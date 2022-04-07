@@ -1,4 +1,4 @@
-baseURL = "http://example.org/"
+baseURL = "http://wfsui.github.io/"
 languageCode = "en-us"
 title = "Wfsui"
 theme = "wfsui"

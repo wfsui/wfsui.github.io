@@ -1,4 +1,4 @@
-baseURL = "http://example.org/"
+baseURL = "http://wfsui.github.io/"
 publishDir = "docs"
 languageCode = "en-us"
 title = "Wfsui"

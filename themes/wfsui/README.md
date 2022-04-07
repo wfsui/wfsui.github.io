@@ -36,7 +36,7 @@ For more information read the [official setup guide](https://gohugo.io/overview/
 ## Configuration
 
 ```toml
-baseURL = "http://wfsui.github.io/"
+baseURL = "https://wfsui.github.io/"
 languageCode = "en-us"
 title = "My personal blog"
 theme = "wfsui"

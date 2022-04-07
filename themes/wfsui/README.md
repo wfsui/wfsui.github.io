@@ -48,8 +48,6 @@ pygmentsstyle = "solarized-dark"
 pygmentscodefences = true
 pygmentscodefencesguesssyntax = true
 
-# Your Google analytics code.
-googleAnalytics = "UA-123-45"
 # Your Disqus sortname.
 disqusShortname = "localhost"
 

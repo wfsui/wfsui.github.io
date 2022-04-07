@@ -1,4 +1,5 @@
 baseURL = "http://example.org/"
+publishDir = "docs"
 languageCode = "en-us"
 title = "Wfsui"
 theme = "wfsui"

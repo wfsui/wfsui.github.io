@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Procrastinating on Wfsui</title>
+    <title>Procrastinating on 大峰哥</title>
     <link>https://wfsui.github.io/tags/procrastinating/</link>
-    <description>Recent content in Procrastinating on Wfsui</description>
+    <description>Recent content in Procrastinating on 大峰哥</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
     <lastBuildDate>Sun, 18 Mar 2018 12:13:32 +0530</lastBuildDate><atom:link href="https://wfsui.github.io/tags/procrastinating/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>How I Learned to Stop Procrastinating, &amp; Love Letting Go</title>
+      <title>够浪</title>
       <link>https://wfsui.github.io/posts/post-3/</link>
       <pubDate>Sun, 18 Mar 2018 12:13:32 +0530</pubDate>
       
       <guid>https://wfsui.github.io/posts/post-3/</guid>
-      <description>The end of procrastination is the art of letting go.
-I’ve been a lifelong procrastinator, at least until recent years. I would put things off until deadline, because I knew I could come through.</description>
+      <description>测试
+The end of procrastination is the art of letting go.
+I’ve been a lifelong procrastinator, at least until recent years.</description>
     </item>
     
   </channel>

@@ -1,6 +1,6 @@
+defaultContentLanguage = 'zh-cn'
 baseURL = "https://wfsui.github.io/"
 publishDir = "docs"
-languageCode = "en-us"
 title = "Wfsui"
 paginate = 5
 
@@ -14,41 +14,86 @@ disqusShortname = "wfsui"
 
 summaryLength = 20
 
-[params]
-	subtitle = "Clean and minimal personal"
-	disableDisqusTypes = ["page"]
-	featherIconsCDN = true
-	mode = "auto" # "dark", "auto", "light"
-
-[[menu.main]]
-name = "Home"
-url = "/"
-weight = 1
-
-[[menu.main]]
-name = "All posts"
-url = "/posts"
-weight = 2
-
-[[menu.main]]
-name = "About"
-url = "/about"
-weight = 3
-
-[[menu.main]]
-name = "Tags"
-url = "/tags"
-weight = 4
-
-[[params.social]]
-name = "Github"
-icon = "github"
-url = "https://github.com/wfsui"
-
-[[params.social]]
-name = "RSS"
-icon = "rss"
-url = "/index.xml"
-
 [taxonomies]
    tag = "tags"
+
+[languages]
+  [languages.zh-cn]
+    title = '大峰哥'
+    languageCode = "zh-cn"
+    weight = 2
+  [languages.zh-cn.params]
+    subtitle = "记录日常生活哦"
+    disableDisqusTypes = ["page"]
+    featherIconsCDN = true
+    mode = "auto" # "dark", "auto", "light"
+
+  [[languages.zh-cn.menu.main]]
+    name = "首页"
+    url = "/"
+    weight = 1
+
+  [[languages.zh-cn.menu.main]]
+    name = "文章"
+    url = "/posts"
+    weight = 2
+
+  [[languages.zh-cn.menu.main]]
+    name = "关于"
+    url = "/about"
+    weight = 3
+
+  [[languages.zh-cn.menu.main]]
+    name = "标签"
+    url = "/tags"
+    weight = 4
+
+  [[languages.zh-cn.params.social]]
+    name = "Github"
+    icon = "github"
+    url = "https://github.com/wfsui"
+
+  [[languages.zh-cn.params.social]]
+    name = "RSS"
+    icon = "rss"
+    url = "/index.xml"
+
+  [languages.en]
+    title = 'Wfsui'
+    languageCode = "en"
+    weight = 1
+  [languages.en.params]
+    subtitle = "Clean and minimal personal"
+    disableDisqusTypes = ["page"]
+    featherIconsCDN = true
+    mode = "auto" # "dark", "auto", "light"
+
+  [[languages.en.menu.main]]
+    name = "Home"
+    url = "/en"
+    weight = 1
+
+  [[languages.en.menu.main]]
+    name = "All posts"
+    url = "/en/posts"
+    weight = 2
+
+  [[languages.en.menu.main]]
+    name = "About"
+    url = "/en/about"
+    weight = 3
+
+  [[languages.en.menu.main]]
+    name = "Tags"
+    url = "/en/tags"
+    weight = 4
+
+  [[languages.en.params.social]]
+    name = "Github"
+    icon = "github"
+    url = "https://github.com/wfsui"
+
+  [[languages.en.params.social]]
+    name = "RSS"
+    icon = "rss"
+    url = "/en/index.xml"

@@ -1,50 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url>
-    <loc>https://wfsui.github.io/about/</loc>
-    <lastmod>2019-04-19T21:37:58+05:30</lastmod>
-  </url><url>
-    <loc>https://wfsui.github.io/posts/post-7/</loc>
-    <lastmod>2018-03-18T12:13:38+05:30</lastmod>
-  </url><url>
-    <loc>https://wfsui.github.io/posts/</loc>
-    <lastmod>2018-03-18T12:13:38+05:30</lastmod>
-  </url><url>
-    <loc>https://wfsui.github.io/posts/post-5/</loc>
-    <lastmod>2018-03-18T12:13:38+05:30</lastmod>
-  </url><url>
-    <loc>https://wfsui.github.io/</loc>
-    <lastmod>2018-03-18T12:13:38+05:30</lastmod>
-  </url><url>
-    <loc>https://wfsui.github.io/posts/post-6/</loc>
-    <lastmod>2018-03-18T12:13:36+05:30</lastmod>
-  </url><url>
-    <loc>https://wfsui.github.io/posts/post-4/</loc>
-    <lastmod>2018-03-18T12:13:35+05:30</lastmod>
-  </url><url>
-    <loc>https://wfsui.github.io/posts/post-3/</loc>
-    <lastmod>2018-03-18T12:13:32+05:30</lastmod>
-  </url><url>
-    <loc>https://wfsui.github.io/tags/procrastinating/</loc>
-    <lastmod>2018-03-18T12:13:32+05:30</lastmod>
-  </url><url>
-    <loc>https://wfsui.github.io/tags/</loc>
-    <lastmod>2018-03-18T12:13:32+05:30</lastmod>
-  </url><url>
-    <loc>https://wfsui.github.io/posts/post-2/</loc>
-    <lastmod>2018-03-18T12:13:30+05:30</lastmod>
-  </url><url>
-    <loc>https://wfsui.github.io/tags/space/</loc>
-    <lastmod>2018-03-18T12:13:30+05:30</lastmod>
-  </url><url>
-    <loc>https://wfsui.github.io/tags/primer/</loc>
-    <lastmod>2018-03-18T02:01:58+05:30</lastmod>
-  </url><url>
-    <loc>https://wfsui.github.io/posts/post-1/</loc>
-    <lastmod>2018-03-18T02:01:58+05:30</lastmod>
-  </url><url>
-    <loc>https://wfsui.github.io/tags/todo/</loc>
-    <lastmod>2018-03-18T02:01:58+05:30</lastmod>
-  </url>
-</urlset>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <sitemap>
+    <loc>https://wfsui.github.io/en/sitemap.xml</loc>
+    
+      <lastmod>2018-03-18T12:13:38+05:30</lastmod>
+    
+  </sitemap>
+  
+  <sitemap>
+    <loc>https://wfsui.github.io/zh-cn/sitemap.xml</loc>
+    
+      <lastmod>2018-03-18T12:13:38+05:30</lastmod>
+    
+  </sitemap>
+  
+</sitemapindex>

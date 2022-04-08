@@ -2,7 +2,6 @@ baseURL = "https://wfsui.github.io/"
 publishDir = "docs"
 languageCode = "en-us"
 title = "Wfsui"
-theme = "wfsui"
 paginate = 5
 
 copyright = "© Copyright notice"

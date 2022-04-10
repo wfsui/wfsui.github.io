@@ -1,0 +1,28 @@
+name: article gen
+
+on:
+  schedule:
+    - cron: '33 * * * *,*'
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: 1.18
+        hugo-version: 'latest'
+
+    - name: Build
+      run: |
+            cd scripts && go run gen.go
+            mv *.md ../content/post/
+            cd .. && hugo -D
+            git config --global user.name 'wfsui'
+            git config --global user.email 'wfsui@protonmail.com'
+            git commit -am "Automated report"
+            git push

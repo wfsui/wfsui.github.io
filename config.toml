@@ -1,4 +1,5 @@
 defaultContentLanguage = 'zh-cn'
+ignoreErrors = ["error-remote-getjson"]
 baseURL = "https://wfsui.github.io/"
 publishDir = "docs"
 title = "Wfsui"

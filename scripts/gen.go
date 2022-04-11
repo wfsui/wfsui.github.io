@@ -90,7 +90,7 @@ func (gfwReport *GfwReport) parse(html string) []string {
 // 3. pick 10 = headers wordcount images
 // 4. add markdown descriptions
 func main() {
-	sources := []ArticleSource{&InfoQ{}}
+	sources := []ArticleSource{&InfoQ{}, &GfwReport{}}
 	for _, source := range sources {
 		links := source.pick(Option{})
 		for _, link := range links {

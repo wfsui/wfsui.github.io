@@ -17,6 +17,8 @@ type Option map[string]string
 
 type ArticleSource interface {
 	pick(opt Option) []string
+	parse(html string) []string
+	down(link string) []string
 }
 
 type Article struct {
@@ -53,6 +55,25 @@ func (infoq *InfoQ) parse(html string) []string {
 	return hrefs
 }
 
+func (infoq *InfoQ) down(link string) []string {
+	client := &http.Client{
+		CheckRedirect: func(req *http.Request, via []*http.Request) error {
+			return http.ErrUseLastResponse
+		},
+	}
+
+	req, _ := http.NewRequest("GET", link, nil)
+	req.Header.Set("User-Agent", "Golang_Spider_Bot/3.0")
+	resp, _ := client.Do(req)
+	body, _ := ioutil.ReadAll(resp.Body)
+	doc, _ := htmlquery.Parse(strings.NewReader(string(body)))
+	tnode := htmlquery.FindOne(doc, "//h1[contains(@class, 'article-title')]")
+	title := htmlquery.InnerText(tnode)
+	cnode := htmlquery.FindOne(doc, "//div[contains(@class, 'article-preview')]")
+	content := htmlquery.OutputHTML(cnode, true)
+	return []string{title, content}
+}
+
 type GfwReport struct {
 }
 
@@ -87,6 +108,25 @@ func (gfwReport *GfwReport) parse(html string) []string {
 	return hrefs
 }
 
+func (gfwReport *GfwReport) down(link string) []string {
+	client := &http.Client{
+		CheckRedirect: func(req *http.Request, via []*http.Request) error {
+			return http.ErrUseLastResponse
+		},
+	}
+
+	req, _ := http.NewRequest("GET", link, nil)
+	req.Header.Set("User-Agent", "Golang_Spider_Bot/3.0")
+	resp, _ := client.Do(req)
+	body, _ := ioutil.ReadAll(resp.Body)
+	doc, _ := htmlquery.Parse(strings.NewReader(string(body)))
+	tnode := htmlquery.FindOne(doc, "//h1[contains(@class, 'display-5')]")
+	title := htmlquery.InnerText(tnode)
+	cnode := htmlquery.FindOne(doc, "//div[contains(@class, 'js-toc-content')]")
+	content := htmlquery.OutputHTML(cnode, true)
+	return []string{title, content}
+}
+
 // 1. sources = article links
 // 2. request & convert
 // 3. pick 10 = headers wordcount images
@@ -96,21 +136,9 @@ func main() {
 	for _, source := range sources {
 		links := source.pick(Option{})
 		for _, link := range links {
-			client := &http.Client{
-				CheckRedirect: func(req *http.Request, via []*http.Request) error {
-					return http.ErrUseLastResponse
-				},
-			}
-
-			req, _ := http.NewRequest("GET", link, nil)
-			req.Header.Set("User-Agent", "Golang_Spider_Bot/3.0")
-			resp, _ := client.Do(req)
-			body, _ := ioutil.ReadAll(resp.Body)
-			doc, _ := htmlquery.Parse(strings.NewReader(string(body)))
-			tnode := htmlquery.FindOne(doc, "//h1[contains(@class, 'article-title')]")
-			title := htmlquery.InnerText(tnode)
-			cnode := htmlquery.FindOne(doc, "//div[contains(@class, 'article-preview')]")
-			content := htmlquery.OutputHTML(cnode, true)
+			article := source.down(link)
+			title := article[0]
+			content := article[1]
 			f, _ := os.Create(title + ".md")
 			w := bufio.NewWriter(f)
 			w.WriteString("---")

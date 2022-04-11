@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - uses: peaceiris/actions-hugo@v2
 
     - name: Set up Go
       uses: actions/setup-go@v3
@@ -15,7 +16,6 @@ jobs:
         go-version: 1.18
 
     - name: Build
-      uses: peaceiris/actions-hugo@v2	# hugo官方提供的action，用于在任务环境中获取hugo
       run: |
         cd scripts && go run gen.go
         mv *.md ../content/post/

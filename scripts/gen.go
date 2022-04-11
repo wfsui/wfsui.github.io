@@ -114,7 +114,7 @@ func (gfwReport *GfwReport) down(link string) []string {
 			return http.ErrUseLastResponse
 		},
 	}
-
+	fmt.Println("down " + link)
 	req, _ := http.NewRequest("GET", link, nil)
 	req.Header.Set("User-Agent", "Golang_Spider_Bot/3.0")
 	resp, _ := client.Do(req)

@@ -19,7 +19,7 @@ jobs:
       run: |
         cd scripts
         go run gen.go
-        mv *.md ../content/post/
+        mv *.md ../content/posts/
         cd ..
         hugo -D
         

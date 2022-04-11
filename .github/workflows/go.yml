@@ -21,11 +21,22 @@ jobs:
         go run gen.go
         mv *.md ../content/posts/
         cd ..
+        rm -rf docs
         hugo -D
         
     - name: Push
       run: | 
+        git add .
         git config --global user.name 'wfsui'
         git config --global user.email 'wfsui@protonmail.com'
         git commit -am "Automated report"
         git push
+
+    - name: Deploy to GitHub Pages
+      if: success()
+      uses: crazy-max/ghaction-github-pages@v2
+      with:
+        target_branch: main
+        build_dir: docs
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

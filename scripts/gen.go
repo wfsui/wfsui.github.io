@@ -79,8 +79,10 @@ func (gfwReport *GfwReport) parse(html string) []string {
 	hrefs := []string{}
 	for _, n := range list {
 		href := htmlquery.SelectAttr(n, "href")
-		fmt.Println(href) // output @href value
-		hrefs = append(hrefs, href[:len(href)-3]+"zh/")
+		if strings.HasSuffix(href, "/en/") {
+			href = "https://gfw.report" + href
+			hrefs = append(hrefs, href[:len(href)-3]+"zh/")
+		}
 	}
 	return hrefs
 }

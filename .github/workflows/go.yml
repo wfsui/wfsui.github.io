@@ -17,9 +17,10 @@ jobs:
 
     - name: Build
       run: |
-        cd scripts && go run gen.go
-        ls -al
-        mv scripts/*.md content/post/
+        cd scripts
+        go run gen.go
+        mv *.md ../content/post/
+        cd ..
         hugo -D
         
     - name: Push

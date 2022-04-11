@@ -74,65 +74,12 @@ func (infoq *InfoQ) down(link string) []string {
 	return []string{title, content}
 }
 
-type GfwReport struct {
-}
-
-func (gfwReport *GfwReport) pick(opt Option) []string {
-	client := &http.Client{
-		CheckRedirect: func(req *http.Request, via []*http.Request) error {
-			return http.ErrUseLastResponse
-		},
-	}
-
-	req, _ := http.NewRequest("GET", "https://gfw.report/", nil)
-	req.Header.Set("User-Agent", "Golang_Spider_Bot/3.0")
-	resp, err := client.Do(req)
-	if err != nil {
-		panic(err)
-	}
-	body, _ := ioutil.ReadAll(resp.Body)
-	return gfwReport.parse(string(body))
-}
-
-func (gfwReport *GfwReport) parse(html string) []string {
-	doc, _ := htmlquery.Parse(strings.NewReader(html))
-	list, _ := htmlquery.QueryAll(doc, "//div[contains(@class, 'row')]//li//a/@href")
-	hrefs := []string{}
-	for _, n := range list {
-		href := htmlquery.SelectAttr(n, "href")
-		if strings.HasSuffix(href, "/en/") {
-			href = "https://gfw.report" + href
-			hrefs = append(hrefs, href[:len(href)-3]+"zh/")
-		}
-	}
-	return hrefs
-}
-
-func (gfwReport *GfwReport) down(link string) []string {
-	client := &http.Client{
-		CheckRedirect: func(req *http.Request, via []*http.Request) error {
-			return http.ErrUseLastResponse
-		},
-	}
-	fmt.Println("down " + link)
-	req, _ := http.NewRequest("GET", link, nil)
-	req.Header.Set("User-Agent", "Golang_Spider_Bot/3.0")
-	resp, _ := client.Do(req)
-	body, _ := ioutil.ReadAll(resp.Body)
-	doc, _ := htmlquery.Parse(strings.NewReader(string(body)))
-	tnode := htmlquery.FindOne(doc, "//h1[contains(@class, 'display-5')]")
-	title := htmlquery.InnerText(tnode)
-	cnode := htmlquery.FindOne(doc, "//div[contains(@class, 'js-toc-content')]")
-	content := htmlquery.OutputHTML(cnode, true)
-	return []string{title, content}
-}
-
 // 1. sources = article links
 // 2. request & convert
 // 3. pick 10 = headers wordcount images
 // 4. add markdown descriptions
 func main() {
-	sources := []ArticleSource{&InfoQ{}, &GfwReport{}}
+	sources := []ArticleSource{&InfoQ{}}
 	for _, source := range sources {
 		links := source.pick(Option{})
 		for _, link := range links {

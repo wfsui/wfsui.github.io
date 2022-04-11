@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 11 Apr 2022 12:00:36 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Apr 2022 13:36:36 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>如何零宕机将 2000 个微服务从本地 Kafka 集群迁移至云托管多集群平台？</title>
       <link>https://wfsui.github.io/posts/%E5%A6%82%E4%BD%95%E9%9B%B6%E5%AE%95%E6%9C%BA%E5%B0%86-2000-%E4%B8%AA%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%BB%8E%E6%9C%AC%E5%9C%B0-kafka-%E9%9B%86%E7%BE%A4%E8%BF%81%E7%A7%BB%E8%87%B3%E4%BA%91%E6%89%98%E7%AE%A1%E5%A4%9A%E9%9B%86%E7%BE%A4%E5%B9%B3%E5%8F%B0/</link>
-      <pubDate>Mon, 11 Apr 2022 12:00:36 +0000</pubDate>
+      <pubDate>Mon, 11 Apr 2022 13:36:36 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%A6%82%E4%BD%95%E9%9B%B6%E5%AE%95%E6%9C%BA%E5%B0%86-2000-%E4%B8%AA%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%BB%8E%E6%9C%AC%E5%9C%B0-kafka-%E9%9B%86%E7%BE%A4%E8%BF%81%E7%A7%BB%E8%87%B3%E4%BA%91%E6%89%98%E7%AE%A1%E5%A4%9A%E9%9B%86%E7%BE%A4%E5%B9%B3%E5%8F%B0/</guid>
       <description>本文最初发表于 Medium 博客，经原作者 Natan Silnitsky 授权，InfoQ 中文站翻译并分享。
@@ -21,7 +21,7 @@
     <item>
       <title>系列解读 SMC-R：透明无感提升云上 TCP 应用网络性能（一）</title>
       <link>https://wfsui.github.io/posts/%E7%B3%BB%E5%88%97%E8%A7%A3%E8%AF%BB-smc-r%E9%80%8F%E6%98%8E%E6%97%A0%E6%84%9F%E6%8F%90%E5%8D%87%E4%BA%91%E4%B8%8A-tcp-%E5%BA%94%E7%94%A8%E7%BD%91%E7%BB%9C%E6%80%A7%E8%83%BD%E4%B8%80/</link>
-      <pubDate>Mon, 11 Apr 2022 12:00:36 +0000</pubDate>
+      <pubDate>Mon, 11 Apr 2022 13:36:36 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%B3%BB%E5%88%97%E8%A7%A3%E8%AF%BB-smc-r%E9%80%8F%E6%98%8E%E6%97%A0%E6%84%9F%E6%8F%90%E5%8D%87%E4%BA%91%E4%B8%8A-tcp-%E5%BA%94%E7%94%A8%E7%BD%91%E7%BB%9C%E6%80%A7%E8%83%BD%E4%B8%80/</guid>
       <description>引言 Shared Memory Communication over RDMA (SMC-R) 是一种基于 RDMA 技术、兼容 socket 接口的内核网络协议，由 IBM 提出并在 2017 年贡献至 Linux 内核。SMC-R 能够帮助 TCP 网络应用程序透明使用 RDMA，获得高带宽、低时延的网络通信服务。阿里云云上操作系统 Alibaba Cloud Linux 3 以及龙蜥社区开源操作系统 Anolis 8 配合神龙弹性 RDMA (eRDMA) 首次将 SMC-R 带上云上场景，助力云上应用获得更好的网络性能：《技术揭秘：阿里云发布第四代神龙 ，SMC-R 让网络性能提升 20%》。</description>
@@ -30,7 +30,7 @@
     <item>
       <title>AlphaCode 能替代人类程序员吗？网友：被替代也挺好，这样就可以少写代码多开会了</title>
       <link>https://wfsui.github.io/posts/alphacode-%E8%83%BD%E6%9B%BF%E4%BB%A3%E4%BA%BA%E7%B1%BB%E7%A8%8B%E5%BA%8F%E5%91%98%E5%90%97%E7%BD%91%E5%8F%8B%E8%A2%AB%E6%9B%BF%E4%BB%A3%E4%B9%9F%E6%8C%BA%E5%A5%BD%E8%BF%99%E6%A0%B7%E5%B0%B1%E5%8F%AF%E4%BB%A5%E5%B0%91%E5%86%99%E4%BB%A3%E7%A0%81%E5%A4%9A%E5%BC%80%E4%BC%9A%E4%BA%86/</link>
-      <pubDate>Mon, 11 Apr 2022 12:00:35 +0000</pubDate>
+      <pubDate>Mon, 11 Apr 2022 13:36:35 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/alphacode-%E8%83%BD%E6%9B%BF%E4%BB%A3%E4%BA%BA%E7%B1%BB%E7%A8%8B%E5%BA%8F%E5%91%98%E5%90%97%E7%BD%91%E5%8F%8B%E8%A2%AB%E6%9B%BF%E4%BB%A3%E4%B9%9F%E6%8C%BA%E5%A5%BD%E8%BF%99%E6%A0%B7%E5%B0%B1%E5%8F%AF%E4%BB%A5%E5%B0%91%E5%86%99%E4%BB%A3%E7%A0%81%E5%A4%9A%E5%BC%80%E4%BC%9A%E4%BA%86/</guid>
       <description>DeepMind 是最新的人工智能研究实验室。它推出了一个可以生成软件源代码的深度学习模型，成果令人印象深刻。该模型被称为 AlphaCode，基于 Transformer，与 OpenAI 在其代码生成模型中使用的架构是一样的。
@@ -45,7 +45,7 @@ AlphaCode 不是业内在这一领域唯一的成果，但它完成了一项非�
     <item>
       <title>我在大厂这五年：从热情如火到精神焦虑，高薪升职也要离开</title>
       <link>https://wfsui.github.io/posts/%E6%88%91%E5%9C%A8%E5%A4%A7%E5%8E%82%E8%BF%99%E4%BA%94%E5%B9%B4%E4%BB%8E%E7%83%AD%E6%83%85%E5%A6%82%E7%81%AB%E5%88%B0%E7%B2%BE%E7%A5%9E%E7%84%A6%E8%99%91%E9%AB%98%E8%96%AA%E5%8D%87%E8%81%8C%E4%B9%9F%E8%A6%81%E7%A6%BB%E5%BC%80/</link>
-      <pubDate>Mon, 11 Apr 2022 12:00:35 +0000</pubDate>
+      <pubDate>Mon, 11 Apr 2022 13:36:35 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%88%91%E5%9C%A8%E5%A4%A7%E5%8E%82%E8%BF%99%E4%BA%94%E5%B9%B4%E4%BB%8E%E7%83%AD%E6%83%85%E5%A6%82%E7%81%AB%E5%88%B0%E7%B2%BE%E7%A5%9E%E7%84%A6%E8%99%91%E9%AB%98%E8%96%AA%E5%8D%87%E8%81%8C%E4%B9%9F%E8%A6%81%E7%A6%BB%E5%BC%80/</guid>
       <description>爱彼迎向来以活跃且极具归属感的员工社区为傲，如今前爱彼迎软件工程师 Sahil 却爆出不少“猛料”。除了无视员工间缺乏平等，爱彼迎还强势打压那些对过度工作文化不满的员工。尽管阻力重重，Sahil 和同事们仍然坚持透明和相互遵循的基础，希望建立起一个强大的社区体系。本文从 Sahil 的第一视角出发，讲述了他在爱彼迎 5 年的心路变化。
@@ -61,7 +61,7 @@ AlphaCode 不是业内在这一领域唯一的成果，但它完成了一项非�
     <item>
       <title>马斯克又双叒叕食言背后：自动驾驶汽车为何长期身陷「慢车道」？</title>
       <link>https://wfsui.github.io/posts/%E9%A9%AC%E6%96%AF%E5%85%8B%E5%8F%88%E5%8F%8C%E5%8F%92%E5%8F%95%E9%A3%9F%E8%A8%80%E8%83%8C%E5%90%8E%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E6%B1%BD%E8%BD%A6%E4%B8%BA%E4%BD%95%E9%95%BF%E6%9C%9F%E8%BA%AB%E9%99%B7%E6%85%A2%E8%BD%A6%E9%81%93/</link>
-      <pubDate>Mon, 11 Apr 2022 12:00:35 +0000</pubDate>
+      <pubDate>Mon, 11 Apr 2022 13:36:35 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E9%A9%AC%E6%96%AF%E5%85%8B%E5%8F%88%E5%8F%8C%E5%8F%92%E5%8F%95%E9%A3%9F%E8%A8%80%E8%83%8C%E5%90%8E%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E6%B1%BD%E8%BD%A6%E4%B8%BA%E4%BD%95%E9%95%BF%E6%9C%9F%E8%BA%AB%E9%99%B7%E6%85%A2%E8%BD%A6%E9%81%93/</guid>
       <description>多年以来，马斯克多次承诺自动驾驶汽车即将到来 事实证明，自动驾驶汽车的底层技术极难完善。就算是备受期待的特斯拉也没能跨越这道障碍。

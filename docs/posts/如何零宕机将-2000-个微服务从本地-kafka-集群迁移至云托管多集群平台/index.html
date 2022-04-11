@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>如何零宕机将 2000 个微服务从本地 Kafka 集群迁移至云托管多集群平台？ - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="如何零宕机将 2000 个微服务从本地 Kafka 集群迁移至云托管多集群平台？" />
+<meta property="og:description" content="本文最初发表于 Medium 博客，经原作者 Natan Silnitsky 授权，InfoQ 中文站翻译并分享。
+2021 年，我们的团队致力于将 Wix （国外比较火的一款建站平台）的 2000 个微服务从自托管的 Kafka 集群迁移到多集群的 Confluent Cloud 平台（ Confluent Enterprise 的云端托管服务），整个过程是无缝的方式，无需服务所有者参与，且迁移是在正常通信中进行，没有任何停机。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wfsui.github.io/posts/%E5%A6%82%E4%BD%95%E9%9B%B6%E5%AE%95%E6%9C%BA%E5%B0%86-2000-%E4%B8%AA%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%BB%8E%E6%9C%AC%E5%9C%B0-kafka-%E9%9B%86%E7%BE%A4%E8%BF%81%E7%A7%BB%E8%87%B3%E4%BA%91%E6%89%98%E7%AE%A1%E5%A4%9A%E9%9B%86%E7%BE%A4%E5%B9%B3%E5%8F%B0/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-11T14:10:35+00:00" />
+<meta property="article:modified_time" content="2022-04-11T14:10:35+00:00" /><meta property="og:site_name" content="大峰哥" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="如何零宕机将 2000 个微服务从本地 Kafka 集群迁移至云托管多集群平台？"/>
+<meta name="twitter:description" content="本文最初发表于 Medium 博客，经原作者 Natan Silnitsky 授权，InfoQ 中文站翻译并分享。
+2021 年，我们的团队致力于将 Wix （国外比较火的一款建站平台）的 2000 个微服务从自托管的 Kafka 集群迁移到多集群的 Confluent Cloud 平台（ Confluent Enterprise 的云端托管服务），整个过程是无缝的方式，无需服务所有者参与，且迁移是在正常通信中进行，没有任何停机。"/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://wfsui.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://wfsui.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<base href="https://wfsui.github.io/">
+	<h1 class="site-title"><a href="https://wfsui.github.io/">大峰哥</a></h1>
+	<div class="site-description"><h2>记录日常生活哦</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/wfsui" title="Github"><i data-feather="github"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">文章</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">如何零宕机将 2000 个微服务从本地 Kafka 集群迁移至云托管多集群平台？</h1>
+			<div class="meta">Posted at &mdash; Apr 11, 2022</div>
+		</div>
+
+		<div class="markdown">
+			<p><em>本文最初发表于 Medium 博客，经原作者 Natan Silnitsky 授权，InfoQ 中文站翻译并分享。</em></p>
+<p>2021 年，我们的团队致力于将 Wix （国外比较火的一款建站平台）的 2000 个微服务从自托管的 Kafka 集群迁移到多集群的 Confluent Cloud 平台（ Confluent Enterprise 的云端托管服务），整个过程是无缝的方式，无需服务所有者参与，且迁移是在正常通信中进行，没有任何停机。</p>
+<p>这是我所领导过的最有挑战的项目，本文，我将与你分享我们作出的关键设计决策，并提供这种迁移的最佳实践和技巧。</p>
+<h2 id="分割过载集群">分割过载集群</h2>
+<p>最近几年，由于事件驱动架构中的服务数量不断增多，Wix 业务 中大量的 OLTP 服务对 Kafka 的运转造成了负担。</p>
+<p>我们的自托管集群规模从 2019 年的 5K Topics，大于 45K 分区增加到 2021 年的 20K Topics， 大于 200K 分区。</p>
+<p>流量也从每天约 4.5 亿条记录增长到每个集群每天产生 25 亿多条记录。</p>
+<p><img src="https://static001.geekbang.org/infoq/f4/f448ae5313c031ea7f5553d9ad8f875a.jpeg" alt=""><!-- raw HTML omitted --></p>
+<p>迁移前 Wix 的 Kafka 使用情况</p>
+<p>由于需要将所有元数据都加载到分区中，从而给集群控制器的启动时间带来了很大压力，这使得 leader 的选举时间大大增加。如果单个 broker 发生故障，也会极大影响其启动时间，从而造成更多的分区复制不足事件。</p>
+<p>为防止 Kafka 集群在生产中出现不稳定的情况，我们决定将自托管的 Kafka 集群迁移到 Confluent Cloud，并将每个数据中心的单集群分割成多个集群。</p>
+<h2 id="为什么要云托管-kafka-集群">为什么要云托管 Kafka 集群？</h2>
+<p>自管理一个 Kafka 集群并非易事，尤其是在执行一些任务时，例如重新平衡 brokers 之间的分区，或者升级 brokers 版本等，这些必须认真规划和实施。特别是集群中过载了元数据时，这一点尤为明显，正如我们的情况一样。</p>
+<p>以下是使用 Kafka 云平台，特别是 Confluent Cloud 的 4 个好处：</p>
+<ul>
+<li>更好的集群性能和灵活性</li>
+</ul>
+<p>其中的 brokers 分区的重新平衡让其不会成为性能瓶颈，可以轻松扩大或缩小集群容量，以实现成本效益。</p>
+<ul>
+<li>透明的版本升级</li>
+</ul>
+<p>Kafka 的代码库不断得到改进，尤其是专注于 KIP-500：元数据将存储在 Kafka 内的分区中，而不是存储在 ZooKeeper，控制器将成为该分区的 leader。除了 Kafka 本身，不需要配置和管理外部元数据系统。这个项目一旦完成，将会极大地提高每个集群和 brokers 所能容纳的元数据量。通过管理，你可以实现对版本的自动更新，这样就可以改进性能并修正 Bug。</p>
+<ul>
+<li>轻松添加新集群</li>
+</ul>
+<p>如果你需要一个新的集群。设置它是非常简单的。</p>
+<ul>
+<li>分层存储</li>
+</ul>
+<p>Confluent 平台提供了分层存储，使得 Kafka 的记录保留期大大延长，而且不需要支付高昂的磁盘空间费用，通过将旧的记录转移到更便宜的 S3 存储，而不增加新的费用。</p>
+<h2 id="将-2000-个微服务切换到多集群-kafka-架构">将 2000 个微服务切换到多集群 Kafka 架构</h2>
+<p>在 Wix，我们拥有一个标准的 JVM 库和代理服务，用于与 Kafka 进行交互，称为 Greyhound。这是一个开源的先进 SDK，可以为 Apache Kafka 提供诸如并发消息处理、批量处理、重试等其他特性。</p>
+<p><img src="https://static001.geekbang.org/infoq/5c/5cb553dab70ef9273bf9de9c3f50fbe5.jpeg" alt=""><!-- raw HTML omitted --></p>
+<p>Greyhound 是 Wix 约 2200 个微服务的事件驱动主干，因此，引入多集群的概念仅需在一些地方（包括库和代理服务）就可以进行。由于旧的集群会自动映射，所以新主题的生产者（producer）和消费者（consumer）必须清楚地指明集群。当构建 Greyhound 消费者或生产者时，开发人员只要定义集群的逻辑名称即可，如下图所示：</p>
+<p><img src="https://static001.geekbang.org/infoq/f0/f071ff728a00c4b5ae7ab149c64c5264.jpeg" alt=""><!-- raw HTML omitted --></p>
+<h2 id="如何分割">如何分割？</h2>
+<p>我们决定根据不同的服务级别协议（Service-level agreement，SLA）对 Kafka 集群进行分割。例如，在 CI/CD 管道和数据迁移案例中，服务级别协议是有别于生产服务的。请注意，由于每个数据中心的作用不同，并非所有数据中心都拥有同样数目的 Kafka 集群。</p>
+<p>Greyhound（Wix 自己的 Kafka SDK）懂得当服务实例在目前运行的数据中心集群不可用时，该如何处理这个问题并防止发生故障。</p>
+<p><img src="https://static001.geekbang.org/infoq/b1/b14ee5978c6b8f3d397a3d92afc05717.jpeg" alt=""><!-- raw HTML omitted --></p>
+<h2 id="流量耗尽的数据中心">流量耗尽的数据中心？</h2>
+<p>为了使 2000 个微服务的生产者和消费者更容易迁移到多个管理式 Kafka 集群，最初的设计依赖于首先将每个数据中心（data center，DC）的流量全部耗尽。</p>
+<p>这样的设计意味着只需要将生产者和消费者的连接细节切换到新的 Kafka 集群。因为 Wix 微服务通过 Greyhound 层与 Kafka 集群相连，所以只要在 Greyhound 的生产配置就可以更改连接（同时保证仅有一个数据中心受到影响）。</p>
+<p>虽然这种设计非常简单，但是很遗憾，它不可能实现和执行。</p>
+<p>有以下理由：</p>
+<p>有些服务只部署在其中一个数据中心，并且难以进行迁移。这种设计意味着，（只可能出现两种极端局面）要么全有要么全无，并且当流量返回时，就会面临巨大的风险。未被切换的边缘案例可能会遭受数据丢失。数据中心的流量不能在很长一段时间内完全耗尽，因为这将极大提高一些服务的停机风险。</p>
+<p>取而代之的是，计划了一种新的设计，包括在实时流量期间进行迁移。</p>
+<h2 id="零宕机迁移">零宕机迁移</h2>
+<p>在实时流量中执行迁移，就意味着必须进行细致的规划和实施。</p>
+<p>这个过程需要逐步进行（一次只能对少量微服务产生影响，从而降低发生故障时的“爆炸半径”），并且可以实现完全的自动化，从而降低人为失误，其中包括自动化的回滚过程。</p>
+<p>首先迁移生产者（在消费者之前）并非一种选项，这就意味着要花大量的时间来保证所有的消费者都已处理好了自托管集群中找到的所有记录，并能够安全地切换到新的集群主题。这会在处理过程中导致相当大的延迟，并且可能会损害某些 OTLP 业务流和用户。此外，如果没有数据丢失，由于一些意想不到的问题而回滚消费者是不可能的。</p>
+<p>活跃的 Kafka 消费者在保证没有消息丢失和最小程度的重新处理记录的情况下，必须首先进行切换。唯一的方法是将所有消耗的主题记录从自己的主机集群复制到目标管理式集群。</p>
+<h3 id="复制">复制</h3>
+<p>为了保证在迁移过程中不会出现消息处理的丢失，我们创建了一个专门的复制服务。一旦所有的消费者主题被确定，复制器（replicator）服务就会被要求在适当的云集群中创建主题，并开始消费来自自托管集群的记录，并将它们生成到目标集群中。</p>
+<p><img src="https://static001.geekbang.org/infoq/3b/3bd2000cba4a48efefc432b2b1fb0682.jpeg" alt=""><!-- raw HTML omitted --></p>
+<h3 id="消费者迁移">消费者迁移</h3>
+<p>为了促进消费者迁移，复制器还坚持为每个分区提供偏移量映射，这样 Greyhound 消费者就可以从正确的偏移量开始处理云集群中的记录——该偏移量是从自托管集群中第一个未提交的偏移量映射而来的。</p>
+<p>除了复制器外，还有一个迁移编排器（Migration Orchestrator），它可以确保一个主题被复制，所有的偏移量被映射，并继续请求 Greyhound 消费者从自托管集群中取消订阅。在验证成功后，编排器就会要求消费者在寻求正确的映射偏移时订阅云集群。</p>
+<p><img src="https://static001.geekbang.org/infoq/35/351febab231b65901143cf1da76013db.jpeg" alt=""><!-- raw HTML omitted --></p>
+<p>如果出现失败的情况，编排器能够要求消费者恢复到自托管集群。</p>
+<p>所有这些编排器与消费者之间的通信都是通过专门的 Kafka 迁移主题实现的。Greyhound 消费者在启动时就开始监听它们。</p>
+<h3 id="生产者迁移">生产者迁移</h3>
+<p>一旦某个主题的所有消费者都迁移了，就可以迁移其生产者。</p>
+<p>最初的迁移设计需要请求生产者切换集群连接，同时仍然接受传入的生产请求。这就意味着将这些请求缓存到内存中，而且被人们认为相当危险。</p>
+<p>之后，我们提出了一种更加简便的设计方案，它依赖于 Wix 的渐进式 Kubernetes 部署过程。每个新的 pod 只会在它的全部健康测试正常时，才会开始接受传入的请求，包括与 Kafka 的连接。因为这个过程都是逐步进行的，所以总会有“老”的 pod 在运行，所以服务作为一个整体，总是能接受到传入的请求。</p>
+<p>在 pod 启动时，Greyhound 生产者会简单地查看数据库来确定他们要连接的集群。这要比动态的集群切换和记录缓存更加简单。这就意味着可以安全地进行迁移，不会出现请求丢失，并且服务可以维持高可用性。</p>
+<h3 id="复制的瓶颈">复制的瓶颈</h3>
+<p>只有在迁移了生产者之后，才能终止对主题的复制。但是要想迁移生产者，就得把其所有的主题消费者都迁移出去。</p>
+<p>事实证明，许多主题有来自不同服务的多个消费者，这就意味着，复制器消费者需要处理和复制的流量越来越多。</p>
+<p>这就产生了一个问题，由于我们相对较老的自托管 Kafka brokers 版本的技术局限性，使得消费者能够处理的主题数量有限。在几次尝试增加 message.max.bytes 的结果都适得其反（参阅 KAFKA-9254 bug），并造成了严重的问题后，我们决定简单地增加复制器消费者，并在它们之间分片处理要复制的主题。</p>
+<p><img src="https://static001.geekbang.org/infoq/f8/f8cab64f9ac674f6a26d008d77a97970.jpeg" alt=""><!-- raw HTML omitted --></p>
+<h3 id="迁移之外外部消费者控制">迁移之外——外部消费者控制</h3>
+<p>这种“有流量”的迁移设计为动态改变 Greyhound 消费者的配置或状态，提供了很多新的可能性，而无需在生产中采用新的版本。</p>
+<p>现在，我们已经有了基础设施，使 Greyhound 消费者能够监听传入的命令来改变状态或配置。这样的命令可以包括：</p>
+<p>切换集群：取消订阅当前集群并订阅另一个集群。跳过记录：跳过不能处理的记录。改变处理率：动态地增加或减少并行处理量，或为节流和背压添加延迟。重新分配记录：如果一个分区的延迟越来越大，则能够在所有分区之间重新分配记录（并跳过旧的记录）。</p>
+<p><img src="https://static001.geekbang.org/infoq/f0/f07eb1c3870f37e5fa9c43529d637c48.jpeg" alt=""><!-- raw HTML omitted --></p>
+<p>目前，这些都是理论上的，但利用已经存在的迁移基础设施就可以更容易地实现。</p>
+<h3 id="最佳实践和提示">最佳实践和提示</h3>
+<p>以下是成功进行 Kafka 集群迁移的最佳实践和技巧清单：</p>
+<ul>
+<li>创建一个脚本，自行检查状态，如果没有达到预期状态就停止</li>
+</ul>
+<p>让迁移过程尽可能地自动化是关键，所以让脚本能够自行检查是否能够进入下一阶段，这会极大地加速迁移过程。而另一方面，自动回滚和自我修复是很难做到的，因此，还是要交给人工干预。</p>
+<ul>
+<li>准备好随时可以使用回滚</li>
+</ul>
+<p>无论你的迁移代码测试得有多好，生产环境都是不确定的。为每个阶段准备一个现成的回滚选项是非常重要的。一定要提前准备好，并在开始运行迁移之前进行尽可能多的测试。</p>
+<ul>
+<li>先从测试 / 中继主题和无影响主题入手</li>
+</ul>
+<p>由于记录有可能丢失，或者恢复过程可能会很痛苦，因此迁移过程会非常危险。请确保用测试主题开始测试你的迁移代码。这样才能得到真正的检验。利用测试主题，通过将真实的生产记录复制到特定的测试应用中，实际模仿生产主题。这样，在消费者迁移时，万一发生失败，也不会影响到生产，但是会给你一个更加真实的生产模拟。</p>
+<ul>
+<li>创建自定义的指标仪表板，以显示当前和演变的状态</li>
+</ul>
+<p>即便你创建了一个自动化的、完全无人值守的迁移过程，你也必须能够监控所发生的一切，并且当问题发生时，你拥有相关的工具可以进行调查。一定要事先准备好自定义的监控仪表板，以明确地显示你正在迁移的消费者和生产者的当前和历史状态。</p>
+<p>在下图中，我们可以看出，生产者是如何成功地从自托管集群切换到管理式集群的（随着越来越多的 Pod 被重新启动并读取新的配置，因此吞吐量会降低）。</p>
+<ul>
+<li>确保自托管 Kafka 代理是最新的补丁版本</li>
+</ul>
+<p>因为我们的自托管 Kafka brokers 没有使用最新的补丁版本，所以在我们多次试图提高 message.max.bytes 的值时，我们最后还是发生了一个生产事故（详见本文的“复制的瓶颈”部分）。我的忠告是，先更新自托管集群 Kafka brokers 版本。如果不是最新版本，那至少也要安装最新的补丁。</p>
+<p><img src="https://static001.geekbang.org/infoq/66/668fce869eacfe918980b04adbdb433a.jpeg" alt=""><!-- raw HTML omitted --></p>
+<h2 id="总结">总结</h2>
+<p>我们利用 Greyhound 和专用编排服务和脚本，以便在实时流量期间以无缝方式实现自动、安全和逐步的迁移。</p>
+<p>这可不是一件简单的事情。如果你可以充分利用数据中心完全耗尽流量的时间，或者可以承受得住处理的停机时间，那么我强烈建议将生产者和消费者切换到新集群，而不是首先复制数据。这样的设计更加容易，你也可以节省更多的时间。</p>
+<p>否则，当你在流量下进行迁移时，你必须小心地按照执行的顺序（消费者在生产者之前 / 之后）进行迁移，并且要保证你明白这个决策的后果（回滚的能力，丢失数据的可能）。</p>
+<p>下面你会看到一张流程图，使你容易理解各种选择。</p>
+<p><img src="https://static001.geekbang.org/infoq/81/81c86def4c634c32d880b33c00253f8d.jpeg" alt=""><!-- raw HTML omitted --></p>
+<p><strong>作者介绍：</strong></p>
+<p>Natan Silnitsky，供职于 Wix，后端基础设施开发者。</p>
+<p><strong>原文链接：</strong></p>
+<p><a href="https://medium.com/wix-engineering/migrating-to-a-multi-cluster-managed-kafka-with-0-downtime-b936655f888e">https://medium.com/wix-engineering/migrating-to-a-multi-cluster-managed-kafka-with-0-downtime-b936655f888e</a></p>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'wfsui';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="">Wfsui theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div><script>feather.replace()</script>
+</body>
+</html>

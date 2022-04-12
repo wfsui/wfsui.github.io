@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>年度总结 on 大峰哥</title>
+    <link>https://wfsui.github.io/tags/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</link>
+    <description>Recent content in 年度总结 on 大峰哥</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Tue, 12 Apr 2022 11:50:25 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2021年美团技术团队最受欢迎的22篇技术文章</title>
+      <link>https://wfsui.github.io/posts/2021%E5%B9%B4%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E6%9C%80%E5%8F%97%E6%AC%A2%E8%BF%8E%E7%9A%8422%E7%AF%87%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/</link>
+      <pubDate>Tue, 12 Apr 2022 11:50:25 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/2021%E5%B9%B4%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E6%9C%80%E5%8F%97%E6%AC%A2%E8%BF%8E%E7%9A%8422%E7%AF%87%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/</guid>
+      <description>再见2021，你好2022！
+「美团技术团队」微信公众号祝大家新年快乐！温故而知新，我们根据文章的「阅读量」和「在看」数，以及所覆盖的技术领域，精选了22篇技术文章作为新年礼物送给大家。希望在2022年，继续陪大家一起，静心苦练，砥砺向前。
+为了做出更好的内容，从2022年开始，我们在选题层面想多听听大家的意见和建议。我们准备了一份调研问卷，欢迎大家帮忙填写。我们会评选出5位小伙伴，送上来自美团礼品店精美的键盘手托（本次活动的截止日期为2022年1月6日）。
+2021年「阅读量」最高的11篇技术文章 如何优雅地记录操作日志 | 阅读量42391 操作日志几乎存在于每个系统中，而这些系统都有记录操作日志的一套API。操作日志和系统日志不一样，操作日志必须要做到简单易懂。所以如何让操作日志不跟业务逻辑耦合，如何让操作日志的内容易于理解，如何让操作日志的接入更加简单？上面这些都是本文要回答的问题。本文主要围绕着如何「优雅」地记录操作日志展开描述。
+美团基于知识图谱的剧本杀标准化建设与应用 | 阅读量30035 剧本杀作为爆发式增长的新兴业务，在商家上单、用户选购、供需匹配等方面存在不足，供给标准化能为用户、商家、平台三方创造价值，助力业务增长。
+本文介绍了美团到店综合业务数据团队从0到1快速建设剧本杀供给标准化的过程及算法方案。我们将美团到店综合知识图谱（GENE，GEneral NEeds net）覆盖至剧本杀行业，构建剧本杀知识图谱，实现供给标准化建设，包括剧本杀供给挖掘、标准剧本库构建、供给与标准剧本关联等环节，并在多个场景进行应用落地。
+美团商品知识图谱的构建及应用 | 阅读量24601 商品知识图谱作为新零售行业数字化的基石，提供了围绕商品的精准结构化理解，对业务应用起到了至关重要的作用。相比于美团大脑中原有的围绕商户的图谱而言，商品图谱需应对更加分散、复杂、海量的数据和业务场景，且面临着信息来源质量低、数据维度多、依赖常识以及专业知识等挑战。本文将围绕零售商品知识图谱，介绍美团在商品层级建设、属性体系建设、图谱建设人效提升等方向的探索。
+GraphQL及元数据驱动架构在后端BFF中的实践 | 阅读量22247 GraphQL是Facebook提出的一种数据查询语言，核心特性是数据聚合和按需索取，目前被广泛应用于前后端之间，解决客户端灵活使用数据问题。本文介绍的是GraphQL的另一种实践，我们将GraphQL下沉至后端BFF（Backend For Frontend）层之下，结合元数据技术，实现数据和加工逻辑的按需查询和执行。这样不仅解决了后端BFF层灵活使用数据的问题，这些字段加工逻辑还可以直接复用，大幅度提升了研发的效率。</description>
+    </item>
+    
+  </channel>
+</rss>

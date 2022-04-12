@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>TensorFlow在美团外卖推荐场景的GPU训练优化实践 - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="TensorFlow在美团外卖推荐场景的GPU训练优化实践" />
+<meta property="og:description" content="1 背景 在推荐系统训练场景中，美团内部深度定制的TenorFlow（简称TF）版本[1]，通过CPU算力支撑了美团内部大量的业务。但随着业务的发展，模型单次训练的样本量越来越多，结构也变得越来越复杂。以美团外卖推荐的精排模型为例，单次训练的样本量已达百亿甚至千亿，一次实验要耗费上千核，且优化后的训练任务CPU使用率已达90%以上。为了支持业务的高速发展，模型迭代实验的频次和并发度都在不断增加，进一步增加了算力使用需求。在预算有限的前提下，如何以较高的性价比来实现高速的模型训练，从而保障高效率的模型研发迭代，是我们迫切需要解决的问题。
+近几年，GPU服务器的硬件能力突飞猛进，新一代的NVIDIA A100 80GB SXM GPU服务器（8卡）[2]，在存储方面可以做到：显存640GB、内存1~2TB、SSD10&#43;TB，在通信方面可以做到：卡间双向通信600GB/s、多机通信800~1000Gbps/s，在算力方面可以做到：GPU 1248TFLOPS（TF32 Tensor Cores），CPU 96~128物理核。如果训练架构能充分发挥新硬件的优势，模型训练的成本将会大大降低。但TensorFlow社区在推荐系统训练场景中，并没有高效和成熟的解决方案。我们也尝试使用优化后的TensorFlow CPU Parameter Server[3]（简称PS）&#43;GPU Worker的模式进行训练，但只对复杂模型有一定的收益。NVIDIA开源的HugeCTR[4]虽然在经典的深度学习模型上性能表现优异，但要在美团的生产环境直接使用起来，还需要做较多的工作。
+美团基础研发机器学习平台训练引擎团队，联合到家搜推技术部算法效能团队、NVIDIA DevTech团队，成立了联合项目组。在美团内部深度定制的TenorFlow以及NVIDIA HugeCTR的基础上，研发了推荐系统场景的高性能GPU训练架构Booster。目前在美团外卖推荐场景中进行了部署，多代模型全面对齐算法的离线效果，对比之前，优化后的CPU任务，性价比提升了2~4倍。由于Booster对原生TensorFlow接口有较好的兼容性，原TensorFlow CPU任务只需要一行代码就可完成迁移。这样让Booster可以快速在美团多条业务线上进行初步验证，相比之前的CPU任务，平均性价比都提升到2倍以上。本文将重点介绍Booster架构的设计与优化，以及在美团外卖推荐场景落地的全过程，希望能对大家有所帮助或启发。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wfsui.github.io/posts/tensorflow%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E7%9A%84gpu%E8%AE%AD%E7%BB%83%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-12T11:50:21+00:00" />
+<meta property="article:modified_time" content="2022-04-12T11:50:21+00:00" /><meta property="og:site_name" content="大峰哥" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="TensorFlow在美团外卖推荐场景的GPU训练优化实践"/>
+<meta name="twitter:description" content="1 背景 在推荐系统训练场景中，美团内部深度定制的TenorFlow（简称TF）版本[1]，通过CPU算力支撑了美团内部大量的业务。但随着业务的发展，模型单次训练的样本量越来越多，结构也变得越来越复杂。以美团外卖推荐的精排模型为例，单次训练的样本量已达百亿甚至千亿，一次实验要耗费上千核，且优化后的训练任务CPU使用率已达90%以上。为了支持业务的高速发展，模型迭代实验的频次和并发度都在不断增加，进一步增加了算力使用需求。在预算有限的前提下，如何以较高的性价比来实现高速的模型训练，从而保障高效率的模型研发迭代，是我们迫切需要解决的问题。
+近几年，GPU服务器的硬件能力突飞猛进，新一代的NVIDIA A100 80GB SXM GPU服务器（8卡）[2]，在存储方面可以做到：显存640GB、内存1~2TB、SSD10&#43;TB，在通信方面可以做到：卡间双向通信600GB/s、多机通信800~1000Gbps/s，在算力方面可以做到：GPU 1248TFLOPS（TF32 Tensor Cores），CPU 96~128物理核。如果训练架构能充分发挥新硬件的优势，模型训练的成本将会大大降低。但TensorFlow社区在推荐系统训练场景中，并没有高效和成熟的解决方案。我们也尝试使用优化后的TensorFlow CPU Parameter Server[3]（简称PS）&#43;GPU Worker的模式进行训练，但只对复杂模型有一定的收益。NVIDIA开源的HugeCTR[4]虽然在经典的深度学习模型上性能表现优异，但要在美团的生产环境直接使用起来，还需要做较多的工作。
+美团基础研发机器学习平台训练引擎团队，联合到家搜推技术部算法效能团队、NVIDIA DevTech团队，成立了联合项目组。在美团内部深度定制的TenorFlow以及NVIDIA HugeCTR的基础上，研发了推荐系统场景的高性能GPU训练架构Booster。目前在美团外卖推荐场景中进行了部署，多代模型全面对齐算法的离线效果，对比之前，优化后的CPU任务，性价比提升了2~4倍。由于Booster对原生TensorFlow接口有较好的兼容性，原TensorFlow CPU任务只需要一行代码就可完成迁移。这样让Booster可以快速在美团多条业务线上进行初步验证，相比之前的CPU任务，平均性价比都提升到2倍以上。本文将重点介绍Booster架构的设计与优化，以及在美团外卖推荐场景落地的全过程，希望能对大家有所帮助或启发。"/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://wfsui.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://wfsui.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<base href="https://wfsui.github.io/">
+	<h1 class="site-title"><a href="https://wfsui.github.io/">大峰哥</a></h1>
+	<div class="site-description"><h2>记录日常生活哦</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/wfsui" title="Github"><i data-feather="github"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">文章</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">TensorFlow在美团外卖推荐场景的GPU训练优化实践</h1>
+			<div class="meta">Posted at &mdash; Apr 12, 2022</div>
+		</div>
+
+		<div class="markdown">
+			<h2 id="1-背景">1 背景</h2>
+<p>在推荐系统训练场景中，美团内部深度定制的TenorFlow（简称TF）版本[1]，通过CPU算力支撑了美团内部大量的业务。但随着业务的发展，模型单次训练的样本量越来越多，结构也变得越来越复杂。以美团外卖推荐的精排模型为例，单次训练的样本量已达百亿甚至千亿，一次实验要耗费上千核，且优化后的训练任务CPU使用率已达90%以上。为了支持业务的高速发展，模型迭代实验的频次和并发度都在不断增加，进一步增加了算力使用需求。在预算有限的前提下，如何以较高的性价比来实现高速的模型训练，从而保障高效率的模型研发迭代，是我们迫切需要解决的问题。</p>
+<p>近几年，GPU服务器的硬件能力突飞猛进，新一代的NVIDIA A100 80GB SXM GPU服务器（8卡）[2]，在存储方面可以做到：显存640GB、内存1~2TB、SSD10+TB，在通信方面可以做到：卡间双向通信600GB/s、多机通信800~1000Gbps/s，在算力方面可以做到：GPU 1248TFLOPS（TF32 Tensor Cores），CPU 96~128物理核。如果训练架构能充分发挥新硬件的优势，模型训练的成本将会大大降低。但TensorFlow社区在推荐系统训练场景中，并没有高效和成熟的解决方案。我们也尝试使用优化后的TensorFlow CPU Parameter Server[3]（简称PS）+GPU Worker的模式进行训练，但只对复杂模型有一定的收益。NVIDIA开源的HugeCTR[4]虽然在经典的深度学习模型上性能表现优异，但要在美团的生产环境直接使用起来，还需要做较多的工作。</p>
+<p>美团基础研发机器学习平台训练引擎团队，联合到家搜推技术部算法效能团队、NVIDIA DevTech团队，成立了联合项目组。在美团内部深度定制的TenorFlow以及NVIDIA HugeCTR的基础上，研发了<strong>推荐系统场景的高性能GPU训练架构Booster</strong>。目前在美团外卖推荐场景中进行了部署，多代模型全面对齐算法的离线效果，对比之前，优化后的CPU任务，<strong>性价比提升了2~4倍</strong>。由于Booster对原生TensorFlow接口有较好的兼容性，原TensorFlow CPU任务只需要一行代码就可完成迁移。这样让Booster可以快速在美团多条业务线上进行初步验证，相比之前的CPU任务，平均性价比都提升到2倍以上。本文将重点介绍Booster架构的设计与优化，以及在美团外卖推荐场景落地的全过程，希望能对大家有所帮助或启发。</p>
+<h2 id="2-gpu训练优化挑战">2 GPU训练优化挑战</h2>
+<p>GPU训练在美团内已经广泛应用到CV、NLP、ASR等场景的深度学习模型，但在推荐系统场景中，却迟迟没有得到大规模的应用，这跟场景的模型特点、GPU服务器的硬件特点都有较强的关系。</p>
+<p><strong>推荐系统深度学习模型特点</strong></p>
+<ul>
+<li><strong>读取样本量大</strong>：训练样本在几十TB~几百TB，而CV等场景通常在几百GB以内。</li>
+<li><strong>模型参数量大</strong>：同时有大规模稀疏参数和稠密参数，需要几百GB甚至上TB存储，而CV等场景模型主要是稠密参数，通常在几十GB以内。</li>
+<li><strong>模型计算复杂度相对低一些</strong>：推荐系统模型在GPU上单步执行只需要10~100ms，而CV模型在GPU上单步执行是100~500ms，NLP模型在GPU上单步执行是500ms~1s。</li>
+</ul>
+<p><strong>GPU服务器特点</strong></p>
+<ul>
+<li><strong>GPU卡算力很强，但显存仍有限</strong>：如果要充分发挥GPU算力，需要把GPU计算用到的各种数据提前放置到显存中。而从2016年~2020年，NVIDIA Tesla GPU卡[5]计算能力提升了10倍以上，但显存大小只提升了3倍左右。</li>
+<li><strong>其它维度资源并不是很充足</strong>：相比GPU算力的提升速度，单机的CPU、网络带宽的增长速度较慢，如果遇到这两类资源负荷较重的模型，将无法充分发挥GPU的能力，GPU服务器相比CPU服务器的性价比不会太高。</li>
+</ul>
+<p>总结来说，CV、NLP等场景的模型训练属于计算密集型任务，而且大多模型单张卡的显存都可以装下，这和GPU服务器的优势非常好地进行了匹配。但在推荐系统场景中，由于模型相对没有那么复杂，远端读取的样本量大，特征处理耗费CPU多，给单机CPU和网络带来较大的压力。同时面对模型参数量大的情况，单机的GPU显存是无法放下的。这些GPU服务器的劣势，恰恰都被推荐系统场景命中。</p>
+<p>好在NVIDIA A100 GPU服务器，在硬件上的升级弥补了显存、CPU、带宽这些短板，但如果系统实现和优化不当，依然不会有太高的性价比收益。在落地Booster架构的过程中，我们主要面临如下挑战：</p>
+<ul>
+<li><strong>数据流系统</strong>：如何利用好多网卡、多路CPU，实现高性能的数据流水线，让数据的供给可以跟上GPU的消费速度。</li>
+<li><strong>混合参数计算</strong>：对于大规模稀疏参数，GPU显存直接装不下的情况，如何充分利用GPU高算力、GPU卡间的高带宽，实现一套大规模稀疏参数的计算，同时还需要兼顾稠密参数的计算。</li>
+</ul>
+<h2 id="3-系统设计与实现">3 系统设计与实现</h2>
+<p>面对上面的挑战，如果纯从系统的的角度去设计，难度较大。Booster采用了“算法+系统”Co-design的设计思路，让这代系统的设计大大得到简化。在系统实施路径上，考虑到业务预期交付时间、实施风险，我们并没有一步到位落地Booster的多机多卡版本，而是第一版先落地了GPU单机多卡版本，<strong>本文重点介绍的也是单机多卡的工作</strong>。另外，依托于NVIDIA A100 GPU服务器强大的计算能力，单机的算力可以满足美团绝大多数业务的单次实验需求。</p>
+<h3 id="31-参数规模的合理化">3.1 参数规模的合理化</h3>
+<p>大规模稀疏离散特征的使用，导致深度预估模型的Embedding参数量急剧膨胀，数TB大小的模型一度流行于业界推搜的各大头部业务场景。但是业界很快意识到，在硬件成本有限的情况下，过于庞大的模型给生产部署运维和实验迭代创新增添了沉重的负担。学术研究表明[10-13]，模型效果强依赖于模型的信息容量，并非参数量。实践证明，前者可以通过模型结构的优化来进行提升，而后者在保证效果的前提下，尚存有很大的优化空间。Facebook在2020年提出了Compositional Embedding[14]，实现推荐模型参数规模数个量级的压缩。阿里巴巴也发表了相关工作[15]，将核心业务场景的预估模型由数TB压缩至几十GB甚至更小。总的来看，业界的做法主要有以下几种思路：</p>
+<ul>
+<li><strong>去交叉特征</strong>：交叉特征由单特征间做笛卡尔积产生，这会生成巨大的特征ID取值空间和对应Embedding参数表。深度预估模型发展至今，已经有大量的方法通过模型结构来建模单特征间的交互，避免了交叉特征造成的Embedding规模膨胀，如FM系列[16]、AutoInt[17]、CAN[18]等。</li>
+<li><strong>精简特征</strong>：特别是基于NAS的思路，以较低的训练成本实现深度神经网络自适应特征选择，如Dropout Rank[19]和FSCD[20]等工作。</li>
+<li><strong>压缩Embedding向量数</strong>：对特征取值进行复合ID编码和Embedding映射，以远小于特征取值空间的Embedding向量数，来实现丰富的特征Embedding表达，如Compositional Embedding[14]、Binary Code Hash Embedding[21]等工作。</li>
+<li><strong>压缩Embedding向量维度</strong>：一个特征Embedding向量的维度决定了其表征信息的上限，但是并非所有的特征取值都有那么大的信息量，需要Embedding表达。因此，可以每一个特征值自适应的学习精简Embedding维度，从而压缩参数总量，如AutoDim[22]和AMTL[23]等工作。</li>
+<li><strong>量化压缩</strong>：使用半精度甚至int8等更激进的方式，对模型参数做量化压缩，如DPQ[24]和MGQE[25]。</li>
+</ul>
+<p>美团外卖推荐的模型一度达到100G以上，通过应用以上方案，我们在模型预估精度损失可控的前提下，将模型控制在10GB以下。</p>
+<p>基于这个算法基础假设，我们将<strong>第一阶段的设计目标定义到支持100G以下的参数规模</strong>。这可以比较好的适配A100的显存，存放在单机多卡上，GPU卡间双向带宽600GB/s，可以充分发挥GPU的处理能力，同时也可以满足美团大多数模型的需求。</p>
+<h3 id="32-系统架构">3.2 系统架构</h3>
+<p>基于GPU系统的架构设计，要充分考虑硬件的特性才能充分发挥性能的优势。我们NVIDIA A100服务器的硬件拓扑和NVIDIA DGX A100[6]比较类似，每台服务器包含：2颗CPU，8张GPU，8张网卡。Booster架构的架构图如下所示：</p>
+<p><img src="https://p0.meituan.net/travelcube/8efcb9ba1bb1a0f72f6b35366130192c907575.png" alt="图1 系统架构"></p>
+<p>整个系统主要包括三个核心模块：数据模块，计算模块，通信模块：</p>
+<ul>
+<li><strong>数据模块</strong>：美团自研了一套支持多数据源、多框架的数据分发系统，在GPU系统上，我们改造数据模块支持了多网卡数据下载，以及考虑到NUMA Awareness的特性，在每颗CPU上都部署了一个数据分发服务。</li>
+<li><strong>计算模块</strong>：每张GPU卡启动一个TensorFlow训练进程执行训练。</li>
+<li><strong>通信模块</strong>：我们使用了Horovod[7]来做分布式训练的卡间通信，我们在每个节点上启动一个Horovod进程来执行对应的通信任务。</li>
+</ul>
+<p>上述的设计，符合TensorFlow和Horovod原生的设计范式。几个核心模块可以相互解耦，独立迭代，而且如果合并开源社区的最新特性，也不会对系统造成架构性的冲击。</p>
+<p>我们再来看一下整个系统的简要执行流程，每张GPU卡上启动的TensorFlow进程内部的执行逻辑如下图：</p>
+<p><img src="https://p1.meituan.net/travelcube/d5213c915f8d3e192e8e9987736c8bd2933367.png" alt="图2 进程内部执行逻辑"></p>
+<p>整个训练流程涉及参数存储、优化器、卡间通信等几个关键模块。对于样本的输入特征，我们分为稀疏特征（ID类特征）和稠密特征。在实际业务场景中，稀疏特征通常IDs总量较多，对应的稀疏参数使用HashTable数据结构存储更合适，而且由于参数量较大，GPU单卡显存放不下，我们会通过ID Modulo的方式Partition到多张GPU卡的显存中存放。对于IDs总量较少的稀疏特征，业务通常使用多维矩阵数据结构表达（在TensorFlow里面的数据结构是Variable），由于参数量不大，GPU单卡显存可以放下，我们使用Replica的方式，每张GPU卡的显存都放置一份参数。对于稠密参数，通常使用Variable数据结构，以Replica的方式放置到GPU显存中。下边将详细介绍Booster架构的内部实现。</p>
+<h3 id="33-关键实现">3.3 关键实现</h3>
+<h4 id="331-参数存储">3.3.1 参数存储</h4>
+<p>早在CPU场景的PS架构下，我们就实现了大规模稀疏参数的整套逻辑，现在要把这套逻辑搬到GPU上，首先要实现的就是GPU版本的HashTable。我们调研了业界多种GPU HashTable的实现，如cuDF、cuDPP、cuCollections、WarpCore等，最终选择了基于cuCollections实现TensorFlow版本的GPUHashTable。究其原因，主要是因为实际业务场景中，大规模稀疏特征的总量通常是未知的，并且随时可能出现特征交叉，从而致使稀疏特征的总量变化很大，这就导致“动态扩容”能力将成为我们GPU HashTable的必备功能，能够做到动态扩容的只有cuCollections的实现。我们在cuCollections的GPU HashTable基础上实现了特殊接口（find_or_insert），对大规模读写性能进行了优化，然后封装到了TensorFlow中，并在其上实现了低频过滤的功能，能力上对齐CPU版本的稀疏参数存储模块。</p>
+<h4 id="332-优化器">3.3.2 优化器</h4>
+<p>目前，稀疏参数的优化器与稠密参数的优化器并不兼容，我们在GPU HashTable的基础上，实现了多种稀疏优化器，并且都做了优化器动量Fusion等功能，主要实现了Adam、Adagrad、FTRL、Momentum等优化器。对实际业务场景来说，这些优化器已经能够覆盖到绝大多数业务的使用。稠密部分参数可以直接使用TensorFlow原生支持的稀疏/稠密优化器。</p>
+<h4 id="332-卡间通信">3.3.2 卡间通信</h4>
+<p>实际训练期间，对于不同类型的特征，我们的处理流程也有所不同：</p>
+<ul>
+<li><strong>稀疏特征</strong>（ID类特征，规模较大，使用HashTable存储）：由于每张卡的输入样本数据不同，因此输入的稀疏特征对应的特征向量，可能存放在其他GPU卡上。具体流程上，训练的前向我们通过卡间AllToAll通信，将每张卡的ID特征以Modulo的方式Partition到其他卡中，每张卡再去卡内的GPUHashTable查询稀疏特征向量，然后再通过卡间AllToAll通信，将第一次AllToAll从其他卡上拿到的ID特征以及对应的特征向量原路返回，通过两次卡间AllToAll通信，每张卡样本输入的ID特征都拿到对应的特征向量。训练的反向则会再次通过卡间AllToAll通信，将稀疏参数的梯度以Modulo的方式Partition到其他卡中，每张卡拿到自己的稀疏梯度后再执行稀疏优化器，完成大规模稀疏特征的优化。详细流程如下图所示：</li>
+</ul>
+<p><img src="https://p0.meituan.net/travelcube/9bdc0d9d711b0980579cdc0eac52f8ed564322.png" alt="图3 稀疏特征处理流程"></p>
+<ul>
+<li><strong>稀疏特征</strong>（规模较小，使用Variable存储）：相比使用HashTable的区别，由于每张GPU卡都有全量的参数，直接在卡内查找模型参数即可。在反向聚合梯度的时候，会通过卡间AllGather获取所有卡上的梯度求平均，然后交给优化器执行参数优化。</li>
+<li><strong>稠密特征</strong>：稠密参数也是每张卡都有全量的参数，卡内可以直接获取参数执行训练，最后通过卡间AllReduce聚合多卡的稠密梯度，执行稠密优化器。</li>
+</ul>
+<p>在整个的执行过程中，稀疏参数和稠密参数全部放置在GPU显存中，模型计算也全部在GPU上处理，GPU卡间通信带宽也足够快，能够充分发挥了GPU的强大算力。</p>
+<p>这里小结一下，Booster训练架构，与CPU场景PS架构的核心区别在于：</p>
+<ul>
+<li><strong>训练模式</strong>：PS架构是异步训练模式，Booster架构是同步训练模式。</li>
+<li><strong>参数分布</strong>：PS架构下模型参数都存放在PS内存中，Booster架构下稀疏参数（HashTable）是Partition方式分布在单机八卡中，稠密参数（Variable）是Replica方式存放在每张卡中，因此Booster架构下的Worker角色兼顾了PS架构下PS/Worker角色的功能。</li>
+<li><strong>通信方式</strong>：PS架构下PS/Worker间通信走的是TCP（Grpc/Seastar），Booster架构下Worker间通信走的是NVSwitch（NCCL），任意两卡间双向带宽600GB/s，这也是Booster架构的训练速度取得较大提升的原因之一。</li>
+</ul>
+<p>由于每张卡的输入数据不同，并且模型参数既有在卡间Partition存储的，也有在卡间Replica存储的，因此Booster架构同时存在模型并行、数据并行。此外，由于NVIDIA A100要求CUDA版本&gt;=11.0，而TensorFlow 1.x版本只有NV1.15.4才支持CUDA11.0。美团绝大多数业务场景都还在使用TensorFlow 1.x，因此我们所有改造都是在NV1.15.4版本基础上开发的。</p>
+<p>以上就是Booster整体系统架构及内部执行流程的介绍。下文主要介绍在初步实现的Booster架构的基础上，我们所做的一些性能优化工作。</p>
+<h2 id="4-系统性能优化">4 系统性能优化</h2>
+<p>基于上述的设计实现完第一版系统后，我们发现端到端性能并不是很符合预期，GPU的SM利用率（SM Activity指标）只有10%~20%，相比CPU并没有太大的优势。为了分析架构的性能瓶颈，我们使用NVIDIA Nsight Systems（以下简称nsys）、Perf、uPerf等工具，通过模块化压测、模拟分析等多种分析手段，最终定位到数据层、计算层、通信层等几方面的性能瓶颈，并分别做了相应的性能优化。以下我们将以美团外卖某推荐模型为例，分别从GPU架构的数据层、计算层、通信层，逐个介绍我们所做的性能优化工作。</p>
+<h3 id="41-数据层">4.1 数据层</h3>
+<p>如前文所述，推荐系统的深度学习模型，样本量大，模型相对不复杂，数据I/O本身就是瓶颈点。如果几十台CPU服务器上的数据I/O操作，都要在单台GPU服务器上完成，那么数据I/O的压力会变得更大。我们先看一下在当前系统下的样本数据流程，如下图所示：</p>
+<p><img src="https://p0.meituan.net/travelcube/9c562e709b9a16650143282693af7fe2433914.png" alt="图4 样本数据流程及核心优化点"></p>
+<p><strong>核心流程</strong>：数据分发进程通过网络读取HDFS样本数据（TFRecord格式）到内存中，然后通过共享内存（Shared Memory）的方式把样本数据传输给TensorFlow训练进程。TensrFlow训练进程收到样本数据后，走原生的TensrFlow特征解析逻辑，拿到特征数据后通过GPU MemcpyH2D到GPU显存中。我们通过模块化压测分析发现，数据分发层的样本拉取、TensrFlow层的特征解析以及特征数据MemcpyH2D到GPU等几个流程，都存在较大的性能问题（图中黄色流程所示），以下详细介绍我们在这几块所做的性能优化工作。</p>
+<h4 id="411-样本拉取优化">4.1.1 样本拉取优化</h4>
+<p>样本拉取、组装Batch是由数据分发进程完成的，我们在这里所做的主要优化工作是，首先将数据分发进程通过numactl独立到NUMA内部执行，避免了NUMA间的数据传输；其次，数据下载从单网卡扩充到了多网卡，增大数据下载带宽；最后，数据分发进程与TensrFlow进程之间的传输通道，从单个Shared Memory扩展到每张GPU卡有独立的Shared Memory，避免了单Shared Memory所带来的内存带宽问题，并在TensrFlow内部实现了特征解析时对输入数据零拷贝的能力。</p>
+<h4 id="412-特征解析优化">4.1.2 特征解析优化</h4>
+<p>目前，美团内部绝大多数业务的样本数据都还是TFRecord格式，TFRecord实际上是ProtoBuf（简称PB）格式。PB反序列化非常耗费CPU，其中ReadVarint64Fallback方法CPU占用较为突出，实际profiling结果如下图：</p>
+<p><img src="https://p0.meituan.net/travelcube/6167efbac231d92412920e1f9469a4fb122294.png" alt="图5 样本解析profiling结果"></p>
+<p>究其原因，CTR场景的训练样本通常包含了大量的int64类型的特征，int64在PB中是以Varint64类型数据存储的，ReadVarint64Fallback方法就是用来解析int64类型的特征。普通的int64数据类型需要占用8个字节，而Varint64针对不同的数据范围，使用了变长的存储长度。PB在解析Varint类型数据时，首先要确定当前数据的长度，Varint用7bit存储数据，高位1bit存储标记位，该标记位表示下一个字节是否有效，如果当前字节最高位为0，则说明当前Varint数据在该字节处结束。我们实际业务场景的ID特征大多是经过Hash后的值，用Varint64类型表达会比较长，这也就导致在特征解析过程中要多次判断数据是否结束，以及多次位移和拼接来生成最终数据，这使得CPU在解析过程中存在大量的<strong>分支预测和临时变量</strong>，非常影响性能。以下是4字节Varint的解析流程图：</p>
+<p><img src="https://p0.meituan.net/travelcube/2cb32b444e8f28fd75b1b7f2d55db144143987.png" alt="图6 ProtoBuf Varint解析流程图"></p>
+<p>这个处理流程，非常适合用SIMD指令集批处理优化。以4字节的Varint类型为例，我们的优化流程主要包括两步：</p>
+<ol>
+<li><strong>SIMD寻找最高位</strong>：通过SIMD指令将Varint类型数据的每个字节与0xF0做与运算，找到第一个结果等于0的字节，这个字节就是当前Varint数据的结束位置。</li>
+<li><strong>SIMD处理Varint</strong>：按理来说，通过SIMD指令将Varint数据高位清零后的每个字节依次右移3/2/1/0字节，就可得到最终的int类型数据，但SIMD没有这样的指令。因此，我们通过SIMD指令分别处理每个字节的高4bit、低4bit，完成了这个功能。我们将Varint数据的高低4bit分别处理成int_h4与int_l4，再做或运算，就得到了最终的int类型数据。具体优化流程如下图所示（4字节数据）：</li>
+</ol>
+<p><img src="https://p0.meituan.net/travelcube/4647897f12d8a24bb9f92c72402d2fd5257822.png" alt="图7 ProtoBuf Varint解析优化后流程图"></p>
+<p>对于Varint64类型数据的处理，我们直接分成了两个Varint类型数据来处理。通过这两步的SIMD指令集优化，样本解析速度得到大大提升，在GPU端到端训练速度提升的同时，CPU使用率下降了15%。这里我们主要使用了SSE指令集优化，期间也尝试了AVX等更大长度的指令集，但效果不是很明显，最终并没有使用。此外，SIMD指令集在老的机器上会导致CPU严重降频，因此官方社区并没有引入这个优化，而我们GPU机器的CPU都比较新，完全可以使用SIMD指令集进行优化。</p>
+<h4 id="413-memcpyh2d流水线">4.1.3 MemcpyH2D流水线</h4>
+<p>解析完样本得到特征数据后，需要将特征数据拉到GPU中才能执行模型计算，这里需要通过CUDA的MemcpyH2D操作。我们通过nsys分析这块的性能，发现GPU在执行期间有较多的停顿时间，GPU需要等待特征数据Memcpy到GPU上之后才能执行模型训练，如下图所示：</p>
+<p><img src="https://p0.meituan.net/travelcube/da36727537c0e8c1af88c9914e6bae60107239.png" alt="图8 nsys profiling结果"></p>
+<p>对于GPU系统的数据流，需要提前传输到离GPU处理器最近的显存中，才能发挥GPU的计算能力。我们基于TensorFlow的prefetch功能，实现了GPU版本的PipelineDataset，在计算之前先把数据拷贝到了GPU显存中。需要注意的是CPU内存拷贝到GPU显存这个过程，CPU内存需要使用Pinned Memory，而非原生的Paged Memory，可以加速MemcpyH2D流程。</p>
+<h4 id="414-硬件调优">4.1.4 硬件调优</h4>
+<p>在数据层的性能优化期间，美团内部基础研发平台的服务器组、网络组、操作系统组也帮助我们做了相关的调优：</p>
+<ul>
+<li>在网络传输方面，为了减少网络协议栈处理开销，提高数据拷贝的效率，我们通过优化网卡配置，开启LRO（Large-Receive-Offload）、TC Flower的硬件卸载、Tx-Nocache-Copy等特性，最终网络带宽提升了17%。</li>
+<li>在CPU性能优化方面，经过性能profiling分析，发现内存延迟和带宽是瓶颈。于是我们尝试了3种NPS配置，综合业务场景和NUMA特性，选择了NPS2。此外，结合其他BIOS配置（例如APBDIS，P-state等），可以将内存延迟降低8%，内存带宽提升6%。</li>
+</ul>
+<p>通过上述优化，网络极限带宽提升了80%，在业务需求带宽下GPU的H2D带宽提升了86%。最终在数据解析层面也拿到了10%+的性能收益。</p>
+<p>经过数据层样本拉取、特征解析、MemcpyH2D和硬件的优化，Booster架构端到端训练速度提升了40%，训练性价比达到了CPU的1.4倍，数据层也不再成为当前架构的性能瓶颈。</p>
+<h3 id="42-计算层">4.2 计算层</h3>
+<h4 id="421-embedding流水线">4.2.1 Embedding流水线</h4>
+<p>早在CPU场景做TensorFlow训练性能优化时，我们就已经实现了Embedding Pipeline[1]的功能：我们把整个计算图拆分为Embedding Graph（EG）和Main Graph（MG）两张子图，两者异步独立执行，做到执行上的Overlap（整个拆分过程，可以做到对用户透明）。EG主要覆盖从样本中抽取Embedding Key，查询组装Embedding向量，Embedding向量更新等环节；MG主要包含稠密部分子网络计算、梯度计算、稠密参数部分更新等环节。</p>
+<p><img src="https://p0.meituan.net/travelcube/e52f7c05ca6469e79d56ece19ed8a5e968848.png" alt="图9 Embedding流水线模块交互关系"></p>
+<p>两张子图的交互关系为：EG向MG传递Embedding向量（从MG的视角看，是从一个稠密Variable读取数值），MG向EG传递Embedding参数对应的梯度。上述两个过程的表达都是TensorFlow的计算图，我们利用两个Python线程，两个TensorFlow Session并发的执行两张计算图，使得两个阶段Overlap起来，以此达到了更大的训练吞吐。</p>
+<p>我们把这个流程在GPU架构下也实现了一遍，并在其中加入了卡间同步流程，大规模稀疏特征的AllToAll通信及其反向梯度的AllToAll通信都在EG中执行，普通稀疏特征的反向梯度的卡间AllGather同步、稠密参数的反向梯度的卡间AllReduce同步都在MG中执行。需要注意的是，在GPU场景中，EG、MG是在同一个GPU Stream上执行CUDA Kernel的，我们尝试过EG、MG分别在独立的GPU Stream上执行，性能会变差，深层原因与CUDA底层实现有关，这个问题本身还在等待解决。</p>
+<h4 id="422-算子优化及xla">4.2.2 算子优化及XLA</h4>
+<p>相比CPU层面的优化，GPU上的优化更加复杂。首先对于TensorFlow的算子，还有一些没有GPU的实现，当模型中使用了这些CPU算子，会跟上下游的GPU算子出现内存和显存之间的数据来回拷贝，影响整体性能，我们在GPU上实现了使用较为频繁、影响较大的算子。另外，对于TensorFlow这代框架，算子粒度是非常细的，可以方便用户灵活搭建各种复杂的模型，但这对GPU处理器来说却是一个灾难，大量的Kernel Launch以及访存开销导致不能充分利用GPU算力。对于GPU上的优化，通常有两个方向，手工优化和编译优化。在手工优化方面，我们重新实现了一些常用的算子和层（Unique、DynamicPartition、Gather等）。</p>
+<p>以Unique算子为例，原生TensorFlow的Unique算子要求输出元素的顺序与输入元素的顺序一致，而在实际场景中，我们并不需要这个限制，我们修改了Unique算子的GPU实现，减少了因输出有序导致的额外执行的GPU Kernel。</p>
+<p>在编译优化方面，目前我们主要使用TensorFlow社区提供的XLA[9]来做一些自动优化。原生TensorFlow 1.15中的XLA正常开启可获得10～20%端到端的性能提升。但XLA对算子动态shape不能很好地进行支持，而推荐系统场景的模型中这种情况却非常常见，这就导致XLA加速性能不符合预期，甚至是负优化，因此我们做了如下的缓解工作：</p>
+<ul>
+<li><strong>局部优化</strong>：对于我们手动引入的动态shape算子（如Unique），我们进行了子图标记，不执行XLA编译，XLA只优化可以稳定加速的子图。</li>
+<li><strong>OOM兜底</strong>：XLA会根据算子的type、input type、shape等信息，缓存编译中间结果，避免重复编译。然而由于稀疏场景以及GPU架构实现的特殊性，天然存在Unique、DynamicPartition等Output shape是动态的算子，这就导致这些算子以及连接在这些算子之后的算子，在执行XLA编译时无法命中XLA缓存而重新编译，新的缓存越来越多，而旧的缓存不会被释放，最终导致CPU内存OOM。我们在XLA内部实现了LRUCache，主动淘汰掉旧的XLA缓存，避免OOM的问题。</li>
+<li><strong>Const Memcpy消除</strong>：XLA在使用TF_HLO重写TensorFlow算子时，对一些编译期已固定的数据会打上Const标记，然而这些Const算子的Output只能定义在Host端，为了将Host端的Output送给Device端需要再加一次MemcpyH2D，这就占用了TensorFlow原有的H2D Stream，影响样本数据提前拷贝到GPU端。由于XLA的Const Output在编译期已经固化，因此没有必要每一步都做一次MemcpyH2D，我们将Device端的Output缓存下来，后续使用该Output时，直接从缓存中读取，避免多余的MemcpyH2D。</li>
+</ul>
+<p>对于XLA的优化，确切的来说应该是问题修复，目前能够做到的是GPU场景下可以正常开启XLA，并获得10～20%的训练速度提升。值得一提的是，对于动态shape的算子编译问题，美团内部基础研发机器学习平台/深度学习编译器团队已经有了彻底的解决方案，后续我们会联合解决这个问题。</p>
+<p>经过计算层的Embedding流水线、XLA相关优化，Booster架构端到端训练速度提升了60%，GPU单机八卡训练性价比达到同等资源下CPU的2.2倍。</p>
+<h3 id="43-通信层">4.3 通信层</h3>
+<p>在单机多卡训练过程中，我们通过Nsight Systems分析发现，卡间通信耗时占比非常高，而且在此期间GPU使用率也非常低，如下图所示：</p>
+<p><img src="https://p0.meituan.net/travelcube/f180e6847a8ba052e26a945569e495d0194648.png" alt="图10 nsys profiling结果"></p>
+<p>从图中可以看出，训练期间卡间通信耗时比较长，同时在通信期间GPU使用率也非常低，卡间通信是影响训练性能提升的关键瓶颈点。我们对通信过程进行拆解打点后发现，卡间通信（AllToAll、AllReduce、AllGather等）协商的时间远远高于数据传输的时间：</p>
+<p><img src="https://p0.meituan.net/travelcube/8660a22687ab0653124548d14831b16b48964.png" alt="图11 Horovod timeline结果"></p>
+<p>分析具体原因，以负责大规模稀疏参数通信的AllToAll为例，我们通过Nsight Systems工具，观察到通信协商时间长主要是由于某张卡上的算子执行时间比较晚导致的。由于TensorFlow算子调度并不是严格有序，同一个特征的embedding_lookup算子，在不同卡上真正执行的时间点也不尽相同，某张卡上第一个执行embedding_lookup算子在另一张卡上可能是最后一个执行，因此我们怀疑不同卡上算子调度的不一致性，导致了各张卡发起通信的时刻不同，并最终导致了通信协商时间过长。我们通过几组模拟实验也论证了确实是由算子调度导致的。对于这个问题，最直接的想法是改造TensorFlow计算图的核心调度算法，但这个问题在学术界也一直是一个复杂的问题。我们换了一种思路，通过融合关键的算子，来缓解这个问题，通过统计，我们选择了HashTable和Variable相关的算子。</p>
+<h4 id="431-hashtable相关算子融合">4.3.1 HashTable相关算子融合</h4>
+<p>我们设计和实现了一个图优化过程，这个过程会自动地将图中可以合并的HashTable及对应的embedding_lookup过程进行合并，合并策略上主要将embedding_size相同的HashTable合并到一块。同时为了避免HashTable合并之后原始特征之间发生ID冲突，我们引入了自动统一特征编码的功能，对不同的原始特征分别加上不同的偏移量，归入不同的特征域，实现了训练时的统一特征编码。</p>
+<p>我们在某实际业务模型上进行测试，该图优化将38张HashTable合并成为了2张HashTable，将38次embedding_lookup合并成了2次，这将EmbeddingGraph中的embedding_lookup相关算子数量减少了90%，卡间同步通信次数减少了90%。此外，算子合并之后，embedding_lookup中的GPU算子也发生了合并，减少了Kernel Launch次数，使得EmbeddingGraph的执行速度变得更快。</p>
+<h4 id="432-variable相关算子融合">4.3.2 Variable相关算子融合</h4>
+<p>类似于HashTable Fusion的优化思路，我们观察到业务模型中通常包含数十至数百个TensorFlow原生的Variable，这些Variable在训练期间梯度需要做卡间同步，同样的，Variable数量太多导致卡间同步的协商时间变长。我们通过Concat/Split算子，将所有的Trainable Variables自动合并到一起，使得整个MG的反向只产生几个梯度Tensor，大大减少了卡间同步的次数。同时，做完Variable Fusion之后，优化器中实际执行的算子数量也大大减少，加快了计算图本身的执行速度。</p>
+<p>需要注意的是，TensorFlow的Variable分为两种，一种是每个Step全部参数值都参与训练的Dense Variable，如MLP的Weight；另一种是专门用于embedding_lookup的Variable，每个Step只有部分值参与训练，我们称之为Sparse Variable。对于前者，做Variable合并不会影响到算法效果。而对于后者，它反向梯度是IndexedSlices对象，卡间同步默认走的是AllGather通信，如果业务模型中对于Sparse Variables的优化采用的是Lazy优化器，即每个Step只优化更新Variable中的某些行，此时对Sparse Variables做合并，会导致其反向梯度从IndexedSlices对象转为Tensor对象，卡间同步变成AllReduce过程，就可能会影响到算法效果。对于这种情况，我们提供了一个开关，由业务去控制是否合并Sparse Variables。经过我们的实测，在某推荐模型上合并Sparse Variables会提高5～10%的训练性能，而对实际业务效果的影响在一个千分点以内。</p>
+<p>这两种算子融合的优化，不仅优化了卡间通信性能，对卡内计算性能也有一定的提升。经过这两种算子融合的优化，GPU架构端到端训练速度提升了85%，同时不影响业务算法的效果。</p>
+<h3 id="44-性能指标">4.4 性能指标</h3>
+<p>完成了数据层、计算层、通信层的性能优化后，对比我们的TensorFlow[3] CPU场景，GPU架构取得了2～4倍的性价比收益（不同业务模型收益不同）。我们基于美团外卖某推荐模型，使用单台GPU节点（A100单机八卡）和同成本的CPU Cluster，分别对比了原生TensorFlow 1.15和我们优化后的TensorFlow 1.15的训练性能，具体数据如下：</p>
+<p><img src="https://p0.meituan.net/travelcube/c01c486eb2e1060d4aa28590e505f63541179.png" alt="图12 CPU/GPU训练吞吐对比"></p>
+<p>可以看到，我们优化后的TensorFlow GPU架构训练吞吐，是原生TensorFlow GPU的3倍以上，是优化后TensorFlow CPU场景的4倍以上。</p>
+<p>注：原生TensorFlow使用了tf.Variable作为Embedding的参数存储。</p>
+<h2 id="5-业务落地">5 业务落地</h2>
+<p>Booster架构要在业务生产中落地，不只是要有一个良好的系统性能，还需要同时关注训练生态系统的完备性以及训练产出模型的效果。</p>
+<h3 id="51-完备性">5.1 完备性</h3>
+<p>一次完整的模型训练实验，除了要跑训练（Train）任务外，往往还需要跑模型的效果评估（Evaluate）或模型的预估（Predict）任务。我们基于TensorFlow Estimator范式对训练架构进行封装，实现用户侧一套代码统一支持GPU和CPU场景下的Train、Evaluate和Predict任务，通过开关进行灵活切换，用户只需要关注模型代码本身的开发。我们将架构改动全都封装到了引擎内部，用户只需要一行代码就能从CPU场景迁移到GPU架构：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span> tf<span style="color:#719e07">.</span>enable_gpu_booster()
+</span></span></code></pre></div><p>实际业务场景，用户通常会使用train_and_evaluate模式，在跑训练任务的过程中同时评估模型效果。上了Booster架构后，由于训练跑的太快，导致Evaluate速度跟不上训练正常产出Checkpoint的速度。我们在GPU训练架构的基础上，支持了Evaluate on GPU的能力，业务可以申请一颗A100 GPU专门用来做Evaluate，单颗GPU做Evaluate的速度是CPU场景下单个Evaluate进程的40倍。同时，我们也支持了Predict on GPU的能力，单机八卡Predict的速度是同等成本下CPU的3倍。</p>
+<p>此外，我们在任务资源配置上也提供了比较完善的选项。在单机八卡（A100单台机器至多配置8张卡）的基础上，我们支持了单机单卡、双卡、四卡任务，并打通了单机单卡/双卡/四卡/八卡/CPU PS架构的Checkpoint，使得用户能够在这几种训练模式间自由切换、断点续训，方便用户选择合理的资源类型、资源量跑实验，同时业务也能够从已有模型的Checkpoint来WarmStart训练新的模型。</p>
+<h3 id="52-训练效果">5.2 训练效果</h3>
+<p>相较PS/Worker异步模式的CPU训练，单机多卡训练时卡间是全同步的，因而避免了异步训练梯度更新延迟对训练效果的影响。然而，由于同步模式下每一步迭代的实际Batch Size是每张卡样本数的总和，并且为了充分利用A100卡的算力，我们会将每张卡的Batch Size（单步迭代的样本数）尽量调大。这使得实际训练的Batch Size（1万~10万）比PS/Worker异步模式（1千~1万）大很多。我们需要面临大Batch下训练超参调优的问题[26,27]：在保证Epoch不变的前提下，扩大Batch Size会导致参数有效更新次数减少，可能导致模型训练的效果变差。</p>
+<p>我们采用Linear Scaling Rule[28]的原则指导调整学习率。如果训练Batch Size较PS/Worker模式的Batch Size增大N倍，将学习率也放大N倍即可。这种方式简单便于操作，实践效果还不错。当然需要注意的是，如果原有训练方式的学习率已经很激进时，大Batch Size训练学习率的调整幅度则需要适当减小，或者使用学习率Warmup等更复杂的训练策略[29]。我们会在后续工作中对超参优化模式做更深入的探索。</p>
+<h2 id="6-总结与展望">6 总结与展望</h2>
+<p>在美团推荐系统训练场景，随着模型越来越复杂，CPU上优化的边际效应越来越低。美团基于内部深度定制的TensorFlow、NVIDIA HugeCTR，研发了Booster GPU训练架构。整体设计充分考虑算法、架构、新硬件的特性，并从数据、计算、通信等多个角度深度优化，对比之前CPU的任务，性价比提升到2~4倍。从功能和完备性上支持TensorFlow的各类训练接口（Train/Evaluate/Rredict等)，支持CPU和GPU模型相互导入。易用性上TensorFlow CPU任务只需要一行代码就可完成GPU架构迁移。目前在美团外卖推荐场景实现了大规模的投产应用，后续我们将会全面推广到到家搜索推荐技术部以及美团全业务线。</p>
+<p>当然，Booster基于NVIDIA A100单机多卡还有不少优化空间，如数据层面的样本压缩、序列化、特征解析，计算层面的多图算子调度、动态shape算子的编译优化，通信层面的量化通信等等。同时为了更广泛的支持美团内的业务模型，Booster的下一个版本也会支持更大的模型，以及多机多卡的GPU训练。</p>
+<h2 id="7-作者简介">7 作者简介</h2>
+<p>家恒、国庆、峥少、晓光、鹏鹏、永宇、俊文、正阳、瑞东、翔宇、秀峰、王庆、封宇、事峰、黄军等，来自美团基础研发平台-机器学习平台训练引擎&amp;到家研发平台-搜索推荐技术部Booster联合项目组。</p>
+<h2 id="8-参考文献">8 参考文献</h2>
+<ul>
+<li>[1] <a href="https://tech.meituan.com/2021/12/09/meituan-tensorflow-in-recommender-systems.html">https://tech.meituan.com/2021/12/09/meituan-tensorflow-in-recommender-systems.html</a></li>
+<li>[2] <a href="https://images.nvidia.cn/aem-dam/en-zz/Solutions/data-center/nvidia-ampere-architecture-whitepaper.pdf">https://images.nvidia.cn/aem-dam/en-zz/Solutions/data-center/nvidia-ampere-architecture-whitepaper.pdf</a></li>
+<li>[3] <a href="https://www.usenix.org/system/files/conference/osdi14/osdi14-paper-li_mu.pdf">https://www.usenix.org/system/files/conference/osdi14/osdi14-paper-li_mu.pdf</a></li>
+<li>[4] <a href="https://github.com/NVIDIA-Merlin/HugeCTR">https://github.com/NVIDIA-Merlin/HugeCTR</a></li>
+<li>[5] <a href="https://en.wikipedia.org/wiki/Nvidia_Tesla">https://en.wikipedia.org/wiki/Nvidia_Tesla</a></li>
+<li>[6] <a href="https://www.nvidia.com/en-us/data-center/dgx-a100/">https://www.nvidia.com/en-us/data-center/dgx-a100</a></li>
+<li>[7] <a href="https://github.com/horovod/horovod">https://github.com/horovod/horovod</a></li>
+<li>[8] <a href="https://github.com/NVIDIA/nccl">https://github.com/NVIDIA/nccl</a></li>
+<li>[9] <a href="https://www.tensorflow.org/xla">https://www.tensorflow.org/xla</a></li>
+<li>[10] Yann LeCun, John S. Denker, and Sara A. Solla. Optimal brain damage. In NIPS, pp. 598–605. Morgan Kaufmann, 1989.</li>
+<li>[11] Kenji Suzuki, Isao Horiba, and Noboru Sugie. A simple neural network pruning algorithm with application to filter synthesis. Neural Process. Lett., 13(1):43–53, 2001.</li>
+<li>[12] Suraj Srinivas and R. Venkatesh Babu. Data-free parameter pruning for deep neural networks. In BMVC, pp. 31.1–31.12. BMVA Press, 2015.</li>
+<li>[13] Jonathan Frankle and Michael Carbin. The lottery ticket hypothesis: Finding sparse, trainable neural networks. In 7th International Conference on Learning Representations, ICLR 2019, New Orleans, LA, USA, May 6-9, 2019. OpenReview.net, 2019.</li>
+<li>[14] Hao-Jun Michael Shi, Dheevatsa Mudigere, Maxim Naumov, and Jiyan Yang. Compositional embeddings using complementary partitions for memory-efficient recommendation systems. In Proceedings of the 26th ACM SIGKDD International Conference on Knowledge Discovery &amp; Data Mining, pp. 165-175. 2020.</li>
+<li>[15] <a href="https://mp.weixin.qq.com/s/fOA_u3TYeSwAeI6C9QW8Yw">https://mp.weixin.qq.com/s/fOA_u3TYeSwAeI6C9QW8Yw</a></li>
+<li>[16] Jianxun Lian, Xiaohuan Zhou, Fuzheng Zhang, Zhongxia Chen, Xing Xie, and Guangzhong Sun. 2018. xDeepFM: Combining Explicit and Implicit Feature Interactions for Recommender Systems. arXiv preprint arXiv:1803.05170 (2018).</li>
+<li>[17] Weiping Song, Chence Shi, Zhiping Xiao, Zhijian Duan, Yewen Xu, Ming Zhang, and Jian Tang. Autoint: Automatic feature interaction learning via self-attentive neural networks. In Proceedings of the 28th ACM International Conference on Information and Knowledge Management, pp. 1161-1170. 2019.</li>
+<li>[18] Guorui Zhou, Weijie Bian, Kailun Wu, Lejian Ren, Qi Pi, Yujing Zhang, Can Xiao et al. CAN: revisiting feature co-action for click-through rate prediction. arXiv preprint arXiv:2011.05625 (2020).</li>
+<li>[19] Chun-Hao Chang, Ladislav Rampasek, and Anna Goldenberg. Dropout feature ranking for deep learning models. arXiv preprint arXiv:1712.08645 (2017).</li>
+<li>[20] Xu Ma, Pengjie Wang, Hui Zhao, Shaoguo Liu, Chuhan Zhao, Wei Lin, Kuang-Chih Lee, Jian Xu, and Bo Zheng. Towards a Better Tradeoff between Effectiveness and Efficiency in Pre-Ranking: A Learnable Feature Selection based Approach. In Proceedings of the 44th International ACM SIGIR Conference on Research and Development in Information Retrieval, pp. 2036-2040. 2021.</li>
+<li>[21] Bencheng Yan, Pengjie Wang, Jinquan Liu, Wei Lin, Kuang-Chih Lee, Jian Xu, and Bo Zheng. Binary Code based Hash Embedding for Web-scale Applications. In Proceedings of the 30th ACM International Conference on Information &amp; Knowledge Management, pp. 3563-3567. 2021.</li>
+<li>[22] Xiangyu Zhao, Haochen Liu, Hui Liu, Jiliang Tang, Weiwei Guo, Jun Shi, Sida Wang, Huiji Gao, and Bo Long. Autodim: Field-aware embedding dimension searchin recommender systems. In Proceedings of the Web Conference 2021, pp. 3015-3022. 2021.</li>
+<li>[23] Bencheng Yan, Pengjie Wang, Kai Zhang, Wei Lin, Kuang-Chih Lee, Jian Xu, and Bo Zheng. Learning Effective and Efficient Embedding via an Adaptively-Masked Twins-based Layer. In Proceedings of the 30th ACM International Conference on Information &amp; Knowledge Management, pp. 3568-3572. 2021.</li>
+<li>[24] Ting Chen, Lala Li, and Yizhou Sun. Differentiable product quantization for end-to-end embedding compression. In International Conference on Machine Learning, pp. 1617-1626. PMLR, 2020.</li>
+<li>[25] Wang-Cheng Kang, Derek Zhiyuan Cheng, Ting Chen, Xinyang Yi, Dong Lin, Lichan Hong, and Ed H. Chi. Learning multi-granular quantized embeddings for large-vocab categorical features in recommender systems. In Companion Proceedings of the Web Conference 2020, pp. 562-566. 2020.</li>
+<li>[26] Nitish Shirish Keskar, Dheevatsa Mudigere, Jorge Nocedal, Mikhail Smelyanskiy, and Ping Tak Peter Tang. On large-batch training for deep learning: Generalization gap and sharp minima. arXiv preprint arXiv:1609.04836 (2016).</li>
+<li>[27] Elad Hoffer, Itay Hubara, and Daniel Soudry. Train longer, generalize better: closing the generalization gap in large batch training of neural networks. Advances in neural information processing systems 30 (2017).</li>
+<li>[28] Priya Goyal, Piotr Dollár, Ross Girshick, Pieter Noordhuis, Lukasz Wesolowski, Aapo Kyrola, Andrew Tulloch, Yangqing Jia, and Kaiming He. Accurate, large minibatch sgd: Training imagenet in 1 hour. arXiv preprint arXiv:1706.02677 (2017).</li>
+<li>[29] Chao Peng, Tete Xiao, Zeming Li, Yuning Jiang, Xiangyu Zhang, Kai Jia, Gang Yu, and Jian Sun. Megdet: A large mini-batch object detector. In Proceedings of the IEEE conference on Computer Vision and Pattern Recognition, pp. 6181-6189. 2018.</li>
+</ul>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F">美团技术团队</a></li>
+								
+								<li><a href="/tags/%E5%9F%BA%E7%A1%80%E7%A0%94%E5%8F%91%E5%B9%B3%E5%8F%B0">基础研发平台</a></li>
+								
+								<li><a href="/tags/%E5%90%8E%E5%8F%B0">后台</a></li>
+								
+								<li><a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a></li>
+								
+								<li><a href="/tags/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F">推荐系统</a></li>
+								
+								<li><a href="/tags/tensorflow">TensorFlow</a></li>
+								
+								<li><a href="/tags/gpu">GPU</a></li>
+								
+								<li><a href="/tags/training">Training</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'wfsui';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="">Wfsui theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div><script>feather.replace()</script>
+</body>
+</html>

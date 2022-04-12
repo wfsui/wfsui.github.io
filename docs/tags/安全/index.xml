@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>安全 on 大峰哥</title>
+    <link>https://wfsui.github.io/tags/%E5%AE%89%E5%85%A8/</link>
+    <description>Recent content in 安全 on 大峰哥</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Tue, 12 Apr 2022 11:50:20 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%AE%89%E5%85%A8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux中基于eBPF的恶意利用与检测机制</title>
+      <link>https://wfsui.github.io/posts/linux%E4%B8%AD%E5%9F%BA%E4%BA%8Eebpf%E7%9A%84%E6%81%B6%E6%84%8F%E5%88%A9%E7%94%A8%E4%B8%8E%E6%A3%80%E6%B5%8B%E6%9C%BA%E5%88%B6/</link>
+      <pubDate>Tue, 12 Apr 2022 11:50:20 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/linux%E4%B8%AD%E5%9F%BA%E4%BA%8Eebpf%E7%9A%84%E6%81%B6%E6%84%8F%E5%88%A9%E7%94%A8%E4%B8%8E%E6%A3%80%E6%B5%8B%E6%9C%BA%E5%88%B6/</guid>
+      <description>前言 近几年，云原生领域飞速发展，K8s成为公认的云操作系统。容器的高频率部署、短暂的生命周期、复杂的网络路由，都给内核安全带来了新的挑战。系统内核面对的复杂性在不断增长，在满足性能、可扩展性等新需求的同时，还需要保障系统稳定可用，这是极其困难的事情。此时，eBPF出现，它以较小的子系统改动，保障了系统内核的稳定，还具备实时动态加载的特性，能将业务逻辑加载到内核，实现热更新的动态执行。
+eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCanne和Van Jacobson提出，1997年引入Linux Kernel 2.1，3.0中增加了即时编译器，应用在网络过滤领域。2014年Alexei Starovoitov实现了eBPF并扩展到用户空间，威力更大。常用的TCPDUMP&amp;amp;LIBPCAP就是基于它。在Linux Kernel 4.x中，扩展了内核态函数、用户态函数、跟踪点、性能事件（perf_events）以及安全控制等事件类型。尤其是近几年云原生快速发展，也带动了eBPF的繁荣。微软、Google、Facebook等企业成立eBPF基金会，Cilium公司也发布了基于eBPF技术实现的网络产品。不过，在eBPF技术带动新业务快速发展的同时，也带来了安全威胁。
+现状分析 我们可以从一些海外资料和国内资料中可以看到，eBPF在解决很多技术难题的同时，也被很多非法的组织和机构恶意利用。
+海外资料 Black Hat
+在Black Hat 2021的峰会中，Datadog工程师Guillaume Fournier带来主题为《With Friends Like eBPF, Who Needs Enemies?</description>
+    </item>
+    
+  </channel>
+</rss>

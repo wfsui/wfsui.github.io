@@ -5,6 +5,7 @@ go 1.17
 require (
 	github.com/antchfx/htmlquery v1.2.4
 	github.com/mattn/godown v0.0.2-0.20211008172519-aa55d034e1f9
+	gopkg.in/yaml.v2 v2.4.0
 )
 
 require (

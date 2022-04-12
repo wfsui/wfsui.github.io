@@ -1,0 +1,13 @@
+subscribe:
+  美团技术团队:
+    - link: https://tech.meituan.com
+      hrefs: //h2[contains(@class, 'post-title')]//a/@href
+  收藏:
+    - link: https://tech.meituan.com/2019/02/28/java-dynamic-trace.html
+    - link: https://tech.meituan.com/2019/02/14/talk-about-java-magic-class-unsafe.html
+
+source:
+  tech.meituan.com:
+    title: //h1[contains(@class, 'post-title')]
+    content: //div[contains(@class, 'content')]
+    tags: //span[contains(@class, 'tag-links')]//a

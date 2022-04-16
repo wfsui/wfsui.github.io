@@ -2,7 +2,7 @@ name: article gen
 
 on:
   schedule:
-    - cron: '15 10 * * *'
+    - cron: '38 2 * * *'
 
 jobs:
 

@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Tue, 12 Apr 2022 11:50:26 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%90%8E%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 16 Apr 2022 03:11:35 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%90%8E%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Java魔法类：Unsafe应用解析</title>
       <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Tue, 12 Apr 2022 11:50:26 +0000</pubDate>
+      <pubDate>Sat, 16 Apr 2022 03:11:35 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
       <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
@@ -23,7 +23,7 @@ public final class Unsafe {  // 单例对象  private static final Unsafe theUns
     <item>
       <title>TensorFlow在推荐系统中的分布式训练优化实践</title>
       <link>https://wfsui.github.io/posts/tensorflow%E5%9C%A8%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 12 Apr 2022 11:50:26 +0000</pubDate>
+      <pubDate>Sat, 16 Apr 2022 03:11:34 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/tensorflow%E5%9C%A8%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景 TensorFlow（下文简称TF）是谷歌推出的一个开源深度学习框架，在美团推荐系统场景中得到了广泛的使用。但TensorFlow官方版本对工业级场景的支持，目前做得并不是特别的完善。美团在大规模生产落地的过程中，遇到了以下几方面的挑战：
@@ -33,9 +33,22 @@ public final class Unsafe {  // 单例对象  private static final Unsafe theUns
     </item>
     
     <item>
+      <title>广告平台化的探索与实践 | 美团外卖广告工程实践专题连载</title>
+      <link>https://wfsui.github.io/posts/%E5%B9%BF%E5%91%8A%E5%B9%B3%E5%8F%B0%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E4%B8%93%E9%A2%98%E8%BF%9E%E8%BD%BD/</link>
+      <pubDate>Sat, 16 Apr 2022 03:11:32 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E5%B9%BF%E5%91%8A%E5%B9%B3%E5%8F%B0%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E4%B8%93%E9%A2%98%E8%BF%9E%E8%BD%BD/</guid>
+      <description>1 前言 美团外卖已经成为公司最为重要的业务之一，而商业变现又是整个外卖生态重要的组成部分。经过多年的发展，广告业务覆盖了Feed流形式的列表广告，针对KA以及大商家的展示广告，根据用户查询Query的搜索广告，以及一些创新场景的创新广告等多个产品线，并对应十几个细分的业务场景。
+从技术层面而言，一次广告请求的过程，可以分为以下几个主要步骤：广告的触发、召回、精排、创意优选、机制策略等过程。如下图所示：即通过触发得到用户的意图，再通过召回得到广告候选集，通过预估对候选集的店铺打分、排序，再对于Top的店铺再进行创意的选择，最后经过一些机制策略得到广告结果。
+2 现状分析 在业务迭代的过程中，随着新业务场景的不断接入，以及原有业务场景功能的不断迭代，系统变得越来越复杂，业务迭代的需求响应逐渐变慢。在业务发展前期，开展过单个模块的架构重构，如机制策略、召回服务，虽然对于效率提升有一定的改善，但是还会存在以下一些问题：
+ 业务逻辑复用度低：广告业务逻辑比较复杂，比如机制服务模块，它主要功能是为广告的控制中枢以及广告的出价和排序的机制提供决策，线上支持十几个业务场景，每种场景都存在很多差异，比如会涉及多种召回、计费模式、排序方案、出价机制、预算控制等等。此外，还有大量业务自定义的逻辑，由于相关逻辑是算法和业务迭代的重点，因此开发人员较多，并且分布在不同的工程和策略组内，导致业务逻辑抽象粒度标准不够统一，使得不同场景不同业务之间复用程度较低。 学习成本高：由于代码复杂，新同学熟悉代码成本较高，上手较难。此外，线上服务很早就进行了微服务改造，线上模块数量超过20个，由于历史原因，导致多个不同模块使用的框架差异较大，不同模块之间的开发有一定的学习成本。在跨模块的项目开发中，一位同学很难独立完成，这使得人员效率没有得到充分利用。 PM（产品经理）信息获取难：由于目前业务场景较多、逻辑复杂，对于信息的获取，绝大多数同学很难了解业务的所有逻辑。PM在产品设计阶段需要确认相关逻辑时，只能让研发同学先查看代码，再进行逻辑的确认，信息获取较难。此外，由于PM对相关模块的设计逻辑不清楚，往往还需要通过找研发人员线下进行询问，影响双方的工作效率。 QA（测试）评估难：QA在功能范围评估时，完全依赖于研发同学的技术方案，且大多数也是通过沟通来确认功能改动涉及的范围和边界，在影响效率的同时，还很容易出现“漏测”的问题。  3 目标 针对以上的问题，我们从2020年初，启动美团外卖广告引擎平台化项目，旨在通过平台化的项目达成以下目标。
+ 提升产研效率  高功能复用度，提升开发效率。 降低研发人员（RD）、PM、QA之间的协作成本，提升产研协作的效率。   提升交付质量  精确QA测试的范围，提升交付的质量。 对业务进行赋能。   PM可通过可视化的平台化页面，了解其他产品线的能力，互相赋能，助力产品迭代。  4 整体设计 4.</description>
+    </item>
+    
+    <item>
       <title>美团集群调度系统的云原生实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%BA%91%E5%8E%9F%E7%94%9F%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 12 Apr 2022 11:50:24 +0000</pubDate>
+      <pubDate>Sat, 16 Apr 2022 03:11:32 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%BA%91%E5%8E%9F%E7%94%9F%E5%AE%9E%E8%B7%B5/</guid>
       <description>导语 集群调度系统在企业数据中心中占有举足轻重的地位，随着集群规模与应用数量的不断激增，开发者处理业务问题的复杂度也显著提升。如何解决大规模集群管理的难题，设计优秀且合理的集群调度系统，做到保稳定，降成本，提效率？本文将会逐一进行解答。
@@ -48,22 +61,9 @@ public final class Unsafe {  // 单例对象  private static final Unsafe theUns
     </item>
     
     <item>
-      <title>广告平台化的探索与实践 | 美团外卖广告工程实践专题连载</title>
-      <link>https://wfsui.github.io/posts/%E5%B9%BF%E5%91%8A%E5%B9%B3%E5%8F%B0%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E4%B8%93%E9%A2%98%E8%BF%9E%E8%BD%BD/</link>
-      <pubDate>Tue, 12 Apr 2022 11:50:23 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E5%B9%BF%E5%91%8A%E5%B9%B3%E5%8F%B0%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E4%B8%93%E9%A2%98%E8%BF%9E%E8%BD%BD/</guid>
-      <description>1 前言 美团外卖已经成为公司最为重要的业务之一，而商业变现又是整个外卖生态重要的组成部分。经过多年的发展，广告业务覆盖了Feed流形式的列表广告，针对KA以及大商家的展示广告，根据用户查询Query的搜索广告，以及一些创新场景的创新广告等多个产品线，并对应十几个细分的业务场景。
-从技术层面而言，一次广告请求的过程，可以分为以下几个主要步骤：广告的触发、召回、精排、创意优选、机制策略等过程。如下图所示：即通过触发得到用户的意图，再通过召回得到广告候选集，通过预估对候选集的店铺打分、排序，再对于Top的店铺再进行创意的选择，最后经过一些机制策略得到广告结果。
-2 现状分析 在业务迭代的过程中，随着新业务场景的不断接入，以及原有业务场景功能的不断迭代，系统变得越来越复杂，业务迭代的需求响应逐渐变慢。在业务发展前期，开展过单个模块的架构重构，如机制策略、召回服务，虽然对于效率提升有一定的改善，但是还会存在以下一些问题：
- 业务逻辑复用度低：广告业务逻辑比较复杂，比如机制服务模块，它主要功能是为广告的控制中枢以及广告的出价和排序的机制提供决策，线上支持十几个业务场景，每种场景都存在很多差异，比如会涉及多种召回、计费模式、排序方案、出价机制、预算控制等等。此外，还有大量业务自定义的逻辑，由于相关逻辑是算法和业务迭代的重点，因此开发人员较多，并且分布在不同的工程和策略组内，导致业务逻辑抽象粒度标准不够统一，使得不同场景不同业务之间复用程度较低。 学习成本高：由于代码复杂，新同学熟悉代码成本较高，上手较难。此外，线上服务很早就进行了微服务改造，线上模块数量超过20个，由于历史原因，导致多个不同模块使用的框架差异较大，不同模块之间的开发有一定的学习成本。在跨模块的项目开发中，一位同学很难独立完成，这使得人员效率没有得到充分利用。 PM（产品经理）信息获取难：由于目前业务场景较多、逻辑复杂，对于信息的获取，绝大多数同学很难了解业务的所有逻辑。PM在产品设计阶段需要确认相关逻辑时，只能让研发同学先查看代码，再进行逻辑的确认，信息获取较难。此外，由于PM对相关模块的设计逻辑不清楚，往往还需要通过找研发人员线下进行询问，影响双方的工作效率。 QA（测试）评估难：QA在功能范围评估时，完全依赖于研发同学的技术方案，且大多数也是通过沟通来确认功能改动涉及的范围和边界，在影响效率的同时，还很容易出现“漏测”的问题。  3 目标 针对以上的问题，我们从2020年初，启动美团外卖广告引擎平台化项目，旨在通过平台化的项目达成以下目标。
- 提升产研效率  高功能复用度，提升开发效率。 降低研发人员（RD）、PM、QA之间的协作成本，提升产研协作的效率。   提升交付质量  精确QA测试的范围，提升交付的质量。 对业务进行赋能。   PM可通过可视化的平台化页面，了解其他产品线的能力，互相赋能，助力产品迭代。  4 整体设计 4.</description>
-    </item>
-    
-    <item>
       <title>GPU在外卖场景精排模型预估中的应用实践</title>
       <link>https://wfsui.github.io/posts/gpu%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%B2%BE%E6%8E%92%E6%A8%A1%E5%9E%8B%E9%A2%84%E4%BC%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 12 Apr 2022 11:50:22 +0000</pubDate>
+      <pubDate>Sat, 16 Apr 2022 03:11:31 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/gpu%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%B2%BE%E6%8E%92%E6%A8%A1%E5%9E%8B%E9%A2%84%E4%BC%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 前言 近些年，随着机器学习技术的蓬勃发展，以GPU为代表的一系列专用芯片以优越的高性能计算能力和愈发低廉的成本，在机器学习领域得到广泛认可和青睐，且与传统的CPU体系不断融合，形成了新的异构硬件生态。
@@ -81,7 +81,7 @@ public final class Unsafe {  // 单例对象  private static final Unsafe theUns
     <item>
       <title>Java系列 | 远程热部署在美团的落地实践</title>
       <link>https://wfsui.github.io/posts/java%E7%B3%BB%E5%88%97-%E8%BF%9C%E7%A8%8B%E7%83%AD%E9%83%A8%E7%BD%B2%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E8%90%BD%E5%9C%B0%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 12 Apr 2022 11:50:21 +0000</pubDate>
+      <pubDate>Sat, 16 Apr 2022 03:11:30 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/java%E7%B3%BB%E5%88%97-%E8%BF%9C%E7%A8%8B%E7%83%AD%E9%83%A8%E7%BD%B2%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E8%90%BD%E5%9C%B0%E5%AE%9E%E8%B7%B5/</guid>
       <description>Sonic是美团内部研发设计的一款用于热部署的IDEA插件，本文其实现原理及落地的一些技术细节。在阅读本文之前，建议大家先熟悉一下Spring源码、Spring MVC 源码 、Spring Boot源码 、Agent字节码增强、Javassist、Classloader等相关知识。
@@ -94,7 +94,7 @@ public final class Unsafe {  // 单例对象  private static final Unsafe theUns
     <item>
       <title>TensorFlow在美团外卖推荐场景的GPU训练优化实践</title>
       <link>https://wfsui.github.io/posts/tensorflow%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E7%9A%84gpu%E8%AE%AD%E7%BB%83%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 12 Apr 2022 11:50:21 +0000</pubDate>
+      <pubDate>Sat, 16 Apr 2022 03:11:30 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/tensorflow%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E7%9A%84gpu%E8%AE%AD%E7%BB%83%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景 在推荐系统训练场景中，美团内部深度定制的TenorFlow（简称TF）版本[1]，通过CPU算力支撑了美团内部大量的业务。但随着业务的发展，模型单次训练的样本量越来越多，结构也变得越来越复杂。以美团外卖推荐的精排模型为例，单次训练的样本量已达百亿甚至千亿，一次实验要耗费上千核，且优化后的训练任务CPU使用率已达90%以上。为了支持业务的高速发展，模型迭代实验的频次和并发度都在不断增加，进一步增加了算力使用需求。在预算有限的前提下，如何以较高的性价比来实现高速的模型训练，从而保障高效率的模型研发迭代，是我们迫切需要解决的问题。

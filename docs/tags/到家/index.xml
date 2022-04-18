@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sun, 17 Apr 2022 03:16:41 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%88%B0%E5%AE%B6/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 18 Apr 2022 03:30:27 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%88%B0%E5%AE%B6/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>FlutterWeb性能优化探索与实践</title>
       <link>https://wfsui.github.io/posts/flutterweb%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sun, 17 Apr 2022 03:16:41 +0000</pubDate>
+      <pubDate>Mon, 18 Apr 2022 03:30:27 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/flutterweb%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>一、背景 1.1 关于FlutterWeb 时间回拨到 2018 年，Google 首次公开 FlutterWeb Beta 版，表露出要实现一份代码、多端运行的愿景。经过无数工程师两年多的努力，在今年年初（2021 年 3 月份），Flutter 2.0 正式对外发布，它将 FlutterWeb 功能并入了 Stable Channel，意味着 Google 更加坚定了多端复用的决心。</description>
@@ -20,7 +20,7 @@
     <item>
       <title>从0到1：美团端侧CDN容灾解决方案</title>
       <link>https://wfsui.github.io/posts/%E4%BB%8E0%E5%88%B01%E7%BE%8E%E5%9B%A2%E7%AB%AF%E4%BE%A7cdn%E5%AE%B9%E7%81%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</link>
-      <pubDate>Sun, 17 Apr 2022 03:16:40 +0000</pubDate>
+      <pubDate>Mon, 18 Apr 2022 03:30:26 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%BB%8E0%E5%88%B01%E7%BE%8E%E5%9B%A2%E7%AB%AF%E4%BE%A7cdn%E5%AE%B9%E7%81%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</guid>
       <description>1. 前言 作为业务研发，你是否遇到过因为 CDN 问题导致的业务图片加载失败，页面打开缓慢，页面布局错乱或者页面白屏？你是否又遇到过某些区域 CDN 域名异常导致业务停摆，客诉不断，此时的你一脸茫然，不知所措？作为 CDN 运维，你是否常常被业务方反馈的各种 CDN 问题搞得焦头烂额，一边顶着各种催促和压力寻求解决方案，一边抱怨着服务商的不靠谱？今天，我们主要介绍一下美团外卖技术团队端侧 CDN 的容灾方案，经过实践，我们发现该产品能有效减少运维及业务开发同学的焦虑，希望我们的这些经验也能够帮助到更多的技术团队。
@@ -30,7 +30,7 @@
     <item>
       <title>GPU在外卖场景精排模型预估中的应用实践</title>
       <link>https://wfsui.github.io/posts/gpu%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%B2%BE%E6%8E%92%E6%A8%A1%E5%9E%8B%E9%A2%84%E4%BC%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sun, 17 Apr 2022 03:16:39 +0000</pubDate>
+      <pubDate>Mon, 18 Apr 2022 03:30:25 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/gpu%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%B2%BE%E6%8E%92%E6%A8%A1%E5%9E%8B%E9%A2%84%E4%BC%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 前言 近些年，随着机器学习技术的蓬勃发展，以GPU为代表的一系列专用芯片以优越的高性能计算能力和愈发低廉的成本，在机器学习领域得到广泛认可和青睐，且与传统的CPU体系不断融合，形成了新的异构硬件生态。
@@ -48,7 +48,7 @@
     <item>
       <title>广告平台化的探索与实践 | 美团外卖广告工程实践专题连载</title>
       <link>https://wfsui.github.io/posts/%E5%B9%BF%E5%91%8A%E5%B9%B3%E5%8F%B0%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E4%B8%93%E9%A2%98%E8%BF%9E%E8%BD%BD/</link>
-      <pubDate>Sun, 17 Apr 2022 03:16:39 +0000</pubDate>
+      <pubDate>Mon, 18 Apr 2022 03:30:25 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%B9%BF%E5%91%8A%E5%B9%B3%E5%8F%B0%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E4%B8%93%E9%A2%98%E8%BF%9E%E8%BD%BD/</guid>
       <description>1 前言 美团外卖已经成为公司最为重要的业务之一，而商业变现又是整个外卖生态重要的组成部分。经过多年的发展，广告业务覆盖了Feed流形式的列表广告，针对KA以及大商家的展示广告，根据用户查询Query的搜索广告，以及一些创新场景的创新广告等多个产品线，并对应十几个细分的业务场景。
@@ -61,7 +61,7 @@
     <item>
       <title>数据治理一体化实践之体系化建模</title>
       <link>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E4%B8%80%E4%BD%93%E5%8C%96%E5%AE%9E%E8%B7%B5%E4%B9%8B%E4%BD%93%E7%B3%BB%E5%8C%96%E5%BB%BA%E6%A8%A1/</link>
-      <pubDate>Sun, 17 Apr 2022 03:16:39 +0000</pubDate>
+      <pubDate>Mon, 18 Apr 2022 03:30:25 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E4%B8%80%E4%BD%93%E5%8C%96%E5%AE%9E%E8%B7%B5%E4%B9%8B%E4%BD%93%E7%B3%BB%E5%8C%96%E5%BB%BA%E6%A8%A1/</guid>
       <description>1 前言 随着数字经济的快速发展，数据已经成为新的生产要素。如何有效地开展数据治理工作，提升数据质量，打破数据孤岛，充分发挥数据的业务价值，已成为业界的热门话题。本文基于美团配送数据治理的历程，重点和大家分享一下配送数据“底座”的建设与实践，如何通过体系化建模建立起数据定义到数据生产的桥梁，达成数据定义、模型设计、数据生产三个环节的统一，消除因数据标准缺失和执行不到位引发的数据信任问题，在高质量地实现数据到信息的转化的同时，为后续的数据便捷消费提供数据和元数据保障。希望能给从事数据治理方向的同学在实现数据到资产的转化过程提供一些参考和借鉴。
@@ -78,7 +78,7 @@
     <item>
       <title>终端新玩法：技术栈无关的剧本式引导</title>
       <link>https://wfsui.github.io/posts/%E7%BB%88%E7%AB%AF%E6%96%B0%E7%8E%A9%E6%B3%95%E6%8A%80%E6%9C%AF%E6%A0%88%E6%97%A0%E5%85%B3%E7%9A%84%E5%89%A7%E6%9C%AC%E5%BC%8F%E5%BC%95%E5%AF%BC/</link>
-      <pubDate>Sun, 17 Apr 2022 03:16:36 +0000</pubDate>
+      <pubDate>Mon, 18 Apr 2022 03:30:22 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BB%88%E7%AB%AF%E6%96%B0%E7%8E%A9%E6%B3%95%E6%8A%80%E6%9C%AF%E6%A0%88%E6%97%A0%E5%85%B3%E7%9A%84%E5%89%A7%E6%9C%AC%E5%BC%8F%E5%BC%95%E5%AF%BC/</guid>
       <description>背景 互联网行业节奏偏快，App 的更新愈发频繁，如何让用户跟上更新节奏，理解产品功能，完成认知迭代，是业务发展中不可忽视的一环。同时“低代码/零代码”的理念也逐步被大众认可，相关调研报告指出“低代码/零代码”可以加速企业的数字化转型。以美团到家事业群为例，在宅经济再度升温后，即时配送应用的增长速度高于其他配送时长的应用。大量新用户的涌入既是机遇，也是挑战。目前美团到家事业群已经涵盖了医药、团餐、闪购、跑腿、团好货、无人配送等 10+ 业务线。新的商业模式意味着新领域的尝试，主业务外卖平均数日也会上线新的功能模块，这些都需要关注用户心智建设与效率提升。

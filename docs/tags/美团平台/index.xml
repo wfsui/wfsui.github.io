@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 18 Apr 2022 03:30:26 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E5%B9%B3%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 19 Apr 2022 03:42:56 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E5%B9%B3%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>DSTC10开放领域对话评估比赛冠军方法总结</title>
       <link>https://wfsui.github.io/posts/dstc10%E5%BC%80%E6%94%BE%E9%A2%86%E5%9F%9F%E5%AF%B9%E8%AF%9D%E8%AF%84%E4%BC%B0%E6%AF%94%E8%B5%9B%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:26 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:56 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/dstc10%E5%BC%80%E6%94%BE%E9%A2%86%E5%9F%9F%E5%AF%B9%E8%AF%9D%E8%AF%84%E4%BC%B0%E6%AF%94%E8%B5%9B%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</guid>
       <description>1. 背景 对话系统技术挑战赛DSTC（The Dialog System Technology Challenge）由微软、卡内基梅隆大学的科学家于2013年发起，旨在带动学术与工业界在对话技术上的提升，在对话领域具有极高的权威性和知名度。对话系统挑战赛今年已举办至第十届（DSTC10），吸引了微软、亚马逊、卡内基梅隆大学、Facebook、三菱电子研究实验室、美团、百度等全球知名企业、顶尖大学和机构同台竞技。
@@ -22,7 +22,7 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
     <item>
       <title>美团搜索中查询改写技术的探索与实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E4%B8%AD%E6%9F%A5%E8%AF%A2%E6%94%B9%E5%86%99%E6%8A%80%E6%9C%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:26 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:56 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E4%B8%AD%E6%9F%A5%E8%AF%A2%E6%94%B9%E5%86%99%E6%8A%80%E6%9C%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 引言 在搜索场景中，由于用户搜索词Query和检索文本Document之间存在大量表述不一的情况，在文本检索框架下，此类文本不匹配导致的漏召回问题严重影响着用户的体验。对这类问题业界一般有两种方案：用户端拓展用户的查询词——即查询改写，或Document端拓展文档关键词——即Document标签。本文主要介绍前一种解决漏召回的方案：查询改写（Query Rewriting，或称为查询扩展Query Expansion）。查询改写的应用方式是对原始Query拓展出与用户需求关联度高的改写词，多个改写词与用户搜索词一起做检索，从而用更好的表述，帮用户搜到更多符合需求的商户、商品和服务。
@@ -35,14 +35,13 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
     <item>
       <title>知识图谱可视化技术在美团的实践与探索</title>
       <link>https://wfsui.github.io/posts/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:22 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:52 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</guid>
       <description>1 知识图谱可视化基本概念 1.1 知识图谱技术的简介 知识图谱（Knowledge Graph）是人工智能的重要分支，它是一种揭示实体之间关系的语义网络，可以对现实世界的事物及其相互关系进行形式化地描述。举个例子，“孙悟空的师傅是唐僧”就是一条知识。在这条知识里，有“孙悟空”和“唐僧”两个实体，“师傅”是描述这两个实体之间的关系，上述内容在知识图谱中就组成了一个SPO三元组（Subject-Predicate-Object）。
 所以，对于现实世界中实体之间的关联关系，用知识图谱进行描述的话，就显得非常合适。正是由于知识图谱的这种优势，这项技术得到迅速普及，目前在搜索、推荐、广告、问答等多个领域都有相应的解决方案。
 1.2 知识图谱可视化的简介 可视化，简单来说就是将数据以一种更直观的形式表现出来。其实，我们现在常用的折线图、柱状图、饼状图（下称折柱饼），甚至Excel表格，都属于数据可视化的一种。
 以往，我们存储数据主要是以数据表的方式，但这种方式很难结构化地存储好知识类型的数据。对于关系类型的数据，如果用前文的例子为基础并补充一些相关信息，经过可视化后就能展示成这样：
-![西游记中人、物关系](https://p0.meituan.net/travelcube/8647375000bb44cc4f2b1bd2e083288356621.png =400x)
 这种信息就很难用“折柱饼”或者表格呈现出来，而用知识图谱可视化的方式呈现，就非常的清晰。
 2 场景分析与架构设计 2.1 场景需求分析 我们梳理后发现，在美团的各个业务场景中知识图谱可视化需求主要包含以下几类：
  图查询应用：以图数据库为主的图谱可视化工具，提供图数据的编辑、子图探索、顶点/边信息查询等交互操作。 图分析应用：对业务场景中的关系类数据进行可视化展示，帮助业务同学快速了解链路故障、组件依赖等问题。 技术品牌建设：通过知识图谱向大家普及人工智能技术是什么，以及它能做什么，让AI也具备可解释性。  2.</description>

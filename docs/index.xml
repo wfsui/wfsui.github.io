@@ -7,23 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 18 Apr 2022 03:30:28 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Java魔法类：Unsafe应用解析</title>
-      <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:28 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
-      <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
-注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
-基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
-public final class Unsafe {  // 单例对象  private static final Unsafe theUnsafe;   private Unsafe() {  }  @CallerSensitive  public static Unsafe getUnsafe() {  Class var0 = Reflection.</description>
-    </item>
-    
+    <lastBuildDate>Tue, 19 Apr 2022 03:42:57 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>2021年美团技术团队最受欢迎的22篇技术文章</title>
       <link>https://wfsui.github.io/posts/2021%E5%B9%B4%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E6%9C%80%E5%8F%97%E6%AC%A2%E8%BF%8E%E7%9A%8422%E7%AF%87%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:27 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:57 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/2021%E5%B9%B4%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E6%9C%80%E5%8F%97%E6%AC%A2%E8%BF%8E%E7%9A%8422%E7%AF%87%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/</guid>
       <description>再见2021，你好2022！
@@ -39,7 +27,7 @@ GraphQL及元数据驱动架构在后端BFF中的实践 | 阅读量22247 GraphQL
     <item>
       <title>7次KDD Cup&amp;Kaggle冠军的经验分享：从多领域优化到AutoML框架</title>
       <link>https://wfsui.github.io/posts/7%E6%AC%A1kdd-cupkaggle%E5%86%A0%E5%86%9B%E7%9A%84%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB%E4%BB%8E%E5%A4%9A%E9%A2%86%E5%9F%9F%E4%BC%98%E5%8C%96%E5%88%B0automl%E6%A1%86%E6%9E%B6/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:27 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:57 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/7%E6%AC%A1kdd-cupkaggle%E5%86%A0%E5%86%9B%E7%9A%84%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB%E4%BB%8E%E5%A4%9A%E9%A2%86%E5%9F%9F%E4%BC%98%E5%8C%96%E5%88%B0automl%E6%A1%86%E6%9E%B6/</guid>
       <description>1 背景与简介 反馈快速、竞争激烈的算法比赛是算法从业者提升技术水平的重要方式。从若干行业核心问题中抽象出的算法比赛题目具有很强的实际意义，而比赛的实时积分榜促使参加者不断改进，以试图超越当前的最佳实践，而且获胜方案对于工业界与学术界也有很强的推动作用，例如KDD Cup比赛产出的Field-Aware Factorization Machine(FFM)算法[1]、ImageNet比赛产出的ResNet模型[2]在业界都有着广泛的应用。
@@ -53,40 +41,16 @@ ACM SIGKDD （国际数据挖掘与知识发现大会，简称 KDD）是数据�
     <item>
       <title>FlutterWeb性能优化探索与实践</title>
       <link>https://wfsui.github.io/posts/flutterweb%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:27 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:57 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/flutterweb%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>一、背景 1.1 关于FlutterWeb 时间回拨到 2018 年，Google 首次公开 FlutterWeb Beta 版，表露出要实现一份代码、多端运行的愿景。经过无数工程师两年多的努力，在今年年初（2021 年 3 月份），Flutter 2.0 正式对外发布，它将 FlutterWeb 功能并入了 Stable Channel，意味着 Google 更加坚定了多端复用的决心。</description>
     </item>
     
     <item>
-      <title>Java动态追踪技术探究</title>
-      <link>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:27 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</guid>
-      <description>引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：
-“Debug一下吧。”
-“线上机器，没开Debug端口。”
-“看日志，看看请求值和返回值分别是什么？”
-“那段代码没打印日志。”
-“改代码，加日志，重新发布一次。”
-“怀疑是线程池的问题，重启会破坏现场。”
-长达几十秒的沉默之后：“据说，排查问题的最高境界，就是只通过Review代码来发现问题。”
-比几十秒长几十倍的沉默之后：“我轮询了那段代码一十七遍之后，终于得出一个结论。”
-“结论是？”
-“我还没到达只通过Review代码就能发现问题的至高境界。”
-从JSP说起 对于大多数Java程序员来说，早期的时候，都会接触到一个叫做JSP（Java Server Pages）的技术。虽然这种技术，在前后端代码分离、前后端逻辑分离、前后端组织架构分离的今天来看，已经过时了，但是其中还是有一些有意思的东西，值得拿出来说一说。
-当时刚刚处于Java入门时期的我们，大多数精力似乎都放在了JSP的页面展示效果上了：
-“这个表格显示的行数不对”
-“原来是for循环写的有问题，改一下，刷新页面再试一遍”
-“嗯，好了，表格显示没问题了，但是，登录人的姓名没取到啊，是不是Sesstion获取有问题？”</description>
-    </item>
-    
-    <item>
       <title>DSTC10开放领域对话评估比赛冠军方法总结</title>
       <link>https://wfsui.github.io/posts/dstc10%E5%BC%80%E6%94%BE%E9%A2%86%E5%9F%9F%E5%AF%B9%E8%AF%9D%E8%AF%84%E4%BC%B0%E6%AF%94%E8%B5%9B%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:26 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:56 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/dstc10%E5%BC%80%E6%94%BE%E9%A2%86%E5%9F%9F%E5%AF%B9%E8%AF%9D%E8%AF%84%E4%BC%B0%E6%AF%94%E8%B5%9B%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</guid>
       <description>1. 背景 对话系统技术挑战赛DSTC（The Dialog System Technology Challenge）由微软、卡内基梅隆大学的科学家于2013年发起，旨在带动学术与工业界在对话技术上的提升，在对话领域具有极高的权威性和知名度。对话系统挑战赛今年已举办至第十届（DSTC10），吸引了微软、亚马逊、卡内基梅隆大学、Facebook、三菱电子研究实验室、美团、百度等全球知名企业、顶尖大学和机构同台竞技。
@@ -97,7 +61,7 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
     <item>
       <title>从0到1：美团端侧CDN容灾解决方案</title>
       <link>https://wfsui.github.io/posts/%E4%BB%8E0%E5%88%B01%E7%BE%8E%E5%9B%A2%E7%AB%AF%E4%BE%A7cdn%E5%AE%B9%E7%81%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:26 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:56 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%BB%8E0%E5%88%B01%E7%BE%8E%E5%9B%A2%E7%AB%AF%E4%BE%A7cdn%E5%AE%B9%E7%81%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</guid>
       <description>1. 前言 作为业务研发，你是否遇到过因为 CDN 问题导致的业务图片加载失败，页面打开缓慢，页面布局错乱或者页面白屏？你是否又遇到过某些区域 CDN 域名异常导致业务停摆，客诉不断，此时的你一脸茫然，不知所措？作为 CDN 运维，你是否常常被业务方反馈的各种 CDN 问题搞得焦头烂额，一边顶着各种催促和压力寻求解决方案，一边抱怨着服务商的不靠谱？今天，我们主要介绍一下美团外卖技术团队端侧 CDN 的容灾方案，经过实践，我们发现该产品能有效减少运维及业务开发同学的焦虑，希望我们的这些经验也能够帮助到更多的技术团队。
@@ -107,7 +71,7 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
     <item>
       <title>美团集群调度系统的云原生实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%BA%91%E5%8E%9F%E7%94%9F%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:26 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:56 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%BA%91%E5%8E%9F%E7%94%9F%E5%AE%9E%E8%B7%B5/</guid>
       <description>导语 集群调度系统在企业数据中心中占有举足轻重的地位，随着集群规模与应用数量的不断激增，开发者处理业务问题的复杂度也显著提升。如何解决大规模集群管理的难题，设计优秀且合理的集群调度系统，做到保稳定，降成本，提效率？本文将会逐一进行解答。
@@ -122,7 +86,7 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
     <item>
       <title>美团技术年货：1200&#43;页电子书，覆盖前后端、算法、数据、安全、测试、顶会论文</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%B9%B4%E8%B4%A71200&#43;%E9%A1%B5%E7%94%B5%E5%AD%90%E4%B9%A6%E8%A6%86%E7%9B%96%E5%89%8D%E5%90%8E%E7%AB%AF%E7%AE%97%E6%B3%95%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95%E9%A1%B6%E4%BC%9A%E8%AE%BA%E6%96%87/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:26 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:56 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%B9%B4%E8%B4%A71200&#43;%E9%A1%B5%E7%94%B5%E5%AD%90%E4%B9%A6%E8%A6%86%E7%9B%96%E5%89%8D%E5%90%8E%E7%AB%AF%E7%AE%97%E6%B3%95%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95%E9%A1%B6%E4%BC%9A%E8%AE%BA%E6%96%87/</guid>
       <description>新年将至，年味渐浓。虽然疫情的阴霾还没彻底消散，但是相信很多人都对2022年的春天充满了期待。期待春暖花开，期待国泰民安，期待早一天在阳光下自由地呼吸。
@@ -139,7 +103,7 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
     <item>
       <title>美团搜索中查询改写技术的探索与实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E4%B8%AD%E6%9F%A5%E8%AF%A2%E6%94%B9%E5%86%99%E6%8A%80%E6%9C%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:26 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:56 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E4%B8%AD%E6%9F%A5%E8%AF%A2%E6%94%B9%E5%86%99%E6%8A%80%E6%9C%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 引言 在搜索场景中，由于用户搜索词Query和检索文本Document之间存在大量表述不一的情况，在文本检索框架下，此类文本不匹配导致的漏召回问题严重影响着用户的体验。对这类问题业界一般有两种方案：用户端拓展用户的查询词——即查询改写，或Document端拓展文档关键词——即Document标签。本文主要介绍前一种解决漏召回的方案：查询改写（Query Rewriting，或称为查询扩展Query Expansion）。查询改写的应用方式是对原始Query拓展出与用户需求关联度高的改写词，多个改写词与用户搜索词一起做检索，从而用更好的表述，帮用户搜到更多符合需求的商户、商品和服务。
@@ -152,7 +116,7 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
     <item>
       <title>GPU在外卖场景精排模型预估中的应用实践</title>
       <link>https://wfsui.github.io/posts/gpu%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%B2%BE%E6%8E%92%E6%A8%A1%E5%9E%8B%E9%A2%84%E4%BC%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:25 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:55 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/gpu%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%B2%BE%E6%8E%92%E6%A8%A1%E5%9E%8B%E9%A2%84%E4%BC%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 前言 近些年，随着机器学习技术的蓬勃发展，以GPU为代表的一系列专用芯片以优越的高性能计算能力和愈发低廉的成本，在机器学习领域得到广泛认可和青睐，且与传统的CPU体系不断融合，形成了新的异构硬件生态。
@@ -170,7 +134,7 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
     <item>
       <title>广告平台化的探索与实践 | 美团外卖广告工程实践专题连载</title>
       <link>https://wfsui.github.io/posts/%E5%B9%BF%E5%91%8A%E5%B9%B3%E5%8F%B0%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E4%B8%93%E9%A2%98%E8%BF%9E%E8%BD%BD/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:25 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:55 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%B9%BF%E5%91%8A%E5%B9%B3%E5%8F%B0%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E4%B8%93%E9%A2%98%E8%BF%9E%E8%BD%BD/</guid>
       <description>1 前言 美团外卖已经成为公司最为重要的业务之一，而商业变现又是整个外卖生态重要的组成部分。经过多年的发展，广告业务覆盖了Feed流形式的列表广告，针对KA以及大商家的展示广告，根据用户查询Query的搜索广告，以及一些创新场景的创新广告等多个产品线，并对应十几个细分的业务场景。
@@ -183,7 +147,7 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
     <item>
       <title>数据治理一体化实践之体系化建模</title>
       <link>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E4%B8%80%E4%BD%93%E5%8C%96%E5%AE%9E%E8%B7%B5%E4%B9%8B%E4%BD%93%E7%B3%BB%E5%8C%96%E5%BB%BA%E6%A8%A1/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:25 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:55 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E4%B8%80%E4%BD%93%E5%8C%96%E5%AE%9E%E8%B7%B5%E4%B9%8B%E4%BD%93%E7%B3%BB%E5%8C%96%E5%BB%BA%E6%A8%A1/</guid>
       <description>1 前言 随着数字经济的快速发展，数据已经成为新的生产要素。如何有效地开展数据治理工作，提升数据质量，打破数据孤岛，充分发挥数据的业务价值，已成为业界的热门话题。本文基于美团配送数据治理的历程，重点和大家分享一下配送数据“底座”的建设与实践，如何通过体系化建模建立起数据定义到数据生产的桥梁，达成数据定义、模型设计、数据生产三个环节的统一，消除因数据标准缺失和执行不到位引发的数据信任问题，在高质量地实现数据到信息的转化的同时，为后续的数据便捷消费提供数据和元数据保障。希望能给从事数据治理方向的同学在实现数据到资产的转化过程提供一些参考和借鉴。
@@ -200,7 +164,7 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
     <item>
       <title>Java系列 | 远程热部署在美团的落地实践</title>
       <link>https://wfsui.github.io/posts/java%E7%B3%BB%E5%88%97-%E8%BF%9C%E7%A8%8B%E7%83%AD%E9%83%A8%E7%BD%B2%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E8%90%BD%E5%9C%B0%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:24 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:54 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/java%E7%B3%BB%E5%88%97-%E8%BF%9C%E7%A8%8B%E7%83%AD%E9%83%A8%E7%BD%B2%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E8%90%BD%E5%9C%B0%E5%AE%9E%E8%B7%B5/</guid>
       <description>Sonic是美团内部研发设计的一款用于热部署的IDEA插件，本文其实现原理及落地的一些技术细节。在阅读本文之前，建议大家先熟悉一下Spring源码、Spring MVC 源码 、Spring Boot源码 、Agent字节码增强、Javassist、Classloader等相关知识。
@@ -213,7 +177,7 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
     <item>
       <title>美团内部讲座 | 清华大学崔鹏：因果启发的学习、推断和决策</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%86%85%E9%83%A8%E8%AE%B2%E5%BA%A7-%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6%E5%B4%94%E9%B9%8F%E5%9B%A0%E6%9E%9C%E5%90%AF%E5%8F%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%8E%A8%E6%96%AD%E5%92%8C%E5%86%B3%E7%AD%96/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:24 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:54 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%86%85%E9%83%A8%E8%AE%B2%E5%BA%A7-%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6%E5%B4%94%E9%B9%8F%E5%9B%A0%E6%9E%9C%E5%90%AF%E5%8F%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%8E%A8%E6%96%AD%E5%92%8C%E5%86%B3%E7%AD%96/</guid>
       <description>| 分享嘉宾：崔鹏，清华大学计算机系长聘副教授，博士生导师
@@ -231,7 +195,7 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
     <item>
       <title>设计模式二三事</title>
       <link>https://wfsui.github.io/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BA%8C%E4%B8%89%E4%BA%8B/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:24 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:54 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BA%8C%E4%B8%89%E4%BA%8B/</guid>
       <description>设计模式是众多软件开发人员经过长时间的试错和应用总结出来的，解决特定问题的一系列方案。现行的部分教材在介绍设计模式时，有些会因为案例脱离实际应用场景而令人费解，有些又会因为场景简单而显得有些小题大做。本文会结合在美团金融服务平台设计开发时的经验，结合实际的案例，并采用“师生对话”这种相对诙谐的形式去讲解三类常用设计模式的应用。希望能对想提升系统设计能力的同学有所帮助或启发。
@@ -256,7 +220,7 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
     <item>
       <title>异构广告混排在美团到店业务的探索与实践</title>
       <link>https://wfsui.github.io/posts/%E5%BC%82%E6%9E%84%E5%B9%BF%E5%91%8A%E6%B7%B7%E6%8E%92%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:24 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:54 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%BC%82%E6%9E%84%E5%B9%BF%E5%91%8A%E6%B7%B7%E6%8E%92%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景与简介 1.1 背景 美团到店广告负责美团搜索流量的商业变现，服务于到店餐饮、休娱亲子、丽人医美、酒店旅游等众多本地生活服务商家。质量预估团队负责广告系统中CTR/CVR以及客单价/交易额等质量分预估，在过去几年中，我们通过位次上下文建模[1]、时空超长序列建模[2]等创新技术，在CTR预估问题中的用户、上下文等方向都取得了一些突破[3]，并整理成论文发表在SIGIR、ICDE、CIKM等国际会议上。
@@ -268,7 +232,7 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
     <item>
       <title>Linux中基于eBPF的恶意利用与检测机制</title>
       <link>https://wfsui.github.io/posts/linux%E4%B8%AD%E5%9F%BA%E4%BA%8Eebpf%E7%9A%84%E6%81%B6%E6%84%8F%E5%88%A9%E7%94%A8%E4%B8%8E%E6%A3%80%E6%B5%8B%E6%9C%BA%E5%88%B6/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:23 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:53 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/linux%E4%B8%AD%E5%9F%BA%E4%BA%8Eebpf%E7%9A%84%E6%81%B6%E6%84%8F%E5%88%A9%E7%94%A8%E4%B8%8E%E6%A3%80%E6%B5%8B%E6%9C%BA%E5%88%B6/</guid>
       <description>前言 近几年，云原生领域飞速发展，K8s成为公认的云操作系统。容器的高频率部署、短暂的生命周期、复杂的网络路由，都给内核安全带来了新的挑战。系统内核面对的复杂性在不断增长，在满足性能、可扩展性等新需求的同时，还需要保障系统稳定可用，这是极其困难的事情。此时，eBPF出现，它以较小的子系统改动，保障了系统内核的稳定，还具备实时动态加载的特性，能将业务逻辑加载到内核，实现热更新的动态执行。
@@ -281,7 +245,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
     <item>
       <title>NeurIPS 2021 ｜ Twins：重新思考高效的视觉注意力模型设计</title>
       <link>https://wfsui.github.io/posts/neurips-2021-twins%E9%87%8D%E6%96%B0%E6%80%9D%E8%80%83%E9%AB%98%E6%95%88%E7%9A%84%E8%A7%86%E8%A7%89%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:23 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:53 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/neurips-2021-twins%E9%87%8D%E6%96%B0%E6%80%9D%E8%80%83%E9%AB%98%E6%95%88%E7%9A%84%E8%A7%86%E8%A7%89%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/</guid>
       <description>导读 Twins [1] 是美团和阿德莱德大学合作提出的视觉注意力模型，相关论文已被 NeurIPS 2021 会议接收，代码也已在GitHub上进行开源。NeurIPS（Conference on Neural Information Processing Systems）是机器学习和计算神经科学相关的学术会议，也是人工智能方向的国际顶级会议。
@@ -292,7 +256,7 @@ Twins 提出了两类结构，分别是 Twins-PCPVT 和 Twins-SVT：
     <item>
       <title>TensorFlow在美团外卖推荐场景的GPU训练优化实践</title>
       <link>https://wfsui.github.io/posts/tensorflow%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E7%9A%84gpu%E8%AE%AD%E7%BB%83%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:23 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:53 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/tensorflow%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E7%9A%84gpu%E8%AE%AD%E7%BB%83%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景 在推荐系统训练场景中，美团内部深度定制的TenorFlow（简称TF）版本[1]，通过CPU算力支撑了美团内部大量的业务。但随着业务的发展，模型单次训练的样本量越来越多，结构也变得越来越复杂。以美团外卖推荐的精排模型为例，单次训练的样本量已达百亿甚至千亿，一次实验要耗费上千核，且优化后的训练任务CPU使用率已达90%以上。为了支持业务的高速发展，模型迭代实验的频次和并发度都在不断增加，进一步增加了算力使用需求。在预算有限的前提下，如何以较高的性价比来实现高速的模型训练，从而保障高效率的模型研发迭代，是我们迫切需要解决的问题。
@@ -303,14 +267,13 @@ Twins 提出了两类结构，分别是 Twins-PCPVT 和 Twins-SVT：
     <item>
       <title>知识图谱可视化技术在美团的实践与探索</title>
       <link>https://wfsui.github.io/posts/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:22 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:52 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</guid>
       <description>1 知识图谱可视化基本概念 1.1 知识图谱技术的简介 知识图谱（Knowledge Graph）是人工智能的重要分支，它是一种揭示实体之间关系的语义网络，可以对现实世界的事物及其相互关系进行形式化地描述。举个例子，“孙悟空的师傅是唐僧”就是一条知识。在这条知识里，有“孙悟空”和“唐僧”两个实体，“师傅”是描述这两个实体之间的关系，上述内容在知识图谱中就组成了一个SPO三元组（Subject-Predicate-Object）。
 所以，对于现实世界中实体之间的关联关系，用知识图谱进行描述的话，就显得非常合适。正是由于知识图谱的这种优势，这项技术得到迅速普及，目前在搜索、推荐、广告、问答等多个领域都有相应的解决方案。
 1.2 知识图谱可视化的简介 可视化，简单来说就是将数据以一种更直观的形式表现出来。其实，我们现在常用的折线图、柱状图、饼状图（下称折柱饼），甚至Excel表格，都属于数据可视化的一种。
 以往，我们存储数据主要是以数据表的方式，但这种方式很难结构化地存储好知识类型的数据。对于关系类型的数据，如果用前文的例子为基础并补充一些相关信息，经过可视化后就能展示成这样：
-![西游记中人、物关系](https://p0.meituan.net/travelcube/8647375000bb44cc4f2b1bd2e083288356621.png =400x)
 这种信息就很难用“折柱饼”或者表格呈现出来，而用知识图谱可视化的方式呈现，就非常的清晰。
 2 场景分析与架构设计 2.1 场景需求分析 我们梳理后发现，在美团的各个业务场景中知识图谱可视化需求主要包含以下几类：
  图查询应用：以图数据库为主的图谱可视化工具，提供图数据的编辑、子图探索、顶点/边信息查询等交互操作。 图分析应用：对业务场景中的关系类数据进行可视化展示，帮助业务同学快速了解链路故障、组件依赖等问题。 技术品牌建设：通过知识图谱向大家普及人工智能技术是什么，以及它能做什么，让AI也具备可解释性。  2.</description>
@@ -319,7 +282,7 @@ Twins 提出了两类结构，分别是 Twins-PCPVT 和 Twins-SVT：
     <item>
       <title>终端新玩法：技术栈无关的剧本式引导</title>
       <link>https://wfsui.github.io/posts/%E7%BB%88%E7%AB%AF%E6%96%B0%E7%8E%A9%E6%B3%95%E6%8A%80%E6%9C%AF%E6%A0%88%E6%97%A0%E5%85%B3%E7%9A%84%E5%89%A7%E6%9C%AC%E5%BC%8F%E5%BC%95%E5%AF%BC/</link>
-      <pubDate>Mon, 18 Apr 2022 03:30:22 +0000</pubDate>
+      <pubDate>Tue, 19 Apr 2022 03:42:52 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BB%88%E7%AB%AF%E6%96%B0%E7%8E%A9%E6%B3%95%E6%8A%80%E6%9C%AF%E6%A0%88%E6%97%A0%E5%85%B3%E7%9A%84%E5%89%A7%E6%9C%AC%E5%BC%8F%E5%BC%95%E5%AF%BC/</guid>
       <description>背景 互联网行业节奏偏快，App 的更新愈发频繁，如何让用户跟上更新节奏，理解产品功能，完成认知迭代，是业务发展中不可忽视的一环。同时“低代码/零代码”的理念也逐步被大众认可，相关调研报告指出“低代码/零代码”可以加速企业的数字化转型。以美团到家事业群为例，在宅经济再度升温后，即时配送应用的增长速度高于其他配送时长的应用。大量新用户的涌入既是机遇，也是挑战。目前美团到家事业群已经涵盖了医药、团餐、闪购、跑腿、团好货、无人配送等 10+ 业务线。新的商业模式意味着新领域的尝试，主业务外卖平均数日也会上线新的功能模块，这些都需要关注用户心智建设与效率提升。
@@ -327,6 +290,42 @@ Twins 提出了两类结构，分别是 Twins-PCPVT 和 Twins-SVT：
 App 功能引导是用户心智建设的“敲门砖”，只有让用户熟悉平台操作、了解产品特色作为前提，才能进一步借助情感化、场景识别、运营技巧等手段来做用户心智建设。随着 App 功能的不断迭代，在用户中逐渐出现了“用不明白”的现象，这个现象在美团外卖商家客户端尤为突出。作为商家生产运营的主要工具，客户端承载的业务功能复杂多样，设置项更是品类繁杂，如果商家用不明白，就会对整个运营体系造成非常不利的影响。
 为了让商户“用得明白”，2021 年第一季度，美团外卖商家端在功能引导类需求层面耗费了大量人力，平台产品侧重点对商家进行了扶持，并试点了“情感化引导”等项目，虽然业务效果取得了正向收益，但由于后续的研发估时较大，空有想法却难以落地。类似的营销、广告、商品、订单等业务也由于快速迭代，也需要配套生产一系列产品功能的引导需求，也因为人力问题而一直处于积压状态。
 目标与挑战 基于上述背景与现状，我们迫切需要提供一种解决方案，让业务方可以更快捷地落地自己的想法，在控制好成本的情况下，更好地建设用户心智。同时，解决目前积压的业务任务，包括但不限操作教学、功能介绍、情感化、严肃化等等场景。于是 ASG（Application Scripted Guidance） 剧本式引导项目就应运而生了。</description>
+    </item>
+    
+    <item>
+      <title>Java动态追踪技术探究</title>
+      <link>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</link>
+      <pubDate>Tue, 19 Apr 2022 03:42:51 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</guid>
+      <description>引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：
+“Debug一下吧。”
+“线上机器，没开Debug端口。”
+“看日志，看看请求值和返回值分别是什么？”
+“那段代码没打印日志。”
+“改代码，加日志，重新发布一次。”
+“怀疑是线程池的问题，重启会破坏现场。”
+长达几十秒的沉默之后：“据说，排查问题的最高境界，就是只通过Review代码来发现问题。”
+比几十秒长几十倍的沉默之后：“我轮询了那段代码一十七遍之后，终于得出一个结论。”
+“结论是？”
+“我还没到达只通过Review代码就能发现问题的至高境界。”
+从JSP说起 对于大多数Java程序员来说，早期的时候，都会接触到一个叫做JSP（Java Server Pages）的技术。虽然这种技术，在前后端代码分离、前后端逻辑分离、前后端组织架构分离的今天来看，已经过时了，但是其中还是有一些有意思的东西，值得拿出来说一说。
+当时刚刚处于Java入门时期的我们，大多数精力似乎都放在了JSP的页面展示效果上了：
+“这个表格显示的行数不对”
+“原来是for循环写的有问题，改一下，刷新页面再试一遍”
+“嗯，好了，表格显示没问题了，但是，登录人的姓名没取到啊，是不是Sesstion获取有问题？”</description>
+    </item>
+    
+    <item>
+      <title>Java魔法类：Unsafe应用解析</title>
+      <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Tue, 19 Apr 2022 03:42:51 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
+      <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
+注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
+基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
+public final class Unsafe {  // 单例对象  private static final Unsafe theUnsafe;   private Unsafe() {  }  @CallerSensitive  public static Unsafe getUnsafe() {  Class var0 = Reflection.</description>
     </item>
     
     <item>

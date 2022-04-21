@@ -1,6 +1,6 @@
 ---
 title: "7次KDD Cup&Kaggle冠军的经验分享：从多领域优化到AutoML框架"
-date: 2022-04-20T03:53:21+0000
+date: 2022-04-21T03:49:42+0000
 tags: [美团技术团队, 算法, 到店, Kaggle, KDD Cup, AutoML, 经验分享]
 ---
 

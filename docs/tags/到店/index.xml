@@ -7,11 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Wed, 20 Apr 2022 03:53:21 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%88%B0%E5%BA%97/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 21 Apr 2022 03:49:43 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%88%B0%E5%BA%97/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java魔法类：Unsafe应用解析</title>
+      <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Thu, 21 Apr 2022 03:49:43 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
+      <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
+注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
+基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
+public final class Unsafe {  // 单例对象  private static final Unsafe theUnsafe;   private Unsafe() {  }  @CallerSensitive  public static Unsafe getUnsafe() {  Class var0 = Reflection.</description>
+    </item>
+    
     <item>
       <title>7次KDD Cup&amp;Kaggle冠军的经验分享：从多领域优化到AutoML框架</title>
       <link>https://wfsui.github.io/posts/7%E6%AC%A1kdd-cupkaggle%E5%86%A0%E5%86%9B%E7%9A%84%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB%E4%BB%8E%E5%A4%9A%E9%A2%86%E5%9F%9F%E4%BC%98%E5%8C%96%E5%88%B0automl%E6%A1%86%E6%9E%B6/</link>
-      <pubDate>Wed, 20 Apr 2022 03:53:21 +0000</pubDate>
+      <pubDate>Thu, 21 Apr 2022 03:49:42 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/7%E6%AC%A1kdd-cupkaggle%E5%86%A0%E5%86%9B%E7%9A%84%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB%E4%BB%8E%E5%A4%9A%E9%A2%86%E5%9F%9F%E4%BC%98%E5%8C%96%E5%88%B0automl%E6%A1%86%E6%9E%B6/</guid>
       <description>1 背景与简介 反馈快速、竞争激烈的算法比赛是算法从业者提升技术水平的重要方式。从若干行业核心问题中抽象出的算法比赛题目具有很强的实际意义，而比赛的实时积分榜促使参加者不断改进，以试图超越当前的最佳实践，而且获胜方案对于工业界与学术界也有很强的推动作用，例如KDD Cup比赛产出的Field-Aware Factorization Machine(FFM)算法[1]、ImageNet比赛产出的ResNet模型[2]在业界都有着广泛的应用。
@@ -23,21 +35,9 @@ ACM SIGKDD （国际数据挖掘与知识发现大会，简称 KDD）是数据�
     </item>
     
     <item>
-      <title>Java魔法类：Unsafe应用解析</title>
-      <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Wed, 20 Apr 2022 03:53:21 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
-      <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
-注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
-基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
-public final class Unsafe {  // 单例对象  private static final Unsafe theUnsafe;   private Unsafe() {  }  @CallerSensitive  public static Unsafe getUnsafe() {  Class var0 = Reflection.</description>
-    </item>
-    
-    <item>
       <title>异构广告混排在美团到店业务的探索与实践</title>
       <link>https://wfsui.github.io/posts/%E5%BC%82%E6%9E%84%E5%B9%BF%E5%91%8A%E6%B7%B7%E6%8E%92%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Wed, 20 Apr 2022 03:53:17 +0000</pubDate>
+      <pubDate>Thu, 21 Apr 2022 03:49:39 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%BC%82%E6%9E%84%E5%B9%BF%E5%91%8A%E6%B7%B7%E6%8E%92%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景与简介 1.1 背景 美团到店广告负责美团搜索流量的商业变现，服务于到店餐饮、休娱亲子、丽人医美、酒店旅游等众多本地生活服务商家。质量预估团队负责广告系统中CTR/CVR以及客单价/交易额等质量分预估，在过去几年中，我们通过位次上下文建模[1]、时空超长序列建模[2]等创新技术，在CTR预估问题中的用户、上下文等方向都取得了一些突破[3]，并整理成论文发表在SIGIR、ICDE、CIKM等国际会议上。

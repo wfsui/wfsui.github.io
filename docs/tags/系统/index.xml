@@ -7,11 +7,35 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sat, 23 Apr 2022 03:21:38 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%B3%BB%E7%BB%9F/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 24 Apr 2022 03:11:00 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%B3%BB%E7%BB%9F/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java动态追踪技术探究</title>
+      <link>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</link>
+      <pubDate>Sun, 24 Apr 2022 03:11:00 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</guid>
+      <description>引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：
+“Debug一下吧。”
+“线上机器，没开Debug端口。”
+“看日志，看看请求值和返回值分别是什么？”
+“那段代码没打印日志。”
+“改代码，加日志，重新发布一次。”
+“怀疑是线程池的问题，重启会破坏现场。”
+长达几十秒的沉默之后：“据说，排查问题的最高境界，就是只通过Review代码来发现问题。”
+比几十秒长几十倍的沉默之后：“我轮询了那段代码一十七遍之后，终于得出一个结论。”
+“结论是？”
+“我还没到达只通过Review代码就能发现问题的至高境界。”
+从JSP说起 对于大多数Java程序员来说，早期的时候，都会接触到一个叫做JSP（Java Server Pages）的技术。虽然这种技术，在前后端代码分离、前后端逻辑分离、前后端组织架构分离的今天来看，已经过时了，但是其中还是有一些有意思的东西，值得拿出来说一说。
+当时刚刚处于Java入门时期的我们，大多数精力似乎都放在了JSP的页面展示效果上了：
+“这个表格显示的行数不对”
+“原来是for循环写的有问题，改一下，刷新页面再试一遍”
+“嗯，好了，表格显示没问题了，但是，登录人的姓名没取到啊，是不是Sesstion获取有问题？”</description>
+    </item>
+    
     <item>
       <title>设计模式二三事</title>
       <link>https://wfsui.github.io/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BA%8C%E4%B8%89%E4%BA%8B/</link>
-      <pubDate>Sat, 23 Apr 2022 03:21:38 +0000</pubDate>
+      <pubDate>Sun, 24 Apr 2022 03:10:57 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BA%8C%E4%B8%89%E4%BA%8B/</guid>
       <description>设计模式是众多软件开发人员经过长时间的试错和应用总结出来的，解决特定问题的一系列方案。现行的部分教材在介绍设计模式时，有些会因为案例脱离实际应用场景而令人费解，有些又会因为场景简单而显得有些小题大做。本文会结合在美团金融服务平台设计开发时的经验，结合实际的案例，并采用“师生对话”这种相对诙谐的形式去讲解三类常用设计模式的应用。希望能对想提升系统设计能力的同学有所帮助或启发。
@@ -36,35 +60,11 @@
     <item>
       <title>基于代价的慢查询优化建议</title>
       <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E4%BB%A3%E4%BB%B7%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE/</link>
-      <pubDate>Sat, 23 Apr 2022 03:21:35 +0000</pubDate>
+      <pubDate>Sun, 24 Apr 2022 03:10:54 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E4%BB%A3%E4%BB%B7%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE/</guid>
       <description>1 背景 慢查询是指数据库中查询时间超过指定阈值（美团设置为100ms）的SQL，它是数据库的性能杀手，也是业务优化数据库访问的重要抓手。随着美团业务的高速增长，日均慢查询量已经过亿条，此前因慢查询导致的故障约占数据库故障总数的10%以上，而且高级别的故障呈日益增长趋势。因此，对慢查询的优化已经变得刻不容缓。
 那么如何优化慢查询呢？最直接有效的方法就是选用一个查询效率高的索引。关于高效率的索引推荐，主要在日常工作中，基于经验规则的推荐随处可见，对于简单的SQL，如select * from sync_test1 where name like &#39;Bobby%&#39;，直接添加索引IX(name) 就可以取得不错的效果；但对于稍微复杂点的SQL，如select * from sync_test1 where name like &#39;Bobby%&#39; and dt &amp;gt; &#39;2021-07-06&#39;，到底选择IX(name)、IX(dt)、IX(dt,name) 还是IX(name,dt)，该方法也无法给出准确的回答。更别说像多表Join、子查询这样复杂的场景了。所以采用基于代价的推荐来解决该问题会更加普适，因为基于代价的方法使用了和数据库优化器相同的方式，去量化评估所有的可能性，选出的是执行SQL耗费代价最小的索引。</description>
-    </item>
-    
-    <item>
-      <title>Java动态追踪技术探究</title>
-      <link>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</link>
-      <pubDate>Sat, 23 Apr 2022 03:21:34 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</guid>
-      <description>引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：
-“Debug一下吧。”
-“线上机器，没开Debug端口。”
-“看日志，看看请求值和返回值分别是什么？”
-“那段代码没打印日志。”
-“改代码，加日志，重新发布一次。”
-“怀疑是线程池的问题，重启会破坏现场。”
-长达几十秒的沉默之后：“据说，排查问题的最高境界，就是只通过Review代码来发现问题。”
-比几十秒长几十倍的沉默之后：“我轮询了那段代码一十七遍之后，终于得出一个结论。”
-“结论是？”
-“我还没到达只通过Review代码就能发现问题的至高境界。”
-从JSP说起 对于大多数Java程序员来说，早期的时候，都会接触到一个叫做JSP（Java Server Pages）的技术。虽然这种技术，在前后端代码分离、前后端逻辑分离、前后端组织架构分离的今天来看，已经过时了，但是其中还是有一些有意思的东西，值得拿出来说一说。
-当时刚刚处于Java入门时期的我们，大多数精力似乎都放在了JSP的页面展示效果上了：
-“这个表格显示的行数不对”
-“原来是for循环写的有问题，改一下，刷新页面再试一遍”
-“嗯，好了，表格显示没问题了，但是，登录人的姓名没取到啊，是不是Sesstion获取有问题？”</description>
     </item>
     
   </channel>

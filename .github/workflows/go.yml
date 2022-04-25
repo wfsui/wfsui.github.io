@@ -1,6 +1,7 @@
 name: article gen
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '38 2 * * *'
 

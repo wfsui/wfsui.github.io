@@ -5,9 +5,15 @@ subscribe:
   收藏:
     - link: https://tech.meituan.com/2019/02/28/java-dynamic-trace.html
     - link: https://tech.meituan.com/2019/02/14/talk-about-java-magic-class-unsafe.html
+  算法:
+    - link: https://blog.csdn.net/u013832707/article/details/108647898
 
 source:
   tech.meituan.com:
     title: //h1[contains(@class, 'post-title')]
     content: //div[contains(@class, 'content')]
     tags: //span[contains(@class, 'tag-links')]//a
+  blog.csdn.net:
+    title: //h1[contains(@class, 'title-article')]
+    content: //div[contains(@class, 'article_content')]
+    tags: //a[contains(@class, 'tag-link')]

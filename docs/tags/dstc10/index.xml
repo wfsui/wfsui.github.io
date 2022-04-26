@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 25 Apr 2022 07:48:15 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/dstc10/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 26 Apr 2022 03:36:49 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/dstc10/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>DSTC10开放领域对话评估比赛冠军方法总结</title>
       <link>https://wfsui.github.io/posts/dstc10%E5%BC%80%E6%94%BE%E9%A2%86%E5%9F%9F%E5%AF%B9%E8%AF%9D%E8%AF%84%E4%BC%B0%E6%AF%94%E8%B5%9B%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Mon, 25 Apr 2022 07:48:15 +0000</pubDate>
+      <pubDate>Tue, 26 Apr 2022 03:36:49 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/dstc10%E5%BC%80%E6%94%BE%E9%A2%86%E5%9F%9F%E5%AF%B9%E8%AF%9D%E8%AF%84%E4%BC%B0%E6%AF%94%E8%B5%9B%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</guid>
       <description>1. 背景 对话系统技术挑战赛DSTC（The Dialog System Technology Challenge）由微软、卡内基梅隆大学的科学家于2013年发起，旨在带动学术与工业界在对话技术上的提升，在对话领域具有极高的权威性和知名度。对话系统挑战赛今年已举办至第十届（DSTC10），吸引了微软、亚马逊、卡内基梅隆大学、Facebook、三菱电子研究实验室、美团、百度等全球知名企业、顶尖大学和机构同台竞技。

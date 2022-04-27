@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Tue, 26 Apr 2022 03:36:50 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%B3%BB%E7%BB%9F/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 27 Apr 2022 03:53:54 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%B3%BB%E7%BB%9F/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Java动态追踪技术探究</title>
       <link>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</link>
-      <pubDate>Tue, 26 Apr 2022 03:36:50 +0000</pubDate>
+      <pubDate>Wed, 27 Apr 2022 03:53:54 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</guid>
       <description>引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：
@@ -35,7 +35,7 @@
     <item>
       <title>设计模式二三事</title>
       <link>https://wfsui.github.io/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BA%8C%E4%B8%89%E4%BA%8B/</link>
-      <pubDate>Tue, 26 Apr 2022 03:36:47 +0000</pubDate>
+      <pubDate>Wed, 27 Apr 2022 03:53:52 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BA%8C%E4%B8%89%E4%BA%8B/</guid>
       <description>设计模式是众多软件开发人员经过长时间的试错和应用总结出来的，解决特定问题的一系列方案。现行的部分教材在介绍设计模式时，有些会因为案例脱离实际应用场景而令人费解，有些又会因为场景简单而显得有些小题大做。本文会结合在美团金融服务平台设计开发时的经验，结合实际的案例，并采用“师生对话”这种相对诙谐的形式去讲解三类常用设计模式的应用。希望能对想提升系统设计能力的同学有所帮助或启发。
@@ -60,7 +60,7 @@
     <item>
       <title>基于代价的慢查询优化建议</title>
       <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E4%BB%A3%E4%BB%B7%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE/</link>
-      <pubDate>Tue, 26 Apr 2022 03:36:43 +0000</pubDate>
+      <pubDate>Wed, 27 Apr 2022 03:53:48 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E4%BB%A3%E4%BB%B7%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE/</guid>
       <description>1 背景 慢查询是指数据库中查询时间超过指定阈值（美团设置为100ms）的SQL，它是数据库的性能杀手，也是业务优化数据库访问的重要抓手。随着美团业务的高速增长，日均慢查询量已经过亿条，此前因慢查询导致的故障约占数据库故障总数的10%以上，而且高级别的故障呈日益增长趋势。因此，对慢查询的优化已经变得刻不容缓。

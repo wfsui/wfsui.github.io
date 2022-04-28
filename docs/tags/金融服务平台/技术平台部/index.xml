@@ -10,7 +10,7 @@
     <item>
       <title>设计模式二三事</title>
       <link>https://wfsui.github.io/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BA%8C%E4%B8%89%E4%BA%8B/</link>
-      <pubDate>Wed, 27 Apr 2022 03:53:52 +0000</pubDate>
+      <pubDate>Thu, 28 Apr 2022 04:18:33 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BA%8C%E4%B8%89%E4%BA%8B/</guid>
       <description>设计模式是众多软件开发人员经过长时间的试错和应用总结出来的，解决特定问题的一系列方案。现行的部分教材在介绍设计模式时，有些会因为案例脱离实际应用场景而令人费解，有些又会因为场景简单而显得有些小题大做。本文会结合在美团金融服务平台设计开发时的经验，结合实际的案例，并采用“师生对话”这种相对诙谐的形式去讲解三类常用设计模式的应用。希望能对想提升系统设计能力的同学有所帮助或启发。

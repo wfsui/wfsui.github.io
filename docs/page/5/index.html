@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="generator" content="Hugo 0.97.3" />
+	<meta name="generator" content="Hugo 0.98.0" />
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>大峰哥 - 记录日常生活哦 </title><meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="alternate" type="application/rss+xml" href="https://wfsui.github.io/index.xml" title="大峰哥" />
@@ -67,7 +67,18 @@
 				
 				
 				<div class="post">
-					<div class="meta">Apr 28, 2022</div>
+					<div class="meta">Apr 29, 2022</div>
+					<a class="title" href="/posts/%E5%9F%BA%E4%BA%8E%E4%BB%A3%E4%BB%B7%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE/">基于代价的慢查询优化建议</a> &mdash;
+					<span class="description">
+						
+						1 背景 慢查询是指数据库中查询时间超过指定阈值（美团设置为100ms）的SQL，它是数据库的性能杀手，也是业务优化数据库访问的重要抓手。随着美团业务的高速增长，日均慢查询量已经过亿条，此前因慢查询导致的故障约占数据库故障总数的10%以上，而且高级别的故障呈日益增长趋势。因此，对慢查询的优化已经变得刻不容缓。
+那么如何优化慢查询呢？最直接有效的方法就是选用一个查询效率高的索引。关于高效率的索引推荐，主要在日常工作中，基于经验规则的推荐随处可见，对于简单的SQL，如select * from sync_test1 where name like 'Bobby%'，直接添加索引IX(name) 就可以取得不错的效果；但对于稍微复杂点的SQL，如select * from sync_test1 where name like 'Bobby%' and dt &gt; '2021-07-06'，到底选择IX(name)、IX(dt)、IX(dt,name) 还是IX(name,dt)，该方法也无法给出准确的回答。更别说像多表Join、子查询这样复杂的场景了。所以采用基于代价的推荐来解决该问题会更加普适，因为基于代价的方法使用了和数据库优化器相同的方式，去量化评估所有的可能性，选出的是执行SQL耗费代价最小的索引。&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
+					<div class="meta">Apr 29, 2022</div>
 					<a class="title" href="/posts/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/">知识图谱可视化技术在美团的实践与探索</a> &mdash;
 					<span class="description">
 						
@@ -83,7 +94,7 @@
 				</div>
 				
 				<div class="post">
-					<div class="meta">Apr 28, 2022</div>
+					<div class="meta">Apr 29, 2022</div>
 					<a class="title" href="/posts/linux%E4%B8%8B%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8c&#43;&#43;%E5%AE%9E%E8%B7%B5/">Linux下跨语言调用C&#43;&#43;实践</a> &mdash;
 					<span class="description">
 						
@@ -94,17 +105,6 @@
 3 实现详情 Python、Java支持调用C接口，但不支持调用C++接口，因此对于C++语言实现的接口，必须转换为C语言实现。为了不修改原始C++代码，在C++接口上层用C语言进行一次封装，这部分代码通常被称为“胶水代码”(Glue Code)。具体方案如下图所示：
 本章节各部分内容如下：
  【功能代码】部分，通过打印字符串的例子来讲述各语言部分的编码工作。 【打包发布】部分，介绍如何将生成的动态库作为资源文件与Python、Java代码打包在一起发布到仓库，以降低使用方的接入成本。 【业务使用】部分，介绍开箱即用的使用示例。 【易用性优化】部分，结合实际使用中遇到的问题，讲述了对于Python版本兼容，以及动态库依赖问题的处理方式。  3.&hellip;
-						
-					</span>
-				</div>
-				
-				<div class="post">
-					<div class="meta">Apr 28, 2022</div>
-					<a class="title" href="/posts/%E5%9F%BA%E4%BA%8E%E4%BB%A3%E4%BB%B7%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE/">基于代价的慢查询优化建议</a> &mdash;
-					<span class="description">
-						
-						1 背景 慢查询是指数据库中查询时间超过指定阈值（美团设置为100ms）的SQL，它是数据库的性能杀手，也是业务优化数据库访问的重要抓手。随着美团业务的高速增长，日均慢查询量已经过亿条，此前因慢查询导致的故障约占数据库故障总数的10%以上，而且高级别的故障呈日益增长趋势。因此，对慢查询的优化已经变得刻不容缓。
-那么如何优化慢查询呢？最直接有效的方法就是选用一个查询效率高的索引。关于高效率的索引推荐，主要在日常工作中，基于经验规则的推荐随处可见，对于简单的SQL，如select * from sync_test1 where name like 'Bobby%'，直接添加索引IX(name) 就可以取得不错的效果；但对于稍微复杂点的SQL，如select * from sync_test1 where name like 'Bobby%' and dt &gt; '2021-07-06'，到底选择IX(name)、IX(dt)、IX(dt,name) 还是IX(name,dt)，该方法也无法给出准确的回答。更别说像多表Join、子查询这样复杂的场景了。所以采用基于代价的推荐来解决该问题会更加普适，因为基于代价的方法使用了和数据库优化器相同的方式，去量化评估所有的可能性，选出的是执行SQL耗费代价最小的索引。&hellip;
 						
 					</span>
 				</div>

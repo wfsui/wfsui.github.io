@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sun, 01 May 2022 03:50:20 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 02 May 2022 04:03:49 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>知识图谱可视化技术在美团的实践与探索</title>
       <link>https://wfsui.github.io/posts/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Sun, 01 May 2022 03:50:20 +0000</pubDate>
+      <pubDate>Mon, 02 May 2022 04:03:49 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</guid>
       <description>1 知识图谱可视化基本概念 1.1 知识图谱技术的简介 知识图谱（Knowledge Graph）是人工智能的重要分支，它是一种揭示实体之间关系的语义网络，可以对现实世界的事物及其相互关系进行形式化地描述。举个例子，“孙悟空的师傅是唐僧”就是一条知识。在这条知识里，有“孙悟空”和“唐僧”两个实体，“师傅”是描述这两个实体之间的关系，上述内容在知识图谱中就组成了一个SPO三元组（Subject-Predicate-Object）。

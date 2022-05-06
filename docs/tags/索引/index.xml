@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Thu, 05 May 2022 03:46:43 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%B4%A2%E5%BC%95/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 06 May 2022 03:27:52 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%B4%A2%E5%BC%95/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>基于代价的慢查询优化建议</title>
       <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E4%BB%A3%E4%BB%B7%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE/</link>
-      <pubDate>Thu, 05 May 2022 03:46:43 +0000</pubDate>
+      <pubDate>Fri, 06 May 2022 03:27:52 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E4%BB%A3%E4%BB%B7%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE/</guid>
       <description>1 背景 慢查询是指数据库中查询时间超过指定阈值（美团设置为100ms）的SQL，它是数据库的性能杀手，也是业务优化数据库访问的重要抓手。随着美团业务的高速增长，日均慢查询量已经过亿条，此前因慢查询导致的故障约占数据库故障总数的10%以上，而且高级别的故障呈日益增长趋势。因此，对慢查询的优化已经变得刻不容缓。

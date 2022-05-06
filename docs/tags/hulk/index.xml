@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Thu, 05 May 2022 03:46:50 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/hulk/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 06 May 2022 03:27:58 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/hulk/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>美团集群调度系统的云原生实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%BA%91%E5%8E%9F%E7%94%9F%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Thu, 05 May 2022 03:46:50 +0000</pubDate>
+      <pubDate>Fri, 06 May 2022 03:27:58 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%BA%91%E5%8E%9F%E7%94%9F%E5%AE%9E%E8%B7%B5/</guid>
       <description>导语 集群调度系统在企业数据中心中占有举足轻重的地位，随着集群规模与应用数量的不断激增，开发者处理业务问题的复杂度也显著提升。如何解决大规模集群管理的难题，设计优秀且合理的集群调度系统，做到保稳定，降成本，提效率？本文将会逐一进行解答。

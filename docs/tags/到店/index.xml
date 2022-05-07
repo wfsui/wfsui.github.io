@@ -7,29 +7,29 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 06 May 2022 03:27:59 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%88%B0%E5%BA%97/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Java魔法类：Unsafe应用解析</title>
-      <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Fri, 06 May 2022 03:27:59 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
-      <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
-注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
-基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
-public final class Unsafe {  // 单例对象  private static final Unsafe theUnsafe;   private Unsafe() {  }  @CallerSensitive  public static Unsafe getUnsafe() {  Class var0 = Reflection.</description>
-    </item>
-    
+    <lastBuildDate>Sat, 07 May 2022 03:22:34 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%88%B0%E5%BA%97/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>异构广告混排在美团到店业务的探索与实践</title>
       <link>https://wfsui.github.io/posts/%E5%BC%82%E6%9E%84%E5%B9%BF%E5%91%8A%E6%B7%B7%E6%8E%92%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 06 May 2022 03:27:56 +0000</pubDate>
+      <pubDate>Sat, 07 May 2022 03:22:34 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%BC%82%E6%9E%84%E5%B9%BF%E5%91%8A%E6%B7%B7%E6%8E%92%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景与简介 1.1 背景 美团到店广告负责美团搜索流量的商业变现，服务于到店餐饮、休娱亲子、丽人医美、酒店旅游等众多本地生活服务商家。质量预估团队负责广告系统中CTR/CVR以及客单价/交易额等质量分预估，在过去几年中，我们通过位次上下文建模[1]、时空超长序列建模[2]等创新技术，在CTR预估问题中的用户、上下文等方向都取得了一些突破[3]，并整理成论文发表在SIGIR、ICDE、CIKM等国际会议上。
 不过以上论文重在模型精度，而模型精度与广告候选共同决定着排序系统的质量。但在广告候选角度，相比于传统电商的候选集合，美团搜索广告因LBS（Location Based Services, 基于位置的服务）的限制，所以在某些类目上门店候选较少，而候选较少又严重制约了整个排序系统的潜力空间。当用传统方式来增加候选数量的方法无法取得收益时，我们考虑将广告候选进行扩展与优化，以期提升本地生活场景排序系统的潜能上限。
 1.2 场景介绍 单一的门店广告不足以满足用户找商品、找服务的细粒度意图诉求。部分场景将商品广告作为门店广告的候选补充，两者以竞争方式来确定展示广告样式；此外，还有部分场景商品广告以下挂形式同门店广告进行组合展示。多种形式的异构广告展示样式，给到店广告技术团队带来了机遇与挑战，我们根据业务场景特点，针对性地对异构广告进行了混排优化。下文以美团结婚频道页和美团首页搜索为例，分别介绍两类典型异构混排广告：竞争关系异构广告和组合关系异构广告。
  竞争关系异构广告：门店和商品两种类型广告竞争混排，通过比较混排模型中pCTR确定广告展示类型。如下图1所示，左列首位为门店类型广告胜出，展示内容为门店图片、门店标题和门店星级评论数；右列首位为商品类型广告胜出，展示内容为商品图片、商品标题和对应门店。广告系统决定广告的排列顺序和展示类型，当商品类型广告获胜时，系统确定展示的具体商品。   组合关系异构广告：门店广告和其商品广告组合为一个展示单元（蓝色框体）进行列表排序，商品从属于门店，两种类型异构广告组合混排展示。如下图2所示，门店广告展示门店的头图、标题价格等信息；两个商品广告展示商品价格、标题和销量等信息。广告系统确定展示单元的排列顺序，并在门店的商品集合中确定展示的Top2商品。  1.3 挑战与做法简介 目前，搜索广告模型线上为基于DNN（深度神经网络）[4-6]的门店粒度排序模型，门店候选数量受限（约150）且缺失商品等更直接且重要的决策信息。因此，我们将商品广告作为门店的候选补充，通过门店与门店下多商品的混排打开候选空间，候选量可以达到1500+。此外，考虑广告上下文影响，同时进一步扩展打分候选以提升排序上限，我们将门店粒度升级为异构广告组合粒度的排序，基于此构建生成式广告组合预估系统，候选极限达到了1500X（考虑线上性能我们最终选择1500X)。而在探索过程中，我们遇到了以下三大挑战：</description>
+    </item>
+    
+    <item>
+      <title>Java魔法类：Unsafe应用解析</title>
+      <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Sat, 07 May 2022 03:22:28 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
+      <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
+注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
+基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
+public final class Unsafe {  // 单例对象  private static final Unsafe theUnsafe;   private Unsafe() {  }  @CallerSensitive  public static Unsafe getUnsafe() {  Class var0 = Reflection.</description>
     </item>
     
     <item>

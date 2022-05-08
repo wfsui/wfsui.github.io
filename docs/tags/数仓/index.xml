@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sat, 07 May 2022 03:22:36 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%95%B0%E4%BB%93/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 08 May 2022 03:29:42 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%95%B0%E4%BB%93/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>数据治理一体化实践之体系化建模</title>
       <link>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E4%B8%80%E4%BD%93%E5%8C%96%E5%AE%9E%E8%B7%B5%E4%B9%8B%E4%BD%93%E7%B3%BB%E5%8C%96%E5%BB%BA%E6%A8%A1/</link>
-      <pubDate>Sat, 07 May 2022 03:22:36 +0000</pubDate>
+      <pubDate>Sun, 08 May 2022 03:29:42 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E4%B8%80%E4%BD%93%E5%8C%96%E5%AE%9E%E8%B7%B5%E4%B9%8B%E4%BD%93%E7%B3%BB%E5%8C%96%E5%BB%BA%E6%A8%A1/</guid>
       <description>1 前言 随着数字经济的快速发展，数据已经成为新的生产要素。如何有效地开展数据治理工作，提升数据质量，打破数据孤岛，充分发挥数据的业务价值，已成为业界的热门话题。本文基于美团配送数据治理的历程，重点和大家分享一下配送数据“底座”的建设与实践，如何通过体系化建模建立起数据定义到数据生产的桥梁，达成数据定义、模型设计、数据生产三个环节的统一，消除因数据标准缺失和执行不到位引发的数据信任问题，在高质量地实现数据到信息的转化的同时，为后续的数据便捷消费提供数据和元数据保障。希望能给从事数据治理方向的同学在实现数据到资产的转化过程提供一些参考和借鉴。

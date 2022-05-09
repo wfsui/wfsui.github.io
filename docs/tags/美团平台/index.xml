@@ -7,22 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sun, 08 May 2022 03:29:44 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E5%B9%B3%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>DSTC10开放领域对话评估比赛冠军方法总结</title>
-      <link>https://wfsui.github.io/posts/dstc10%E5%BC%80%E6%94%BE%E9%A2%86%E5%9F%9F%E5%AF%B9%E8%AF%9D%E8%AF%84%E4%BC%B0%E6%AF%94%E8%B5%9B%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Sun, 08 May 2022 03:29:44 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/dstc10%E5%BC%80%E6%94%BE%E9%A2%86%E5%9F%9F%E5%AF%B9%E8%AF%9D%E8%AF%84%E4%BC%B0%E6%AF%94%E8%B5%9B%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</guid>
-      <description>1. 背景 对话系统技术挑战赛DSTC（The Dialog System Technology Challenge）由微软、卡内基梅隆大学的科学家于2013年发起，旨在带动学术与工业界在对话技术上的提升，在对话领域具有极高的权威性和知名度。对话系统挑战赛今年已举办至第十届（DSTC10），吸引了微软、亚马逊、卡内基梅隆大学、Facebook、三菱电子研究实验室、美团、百度等全球知名企业、顶尖大学和机构同台竞技。
-DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务。其中Track5 Task1 Automatic Open-domain Dialogue Evaluation较为系统全面地将开放领域对话的自动评估任务引入DSTC10比赛中。开放领域对话自动评估是对话系统的重要组成部分，致力于自动化地给出符合人类直觉的对话质量评估结果。相比于速度慢、成本高的人工标注，自动化评估方法可以高效率、低成本地对不同对话系统进行打分，有力促进了对话系统的发展。
-不同于任务型对话有一个固定的优化目标，开放领域对话更接近人类真实的对话，评估难度更大，因而吸引了广泛的关注。DSTC10 Track5 Task1比赛共包含14个验证数据集（共包含37种不同的对话评估维度）和5个测试数据集（共包含11个评估维度）。美团语音团队最终以平均0.3104的相关性取得了该比赛的第一名，该部分工作已完成一篇论文MME-CRS: Multi-Metric Evaluation based on Correlation Re-Scaling for Evaluating Open-Domain Dialogue，并收录在AAAI2022 Workshop。</description>
-    </item>
-    
+    <lastBuildDate>Mon, 09 May 2022 03:36:58 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E5%B9%B3%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>美团搜索中查询改写技术的探索与实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E4%B8%AD%E6%9F%A5%E8%AF%A2%E6%94%B9%E5%86%99%E6%8A%80%E6%9C%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sun, 08 May 2022 03:29:42 +0000</pubDate>
+      <pubDate>Mon, 09 May 2022 03:36:58 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E4%B8%AD%E6%9F%A5%E8%AF%A2%E6%94%B9%E5%86%99%E6%8A%80%E6%9C%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 引言 在搜索场景中，由于用户搜索词Query和检索文本Document之间存在大量表述不一的情况，在文本检索框架下，此类文本不匹配导致的漏召回问题严重影响着用户的体验。对这类问题业界一般有两种方案：用户端拓展用户的查询词——即查询改写，或Document端拓展文档关键词——即Document标签。本文主要介绍前一种解决漏召回的方案：查询改写（Query Rewriting，或称为查询扩展Query Expansion）。查询改写的应用方式是对原始Query拓展出与用户需求关联度高的改写词，多个改写词与用户搜索词一起做检索，从而用更好的表述，帮用户搜到更多符合需求的商户、商品和服务。
@@ -35,7 +24,7 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
     <item>
       <title>知识图谱可视化技术在美团的实践与探索</title>
       <link>https://wfsui.github.io/posts/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Sun, 08 May 2022 03:29:35 +0000</pubDate>
+      <pubDate>Mon, 09 May 2022 03:36:53 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</guid>
       <description>1 知识图谱可视化基本概念 1.1 知识图谱技术的简介 知识图谱（Knowledge Graph）是人工智能的重要分支，它是一种揭示实体之间关系的语义网络，可以对现实世界的事物及其相互关系进行形式化地描述。举个例子，“孙悟空的师傅是唐僧”就是一条知识。在这条知识里，有“孙悟空”和“唐僧”两个实体，“师傅”是描述这两个实体之间的关系，上述内容在知识图谱中就组成了一个SPO三元组（Subject-Predicate-Object）。
@@ -50,7 +39,7 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
     <item>
       <title>Linux下跨语言调用C&#43;&#43;实践</title>
       <link>https://wfsui.github.io/posts/linux%E4%B8%8B%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8c&#43;&#43;%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sun, 08 May 2022 03:29:33 +0000</pubDate>
+      <pubDate>Mon, 09 May 2022 03:36:52 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/linux%E4%B8%8B%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8c&#43;&#43;%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景 查询理解（QU, Query Understanding）是美团搜索的核心模块，主要职责是理解用户查询，生成查询意图、成分、改写等基础信号，应用于搜索的召回、排序、展示等多个环节，对搜索基础体验至关重要。该服务的线上主体程序基于C++语言开发，服务中会加载大量的词表数据、预估模型等，这些数据与模型的离线生产过程有很多文本解析能力需要与线上服务保持一致，从而保证效果层面的一致性，如文本归一化、分词等。
@@ -60,6 +49,17 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
 3 实现详情 Python、Java支持调用C接口，但不支持调用C++接口，因此对于C++语言实现的接口，必须转换为C语言实现。为了不修改原始C++代码，在C++接口上层用C语言进行一次封装，这部分代码通常被称为“胶水代码”(Glue Code)。具体方案如下图所示：
 本章节各部分内容如下：
  【功能代码】部分，通过打印字符串的例子来讲述各语言部分的编码工作。 【打包发布】部分，介绍如何将生成的动态库作为资源文件与Python、Java代码打包在一起发布到仓库，以降低使用方的接入成本。 【业务使用】部分，介绍开箱即用的使用示例。 【易用性优化】部分，结合实际使用中遇到的问题，讲述了对于Python版本兼容，以及动态库依赖问题的处理方式。  3.</description>
+    </item>
+    
+    <item>
+      <title>DSTC10开放领域对话评估比赛冠军方法总结</title>
+      <link>https://wfsui.github.io/posts/dstc10%E5%BC%80%E6%94%BE%E9%A2%86%E5%9F%9F%E5%AF%B9%E8%AF%9D%E8%AF%84%E4%BC%B0%E6%AF%94%E8%B5%9B%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Sun, 08 May 2022 03:29:44 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/dstc10%E5%BC%80%E6%94%BE%E9%A2%86%E5%9F%9F%E5%AF%B9%E8%AF%9D%E8%AF%84%E4%BC%B0%E6%AF%94%E8%B5%9B%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</guid>
+      <description>1. 背景 对话系统技术挑战赛DSTC（The Dialog System Technology Challenge）由微软、卡内基梅隆大学的科学家于2013年发起，旨在带动学术与工业界在对话技术上的提升，在对话领域具有极高的权威性和知名度。对话系统挑战赛今年已举办至第十届（DSTC10），吸引了微软、亚马逊、卡内基梅隆大学、Facebook、三菱电子研究实验室、美团、百度等全球知名企业、顶尖大学和机构同台竞技。
+DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务。其中Track5 Task1 Automatic Open-domain Dialogue Evaluation较为系统全面地将开放领域对话的自动评估任务引入DSTC10比赛中。开放领域对话自动评估是对话系统的重要组成部分，致力于自动化地给出符合人类直觉的对话质量评估结果。相比于速度慢、成本高的人工标注，自动化评估方法可以高效率、低成本地对不同对话系统进行打分，有力促进了对话系统的发展。
+不同于任务型对话有一个固定的优化目标，开放领域对话更接近人类真实的对话，评估难度更大，因而吸引了广泛的关注。DSTC10 Track5 Task1比赛共包含14个验证数据集（共包含37种不同的对话评估维度）和5个测试数据集（共包含11个评估维度）。美团语音团队最终以平均0.3104的相关性取得了该比赛的第一名，该部分工作已完成一篇论文MME-CRS: Multi-Metric Evaluation based on Correlation Re-Scaling for Evaluating Open-Domain Dialogue，并收录在AAAI2022 Workshop。</description>
     </item>
     
   </channel>

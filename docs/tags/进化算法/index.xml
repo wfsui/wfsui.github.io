@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Wed, 11 May 2022 03:40:00 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E8%BF%9B%E5%8C%96%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 12 May 2022 03:31:43 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E8%BF%9B%E5%8C%96%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>美团外卖广告智能算力的探索与实践（二）</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E6%99%BA%E8%83%BD%E7%AE%97%E5%8A%9B%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5%E4%BA%8C/</link>
-      <pubDate>Wed, 11 May 2022 03:40:00 +0000</pubDate>
+      <pubDate>Thu, 12 May 2022 03:31:43 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E6%99%BA%E8%83%BD%E7%AE%97%E5%8A%9B%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5%E4%BA%8C/</guid>
       <description>1 业务背景 随着美团外卖业务的飞速发展，外卖广告系统压力变得越来越大，算力开始成为新的瓶颈。2021年上半年，外卖广告的数条业务线开始出现算力资源不足的情况，算力分配效率亟待提升。在外卖场景下，流量呈现明显的双峰结构，广告系统在高峰时段面临较大的性能压力，非高峰时段存在大量算力冗余。智能算力旨在对流量算力进行精细化和个性化分配，从而实现系统算力约束下的业务收益最大化。

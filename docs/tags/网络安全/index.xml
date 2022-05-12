@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Wed, 11 May 2022 03:40:02 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 12 May 2022 03:31:45 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Linux中基于eBPF的恶意利用与检测机制</title>
       <link>https://wfsui.github.io/posts/linux%E4%B8%AD%E5%9F%BA%E4%BA%8Eebpf%E7%9A%84%E6%81%B6%E6%84%8F%E5%88%A9%E7%94%A8%E4%B8%8E%E6%A3%80%E6%B5%8B%E6%9C%BA%E5%88%B6/</link>
-      <pubDate>Wed, 11 May 2022 03:40:02 +0000</pubDate>
+      <pubDate>Thu, 12 May 2022 03:31:45 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/linux%E4%B8%AD%E5%9F%BA%E4%BA%8Eebpf%E7%9A%84%E6%81%B6%E6%84%8F%E5%88%A9%E7%94%A8%E4%B8%8E%E6%A3%80%E6%B5%8B%E6%9C%BA%E5%88%B6/</guid>
       <description>前言 近几年，云原生领域飞速发展，K8s成为公认的云操作系统。容器的高频率部署、短暂的生命周期、复杂的网络路由，都给内核安全带来了新的挑战。系统内核面对的复杂性在不断增长，在满足性能、可扩展性等新需求的同时，还需要保障系统稳定可用，这是极其困难的事情。此时，eBPF出现，它以较小的子系统改动，保障了系统内核的稳定，还具备实时动态加载的特性，能将业务逻辑加载到内核，实现热更新的动态执行。

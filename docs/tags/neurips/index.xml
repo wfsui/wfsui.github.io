@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 13 May 2022 03:59:02 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/neurips/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 14 May 2022 04:18:43 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/neurips/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>NeurIPS 2021 ｜ Twins：重新思考高效的视觉注意力模型设计</title>
       <link>https://wfsui.github.io/posts/neurips-2021-twins%E9%87%8D%E6%96%B0%E6%80%9D%E8%80%83%E9%AB%98%E6%95%88%E7%9A%84%E8%A7%86%E8%A7%89%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/</link>
-      <pubDate>Fri, 13 May 2022 03:59:02 +0000</pubDate>
+      <pubDate>Sat, 14 May 2022 04:18:43 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/neurips-2021-twins%E9%87%8D%E6%96%B0%E6%80%9D%E8%80%83%E9%AB%98%E6%95%88%E7%9A%84%E8%A7%86%E8%A7%89%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/</guid>
       <description>导读 Twins [1] 是美团和阿德莱德大学合作提出的视觉注意力模型，相关论文已被 NeurIPS 2021 会议接收，代码也已在GitHub上进行开源。NeurIPS（Conference on Neural Information Processing Systems）是机器学习和计算神经科学相关的学术会议，也是人工智能方向的国际顶级会议。

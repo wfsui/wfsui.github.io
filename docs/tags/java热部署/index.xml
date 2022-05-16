@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sun, 15 May 2022 03:30:37 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/java%E7%83%AD%E9%83%A8%E7%BD%B2/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 16 May 2022 03:24:28 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/java%E7%83%AD%E9%83%A8%E7%BD%B2/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Java系列 | 远程热部署在美团的落地实践</title>
       <link>https://wfsui.github.io/posts/java%E7%B3%BB%E5%88%97-%E8%BF%9C%E7%A8%8B%E7%83%AD%E9%83%A8%E7%BD%B2%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E8%90%BD%E5%9C%B0%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sun, 15 May 2022 03:30:37 +0000</pubDate>
+      <pubDate>Mon, 16 May 2022 03:24:28 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/java%E7%B3%BB%E5%88%97-%E8%BF%9C%E7%A8%8B%E7%83%AD%E9%83%A8%E7%BD%B2%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E8%90%BD%E5%9C%B0%E5%AE%9E%E8%B7%B5/</guid>
       <description>Sonic是美团内部研发设计的一款用于热部署的IDEA插件，本文其实现原理及落地的一些技术细节。在阅读本文之前，建议大家先熟悉一下Spring源码、Spring MVC 源码 、Spring Boot源码 、Agent字节码增强、Javassist、Classloader等相关知识。

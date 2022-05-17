@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 16 May 2022 03:24:23 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/database/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 17 May 2022 03:42:32 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/database/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>数据库异常智能分析与诊断</title>
       <link>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E6%99%BA%E8%83%BD%E5%88%86%E6%9E%90%E4%B8%8E%E8%AF%8A%E6%96%AD/</link>
-      <pubDate>Mon, 16 May 2022 03:24:23 +0000</pubDate>
+      <pubDate>Tue, 17 May 2022 03:42:32 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E6%99%BA%E8%83%BD%E5%88%86%E6%9E%90%E4%B8%8E%E8%AF%8A%E6%96%AD/</guid>
       <description>1 现状与问题 1.1 规模增长与运维能力发展之间的不平衡问题凸显 伴随着最近几年美团业务的快速发展，数据库的规模也保持着高速增长。而作为整个业务系统的“神经末梢”，数据库一旦出现问题，对业务造成的损失就会非常大。同时，因数据库规模的快速增长，出现问题的数量也大大增加，完全依靠人力的被动分析与定位已经不堪重负。下图是当时数据库实例近年来的增长趋势：

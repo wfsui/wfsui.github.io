@@ -1,6 +1,6 @@
 ---
 title: "TensorFlow在美团外卖推荐场景的GPU训练优化实践"
-date: 2022-05-17T03:42:36+0000
+date: 2022-05-18T03:40:54+0000
 tags: [美团技术团队, 基础研发平台, 后台, 机器学习, 推荐系统, TensorFlow, GPU, Training]
 ---
 

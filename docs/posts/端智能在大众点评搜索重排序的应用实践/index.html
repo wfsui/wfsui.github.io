@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>端智能在大众点评搜索重排序的应用实践 - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="端智能在大众点评搜索重排序的应用实践" />
+<meta property="og:description" content="1 引言 随着大数据、人工智能等信息技术的快速发展，云计算已经无法满足特定场景对数据隐私、高实时性的要求。借鉴边缘计算的思想，在终端部署 AI 能力逐渐步入大众的视野，“端智能”的概念应运而生。相比于传统的云计算，在智能手机等终端部署运行 AI 模块有以下几个方面的优势：首先，数据本地化可以缓解云存储的压力，也有利于用户数据的隐私保护；其次，计算的本地化可以缓解云计算过载问题；最后，端智能减少了和云端系统的请求通信成本，可以更好地利用用户在端上的交互，提供更加实时、个性化的服务体验。
+在端智能的应用方面，国内外各大科技公司已经走在了前列。Google 提出了 Recommendation Android App 的概念，根据用户兴趣进行内容推荐；Apple 的 Face ID 识别、Siri 智能助手等一些我们熟知的产品，也都是端智能典型的应用代表。阿里巴巴、快手、字节跳动等企业也在各自的应用场景上进行了端智能的落地，并推出相应的端上模型推理框架。比如，快手上线的短视频特效拍摄、智能识物等功能。另外，在搜索推荐场景下也有一些实践，其中，手机淘宝“猜你喜欢”在端上部署了智能推荐系统，取得较为显著收益（EdgeRec[1]，双十一 IPV 提升 10%&#43;，GMV 提升 5%&#43;）。快手上下滑推荐场景也应用了端上重排的方案，并取得App时长提升了 1%&#43; 的效果。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wfsui.github.io/posts/%E7%AB%AF%E6%99%BA%E8%83%BD%E5%9C%A8%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E9%87%8D%E6%8E%92%E5%BA%8F%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-21T03:08:39+00:00" />
+<meta property="article:modified_time" content="2022-05-21T03:08:39+00:00" /><meta property="og:site_name" content="大峰哥" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="端智能在大众点评搜索重排序的应用实践"/>
+<meta name="twitter:description" content="1 引言 随着大数据、人工智能等信息技术的快速发展，云计算已经无法满足特定场景对数据隐私、高实时性的要求。借鉴边缘计算的思想，在终端部署 AI 能力逐渐步入大众的视野，“端智能”的概念应运而生。相比于传统的云计算，在智能手机等终端部署运行 AI 模块有以下几个方面的优势：首先，数据本地化可以缓解云存储的压力，也有利于用户数据的隐私保护；其次，计算的本地化可以缓解云计算过载问题；最后，端智能减少了和云端系统的请求通信成本，可以更好地利用用户在端上的交互，提供更加实时、个性化的服务体验。
+在端智能的应用方面，国内外各大科技公司已经走在了前列。Google 提出了 Recommendation Android App 的概念，根据用户兴趣进行内容推荐；Apple 的 Face ID 识别、Siri 智能助手等一些我们熟知的产品，也都是端智能典型的应用代表。阿里巴巴、快手、字节跳动等企业也在各自的应用场景上进行了端智能的落地，并推出相应的端上模型推理框架。比如，快手上线的短视频特效拍摄、智能识物等功能。另外，在搜索推荐场景下也有一些实践，其中，手机淘宝“猜你喜欢”在端上部署了智能推荐系统，取得较为显著收益（EdgeRec[1]，双十一 IPV 提升 10%&#43;，GMV 提升 5%&#43;）。快手上下滑推荐场景也应用了端上重排的方案，并取得App时长提升了 1%&#43; 的效果。"/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://wfsui.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://wfsui.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<base href="https://wfsui.github.io/">
+	<h1 class="site-title"><a href="https://wfsui.github.io/">大峰哥</a></h1>
+	<div class="site-description"><h2>记录日常生活哦</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/wfsui" title="Github"><i data-feather="github"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">文章</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">端智能在大众点评搜索重排序的应用实践</h1>
+			<div class="meta">Posted at &mdash; May 21, 2022</div>
+		</div>
+
+		<div class="markdown">
+			<h2 id="1-引言">1 引言</h2>
+<p>随着大数据、人工智能等信息技术的快速发展，云计算已经无法满足特定场景对数据隐私、高实时性的要求。借鉴边缘计算的思想，在终端部署 AI 能力逐渐步入大众的视野，“端智能”的概念应运而生。相比于传统的云计算，在智能手机等终端部署运行 AI 模块有以下几个方面的优势：首先，数据本地化可以缓解云存储的压力，也有利于用户数据的隐私保护；其次，计算的本地化可以缓解云计算过载问题；最后，端智能减少了和云端系统的请求通信成本，可以更好地利用用户在端上的交互，提供更加实时、个性化的服务体验。</p>
+<p>在端智能的应用方面，国内外各大科技公司已经走在了前列。Google 提出了 Recommendation Android App 的概念，根据用户兴趣进行内容推荐；Apple 的 Face ID 识别、Siri 智能助手等一些我们熟知的产品，也都是端智能典型的应用代表。阿里巴巴、快手、字节跳动等企业也在各自的应用场景上进行了端智能的落地，并推出相应的端上模型推理框架。比如，快手上线的短视频特效拍摄、智能识物等功能。另外，在搜索推荐场景下也有一些实践，其中，手机淘宝“猜你喜欢”在端上部署了智能推荐系统，取得较为显著收益（EdgeRec[1]，双十一 IPV 提升 10%+，GMV 提升 5%+）。快手上下滑推荐场景也应用了端上重排的方案，并取得App时长提升了 1%+ 的效果。</p>
+<p>搜索是大众点评 App 连接用户与商家的重要渠道，越来越多的用户在不同场景下都会通过搜索来获取自己想要的服务。理解用户的搜索意图，将用户最想要结果排在靠前的位置，是搜索引擎最核心的步骤。为了进一步优化搜索个性化的排序能力，提升用户体验，搜索技术中心进行了在端上部署深度个性化模型的探索实践。本文主要介绍了端智能重排在大众点评 App 上的实践经验，文章主要分为以下三个部分：第一部分主要分析端智能重排要解决的问题和整体流程；第二部分会介绍端上重排序算法部分的探索实践过程；第三部分将介绍端上重排系统的架构设计以及部署优化，最后是总结与展望。</p>
+<h2 id="2-排序系统进阶为什么需要端上重排">2 排序系统进阶：为什么需要端上重排</h2>
+<h3 id="21-云端排序痛点">2.1 云端排序痛点</h3>
+<p>我们以一次完整的搜索行为，来看一下整个前后端执行的过程。如图 1 所示，用户在手机端搜索入口发起检索请求后，触发云端服务器执行，包括查询理解、多路召回、模型排序与展示信息合并等处理，最终返回给客户端进行渲染呈现给用户。</p>
+<p><img src="https://p0.meituan.net/travelcube/72a9c982950cb492402f4fc4db0234ac826976.png@750w_80q" alt="图1 搜索执行链路示意图"></p>
+<p>由于整个系统的每秒查询数（QPS）的限制，以及前后端请求通信、传输包体影响，通常会采用分页请求机制。这种客户端分页请求，云端服务检索排序返回给用户最终展示列表的 Client-Server 架构，对于大众点评 LBS 场景、类推荐的搜索产品来说，存在以下两个问题：</p>
+<p>① <strong>列表结果排序更新延迟</strong></p>
+<p>分页请求限制会导致排序结果的更新不及时。在下一个分页请求之前，用户的任何行为都无法对当前页内的搜索排序结果产生任何影响。以大众点评搜索结果页为例，一次请求返回 25 个结果到客户端，每屏展示约 3~4 个，那么用户需要滑动 6~8 屏左右，才能触发新的分页请求到云端获取下一页结果（以美食频道列表页为例，有 20% 以上的搜索浏览超过一页结果）。云端的排序系统无法及时感知用户的兴趣变化，并调整已下发到客户端的结果顺序。</p>
+<p><img src="https://p0.meituan.net/travelcube/0626ee632cadb577454b19a1dc9f182f233922.png@750w_80q" alt="图2 分页浏览决策示意图"></p>
+<p>② <strong>实时反馈信号感知延迟</strong></p>
+<p>一般来说，实时反馈信号会通过 Storm、Flink 等流处理平台，将日志流以 Mini-batch 的方式计算后，存入 KV 特征数据库供搜索系统模型使用。这种方式往往会有分钟级的特征延迟，因为需要对反馈数据进行解析处理，当涉及到更多、更复杂的反馈数据时，这种延迟表现会更加明显。而实时反馈反映着用户的实时偏好，对于搜索排序的优化有着十分重要的意义。</p>
+<h3 id="22-端智能重排流程和优势">2.2 端智能重排流程和优势</h3>
+<p>为了解决分页结果排序调整决策延迟，更及时地建模用户实时的兴趣偏好变化，我们在端上建设了重排序的系统架构，使得客户端具备深度模型推理能力，该方案具有以下几个方面的优势：</p>
+<ul>
+<li><strong>支持页内重排，对用户反馈作出实时决策</strong>：不再受限于云端的分页请求更新机制，具备进行本地重排、智能刷新等实时决策的功能。</li>
+<li><strong>无延时感知用户实时偏好</strong>：无需通过云端的计算平台处理，不存在反馈信号感知延迟问题。</li>
+<li><strong>更好的保护用户隐私</strong>：大数据时代数据隐私问题越来越受到用户的关注，大众点评 App 也在积极响应监管部门在个人信息保护方面的执行条例，升级个人隐私保护功能，在端上排序可以做到相关数据存放在客户端，更好地保护用户的隐私。</li>
+</ul>
+<p>端智能重排在大众点评搜索和美食频道页上线后，均取得显著效果，其中搜索流量点击率提升了 25BP（基点），美食频道页点击率提升了 43BP，Query平均点击数提升 0.29%。</p>
+<p><img src="https://p1.meituan.net/travelcube/eef0aa4bbec4c14a940f05d35c143ec0328788.png@750w_80q" alt="图3 端智能重排流程示意图"></p>
+<h2 id="3-端上重排序算法探索与实践">3 端上重排序算法探索与实践</h2>
+<p>重排序任务在搜索、推荐领域已有不少研究工作和落地实践，核心解决的问题是从 N 个结果候选中，生成 Top-K 个结果的排列。具体到端上的重排序场景，我们要做的主要工作是：根据用户对前面排序结果的反馈行为，生成候选商户上下文的排列，使得列表页整体的搜索点击率达到最优。下面将详细介绍，针对端上重排序场景，我们在特征工程、实时反馈序列建模以及模型结构做的一些探索与实践。</p>
+<h3 id="31-特征工程">3.1 特征工程</h3>
+<p>在端上建设特征工程的思路和云端搜索排序系统基本一致，User/Item/Query/Contextual 各个维度的基础、交叉特征可以快速复用到端上，当然需要考虑传输和存储优化，以及端、云特征系统的一致性，做到端云“无感”的开发部署，这部分内容会在后面架构&amp;部署优化章节详细介绍。除此以外，还有一部分端上特色的用户实时反馈信号，包括更多细粒度的交互行为等，这些特征也是前文所分析的端上实时反馈决策优势的关键信号。</p>
+<p><img src="https://p1.meituan.net/travelcube/731a34bb17a3ec93cf6e72dac4ccc1f094522.png@750w_80q" alt="表1 特征体系"></p>
+<p>具体来说，在端上建设的重排模型特征体系如表 1 所示，主要包括以下几个方面：</p>
+<ol>
+<li>基础特征，典型的用户/商户/Query/Context 侧特征，以及双侧的交叉特征等。</li>
+<li>偏置特征，主要包括后端返回的排序位置，终端设备上存在的一些大小等视觉上的偏置。</li>
+<li>用户的实时反馈特征，这部分是整个端上重排特征体系的重要组成部分，包括：
+<ul>
+<li>用户直接的交互行为序列（曝光、点击等）。</li>
+<li>行为关联特征，比如点击进入商户详情页内的停留、交互等相关行为。</li>
+</ul>
+</li>
+</ol>
+<h3 id="32-用户反馈行为序列建模">3.2 用户反馈行为序列建模</h3>
+<p>对于用户反馈序列的建模，业界有非常多的算法方案，比如我们所熟知的 DIN（Deep Interest Network[10]）、DIEN（Deep Interest Evolved Network[11]）以及基于 Transformer 的 BST（Behavior Sequence Transformer[12]）等等。端上排序场景里，对于用户反馈行为序列的应用会很大程度影响到算法的效果。因此，我们也在这个方面进行了一些探索。</p>
+<p><strong>引入深度反馈网络</strong></p>
+<p>在云端的精排模型优化工作中，我们一般只考虑用户和商户显式的“正反馈”行为（包括点击、下单等），隐式的曝光未点击“负反馈”信号则少有引入，因为长短期的历史行为中，此类曝光未点击行为非常多，相比于点击信号噪音很大。对于端上来说，这种实时的曝光“负反馈”信号也很重要。比如，对于同一品牌的某类商户实时多次曝光后，该品牌商户的点击率会呈明显的下降趋势。</p>
+<p>由于实时反馈序列中曝光未点击的隐式负反馈信号占了较大的比例，作为一个整体序列进行建模，对稀疏的正反馈信号存在较大的主导影响。阿里巴巴在淘宝首页信息流推荐场景下也提出了一种基于对抗的方式，来挖掘曝光、点击行为序列之间的联系，从而寻找当前曝光序列当中有哪些行为是真正的负反馈，而哪些行为与点击有更相近的关系。微信团队提出了深度反馈网络 DFN[4]，通过引入正负反馈信号的交互作用关系，进行一定程度的去噪、纠偏。</p>
+<p>首先，基于 DFN 的优化思路，我们对反馈序列进行拆分，生成正负反馈序列，利用 Transformer 进行正负反馈信号的 Cross Attention 交互作用。具体来说，以曝光序列和点击序列为例，曝光行为序列作为 Query，点击行为序列作为 Key 和 Value，得到曝光行为序列对点击行为序列的 Attention 结果。同理，再调换一下得到点击行为序列对曝光行为序列的 Attention 结果。考虑到正反馈信号的稀疏性，当仅有负反馈序列时，会计算得到一些平均的无关噪音权重。因此，我们参考[7]的做法，在负反馈序列中引入全零的向量，来消除这种潜在的噪音。具体模型结构如下图 4 所示：</p>
+<p><img src="https://p1.meituan.net/travelcube/3f226da003da07b7c6c7974e917a9b81240115.png@750w_80q" alt="图4 正负反馈交叉 Attention 结构图"></p>
+<p><strong>提升负反馈信号的信噪比</strong></p>
+<p>初版模型在美食频道列表页上线后，相比 Base 取得 0.1% 的稳定提升，但是和离线的收益对比还有一些差距，不太符合我们的预期。经过消融实验分析发现，主要原因是负反馈信号中存在大量噪音，而噪音产生的根源是因为部分曝光商户的点击行为可能发生在特征收集的时刻之后。因此，为了提高负反馈信号的信噪比，我们对于负反馈信号的曝光时间进行了限制，长时间曝光但未点击的商户更有可能是真实负反馈信号。如下图 5 所示，更长的停留可以关联到更稳定的反馈信号，线上效果更优。</p>
+<p><img src="https://p1.meituan.net/travelcube/15612bb6d7a234b3dec02777bcde7dcb30910.png@750w_80q" alt="图5 停留时长-点击率效果对比"></p>
+<p><strong>多视角的正负反馈序列交叉建模</strong></p>
+<p>在初版正负反馈序列模型的基础上继续迭代，我们关注到在调整 Transformer 中 Multi-Head 的数目时，并没有预期的增量收益，相比仅使用一个 Head 指标无明显变化。经过分析，我们怀疑这种通过随机初始化的生成的多头表征，很大程度上只是单纯参数量上的扩充。</p>
+<p>另外，在大众点评搜索场景下，同 Query 下商户列表整体的相关度比较高，尤其对页内的结果来说，同质度更高。差异性主要体现在比如价格、距离、环境、口味等细粒度的表征上面。因此，我们设计了一种多视角的正负反馈序列交叉建模方式 Multi-View FeedBack Attention Network (MVFAN)，来强化曝光、点击行为在这些感知度更高的维度上的交互作用。具体网络结构如下图 6 所示：</p>
+<p><img src="https://p1.meituan.net/travelcube/95e2c128aacdf7fc65d80591154b85b4174538.png@750w_80q" alt="图6 Multi-View FeedBack Attention Network 结构图"></p>
+<p>用户行为序列按反馈类型切分为点击正反馈和曝光未点负反馈，序列除了 shopid 本身，还补充了更多泛化的属性信息（包括类目、价格等），以及上下文相关的特征（比如经纬度、距离）。这些序列 Embedding 后叠加，形成最终正负反馈序列的表征。接下来会使用多级的 Transformer 进行编码，输入多个维度的信号去解码，激活用户在不同商户维度上的偏好：</p>
+<ol>
+<li>使用待排商户ID作为Q，对实时反馈行为进行激活，表达用户隐形的多样性兴趣。</li>
+<li>使用商户更多表现粒度的属性信息作为Q，激活得到注意力权重，提升用户在这些更显式感知的商户表征上的兴趣表达。</li>
+<li>使用当前搜索上下文相关的信号作为Q，激活得到注意力权重，增强实时反馈行为对于不同上下文环境的自适应地表达。</li>
+</ol>
+<p>$Q = [x_s, x_c, …, x_d] \in \Re^{K\times d_{model}}$，$K = V = x_s \oplus x_c \oplus … \oplus x_d$ 表示各种反馈序列（shop_id/category/distance/position等）相加，作为 Transformer 的输入，Multi-View 的注意力结构可以由以下公式表示：</p>
+<p>$$MultiHead(Q, K, V) = Concat(head_1, head_2, …, head_h) W^O$$$$head_i = Attention(Q_iW^{Q_i}, KW_i^K, VW_i^V)$$$$Attention(Q_i, K, V) = softmax(\frac{Q_iK^T}{\sqrt{d_k}})V$$</p>
+<p>通过消融对比实验发现，相比于随机初始化的 Multi-Head Attention，这种显式使用多种商户上下文特征的 Transformer 激活方式效果更显著。</p>
+<p><strong>Match&amp;Aggregate 序列特征</strong></p>
+<p>对于端上的用户实时反馈特征，除了各种常用的基于 Attention 的序列建模方式，还有一种采用显式交叉的兴趣提取方式。如图 7 所示，相比于一般基于 Embedding 内积计算“Soft”权重的 Attention 建模，它可以理解为一种“Hard”的 Attention 方式，提取的形式包括：Hit（是否命中）、Frequency（命中多少次）、Step（间隔多久）等等，除了单变量序列的交叉，还可以组合多个变量进行交叉，来提升行为描述的粒度和区分度。</p>
+<p><img src="https://p0.meituan.net/travelcube/c231d8e2e63113e00fe5d0b1a51cdac591238.png@750w_80q" alt="图7 Attention、Match&amp;Aggregate 序列特征提取对比图"></p>
+<p>这种基于先验知识引入的反馈序列交叉特征，可以一定程度上避免“Soft” Attention 方式引入的一些噪音信息，同时也具有更好的可解释性。比如，用户在搜索“火锅”时，没有选择附近的商户，而点击了常住地附近的历史偏好商户，这种场景下存在明显的信号说明用户提前决策的意图。这时，加入一些显式的强交叉特征（例如，待排商户距实时点击商户的距离等）就能非常好的捕捉这种意图，从而把距离远但和用户意图更匹配的相关商户排上来。在大众点评搜索的场景下，我们基于该方式引入了大量的先验交叉特征，也取得了较为显著的效果。</p>
+<h3 id="33-重排模型设计">3.3 重排模型设计</h3>
+<p>关于重排序的研究，目前业界也有不少相关的工作，包括：基于贪心策略优化多目标的 MMR(Maximal Marginal Relevance) [8]，直接建模上下文作用关系的 Context-aware List-wise Model[2,3] 以及基于强化学习的方案[9]等。在搜索端智能重排场景上，我们采用了基于 Context-aware List-wise 的模型进行构建，通过建模精排模型生成的 Top-N 个物品上下文之间的互相影响关系，来生成 Top-K 结果。整体模型结构如下图 8 所示，主要包括端云联动的训练方案，以此来引入更多云端的交互表征；以及基于 Transformer 的上下文关系建模，下面将分别进行介绍。</p>
+<p><img src="https://p0.meituan.net/travelcube/65b0af2ee89ba5861c286c92af575561104782.png@750w_80q" alt="图8 整体模型结构图"></p>
+<p><strong>端云联合训练</strong></p>
+<p>一般来说，云端的重排序模型基本都复用精排层的特征，并在此基础上加入精排输出的位置或者模型分。大众点评搜索精排模型经过长期的迭代更新，已经建设了大量的基础、场景相关特征，以及建模了包括点击、访购等多个联合目标，这些大规模维度的特征和多目标优化在端上直接复用存在巨大的计算开销、存储&amp;传输压力。而仅使用云端模型位置或者预估分输出，则不可避免的会损失掉很多端云特征的交叉表达能力。同时，对于到端云两侧的模型迭代、更新，还会存在较大的维护成本。</p>
+<p>因此，我们采用端云联合训练的方式把大量的云端特征交叉信号，以及多目标高阶表征引入到端上使用。如图 9 所示，云端的模型训练收敛后，加入到端上重排任务继续 Fine-tune 更新。需要注意的是：</p>
+<ol>
+<li>因为搜索精排层使用的是 ListWise 的 LambdaLoss，模型输出的预估分仅有相对的大小意思，不能表示商户的点击率预估范围，无法进行全局的绝对值使用。故仅采用网络的最后一层输出接入。</li>
+<li>仅接入最后一层的 Dense 输出，大大损失了云端特征与端上特征的交叉能力，因此，需要通过特征选择方式，选取头部特征加入到云端进行使用。</li>
+</ol>
+<p><img src="https://p0.meituan.net/travelcube/8293287b93fc316da3718385727d7cab118388.png@750w_80q" alt="图9 端云联合训练模型结构图"></p>
+<p><strong>重排商户上下文建模</strong></p>
+<p>商户上下文重排建模结构参考 PRM[3]，结合端上应用场景做了一些调整，具体结构如下图 10 所示：</p>
+<p><img src="https://p0.meituan.net/travelcube/c136e22acad3787a24bd2a5acc02b71084994.png@750w_80q" alt="图10 重排算法模型结构图"></p>
+<p>主要由以下几个部分构成：</p>
+<ul>
+<li>商户特征向量 X ：由前文所述的各方面特征（User/Shop 单、双侧统计交叉特征、反馈序列编码特征，以及云端融合输出的特征）经过全连接映射后的输出进行表示。该输出已包含位置信息，所以后续的 Transformer 输入不需要再增加位置编码。</li>
+<li>输入层需要进过 Query Dynamic Partition 处理，切分为每个 Query 单元的上下文商户序列，再输入到 Transformer 层进行编码。</li>
+<li>Transformer 编码层：通过 Multi-Head Self-Attention 编码商户上下文关系。</li>
+</ul>
+<p><strong>优化目标</strong></p>
+<p>在搜索场景下，我们关注的还是用户搜索的成功率（有没有发生点击行为），不同于推荐、广告场景往往基于全局性损失预估 item 的点击率，搜索业务更关心排在页面头部结果的好坏，靠前位置排序需要优先考虑。因此，在重排提升用户搜索点击率目标的建模中，我们采用了 ListWise 的 LambdaLoss，梯度更新中引入 DeltaNDCG 值来强化头部位置的影响。详细推论和计算实现过程参见<a href="https://tech.meituan.com/2019/01/17/dianping-search-deeplearning.html">大众点评搜索基于知识图谱的深度学习排序实践</a>。</p>
+<p>$$C = \frac{1}{2}(1 - S{ij})\sigma(s_i - s_j) + log(1 + e^{-\sigma (s_i-s_j)})$$ $$\lambda_{ij} = \frac{\partial C(s_i - s_j)}{\partial s_i} = \frac{-\sigma}{1 + e^{\sigma (s_i-s_j)}}| \Delta _{NDCG}|$$</p>
+<h3 id="34-多场景应用效果">3.4 多场景应用效果</h3>
+<p>综合上述特征&amp;模型优化举措，相关的离线实验指标效果对比如表 2 所示：</p>
+<p><img src="https://p0.meituan.net/travelcube/1d028776269b59415ca3a92405ce8184121845.png@750w_80q" alt="表2 实验迭代指标对比数据表"></p>
+<p>端智能重排序在点评主搜和美食频道列表页上线 AB 实验，核心业务指标 QV_CTR 均在高位基础上取得显著提升。如图 11 所示，上半部分，主搜列表页 QV_CTR 提升 0.25%，美食频道列表页 QV_CTR 提升 0.43%，分端表现稳定正向。另外，从下半部分分位置的点击率对比曲线，可以看出，端上重排能够一定程度上缓解固定分页请求的点击衰减效果，尤其在靠后的几屏展示上都有比较显著的提升。</p>
+<p><img src="https://p0.meituan.net/travelcube/c3a2b5a223d8cec225238a222cf6602a503574.png@750w_80q" alt="图11 线上 AB 实验 QV_CTR 指标效果 &amp; 分位置点击率对比"></p>
+<h2 id="4-系统架构与部署优化">4 系统架构与部署优化</h2>
+<p>不同于云端的大规模深度模型上线，几百 GB，甚至上 T 的模型都可以通过扩充机器分片加载的分布式方案部署使用。终端设备的计算和存储能力虽然有了显著提升，可以支持一定规模的深度模型进行推理，但相对来说，端上的存储资源是非常受限的，毕竟 App 整体的大小最多不过几百 MB。</p>
+<p>因此，除了前面提到的在特征选择、触发决策控制上对效果与性能进行权衡外，我们还在模型部署、压缩上做了进一步优化，并对能耗等各方面指标进行详细的评估。另外，为了更高效地迭代端上的模型，包括进一步挖掘用户实时的兴趣偏好特征，自研了一套和云端系统流程一致的“端无感”模型训练、预估框架，下面会逐步展开介绍。</p>
+<h3 id="41-系统架构">4.1 系统架构</h3>
+<p>整体的端智能重排系统架构，包括和云端的搜索排序系统联合部署方案如图 12 所示。具体来说，主要有以下三大模块来支持端上重排系统的实现：</p>
+<ul>
+<li>智能触发方案模块，针对业务设计的各类触发事件，执行端上智能模块的调度。例如，用户点击商户行为触发执行本地重排。</li>
+<li>端上重排服务模块，执行构建特征数据，并调用端侧推理引擎运行重排模型，进行打分输出。其中：
+<ul>
+<li>特征处理部分，是搜索技术中心针对搜/推/广算法场景，专项设计的一套方便算法使用的通用特征算子处理服务。支持对客户端、云端的各种类型数据，使用轻量、简便的表达式构建特征。</li>
+<li>端侧推理引擎部分，是终端研发中心输出的统一模型管理框架，支持各类端上轻量级推理引擎部署，以及模型的动态下发控制等。</li>
+</ul>
+</li>
+<li>Native 重排处理逻辑部分，主要进行重排输出后的结果回插，刷新控制处理。</li>
+</ul>
+<p><img src="https://p0.meituan.net/travelcube/66fd27bca77d6a435362b681e04ea063142874.png@750w_80q" alt="图12 端智能重排系统架构"></p>
+<h3 id="42-端上大规模深度模型部署优化">4.2 端上大规模深度模型部署优化</h3>
+<p><strong>Sparse Embedding 与 Dense 网络拆分部署</strong></p>
+<p>因为端上的计算资源受限，无法存储完整的超大规模参数模型，因此，基于最直观的思路，我们将离线训练的模型参数拆分成了 Dense 网络与大规模 ID 特征的 Embedding Table 分别部署：</p>
+<ol>
+<li>主 Dense 网络以及一些较小的 Query/Contextual 特征、Shop 基础属性特征等输入层结构，转化成 MNN 格式，存储在美团资源管理平台上，供客户端启动时一次性拉取，存储在客户端本地。</li>
+<li>大规模的 ID 特征 Embedding Table 部分（占整体网络参数量的 80%），存储在云端的 TF-Servering 服务中，在客户端发起搜索请求时，会从 Serving 服务中获取当前页商户结果所对应的 Embedding 特征，与商户结果列表一同下返回到客户端，与客户端构建的其余特征一起 Concat 后，输入到推理引擎进行打分重排。</li>
+</ol>
+<p><strong>模型压缩</strong></p>
+<p>经过上一步拆分处理，模型大小可以控制在 10MB 以内，为了进一步减少模型在手机端的空间占用，以及功耗/性能影响，我们采用了美团视觉智能部提供的压缩方案。该方案针对现有的神经网络模型压缩技术没有考虑要契合部署的端智能设备、压缩后的模型往往不能适配特定的设备、输出结果对齐度差等问题，设计了能更好用于移动端上部署的神经网络压缩工具，更好地在端上推理框架上发挥了性能。</p>
+<p>压缩优化后从下面的测试对比数据可以看到，模型大小进一步减小到 1MB 以内，同时精度损失在十万分位差距。采用 Sysdiagnose 进行耗电分析，开启推理功能，重复动作：从首页搜索“火锅/五角场”，进入搜索列表页进行首次重排推理，滑动列表再次计算后，退出页面（测试时间为 10 分钟，间隔 20 秒采用一次），相关的能耗指标均无显著的变化。</p>
+<p><img src="https://p0.meituan.net/travelcube/fde829c838730b1fa63d79c2f4ff000c451417.png@750w_80q" alt="图13 模型压缩数据、能耗相关指标对比"></p>
+<h3 id="43-端智能模型训练预估平台">4.3 端智能模型训练预估平台</h3>
+<p>不同于云端的排序算法实验流程，已经有成熟、完善的训练预估平台支持，特征&amp;模型上线非常便捷、高效。客户端的实验流程前期存在非常大的迭代效率问题，比如模型的上线流程繁琐，包括模型结构的分离、转换&amp;验证以及发布依赖大量的人工操作，跟多个内部平台的流转、对接；另外特征迭代效率低下，需要客户端协同开发相应的特征加工逻辑，存在较大的逻辑一致性风险，而且还会存在分端的实现差异等问题。</p>
+<p>基于此，美团的前后端工程合力推进开发、设计了一套适配客户端的 Augur 特征处理框架，将端上的模型发布和特征处理与一站式实验平台（Poker）、统一预估框架（Augur）进行打通，为进一步的算法迭代实验奠定了良好的基础，后续搜索技术中心团队也会向大家介绍面向端智能算法应用的一站式模型训练预估平台，敬请期待。</p>
+<p><img src="https://p0.meituan.net/travelcube/17d9f0c2e77887e0fdbe18c9b21f3feb579715.png@750w_80q" alt="图14 端智能模型训练预估框架图"></p>
+<h2 id="5-总结与展望">5 总结与展望</h2>
+<p>端智能重排序是大众点评搜索在边缘计算方向的一次探索实践，并且在核心指标上取得了较为显著的效果。通过利用端上计算的能力，更高效地捕捉用户的实时兴趣偏好，弥补云端服务决策延迟、用户反馈信息获取延迟等问题。及时调整未曝光候选结果的顺序，把更符合用户意图的商户排上来，从而带来更好的用户搜索触达体验。同时，我们对前后端训练、部署预估框架进行了升级，为后续进一步快速迭代实验奠定了良好的基础。</p>
+<p>大众点评搜索技术中心团队会持续进行端智能技术在各个业务场景中的落地，未来可以探索优化的方向还包括：</p>
+<ol>
+<li>基于联邦学习模式，进一步在保证数据隐私安全及合法合规的基础上，迭代端云联合的智能搜索排序模型。</li>
+<li>建模更精确、多样的触发控制策略，对于端上实时用户意图感知的决策模块，当前的控制策略还比较简单。后续我们会考虑结合 Query 上下文，用户反馈信号等特征输出更灵活的预判信号，同时请求云端，获取更多符合用户当前意图的候选结果。</li>
+<li>继续优化重排序模型，包括实时反馈序列建模算法，探索对于隐式负反馈信号更鲁棒的编码表达方式等。</li>
+<li>思考端上更丰富、灵活的应用场景，比如模型的个性化定制，做到“千人千模”的极致个性化体验。</li>
+</ol>
+<h2 id="作者简介">作者简介</h2>
+<p>祝升、刘哲、汤彪、嘉炜、凯元、杨乐、洪晨、曼曼、华林、孝峰、张弓，来自美团/大众点评事业部/搜索技术中心。</p>
+<p>逸然、朱敏，来自美团平台/搜索与NLP部/工程研发中心。</p>
+<h2 id="参考资料">参考资料</h2>
+<p>[1] Yu Gong, Ziwen Jiang, et al. “EdgeRec: Recommender System on Edge in Mobile Taobao” arXiv preprint arXiv:2005.08416 (2020). [2] Qingyao Ai, Keping Bi, et al. “Learning a Deep Listwise Context Model for Ranking Refinement” arXiv preprint arXiv:1804.05936 (2018). [3] Changhua Pei, Yi Zhang, et al. “Personalized Re-ranking for Recommendation” arXiv preprint arXiv:1904.06813 (2019). [4] Ruobing Xie, Cheng Ling, et al. “Deep Feedback Network for Recommendation” (IJCAI-2020). [5] 非易、祝升等. <a href="https://tech.meituan.com/2019/01/17/dianping-search-deeplearning.html">大众点评搜索基于知识图谱的深度学习排序实践.</a>[6] 肖垚、家琪等. <a href="https://tech.meituan.com/2020/04/16/transformer-in-meituan.html">Transformer 在美团搜索排序中的实践.</a>[7] Qingyao Ai, Daniel N Hill, et al. “A zero attention model for personalized product search” arXiv preprint arXiv:1908.11322 (2019). [8] Teo CH, Nassif H, et al. “Adaptive, Personalized Diversity for Visual Discovery” (RecSys-2016). [9] Eugene Ie, Vihan Jain, et al. “SLATEQ - A Tractable Decomposition for Reinforcement Learning with Recommendation Sets” (IJCAI-19). [10] Zhou, Guorui, et al. “Deep interest network for click-through rate prediction.” (SIGKDD-2018). [11] Zhou, Guorui, et al. “Deep interest evolution network for click-through rate prediction.” (AAAI-2019). [12] Chen, Qiwei, et al. “Behavior Sequence Transformer for E-commerce Recommendation in Alibaba.” arXiv preprint arXiv:1905.06874 (2019).</p>
+<h2 id="招聘信息">招聘信息</h2>
+<p>美团/点评事业部-搜索技术中心，致力于打造一流的搜索系统和搜索体验，满足大众点评用户的多样搜索需求，支撑各业务在大众点评 App 上的搜索需求。欢迎感兴趣的同学发送简历至：edp.itu.zhaopin@meituan.com。</p>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F">美团技术团队</a></li>
+								
+								<li><a href="/tags/%E7%82%B9%E8%AF%84%E4%BA%8B%E4%B8%9A%E9%83%A8">点评事业部</a></li>
+								
+								<li><a href="/tags/%E7%AE%97%E6%B3%95">算法</a></li>
+								
+								<li><a href="/tags/%E7%AB%AF%E6%99%BA%E8%83%BD">端智能</a></li>
+								
+								<li><a href="/tags/%E6%90%9C%E7%B4%A2">搜索</a></li>
+								
+								<li><a href="/tags/%E9%87%8D%E6%8E%92%E5%BA%8F">重排序</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'wfsui';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="">Wfsui theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div><script>feather.replace()</script>
+</body>
+</html>

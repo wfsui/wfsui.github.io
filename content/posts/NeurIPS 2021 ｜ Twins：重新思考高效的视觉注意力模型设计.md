@@ -1,6 +1,6 @@
 ---
 title: "NeurIPS 2021 ｜ Twins：重新思考高效的视觉注意力模型设计"
-date: 2022-05-20T03:35:35+0000
+date: 2022-05-21T03:08:45+0000
 tags: [美团技术团队, 基础研发平台, 算法, Twins, 主干网模型, Vision Transformer, NeurIPS]
 ---
 

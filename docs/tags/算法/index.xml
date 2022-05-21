@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 20 May 2022 03:35:36 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 21 May 2022 03:08:46 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>异构广告混排在美团到店业务的探索与实践</title>
       <link>https://wfsui.github.io/posts/%E5%BC%82%E6%9E%84%E5%B9%BF%E5%91%8A%E6%B7%B7%E6%8E%92%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 20 May 2022 03:35:36 +0000</pubDate>
+      <pubDate>Sat, 21 May 2022 03:08:46 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%BC%82%E6%9E%84%E5%B9%BF%E5%91%8A%E6%B7%B7%E6%8E%92%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景与简介 1.1 背景 美团到店广告负责美团搜索流量的商业变现，服务于到店餐饮、休娱亲子、丽人医美、酒店旅游等众多本地生活服务商家。质量预估团队负责广告系统中CTR/CVR以及客单价/交易额等质量分预估，在过去几年中，我们通过位次上下文建模[1]、时空超长序列建模[2]等创新技术，在CTR预估问题中的用户、上下文等方向都取得了一些突破[3]，并整理成论文发表在SIGIR、ICDE、CIKM等国际会议上。
@@ -23,7 +23,7 @@
     <item>
       <title>NeurIPS 2021 ｜ Twins：重新思考高效的视觉注意力模型设计</title>
       <link>https://wfsui.github.io/posts/neurips-2021-twins%E9%87%8D%E6%96%B0%E6%80%9D%E8%80%83%E9%AB%98%E6%95%88%E7%9A%84%E8%A7%86%E8%A7%89%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/</link>
-      <pubDate>Fri, 20 May 2022 03:35:35 +0000</pubDate>
+      <pubDate>Sat, 21 May 2022 03:08:45 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/neurips-2021-twins%E9%87%8D%E6%96%B0%E6%80%9D%E8%80%83%E9%AB%98%E6%95%88%E7%9A%84%E8%A7%86%E8%A7%89%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/</guid>
       <description>导读 Twins [1] 是美团和阿德莱德大学合作提出的视觉注意力模型，相关论文已被 NeurIPS 2021 会议接收，代码也已在GitHub上进行开源。NeurIPS（Conference on Neural Information Processing Systems）是机器学习和计算神经科学相关的学术会议，也是人工智能方向的国际顶级会议。
@@ -34,7 +34,7 @@ Twins 提出了两类结构，分别是 Twins-PCPVT 和 Twins-SVT：
     <item>
       <title>短视频内容理解与生成技术在美团的创新实践</title>
       <link>https://wfsui.github.io/posts/%E7%9F%AD%E8%A7%86%E9%A2%91%E5%86%85%E5%AE%B9%E7%90%86%E8%A7%A3%E4%B8%8E%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%88%9B%E6%96%B0%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 20 May 2022 03:35:34 +0000</pubDate>
+      <pubDate>Sat, 21 May 2022 03:08:44 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%9F%AD%E8%A7%86%E9%A2%91%E5%86%85%E5%AE%B9%E7%90%86%E8%A7%A3%E4%B8%8E%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%88%9B%E6%96%B0%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 背景 美团围绕丰富的本地生活服务电商场景，积累了丰富的视频数据。
@@ -53,9 +53,34 @@ Twins 提出了两类结构，分别是 Twins-PCPVT 和 Twins-SVT：
     </item>
     
     <item>
+      <title>端智能在大众点评搜索重排序的应用实践</title>
+      <link>https://wfsui.github.io/posts/%E7%AB%AF%E6%99%BA%E8%83%BD%E5%9C%A8%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E9%87%8D%E6%8E%92%E5%BA%8F%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Sat, 21 May 2022 03:08:39 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%AB%AF%E6%99%BA%E8%83%BD%E5%9C%A8%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E9%87%8D%E6%8E%92%E5%BA%8F%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</guid>
+      <description>1 引言 随着大数据、人工智能等信息技术的快速发展，云计算已经无法满足特定场景对数据隐私、高实时性的要求。借鉴边缘计算的思想，在终端部署 AI 能力逐渐步入大众的视野，“端智能”的概念应运而生。相比于传统的云计算，在智能手机等终端部署运行 AI 模块有以下几个方面的优势：首先，数据本地化可以缓解云存储的压力，也有利于用户数据的隐私保护；其次，计算的本地化可以缓解云计算过载问题；最后，端智能减少了和云端系统的请求通信成本，可以更好地利用用户在端上的交互，提供更加实时、个性化的服务体验。
+在端智能的应用方面，国内外各大科技公司已经走在了前列。Google 提出了 Recommendation Android App 的概念，根据用户兴趣进行内容推荐；Apple 的 Face ID 识别、Siri 智能助手等一些我们熟知的产品，也都是端智能典型的应用代表。阿里巴巴、快手、字节跳动等企业也在各自的应用场景上进行了端智能的落地，并推出相应的端上模型推理框架。比如，快手上线的短视频特效拍摄、智能识物等功能。另外，在搜索推荐场景下也有一些实践，其中，手机淘宝“猜你喜欢”在端上部署了智能推荐系统，取得较为显著收益（EdgeRec[1]，双十一 IPV 提升 10%+，GMV 提升 5%+）。快手上下滑推荐场景也应用了端上重排的方案，并取得App时长提升了 1%+ 的效果。</description>
+    </item>
+    
+    <item>
+      <title>图神经网络训练框架的实践和探索</title>
+      <link>https://wfsui.github.io/posts/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%8E%A2%E7%B4%A2/</link>
+      <pubDate>Sat, 21 May 2022 03:08:38 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%8E%A2%E7%B4%A2/</guid>
+      <description>1. 前言 万物之间皆有联系。图作为一种通用的数据结构，可以很好地描述实体与实体之间的关系。例如，在社交网络中，用图来表示用户与用户之间的好友关系；在电商网站中，用图表示用户与商品之间的点击购买行为；在知识图谱构建中，还可以用图表示实体与实体间多样的关系。另一方面，深度学习技术在计算机视觉、自然语言处理、语音处理等领域均已取得了巨大的成功。深度学习技术将图像、文本、语音等多种多样的数据转化为稠密的向量表示，提供了表示数据的另一种方式。借助于硬件日益强大的计算能力，深度学习可以从海量数据中学习到数据之间复杂多样的相关性。
+这会让人不禁思考，深度学习能否应用到更广阔的领域，比如——图？事实上，早在深度学习兴起之前，业界就已经开始了图嵌入(Graph Embedding)技术的探索[1]。早期的图嵌入算法多以启发式的矩阵分解、概率图模型为主；随后出现了以DeepWalk[2]和Node2vec[3]为代表的、较为“浅层”的神经网络模型；最后，以GCN[4]为代表的一系列研究工作，打通了图信号处理与神经网络之间的壁垒，奠定了当前基于消息传递机制的图神经网络(GNN: Graph Neural Network)模型的基本范式。
+近年来，图神经网络逐渐成为学术界的研究热点之一[5]。在工业界，图神经网络在电商搜索、推荐、在线广告、金融风控、交通预估等领域也有诸多的落地应用，并带来了显著收益。
+由于图数据特有的稀疏性（图的所有节点对之间只有少量边相连），直接使用通用的深度学习框架（例如TensorFlow和PyTorch）训练往往性能不佳。工欲善其事，必先利其器。针对图神经网络的深度学习框架应运而出：PyG (PyTorch Geometric)[6]和DGL (Deep Graph Library)[7]等开源框架大幅提升了图神经网络的训练速度，并且降低了资源消耗[17][18]，拥有活跃的社区支持。很多公司根据自身业务特点，也纷纷建设自有的图神经网络框架。美团搜索与NLP团队在长期的落地实践中，总结实践经验，在训练的规模和性能、功能的丰富性、易用性等方面进行了大量优化。本文首先介绍我们在过往落地应用中遇到的实际问题和挑战，然后再介绍具体的解决方案。
+1.1 问题和挑战 从工业界落地应用的角度来看，一个“好用”的图神经网络框架至少具备以下特点。
+（1）完善支持当前流行的图神经网络模型。
+从图本身的类型来看，图神经网络模型可以分为同质图(Homogeneous Graph)、异质图(Heterogeneous Graph)、动态图(Dynamic Graph)等类型。从训练方式来看，又可以分为全图消息传递[4]和基于子图采样的消息传递[8]等类型。从推理方式来看，还可以分为直推式和归纳式[9]。</description>
+    </item>
+    
+    <item>
       <title>算法中七种常见的时间复杂度</title>
       <link>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</link>
-      <pubDate>Fri, 20 May 2022 03:35:27 +0000</pubDate>
+      <pubDate>Sat, 21 May 2022 03:08:37 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</guid>
       <description>这是我的推广信息，以激励自己更好的分享自己的知识和经验！也希望看到的你能够多多支持，谢谢！

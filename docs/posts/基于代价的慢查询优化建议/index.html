@@ -8,8 +8,8 @@
 那么如何优化慢查询呢？最直接有效的方法就是选用一个查询效率高的索引。关于高效率的索引推荐，主要在日常工作中，基于经验规则的推荐随处可见，对于简单的SQL，如select * from sync_test1 where name like &#39;Bobby%&#39;，直接添加索引IX(name) 就可以取得不错的效果；但对于稍微复杂点的SQL，如select * from sync_test1 where name like &#39;Bobby%&#39; and dt &gt; &#39;2021-07-06&#39;，到底选择IX(name)、IX(dt)、IX(dt,name) 还是IX(name,dt)，该方法也无法给出准确的回答。更别说像多表Join、子查询这样复杂的场景了。所以采用基于代价的推荐来解决该问题会更加普适，因为基于代价的方法使用了和数据库优化器相同的方式，去量化评估所有的可能性，选出的是执行SQL耗费代价最小的索引。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E4%BB%A3%E4%BB%B7%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-05-20T03:35:33+00:00" />
-<meta property="article:modified_time" content="2022-05-20T03:35:33+00:00" /><meta property="og:site_name" content="大峰哥" />
+<meta property="article:published_time" content="2022-05-21T03:08:43+00:00" />
+<meta property="article:modified_time" content="2022-05-21T03:08:43+00:00" /><meta property="og:site_name" content="大峰哥" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="基于代价的慢查询优化建议"/>
@@ -60,7 +60,7 @@
 
 		<div class="post-header">
 			<h1 class="title">基于代价的慢查询优化建议</h1>
-			<div class="meta">Posted at &mdash; May 20, 2022</div>
+			<div class="meta">Posted at &mdash; May 21, 2022</div>
 		</div>
 
 		<div class="markdown">

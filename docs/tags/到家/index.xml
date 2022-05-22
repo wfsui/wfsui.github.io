@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sat, 21 May 2022 03:08:47 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%88%B0%E5%AE%B6/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 22 May 2022 03:28:33 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%88%B0%E5%AE%B6/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>GPU在外卖场景精排模型预估中的应用实践</title>
       <link>https://wfsui.github.io/posts/gpu%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%B2%BE%E6%8E%92%E6%A8%A1%E5%9E%8B%E9%A2%84%E4%BC%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sat, 21 May 2022 03:08:47 +0000</pubDate>
+      <pubDate>Sun, 22 May 2022 03:28:33 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/gpu%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%B2%BE%E6%8E%92%E6%A8%A1%E5%9E%8B%E9%A2%84%E4%BC%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 前言 近些年，随着机器学习技术的蓬勃发展，以GPU为代表的一系列专用芯片以优越的高性能计算能力和愈发低廉的成本，在机器学习领域得到广泛认可和青睐，且与传统的CPU体系不断融合，形成了新的异构硬件生态。
@@ -29,7 +29,7 @@
     <item>
       <title>终端新玩法：技术栈无关的剧本式引导</title>
       <link>https://wfsui.github.io/posts/%E7%BB%88%E7%AB%AF%E6%96%B0%E7%8E%A9%E6%B3%95%E6%8A%80%E6%9C%AF%E6%A0%88%E6%97%A0%E5%85%B3%E7%9A%84%E5%89%A7%E6%9C%AC%E5%BC%8F%E5%BC%95%E5%AF%BC/</link>
-      <pubDate>Sat, 21 May 2022 03:08:45 +0000</pubDate>
+      <pubDate>Sun, 22 May 2022 03:28:31 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BB%88%E7%AB%AF%E6%96%B0%E7%8E%A9%E6%B3%95%E6%8A%80%E6%9C%AF%E6%A0%88%E6%97%A0%E5%85%B3%E7%9A%84%E5%89%A7%E6%9C%AC%E5%BC%8F%E5%BC%95%E5%AF%BC/</guid>
       <description>背景 互联网行业节奏偏快，App 的更新愈发频繁，如何让用户跟上更新节奏，理解产品功能，完成认知迭代，是业务发展中不可忽视的一环。同时“低代码/零代码”的理念也逐步被大众认可，相关调研报告指出“低代码/零代码”可以加速企业的数字化转型。以美团到家事业群为例，在宅经济再度升温后，即时配送应用的增长速度高于其他配送时长的应用。大量新用户的涌入既是机遇，也是挑战。目前美团到家事业群已经涵盖了医药、团餐、闪购、跑腿、团好货、无人配送等 10+ 业务线。新的商业模式意味着新领域的尝试，主业务外卖平均数日也会上线新的功能模块，这些都需要关注用户心智建设与效率提升。
@@ -42,7 +42,7 @@ App 功能引导是用户心智建设的“敲门砖”，只有让用户熟悉�
     <item>
       <title>美团外卖广告智能算力的探索与实践（二）</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E6%99%BA%E8%83%BD%E7%AE%97%E5%8A%9B%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5%E4%BA%8C/</link>
-      <pubDate>Sat, 21 May 2022 03:08:42 +0000</pubDate>
+      <pubDate>Sun, 22 May 2022 03:28:27 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E6%99%BA%E8%83%BD%E7%AE%97%E5%8A%9B%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5%E4%BA%8C/</guid>
       <description>1 业务背景 随着美团外卖业务的飞速发展，外卖广告系统压力变得越来越大，算力开始成为新的瓶颈。2021年上半年，外卖广告的数条业务线开始出现算力资源不足的情况，算力分配效率亟待提升。在外卖场景下，流量呈现明显的双峰结构，广告系统在高峰时段面临较大的性能压力，非高峰时段存在大量算力冗余。智能算力旨在对流量算力进行精细化和个性化分配，从而实现系统算力约束下的业务收益最大化。

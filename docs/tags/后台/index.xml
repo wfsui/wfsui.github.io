@@ -7,23 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sun, 22 May 2022 03:28:34 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%90%8E%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Java魔法类：Unsafe应用解析</title>
-      <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Sun, 22 May 2022 03:28:34 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
-      <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
-注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
-基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
-public final class Unsafe {  // 单例对象  private static final Unsafe theUnsafe;   private Unsafe() {  }  @CallerSensitive  public static Unsafe getUnsafe() {  Class var0 = Reflection.</description>
-    </item>
-    
+    <lastBuildDate>Mon, 23 May 2022 03:42:10 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%90%8E%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>GPU在外卖场景精排模型预估中的应用实践</title>
       <link>https://wfsui.github.io/posts/gpu%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%B2%BE%E6%8E%92%E6%A8%A1%E5%9E%8B%E9%A2%84%E4%BC%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sun, 22 May 2022 03:28:33 +0000</pubDate>
+      <pubDate>Mon, 23 May 2022 03:42:10 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/gpu%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%B2%BE%E6%8E%92%E6%A8%A1%E5%9E%8B%E9%A2%84%E4%BC%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 前言 近些年，随着机器学习技术的蓬勃发展，以GPU为代表的一系列专用芯片以优越的高性能计算能力和愈发低廉的成本，在机器学习领域得到广泛认可和青睐，且与传统的CPU体系不断融合，形成了新的异构硬件生态。
@@ -39,9 +27,21 @@ public final class Unsafe {  // 单例对象  private static final Unsafe theUns
     </item>
     
     <item>
+      <title>Java魔法类：Unsafe应用解析</title>
+      <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Mon, 23 May 2022 03:42:10 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
+      <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
+注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
+基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
+public final class Unsafe {  // 单例对象  private static final Unsafe theUnsafe;   private Unsafe() {  }  @CallerSensitive  public static Unsafe getUnsafe() {  Class var0 = Reflection.</description>
+    </item>
+    
+    <item>
       <title>Java系列 | 远程热部署在美团的落地实践</title>
       <link>https://wfsui.github.io/posts/java%E7%B3%BB%E5%88%97-%E8%BF%9C%E7%A8%8B%E7%83%AD%E9%83%A8%E7%BD%B2%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E8%90%BD%E5%9C%B0%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sun, 22 May 2022 03:28:32 +0000</pubDate>
+      <pubDate>Mon, 23 May 2022 03:42:08 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/java%E7%B3%BB%E5%88%97-%E8%BF%9C%E7%A8%8B%E7%83%AD%E9%83%A8%E7%BD%B2%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E8%90%BD%E5%9C%B0%E5%AE%9E%E8%B7%B5/</guid>
       <description>Sonic是美团内部研发设计的一款用于热部署的IDEA插件，本文其实现原理及落地的一些技术细节。在阅读本文之前，建议大家先熟悉一下Spring源码、Spring MVC 源码 、Spring Boot源码 、Agent字节码增强、Javassist、Classloader等相关知识。
@@ -54,7 +54,7 @@ public final class Unsafe {  // 单例对象  private static final Unsafe theUns
     <item>
       <title>TensorFlow在美团外卖推荐场景的GPU训练优化实践</title>
       <link>https://wfsui.github.io/posts/tensorflow%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E7%9A%84gpu%E8%AE%AD%E7%BB%83%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sun, 22 May 2022 03:28:31 +0000</pubDate>
+      <pubDate>Mon, 23 May 2022 03:42:08 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/tensorflow%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E7%9A%84gpu%E8%AE%AD%E7%BB%83%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景 在推荐系统训练场景中，美团内部深度定制的TenorFlow（简称TF）版本[1]，通过CPU算力支撑了美团内部大量的业务。但随着业务的发展，模型单次训练的样本量越来越多，结构也变得越来越复杂。以美团外卖推荐的精排模型为例，单次训练的样本量已达百亿甚至千亿，一次实验要耗费上千核，且优化后的训练任务CPU使用率已达90%以上。为了支持业务的高速发展，模型迭代实验的频次和并发度都在不断增加，进一步增加了算力使用需求。在预算有限的前提下，如何以较高的性价比来实现高速的模型训练，从而保障高效率的模型研发迭代，是我们迫切需要解决的问题。
@@ -65,7 +65,7 @@ public final class Unsafe {  // 单例对象  private static final Unsafe theUns
     <item>
       <title>Linux下跨语言调用C&#43;&#43;实践</title>
       <link>https://wfsui.github.io/posts/linux%E4%B8%8B%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8c&#43;&#43;%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sun, 22 May 2022 03:28:28 +0000</pubDate>
+      <pubDate>Mon, 23 May 2022 03:42:05 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/linux%E4%B8%8B%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8c&#43;&#43;%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景 查询理解（QU, Query Understanding）是美团搜索的核心模块，主要职责是理解用户查询，生成查询意图、成分、改写等基础信号，应用于搜索的召回、排序、展示等多个环节，对搜索基础体验至关重要。该服务的线上主体程序基于C++语言开发，服务中会加载大量的词表数据、预估模型等，这些数据与模型的离线生产过程有很多文本解析能力需要与线上服务保持一致，从而保证效果层面的一致性，如文本归一化、分词等。
@@ -78,9 +78,22 @@ public final class Unsafe {  // 单例对象  private static final Unsafe theUns
     </item>
     
     <item>
+      <title>美团外卖广告智能算力的探索与实践（二）</title>
+      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E6%99%BA%E8%83%BD%E7%AE%97%E5%8A%9B%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5%E4%BA%8C/</link>
+      <pubDate>Mon, 23 May 2022 03:42:05 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E6%99%BA%E8%83%BD%E7%AE%97%E5%8A%9B%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5%E4%BA%8C/</guid>
+      <description>1 业务背景 随着美团外卖业务的飞速发展，外卖广告系统压力变得越来越大，算力开始成为新的瓶颈。2021年上半年，外卖广告的数条业务线开始出现算力资源不足的情况，算力分配效率亟待提升。在外卖场景下，流量呈现明显的双峰结构，广告系统在高峰时段面临较大的性能压力，非高峰时段存在大量算力冗余。智能算力旨在对流量算力进行精细化和个性化分配，从而实现系统算力约束下的业务收益最大化。
+本文是广告智能算力系列文章的第二篇，在第一期《美团外卖广告智能算力的探索与实践》中[1]，我们对阿里DCAF[2]线性规划求解方案进行了外卖场景下的优化，落地了弹性队列局部最优算力分配方案（以下简称“第一期”）。如上图所示，外卖展示广告链路中，召回通道和模型决策均使用固定策略，在算力不足时会丢失部分优质流量带来的收益。
+在本文中，我们提出了基于进化算法的多动作算力决策方法ES-MACA（Evolutionary Strategies based Multi-Action Computation Allocation）。在外卖广告链路上，同时决策弹性通道、弹性队列和弹性模型三个动作。在后置动作决策中，我们考虑前置模块的决策引起的状态变化，同时使用多任务模型联合建模实现系统仿真模拟（离线仿真+收益预估，实现不同决策动作下的收益评估功能），实现全链路最优算力分配。相对第一期内容，ES-MACA在外卖展示广告业务线上取得CPM+1.x%、收入+1.x%的效果。
+2 整体思路 为了应对极大的在线流量压力和庞大的候选集，外卖广告投放系统将整个检索过程设计成候选集依次递减的漏斗型级联架构，主要包含召回、粗排、精排、机制等模块。在第一期中，我们把算力分配的手段定义为弹性动作，并结合外卖场景归纳了弹性队列、弹性模型、弹性通道和弹性链路等四种动作，具体动作的定义如下：
+ 弹性队列：线上检索是一个漏斗的过程，不同价值流量可以在级联漏斗的各模块中分配不同候选队列长度。 弹性模型：在模型预估服务中，对于不同价值流量可以选择不同大小模型，大模型相对小模型预估效果更好的同时，消耗的算力也更多。 弹性通道：在召回场景中，不同价值流量可以选择不同复杂度的召回通道和召回通道的路数。 弹性链路：在检索链路上，不同价值流量可以选择不同复杂度的检索链路。  2.1 算力分配问题形式化描述 在一个包含M个算力决策模块的链路中，全链路最优的智能算力的目标可通用的描述为：通过智能化决策M个模块的算力档位，在整体算力满足约束的条件下，使得整体流量收益最大化。</description>
+    </item>
+    
+    <item>
       <title>标准化思想及组装式架构在后端BFF中的实践</title>
       <link>https://wfsui.github.io/posts/%E6%A0%87%E5%87%86%E5%8C%96%E6%80%9D%E6%83%B3%E5%8F%8A%E7%BB%84%E8%A3%85%E5%BC%8F%E6%9E%B6%E6%9E%84%E5%9C%A8%E5%90%8E%E7%AB%AFbff%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sun, 22 May 2022 03:28:27 +0000</pubDate>
+      <pubDate>Mon, 23 May 2022 03:42:04 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%A0%87%E5%87%86%E5%8C%96%E6%80%9D%E6%83%B3%E5%8F%8A%E7%BB%84%E8%A3%85%E5%BC%8F%E6%9E%B6%E6%9E%84%E5%9C%A8%E5%90%8E%E7%AB%AFbff%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 前言 在本地生活服务领域，面向C端的信息展示类功能存在着类生物系统的复杂性，具体体现在以下三个方面：功能多，为了帮助用户高效找店、找服务，信息会在尽可能多的地方展示；差异大，同样的信息，在不同客户端、不同页面及模块下的展示逻辑会存在一些差异；功能易变，产品逻辑经常调整。以上三个方面的特点给研发同学带来了很大的挑战，比如当我们面临数千个功能模块，数十个行业产品的持续需求时，如何快速响应呢？
@@ -93,22 +106,9 @@ public final class Unsafe {  // 单例对象  private static final Unsafe theUns
     </item>
     
     <item>
-      <title>美团外卖广告智能算力的探索与实践（二）</title>
-      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E6%99%BA%E8%83%BD%E7%AE%97%E5%8A%9B%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5%E4%BA%8C/</link>
-      <pubDate>Sun, 22 May 2022 03:28:27 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E6%99%BA%E8%83%BD%E7%AE%97%E5%8A%9B%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5%E4%BA%8C/</guid>
-      <description>1 业务背景 随着美团外卖业务的飞速发展，外卖广告系统压力变得越来越大，算力开始成为新的瓶颈。2021年上半年，外卖广告的数条业务线开始出现算力资源不足的情况，算力分配效率亟待提升。在外卖场景下，流量呈现明显的双峰结构，广告系统在高峰时段面临较大的性能压力，非高峰时段存在大量算力冗余。智能算力旨在对流量算力进行精细化和个性化分配，从而实现系统算力约束下的业务收益最大化。
-本文是广告智能算力系列文章的第二篇，在第一期《美团外卖广告智能算力的探索与实践》中[1]，我们对阿里DCAF[2]线性规划求解方案进行了外卖场景下的优化，落地了弹性队列局部最优算力分配方案（以下简称“第一期”）。如上图所示，外卖展示广告链路中，召回通道和模型决策均使用固定策略，在算力不足时会丢失部分优质流量带来的收益。
-在本文中，我们提出了基于进化算法的多动作算力决策方法ES-MACA（Evolutionary Strategies based Multi-Action Computation Allocation）。在外卖广告链路上，同时决策弹性通道、弹性队列和弹性模型三个动作。在后置动作决策中，我们考虑前置模块的决策引起的状态变化，同时使用多任务模型联合建模实现系统仿真模拟（离线仿真+收益预估，实现不同决策动作下的收益评估功能），实现全链路最优算力分配。相对第一期内容，ES-MACA在外卖展示广告业务线上取得CPM+1.x%、收入+1.x%的效果。
-2 整体思路 为了应对极大的在线流量压力和庞大的候选集，外卖广告投放系统将整个检索过程设计成候选集依次递减的漏斗型级联架构，主要包含召回、粗排、精排、机制等模块。在第一期中，我们把算力分配的手段定义为弹性动作，并结合外卖场景归纳了弹性队列、弹性模型、弹性通道和弹性链路等四种动作，具体动作的定义如下：
- 弹性队列：线上检索是一个漏斗的过程，不同价值流量可以在级联漏斗的各模块中分配不同候选队列长度。 弹性模型：在模型预估服务中，对于不同价值流量可以选择不同大小模型，大模型相对小模型预估效果更好的同时，消耗的算力也更多。 弹性通道：在召回场景中，不同价值流量可以选择不同复杂度的召回通道和召回通道的路数。 弹性链路：在检索链路上，不同价值流量可以选择不同复杂度的检索链路。  2.1 算力分配问题形式化描述 在一个包含M个算力决策模块的链路中，全链路最优的智能算力的目标可通用的描述为：通过智能化决策M个模块的算力档位，在整体算力满足约束的条件下，使得整体流量收益最大化。</description>
-    </item>
-    
-    <item>
       <title>CompletableFuture原理与实践-外卖商家端API的异步化</title>
       <link>https://wfsui.github.io/posts/completablefuture%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E5%A4%96%E5%8D%96%E5%95%86%E5%AE%B6%E7%AB%AFapi%E7%9A%84%E5%BC%82%E6%AD%A5%E5%8C%96/</link>
-      <pubDate>Sun, 22 May 2022 03:28:25 +0000</pubDate>
+      <pubDate>Mon, 23 May 2022 03:42:03 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/completablefuture%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E5%A4%96%E5%8D%96%E5%95%86%E5%AE%B6%E7%AB%AFapi%E7%9A%84%E5%BC%82%E6%AD%A5%E5%8C%96/</guid>
       <description>0 背景 随着订单量的持续上升，美团外卖各系统服务面临的压力也越来越大。作为外卖链路的核心环节，商家端提供了商家接单、配送等一系列核心功能，业务对系统吞吐量的要求也越来越高。而商家端API服务是流量入口，所有商家端流量都会由其调度、聚合，对外面向商家提供功能接口，对内调度各个下游服务获取数据进行聚合，具有鲜明的I/O密集型（I/O Bound）特点。在当前日订单规模已达千万级的情况下，使用同步加载方式的弊端逐渐显现，因此我们开始考虑将同步加载改为并行加载的可行性。

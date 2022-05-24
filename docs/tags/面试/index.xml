@@ -7,11 +7,24 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Tue, 24 May 2022 03:42:12 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E9%9D%A2%E8%AF%95/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 24 May 2022 14:33:04 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E9%9D%A2%E8%AF%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>咱们从头到尾讲一次 Flink 网络流控和反压剖析</title>
+      <link>https://wfsui.github.io/posts/%E5%92%B1%E4%BB%AC%E4%BB%8E%E5%A4%B4%E5%88%B0%E5%B0%BE%E8%AE%B2%E4%B8%80%E6%AC%A1-flink-%E7%BD%91%E7%BB%9C%E6%B5%81%E6%8E%A7%E5%92%8C%E5%8F%8D%E5%8E%8B%E5%89%96%E6%9E%90/</link>
+      <pubDate>Tue, 24 May 2022 14:33:04 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E5%92%B1%E4%BB%AC%E4%BB%8E%E5%A4%B4%E5%88%B0%E5%B0%BE%E8%AE%B2%E4%B8%80%E6%AC%A1-flink-%E7%BD%91%E7%BB%9C%E6%B5%81%E6%8E%A7%E5%92%8C%E5%8F%8D%E5%8E%8B%E5%89%96%E6%9E%90/</guid>
+      <description>作者：张俊
+整理：张友亮（Apache Flink 社区志愿者）
+ 本文共 4745字，预计阅读时间 15min。
+ 本文根据 Apache Flink 系列直播整理而成，由 Apache Flink Contributor、OPPO 大数据平台研发负责人张俊老师分享。主要内容如下：
+ 网络流控的概念与背景 TCP的流控机制 Flink TCP-based 反压机制（before V1.</description>
+    </item>
+    
     <item>
       <title>JPA 和 Mybatis 技术选型</title>
       <link>https://wfsui.github.io/posts/jpa-%E5%92%8C-mybatis-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B/</link>
-      <pubDate>Tue, 24 May 2022 03:42:12 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:33:03 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/jpa-%E5%92%8C-mybatis-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B/</guid>
       <description>在我们平时的项目中，大家都知道可以使用 JPA 或者 Mybatis 作为 ORM 层。对 JPA 和 Mybatis 如何进行技术选型？

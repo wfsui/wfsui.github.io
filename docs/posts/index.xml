@@ -7,11 +7,24 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Tue, 24 May 2022 03:42:12 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 24 May 2022 14:33:04 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>咱们从头到尾讲一次 Flink 网络流控和反压剖析</title>
+      <link>https://wfsui.github.io/posts/%E5%92%B1%E4%BB%AC%E4%BB%8E%E5%A4%B4%E5%88%B0%E5%B0%BE%E8%AE%B2%E4%B8%80%E6%AC%A1-flink-%E7%BD%91%E7%BB%9C%E6%B5%81%E6%8E%A7%E5%92%8C%E5%8F%8D%E5%8E%8B%E5%89%96%E6%9E%90/</link>
+      <pubDate>Tue, 24 May 2022 14:33:04 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E5%92%B1%E4%BB%AC%E4%BB%8E%E5%A4%B4%E5%88%B0%E5%B0%BE%E8%AE%B2%E4%B8%80%E6%AC%A1-flink-%E7%BD%91%E7%BB%9C%E6%B5%81%E6%8E%A7%E5%92%8C%E5%8F%8D%E5%8E%8B%E5%89%96%E6%9E%90/</guid>
+      <description>作者：张俊
+整理：张友亮（Apache Flink 社区志愿者）
+ 本文共 4745字，预计阅读时间 15min。
+ 本文根据 Apache Flink 系列直播整理而成，由 Apache Flink Contributor、OPPO 大数据平台研发负责人张俊老师分享。主要内容如下：
+ 网络流控的概念与背景 TCP的流控机制 Flink TCP-based 反压机制（before V1.</description>
+    </item>
+    
     <item>
       <title>JPA 和 Mybatis 技术选型</title>
       <link>https://wfsui.github.io/posts/jpa-%E5%92%8C-mybatis-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B/</link>
-      <pubDate>Tue, 24 May 2022 03:42:12 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:33:03 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/jpa-%E5%92%8C-mybatis-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B/</guid>
       <description>在我们平时的项目中，大家都知道可以使用 JPA 或者 Mybatis 作为 ORM 层。对 JPA 和 Mybatis 如何进行技术选型？
@@ -26,7 +39,7 @@
     <item>
       <title>算法中七种常见的时间复杂度</title>
       <link>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</link>
-      <pubDate>Tue, 24 May 2022 03:42:11 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:33:02 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</guid>
       <description>这是我的推广信息，以激励自己更好的分享自己的知识和经验！也希望看到的你能够多多支持，谢谢！
@@ -37,7 +50,7 @@
     <item>
       <title>GPU在外卖场景精排模型预估中的应用实践</title>
       <link>https://wfsui.github.io/posts/gpu%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%B2%BE%E6%8E%92%E6%A8%A1%E5%9E%8B%E9%A2%84%E4%BC%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 24 May 2022 03:42:09 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:33:00 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/gpu%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%B2%BE%E6%8E%92%E6%A8%A1%E5%9E%8B%E9%A2%84%E4%BC%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 前言 近些年，随着机器学习技术的蓬勃发展，以GPU为代表的一系列专用芯片以优越的高性能计算能力和愈发低廉的成本，在机器学习领域得到广泛认可和青睐，且与传统的CPU体系不断融合，形成了新的异构硬件生态。
@@ -55,7 +68,7 @@
     <item>
       <title>Java动态追踪技术探究</title>
       <link>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</link>
-      <pubDate>Tue, 24 May 2022 03:42:09 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:33:00 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</guid>
       <description>引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：
@@ -79,7 +92,7 @@
     <item>
       <title>Java魔法类：Unsafe应用解析</title>
       <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Tue, 24 May 2022 03:42:09 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:33:00 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
       <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
@@ -91,7 +104,7 @@ public final class Unsafe {  // 单例对象  private static final Unsafe theUns
     <item>
       <title>设计模式二三事</title>
       <link>https://wfsui.github.io/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BA%8C%E4%B8%89%E4%BA%8B/</link>
-      <pubDate>Tue, 24 May 2022 03:42:08 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:32:59 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BA%8C%E4%B8%89%E4%BA%8B/</guid>
       <description>设计模式是众多软件开发人员经过长时间的试错和应用总结出来的，解决特定问题的一系列方案。现行的部分教材在介绍设计模式时，有些会因为案例脱离实际应用场景而令人费解，有些又会因为场景简单而显得有些小题大做。本文会结合在美团金融服务平台设计开发时的经验，结合实际的案例，并采用“师生对话”这种相对诙谐的形式去讲解三类常用设计模式的应用。希望能对想提升系统设计能力的同学有所帮助或启发。
@@ -116,7 +129,7 @@ public final class Unsafe {  // 单例对象  private static final Unsafe theUns
     <item>
       <title>异构广告混排在美团到店业务的探索与实践</title>
       <link>https://wfsui.github.io/posts/%E5%BC%82%E6%9E%84%E5%B9%BF%E5%91%8A%E6%B7%B7%E6%8E%92%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 24 May 2022 03:42:08 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:32:59 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%BC%82%E6%9E%84%E5%B9%BF%E5%91%8A%E6%B7%B7%E6%8E%92%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景与简介 1.1 背景 美团到店广告负责美团搜索流量的商业变现，服务于到店餐饮、休娱亲子、丽人医美、酒店旅游等众多本地生活服务商家。质量预估团队负责广告系统中CTR/CVR以及客单价/交易额等质量分预估，在过去几年中，我们通过位次上下文建模[1]、时空超长序列建模[2]等创新技术，在CTR预估问题中的用户、上下文等方向都取得了一些突破[3]，并整理成论文发表在SIGIR、ICDE、CIKM等国际会议上。
@@ -128,7 +141,7 @@ public final class Unsafe {  // 单例对象  private static final Unsafe theUns
     <item>
       <title>Java系列 | 远程热部署在美团的落地实践</title>
       <link>https://wfsui.github.io/posts/java%E7%B3%BB%E5%88%97-%E8%BF%9C%E7%A8%8B%E7%83%AD%E9%83%A8%E7%BD%B2%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E8%90%BD%E5%9C%B0%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 24 May 2022 03:42:07 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:32:58 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/java%E7%B3%BB%E5%88%97-%E8%BF%9C%E7%A8%8B%E7%83%AD%E9%83%A8%E7%BD%B2%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E8%90%BD%E5%9C%B0%E5%AE%9E%E8%B7%B5/</guid>
       <description>Sonic是美团内部研发设计的一款用于热部署的IDEA插件，本文其实现原理及落地的一些技术细节。在阅读本文之前，建议大家先熟悉一下Spring源码、Spring MVC 源码 、Spring Boot源码 、Agent字节码增强、Javassist、Classloader等相关知识。
@@ -141,7 +154,7 @@ public final class Unsafe {  // 单例对象  private static final Unsafe theUns
     <item>
       <title>TensorFlow在美团外卖推荐场景的GPU训练优化实践</title>
       <link>https://wfsui.github.io/posts/tensorflow%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E7%9A%84gpu%E8%AE%AD%E7%BB%83%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 24 May 2022 03:42:07 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:32:58 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/tensorflow%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E7%9A%84gpu%E8%AE%AD%E7%BB%83%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景 在推荐系统训练场景中，美团内部深度定制的TenorFlow（简称TF）版本[1]，通过CPU算力支撑了美团内部大量的业务。但随着业务的发展，模型单次训练的样本量越来越多，结构也变得越来越复杂。以美团外卖推荐的精排模型为例，单次训练的样本量已达百亿甚至千亿，一次实验要耗费上千核，且优化后的训练任务CPU使用率已达90%以上。为了支持业务的高速发展，模型迭代实验的频次和并发度都在不断增加，进一步增加了算力使用需求。在预算有限的前提下，如何以较高的性价比来实现高速的模型训练，从而保障高效率的模型研发迭代，是我们迫切需要解决的问题。
@@ -152,7 +165,7 @@ public final class Unsafe {  // 单例对象  private static final Unsafe theUns
     <item>
       <title>美团内部讲座 | 清华大学崔鹏：因果启发的学习、推断和决策</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%86%85%E9%83%A8%E8%AE%B2%E5%BA%A7-%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6%E5%B4%94%E9%B9%8F%E5%9B%A0%E6%9E%9C%E5%90%AF%E5%8F%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%8E%A8%E6%96%AD%E5%92%8C%E5%86%B3%E7%AD%96/</link>
-      <pubDate>Tue, 24 May 2022 03:42:07 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:32:58 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%86%85%E9%83%A8%E8%AE%B2%E5%BA%A7-%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6%E5%B4%94%E9%B9%8F%E5%9B%A0%E6%9E%9C%E5%90%AF%E5%8F%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%8E%A8%E6%96%AD%E5%92%8C%E5%86%B3%E7%AD%96/</guid>
       <description>| 分享嘉宾：崔鹏，清华大学计算机系长聘副教授，博士生导师
@@ -170,7 +183,7 @@ public final class Unsafe {  // 单例对象  private static final Unsafe theUns
     <item>
       <title>NeurIPS 2021 ｜ Twins：重新思考高效的视觉注意力模型设计</title>
       <link>https://wfsui.github.io/posts/neurips-2021-twins%E9%87%8D%E6%96%B0%E6%80%9D%E8%80%83%E9%AB%98%E6%95%88%E7%9A%84%E8%A7%86%E8%A7%89%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/</link>
-      <pubDate>Tue, 24 May 2022 03:42:06 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:32:57 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/neurips-2021-twins%E9%87%8D%E6%96%B0%E6%80%9D%E8%80%83%E9%AB%98%E6%95%88%E7%9A%84%E8%A7%86%E8%A7%89%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/</guid>
       <description>导读 Twins [1] 是美团和阿德莱德大学合作提出的视觉注意力模型，相关论文已被 NeurIPS 2021 会议接收，代码也已在GitHub上进行开源。NeurIPS（Conference on Neural Information Processing Systems）是机器学习和计算神经科学相关的学术会议，也是人工智能方向的国际顶级会议。
@@ -181,7 +194,7 @@ Twins 提出了两类结构，分别是 Twins-PCPVT 和 Twins-SVT：
     <item>
       <title>终端新玩法：技术栈无关的剧本式引导</title>
       <link>https://wfsui.github.io/posts/%E7%BB%88%E7%AB%AF%E6%96%B0%E7%8E%A9%E6%B3%95%E6%8A%80%E6%9C%AF%E6%A0%88%E6%97%A0%E5%85%B3%E7%9A%84%E5%89%A7%E6%9C%AC%E5%BC%8F%E5%BC%95%E5%AF%BC/</link>
-      <pubDate>Tue, 24 May 2022 03:42:06 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:32:57 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BB%88%E7%AB%AF%E6%96%B0%E7%8E%A9%E6%B3%95%E6%8A%80%E6%9C%AF%E6%A0%88%E6%97%A0%E5%85%B3%E7%9A%84%E5%89%A7%E6%9C%AC%E5%BC%8F%E5%BC%95%E5%AF%BC/</guid>
       <description>背景 互联网行业节奏偏快，App 的更新愈发频繁，如何让用户跟上更新节奏，理解产品功能，完成认知迭代，是业务发展中不可忽视的一环。同时“低代码/零代码”的理念也逐步被大众认可，相关调研报告指出“低代码/零代码”可以加速企业的数字化转型。以美团到家事业群为例，在宅经济再度升温后，即时配送应用的增长速度高于其他配送时长的应用。大量新用户的涌入既是机遇，也是挑战。目前美团到家事业群已经涵盖了医药、团餐、闪购、跑腿、团好货、无人配送等 10+ 业务线。新的商业模式意味着新领域的尝试，主业务外卖平均数日也会上线新的功能模块，这些都需要关注用户心智建设与效率提升。
@@ -194,7 +207,7 @@ App 功能引导是用户心智建设的“敲门砖”，只有让用户熟悉�
     <item>
       <title>Linux中基于eBPF的恶意利用与检测机制</title>
       <link>https://wfsui.github.io/posts/linux%E4%B8%AD%E5%9F%BA%E4%BA%8Eebpf%E7%9A%84%E6%81%B6%E6%84%8F%E5%88%A9%E7%94%A8%E4%B8%8E%E6%A3%80%E6%B5%8B%E6%9C%BA%E5%88%B6/</link>
-      <pubDate>Tue, 24 May 2022 03:42:05 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:32:56 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/linux%E4%B8%AD%E5%9F%BA%E4%BA%8Eebpf%E7%9A%84%E6%81%B6%E6%84%8F%E5%88%A9%E7%94%A8%E4%B8%8E%E6%A3%80%E6%B5%8B%E6%9C%BA%E5%88%B6/</guid>
       <description>前言 近几年，云原生领域飞速发展，K8s成为公认的云操作系统。容器的高频率部署、短暂的生命周期、复杂的网络路由，都给内核安全带来了新的挑战。系统内核面对的复杂性在不断增长，在满足性能、可扩展性等新需求的同时，还需要保障系统稳定可用，这是极其困难的事情。此时，eBPF出现，它以较小的子系统改动，保障了系统内核的稳定，还具备实时动态加载的特性，能将业务逻辑加载到内核，实现热更新的动态执行。
@@ -207,7 +220,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
     <item>
       <title>短视频内容理解与生成技术在美团的创新实践</title>
       <link>https://wfsui.github.io/posts/%E7%9F%AD%E8%A7%86%E9%A2%91%E5%86%85%E5%AE%B9%E7%90%86%E8%A7%A3%E4%B8%8E%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%88%9B%E6%96%B0%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 24 May 2022 03:42:05 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:32:56 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%9F%AD%E8%A7%86%E9%A2%91%E5%86%85%E5%AE%B9%E7%90%86%E8%A7%A3%E4%B8%8E%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%88%9B%E6%96%B0%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 背景 美团围绕丰富的本地生活服务电商场景，积累了丰富的视频数据。
@@ -226,34 +239,9 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
     </item>
     
     <item>
-      <title>基于代价的慢查询优化建议</title>
-      <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E4%BB%A3%E4%BB%B7%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE/</link>
-      <pubDate>Tue, 24 May 2022 03:42:04 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E4%BB%A3%E4%BB%B7%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE/</guid>
-      <description>1 背景 慢查询是指数据库中查询时间超过指定阈值（美团设置为100ms）的SQL，它是数据库的性能杀手，也是业务优化数据库访问的重要抓手。随着美团业务的高速增长，日均慢查询量已经过亿条，此前因慢查询导致的故障约占数据库故障总数的10%以上，而且高级别的故障呈日益增长趋势。因此，对慢查询的优化已经变得刻不容缓。
-那么如何优化慢查询呢？最直接有效的方法就是选用一个查询效率高的索引。关于高效率的索引推荐，主要在日常工作中，基于经验规则的推荐随处可见，对于简单的SQL，如select * from sync_test1 where name like &#39;Bobby%&#39;，直接添加索引IX(name) 就可以取得不错的效果；但对于稍微复杂点的SQL，如select * from sync_test1 where name like &#39;Bobby%&#39; and dt &amp;gt; &#39;2021-07-06&#39;，到底选择IX(name)、IX(dt)、IX(dt,name) 还是IX(name,dt)，该方法也无法给出准确的回答。更别说像多表Join、子查询这样复杂的场景了。所以采用基于代价的推荐来解决该问题会更加普适，因为基于代价的方法使用了和数据库优化器相同的方式，去量化评估所有的可能性，选出的是执行SQL耗费代价最小的索引。</description>
-    </item>
-    
-    <item>
-      <title>知识图谱可视化技术在美团的实践与探索</title>
-      <link>https://wfsui.github.io/posts/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Tue, 24 May 2022 03:42:04 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</guid>
-      <description>1 知识图谱可视化基本概念 1.1 知识图谱技术的简介 知识图谱（Knowledge Graph）是人工智能的重要分支，它是一种揭示实体之间关系的语义网络，可以对现实世界的事物及其相互关系进行形式化地描述。举个例子，“孙悟空的师傅是唐僧”就是一条知识。在这条知识里，有“孙悟空”和“唐僧”两个实体，“师傅”是描述这两个实体之间的关系，上述内容在知识图谱中就组成了一个SPO三元组（Subject-Predicate-Object）。
-所以，对于现实世界中实体之间的关联关系，用知识图谱进行描述的话，就显得非常合适。正是由于知识图谱的这种优势，这项技术得到迅速普及，目前在搜索、推荐、广告、问答等多个领域都有相应的解决方案。
-1.2 知识图谱可视化的简介 可视化，简单来说就是将数据以一种更直观的形式表现出来。其实，我们现在常用的折线图、柱状图、饼状图（下称折柱饼），甚至Excel表格，都属于数据可视化的一种。
-以往，我们存储数据主要是以数据表的方式，但这种方式很难结构化地存储好知识类型的数据。对于关系类型的数据，如果用前文的例子为基础并补充一些相关信息，经过可视化后就能展示成这样：
-这种信息就很难用“折柱饼”或者表格呈现出来，而用知识图谱可视化的方式呈现，就非常的清晰。
-2 场景分析与架构设计 2.1 场景需求分析 我们梳理后发现，在美团的各个业务场景中知识图谱可视化需求主要包含以下几类：
- 图查询应用：以图数据库为主的图谱可视化工具，提供图数据的编辑、子图探索、顶点/边信息查询等交互操作。 图分析应用：对业务场景中的关系类数据进行可视化展示，帮助业务同学快速了解链路故障、组件依赖等问题。 技术品牌建设：通过知识图谱向大家普及人工智能技术是什么，以及它能做什么，让AI也具备可解释性。  2.</description>
-    </item>
-    
-    <item>
       <title>Linux下跨语言调用C&#43;&#43;实践</title>
       <link>https://wfsui.github.io/posts/linux%E4%B8%8B%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8c&#43;&#43;%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 24 May 2022 03:42:03 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:32:55 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/linux%E4%B8%8B%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8c&#43;&#43;%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景 查询理解（QU, Query Understanding）是美团搜索的核心模块，主要职责是理解用户查询，生成查询意图、成分、改写等基础信号，应用于搜索的召回、排序、展示等多个环节，对搜索基础体验至关重要。该服务的线上主体程序基于C++语言开发，服务中会加载大量的词表数据、预估模型等，这些数据与模型的离线生产过程有很多文本解析能力需要与线上服务保持一致，从而保证效果层面的一致性，如文本归一化、分词等。
@@ -266,22 +254,34 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
     </item>
     
     <item>
-      <title>美团外卖广告智能算力的探索与实践（二）</title>
-      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E6%99%BA%E8%83%BD%E7%AE%97%E5%8A%9B%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5%E4%BA%8C/</link>
-      <pubDate>Tue, 24 May 2022 03:42:03 +0000</pubDate>
+      <title>基于代价的慢查询优化建议</title>
+      <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E4%BB%A3%E4%BB%B7%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE/</link>
+      <pubDate>Tue, 24 May 2022 14:32:55 +0000</pubDate>
       
-      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E6%99%BA%E8%83%BD%E7%AE%97%E5%8A%9B%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5%E4%BA%8C/</guid>
-      <description>1 业务背景 随着美团外卖业务的飞速发展，外卖广告系统压力变得越来越大，算力开始成为新的瓶颈。2021年上半年，外卖广告的数条业务线开始出现算力资源不足的情况，算力分配效率亟待提升。在外卖场景下，流量呈现明显的双峰结构，广告系统在高峰时段面临较大的性能压力，非高峰时段存在大量算力冗余。智能算力旨在对流量算力进行精细化和个性化分配，从而实现系统算力约束下的业务收益最大化。
-本文是广告智能算力系列文章的第二篇，在第一期《美团外卖广告智能算力的探索与实践》中[1]，我们对阿里DCAF[2]线性规划求解方案进行了外卖场景下的优化，落地了弹性队列局部最优算力分配方案（以下简称“第一期”）。如上图所示，外卖展示广告链路中，召回通道和模型决策均使用固定策略，在算力不足时会丢失部分优质流量带来的收益。
-在本文中，我们提出了基于进化算法的多动作算力决策方法ES-MACA（Evolutionary Strategies based Multi-Action Computation Allocation）。在外卖广告链路上，同时决策弹性通道、弹性队列和弹性模型三个动作。在后置动作决策中，我们考虑前置模块的决策引起的状态变化，同时使用多任务模型联合建模实现系统仿真模拟（离线仿真+收益预估，实现不同决策动作下的收益评估功能），实现全链路最优算力分配。相对第一期内容，ES-MACA在外卖展示广告业务线上取得CPM+1.x%、收入+1.x%的效果。
-2 整体思路 为了应对极大的在线流量压力和庞大的候选集，外卖广告投放系统将整个检索过程设计成候选集依次递减的漏斗型级联架构，主要包含召回、粗排、精排、机制等模块。在第一期中，我们把算力分配的手段定义为弹性动作，并结合外卖场景归纳了弹性队列、弹性模型、弹性通道和弹性链路等四种动作，具体动作的定义如下：
- 弹性队列：线上检索是一个漏斗的过程，不同价值流量可以在级联漏斗的各模块中分配不同候选队列长度。 弹性模型：在模型预估服务中，对于不同价值流量可以选择不同大小模型，大模型相对小模型预估效果更好的同时，消耗的算力也更多。 弹性通道：在召回场景中，不同价值流量可以选择不同复杂度的召回通道和召回通道的路数。 弹性链路：在检索链路上，不同价值流量可以选择不同复杂度的检索链路。  2.1 算力分配问题形式化描述 在一个包含M个算力决策模块的链路中，全链路最优的智能算力的目标可通用的描述为：通过智能化决策M个模块的算力档位，在整体算力满足约束的条件下，使得整体流量收益最大化。</description>
+      <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E4%BB%A3%E4%BB%B7%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE/</guid>
+      <description>1 背景 慢查询是指数据库中查询时间超过指定阈值（美团设置为100ms）的SQL，它是数据库的性能杀手，也是业务优化数据库访问的重要抓手。随着美团业务的高速增长，日均慢查询量已经过亿条，此前因慢查询导致的故障约占数据库故障总数的10%以上，而且高级别的故障呈日益增长趋势。因此，对慢查询的优化已经变得刻不容缓。
+那么如何优化慢查询呢？最直接有效的方法就是选用一个查询效率高的索引。关于高效率的索引推荐，主要在日常工作中，基于经验规则的推荐随处可见，对于简单的SQL，如select * from sync_test1 where name like &#39;Bobby%&#39;，直接添加索引IX(name) 就可以取得不错的效果；但对于稍微复杂点的SQL，如select * from sync_test1 where name like &#39;Bobby%&#39; and dt &amp;gt; &#39;2021-07-06&#39;，到底选择IX(name)、IX(dt)、IX(dt,name) 还是IX(name,dt)，该方法也无法给出准确的回答。更别说像多表Join、子查询这样复杂的场景了。所以采用基于代价的推荐来解决该问题会更加普适，因为基于代价的方法使用了和数据库优化器相同的方式，去量化评估所有的可能性，选出的是执行SQL耗费代价最小的索引。</description>
+    </item>
+    
+    <item>
+      <title>知识图谱可视化技术在美团的实践与探索</title>
+      <link>https://wfsui.github.io/posts/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</link>
+      <pubDate>Tue, 24 May 2022 14:32:55 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</guid>
+      <description>1 知识图谱可视化基本概念 1.1 知识图谱技术的简介 知识图谱（Knowledge Graph）是人工智能的重要分支，它是一种揭示实体之间关系的语义网络，可以对现实世界的事物及其相互关系进行形式化地描述。举个例子，“孙悟空的师傅是唐僧”就是一条知识。在这条知识里，有“孙悟空”和“唐僧”两个实体，“师傅”是描述这两个实体之间的关系，上述内容在知识图谱中就组成了一个SPO三元组（Subject-Predicate-Object）。
+所以，对于现实世界中实体之间的关联关系，用知识图谱进行描述的话，就显得非常合适。正是由于知识图谱的这种优势，这项技术得到迅速普及，目前在搜索、推荐、广告、问答等多个领域都有相应的解决方案。
+1.2 知识图谱可视化的简介 可视化，简单来说就是将数据以一种更直观的形式表现出来。其实，我们现在常用的折线图、柱状图、饼状图（下称折柱饼），甚至Excel表格，都属于数据可视化的一种。
+以往，我们存储数据主要是以数据表的方式，但这种方式很难结构化地存储好知识类型的数据。对于关系类型的数据，如果用前文的例子为基础并补充一些相关信息，经过可视化后就能展示成这样：
+这种信息就很难用“折柱饼”或者表格呈现出来，而用知识图谱可视化的方式呈现，就非常的清晰。
+2 场景分析与架构设计 2.1 场景需求分析 我们梳理后发现，在美团的各个业务场景中知识图谱可视化需求主要包含以下几类：
+ 图查询应用：以图数据库为主的图谱可视化工具，提供图数据的编辑、子图探索、顶点/边信息查询等交互操作。 图分析应用：对业务场景中的关系类数据进行可视化展示，帮助业务同学快速了解链路故障、组件依赖等问题。 技术品牌建设：通过知识图谱向大家普及人工智能技术是什么，以及它能做什么，让AI也具备可解释性。  2.</description>
     </item>
     
     <item>
       <title>标准化思想及组装式架构在后端BFF中的实践</title>
       <link>https://wfsui.github.io/posts/%E6%A0%87%E5%87%86%E5%8C%96%E6%80%9D%E6%83%B3%E5%8F%8A%E7%BB%84%E8%A3%85%E5%BC%8F%E6%9E%B6%E6%9E%84%E5%9C%A8%E5%90%8E%E7%AB%AFbff%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 24 May 2022 03:42:02 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:32:54 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%A0%87%E5%87%86%E5%8C%96%E6%80%9D%E6%83%B3%E5%8F%8A%E7%BB%84%E8%A3%85%E5%BC%8F%E6%9E%B6%E6%9E%84%E5%9C%A8%E5%90%8E%E7%AB%AFbff%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 前言 在本地生活服务领域，面向C端的信息展示类功能存在着类生物系统的复杂性，具体体现在以下三个方面：功能多，为了帮助用户高效找店、找服务，信息会在尽可能多的地方展示；差异大，同样的信息，在不同客户端、不同页面及模块下的展示逻辑会存在一些差异；功能易变，产品逻辑经常调整。以上三个方面的特点给研发同学带来了很大的挑战，比如当我们面临数千个功能模块，数十个行业产品的持续需求时，如何快速响应呢？
@@ -294,9 +294,22 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
     </item>
     
     <item>
+      <title>美团外卖广告智能算力的探索与实践（二）</title>
+      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E6%99%BA%E8%83%BD%E7%AE%97%E5%8A%9B%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5%E4%BA%8C/</link>
+      <pubDate>Tue, 24 May 2022 14:32:54 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E6%99%BA%E8%83%BD%E7%AE%97%E5%8A%9B%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5%E4%BA%8C/</guid>
+      <description>1 业务背景 随着美团外卖业务的飞速发展，外卖广告系统压力变得越来越大，算力开始成为新的瓶颈。2021年上半年，外卖广告的数条业务线开始出现算力资源不足的情况，算力分配效率亟待提升。在外卖场景下，流量呈现明显的双峰结构，广告系统在高峰时段面临较大的性能压力，非高峰时段存在大量算力冗余。智能算力旨在对流量算力进行精细化和个性化分配，从而实现系统算力约束下的业务收益最大化。
+本文是广告智能算力系列文章的第二篇，在第一期《美团外卖广告智能算力的探索与实践》中[1]，我们对阿里DCAF[2]线性规划求解方案进行了外卖场景下的优化，落地了弹性队列局部最优算力分配方案（以下简称“第一期”）。如上图所示，外卖展示广告链路中，召回通道和模型决策均使用固定策略，在算力不足时会丢失部分优质流量带来的收益。
+在本文中，我们提出了基于进化算法的多动作算力决策方法ES-MACA（Evolutionary Strategies based Multi-Action Computation Allocation）。在外卖广告链路上，同时决策弹性通道、弹性队列和弹性模型三个动作。在后置动作决策中，我们考虑前置模块的决策引起的状态变化，同时使用多任务模型联合建模实现系统仿真模拟（离线仿真+收益预估，实现不同决策动作下的收益评估功能），实现全链路最优算力分配。相对第一期内容，ES-MACA在外卖展示广告业务线上取得CPM+1.x%、收入+1.x%的效果。
+2 整体思路 为了应对极大的在线流量压力和庞大的候选集，外卖广告投放系统将整个检索过程设计成候选集依次递减的漏斗型级联架构，主要包含召回、粗排、精排、机制等模块。在第一期中，我们把算力分配的手段定义为弹性动作，并结合外卖场景归纳了弹性队列、弹性模型、弹性通道和弹性链路等四种动作，具体动作的定义如下：
+ 弹性队列：线上检索是一个漏斗的过程，不同价值流量可以在级联漏斗的各模块中分配不同候选队列长度。 弹性模型：在模型预估服务中，对于不同价值流量可以选择不同大小模型，大模型相对小模型预估效果更好的同时，消耗的算力也更多。 弹性通道：在召回场景中，不同价值流量可以选择不同复杂度的召回通道和召回通道的路数。 弹性链路：在检索链路上，不同价值流量可以选择不同复杂度的检索链路。  2.1 算力分配问题形式化描述 在一个包含M个算力决策模块的链路中，全链路最优的智能算力的目标可通用的描述为：通过智能化决策M个模块的算力档位，在整体算力满足约束的条件下，使得整体流量收益最大化。</description>
+    </item>
+    
+    <item>
       <title>数据库异常智能分析与诊断</title>
       <link>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E6%99%BA%E8%83%BD%E5%88%86%E6%9E%90%E4%B8%8E%E8%AF%8A%E6%96%AD/</link>
-      <pubDate>Tue, 24 May 2022 03:42:02 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:32:53 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E6%99%BA%E8%83%BD%E5%88%86%E6%9E%90%E4%B8%8E%E8%AF%8A%E6%96%AD/</guid>
       <description>1 现状与问题 1.1 规模增长与运维能力发展之间的不平衡问题凸显 伴随着最近几年美团业务的快速发展，数据库的规模也保持着高速增长。而作为整个业务系统的“神经末梢”，数据库一旦出现问题，对业务造成的损失就会非常大。同时，因数据库规模的快速增长，出现问题的数量也大大增加，完全依靠人力的被动分析与定位已经不堪重负。下图是当时数据库实例近年来的增长趋势：
@@ -308,23 +321,9 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
     </item>
     
     <item>
-      <title>CompletableFuture原理与实践-外卖商家端API的异步化</title>
-      <link>https://wfsui.github.io/posts/completablefuture%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E5%A4%96%E5%8D%96%E5%95%86%E5%AE%B6%E7%AB%AFapi%E7%9A%84%E5%BC%82%E6%AD%A5%E5%8C%96/</link>
-      <pubDate>Tue, 24 May 2022 03:42:01 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/completablefuture%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E5%A4%96%E5%8D%96%E5%95%86%E5%AE%B6%E7%AB%AFapi%E7%9A%84%E5%BC%82%E6%AD%A5%E5%8C%96/</guid>
-      <description>0 背景 随着订单量的持续上升，美团外卖各系统服务面临的压力也越来越大。作为外卖链路的核心环节，商家端提供了商家接单、配送等一系列核心功能，业务对系统吞吐量的要求也越来越高。而商家端API服务是流量入口，所有商家端流量都会由其调度、聚合，对外面向商家提供功能接口，对内调度各个下游服务获取数据进行聚合，具有鲜明的I/O密集型（I/O Bound）特点。在当前日订单规模已达千万级的情况下，使用同步加载方式的弊端逐渐显现，因此我们开始考虑将同步加载改为并行加载的可行性。
-1 为何需要并行加载 外卖商家端API服务是典型的I/O密集型（I/O Bound）服务。除此之外，美团外卖商家端交易业务还有两个比较大的特点：
- 服务端必须一次返回订单卡片所有内容：根据商家端和服务端的“增量同步协议注1”，服务端必须一次性返回订单的所有信息，包含订单主信息、商品、结算、配送、用户信息、骑手信息、餐损、退款、客服赔付（参照下面订单卡片截图）等，需要从下游三十多个服务中获取数据。在特定条件下，如第一次登录和长时间没登录的情况下，客户端会分页拉取多个订单，这样发起的远程调用会更多。 商家端和服务端交互频繁：商家对订单状态变化敏感，多种推拉机制保证每次变更能够触达商家，导致App和服务端的交互频繁，每次变更需要拉取订单最新的全部内容。  在外卖交易链路如此大的流量下，为了保证商家的用户体验，保证接口的高性能，并行从下游获取数据就成为必然。
-2 并行加载的实现方式 并行从下游获取数据，从IO模型上来讲分为同步模型和异步模型。
-2.1 同步模型 从各个服务获取数据最常见的是同步调用，如下图所示：
-在同步调用的场景下，接口耗时长、性能差，接口响应时长T &amp;gt; T1+T2+T3+……+Tn，这时为了缩短接口的响应时间，一般会使用线程池的方式并行获取数据，商家端订单卡片的组装正是使用了这种方式。</description>
-    </item>
-    
-    <item>
       <title>业务数据治理体系化思考与实践</title>
       <link>https://wfsui.github.io/posts/%E4%B8%9A%E5%8A%A1%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E4%BD%93%E7%B3%BB%E5%8C%96%E6%80%9D%E8%80%83%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 24 May 2022 03:42:01 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:32:53 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%B8%9A%E5%8A%A1%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E4%BD%93%E7%B3%BB%E5%8C%96%E6%80%9D%E8%80%83%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>一、序言 美团住宿数据治理团队通过多年数仓建设及数据治理的经验沉淀，并结合业务发展阶段对于数据治理的诉求，将治理的思路逐步从专项、表象、问题驱动的治理，转变为自动化、体系化的治理，并从标准化、数字化、系统化三个方向进行了落地与实践。
@@ -338,9 +337,23 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
     </item>
     
     <item>
+      <title>CompletableFuture原理与实践-外卖商家端API的异步化</title>
+      <link>https://wfsui.github.io/posts/completablefuture%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E5%A4%96%E5%8D%96%E5%95%86%E5%AE%B6%E7%AB%AFapi%E7%9A%84%E5%BC%82%E6%AD%A5%E5%8C%96/</link>
+      <pubDate>Tue, 24 May 2022 14:32:52 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/completablefuture%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E5%A4%96%E5%8D%96%E5%95%86%E5%AE%B6%E7%AB%AFapi%E7%9A%84%E5%BC%82%E6%AD%A5%E5%8C%96/</guid>
+      <description>0 背景 随着订单量的持续上升，美团外卖各系统服务面临的压力也越来越大。作为外卖链路的核心环节，商家端提供了商家接单、配送等一系列核心功能，业务对系统吞吐量的要求也越来越高。而商家端API服务是流量入口，所有商家端流量都会由其调度、聚合，对外面向商家提供功能接口，对内调度各个下游服务获取数据进行聚合，具有鲜明的I/O密集型（I/O Bound）特点。在当前日订单规模已达千万级的情况下，使用同步加载方式的弊端逐渐显现，因此我们开始考虑将同步加载改为并行加载的可行性。
+1 为何需要并行加载 外卖商家端API服务是典型的I/O密集型（I/O Bound）服务。除此之外，美团外卖商家端交易业务还有两个比较大的特点：
+ 服务端必须一次返回订单卡片所有内容：根据商家端和服务端的“增量同步协议注1”，服务端必须一次性返回订单的所有信息，包含订单主信息、商品、结算、配送、用户信息、骑手信息、餐损、退款、客服赔付（参照下面订单卡片截图）等，需要从下游三十多个服务中获取数据。在特定条件下，如第一次登录和长时间没登录的情况下，客户端会分页拉取多个订单，这样发起的远程调用会更多。 商家端和服务端交互频繁：商家对订单状态变化敏感，多种推拉机制保证每次变更能够触达商家，导致App和服务端的交互频繁，每次变更需要拉取订单最新的全部内容。  在外卖交易链路如此大的流量下，为了保证商家的用户体验，保证接口的高性能，并行从下游获取数据就成为必然。
+2 并行加载的实现方式 并行从下游获取数据，从IO模型上来讲分为同步模型和异步模型。
+2.1 同步模型 从各个服务获取数据最常见的是同步调用，如下图所示：
+在同步调用的场景下，接口耗时长、性能差，接口响应时长T &amp;gt; T1+T2+T3+……+Tn，这时为了缩短接口的响应时间，一般会使用线程池的方式并行获取数据，商家端订单卡片的组装正是使用了这种方式。</description>
+    </item>
+    
+    <item>
       <title>端智能在大众点评搜索重排序的应用实践</title>
       <link>https://wfsui.github.io/posts/%E7%AB%AF%E6%99%BA%E8%83%BD%E5%9C%A8%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E9%87%8D%E6%8E%92%E5%BA%8F%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 24 May 2022 03:42:00 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:32:51 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%AB%AF%E6%99%BA%E8%83%BD%E5%9C%A8%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E9%87%8D%E6%8E%92%E5%BA%8F%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 引言 随着大数据、人工智能等信息技术的快速发展，云计算已经无法满足特定场景对数据隐私、高实时性的要求。借鉴边缘计算的思想，在终端部署 AI 能力逐渐步入大众的视野，“端智能”的概念应运而生。相比于传统的云计算，在智能手机等终端部署运行 AI 模块有以下几个方面的优势：首先，数据本地化可以缓解云存储的压力，也有利于用户数据的隐私保护；其次，计算的本地化可以缓解云计算过载问题；最后，端智能减少了和云端系统的请求通信成本，可以更好地利用用户在端上的交互，提供更加实时、个性化的服务体验。
@@ -350,7 +363,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
     <item>
       <title>图神经网络训练框架的实践和探索</title>
       <link>https://wfsui.github.io/posts/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Tue, 24 May 2022 03:41:59 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:32:51 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%8E%A2%E7%B4%A2/</guid>
       <description>1. 前言 万物之间皆有联系。图作为一种通用的数据结构，可以很好地描述实体与实体之间的关系。例如，在社交网络中，用图来表示用户与用户之间的好友关系；在电商网站中，用图表示用户与商品之间的点击购买行为；在知识图谱构建中，还可以用图表示实体与实体间多样的关系。另一方面，深度学习技术在计算机视觉、自然语言处理、语音处理等领域均已取得了巨大的成功。深度学习技术将图像、文本、语音等多种多样的数据转化为稠密的向量表示，提供了表示数据的另一种方式。借助于硬件日益强大的计算能力，深度学习可以从海量数据中学习到数据之间复杂多样的相关性。

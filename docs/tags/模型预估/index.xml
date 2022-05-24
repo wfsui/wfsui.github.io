@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Tue, 24 May 2022 03:42:09 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%A8%A1%E5%9E%8B%E9%A2%84%E4%BC%B0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 24 May 2022 14:33:00 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%A8%A1%E5%9E%8B%E9%A2%84%E4%BC%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>GPU在外卖场景精排模型预估中的应用实践</title>
       <link>https://wfsui.github.io/posts/gpu%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%B2%BE%E6%8E%92%E6%A8%A1%E5%9E%8B%E9%A2%84%E4%BC%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 24 May 2022 03:42:09 +0000</pubDate>
+      <pubDate>Tue, 24 May 2022 14:33:00 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/gpu%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%B2%BE%E6%8E%92%E6%A8%A1%E5%9E%8B%E9%A2%84%E4%BC%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 前言 近些年，随着机器学习技术的蓬勃发展，以GPU为代表的一系列专用芯片以优越的高性能计算能力和愈发低廉的成本，在机器学习领域得到广泛认可和青睐，且与传统的CPU体系不断融合，形成了新的异构硬件生态。

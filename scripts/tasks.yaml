@@ -9,6 +9,7 @@ subscribe:
     - link: https://blog.csdn.net/u013832707/article/details/108647898
   面试:
     - link: https://blog.csdn.net/adparking/article/details/118105381
+    - link: https://developer.aliyun.com/article/725982
 
 source:
   tech.meituan.com:
@@ -19,3 +20,7 @@ source:
     title: //h1[contains(@class, 'title-article')]
     content: //div[contains(@class, 'article_content')]
     tags: //a[contains(@class, 'tag-link')]
+  developer.aliyun.com:
+    title: //h1[contains(@class, 'article-title')]
+    content: //div[contains(@class, 'article-inner')]
+    tags: //span[contains(@class, 'tag-item')]//a

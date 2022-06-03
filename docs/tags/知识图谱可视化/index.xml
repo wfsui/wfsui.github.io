@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 30 May 2022 03:48:36 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%8F%AF%E8%A7%86%E5%8C%96/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 03 Jun 2022 03:32:44 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%8F%AF%E8%A7%86%E5%8C%96/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>知识图谱可视化技术在美团的实践与探索</title>
       <link>https://wfsui.github.io/posts/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Mon, 30 May 2022 03:48:36 +0000</pubDate>
+      <pubDate>Fri, 03 Jun 2022 03:32:44 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</guid>
       <description>1 知识图谱可视化基本概念 1.1 知识图谱技术的简介 知识图谱（Knowledge Graph）是人工智能的重要分支，它是一种揭示实体之间关系的语义网络，可以对现实世界的事物及其相互关系进行形式化地描述。举个例子，“孙悟空的师傅是唐僧”就是一条知识。在这条知识里，有“孙悟空”和“唐僧”两个实体，“师傅”是描述这两个实体之间的关系，上述内容在知识图谱中就组成了一个SPO三元组（Subject-Predicate-Object）。
@@ -20,7 +20,7 @@
 以往，我们存储数据主要是以数据表的方式，但这种方式很难结构化地存储好知识类型的数据。对于关系类型的数据，如果用前文的例子为基础并补充一些相关信息，经过可视化后就能展示成这样：
 这种信息就很难用“折柱饼”或者表格呈现出来，而用知识图谱可视化的方式呈现，就非常的清晰。
 2 场景分析与架构设计 2.1 场景需求分析 我们梳理后发现，在美团的各个业务场景中知识图谱可视化需求主要包含以下几类：
- 图查询应用：以图数据库为主的图谱可视化工具，提供图数据的编辑、子图探索、顶点/边信息查询等交互操作。 图分析应用：对业务场景中的关系类数据进行可视化展示，帮助业务同学快速了解链路故障、组件依赖等问题。 技术品牌建设：通过知识图谱向大家普及人工智能技术是什么，以及它能做什么，让AI也具备可解释性。  2.</description>
+图查询应用：以图数据库为主的图谱可视化工具，提供图数据的编辑、子图探索、顶点/边信息查询等交互操作。 图分析应用：对业务场景中的关系类数据进行可视化展示，帮助业务同学快速了解链路故障、组件依赖等问题。 技术品牌建设：通过知识图谱向大家普及人工智能技术是什么，以及它能做什么，让AI也具备可解释性。 2.</description>
     </item>
     
   </channel>

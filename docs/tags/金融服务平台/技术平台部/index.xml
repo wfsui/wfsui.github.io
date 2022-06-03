@@ -29,7 +29,7 @@
 “这我知道，活动营销是指企业通过参与社会关注度高的已有活动，或整合有效的资源自主策划大型活动，从而迅速提高企业及其品牌的知名度、美誉度和影响力，常见的比如有抽奖、红包等。”
 老师点点头：“是的。我们假设现在就要做一个营销，需要用户参与一个活动，然后完成一系列的任务，最后可以得到一些奖励作为回报。活动的奖励包含美团外卖、酒旅和美食等多种品类券，现在需要你帮忙设计一套奖励发放方案。”
 因为之前有过类似的开发经验，拿到需求的小明二话不说开始了编写起了代码：
-// 奖励服务 class RewardService {  // 外部服务  private WaimaiService waimaiService;  private HotelService hotelService;  private FoodService foodService;  // 使用对入参的条件判断进行发奖  public void issueReward(String rewardType, Object .</description>
+// 奖励服务 class RewardService { // 外部服务 private WaimaiService waimaiService; private HotelService hotelService; private FoodService foodService; // 使用对入参的条件判断进行发奖 public void issueReward(String rewardType, Object .</description>
     </item>
     
   </channel>

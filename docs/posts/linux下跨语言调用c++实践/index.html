@@ -10,11 +10,11 @@
 2 方案概述 为了达到业务方开箱即用的目的，综合考虑C&#43;&#43;、Python、Java用户的使用习惯，我们设计了如下的协作结构：
 3 实现详情 Python、Java支持调用C接口，但不支持调用C&#43;&#43;接口，因此对于C&#43;&#43;语言实现的接口，必须转换为C语言实现。为了不修改原始C&#43;&#43;代码，在C&#43;&#43;接口上层用C语言进行一次封装，这部分代码通常被称为“胶水代码”(Glue Code)。具体方案如下图所示：
 本章节各部分内容如下：
- 【功能代码】部分，通过打印字符串的例子来讲述各语言部分的编码工作。 【打包发布】部分，介绍如何将生成的动态库作为资源文件与Python、Java代码打包在一起发布到仓库，以降低使用方的接入成本。 【业务使用】部分，介绍开箱即用的使用示例。 【易用性优化】部分，结合实际使用中遇到的问题，讲述了对于Python版本兼容，以及动态库依赖问题的处理方式。  3." />
+【功能代码】部分，通过打印字符串的例子来讲述各语言部分的编码工作。 【打包发布】部分，介绍如何将生成的动态库作为资源文件与Python、Java代码打包在一起发布到仓库，以降低使用方的接入成本。 【业务使用】部分，介绍开箱即用的使用示例。 【易用性优化】部分，结合实际使用中遇到的问题，讲述了对于Python版本兼容，以及动态库依赖问题的处理方式。 3.1 功能代码 3." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/linux%E4%B8%8B%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8c&#43;&#43;%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-05-30T03:48:35+00:00" />
-<meta property="article:modified_time" content="2022-05-30T03:48:35+00:00" /><meta property="og:site_name" content="大峰哥" />
+<meta property="article:published_time" content="2022-06-03T03:32:43+00:00" />
+<meta property="article:modified_time" content="2022-06-03T03:32:43+00:00" /><meta property="og:site_name" content="大峰哥" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Linux下跨语言调用C&#43;&#43;实践"/>
@@ -24,7 +24,7 @@
 2 方案概述 为了达到业务方开箱即用的目的，综合考虑C&#43;&#43;、Python、Java用户的使用习惯，我们设计了如下的协作结构：
 3 实现详情 Python、Java支持调用C接口，但不支持调用C&#43;&#43;接口，因此对于C&#43;&#43;语言实现的接口，必须转换为C语言实现。为了不修改原始C&#43;&#43;代码，在C&#43;&#43;接口上层用C语言进行一次封装，这部分代码通常被称为“胶水代码”(Glue Code)。具体方案如下图所示：
 本章节各部分内容如下：
- 【功能代码】部分，通过打印字符串的例子来讲述各语言部分的编码工作。 【打包发布】部分，介绍如何将生成的动态库作为资源文件与Python、Java代码打包在一起发布到仓库，以降低使用方的接入成本。 【业务使用】部分，介绍开箱即用的使用示例。 【易用性优化】部分，结合实际使用中遇到的问题，讲述了对于Python版本兼容，以及动态库依赖问题的处理方式。  3."/>
+【功能代码】部分，通过打印字符串的例子来讲述各语言部分的编码工作。 【打包发布】部分，介绍如何将生成的动态库作为资源文件与Python、Java代码打包在一起发布到仓库，以降低使用方的接入成本。 【业务使用】部分，介绍开箱即用的使用示例。 【易用性优化】部分，结合实际使用中遇到的问题，讲述了对于Python版本兼容，以及动态库依赖问题的处理方式。 3.1 功能代码 3."/>
 <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
 
 	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
@@ -70,7 +70,7 @@
 
 		<div class="post-header">
 			<h1 class="title">Linux下跨语言调用C&#43;&#43;实践</h1>
-			<div class="meta">Posted at &mdash; May 30, 2022</div>
+			<div class="meta">Posted at &mdash; Jun 3, 2022</div>
 		</div>
 
 		<div class="markdown">

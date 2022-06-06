@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sun, 05 Jun 2022 03:24:28 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%99%BA%E8%83%BD%E5%AE%A2%E6%9C%8D/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 06 Jun 2022 03:37:06 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%99%BA%E8%83%BD%E5%AE%A2%E6%9C%8D/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>对话摘要技术在美团的探索（SIGIR）</title>
       <link>https://wfsui.github.io/posts/%E5%AF%B9%E8%AF%9D%E6%91%98%E8%A6%81%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E6%8E%A2%E7%B4%A2sigir/</link>
-      <pubDate>Sun, 05 Jun 2022 03:24:28 +0000</pubDate>
+      <pubDate>Mon, 06 Jun 2022 03:37:06 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%AF%B9%E8%AF%9D%E6%91%98%E8%A6%81%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E6%8E%A2%E7%B4%A2sigir/</guid>
       <description>随着互联网产生的文本数据越来越多，文本信息过载问题日益严重，对各类文本进行一个“降维”处理显得非常必要，而文本摘要就是其中一个重要的手段。本文首先介绍了经典的文本摘要方法，包括抽取式摘要方法和生成式摘要方法，随后分析了对话摘要的模型，并分享了美团在真实对话摘要场景中面临的挑战。希望能给从事相关工作的同学带来一些启发或者帮助。

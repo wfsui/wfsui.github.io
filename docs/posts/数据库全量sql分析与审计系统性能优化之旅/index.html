@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>数据库全量SQL分析与审计系统性能优化之旅 - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="数据库全量SQL分析与审计系统性能优化之旅" />
+<meta property="og:description" content="1 背景 数据库安全一直是美团信息安全团队和数据库团队非常注重的领域，但由于历史原因，对数据库的访问只具备采样审计能力，导致对于一些攻击事件无法快速地发现、定损和优化。安全团队根据历史经验，发现攻击访问数据库基本上都存在着某些特征，经常会使用一些特定SQL，我们希望通过对MySQL访问流量进行全量分析，识别出惯用SQL，在数据库安全性上做到有的放矢。
+2 现状及挑战 下图是采样MySQL审计系统的架构图，数据采集端基于pcap抓包方式实现，数据处理端选用美团大数据中心的日志接入方案。所有MySQL实例都部署了用于采集MySQL相关数据的rds-agent、日志收集的log-agent。rds-agent抓取到MySQL访问数据，通过log-agent上报到日志接收端，为了减少延时，上报端与接收端间做了同机房调度优化。日志接收端把数据写入到约定的Kafka中，安全团队通过Storm实时消费Kafka分析出攻击事件，并定期拉数据持久化到Hive中。
+我们发现，通常被攻击的都是一些核心MySQL集群。经统计发现，这些集群单机最大QPS的9995线约5万次左右。rds-agent作为MySQL机器上的一个寄生进程，为了宿主稳定性，资源控制也极为重要。为了评估rds-agent在高QPS下的表现，我们用Sysbench对MySQL进行压测，观察在不同QPS下rds-agent抓取的数据丢失率和CPU消耗情况，从下面的压测数据来看结果比较糟糕：
+QPS 丢失率 CPU利用率 10368.72 1.03% 307.35% 17172.61 7.23% 599.90% 29005.51 28.75% 662.39% 42697.05 51." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%A8%E9%87%8Fsql%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E6%97%85/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-06-11T03:32:16+00:00" />
+<meta property="article:modified_time" content="2022-06-11T03:32:16+00:00" /><meta property="og:site_name" content="大峰哥" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数据库全量SQL分析与审计系统性能优化之旅"/>
+<meta name="twitter:description" content="1 背景 数据库安全一直是美团信息安全团队和数据库团队非常注重的领域，但由于历史原因，对数据库的访问只具备采样审计能力，导致对于一些攻击事件无法快速地发现、定损和优化。安全团队根据历史经验，发现攻击访问数据库基本上都存在着某些特征，经常会使用一些特定SQL，我们希望通过对MySQL访问流量进行全量分析，识别出惯用SQL，在数据库安全性上做到有的放矢。
+2 现状及挑战 下图是采样MySQL审计系统的架构图，数据采集端基于pcap抓包方式实现，数据处理端选用美团大数据中心的日志接入方案。所有MySQL实例都部署了用于采集MySQL相关数据的rds-agent、日志收集的log-agent。rds-agent抓取到MySQL访问数据，通过log-agent上报到日志接收端，为了减少延时，上报端与接收端间做了同机房调度优化。日志接收端把数据写入到约定的Kafka中，安全团队通过Storm实时消费Kafka分析出攻击事件，并定期拉数据持久化到Hive中。
+我们发现，通常被攻击的都是一些核心MySQL集群。经统计发现，这些集群单机最大QPS的9995线约5万次左右。rds-agent作为MySQL机器上的一个寄生进程，为了宿主稳定性，资源控制也极为重要。为了评估rds-agent在高QPS下的表现，我们用Sysbench对MySQL进行压测，观察在不同QPS下rds-agent抓取的数据丢失率和CPU消耗情况，从下面的压测数据来看结果比较糟糕：
+QPS 丢失率 CPU利用率 10368.72 1.03% 307.35% 17172.61 7.23% 599.90% 29005.51 28.75% 662.39% 42697.05 51."/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://wfsui.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://wfsui.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<base href="https://wfsui.github.io/">
+	<h1 class="site-title"><a href="https://wfsui.github.io/">大峰哥</a></h1>
+	<div class="site-description"><h2>记录日常生活哦</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/wfsui" title="Github"><i data-feather="github"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">文章</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">数据库全量SQL分析与审计系统性能优化之旅</h1>
+			<div class="meta">Posted at &mdash; Jun 11, 2022</div>
+		</div>
+
+		<div class="markdown">
+			<h2 id="1-背景">1 背景</h2>
+<p>数据库安全一直是美团信息安全团队和数据库团队非常注重的领域，但由于历史原因，对数据库的访问只具备采样审计能力，导致对于一些攻击事件无法快速地发现、定损和优化。安全团队根据历史经验，发现攻击访问数据库基本上都存在着某些特征，经常会使用一些特定SQL，我们希望通过对MySQL访问流量进行全量分析，识别出惯用SQL，在数据库安全性上做到有的放矢。</p>
+<h2 id="2-现状及挑战">2 现状及挑战</h2>
+<p>下图是采样MySQL审计系统的架构图，数据采集端基于pcap抓包方式实现，数据处理端选用美团大数据中心的日志接入方案。所有MySQL实例都部署了用于采集MySQL相关数据的rds-agent、日志收集的log-agent。rds-agent抓取到MySQL访问数据，通过log-agent上报到日志接收端，为了减少延时，上报端与接收端间做了同机房调度优化。日志接收端把数据写入到约定的Kafka中，安全团队通过Storm实时消费Kafka分析出攻击事件，并定期拉数据持久化到Hive中。</p>
+<p><img src="https://p1.meituan.net/travelcube/caa7ce5569917b36a61c00a9b5281e7536657.jpg" alt=""></p>
+<p>我们发现，通常被攻击的都是一些核心MySQL集群。经统计发现，这些集群单机最大QPS的9995线约5万次左右。rds-agent作为MySQL机器上的一个寄生进程，为了宿主稳定性，资源控制也极为重要。为了评估rds-agent在高QPS下的表现，我们用Sysbench对MySQL进行压测，观察在不同QPS下rds-agent抓取的数据丢失率和CPU消耗情况，从下面的压测数据来看结果比较糟糕：</p>
+<table>
+<thead>
+<tr>
+<th>QPS</th>
+<th>丢失率</th>
+<th>CPU利用率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10368.72</td>
+<td>1.03%</td>
+<td>307.35%</td>
+</tr>
+<tr>
+<td>17172.61</td>
+<td>7.23%</td>
+<td>599.90%</td>
+</tr>
+<tr>
+<td>29005.51</td>
+<td>28.75%</td>
+<td>662.39%</td>
+</tr>
+<tr>
+<td>42697.05</td>
+<td>51.73%</td>
+<td>622.34%</td>
+</tr>
+<tr>
+<td>50833.50</td>
+<td>63.95%</td>
+<td>601.39%</td>
+</tr>
+</tbody>
+</table>
+<p>如何在高QPS下保证较低的丢失率与CPU消耗？已经成为当前系统的一个亟待解决的难题与挑战。</p>
+<h2 id="3-分析及优化">3 分析及优化</h2>
+<p>下面主要介绍围绕丢失率与CPU消耗这一问题，我们对数据采集端在流程、调度、垃圾回收和协议方面做的分析与改进。</p>
+<h3 id="31-数据采集端介绍">3.1 数据采集端介绍</h3>
+<p>首先，简要介绍一下数据采集端rds-agent，它是一个MySQL实例上的进程，采用Go语言编写，基于开源的MysqlProbe的Agent改造。通过监听网卡上MySQL端口的流量，分析出客户端的访问时间、来源IP、用户名、SQL、目标数据库和目标IP等审计信息。下面是其架构图，主要分为5大功能模块：</p>
+<p><img src="https://p0.meituan.net/travelcube/2ce6cfc5c17933227451bbd6c127025725850.jpg" alt=""></p>
+<p><strong>1. probe</strong></p>
+<p>probe意为探针，采用了gopacket作为抓包方案，它是谷歌开源的一个Go抓包库，封装了pcap。probe把抓取到原始的数据链路层帧封装成TCP层的数据包。通过变种的Fowler-Noll-Vo算法哈希源和目的IP port字段，快速实现把数据库连接打散到不同的worker中，该算法保证了同一连接的来包与回包的哈希值一样。</p>
+<p><strong>2. watcher</strong></p>
+<p>登录用户名对于审计来说极其重要，客户端往往都是通过长连接访问MySQL，而登录信息仅出现在MySQL通信协议的认证握手阶段，仅通过抓包容易错过。</p>
+<p>watcher通过定时执行show processlist获取当前数据库的所有连接数据，通过对比Host字段与当前包的客户端ip port，补偿错过的用户名信息。</p>
+<p><strong>3. worker</strong></p>
+<p>不同的worker负责管理不同数据库连接的生命周期，一个worker管理多个连接。通过定期比对worker的当前连接列表与watcher中的连接列表，及时发现过期的连接，关闭并释放相关资源，防止内存泄漏。</p>
+<p><strong>4. connStream</strong></p>
+<p>整个数据采集端的核心逻辑，负责根据MySQL协议解析TCP数据包并识别出特定SQL，一个连接对应一个connStream Goroutine。因为SQL中可能包含敏感数据，connStream还负责对SQL进行脱敏，具体的特定SQL识别策略，由于安全方面原因，这里不再进行展开。</p>
+<p><strong>5. sender</strong></p>
+<p>负责数据上报逻辑，通过thrift协议将connStream解析出的审计数据上报给log-agent。</p>
+<h3 id="32-基础性能测试">3.2 基础性能测试</h3>
+<p>抓包库gopacket的性能直接决定了系统性能上限，为了探究问题是否出在gopacket上，我们编写了简易的tcp-client和tcp-server，单独对gopacket在数据流向图中涉及到的前三个步骤（如下图所示）进行了性能测试，从下面的测试结果数据上看，性能瓶颈点不在gopacket。</p>
+<p><img src="https://p0.meituan.net/travelcube/ff758c609d805e049167eba3147928cb24296.jpg" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>QPS</th>
+<th>pcap缓冲区</th>
+<th>丢失率</th>
+<th>CPU利用率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100000</td>
+<td>100MB</td>
+<td>0%</td>
+<td>144.9%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="33-cpu画像分析">3.3 CPU画像分析</h3>
+<p>丢失率与CPU消耗二者密不可分，为了探究如此高CPU消耗的原因，我们用Go自带的pprof工具对进程的CPU消耗进行了画像分析，从下面火焰图的调用函数可以归纳出几个大头：SQL脱敏、解包、GC和Goroutine调度。下面主要介绍一下围绕它们做的优化工作。</p>
+<p><img src="https://p1.meituan.net/travelcube/7b19a1cb4c2a080e692444753518eb3a209388.png" alt=""></p>
+<h3 id="34-脱敏分析及改进">3.4 脱敏分析及改进</h3>
+<p>因为SQL中可能包含敏感信息，出于安全考虑，rds-agent会对每一条SQL进行脱敏处理。</p>
+<p>脱敏操作使用了pingcap的SQL解析器对SQL进行模板化：即把SQL中的值全部替换成“?”来达到目的，该操作需要解析出SQL的抽象语法树，代价较高。当前只有采样和抓取特定SQL的需求，没有必要在解析阶段对每条SQL进行脱敏。这里在流程上进行了优化，把脱敏下沉到上报模块，只对最终发送出去的样本脱敏。</p>
+<p><img src="https://p0.meituan.net/travelcube/1268c6b231be832fbb5c852009b0e34817599.jpg" alt=""></p>
+<p>这个优化取得的效果如下：</p>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>QPS</th>
+<th>丢失率</th>
+<th>CPU利用率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>改进前</td>
+<td>50833.50</td>
+<td>63.95%</td>
+<td>601.39%</td>
+</tr>
+<tr>
+<td>改进后</td>
+<td>51246.47</td>
+<td>31.95%</td>
+<td>259.59%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="35-调度分析及改进">3.5 调度分析及改进</h3>
+<p>从下面的数据流向图可以看出整个链路比较长，容易出现性能瓶颈点。同时存在众多高频运行的Goroutine（红色部分），由于数量多，Go需要经常在这些Goroutine间进行调度切换，切换对于我们这种CPU密集型的程序来说无疑是一种负担。</p>
+<p><img src="https://p0.meituan.net/travelcube/8730656a9a6cf32487f7b7d89687351f31994.jpg" alt=""></p>
+<p>针对该问题，我们做了如下优化：</p>
+<ol>
+<li><strong>缩短链路</strong>：分流、worker、解析SQL等模块合并成一个Goroutine解析器。</li>
+<li><strong>降低切换频率</strong>：解析器每5ms从网络协议包的队列中取一次，相当于手动触发切换。(5ms也是一个多次测试后的折中数据，太小会消耗更多的CPU，太大会引起数据丢失)</li>
+</ol>
+<p>这个优化取得的效果如下：</p>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>QPS</th>
+<th>丢失率</th>
+<th>CPU利用率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>改进前</td>
+<td>51246.47</td>
+<td>31.95%</td>
+<td>259.59%</td>
+</tr>
+<tr>
+<td>改进后</td>
+<td>51229.54</td>
+<td>0%</td>
+<td>206.87%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="36-垃圾回收压力分析及改进">3.6 垃圾回收压力分析及改进</h3>
+<p>下图为rds-agent抓包30秒，已分配指针对象的火焰图。可以看出已经分配了4千多万个对象，GC压力可想而知。关于GC，我们了解到如下两种优化方案：</p>
+<ol>
+<li><strong>池化</strong>：Go的标准库中提供了一个sync.Pool对象池，可通过复用对象来减少对象分配，从而降低GC压力。</li>
+<li><strong>手动管理内存</strong>：通过系统调用mmap直接向OS申请内存，绕过GC，实现内存的手动管理。</li>
+</ol>
+<p><img src="https://p0.meituan.net/travelcube/60d667eb0a25a43e6c86a6d1b590ff70133572.png" alt=""></p>
+<p>但是，方案2容易出现内存泄漏。从稳定性的角度考虑，我们最终选择了方案1来管理高频调用函数里创建的指针对象，这个优化取得的效果如下：</p>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>QPS</th>
+<th>丢失率</th>
+<th>CPU利用率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>改进前</td>
+<td>51229.54</td>
+<td>0%</td>
+<td>206.87%</td>
+</tr>
+<tr>
+<td>改进后</td>
+<td>51275.11</td>
+<td>0%</td>
+<td>153.32%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="37-解包分析及改进">3.7 解包分析及改进</h3>
+<p>MySQL是基于TCP协议之上的，在功能调试过程中，我们发现了很多空包。从下面的MySQL客户端-服务端数据的交互图可以看出：当客户端发送一条SQL命令，服务端响应结果，由于TCP的消息确认机制，客户端会发送一个空的ack包来确认消息，而且空包在整个流程中的比例较大，它们会穿透到解析环节，在高QPS下对于Goroutine调度和GC来说无疑是一个负担。</p>
+<p><img src="https://p0.meituan.net/travelcube/41aa060069e947d9c64a9da0fe11d9ab203394.png" alt=""></p>
+<p>下图是MySQL数据包的唯一格式，通过分析，我们观察到以下特点：</p>
+<p><img src="https://p1.meituan.net/travelcube/e0e11c81e659e026b86d91199f8915d5281492.png" alt=""></p>
+<ol>
+<li>一个完整的MySQL数据包长度&gt;=4Byte</li>
+<li>客户端新发送命令的sequence id都是为0或者1</li>
+</ol>
+<p>而pcap支持设置过滤规则，让我们可以在内核层将空包排除掉，下面是上述特点对应的两条过滤规则：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>特点1： ip[2:2] - ((ip[0] &amp; 0x0f) &lt;&lt; 2) - ((tcp[12:1] &amp; 0xf0) &gt;&gt; 2) &gt;= 4
+</span></span><span style="display:flex;"><span>特点2： (dst host {localIP} and dst port 3306 and (tcp[(((tcp[12:1] &amp; 0xf0) &gt;&gt; 2) + 3)] &lt;= 0x01))
+</span></span></code></pre></div><p>这个优化取得的效果如下：</p>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>QPS</th>
+<th>丢失率</th>
+<th>CPU利用率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>改进前</td>
+<td>51275.11</td>
+<td>0%</td>
+<td>153.32%</td>
+</tr>
+<tr>
+<td>改进后</td>
+<td>51246.02</td>
+<td>0%</td>
+<td>142.58%</td>
+</tr>
+</tbody>
+</table>
+<p>基于上述经验，我们对数据采集端进行功能代码重构，同时还进行一些其它优化。</p>
+<h2 id="4-最终成果">4 最终成果</h2>
+<p>下面是优化前后的数据对比，丢失率从最高60%下降到了0%, CPU消耗从最高占用6个核下降到了1个核。</p>
+<p><img src="https://p0.meituan.net/travelcube/057df79b4a6691fe1f85003c67e2f4d7172659.png" alt=""></p>
+<p>为了探究抓包功能对MySQL性能损耗，我们用Sysbench做了一个性能对比测试。从下面的结果数据可以看出功能对MySQL的TPS、QPS和响应时间99线指标最高大约有6%的损耗。</p>
+<p><img src="https://p0.meituan.net/travelcube/f4544944af5e1dd25e867a2724af0ddf483168.png" alt=""></p>
+<h2 id="5-未来规划">5 未来规划</h2>
+<p>虽然我们对抓包方案进行了各种优化，但对于一些延迟敏感的业务来说性能损耗还是偏大，而且该方案对一些特殊场景支持较差：如TCP协议层发生丢包、重传、乱序时，MySQL协议层使用压缩、传输大SQL时。而业界普遍采用了直接改造MySQL内核的方式来输出全量SQL，同时也支持输出更多的指标数据。目前，数据库内核团队也完成了该方案开发，正在线上灰度替换抓包方案中。另外，对于线上全量SQL端到端丢失率指标的缺失，我们也将陆续进行补齐。</p>
+<h2 id="本文作者">本文作者</h2>
+<p>粟含，来自于美团基础研发平台/基础技术部/数据库技术中心。</p>
+<h2 id="招聘信息">招聘信息</h2>
+<p>美团基础技术部-数据库技术中心诚招高级、资深技术专家，Base上海、北京。美团关系数据库规模大，每年快速的增长，每天承载数千亿的访问流量。在这里可以体验高并发、高可用、高可扩展性的业务挑战，可以紧跟并开拓业界前沿技术，体会到技术进步带来的生产力提升，欢迎投递简历至：suhan03@meituan.com。</p>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F">美团技术团队</a></li>
+								
+								<li><a href="/tags/%E5%9F%BA%E7%A1%80%E7%A0%94%E5%8F%91%E5%B9%B3%E5%8F%B0">基础研发平台</a></li>
+								
+								<li><a href="/tags/%E7%B3%BB%E7%BB%9F">系统</a></li>
+								
+								<li><a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93">数据库</a></li>
+								
+								<li><a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96">性能优化</a></li>
+								
+								<li><a href="/tags/go">Go</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'wfsui';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="">Wfsui theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div><script>feather.replace()</script>
+</body>
+</html>

@@ -8,8 +8,8 @@
 在端智能的应用方面，国内外各大科技公司已经走在了前列。Google 提出了 Recommendation Android App 的概念，根据用户兴趣进行内容推荐；Apple 的 Face ID 识别、Siri 智能助手等一些我们熟知的产品，也都是端智能典型的应用代表。阿里巴巴、快手、字节跳动等企业也在各自的应用场景上进行了端智能的落地，并推出相应的端上模型推理框架。比如，快手上线的短视频特效拍摄、智能识物等功能。另外，在搜索推荐场景下也有一些实践，其中，手机淘宝“猜你喜欢”在端上部署了智能推荐系统，取得较为显著收益（EdgeRec[1]，双十一 IPV 提升 10%&#43;，GMV 提升 5%&#43;）。快手上下滑推荐场景也应用了端上重排的方案，并取得App时长提升了 1%&#43; 的效果。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/%E7%AB%AF%E6%99%BA%E8%83%BD%E5%9C%A8%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E9%87%8D%E6%8E%92%E5%BA%8F%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-06-14T04:00:33+00:00" />
-<meta property="article:modified_time" content="2022-06-14T04:00:33+00:00" /><meta property="og:site_name" content="大峰哥" />
+<meta property="article:published_time" content="2022-06-17T03:40:47+00:00" />
+<meta property="article:modified_time" content="2022-06-17T03:40:47+00:00" /><meta property="og:site_name" content="大峰哥" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="端智能在大众点评搜索重排序的应用实践"/>
@@ -60,7 +60,7 @@
 
 		<div class="post-header">
 			<h1 class="title">端智能在大众点评搜索重排序的应用实践</h1>
-			<div class="meta">Posted at &mdash; Jun 14, 2022</div>
+			<div class="meta">Posted at &mdash; Jun 17, 2022</div>
 		</div>
 
 		<div class="markdown">
@@ -123,8 +123,7 @@
 <li>使用商户更多表现粒度的属性信息作为Q，激活得到注意力权重，提升用户在这些更显式感知的商户表征上的兴趣表达。</li>
 <li>使用当前搜索上下文相关的信号作为Q，激活得到注意力权重，增强实时反馈行为对于不同上下文环境的自适应地表达。</li>
 </ol>
-<p>$Q = [x_s, x_c, …, x_d] \in \Re^{K\times d_{model}}$，$K = V = x_s \oplus x_c \oplus … \oplus x_d$ 表示各种反馈序列（shop_id/category/distance/position等）相加，作为 Transformer 的输入，Multi-View 的注意力结构可以由以下公式表示：</p>
-<p>$$MultiHead(Q, K, V) = Concat(head_1, head_2, …, head_h) W^O$$$$head_i = Attention(Q_iW^{Q_i}, KW_i^K, VW_i^V)$$$$Attention(Q_i, K, V) = softmax(\frac{Q_iK^T}{\sqrt{d_k}})V$$</p>
+<p><img src="https://p1.meituan.net/travelcube/16225c84704f4c706da14b6d2019f1a975986.png" alt=""></p>
 <p>通过消融对比实验发现，相比于随机初始化的 Multi-Head Attention，这种显式使用多种商户上下文特征的 Transformer 激活方式效果更显著。</p>
 <p><strong>Match&amp;Aggregate 序列特征</strong></p>
 <p>对于端上的用户实时反馈特征，除了各种常用的基于 Attention 的序列建模方式，还有一种采用显式交叉的兴趣提取方式。如图 7 所示，相比于一般基于 Embedding 内积计算“Soft”权重的 Attention 建模，它可以理解为一种“Hard”的 Attention 方式，提取的形式包括：Hit（是否命中）、Frequency（命中多少次）、Step（间隔多久）等等，除了单变量序列的交叉，还可以组合多个变量进行交叉，来提升行为描述的粒度和区分度。</p>
@@ -152,7 +151,7 @@
 </ul>
 <p><strong>优化目标</strong></p>
 <p>在搜索场景下，我们关注的还是用户搜索的成功率（有没有发生点击行为），不同于推荐、广告场景往往基于全局性损失预估 item 的点击率，搜索业务更关心排在页面头部结果的好坏，靠前位置排序需要优先考虑。因此，在重排提升用户搜索点击率目标的建模中，我们采用了 ListWise 的 LambdaLoss，梯度更新中引入 DeltaNDCG 值来强化头部位置的影响。详细推论和计算实现过程参见<a href="https://tech.meituan.com/2019/01/17/dianping-search-deeplearning.html">大众点评搜索基于知识图谱的深度学习排序实践</a>。</p>
-<p>$$C = \frac{1}{2}(1 - S{ij})\sigma(s_i - s_j) + log(1 + e^{-\sigma (s_i-s_j)})$$ $$\lambda_{ij} = \frac{\partial C(s_i - s_j)}{\partial s_i} = \frac{-\sigma}{1 + e^{\sigma (s_i-s_j)}}| \Delta _{NDCG}|$$</p>
+<p><img src="https://p0.meituan.net/travelcube/b940839af68a2eb84f6d3039a922da3717749.png" alt=""></p>
 <h3 id="34-多场景应用效果">3.4 多场景应用效果</h3>
 <p>综合上述特征&amp;模型优化举措，相关的离线实验指标效果对比如表 2 所示：</p>
 <p><img src="https://p0.meituan.net/travelcube/1d028776269b59415ca3a92405ce8184121845.png@750w_80q" alt="表2 实验迭代指标对比数据表"></p>

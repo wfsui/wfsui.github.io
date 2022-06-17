@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Tue, 14 Jun 2022 04:00:39 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%9F%BA%E7%A1%80%E7%A0%94%E5%8F%91%E5%B9%B3%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 17 Jun 2022 03:40:57 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%9F%BA%E7%A1%80%E7%A0%94%E5%8F%91%E5%B9%B3%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>NeurIPS 2021 ｜ Twins：重新思考高效的视觉注意力模型设计</title>
       <link>https://wfsui.github.io/posts/neurips-2021-twins%E9%87%8D%E6%96%B0%E6%80%9D%E8%80%83%E9%AB%98%E6%95%88%E7%9A%84%E8%A7%86%E8%A7%89%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/</link>
-      <pubDate>Tue, 14 Jun 2022 04:00:39 +0000</pubDate>
+      <pubDate>Fri, 17 Jun 2022 03:40:57 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/neurips-2021-twins%E9%87%8D%E6%96%B0%E6%80%9D%E8%80%83%E9%AB%98%E6%95%88%E7%9A%84%E8%A7%86%E8%A7%89%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/</guid>
       <description>导读 Twins [1] 是美团和阿德莱德大学合作提出的视觉注意力模型，相关论文已被 NeurIPS 2021 会议接收，代码也已在GitHub上进行开源。NeurIPS（Conference on Neural Information Processing Systems）是机器学习和计算神经科学相关的学术会议，也是人工智能方向的国际顶级会议。
@@ -20,20 +20,9 @@ Twins-PCPVT 将金字塔 Transformer 模型 PVT [2] 中的固定位置编码（P
     </item>
     
     <item>
-      <title>TensorFlow在美团外卖推荐场景的GPU训练优化实践</title>
-      <link>https://wfsui.github.io/posts/tensorflow%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E7%9A%84gpu%E8%AE%AD%E7%BB%83%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 14 Jun 2022 04:00:39 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/tensorflow%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E7%9A%84gpu%E8%AE%AD%E7%BB%83%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
-      <description>1 背景 在推荐系统训练场景中，美团内部深度定制的TenorFlow（简称TF）版本[1]，通过CPU算力支撑了美团内部大量的业务。但随着业务的发展，模型单次训练的样本量越来越多，结构也变得越来越复杂。以美团外卖推荐的精排模型为例，单次训练的样本量已达百亿甚至千亿，一次实验要耗费上千核，且优化后的训练任务CPU使用率已达90%以上。为了支持业务的高速发展，模型迭代实验的频次和并发度都在不断增加，进一步增加了算力使用需求。在预算有限的前提下，如何以较高的性价比来实现高速的模型训练，从而保障高效率的模型研发迭代，是我们迫切需要解决的问题。
-近几年，GPU服务器的硬件能力突飞猛进，新一代的NVIDIA A100 80GB SXM GPU服务器（8卡）[2]，在存储方面可以做到：显存640GB、内存1~2TB、SSD10+TB，在通信方面可以做到：卡间双向通信600GB/s、多机通信800~1000Gbps/s，在算力方面可以做到：GPU 1248TFLOPS（TF32 Tensor Cores），CPU 96~128物理核。如果训练架构能充分发挥新硬件的优势，模型训练的成本将会大大降低。但TensorFlow社区在推荐系统训练场景中，并没有高效和成熟的解决方案。我们也尝试使用优化后的TensorFlow CPU Parameter Server[3]（简称PS）+GPU Worker的模式进行训练，但只对复杂模型有一定的收益。NVIDIA开源的HugeCTR[4]虽然在经典的深度学习模型上性能表现优异，但要在美团的生产环境直接使用起来，还需要做较多的工作。
-美团基础研发机器学习平台训练引擎团队，联合到家搜推技术部算法效能团队、NVIDIA DevTech团队，成立了联合项目组。在美团内部深度定制的TenorFlow以及NVIDIA HugeCTR的基础上，研发了推荐系统场景的高性能GPU训练架构Booster。目前在美团外卖推荐场景中进行了部署，多代模型全面对齐算法的离线效果，对比之前，优化后的CPU任务，性价比提升了2~4倍。由于Booster对原生TensorFlow接口有较好的兼容性，原TensorFlow CPU任务只需要一行代码就可完成迁移。这样让Booster可以快速在美团多条业务线上进行初步验证，相比之前的CPU任务，平均性价比都提升到2倍以上。本文将重点介绍Booster架构的设计与优化，以及在美团外卖推荐场景落地的全过程，希望能对大家有所帮助或启发。</description>
-    </item>
-    
-    <item>
       <title>Linux中基于eBPF的恶意利用与检测机制</title>
       <link>https://wfsui.github.io/posts/linux%E4%B8%AD%E5%9F%BA%E4%BA%8Eebpf%E7%9A%84%E6%81%B6%E6%84%8F%E5%88%A9%E7%94%A8%E4%B8%8E%E6%A3%80%E6%B5%8B%E6%9C%BA%E5%88%B6/</link>
-      <pubDate>Tue, 14 Jun 2022 04:00:38 +0000</pubDate>
+      <pubDate>Fri, 17 Jun 2022 03:40:56 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/linux%E4%B8%AD%E5%9F%BA%E4%BA%8Eebpf%E7%9A%84%E6%81%B6%E6%84%8F%E5%88%A9%E7%94%A8%E4%B8%8E%E6%A3%80%E6%B5%8B%E6%9C%BA%E5%88%B6/</guid>
       <description>前言 近几年，云原生领域飞速发展，K8s成为公认的云操作系统。容器的高频率部署、短暂的生命周期、复杂的网络路由，都给内核安全带来了新的挑战。系统内核面对的复杂性在不断增长，在满足性能、可扩展性等新需求的同时，还需要保障系统稳定可用，这是极其困难的事情。此时，eBPF出现，它以较小的子系统改动，保障了系统内核的稳定，还具备实时动态加载的特性，能将业务逻辑加载到内核，实现热更新的动态执行。
@@ -46,7 +35,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
     <item>
       <title>短视频内容理解与生成技术在美团的创新实践</title>
       <link>https://wfsui.github.io/posts/%E7%9F%AD%E8%A7%86%E9%A2%91%E5%86%85%E5%AE%B9%E7%90%86%E8%A7%A3%E4%B8%8E%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%88%9B%E6%96%B0%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 14 Jun 2022 04:00:37 +0000</pubDate>
+      <pubDate>Fri, 17 Jun 2022 03:40:55 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%9F%AD%E8%A7%86%E9%A2%91%E5%86%85%E5%AE%B9%E7%90%86%E8%A7%A3%E4%B8%8E%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%88%9B%E6%96%B0%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 背景 美团围绕丰富的本地生活服务电商场景，积累了丰富的视频数据。
@@ -67,7 +56,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
     <item>
       <title>基于代价的慢查询优化建议</title>
       <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E4%BB%A3%E4%BB%B7%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE/</link>
-      <pubDate>Tue, 14 Jun 2022 04:00:36 +0000</pubDate>
+      <pubDate>Fri, 17 Jun 2022 03:40:54 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E4%BB%A3%E4%BB%B7%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE/</guid>
       <description>1 背景 慢查询是指数据库中查询时间超过指定阈值（美团设置为100ms）的SQL，它是数据库的性能杀手，也是业务优化数据库访问的重要抓手。随着美团业务的高速增长，日均慢查询量已经过亿条，此前因慢查询导致的故障约占数据库故障总数的10%以上，而且高级别的故障呈日益增长趋势。因此，对慢查询的优化已经变得刻不容缓。
@@ -77,7 +66,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
     <item>
       <title>数据库异常智能分析与诊断</title>
       <link>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E6%99%BA%E8%83%BD%E5%88%86%E6%9E%90%E4%B8%8E%E8%AF%8A%E6%96%AD/</link>
-      <pubDate>Tue, 14 Jun 2022 04:00:34 +0000</pubDate>
+      <pubDate>Fri, 17 Jun 2022 03:40:53 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E6%99%BA%E8%83%BD%E5%88%86%E6%9E%90%E4%B8%8E%E8%AF%8A%E6%96%AD/</guid>
       <description>1 现状与问题 1.1 规模增长与运维能力发展之间的不平衡问题凸显 伴随着最近几年美团业务的快速发展，数据库的规模也保持着高速增长。而作为整个业务系统的“神经末梢”，数据库一旦出现问题，对业务造成的损失就会非常大。同时，因数据库规模的快速增长，出现问题的数量也大大增加，完全依靠人力的被动分析与定位已经不堪重负。下图是当时数据库实例近年来的增长趋势：
@@ -91,7 +80,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
     <item>
       <title>业务数据治理体系化思考与实践</title>
       <link>https://wfsui.github.io/posts/%E4%B8%9A%E5%8A%A1%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E4%BD%93%E7%B3%BB%E5%8C%96%E6%80%9D%E8%80%83%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 14 Jun 2022 04:00:34 +0000</pubDate>
+      <pubDate>Fri, 17 Jun 2022 03:40:52 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%B8%9A%E5%8A%A1%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E4%BD%93%E7%B3%BB%E5%8C%96%E6%80%9D%E8%80%83%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>一、序言 美团住宿数据治理团队通过多年数仓建设及数据治理的经验沉淀，并结合业务发展阶段对于数据治理的诉求，将治理的思路逐步从专项、表象、问题驱动的治理，转变为自动化、体系化的治理，并从标准化、数字化、系统化三个方向进行了落地与实践。
@@ -108,7 +97,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
     <item>
       <title>如何应对开源组件⻛险？软件成分安全分析（SCA）能力的建设与演进</title>
       <link>https://wfsui.github.io/posts/%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6%E9%99%A9%E8%BD%AF%E4%BB%B6%E6%88%90%E5%88%86%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90sca%E8%83%BD%E5%8A%9B%E7%9A%84%E5%BB%BA%E8%AE%BE%E4%B8%8E%E6%BC%94%E8%BF%9B/</link>
-      <pubDate>Tue, 14 Jun 2022 04:00:31 +0000</pubDate>
+      <pubDate>Fri, 17 Jun 2022 03:40:50 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6%E9%99%A9%E8%BD%AF%E4%BB%B6%E6%88%90%E5%88%86%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90sca%E8%83%BD%E5%8A%9B%E7%9A%84%E5%BB%BA%E8%AE%BE%E4%B8%8E%E6%BC%94%E8%BF%9B/</guid>
       <description>1. 前言 SCA 概念出现其实很久了。简单来说，就是针对现有的软件系统生成粒度非常细的 SBOM（Software Bill of Materials 软件物料单）清单，然后通过⻛险数据去匹配有没有存在⻛险组件被引用。目前，市面上比较出色的商业产品包括 Synopsys 的 Blackduck 、Snyk 的 SCA 、HP 的 Fortify SCA 等，开源产品包括国内悬镜的 OpenSCA 。</description>
@@ -117,13 +106,24 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
     <item>
       <title>数据库全量SQL分析与审计系统性能优化之旅</title>
       <link>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%A8%E9%87%8Fsql%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E6%97%85/</link>
-      <pubDate>Tue, 14 Jun 2022 04:00:30 +0000</pubDate>
+      <pubDate>Fri, 17 Jun 2022 03:40:48 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%A8%E9%87%8Fsql%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E6%97%85/</guid>
       <description>1 背景 数据库安全一直是美团信息安全团队和数据库团队非常注重的领域，但由于历史原因，对数据库的访问只具备采样审计能力，导致对于一些攻击事件无法快速地发现、定损和优化。安全团队根据历史经验，发现攻击访问数据库基本上都存在着某些特征，经常会使用一些特定SQL，我们希望通过对MySQL访问流量进行全量分析，识别出惯用SQL，在数据库安全性上做到有的放矢。
 2 现状及挑战 下图是采样MySQL审计系统的架构图，数据采集端基于pcap抓包方式实现，数据处理端选用美团大数据中心的日志接入方案。所有MySQL实例都部署了用于采集MySQL相关数据的rds-agent、日志收集的log-agent。rds-agent抓取到MySQL访问数据，通过log-agent上报到日志接收端，为了减少延时，上报端与接收端间做了同机房调度优化。日志接收端把数据写入到约定的Kafka中，安全团队通过Storm实时消费Kafka分析出攻击事件，并定期拉数据持久化到Hive中。
 我们发现，通常被攻击的都是一些核心MySQL集群。经统计发现，这些集群单机最大QPS的9995线约5万次左右。rds-agent作为MySQL机器上的一个寄生进程，为了宿主稳定性，资源控制也极为重要。为了评估rds-agent在高QPS下的表现，我们用Sysbench对MySQL进行压测，观察在不同QPS下rds-agent抓取的数据丢失率和CPU消耗情况，从下面的压测数据来看结果比较糟糕：
 QPS 丢失率 CPU利用率 10368.72 1.03% 307.35% 17172.61 7.23% 599.90% 29005.51 28.75% 662.39% 42697.05 51.</description>
+    </item>
+    
+    <item>
+      <title>TensorFlow在美团外卖推荐场景的GPU训练优化实践</title>
+      <link>https://wfsui.github.io/posts/tensorflow%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E7%9A%84gpu%E8%AE%AD%E7%BB%83%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Tue, 14 Jun 2022 04:00:39 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/tensorflow%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E7%9A%84gpu%E8%AE%AD%E7%BB%83%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
+      <description>1 背景 在推荐系统训练场景中，美团内部深度定制的TenorFlow（简称TF）版本[1]，通过CPU算力支撑了美团内部大量的业务。但随着业务的发展，模型单次训练的样本量越来越多，结构也变得越来越复杂。以美团外卖推荐的精排模型为例，单次训练的样本量已达百亿甚至千亿，一次实验要耗费上千核，且优化后的训练任务CPU使用率已达90%以上。为了支持业务的高速发展，模型迭代实验的频次和并发度都在不断增加，进一步增加了算力使用需求。在预算有限的前提下，如何以较高的性价比来实现高速的模型训练，从而保障高效率的模型研发迭代，是我们迫切需要解决的问题。
+近几年，GPU服务器的硬件能力突飞猛进，新一代的NVIDIA A100 80GB SXM GPU服务器（8卡）[2]，在存储方面可以做到：显存640GB、内存1~2TB、SSD10+TB，在通信方面可以做到：卡间双向通信600GB/s、多机通信800~1000Gbps/s，在算力方面可以做到：GPU 1248TFLOPS（TF32 Tensor Cores），CPU 96~128物理核。如果训练架构能充分发挥新硬件的优势，模型训练的成本将会大大降低。但TensorFlow社区在推荐系统训练场景中，并没有高效和成熟的解决方案。我们也尝试使用优化后的TensorFlow CPU Parameter Server[3]（简称PS）+GPU Worker的模式进行训练，但只对复杂模型有一定的收益。NVIDIA开源的HugeCTR[4]虽然在经典的深度学习模型上性能表现优异，但要在美团的生产环境直接使用起来，还需要做较多的工作。
+美团基础研发机器学习平台训练引擎团队，联合到家搜推技术部算法效能团队、NVIDIA DevTech团队，成立了联合项目组。在美团内部深度定制的TenorFlow以及NVIDIA HugeCTR的基础上，研发了推荐系统场景的高性能GPU训练架构Booster。目前在美团外卖推荐场景中进行了部署，多代模型全面对齐算法的离线效果，对比之前，优化后的CPU任务，性价比提升了2~4倍。由于Booster对原生TensorFlow接口有较好的兼容性，原TensorFlow CPU任务只需要一行代码就可完成迁移。这样让Booster可以快速在美团多条业务线上进行初步验证，相比之前的CPU任务，平均性价比都提升到2倍以上。本文将重点介绍Booster架构的设计与优化，以及在美团外卖推荐场景落地的全过程，希望能对大家有所帮助或启发。</description>
     </item>
     
     <item>

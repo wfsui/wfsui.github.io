@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 20 Jun 2022 03:31:50 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/jni/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 21 Jun 2022 03:47:39 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/jni/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Linux下跨语言调用C&#43;&#43;实践</title>
       <link>https://wfsui.github.io/posts/linux%E4%B8%8B%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8c&#43;&#43;%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 20 Jun 2022 03:31:50 +0000</pubDate>
+      <pubDate>Tue, 21 Jun 2022 03:47:39 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/linux%E4%B8%8B%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8c&#43;&#43;%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景 查询理解（QU, Query Understanding）是美团搜索的核心模块，主要职责是理解用户查询，生成查询意图、成分、改写等基础信号，应用于搜索的召回、排序、展示等多个环节，对搜索基础体验至关重要。该服务的线上主体程序基于C++语言开发，服务中会加载大量的词表数据、预估模型等，这些数据与模型的离线生产过程有很多文本解析能力需要与线上服务保持一致，从而保证效果层面的一致性，如文本归一化、分词等。

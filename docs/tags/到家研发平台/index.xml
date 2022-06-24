@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Thu, 23 Jun 2022 03:47:00 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%88%B0%E5%AE%B6%E7%A0%94%E5%8F%91%E5%B9%B3%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 24 Jun 2022 03:50:50 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%88%B0%E5%AE%B6%E7%A0%94%E5%8F%91%E5%B9%B3%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CompletableFuture原理与实践-外卖商家端API的异步化</title>
       <link>https://wfsui.github.io/posts/completablefuture%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E5%A4%96%E5%8D%96%E5%95%86%E5%AE%B6%E7%AB%AFapi%E7%9A%84%E5%BC%82%E6%AD%A5%E5%8C%96/</link>
-      <pubDate>Thu, 23 Jun 2022 03:47:00 +0000</pubDate>
+      <pubDate>Fri, 24 Jun 2022 03:50:50 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/completablefuture%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E5%A4%96%E5%8D%96%E5%95%86%E5%AE%B6%E7%AB%AFapi%E7%9A%84%E5%BC%82%E6%AD%A5%E5%8C%96/</guid>
       <description>0 背景 随着订单量的持续上升，美团外卖各系统服务面临的压力也越来越大。作为外卖链路的核心环节，商家端提供了商家接单、配送等一系列核心功能，业务对系统吞吐量的要求也越来越高。而商家端API服务是流量入口，所有商家端流量都会由其调度、聚合，对外面向商家提供功能接口，对内调度各个下游服务获取数据进行聚合，具有鲜明的I/O密集型（I/O Bound）特点。在当前日订单规模已达千万级的情况下，使用同步加载方式的弊端逐渐显现，因此我们开始考虑将同步加载改为并行加载的可行性。

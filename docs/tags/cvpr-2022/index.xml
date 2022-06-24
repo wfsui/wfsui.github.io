@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CVPR 2022 on 大峰哥</title>
+    <link>https://wfsui.github.io/tags/cvpr-2022/</link>
+    <description>Recent content in CVPR 2022 on 大峰哥</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Fri, 24 Jun 2022 03:50:44 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/cvpr-2022/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CVPR 2022 | 美团技术团队精选论文解读</title>
+      <link>https://wfsui.github.io/posts/cvpr-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
+      <pubDate>Fri, 24 Jun 2022 03:50:44 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/cvpr-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
+      <description>CVPR的全称是IEEE国际计算机视觉与模式识别会议（IEEE Conference on Computer Vision and Pattern Recognition），该会议始于1983年，与ICCV和ECCV并称计算机视觉方向的三大顶级会议。根据谷歌学术公布的2021年最新学术期刊和会议影响力排名，CVPR在所有学术刊物中位居第4，仅次于Nature、NEJM和Science。CVPR今年共收到全球8100多篇论文投稿，最终2067篇被接收，接收率约为25%。
+Paper 01 | Compressing Models with Few Samples: Mimicking then Replacing | 论文下载| 论文作者：王环宇（美团实习生&amp;amp;南京大学），刘俊杰（美团），马鑫（美团），雍洋（美团实习生&amp;amp;西安交通大学），柴振华（美团），吴建鑫（南京大学） | 备注：括号内的为论文发表时，论文作者所在的单位。 | 论文类型：CVPR Main Conference（Long Paper）</description>
+    </item>
+    
+  </channel>
+</rss>

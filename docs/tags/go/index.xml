@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 24 Jun 2022 03:50:46 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 26 Jun 2022 03:46:27 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>数据库全量SQL分析与审计系统性能优化之旅</title>
       <link>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%A8%E9%87%8Fsql%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E6%97%85/</link>
-      <pubDate>Fri, 24 Jun 2022 03:50:46 +0000</pubDate>
+      <pubDate>Sun, 26 Jun 2022 03:46:27 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%A8%E9%87%8Fsql%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E6%97%85/</guid>
       <description>1 背景 数据库安全一直是美团信息安全团队和数据库团队非常注重的领域，但由于历史原因，对数据库的访问只具备采样审计能力，导致对于一些攻击事件无法快速地发现、定损和优化。安全团队根据历史经验，发现攻击访问数据库基本上都存在着某些特征，经常会使用一些特定SQL，我们希望通过对MySQL访问流量进行全量分析，识别出惯用SQL，在数据库安全性上做到有的放矢。

@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Wed, 29 Jun 2022 03:56:22 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 30 Jun 2022 03:51:41 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>图神经网络训练框架的实践和探索</title>
       <link>https://wfsui.github.io/posts/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Wed, 29 Jun 2022 03:56:22 +0000</pubDate>
+      <pubDate>Thu, 30 Jun 2022 03:51:41 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%8E%A2%E7%B4%A2/</guid>
       <description>1. 前言 万物之间皆有联系。图作为一种通用的数据结构，可以很好地描述实体与实体之间的关系。例如，在社交网络中，用图来表示用户与用户之间的好友关系；在电商网站中，用图表示用户与商品之间的点击购买行为；在知识图谱构建中，还可以用图表示实体与实体间多样的关系。另一方面，深度学习技术在计算机视觉、自然语言处理、语音处理等领域均已取得了巨大的成功。深度学习技术将图像、文本、语音等多种多样的数据转化为稠密的向量表示，提供了表示数据的另一种方式。借助于硬件日益强大的计算能力，深度学习可以从海量数据中学习到数据之间复杂多样的相关性。

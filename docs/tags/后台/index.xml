@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 04 Jul 2022 03:59:00 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%90%8E%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 07 Jul 2022 03:57:09 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%90%8E%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Java魔法类：Unsafe应用解析</title>
       <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Mon, 04 Jul 2022 03:59:00 +0000</pubDate>
+      <pubDate>Thu, 07 Jul 2022 03:57:09 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
       <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
@@ -23,7 +23,7 @@ public final class Unsafe { // 单例对象 private static final Unsafe theUnsaf
     <item>
       <title>Linux下跨语言调用C&#43;&#43;实践</title>
       <link>https://wfsui.github.io/posts/linux%E4%B8%8B%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8c&#43;&#43;%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 04 Jul 2022 03:58:58 +0000</pubDate>
+      <pubDate>Thu, 07 Jul 2022 03:57:08 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/linux%E4%B8%8B%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8c&#43;&#43;%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景 查询理解（QU, Query Understanding）是美团搜索的核心模块，主要职责是理解用户查询，生成查询意图、成分、改写等基础信号，应用于搜索的召回、排序、展示等多个环节，对搜索基础体验至关重要。该服务的线上主体程序基于C++语言开发，服务中会加载大量的词表数据、预估模型等，这些数据与模型的离线生产过程有很多文本解析能力需要与线上服务保持一致，从而保证效果层面的一致性，如文本归一化、分词等。
@@ -38,7 +38,7 @@ public final class Unsafe { // 单例对象 private static final Unsafe theUnsaf
     <item>
       <title>美团外卖广告智能算力的探索与实践（二）</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E6%99%BA%E8%83%BD%E7%AE%97%E5%8A%9B%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5%E4%BA%8C/</link>
-      <pubDate>Mon, 04 Jul 2022 03:58:58 +0000</pubDate>
+      <pubDate>Thu, 07 Jul 2022 03:57:07 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E6%99%BA%E8%83%BD%E7%AE%97%E5%8A%9B%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5%E4%BA%8C/</guid>
       <description>1 业务背景 随着美团外卖业务的飞速发展，外卖广告系统压力变得越来越大，算力开始成为新的瓶颈。2021年上半年，外卖广告的数条业务线开始出现算力资源不足的情况，算力分配效率亟待提升。在外卖场景下，流量呈现明显的双峰结构，广告系统在高峰时段面临较大的性能压力，非高峰时段存在大量算力冗余。智能算力旨在对流量算力进行精细化和个性化分配，从而实现系统算力约束下的业务收益最大化。
@@ -51,7 +51,7 @@ public final class Unsafe { // 单例对象 private static final Unsafe theUnsaf
     <item>
       <title>标准化思想及组装式架构在后端BFF中的实践</title>
       <link>https://wfsui.github.io/posts/%E6%A0%87%E5%87%86%E5%8C%96%E6%80%9D%E6%83%B3%E5%8F%8A%E7%BB%84%E8%A3%85%E5%BC%8F%E6%9E%B6%E6%9E%84%E5%9C%A8%E5%90%8E%E7%AB%AFbff%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 04 Jul 2022 03:58:57 +0000</pubDate>
+      <pubDate>Thu, 07 Jul 2022 03:57:06 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%A0%87%E5%87%86%E5%8C%96%E6%80%9D%E6%83%B3%E5%8F%8A%E7%BB%84%E8%A3%85%E5%BC%8F%E6%9E%B6%E6%9E%84%E5%9C%A8%E5%90%8E%E7%AB%AFbff%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 前言 在本地生活服务领域，面向C端的信息展示类功能存在着类生物系统的复杂性，具体体现在以下三个方面：功能多，为了帮助用户高效找店、找服务，信息会在尽可能多的地方展示；差异大，同样的信息，在不同客户端、不同页面及模块下的展示逻辑会存在一些差异；功能易变，产品逻辑经常调整。以上三个方面的特点给研发同学带来了很大的挑战，比如当我们面临数千个功能模块，数十个行业产品的持续需求时，如何快速响应呢？
@@ -66,7 +66,7 @@ public final class Unsafe { // 单例对象 private static final Unsafe theUnsaf
     <item>
       <title>CompletableFuture原理与实践-外卖商家端API的异步化</title>
       <link>https://wfsui.github.io/posts/completablefuture%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E5%A4%96%E5%8D%96%E5%95%86%E5%AE%B6%E7%AB%AFapi%E7%9A%84%E5%BC%82%E6%AD%A5%E5%8C%96/</link>
-      <pubDate>Mon, 04 Jul 2022 03:58:56 +0000</pubDate>
+      <pubDate>Thu, 07 Jul 2022 03:57:05 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/completablefuture%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5-%E5%A4%96%E5%8D%96%E5%95%86%E5%AE%B6%E7%AB%AFapi%E7%9A%84%E5%BC%82%E6%AD%A5%E5%8C%96/</guid>
       <description>0 背景 随着订单量的持续上升，美团外卖各系统服务面临的压力也越来越大。作为外卖链路的核心环节，商家端提供了商家接单、配送等一系列核心功能，业务对系统吞吐量的要求也越来越高。而商家端API服务是流量入口，所有商家端流量都会由其调度、聚合，对外面向商家提供功能接口，对内调度各个下游服务获取数据进行聚合，具有鲜明的I/O密集型（I/O Bound）特点。在当前日订单规模已达千万级的情况下，使用同步加载方式的弊端逐渐显现，因此我们开始考虑将同步加载改为并行加载的可行性。
@@ -75,6 +75,20 @@ public final class Unsafe { // 单例对象 private static final Unsafe theUnsaf
 2 并行加载的实现方式 并行从下游获取数据，从IO模型上来讲分为同步模型和异步模型。
 2.1 同步模型 从各个服务获取数据最常见的是同步调用，如下图所示：
 在同步调用的场景下，接口耗时长、性能差，接口响应时长T &amp;gt; T1+T2+T3+……+Tn，这时为了缩短接口的响应时间，一般会使用线程池的方式并行获取数据，商家端订单卡片的组装正是使用了这种方式。</description>
+    </item>
+    
+    <item>
+      <title>外卖广告大规模深度学习模型工程实践 | 美团外卖广告工程实践专题连载</title>
+      <link>https://wfsui.github.io/posts/%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5-%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E4%B8%93%E9%A2%98%E8%BF%9E%E8%BD%BD/</link>
+      <pubDate>Thu, 07 Jul 2022 03:57:00 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5-%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E4%B8%93%E9%A2%98%E8%BF%9E%E8%BD%BD/</guid>
+      <description>导语 随着美团外卖业务不断发展，外卖广告引擎团队在多个领域进行了工程上的探索和实践，也取得了一些成果。我们将以连载的方式进行分享，内容主要包括：① 业务平台化的实践；② 大规模深度学习模型工程实践；③ 近线计算的探索与实践；④ 大规模索引构建与在线检索服务实践；⑤ 机制工程平台化实践。
+不久前，我们已发表过业务平台化的实践（详情请参阅《美团外卖广告平台化的探索与实践》一文）。本文为连载文章的第二篇，我们将重点针对大规模深度模型在全链路层面带来的挑战，从在线时延、离线效率两个方面进行展开，阐述广告在大规模深度模型上的工程实践，希望能为大家带来一些帮助或者启发。
+1 背景 在搜索、推荐、广告（下简称搜推广）等互联网核心业务场景下，对用户行为进行数据挖掘及兴趣建模，为用户提供优质的服务，已经成为改善用户体验、提升营收的关键要素。近几年，针对搜推广业务，深度学习模型凭借数据红利和硬件技术红利，在业界得以广泛落地，同时在CTR场景，业界逐步从简单DNN小模型过渡到数万亿参数的Embedding大模型甚至超大模型。
+外卖广告业务线主要经历了“LR浅层模型（树模型）” -&amp;gt; “深度学习模型” -&amp;gt; “大规模深度学习模型”的演化过程。整个演化趋势从以人工特征为主的简单模型，逐步向以数据为核心的复杂深度学习模型进行过渡。而大模型的使用，大幅提高了模型的表达能力，更精准地实现了供需侧的匹配，为后续业务发展提供了更多的可能性。但随着模型、数据规模的不断变大，我们发现效率跟它们存在如下的关系：
+根据上图所示，在数据规模、模型规模增长的情况下，所对应的“时长”变得会越来越长。这个“时长”对应到离线层面，体现在效率上；对应到在线层面，就体现在Latency上。而我们的工作就是围绕这个“时长”的优化来开展。
+2 分析 相比普通小模型，大模型的核心问题在于：随着数据量、模型规模增加数十倍甚至百倍，整体链路上的存储、通信、计算等都将面临新的挑战，进而影响算法离线的迭代效率。如何突破在线时延约束等一系列问题？我们先从全链路进行分析，如下所示：</description>
     </item>
     
     <item>

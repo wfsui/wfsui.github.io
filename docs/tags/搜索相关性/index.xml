@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Thu, 14 Jul 2022 03:59:09 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%90%9C%E7%B4%A2%E7%9B%B8%E5%85%B3%E6%80%A7/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 15 Jul 2022 04:05:30 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%90%9C%E7%B4%A2%E7%9B%B8%E5%85%B3%E6%80%A7/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>大众点评搜索相关性技术探索与实践</title>
       <link>https://wfsui.github.io/posts/%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E7%9B%B8%E5%85%B3%E6%80%A7%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Thu, 14 Jul 2022 03:59:09 +0000</pubDate>
+      <pubDate>Fri, 15 Jul 2022 04:05:30 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E7%9B%B8%E5%85%B3%E6%80%A7%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 背景 点评搜索是大众点评App的核心入口之一，用户通过搜索来满足不同场景下对生活服务类商户的找店需求。搜索的长期目标是持续优化搜索体验，提升用户的搜索满意度，这需要我们理解用户搜索意图，准确衡量搜索词与商户之间的相关程度，尽可能展示相关商户并将更相关的商户排序靠前。因此，搜索词与商户的相关性计算是点评搜索的重要环节。

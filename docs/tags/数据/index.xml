@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 22 Jul 2022 03:59:57 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%95%B0%E6%8D%AE/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 23 Jul 2022 03:44:54 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%95%B0%E6%8D%AE/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>业务数据治理体系化思考与实践</title>
       <link>https://wfsui.github.io/posts/%E4%B8%9A%E5%8A%A1%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E4%BD%93%E7%B3%BB%E5%8C%96%E6%80%9D%E8%80%83%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 22 Jul 2022 03:59:57 +0000</pubDate>
+      <pubDate>Sat, 23 Jul 2022 03:44:54 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%B8%9A%E5%8A%A1%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E4%BD%93%E7%B3%BB%E5%8C%96%E6%80%9D%E8%80%83%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>一、序言 美团住宿数据治理团队通过多年数仓建设及数据治理的经验沉淀，并结合业务发展阶段对于数据治理的诉求，将治理的思路逐步从专项、表象、问题驱动的治理，转变为自动化、体系化的治理，并从标准化、数字化、系统化三个方向进行了落地与实践。
@@ -28,7 +28,7 @@
     <item>
       <title>美团综合业务推荐系统的质量模型及实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E7%BB%BC%E5%90%88%E4%B8%9A%E5%8A%A1%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%B4%A8%E9%87%8F%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 22 Jul 2022 03:59:54 +0000</pubDate>
+      <pubDate>Sat, 23 Jul 2022 03:44:50 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E7%BB%BC%E5%90%88%E4%B8%9A%E5%8A%A1%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%B4%A8%E9%87%8F%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 前言 美团到店综合业务（以下简称到综）是美团到店业务的重要板块之一，涵盖洗浴、KTV、美业、医美、亲子、结婚、运动健身、玩乐、教育培训、家居、宠物、酒吧、生活服务等数十个重点细分行业，满足数以亿计用户多样化的本地生活需求。推荐系统在其中是实现供给和需求高效匹配的重要环节，是传递数据价值的出口，而推荐系统的质量决定了匹配效果的折损。如下图 1 所示，数据经过数仓处理、算法加工，再通过数据服务到各个业务系统，最后通过客户端埋点又重新流转回数仓，形成了数据的“飞轮效应”，而质量恰恰是这条链路中齿轮啮合的关键点，是提升效率和保障效果的重要前提。

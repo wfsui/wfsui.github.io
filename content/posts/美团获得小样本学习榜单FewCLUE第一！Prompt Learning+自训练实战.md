@@ -1,6 +1,6 @@
 ---
 title: "美团获得小样本学习榜单FewCLUE第一！Prompt Learning+自训练实战"
-date: 2022-07-23T03:44:51+0000
+date: 2022-07-25T03:58:19+0000
 tags: [美团技术团队, 小样本学习, Prompt Learning, 数据增强, 集成学习, 自训练]
 ---
 

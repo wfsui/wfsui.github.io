@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 25 Jul 2022 03:58:20 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/android/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 27 Jul 2022 03:59:15 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/android/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Android对so体积优化的探索与实践</title>
       <link>https://wfsui.github.io/posts/android%E5%AF%B9so%E4%BD%93%E7%A7%AF%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 25 Jul 2022 03:58:20 +0000</pubDate>
+      <pubDate>Wed, 27 Jul 2022 03:59:15 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/android%E5%AF%B9so%E4%BD%93%E7%A7%AF%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 背景 应用安装包的体积影响着用户的下载时长、安装时长、磁盘占用空间等诸多方面，因此减小安装包的体积对于提升用户体验和下载转化率都大有益处。Android 应用安装包其实是一个 zip 文件，主要由 dex、assets、resource、so 等各类型文件压缩而成。目前业内常见的包体积优化方案大体分为以下几类：

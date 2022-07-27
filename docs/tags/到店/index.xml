@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 25 Jul 2022 03:58:25 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%88%B0%E5%BA%97/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 27 Jul 2022 03:59:20 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%88%B0%E5%BA%97/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Java魔法类：Unsafe应用解析</title>
       <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Mon, 25 Jul 2022 03:58:25 +0000</pubDate>
+      <pubDate>Wed, 27 Jul 2022 03:59:20 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
       <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
@@ -23,7 +23,7 @@ public final class Unsafe { // 单例对象 private static final Unsafe theUnsaf
     <item>
       <title>标准化思想及组装式架构在后端BFF中的实践</title>
       <link>https://wfsui.github.io/posts/%E6%A0%87%E5%87%86%E5%8C%96%E6%80%9D%E6%83%B3%E5%8F%8A%E7%BB%84%E8%A3%85%E5%BC%8F%E6%9E%B6%E6%9E%84%E5%9C%A8%E5%90%8E%E7%AB%AFbff%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 25 Jul 2022 03:58:23 +0000</pubDate>
+      <pubDate>Wed, 27 Jul 2022 03:59:19 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%A0%87%E5%87%86%E5%8C%96%E6%80%9D%E6%83%B3%E5%8F%8A%E7%BB%84%E8%A3%85%E5%BC%8F%E6%9E%B6%E6%9E%84%E5%9C%A8%E5%90%8E%E7%AB%AFbff%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 前言 在本地生活服务领域，面向C端的信息展示类功能存在着类生物系统的复杂性，具体体现在以下三个方面：功能多，为了帮助用户高效找店、找服务，信息会在尽可能多的地方展示；差异大，同样的信息，在不同客户端、不同页面及模块下的展示逻辑会存在一些差异；功能易变，产品逻辑经常调整。以上三个方面的特点给研发同学带来了很大的挑战，比如当我们面临数千个功能模块，数十个行业产品的持续需求时，如何快速响应呢？
@@ -38,7 +38,7 @@ public final class Unsafe { // 单例对象 private static final Unsafe theUnsaf
     <item>
       <title>美团综合业务推荐系统的质量模型及实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E7%BB%BC%E5%90%88%E4%B8%9A%E5%8A%A1%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%B4%A8%E9%87%8F%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 25 Jul 2022 03:58:19 +0000</pubDate>
+      <pubDate>Wed, 27 Jul 2022 03:59:13 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E7%BB%BC%E5%90%88%E4%B8%9A%E5%8A%A1%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%B4%A8%E9%87%8F%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 前言 美团到店综合业务（以下简称到综）是美团到店业务的重要板块之一，涵盖洗浴、KTV、美业、医美、亲子、结婚、运动健身、玩乐、教育培训、家居、宠物、酒吧、生活服务等数十个重点细分行业，满足数以亿计用户多样化的本地生活需求。推荐系统在其中是实现供给和需求高效匹配的重要环节，是传递数据价值的出口，而推荐系统的质量决定了匹配效果的折损。如下图 1 所示，数据经过数仓处理、算法加工，再通过数据服务到各个业务系统，最后通过客户端埋点又重新流转回数仓，形成了数据的“飞轮效应”，而质量恰恰是这条链路中齿轮啮合的关键点，是提升效率和保障效果的重要前提。

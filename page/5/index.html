@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="generator" content="Hugo 0.101.0" />
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>大峰哥 - 记录日常生活哦 </title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="alternate" type="application/rss+xml" href="https://wfsui.github.io/index.xml" title="大峰哥" />
+	<meta property="og:title" content="大峰哥" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://wfsui.github.io/" /><meta property="og:site_name" content="大峰哥" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="大峰哥"/>
+<meta name="twitter:description" content=""/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://wfsui.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://wfsui.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper">
+		<div class="header">
+	<base href="https://wfsui.github.io/">
+	<h1 class="site-title"><a href="https://wfsui.github.io/">大峰哥</a></h1>
+	<div class="site-description"><h2>记录日常生活哦</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/wfsui" title="Github"><i data-feather="github"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">文章</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		
+
+		<div class="recent-posts section">
+			<h2 class="section-header">
+				Recent posts
+			</h2>
+			<div class="posts">
+				
+				
+				
+				<div class="post">
+					<div class="meta">Aug 3, 2022</div>
+					<a class="title" href="/posts/%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5-%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E4%B8%93%E9%A2%98%E8%BF%9E%E8%BD%BD/">外卖广告大规模深度学习模型工程实践 | 美团外卖广告工程实践专题连载</a> &mdash;
+					<span class="description">
+						
+						导语 随着美团外卖业务不断发展，外卖广告引擎团队在多个领域进行了工程上的探索和实践，也取得了一些成果。我们将以连载的方式进行分享，内容主要包括：① 业务平台化的实践；② 大规模深度学习模型工程实践；③ 近线计算的探索与实践；④ 大规模索引构建与在线检索服务实践；⑤ 机制工程平台化实践。
+不久前，我们已发表过业务平台化的实践（详情请参阅《美团外卖广告平台化的探索与实践》一文）。本文为连载文章的第二篇，我们将重点针对大规模深度模型在全链路层面带来的挑战，从在线时延、离线效率两个方面进行展开，阐述广告在大规模深度模型上的工程实践，希望能为大家带来一些帮助或者启发。
+1 背景 在搜索、推荐、广告（下简称搜推广）等互联网核心业务场景下，对用户行为进行数据挖掘及兴趣建模，为用户提供优质的服务，已经成为改善用户体验、提升营收的关键要素。近几年，针对搜推广业务，深度学习模型凭借数据红利和硬件技术红利，在业界得以广泛落地，同时在CTR场景，业界逐步从简单DNN小模型过渡到数万亿参数的Embedding大模型甚至超大模型。
+外卖广告业务线主要经历了“LR浅层模型（树模型）” -&gt; “深度学习模型” -&gt; “大规模深度学习模型”的演化过程。整个演化趋势从以人工特征为主的简单模型，逐步向以数据为核心的复杂深度学习模型进行过渡。而大模型的使用，大幅提高了模型的表达能力，更精准地实现了供需侧的匹配，为后续业务发展提供了更多的可能性。但随着模型、数据规模的不断变大，我们发现效率跟它们存在如下的关系：
+根据上图所示，在数据规模、模型规模增长的情况下，所对应的“时长”变得会越来越长。这个“时长”对应到离线层面，体现在效率上；对应到在线层面，就体现在Latency上。而我们的工作就是围绕这个“时长”的优化来开展。
+2 分析 相比普通小模型，大模型的核心问题在于：随着数据量、模型规模增加数十倍甚至百倍，整体链路上的存储、通信、计算等都将面临新的挑战，进而影响算法离线的迭代效率。如何突破在线时延约束等一系列问题？我们先从全链路进行分析，如下所示：&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
+					<div class="meta">Aug 3, 2022</div>
+					<a class="title" href="/posts/%E5%8F%AF%E8%A7%86%E5%8C%96%E5%85%A8%E9%93%BE%E8%B7%AF%E6%97%A5%E5%BF%97%E8%BF%BD%E8%B8%AA/">可视化全链路日志追踪</a> &mdash;
+					<span class="description">
+						
+						1. 背景 1.1 业务系统日益复杂 随着互联网产品的快速发展，不断变化的商业环境和用户诉求带来了纷繁复杂的业务需求。业务系统需要支撑的业务场景越来越广、涵盖的业务逻辑越来越多，系统的复杂度也跟着快速提升。与此同时，由于微服务架构的演进，业务逻辑的实现往往需要依赖多个服务间的共同协作。总而言之，业务系统的日益复杂已经成为一种常态。
+1.2 业务追踪面临挑战 业务系统往往面临着多样的日常客诉和突发问题，“业务追踪”就成为了关键的应对手段。业务追踪可以看做一次业务执行的现场还原过程，通过执行中的各种记录还原出原始现场，可用于业务逻辑执行情况的分析和问题的定位，是整个系统建设中重要的一环。
+目前在分布式场景下，业务追踪的主流实现方式包括两类，一类是基于日志的ELK方案，一类是基于单次请求调用的会话跟踪方案。然而随着业务逻辑的日益复杂，上述方案越来越不适用于当下的业务系统。
+1.2.1 传统的ELK方案 日志作为业务系统的必备能力，职责就是记录程序运行期间发生的离散事件，并且在事后阶段用于程序的行为分析，比如曾经调用过什么方法、操作过哪些数据等等。在分布式系统中，ELK技术栈已经成为日志收集和分析的通用解决方案。如下图1所示，伴随着业务逻辑的执行，业务日志会被打印，统一收集并存储至Elasticsearch（下称ES）[2]。
+传统的ELK方案需要开发者在编写代码时尽可能全地打印日志，再通过关键字段从ES中搜集筛选出与业务逻辑相关的日志数据，进而拼凑出业务执行的现场信息。然而该方案存在如下的痛点：
+日志搜集繁琐：虽然ES提供了日志检索的能力，但是日志数据往往是缺乏结构性的文本段，很难快速完整地搜集到全部相关的日志。日志筛选困难：不同业务场景、业务逻辑之间存在重叠，重叠逻辑打印的业务日志可能相互干扰，难以从中筛选出正确的关联日志。日志分析耗时：搜集到的日志只是一条条离散的数据，只能阅读代码，再结合逻辑，由人工对日志进行串联分析，尽可能地还原出现场。
+综上所述，随着业务逻辑和系统复杂度的攀升，传统的ELK方案在日志搜集、日志筛选和日志分析方面愈加的耗时耗力，很难快速实现对业务的追踪。
+1.2.2 分布式会话跟踪方案 在分布式系统，尤其是微服务系统中，业务场景的某次请求往往需要经过多个服务、多个中间件、多台机器的复杂链路处理才能完成。为了解决复杂链路排查困难的问题，“分布式会话跟踪方案”诞生。该方案的理论知识由Google在2010年《Dapper》论文[3]中发表，随后Twitter开发出了一个开源版本Zipkin[4]。
+市面上的同类型框架几乎都是以Google Dapper论文为基础进行实现，整体大同小异，都是通过一个分布式全局唯一的id（即traceId），将分布在各个服务节点上的同一次请求串联起来，还原调用关系、追踪系统问题、分析调用数据、统计系统指标。分布式会话跟踪，是一种会话级别的追踪能力，如下图2所示，单个分布式请求被还原成一条调用链路，从客户端发起请求抵达系统的边界开始，记录请求流经的每一个服务，直到向客户端返回响应为止。&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
+					<div class="meta">Aug 3, 2022</div>
+					<a class="title" href="/posts/acm-sigir-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">ACM SIGIR 2022 | 美团技术团队精选论文解读</a> &mdash;
+					<span class="description">
+						
+						SIGIR是信息检索方向的国际顶级会议（CCF-A类）。第 45 届国际信息检索大会（The 45th International ACM SIGIR Conference on Research and Development in Information Retrieval，SIGIR 2022）已于上周（2022年7月11-15日）在西班牙马德里举行，同时也支持线上参会。本次会议共收到 794 篇长文投稿，其中 161 篇长文被录用，录用率约 20%；共收到 667 篇短文投稿，其中 165 篇短文被录用，录用率约 24.&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
+					<div class="meta">Aug 3, 2022</div>
+					<a class="title" href="/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/">日志导致线程Block的这些坑，你不得不防</a> &mdash;
+					<span class="description">
+						
+						1. 前言 日志对程序的重要性不言而喻。它很“大”，我们在项目中经常通过日志来记录信息和排查问题，相关代码随处可见。它也很“小”，作为辅助工具，日志使用简单、上手快，我们通常不会花费过多精力耗在日志上。但看似不起眼的日志也隐藏着各种各样的“坑”，如果使用不当，它不仅不能帮助我们，反而还可能降低服务性能，甚至拖垮我们的服务。
+日志导致线程Block的问题，相信你或许已经遇到过，对此应该深有体会；或许你还没遇到过，但不代表没有问题，只是可能还没有触发而已。本文主要介绍美团统一API网关服务Shepherd（参见《百亿规模API网关服务Shepherd的设计与实现》一文）在实践中所踩过的关于日志导致线程Block的那些“坑”，然后再分享一些避“坑”经验。
+2. 背景 API网关服务Shepherd基于Java语言开发，使用业界大名鼎鼎的Apache Log4j2作为主要日志框架，同时使用美团内部的XMD-Log SDK和Scribe-Log SDK对日志内容进行处理，日志处理整体流程如下图1所示。业务打印日志时，日志框架基于Logger配置来决定把日志交给XMDFile处理还是Scribe处理。其中，XMDFile是XMD-Log内部提供的日志Appender名称，负责输出日志到本地磁盘，Scribe是Scribe-Log内部提供的日志Appender名称，负责上报日志到远程日志中心。
+随着业务的快速增长，日志导致的线程Block问题愈发频繁。比如调用后端RPC服务超时，导致调用方大量线程Block；再比如，业务内部输出异常日志导致服务大量线程Block等，这些问题严重影响着服务的稳定性。因此，我们结合项目在过去一段时间暴露出来的各种由于日志导致的线程Block问题，对日志框架存在的稳定性风险因素进行了彻底的排查和修复，并在线下、线上环境进行全方位验证。在此过程中，我们总结了一些日志使用相关的实践经验，希望分享给大家。
+在进入正文前，首先介绍项目当时的运行环境和日志相关配置信息。
+JDK版本 java version &#34;1.8.0_45&#34; Java(TM) SE Runtime Environment (build 1.&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
+					<div class="meta">Jul 27, 2022</div>
+					<a class="title" href="/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E6%99%BA%E8%83%BD%E7%AE%97%E5%8A%9B%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5%E4%BA%8C/">美团外卖广告智能算力的探索与实践（二）</a> &mdash;
+					<span class="description">
+						
+						1 业务背景 随着美团外卖业务的飞速发展，外卖广告系统压力变得越来越大，算力开始成为新的瓶颈。2021年上半年，外卖广告的数条业务线开始出现算力资源不足的情况，算力分配效率亟待提升。在外卖场景下，流量呈现明显的双峰结构，广告系统在高峰时段面临较大的性能压力，非高峰时段存在大量算力冗余。智能算力旨在对流量算力进行精细化和个性化分配，从而实现系统算力约束下的业务收益最大化。
+本文是广告智能算力系列文章的第二篇，在第一期《美团外卖广告智能算力的探索与实践》中[1]，我们对阿里DCAF[2]线性规划求解方案进行了外卖场景下的优化，落地了弹性队列局部最优算力分配方案（以下简称“第一期”）。如上图所示，外卖展示广告链路中，召回通道和模型决策均使用固定策略，在算力不足时会丢失部分优质流量带来的收益。
+在本文中，我们提出了基于进化算法的多动作算力决策方法ES-MACA（Evolutionary Strategies based Multi-Action Computation Allocation）。在外卖广告链路上，同时决策弹性通道、弹性队列和弹性模型三个动作。在后置动作决策中，我们考虑前置模块的决策引起的状态变化，同时使用多任务模型联合建模实现系统仿真模拟（离线仿真+收益预估，实现不同决策动作下的收益评估功能），实现全链路最优算力分配。相对第一期内容，ES-MACA在外卖展示广告业务线上取得CPM+1.x%、收入+1.x%的效果。
+2 整体思路 为了应对极大的在线流量压力和庞大的候选集，外卖广告投放系统将整个检索过程设计成候选集依次递减的漏斗型级联架构，主要包含召回、粗排、精排、机制等模块。在第一期中，我们把算力分配的手段定义为弹性动作，并结合外卖场景归纳了弹性队列、弹性模型、弹性通道和弹性链路等四种动作，具体动作的定义如下：
+弹性队列：线上检索是一个漏斗的过程，不同价值流量可以在级联漏斗的各模块中分配不同候选队列长度。 弹性模型：在模型预估服务中，对于不同价值流量可以选择不同大小模型，大模型相对小模型预估效果更好的同时，消耗的算力也更多。 弹性通道：在召回场景中，不同价值流量可以选择不同复杂度的召回通道和召回通道的路数。 弹性链路：在检索链路上，不同价值流量可以选择不同复杂度的检索链路。 2.1 算力分配问题形式化描述 在一个包含M个算力决策模块的链路中，全链路最优的智能算力的目标可通用的描述为：通过智能化决策M个模块的算力档位，在整体算力满足约束的条件下，使得整体流量收益最大化。&hellip;
+						
+					</span>
+				</div>
+				
+				
+
+<ul class="pagination">
+	<li class="page-item page-prev">
+	
+    <a href="/page/4/" class="page-link" aria-label="Previous"><span aria-hidden="true">← Prev page</span></a>
+	
+	</li>
+	<li class="page-item page-next">
+	
+    <a href="/page/6/" class="page-link" aria-label="Next"><span aria-hidden="true">Next page →</span></a>
+	
+	</li>
+</ul>
+
+
+			</div>
+		</div>
+	</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="">Wfsui theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div><script>feather.replace()</script>
+</body>
+</html>

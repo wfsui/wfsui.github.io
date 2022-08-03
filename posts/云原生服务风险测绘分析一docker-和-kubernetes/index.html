@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>云原生服务风险测绘分析（一）：Docker 和 Kubernetes - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="云原生服务风险测绘分析（一）：Docker 和 Kubernetes" />
+<meta property="og:description" content="一.概述 近年来随着云原生服务的大规模应用，互联网上暴露的相应资产越来越多，通过网络空间测绘技术可对暴露的资产进行数据统计及进一步的分析，从而有效赋能态势感知、漏洞预警、风险溯源等技术领域。
+笔者近期针对云原生各类服务进行了具体的测绘分析。本篇为云原生服务测绘系列的首篇，主要从资产发现、资产脆弱性和漏洞介绍、资产脆弱性发现三个维度分析了我们日常使用的 Docker 及 Kubernetes 服务所存在的风险。针对 Kubernetes 服务，由于其主要暴露资产的方式是通过 API Server，Kubelet 以及 Kubernetes Dashboard 组件，考虑到这几个组件的脆弱性、资产指纹均不一，但又与 Kubernetes 服务有着紧密的联系，故笔者将分别对这些组件进行介绍。最后笔者针对每个组件提供了一些安全建议，希望各位读者通过阅读此文可对云原生服务风险暴露有更清晰的认识。
+注：文中统计的测绘数据为近一个月的国内数据，相关技术仅供研究交流，请勿应用于未授权的渗透测试。
+二. Docker 资产风险测绘分析 2." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wfsui.github.io/posts/%E4%BA%91%E5%8E%9F%E7%94%9F%E6%9C%8D%E5%8A%A1%E9%A3%8E%E9%99%A9%E6%B5%8B%E7%BB%98%E5%88%86%E6%9E%90%E4%B8%80docker-%E5%92%8C-kubernetes/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-10T22:41:25+08:00" />
+<meta property="article:modified_time" content="2022-04-10T22:41:25+08:00" /><meta property="og:site_name" content="大峰哥" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="云原生服务风险测绘分析（一）：Docker 和 Kubernetes"/>
+<meta name="twitter:description" content="一.概述 近年来随着云原生服务的大规模应用，互联网上暴露的相应资产越来越多，通过网络空间测绘技术可对暴露的资产进行数据统计及进一步的分析，从而有效赋能态势感知、漏洞预警、风险溯源等技术领域。
+笔者近期针对云原生各类服务进行了具体的测绘分析。本篇为云原生服务测绘系列的首篇，主要从资产发现、资产脆弱性和漏洞介绍、资产脆弱性发现三个维度分析了我们日常使用的 Docker 及 Kubernetes 服务所存在的风险。针对 Kubernetes 服务，由于其主要暴露资产的方式是通过 API Server，Kubelet 以及 Kubernetes Dashboard 组件，考虑到这几个组件的脆弱性、资产指纹均不一，但又与 Kubernetes 服务有着紧密的联系，故笔者将分别对这些组件进行介绍。最后笔者针对每个组件提供了一些安全建议，希望各位读者通过阅读此文可对云原生服务风险暴露有更清晰的认识。
+注：文中统计的测绘数据为近一个月的国内数据，相关技术仅供研究交流，请勿应用于未授权的渗透测试。
+二. Docker 资产风险测绘分析 2."/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://wfsui.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://wfsui.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<base href="https://wfsui.github.io/">
+	<h1 class="site-title"><a href="https://wfsui.github.io/">大峰哥</a></h1>
+	<div class="site-description"><h2>记录日常生活哦</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/wfsui" title="Github"><i data-feather="github"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">文章</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">云原生服务风险测绘分析（一）：Docker 和 Kubernetes</h1>
+			<div class="meta">Posted at &mdash; Apr 10, 2022</div>
+		</div>
+
+		<div class="markdown">
+			<h2 id="一概述">一.概述</h2>
+<p>近年来随着云原生服务的大规模应用，互联网上暴露的相应资产越来越多，通过网络空间测绘技术可对暴露的资产进行数据统计及进一步的分析，从而有效赋能态势感知、漏洞预警、风险溯源等技术领域。</p>
+<p>笔者近期针对云原生各类服务进行了具体的测绘分析。本篇为云原生服务测绘系列的首篇，主要从资产发现、资产脆弱性和漏洞介绍、资产脆弱性发现三个维度分析了我们日常使用的 Docker 及 Kubernetes 服务所存在的风险。针对 Kubernetes 服务，由于其主要暴露资产的方式是通过 API Server，Kubelet 以及 Kubernetes Dashboard 组件，考虑到这几个组件的脆弱性、资产指纹均不一，但又与 Kubernetes 服务有着紧密的联系，故笔者将分别对这些组件进行介绍。最后笔者针对每个组件提供了一些安全建议，希望各位读者通过阅读此文可对云原生服务风险暴露有更清晰的认识。</p>
+<p><em>注：文中统计的测绘数据为近一个月的国内数据，相关技术仅供研究交流，请勿应用于未授权的渗透测试。</em></p>
+<h2 id="二-docker-资产风险测绘分析">二. Docker 资产风险测绘分析</h2>
+<p><strong>2.1 Docker 资产暴露情况分析</strong></p>
+<p>借助测绘数据，我们可以了解到国内 Docker 资产地区和版本的分布情况，笔者也以这两个维度为各位读者进行介绍。</p>
+<p><strong>2.1.1 Docker 资产地区分布</strong></p>
+<p>笔者从测绘数据中得到 Docker 相关资产共 179 条数据，地区分布如图 1 所示：</p>
+<p><img src="https://static001.infoq.cn/resource/image/3c/58/3cd975c77006012792c3930814a8c658.png" alt=""><!-- raw HTML omitted --></p>
+<p>图 1. Docker 资产地区分布</p>
+<p>以上 Docker 资产暴露的情况笔者进行了统计，如下表所示：</p>
+<p>|<strong>端口</strong></p>
+<p>|<strong>资产数</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2375</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<pre><code>|100
+
+   |
+</code></pre>
+<p>|2376</p>
+<pre><code>|13
+
+    |
+</code></pre>
+<p>|其它</p>
+<pre><code>|66
+
+    |
+</code></pre>
+<p>从以上数据我们可以看出，国内暴露的 Docker 资产多数来源于北京市、上海市、广东省、浙江省，其中北京暴露数据量最大；端口则主要分布在 2375 端口和 2376 端口，其中 2375 端口数量最多。</p>
+<p><strong>2.1.2 Docker 资产版本分布</strong></p>
+<p>通过测绘数据，笔者对国内暴露的 Docker 资产版本进行了分析，其分布情况如图 2 所示：</p>
+<p><img src="https://static001.infoq.cn/resource/image/fc/c0/fc42a49579697bcc53f9dc7c612cbbc0.png" alt=""><!-- raw HTML omitted --></p>
+<p>图 2. Docker 资产版本分布</p>
+<p>从上图可以看出，近 50%的 Docker 资产未获取到具体版本，剩余 50%可统计的 Docker 资产版本中，v1.13.1 版本暴露最多，约占已知版本资产总数的 33%，第二暴露多的版本为 18.09.7，约占已知版本资产总数的 10%。</p>
+<p><strong>2.2 Docker 资产脆弱性和漏洞介绍</strong></p>
+<p><strong>2.2.1 脆弱性介绍</strong></p>
+<p>通过测绘数据，我们得知暴露的 Docker 资产端口主要为 2375、2376 端口，这两个端口为 Docker 的 TCP Socket 端口，在版本较新的 Docker 中，Docker 守护进程默认不会监听 TCP Socket。用户可通过配置文件来设置 Docker 守护进程开启对 TCP Socket 的监听，默认监听端口通常为 2375。然而，默认情况下对 Docker 守护进程 TCP Socket 的访问是无加密且无认证的。因此，任何网络可达的访问者均可通过该 TCP Socket 来对 Docker 守护进程下发命令。2376 端口用于与 Docker 守护进程进行 TLS 通信，因此需要配置证书才可实现通信加密，默认不开启。</p>
+<p>若开放了 2375，2376（未配置证书）端口，以下命令能够列出 IP 为 192.168.1.101 的主机上的所有活动容器：</p>
+<p><code>docker -H tcp://192.168.1.101:2375 ps</code></p>
+<p><code>docker -H tcp://192.168.1.101:2376 ps</code></p>
+<p>显而易见，攻击者也能够通过这样的 TCP Socket 对目标主机上的 Docker 守护进程下发命令，从而实现对目标主机的控制。控制方式与通过 Unix Socket 的控制类似，只是需要通过-H tcp://参数来设置目标地址和端口。</p>
+<p><strong>2.2.2 漏洞介绍</strong></p>
+<p>Docker 自 2013 年发布以来，共曝出 34 个漏洞[2]，根据 CVSS 2.0 标准，其中含高危漏洞 9 个，中危漏洞 7 个，中高危漏洞类型以容器逃逸、命令执行、目录遍历、权限提升为主。关于容器逃逸，各位读者可参考绿盟科技研究通讯公众号曾发表过的相关技术分析文章：</p>
+<p><a href="">未能幸免！安全容器也存在逃逸风险</a></p>
+<p><a href="">【云原生攻防研究】容器逃逸技术概览</a></p>
+<p>更多内容各位读者可以参考 CVE 网站对 Docker 漏洞的统计，此处由于篇幅原因不再赘述。</p>
+<p><strong>2.3 Docker 资产脆弱性暴露情况分析</strong></p>
+<p>借助测绘数据，笔者从 Docker 脆弱性及 CVE 漏洞维度，统计了现有暴露资产的漏洞分布情况，如图 3 所示：</p>
+<p><img src="https://static001.infoq.cn/resource/image/cf/24/cf1cf1678d24f4ecef34dc637ccff824.png" alt=""><!-- raw HTML omitted --></p>
+<p>图 3. Docker 脆弱性及漏洞分布</p>
+<p>可以看出，在国内互联网暴露的 179 个 Docker 资产中，有 81 个资产被曝出含有未授权访问脆弱性，57 个资产被曝出含有 CVE-2021-21284 漏洞, 53 个资产被曝出含有 CVE-2020-27534 漏洞，49 个资产被曝出含有 CVE-2019-14271 漏洞，其中每个资产可能命中多条 CVE。</p>
+<p>值得一提的是，早在 2018 年绿盟科技发布的《容器安全技术报告》[1]中已针对全球范围内 5-7 月暴露的 Docker 资产（2375 端口）进行了分析，其中中国地区共暴露 197 个资产，与本次 Docker 的测绘数据（2375 端口）量对比多出近一倍，由此我们可以看出，经过三年半的时间，2375 端口的暴露量在不断减少，从侧面也可以反映出 Docker 用户的安全意识在不断增强。</p>
+<p><strong>2.4 安全建议</strong></p>
+<ul>
+<li>建议不开启 2375 端口远程监听 </li>
+<li>使用 Docker 的 TLS 端口(2376)并为其配置证书</li>
+<li>应用 CIS Docker Benchmark 最佳实践[3]</li>
+<li>根据官方通告及时升级版本，更新补丁</li>
+</ul>
+<h2 id="三-kubernetes-资产风险测绘分析">三. Kubernetes 资产风险测绘分析</h2>
+<p><strong>3.1 Kubelet</strong></p>
+<p>Kubelet 是在 Kubernetes 集群中每个节点上运行的代理组件,它是工作节点上的主要服务，职责为定期从 Kubernetes API Server 组件中接收新增或修改的 Pods 请求，并确保 Pods 在用户期望的状态下运行。同时，该组件作为节点的监控组件，定时向 Kubernetes API Server 汇报所在节点 Pods 的运行状况。</p>
+<p><strong>3.1.1 Kubelet 资产暴露情况分析</strong></p>
+<p>借助测绘数据，笔者统计了国内暴露的 Kubelet 资产，数量近 8220 个，其中地区分布如图 4 所示：</p>
+<p><img src="https://static001.infoq.cn/resource/image/e7/07/e7104948ea5321d69805008ec8698f07.jpg" alt=""><!-- raw HTML omitted --></p>
+<p><img src="https://static001.infoq.cn/resource/image/f8/bb/f812ef81db44c4dbbec3755e1d7f32bb.png" alt=""><!-- raw HTML omitted --></p>
+<p>图 4. Kubelet 资产地区分布</p>
+<p>从数据中我们可以了解到国内暴露的 Kubelet 资产主要来源于北京市、福建省、江苏省、广东省、上海市，其中北京市暴露 983 条数据，位居第一。</p>
+<p><strong>3.1.2 Kubelet 脆弱性分析</strong></p>
+<p>Kubelet 服务启动后会监听多个端口，用于接收 Kubernetes API Server 组件发送的请求，笔者统计了这些端口的相关信息，汇总为如下表格：</p>
+<p>|<strong>端口</strong></p>
+<p>|<strong>端口服务介绍</strong></p>
+<pre><code>                                                                                                |
+</code></pre>
+<p>|&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;|
+|10248</p>
+<p>|Kubelet healthz的服务端口，用于判断Kubelet组件的健康状态，已于Kubernetes v1.16版本后弃用，访问该端口默认需要认证授权</p>
+<p>|
+|10250</p>
+<p>|Kubelet的HTTPS服务，读写端口，提供Kubernetes基本资源运行状态， 访问该端口默认需要认证授权</p>
+<pre><code>                       |
+</code></pre>
+<p>|10255</p>
+<p>|Kubelet的HTTP服务，只读端口，提供只读形式的Kubernetes基本资源运行状态，该端口无需进行认证授权，默认为禁用</p>
+<pre><code>       |
+</code></pre>
+<p>|4194</p>
+<pre><code>|cAdvisor 的HTTP服务端口，自Kubernetes v1.10版本开始，官方去除了\-\-cadvisor\-port参数配置，不再支持对cAdvisor的访问
+</code></pre>
+<p>|</p>
+<p>笔者对以上端口服务的脆弱性进行了分析并总结如下，供各位读者参考：</p>
+<ul>
+<li>10250 端口，笔者通过查看 Kubernetes GitHub 仓库中 Kubelet 部分的源码[4]得知，该端口服务在默认授权情况下提供如下 API 以供用户查看，我们可以看出这些都是较为敏感的操作：</li>
+</ul>
+<p><code>o /pods, /runningpods</code></p>
+<p><code>o /metrics、/spec、/stats、/stats/container、/logs</code></p>
+<p><code>o /run/、/exec/, /attach/, /portForward/, /containerLogs/</code></p>
+<p>由于 Kubernetes 的 Kubelet 默认启动参数可在 Master 节点的/var/lib/kubelet/config.yaml 文件中进行修改，其中就包含认证及授权的配置项--anonymous-auth 和--authorization-mode,若我们将--anonymous-auth 项设置为 true 开启匿名访问, --authorization-mode 项设置为 AlwaysAllow，用户可通过 curl 命令不附带任何认证信息连接至 Kubelet 服务的 10250 端口，从而对 Kubernetes 运行资源达到未授权访问的目的。</p>
+<ul>
+<li>
+<p>10255 端口，通过参考文献[5][6]，我们知道 10255 端口已于 2018 年 5 月份被废弃，废弃原因 GitHub 上给出的解释是为了安全考虑，如若开启 10255 端口的访问，将会导致与开启 10250 端口匿名访问配置同样的未授权风险，因此 Kubernetes 开发团队为避免让用户感知到此项配置的存在，在 Kubeadm 中默认设置了此项启动参数为禁用状态。该项配置被废弃之前，通常需要在 Kubernetes 的 Kubelet 配置文件中添加--read-only-port: 0 来禁止 10255 端口的访问。</p>
+</li>
+<li>
+<p>4194 和 10248 端口，也许是因为其服务自身不带有较为敏感的信息，所以无法被攻击者轻易利用。</p>
+</li>
+</ul>
+<p>从以上 Kubelet 组件脆弱性分析中，我们可以看出 4194、10248、10255 端口由于各种原因已被 Kubernetes 开发团队先后弃用，因此风险也可谓逐渐减少，但 10250 端口的未授权访问风险依然存在，值得我们注意。</p>
+<p><strong>3.1.3 安全建议</strong></p>
+<ul>
+<li>将 Kubelet 组件的启动参数--anonymous-auth 值设为 false，即不允许匿名访问</li>
+<li>将 Kubelet 组件的启动参数--authorization-mode 值设为 Webhook</li>
+<li>根据官方通告及时升级版本，更新补丁</li>
+<li>应用 CIS Kubernetes Benchmark 最佳实践[7]</li>
+</ul>
+<p><strong>3.2 Kubernetes API Server</strong></p>
+<p><strong>3.2.1 API Server 资产暴露情况分析</strong></p>
+<p>借助测绘数据，我们可以了解到国内 API Server 资产地区、资产版本的分布情况，笔者也以这两个维度为各位读者进行介绍。</p>
+<p><strong>3.2.1.1 资产地区分布</strong></p>
+<p>笔者从测绘数据中得到 API Server 相关资产共 17130 条数据，地区分布如图 5 所示：</p>
+<p><img src="https://static001.infoq.cn/resource/image/13/b4/13978de35bbf273567dc86fa5bc908b4.png" alt=""><!-- raw HTML omitted --></p>
+<p>图 5 Kubernetes API Server 资产地区分布</p>
+<p>此外，笔者对 API Server 资产暴露的端口情况进行了统计，如下表所示：</p>
+<p>|<strong>端口</strong></p>
+<p>|<strong>资产数</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6443</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<pre><code>|16986
+
+ |
+</code></pre>
+<p>|8443</p>
+<pre><code>|92
+
+    |
+</code></pre>
+<p>|其他</p>
+<pre><code>|52
+
+    |
+</code></pre>
+<p>从测绘数据可以看出，国内暴露的 Kubernetes API Server 组件资产中有约 87%左右的数据来源于北京市、浙江省、上海市、广东省、香港特别行政区，其中北京市暴露 4940 条数据位居第一；端口主要分布在 6443、8443、8080 端口，其中 6443 口数量 16986 个位居第一。</p>
+<p><strong>3.2.1.2 资产版本分布</strong></p>
+<p>借助测绘数据，笔者对国内暴露的 API Server 资产版本进行了分析，其分布情况如图 6 所示：</p>
+<p><img src="https://static001.infoq.cn/resource/image/36/81/36293a0655a1cc0851714e1167142f81.png" alt=""><!-- raw HTML omitted --></p>
+<p>图 6 Kubernetes API Server 资产版本分布</p>
+<p>从测绘数据可以看出，绝大多数版本分布在 1.18.8、1.20.4、1.20.11、1.16.9、1.14.8、1.22.3 范围，其中暴露数量较多的版本为 1.18.8（共 2569 个）、1.20.4（近 2000 个）、1.20.11（约 2300 个）、1.16.9（1516 个），1.14.8（近 1100 个），剩余版本资产由于存在数量较少，且分布范围较大，笔者认为没有太多参考价值，故此处不再赘述。</p>
+<p>此外，从测绘数据中我们进一步发现暴露较多版本的资产中，绝大多数资产（约 90%）选择部署在阿里云上。</p>
+<p><strong>3.2.2 API Server 资产脆弱性分析及漏洞介绍</strong></p>
+<p><strong>3.2.2.1 脆弱性分析</strong></p>
+<p>熟悉 Kubernetes 的读者都知道 API Server 组件在 8080 和 6443 两个端口上提供服务，其中，8080 端口提供的是<strong>没有 TLS 加密的 HTTP 服务</strong>，且所有到达该端口的请求将绕过所有认证和授权模块（但是仍然会被准入控制模块处理）。保留该端口主要是为了方便测试以及集群初启动。然而在生产环境开放 8080 端口，即使绑定本地环回地址（localhost）也是很危险的。<strong>如果将该端口暴露在互联网上，那么任何网络可达的攻击者都能够通过该端口直接与 API Server 交互，进而控制整个集群。</strong></p>
+<p>用户可以通过以下操作开启外部对 API Server 的未授权访问：</p>
+<ul>
+<li>在 Kubernetes 主节点的 kube-apiserver.yaml 文件中将--insecure-port=0 配置项修改为--insecure-port=8080</li>
+<li>在 Kubernetes 主节点的 kube-apiserver.yaml 文件中修改--insecure-bind-address 配置项值为 0.0.0.0</li>
+</ul>
+<p><strong>3.2.2.2 漏洞介绍</strong></p>
+<p>Kubernetes 自 2014 年从 Google 内部的 Borg 系统对外开源后，共曝出 46 个漏洞[8]，根据 CVSS 2.0 标准，其中含高危漏洞 3 个，中危漏洞 15 个，中高危漏洞类型以权限提升、命令注入、未授权访问、DoS、中间人攻击、容器逃逸为主，关于容器逃逸、权限提升类漏洞，绿盟科技研究通信公众号曾发表相关技术文章，读者可参考：</p>
+<p><a href="https://mp.weixin.qq.com/s/RqaWvzXZR6sLPzBI8ljoxg">逃逸风云再起：从CVE-2017-1002101到CVE-2021-25741</a></p>
+<p><a href="https://mp.weixin.qq.com/s/MgTRc7gu0-jwnpzzKsrCiw">移花接木：看CVE-2020-8559如何逆袭获取集群权限</a></p>
+<p>更多内容各位读者可以参考 CVE 网站[7]对 Kubernetes 漏洞的统计，此处由于篇幅原因不再赘述。</p>
+<p><strong>3.2.3 API Server 资产脆弱性暴露情况分析</strong></p>
+<p>通过以上针对 API Server 的脆弱性分析，笔者统计了目前含有未授权访问的 API Server 资产共 347 个，具体地区分布如图 7 所示：</p>
+<p><img src="https://static001.infoq.cn/resource/image/91/f0/91006b7eef95c9a1a102a173a6f593f0.png" alt=""><!-- raw HTML omitted --></p>
+<p>图 7 Kubernetes API Server 未授权访问资产地区分布</p>
+<p>同时笔者也统计了未授权访问资产的端口分布情况，如图 8 所示：</p>
+<p><img src="https://static001.infoq.cn/resource/image/c0/37/c0591d76e179b40e33dc4ccda90a7f37.png" alt=""><!-- raw HTML omitted --></p>
+<p>图 8 Kubernetes API Server 未授权访问资产端口分布</p>
+<p>从图 7、图 8 中我们有如下发现：</p>
+<ul>
+<li>北京市、广东省、上海市、浙江省暴露的未授权访问资产最多，北京市暴露 103 条位居第一</li>
+<li>存在未授权访问的 Kubernetes 资产只占总资产数的 2%，这是非常小的一个数目，也可间接说明用户现在的安全意识在逐步增强。</li>
+<li>未授权资产中 8443 端口、6443 端口及 8080 端口数量最多，约占未授权资产总数的 86%</li>
+</ul>
+<p>2018 年绿盟科技发布的《容器安全技术报告》[1]中，除了 Docker 之外，我们还针对全球范围内 7 月暴露的 Kubernetes 资产（6443 端口）进行了扫描分析，其中中国地区共暴露约 2500 个资产，与本次笔者统计的测绘数据量（6443 端口资产数约 17000 个）对比少了近七倍。由此我们可以看出，仅仅三年半的时间，Kubernetes 经历了从试用期，磨合期再到大规模生产落地，因而互联网上暴露的资产愈来愈多，同时相应的风险也在不断增大，也时刻提醒着用户群体的安全意识需要不断增强。</p>
+<p>此外，笔者也从 CVE 漏洞维度统计了现有暴露资产的脆弱性分布情况，如图 9 所示：</p>
+<p><img src="https://static001.infoq.cn/resource/image/f3/f9/f37ecb6f36def2625179898969cb32f9.png" alt=""><!-- raw HTML omitted --></p>
+<p>图 9 Kubernetes API Server 资产脆弱性和漏洞分布</p>
+<p>从测绘数据我们可以看出，现有暴露资产中有 12482 个资产被曝含有 <strong>CVE-2021-25741</strong> 漏洞，11628 个资产被曝含有 <strong>CVE-2021-25735</strong> 漏洞, 9377 个资产被曝含有 <strong>CVE-2018-1002105</strong> 漏洞，其中每个资产可能命中多条 CVE。通过测绘数据我们还可看出命中 <strong>CVE-2021-25741</strong> 漏洞的资产数约占总资产数的 73%，命中 <strong>CVE-2021-25735</strong> 漏洞的资产数约占总资产数的 68%，命中 <strong>CVE-2018-1002105</strong> 漏洞的资产数约占总资产数的 55%，汇总得出平均超过 65%的资产会受到以上三个 CVE 的影响，可见影响面之大。</p>
+<p><strong>3.2.4 安全建议</strong></p>
+<ul>
+<li>根据官方通告及时升级版本，更新补丁</li>
+<li>根据官方提供的缓解措施进行临时缓解</li>
+<li>禁止在 Kubernetes API Server 组件的配置文件中修改--insecure-port 启动参数值为 8080，使用默认配置值</li>
+<li>禁止在 Kubernetes API Server 组件的配置文件中修改--insecure-bind-address 启动参数值为 0.0.0.0，使用默认配置值</li>
+<li>使用 API Server 的安全端口（6443），并为其设置证书</li>
+<li>应用用 CIS Kubernetes Benchmark 最佳实践[7]</li>
+</ul>
+<p><strong>3.3 Kubernetes Dashboard</strong></p>
+<p>Kubernetes Dashboard 是一个通用的，基于 Web 的 Kubernetes 集群用户界面。它允许用户管理集群中运行的应用程序，并对其进行故障排除，以及管理集群本身。</p>
+<p><strong>3.3.1 Kubernetes Dashboard 资产暴露情况分析</strong></p>
+<p>借助测绘数据，笔者统计了国内暴露的 Kubernetes Dashboard 资产数据，数量为 902 个，其中地区分布如图 10 所示：</p>
+<p><img src="https://static001.infoq.cn/resource/image/e6/b5/e6c300fd5eafe79008cfdcd2bc50fdb5.png" alt=""><!-- raw HTML omitted --></p>
+<p> 图 10 Kubernetes Dashboard 资产地区分布</p>
+<p>笔者同时统计了上述资产的端口分布情况，如图 11 所示：</p>
+<p><img src="https://static001.infoq.cn/resource/image/f1/87/f1c8f3e4d53f03ceae52e6e9ae829787.png" alt=""><!-- raw HTML omitted --></p>
+<p>图 11 Kubernetes Dashboard 资产端口分布</p>
+<p>从图 10、图 11 中我们有如下发现：</p>
+<ul>
+<li>暴露资产中近 60%数据来源于北京市、上海市、广东省，其中北京市暴露 248 条数据位居第一</li>
+<li>暴露资产端口主要分布在 30001、443、8443、9090 端口，其中 30001 端口数量 598 个位居第一</li>
+</ul>
+<p>值得注意的是，Kubernetes Dashboard 虽然默认未设置对外暴露的 nodePort，但从数据上我们可看出近 70%用户选择暴露 30001 端口，因而我们可在某种程度上将 30001 端口的资产与 Kubernetes Dashboard 进行关联。</p>
+<p><strong>3.3.2 资产脆弱性分析</strong></p>
+<p>笔者对 Kubernetes Dashboard 的脆弱性进行了分析，在其早期版本中（v1.10.1 之前）存在未授权访问风险，用户在按照官方文档所给方式部署完成后，默认情况下，我们需要先执行 kubectl proxy，然后才能通过本地 8001 端口访问 Dashboard。但是，<strong>如果直接将 Dashboard 端口映射在宿主机节点上，或者在执行 kubectl proxy 时指定了额外地址参数，如：</strong></p>
+<p><code>kubectl proxy --address 0.0.0.0 --accept-hosts='^*$'</code></p>
+<p><strong>那么所有能够访问到宿主机的用户，包括攻击者，都将能够直接访问 Dashboard。</strong></p>
+<p>另外，默认情况下 Dashboard 需要登录认证，但是，**如果用户在 Dashboard 的启动参数中添加了--enable-skip-login 选项，那么攻击者就能够直接点击 Dashboard 界面的“跳过”按钮，无需登录便可直接进入 Dashboard。**关于如何设置--enable-skip-login，在 v1.10.1 前，实则是无需配置的，通过在 Kubernetes Dashboard 的 Web 登录界面点击“跳过”按钮即可访问，也是因为这个原因，安全意识较为薄弱的用户直接将早期版本以默认的配置方式部署在互联网上使得攻击者无需花费丝毫力气就可以轻易浏览到 Kubernetes 集群的运行状态，因而在 v1.10.1 版本后，开发团队增加了显式配置的功能，需要用户在相应部署的 yaml 文件中指定--enable-skip-login 参数配置才能开启未授权访问。</p>
+<p>在测绘数据中，笔者在现有暴露的 818 个资产中未发现含有未授权访问的 Dashboard,由此我们也可以看出目前互联网已经很少有用户部署低版本(&lt;v1.10.1)的 Kubernetes Dashboard，实际上这也大大降低了 Kubernetes 集群失陷的风险。</p>
+<p><strong>3.3.3 安全建议</strong></p>
+<ul>
+<li>将 Kubernetes Dashboard 升级至高于 v1.10.1 的版本</li>
+</ul>
+<h2 id="四总结">四.总结</h2>
+<p>行文至此，云原生服务风险测绘分析 Docker、Kubernetess 篇告一段落，笔者认为，随着业务需求的不断变化，容器技术的不断演进，用户逐渐从使用 Docker 转变为使用 Kubernetes,由于 Docker 的生产落地时间较长，相应暴露风险呈减少趋势。与此同时，Kubernetes 不断走向大规模落地应用，互联网暴露资产数量倍增，以未授权访问、容器逃逸为主的安全风险为开发者、运维人员、安全从业人员敲响了警钟。</p>
+<p>下一篇笔者将针对云原生环境下的其它组件进行相应的测绘风险分析，欢迎各位读者持续关注，若有任何问题欢迎提出，互相交流学习。</p>
+<h2 id="五参考文献">五.参考文献</h2>
+<p>[1]绿盟科技 2018 年《容器安全技术报告》</p>
+<p>[2] Docker CVE 漏洞参考<a href="https://www.cvedetails.com/product/28125/Docker-Docker.html?vendor_id=13534">https://www.cvedetails.com/product/28125/Docker-Docker.html?vendor_id=13534</a></p>
+<p>[3] CIS Docker Benchmark <a href="https://www.cisecurity.org/benchmark/docker">https://www.cisecurity.org/benchmark/docker</a></p>
+<p>[4] Kubelet server.go Github 源码<a href="#L434:3">https://github.com/kubernetes/kubernetes/blob/master/pkg/kubelet/server/server.go#L434:3</a></p>
+<p>[5] <a href="https://github.com/kubernetes/kubernetes/pull/64187">https://github.com/kubernetes/kubernetes/pull/64187</a></p>
+<p>[6] <a href="https://github.com/kubernetes/kubeadm/issues/732">https://github.com/kubernetes/kubeadm/issues/732</a></p>
+<p>[7] CIS Kubernetes Benchmark <a href="https://www.cisecurity.org/benchmark/kubernetes">https://www.cisecurity.org/benchmark/kubernetes</a></p>
+<p>[8] <a href="https://www.cvedetails.com/vulnerability-list/vendor_id-15867/product_id-34016/Kubernetes-Kubernetes.html">https://www.cvedetails.com/vulnerability-list/vendor_id-15867/product_id-34016/Kubernetes-Kubernetes.html</a></p>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'wfsui';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="">Wfsui theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div><script>feather.replace()</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kafka on 大峰哥</title>
+    <link>https://wfsui.github.io/tags/kafka/</link>
+    <description>Recent content in Kafka on 大峰哥</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Fri, 05 Aug 2022 03:55:43 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/kafka/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kafka在美团数据平台的实践</title>
+      <link>https://wfsui.github.io/posts/kafka%E5%9C%A8%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Fri, 05 Aug 2022 03:55:43 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/kafka%E5%9C%A8%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
+      <description>[TOC]
+1. 现状和挑战 1.1 现状 Kafka是一个开源的流处理平台，业界有很多互联网企业也都在使用这款产品。我们首先了解一下Kafka在美团数据平台的现状。
+如图1-1所示，蓝色部分描述了Kafka在数据平台定位为流存储层。主要的职责是做数据的缓存和分发，它会将收集到的日志分发到不同的数据系统里，这些日志来源于系统日志、客户端日志以及业务数据库。下游的数据消费系统包括通过ODS入仓提供离线计算使用、直接供实时计算使用、通过DataLink同步到日志中心，以及做OLAP分析使用。
+Kafka在美团的集群规模总体机器数已经超过了15000+台，单集群的最大机器数也已经到了2000+台。在数据规模上，天级消息量已经超过了30+P，天级消息量峰值也达到了4+亿/秒。不过随着集群规模的增大，数据量的增长，Kafka面临的挑战也愈发严峻，下面讲一下具体的挑战都有哪些。
+1.2 挑战 如图1-2所示，具体的挑战可以概括为两部分：
+第一部分是慢节点影响读写，这里慢节点参考了HDFS的一个概念，具体定义指的是读写延迟TP99大于300ms的Broker。造成慢节点的原因有三个：
+集群负载不均衡会导致局部热点，就是整个集群的磁盘空间很充裕或者ioutil很低，但部分磁盘即将写满或者ioutil打满。 PageCache容量，比如说，80GB的PageCache在170MB/s的写入量下仅能缓存8分钟的数据量。那么如果消费的数据是8分钟前的数据，就有可能触发慢速的磁盘访问。 Consumer客户端的线程模型缺陷会导致端到端延时指标失真。例如当Consumer消费的多个分区处于同一Broker时，TP90可能小于100ms，但是当多个分区处于不同Broker时，TP90可能会大于1000ms。 第二部分是大规模集群管理的复杂性，具体表现有4类问题：
+不同Topic之间会相互影响，个别Topic的流量突增，或者个别消费者的回溯读会影响整体集群的稳定性。 Kafka原生的Broker粒度指标不够健全，导致问题定位和根因分析困难。 故障感知不及时，处理成本较高。 Rack级别的故障会造成部分分区不可用。 2.</description>
+    </item>
+    
+  </channel>
+</rss>

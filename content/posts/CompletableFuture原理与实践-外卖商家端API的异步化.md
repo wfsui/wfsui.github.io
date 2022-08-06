@@ -1,6 +1,6 @@
 ---
 title: "CompletableFuture原理与实践-外卖商家端API的异步化"
-date: 2022-08-05T03:55:57+0000
+date: 2022-08-06T03:33:23+0000
 tags: [美团技术团队, 到家研发平台, 后台, 异步化, CompletableFuture]
 ---
 

@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 12 Aug 2022 03:44:24 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E5%B9%B3%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 14 Aug 2022 03:43:41 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E5%B9%B3%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>对话摘要技术在美团的探索（SIGIR）</title>
       <link>https://wfsui.github.io/posts/%E5%AF%B9%E8%AF%9D%E6%91%98%E8%A6%81%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E6%8E%A2%E7%B4%A2sigir/</link>
-      <pubDate>Fri, 12 Aug 2022 03:44:24 +0000</pubDate>
+      <pubDate>Sun, 14 Aug 2022 03:43:41 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%AF%B9%E8%AF%9D%E6%91%98%E8%A6%81%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E6%8E%A2%E7%B4%A2sigir/</guid>
       <description>随着互联网产生的文本数据越来越多，文本信息过载问题日益严重，对各类文本进行一个“降维”处理显得非常必要，而文本摘要就是其中一个重要的手段。本文首先介绍了经典的文本摘要方法，包括抽取式摘要方法和生成式摘要方法，随后分析了对话摘要的模型，并分享了美团在真实对话摘要场景中面临的挑战。希望能给从事相关工作的同学带来一些启发或者帮助。
@@ -25,7 +25,7 @@
     <item>
       <title>图神经网络训练框架的实践和探索</title>
       <link>https://wfsui.github.io/posts/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Fri, 12 Aug 2022 03:44:24 +0000</pubDate>
+      <pubDate>Sun, 14 Aug 2022 03:43:41 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%8E%A2%E7%B4%A2/</guid>
       <description>1. 前言 万物之间皆有联系。图作为一种通用的数据结构，可以很好地描述实体与实体之间的关系。例如，在社交网络中，用图来表示用户与用户之间的好友关系；在电商网站中，用图表示用户与商品之间的点击购买行为；在知识图谱构建中，还可以用图表示实体与实体间多样的关系。另一方面，深度学习技术在计算机视觉、自然语言处理、语音处理等领域均已取得了巨大的成功。深度学习技术将图像、文本、语音等多种多样的数据转化为稠密的向量表示，提供了表示数据的另一种方式。借助于硬件日益强大的计算能力，深度学习可以从海量数据中学习到数据之间复杂多样的相关性。
@@ -40,11 +40,24 @@
     <item>
       <title>Android对so体积优化的探索与实践</title>
       <link>https://wfsui.github.io/posts/android%E5%AF%B9so%E4%BD%93%E7%A7%AF%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 12 Aug 2022 03:44:22 +0000</pubDate>
+      <pubDate>Sun, 14 Aug 2022 03:43:39 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/android%E5%AF%B9so%E4%BD%93%E7%A7%AF%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 背景 应用安装包的体积影响着用户的下载时长、安装时长、磁盘占用空间等诸多方面，因此减小安装包的体积对于提升用户体验和下载转化率都大有益处。Android 应用安装包其实是一个 zip 文件，主要由 dex、assets、resource、so 等各类型文件压缩而成。目前业内常见的包体积优化方案大体分为以下几类：
 针对 dex 的优化，例如 Proguard、dex 的 DebugItem 删除、字节码优化等； 针对 resource 的优化，例如 AndResGuard、webp 优化等； 针对 assets 的优化，例如压缩、动态下发等； 针对 so 的优化，同 assets，另外还有移除调试符号等。 随着动态化、端智能等技术的广泛应用，在采用上述优化手段后， so 在安装包体积中的比重依然很高，我们开始思索这部分体积是否能进一步优化。</description>
+    </item>
+    
+    <item>
+      <title>美团搜索粗排优化的探索与实践</title>
+      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E7%B2%97%E6%8E%92%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Sun, 14 Aug 2022 03:43:32 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E7%B2%97%E6%8E%92%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
+      <description>1. 前言 众所周知，在搜索、推荐、广告等大规模工业界应用领域，为了平衡性能和效果，排序系统普遍采用级联架构[1,2]，如下图 1 所示。以美团搜索排序系统为例，整个排序分为粗排、精排、重排和混排层；粗排位于召回和精排之间，需要从千级别候选 item 集合中筛选出百级别 item 集合送给精排层。
+从美团搜索排序全链路视角审视粗排模块，目前粗排层优化存在如下几个挑战点：
+样本选择偏差：级联排序系统下，粗排离最后的结果展示环节较远，导致粗排模型离线训练样本空间与待预测的样本空间存在较大的差异，存在严重的样本选择偏差。 粗排精排联动：粗排处于召回和精排之间，粗排需要更多获取和利用后续链路的信息来提升效果。 性能约束：线上粗排预测的候选集远远高于精排模型，然而实际整个搜索系统对性能有严格的要求，导致粗排需要重点关注预测性能。 本文将围绕上述挑战点来分享美团搜索粗排层优化的相关探索与实践，其中样本选择偏差问题我们放在精排联动问题中一起解决。本文主要分成三个部分：第一部分会简单介绍美团搜索排序粗排层的演进路线；第二部分介绍粗排优化的相关探索与实践，其中第一个工作是采用知识蒸馏和对比学习使精排和粗排联动来优化粗排效果，第二个工作是考虑粗排性能和效果 trade-off 的粗排优化，相关工作均已全量上线，且效果显著；最后是总结与展望部分，希望这些内容对大家有所帮助和启发。
+2. 粗排演进路线 美团搜索的粗排技术演进分为以下几个阶段：
+2016 年：基于相关性、质量度、转化率等信息进行线性加权，这种方法简单但是特征的表达能力较弱，权重人工确定，排序效果存在很大的提升空间。 2017 年：采用基于机器学习的简单 LR 模型进行 Pointwise 预估排序。 2018 年：采用基于向量内积的双塔模型，两侧分别输入查询词、用户以及上下文特征和商户特征，经过深度网络计算后，分别产出用户&amp;amp;查询词向量和商户向量，再通过内积计算得到预估分数进行排序。该方法可以提前把商户向量计算保存好，所以在线预测快，但是两侧信息的交叉能力有限。 2019 年：为了解决双塔模型无法很好地建模交叉特征的问题，将双塔模型的输出作为特征与其他交叉特征通过 GBDT 树模型进行融合。 2020 年至今：由于算力的提升，开始探索 NN 端到端粗排模型并且持续迭代 NN 模型。 现阶段，工业界粗排模型常用的有双塔模型，比如腾讯[3]和爱奇艺[4]；交互式 NN 模型，比如阿里巴巴[1,2]。下文主要介绍美团搜索在粗排升级为 NN 模型过程中的相关优化工作，主要包括粗排效果优化、效果&amp;amp;性能联合优化两个部分。</description>
     </item>
     
     <item>

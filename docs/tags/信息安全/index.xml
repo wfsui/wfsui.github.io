@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sat, 27 Aug 2022 04:09:48 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 28 Aug 2022 04:04:06 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>如何应对开源组件⻛险？软件成分安全分析（SCA）能力的建设与演进</title>
       <link>https://wfsui.github.io/posts/%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6%E9%99%A9%E8%BD%AF%E4%BB%B6%E6%88%90%E5%88%86%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90sca%E8%83%BD%E5%8A%9B%E7%9A%84%E5%BB%BA%E8%AE%BE%E4%B8%8E%E6%BC%94%E8%BF%9B/</link>
-      <pubDate>Sat, 27 Aug 2022 04:09:48 +0000</pubDate>
+      <pubDate>Sun, 28 Aug 2022 04:04:06 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6%E9%99%A9%E8%BD%AF%E4%BB%B6%E6%88%90%E5%88%86%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90sca%E8%83%BD%E5%8A%9B%E7%9A%84%E5%BB%BA%E8%AE%BE%E4%B8%8E%E6%BC%94%E8%BF%9B/</guid>
       <description>1. 前言 SCA 概念出现其实很久了。简单来说，就是针对现有的软件系统生成粒度非常细的 SBOM（Software Bill of Materials 软件物料单）清单，然后通过⻛险数据去匹配有没有存在⻛险组件被引用。目前，市面上比较出色的商业产品包括 Synopsys 的 Blackduck 、Snyk 的 SCA 、HP 的 Fortify SCA 等，开源产品包括国内悬镜的 OpenSCA 。</description>

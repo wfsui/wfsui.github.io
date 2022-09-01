@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Wed, 31 Aug 2022 04:41:04 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 01 Sep 2022 04:18:30 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>算法中七种常见的时间复杂度</title>
       <link>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</link>
-      <pubDate>Wed, 31 Aug 2022 04:41:04 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 04:18:30 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</guid>
       <description>这是我的推广信息，以激励自己更好的分享自己的知识和经验！也希望看到的你能够多多支持，谢谢！
@@ -22,7 +22,7 @@
     <item>
       <title>Java动态追踪技术探究</title>
       <link>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</link>
-      <pubDate>Wed, 31 Aug 2022 04:41:03 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 04:18:28 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</guid>
       <description>引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：
@@ -46,7 +46,7 @@
     <item>
       <title>Java魔法类：Unsafe应用解析</title>
       <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Wed, 31 Aug 2022 04:41:03 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 04:18:28 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
       <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
@@ -58,7 +58,7 @@ public final class Unsafe { // 单例对象 private static final Unsafe theUnsaf
     <item>
       <title>对话摘要技术在美团的探索（SIGIR）</title>
       <link>https://wfsui.github.io/posts/%E5%AF%B9%E8%AF%9D%E6%91%98%E8%A6%81%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E6%8E%A2%E7%B4%A2sigir/</link>
-      <pubDate>Wed, 31 Aug 2022 04:41:02 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 04:18:28 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%AF%B9%E8%AF%9D%E6%91%98%E8%A6%81%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E6%8E%A2%E7%B4%A2sigir/</guid>
       <description>随着互联网产生的文本数据越来越多，文本信息过载问题日益严重，对各类文本进行一个“降维”处理显得非常必要，而文本摘要就是其中一个重要的手段。本文首先介绍了经典的文本摘要方法，包括抽取式摘要方法和生成式摘要方法，随后分析了对话摘要的模型，并分享了美团在真实对话摘要场景中面临的挑战。希望能给从事相关工作的同学带来一些启发或者帮助。
@@ -72,7 +72,7 @@ public final class Unsafe { // 单例对象 private static final Unsafe theUnsaf
     <item>
       <title>图神经网络训练框架的实践和探索</title>
       <link>https://wfsui.github.io/posts/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Wed, 31 Aug 2022 04:41:02 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 04:18:28 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%8E%A2%E7%B4%A2/</guid>
       <description>1. 前言 万物之间皆有联系。图作为一种通用的数据结构，可以很好地描述实体与实体之间的关系。例如，在社交网络中，用图来表示用户与用户之间的好友关系；在电商网站中，用图表示用户与商品之间的点击购买行为；在知识图谱构建中，还可以用图表示实体与实体间多样的关系。另一方面，深度学习技术在计算机视觉、自然语言处理、语音处理等领域均已取得了巨大的成功。深度学习技术将图像、文本、语音等多种多样的数据转化为稠密的向量表示，提供了表示数据的另一种方式。借助于硬件日益强大的计算能力，深度学习可以从海量数据中学习到数据之间复杂多样的相关性。
@@ -85,18 +85,9 @@ public final class Unsafe { // 单例对象 private static final Unsafe theUnsaf
     </item>
     
     <item>
-      <title>如何应对开源组件⻛险？软件成分安全分析（SCA）能力的建设与演进</title>
-      <link>https://wfsui.github.io/posts/%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6%E9%99%A9%E8%BD%AF%E4%BB%B6%E6%88%90%E5%88%86%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90sca%E8%83%BD%E5%8A%9B%E7%9A%84%E5%BB%BA%E8%AE%BE%E4%B8%8E%E6%BC%94%E8%BF%9B/</link>
-      <pubDate>Wed, 31 Aug 2022 04:41:01 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6%E9%99%A9%E8%BD%AF%E4%BB%B6%E6%88%90%E5%88%86%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90sca%E8%83%BD%E5%8A%9B%E7%9A%84%E5%BB%BA%E8%AE%BE%E4%B8%8E%E6%BC%94%E8%BF%9B/</guid>
-      <description>1. 前言 SCA 概念出现其实很久了。简单来说，就是针对现有的软件系统生成粒度非常细的 SBOM（Software Bill of Materials 软件物料单）清单，然后通过⻛险数据去匹配有没有存在⻛险组件被引用。目前，市面上比较出色的商业产品包括 Synopsys 的 Blackduck 、Snyk 的 SCA 、HP 的 Fortify SCA 等，开源产品包括国内悬镜的 OpenSCA 。</description>
-    </item>
-    
-    <item>
       <title>Android对so体积优化的探索与实践</title>
       <link>https://wfsui.github.io/posts/android%E5%AF%B9so%E4%BD%93%E7%A7%AF%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Wed, 31 Aug 2022 04:41:00 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 04:18:27 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/android%E5%AF%B9so%E4%BD%93%E7%A7%AF%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 背景 应用安装包的体积影响着用户的下载时长、安装时长、磁盘占用空间等诸多方面，因此减小安装包的体积对于提升用户体验和下载转化率都大有益处。Android 应用安装包其实是一个 zip 文件，主要由 dex、assets、resource、so 等各类型文件压缩而成。目前业内常见的包体积优化方案大体分为以下几类：
@@ -104,9 +95,18 @@ public final class Unsafe { // 单例对象 private static final Unsafe theUnsaf
     </item>
     
     <item>
+      <title>如何应对开源组件⻛险？软件成分安全分析（SCA）能力的建设与演进</title>
+      <link>https://wfsui.github.io/posts/%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6%E9%99%A9%E8%BD%AF%E4%BB%B6%E6%88%90%E5%88%86%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90sca%E8%83%BD%E5%8A%9B%E7%9A%84%E5%BB%BA%E8%AE%BE%E4%B8%8E%E6%BC%94%E8%BF%9B/</link>
+      <pubDate>Thu, 01 Sep 2022 04:18:27 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6%E9%99%A9%E8%BD%AF%E4%BB%B6%E6%88%90%E5%88%86%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90sca%E8%83%BD%E5%8A%9B%E7%9A%84%E5%BB%BA%E8%AE%BE%E4%B8%8E%E6%BC%94%E8%BF%9B/</guid>
+      <description>1. 前言 SCA 概念出现其实很久了。简单来说，就是针对现有的软件系统生成粒度非常细的 SBOM（Software Bill of Materials 软件物料单）清单，然后通过⻛险数据去匹配有没有存在⻛险组件被引用。目前，市面上比较出色的商业产品包括 Synopsys 的 Blackduck 、Snyk 的 SCA 、HP 的 Fortify SCA 等，开源产品包括国内悬镜的 OpenSCA 。</description>
+    </item>
+    
+    <item>
       <title>美团获得小样本学习榜单FewCLUE第一！Prompt Learning&#43;自训练实战</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%8E%B7%E5%BE%97%E5%B0%8F%E6%A0%B7%E6%9C%AC%E5%AD%A6%E4%B9%A0%E6%A6%9C%E5%8D%95fewclue%E7%AC%AC%E4%B8%80prompt-learning&#43;%E8%87%AA%E8%AE%AD%E7%BB%83%E5%AE%9E%E6%88%98/</link>
-      <pubDate>Wed, 31 Aug 2022 04:40:59 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 04:18:26 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%8E%B7%E5%BE%97%E5%B0%8F%E6%A0%B7%E6%9C%AC%E5%AD%A6%E4%B9%A0%E6%A6%9C%E5%8D%95fewclue%E7%AC%AC%E4%B8%80prompt-learning&#43;%E8%87%AA%E8%AE%AD%E7%BB%83%E5%AE%9E%E6%88%98/</guid>
       <description>1 概述 CLUE(Chinese Language Understanding Evaluation)[1]是中文语言理解权威测评榜单，包含了文本分类、句间关系、阅读理解等众多语义分析和语义理解类子任务，对学术界和工业界都产生了较大的影响。
@@ -118,31 +118,9 @@ FSL++整体模型结构如下图2所示。FewCLUE数据集为每个任务提供1
     </item>
     
     <item>
-      <title>数据库全量SQL分析与审计系统性能优化之旅</title>
-      <link>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%A8%E9%87%8Fsql%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E6%97%85/</link>
-      <pubDate>Wed, 31 Aug 2022 04:40:59 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%A8%E9%87%8Fsql%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E6%97%85/</guid>
-      <description>1 背景 数据库安全一直是美团信息安全团队和数据库团队非常注重的领域，但由于历史原因，对数据库的访问只具备采样审计能力，导致对于一些攻击事件无法快速地发现、定损和优化。安全团队根据历史经验，发现攻击访问数据库基本上都存在着某些特征，经常会使用一些特定SQL，我们希望通过对MySQL访问流量进行全量分析，识别出惯用SQL，在数据库安全性上做到有的放矢。
-2 现状及挑战 下图是采样MySQL审计系统的架构图，数据采集端基于pcap抓包方式实现，数据处理端选用美团大数据中心的日志接入方案。所有MySQL实例都部署了用于采集MySQL相关数据的rds-agent、日志收集的log-agent。rds-agent抓取到MySQL访问数据，通过log-agent上报到日志接收端，为了减少延时，上报端与接收端间做了同机房调度优化。日志接收端把数据写入到约定的Kafka中，安全团队通过Storm实时消费Kafka分析出攻击事件，并定期拉数据持久化到Hive中。
-我们发现，通常被攻击的都是一些核心MySQL集群。经统计发现，这些集群单机最大QPS的9995线约5万次左右。rds-agent作为MySQL机器上的一个寄生进程，为了宿主稳定性，资源控制也极为重要。为了评估rds-agent在高QPS下的表现，我们用Sysbench对MySQL进行压测，观察在不同QPS下rds-agent抓取的数据丢失率和CPU消耗情况，从下面的压测数据来看结果比较糟糕：
-QPS 丢失率 CPU利用率 10368.72 1.03% 307.35% 17172.61 7.23% 599.90% 29005.51 28.75% 662.39% 42697.05 51.</description>
-    </item>
-    
-    <item>
-      <title>端智能在大众点评搜索重排序的应用实践</title>
-      <link>https://wfsui.github.io/posts/%E7%AB%AF%E6%99%BA%E8%83%BD%E5%9C%A8%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E9%87%8D%E6%8E%92%E5%BA%8F%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Wed, 31 Aug 2022 04:40:58 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E7%AB%AF%E6%99%BA%E8%83%BD%E5%9C%A8%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E9%87%8D%E6%8E%92%E5%BA%8F%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</guid>
-      <description>1 引言 随着大数据、人工智能等信息技术的快速发展，云计算已经无法满足特定场景对数据隐私、高实时性的要求。借鉴边缘计算的思想，在终端部署 AI 能力逐渐步入大众的视野，“端智能”的概念应运而生。相比于传统的云计算，在智能手机等终端部署运行 AI 模块有以下几个方面的优势：首先，数据本地化可以缓解云存储的压力，也有利于用户数据的隐私保护；其次，计算的本地化可以缓解云计算过载问题；最后，端智能减少了和云端系统的请求通信成本，可以更好地利用用户在端上的交互，提供更加实时、个性化的服务体验。
-在端智能的应用方面，国内外各大科技公司已经走在了前列。Google 提出了 Recommendation Android App 的概念，根据用户兴趣进行内容推荐；Apple 的 Face ID 识别、Siri 智能助手等一些我们熟知的产品，也都是端智能典型的应用代表。阿里巴巴、快手、字节跳动等企业也在各自的应用场景上进行了端智能的落地，并推出相应的端上模型推理框架。比如，快手上线的短视频特效拍摄、智能识物等功能。另外，在搜索推荐场景下也有一些实践，其中，手机淘宝“猜你喜欢”在端上部署了智能推荐系统，取得较为显著收益（EdgeRec[1]，双十一 IPV 提升 10%+，GMV 提升 5%+）。快手上下滑推荐场景也应用了端上重排的方案，并取得App时长提升了 1%+ 的效果。</description>
-    </item>
-    
-    <item>
       <title>美团综合业务推荐系统的质量模型及实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E7%BB%BC%E5%90%88%E4%B8%9A%E5%8A%A1%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%B4%A8%E9%87%8F%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Wed, 31 Aug 2022 04:40:58 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 04:18:26 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E7%BB%BC%E5%90%88%E4%B8%9A%E5%8A%A1%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%B4%A8%E9%87%8F%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 前言 美团到店综合业务（以下简称到综）是美团到店业务的重要板块之一，涵盖洗浴、KTV、美业、医美、亲子、结婚、运动健身、玩乐、教育培训、家居、宠物、酒吧、生活服务等数十个重点细分行业，满足数以亿计用户多样化的本地生活需求。推荐系统在其中是实现供给和需求高效匹配的重要环节，是传递数据价值的出口，而推荐系统的质量决定了匹配效果的折损。如下图 1 所示，数据经过数仓处理、算法加工，再通过数据服务到各个业务系统，最后通过客户端埋点又重新流转回数仓，形成了数据的“飞轮效应”，而质量恰恰是这条链路中齿轮啮合的关键点，是提升效率和保障效果的重要前提。
@@ -153,9 +131,21 @@ QPS 丢失率 CPU利用率 10368.72 1.03% 307.35% 17172.61 7.23% 599.90% 29005.5
     </item>
     
     <item>
+      <title>数据库全量SQL分析与审计系统性能优化之旅</title>
+      <link>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%A8%E9%87%8Fsql%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E6%97%85/</link>
+      <pubDate>Thu, 01 Sep 2022 04:18:26 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%A8%E9%87%8Fsql%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E6%97%85/</guid>
+      <description>1 背景 数据库安全一直是美团信息安全团队和数据库团队非常注重的领域，但由于历史原因，对数据库的访问只具备采样审计能力，导致对于一些攻击事件无法快速地发现、定损和优化。安全团队根据历史经验，发现攻击访问数据库基本上都存在着某些特征，经常会使用一些特定SQL，我们希望通过对MySQL访问流量进行全量分析，识别出惯用SQL，在数据库安全性上做到有的放矢。
+2 现状及挑战 下图是采样MySQL审计系统的架构图，数据采集端基于pcap抓包方式实现，数据处理端选用美团大数据中心的日志接入方案。所有MySQL实例都部署了用于采集MySQL相关数据的rds-agent、日志收集的log-agent。rds-agent抓取到MySQL访问数据，通过log-agent上报到日志接收端，为了减少延时，上报端与接收端间做了同机房调度优化。日志接收端把数据写入到约定的Kafka中，安全团队通过Storm实时消费Kafka分析出攻击事件，并定期拉数据持久化到Hive中。
+我们发现，通常被攻击的都是一些核心MySQL集群。经统计发现，这些集群单机最大QPS的9995线约5万次左右。rds-agent作为MySQL机器上的一个寄生进程，为了宿主稳定性，资源控制也极为重要。为了评估rds-agent在高QPS下的表现，我们用Sysbench对MySQL进行压测，观察在不同QPS下rds-agent抓取的数据丢失率和CPU消耗情况，从下面的压测数据来看结果比较糟糕：
+QPS 丢失率 CPU利用率 10368.72 1.03% 307.35% 17172.61 7.23% 599.90% 29005.51 28.75% 662.39% 42697.05 51.</description>
+    </item>
+    
+    <item>
       <title>CVPR 2022 | 美团技术团队精选论文解读</title>
       <link>https://wfsui.github.io/posts/cvpr-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Wed, 31 Aug 2022 04:40:57 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 04:18:25 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/cvpr-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
       <description>CVPR的全称是IEEE国际计算机视觉与模式识别会议（IEEE Conference on Computer Vision and Pattern Recognition），该会议始于1983年，与ICCV和ECCV并称计算机视觉方向的三大顶级会议。根据谷歌学术公布的2021年最新学术期刊和会议影响力排名，CVPR在所有学术刊物中位居第4，仅次于Nature、NEJM和Science。CVPR今年共收到全球8100多篇论文投稿，最终2067篇被接收，接收率约为25%。
@@ -165,16 +155,26 @@ Paper 01 | Compressing Models with Few Samples: Mimicking then Replacing | 论�
     <item>
       <title>YOLOv6：又快又准的目标检测框架开源啦</title>
       <link>https://wfsui.github.io/posts/yolov6%E5%8F%88%E5%BF%AB%E5%8F%88%E5%87%86%E7%9A%84%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%BC%80%E6%BA%90%E5%95%A6/</link>
-      <pubDate>Wed, 31 Aug 2022 04:40:57 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 04:18:25 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/yolov6%E5%8F%88%E5%BF%AB%E5%8F%88%E5%87%86%E7%9A%84%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%BC%80%E6%BA%90%E5%95%A6/</guid>
       <description>1. 概述 YOLOv6 是美团视觉智能部研发的一款目标检测框架，致力于工业应用。本框架同时专注于检测的精度和推理效率，在工业界常用的尺寸模型中：YOLOv6-nano 在 COCO 上精度可达 35.0% AP，在 T4 上推理速度可达 1242 FPS；YOLOv6-s 在 COCO 上精度可达 43.1% AP，在 T4 上推理速度可达 520 FPS。在部署方面，YOLOv6 支持 GPU（TensorRT）、CPU（OPENVINO）、ARM（MNN、TNN、NCNN）等不同平台的部署，极大地简化工程部署时的适配工作。</description>
     </item>
     
     <item>
+      <title>端智能在大众点评搜索重排序的应用实践</title>
+      <link>https://wfsui.github.io/posts/%E7%AB%AF%E6%99%BA%E8%83%BD%E5%9C%A8%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E9%87%8D%E6%8E%92%E5%BA%8F%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Thu, 01 Sep 2022 04:18:25 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%AB%AF%E6%99%BA%E8%83%BD%E5%9C%A8%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E9%87%8D%E6%8E%92%E5%BA%8F%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</guid>
+      <description>1 引言 随着大数据、人工智能等信息技术的快速发展，云计算已经无法满足特定场景对数据隐私、高实时性的要求。借鉴边缘计算的思想，在终端部署 AI 能力逐渐步入大众的视野，“端智能”的概念应运而生。相比于传统的云计算，在智能手机等终端部署运行 AI 模块有以下几个方面的优势：首先，数据本地化可以缓解云存储的压力，也有利于用户数据的隐私保护；其次，计算的本地化可以缓解云计算过载问题；最后，端智能减少了和云端系统的请求通信成本，可以更好地利用用户在端上的交互，提供更加实时、个性化的服务体验。
+在端智能的应用方面，国内外各大科技公司已经走在了前列。Google 提出了 Recommendation Android App 的概念，根据用户兴趣进行内容推荐；Apple 的 Face ID 识别、Siri 智能助手等一些我们熟知的产品，也都是端智能典型的应用代表。阿里巴巴、快手、字节跳动等企业也在各自的应用场景上进行了端智能的落地，并推出相应的端上模型推理框架。比如，快手上线的短视频特效拍摄、智能识物等功能。另外，在搜索推荐场景下也有一些实践，其中，手机淘宝“猜你喜欢”在端上部署了智能推荐系统，取得较为显著收益（EdgeRec[1]，双十一 IPV 提升 10%+，GMV 提升 5%+）。快手上下滑推荐场景也应用了端上重排的方案，并取得App时长提升了 1%+ 的效果。</description>
+    </item>
+    
+    <item>
       <title>大众点评搜索相关性技术探索与实践</title>
       <link>https://wfsui.github.io/posts/%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E7%9B%B8%E5%85%B3%E6%80%A7%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Wed, 31 Aug 2022 04:40:57 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 04:18:24 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E7%9B%B8%E5%85%B3%E6%80%A7%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 背景 点评搜索是大众点评App的核心入口之一，用户通过搜索来满足不同场景下对生活服务类商户的找店需求。搜索的长期目标是持续优化搜索体验，提升用户的搜索满意度，这需要我们理解用户搜索意图，准确衡量搜索词与商户之间的相关程度，尽可能展示相关商户并将更相关的商户排序靠前。因此，搜索词与商户的相关性计算是点评搜索的重要环节。
@@ -191,7 +191,7 @@ Paper 01 | Compressing Models with Few Samples: Mimicking then Replacing | 论�
     <item>
       <title>外卖广告大规模深度学习模型工程实践 | 美团外卖广告工程实践专题连载</title>
       <link>https://wfsui.github.io/posts/%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5-%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E4%B8%93%E9%A2%98%E8%BF%9E%E8%BD%BD/</link>
-      <pubDate>Wed, 31 Aug 2022 04:40:56 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 04:18:24 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5-%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E4%B8%93%E9%A2%98%E8%BF%9E%E8%BD%BD/</guid>
       <description>导语 随着美团外卖业务不断发展，外卖广告引擎团队在多个领域进行了工程上的探索和实践，也取得了一些成果。我们将以连载的方式进行分享，内容主要包括：① 业务平台化的实践；② 大规模深度学习模型工程实践；③ 近线计算的探索与实践；④ 大规模索引构建与在线检索服务实践；⑤ 机制工程平台化实践。
@@ -205,7 +205,7 @@ Paper 01 | Compressing Models with Few Samples: Mimicking then Replacing | 论�
     <item>
       <title>可视化全链路日志追踪</title>
       <link>https://wfsui.github.io/posts/%E5%8F%AF%E8%A7%86%E5%8C%96%E5%85%A8%E9%93%BE%E8%B7%AF%E6%97%A5%E5%BF%97%E8%BF%BD%E8%B8%AA/</link>
-      <pubDate>Wed, 31 Aug 2022 04:40:55 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 04:18:23 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%8F%AF%E8%A7%86%E5%8C%96%E5%85%A8%E9%93%BE%E8%B7%AF%E6%97%A5%E5%BF%97%E8%BF%BD%E8%B8%AA/</guid>
       <description>1. 背景 1.1 业务系统日益复杂 随着互联网产品的快速发展，不断变化的商业环境和用户诉求带来了纷繁复杂的业务需求。业务系统需要支撑的业务场景越来越广、涵盖的业务逻辑越来越多，系统的复杂度也跟着快速提升。与此同时，由于微服务架构的演进，业务逻辑的实现往往需要依赖多个服务间的共同协作。总而言之，业务系统的日益复杂已经成为一种常态。
@@ -222,7 +222,7 @@ Paper 01 | Compressing Models with Few Samples: Mimicking then Replacing | 论�
     <item>
       <title>ACM SIGIR 2022 | 美团技术团队精选论文解读</title>
       <link>https://wfsui.github.io/posts/acm-sigir-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Wed, 31 Aug 2022 04:40:54 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 04:18:22 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/acm-sigir-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
       <description>SIGIR是信息检索方向的国际顶级会议（CCF-A类）。第 45 届国际信息检索大会（The 45th International ACM SIGIR Conference on Research and Development in Information Retrieval，SIGIR 2022）已于上周（2022年7月11-15日）在西班牙马德里举行，同时也支持线上参会。本次会议共收到 794 篇长文投稿，其中 161 篇长文被录用，录用率约 20%；共收到 667 篇短文投稿，其中 165 篇短文被录用，录用率约 24.</description>
@@ -231,7 +231,7 @@ Paper 01 | Compressing Models with Few Samples: Mimicking then Replacing | 论�
     <item>
       <title>日志导致线程Block的这些坑，你不得不防</title>
       <link>https://wfsui.github.io/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/</link>
-      <pubDate>Wed, 31 Aug 2022 04:40:54 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 04:18:22 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/</guid>
       <description>1. 前言 日志对程序的重要性不言而喻。它很“大”，我们在项目中经常通过日志来记录信息和排查问题，相关代码随处可见。它也很“小”，作为辅助工具，日志使用简单、上手快，我们通常不会花费过多精力耗在日志上。但看似不起眼的日志也隐藏着各种各样的“坑”，如果使用不当，它不仅不能帮助我们，反而还可能降低服务性能，甚至拖垮我们的服务。
@@ -245,7 +245,7 @@ JDK版本 java version &amp;#34;1.8.0_45&amp;#34; Java(TM) SE Runtime Environmen
     <item>
       <title>Kafka在美团数据平台的实践</title>
       <link>https://wfsui.github.io/posts/kafka%E5%9C%A8%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Wed, 31 Aug 2022 04:40:53 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 04:18:21 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/kafka%E5%9C%A8%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 现状和挑战 1.1 现状 Kafka是一个开源的流处理平台，业界有很多互联网企业也都在使用这款产品。我们首先了解一下Kafka在美团数据平台的现状。
@@ -260,7 +260,7 @@ Kafka在美团的集群规模总体机器数已经超过了15000+台，单集群
     <item>
       <title>美团搜索粗排优化的探索与实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E7%B2%97%E6%8E%92%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Wed, 31 Aug 2022 04:40:53 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 04:18:20 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E7%B2%97%E6%8E%92%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 前言 众所周知，在搜索、推荐、广告等大规模工业界应用领域，为了平衡性能和效果，排序系统普遍采用级联架构[1,2]，如下图 1 所示。以美团搜索排序系统为例，整个排序分为粗排、精排、重排和混排层；粗排位于召回和精排之间，需要从千级别候选 item 集合中筛选出百级别 item 集合送给精排层。
@@ -271,22 +271,9 @@ Kafka在美团的集群规模总体机器数已经超过了15000+台，单集群
     </item>
     
     <item>
-      <title>KDD 2022 | 美团技术团队精选论文解读</title>
-      <link>https://wfsui.github.io/posts/kdd-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Wed, 31 Aug 2022 04:40:52 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/kdd-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
-      <description>ACM SIGKDD国际会议（简称 KDD）是由ACM的数据挖掘及知识发现专委会主办的数据挖掘研究领域的顶级年会，属于CCF A类会议。由于KDD的交叉学科性和广泛应用性，其影响力也越来越大，吸引了来自统计、机器学习、数据库、万维网、生物信息学、多媒体、自然语言处理、人机交互、社会网络计算、高性能计算及大数据挖掘等众多领域的从业者和研究学者。第28届KDD会议于2022于8月14日至18日在美国华盛顿举行。
-论文01：Mask and Reason: Pre-Training Knowledge Graph Transformers for Complex Logical Queries（支持知识推理的图谱预训练） **|**下载地址：KG-Transformer
-**|**论文作者：刘潇（清华大学）、赵时予（清华大学）、苏凯（清华大学）、岑宇阔（美团）、裘捷中（清华大学）、东昱晓（清华大学）、张梦迪（美团）、武威（美团）、唐杰（清华大学）
-**|**论文简介：面向复杂逻辑查询的知识图谱预训练。论文研究了知识图谱中复杂逻辑查询问题，讨论了主流的基于知识图谱嵌入的推理器的固有缺陷，并提出了基于KGTransformer的新型图神经网络推理器，及其对应的预训练与微调方法。KGTransformer在两个主要的知识图谱推理数据集上取得了最优的结果，尤其是在域外任务上取得了良好的泛化性能，证明了这一思路应用于知识图谱推理的广泛前景。
-论文02：AutoFAS: Automatic Feature and Architecture Selection for Pre-Ranking System（粗排场景自动特征与结构选择算法） |**下载地址：AutoFAS|**论文作者：李想（美团）、周晓江（美团）、肖垚（美团）、黄培浩（美团）、陈达遥（美团）、陈胜（美团）、仙云森（美团）</description>
-    </item>
-    
-    <item>
       <title>提升资源利用率与保障服务质量，鱼与熊掌不可兼得？</title>
       <link>https://wfsui.github.io/posts/%E6%8F%90%E5%8D%87%E8%B5%84%E6%BA%90%E5%88%A9%E7%94%A8%E7%8E%87%E4%B8%8E%E4%BF%9D%E9%9A%9C%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E9%B1%BC%E4%B8%8E%E7%86%8A%E6%8E%8C%E4%B8%8D%E5%8F%AF%E5%85%BC%E5%BE%97/</link>
-      <pubDate>Wed, 31 Aug 2022 04:40:52 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 04:18:20 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%8F%90%E5%8D%87%E8%B5%84%E6%BA%90%E5%88%A9%E7%94%A8%E7%8E%87%E4%B8%8E%E4%BF%9D%E9%9A%9C%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E9%B1%BC%E4%B8%8E%E7%86%8A%E6%8E%8C%E4%B8%8D%E5%8F%AF%E5%85%BC%E5%BE%97/</guid>
       <description>随着云计算时代的到来，大规模资源运营面临着如何在保障服务质量的同时提升资源利用率（降本增效）。但这两个目标的达成在当前的软硬件技术水平上，是相互矛盾的。本文介绍的LAR（Load Auto-Regulator）系统，即是探索这两个矛盾方向间的平衡点，在保证质量的前提下，提升资源的利用率。
@@ -300,9 +287,22 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
     </item>
     
     <item>
+      <title>KDD 2022 | 美团技术团队精选论文解读</title>
+      <link>https://wfsui.github.io/posts/kdd-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
+      <pubDate>Thu, 01 Sep 2022 04:18:19 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/kdd-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
+      <description>ACM SIGKDD国际会议（简称 KDD）是由ACM的数据挖掘及知识发现专委会主办的数据挖掘研究领域的顶级年会，属于CCF A类会议。由于KDD的交叉学科性和广泛应用性，其影响力也越来越大，吸引了来自统计、机器学习、数据库、万维网、生物信息学、多媒体、自然语言处理、人机交互、社会网络计算、高性能计算及大数据挖掘等众多领域的从业者和研究学者。第28届KDD会议于2022于8月14日至18日在美国华盛顿举行。
+论文01：Mask and Reason: Pre-Training Knowledge Graph Transformers for Complex Logical Queries（支持知识推理的图谱预训练） **|**下载地址：KG-Transformer
+**|**论文作者：刘潇（清华大学）、赵时予（清华大学）、苏凯（清华大学）、岑宇阔（美团）、裘捷中（清华大学）、东昱晓（清华大学）、张梦迪（美团）、武威（美团）、唐杰（清华大学）
+**|**论文简介：面向复杂逻辑查询的知识图谱预训练。论文研究了知识图谱中复杂逻辑查询问题，讨论了主流的基于知识图谱嵌入的推理器的固有缺陷，并提出了基于KGTransformer的新型图神经网络推理器，及其对应的预训练与微调方法。KGTransformer在两个主要的知识图谱推理数据集上取得了最优的结果，尤其是在域外任务上取得了良好的泛化性能，证明了这一思路应用于知识图谱推理的广泛前景。
+论文02：AutoFAS: Automatic Feature and Architecture Selection for Pre-Ranking System（粗排场景自动特征与结构选择算法） |**下载地址：AutoFAS|**论文作者：李想（美团）、周晓江（美团）、肖垚（美团）、黄培浩（美团）、陈达遥（美团）、陈胜（美团）、仙云森（美团）</description>
+    </item>
+    
+    <item>
       <title>咱们从头到尾讲一次 Flink 网络流控和反压剖析</title>
       <link>https://wfsui.github.io/posts/%E5%92%B1%E4%BB%AC%E4%BB%8E%E5%A4%B4%E5%88%B0%E5%B0%BE%E8%AE%B2%E4%B8%80%E6%AC%A1-flink-%E7%BD%91%E7%BB%9C%E6%B5%81%E6%8E%A7%E5%92%8C%E5%8F%8D%E5%8E%8B%E5%89%96%E6%9E%90/</link>
-      <pubDate>Wed, 31 Aug 2022 04:40:50 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 04:18:13 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%92%B1%E4%BB%AC%E4%BB%8E%E5%A4%B4%E5%88%B0%E5%B0%BE%E8%AE%B2%E4%B8%80%E6%AC%A1-flink-%E7%BD%91%E7%BB%9C%E6%B5%81%E6%8E%A7%E5%92%8C%E5%8F%8D%E5%8E%8B%E5%89%96%E6%9E%90/</guid>
       <description>作者：张俊
@@ -315,7 +315,7 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
     <item>
       <title>JPA 和 Mybatis 技术选型</title>
       <link>https://wfsui.github.io/posts/jpa-%E5%92%8C-mybatis-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B/</link>
-      <pubDate>Wed, 31 Aug 2022 04:40:49 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 04:18:12 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/jpa-%E5%92%8C-mybatis-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B/</guid>
       <description>在我们平时的项目中，大家都知道可以使用 JPA 或者 Mybatis 作为 ORM 层。对 JPA 和 Mybatis 如何进行技术选型？

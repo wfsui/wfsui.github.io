@@ -12,8 +12,8 @@ FewCLUE发布后，网易伏羲使用自研的EET模型[4]，并通过二次训�
 FSL&#43;&#43;整体模型结构如下图2所示。FewCLUE数据集为每个任务提供160条有标签数据以及接近两万条无标签数据。本次FewCLUE实践中，我们先在Fine-Tune阶段构造多模板Prompt Learning，并对有标签数据采用对抗训练、对比学习、Mixup等增强策略。由于这些数据增强策略采用不同的增强原理，可以认为这些模型之间差异性比较显著，经过集成学习之后会有比较好的效果。所以在采用数据增强策略进行训练以后，我们拥有了多个弱监督模型，并且用这些弱监督模型在无标签数据上进行预测，得到无标签数据的伪标签分布。之后，我们将多个经过不同的数据增强模型预测得到的无标签数据的伪标签分布整合起来，得到一份总的无标签数据的伪标签分布，接着重新构造多模板Prompt Learning，并再次使用数据增强策略，选择最优策略。目前，我们的实验只进行一轮迭代，也可以尝试多轮迭代，不过随着迭代次数增加，提升也不再明显。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%8E%B7%E5%BE%97%E5%B0%8F%E6%A0%B7%E6%9C%AC%E5%AD%A6%E4%B9%A0%E6%A6%9C%E5%8D%95fewclue%E7%AC%AC%E4%B8%80prompt-learning&#43;%E8%87%AA%E8%AE%AD%E7%BB%83%E5%AE%9E%E6%88%98/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-09-02T04:26:44+00:00" />
-<meta property="article:modified_time" content="2022-09-02T04:26:44+00:00" /><meta property="og:site_name" content="大峰哥" />
+<meta property="article:published_time" content="2022-09-03T04:11:18+00:00" />
+<meta property="article:modified_time" content="2022-09-03T04:11:18+00:00" /><meta property="og:site_name" content="大峰哥" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="美团获得小样本学习榜单FewCLUE第一！Prompt Learning&#43;自训练实战"/>
@@ -68,7 +68,7 @@ FSL&#43;&#43;整体模型结构如下图2所示。FewCLUE数据集为每个任�
 
 		<div class="post-header">
 			<h1 class="title">美团获得小样本学习榜单FewCLUE第一！Prompt Learning&#43;自训练实战</h1>
-			<div class="meta">Posted at &mdash; Sep 2, 2022</div>
+			<div class="meta">Posted at &mdash; Sep 3, 2022</div>
 		</div>
 
 		<div class="markdown">

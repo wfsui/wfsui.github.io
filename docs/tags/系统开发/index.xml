@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sat, 03 Sep 2022 04:11:12 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 04 Sep 2022 04:17:28 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>基于AI算法的数据库异常监测系统的设计与实现</title>
       <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai%E7%AE%97%E6%B3%95%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E7%9B%91%E6%B5%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/</link>
-      <pubDate>Sat, 03 Sep 2022 04:11:12 +0000</pubDate>
+      <pubDate>Sun, 04 Sep 2022 04:17:28 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai%E7%AE%97%E6%B3%95%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E7%9B%91%E6%B5%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/</guid>
       <description>1. 背景 数据库被广泛用于美团的核心业务场景上，对稳定性要求较高，对异常容忍度非常低。因此，快速的数据库异常发现、定位和止损就变得越来越重要。针对异常监测的问题，传统的固定阈值告警方式，需要依赖专家经验进行规则配置，不能根据不同业务场景灵活动态调整阈值，容易让小问题演变成大故障。

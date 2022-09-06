@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 05 Sep 2022 04:29:52 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%90%8E%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 06 Sep 2022 04:33:24 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%90%8E%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Java魔法类：Unsafe应用解析</title>
       <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Mon, 05 Sep 2022 04:29:52 +0000</pubDate>
+      <pubDate>Tue, 06 Sep 2022 04:33:24 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
       <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
@@ -23,7 +23,7 @@ public final class Unsafe { // 单例对象 private static final Unsafe theUnsaf
     <item>
       <title>外卖广告大规模深度学习模型工程实践 | 美团外卖广告工程实践专题连载</title>
       <link>https://wfsui.github.io/posts/%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5-%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E4%B8%93%E9%A2%98%E8%BF%9E%E8%BD%BD/</link>
-      <pubDate>Mon, 05 Sep 2022 04:29:49 +0000</pubDate>
+      <pubDate>Tue, 06 Sep 2022 04:33:20 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5-%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E4%B8%93%E9%A2%98%E8%BF%9E%E8%BD%BD/</guid>
       <description>导语 随着美团外卖业务不断发展，外卖广告引擎团队在多个领域进行了工程上的探索和实践，也取得了一些成果。我们将以连载的方式进行分享，内容主要包括：① 业务平台化的实践；② 大规模深度学习模型工程实践；③ 近线计算的探索与实践；④ 大规模索引构建与在线检索服务实践；⑤ 机制工程平台化实践。
@@ -37,7 +37,7 @@ public final class Unsafe { // 单例对象 private static final Unsafe theUnsaf
     <item>
       <title>可视化全链路日志追踪</title>
       <link>https://wfsui.github.io/posts/%E5%8F%AF%E8%A7%86%E5%8C%96%E5%85%A8%E9%93%BE%E8%B7%AF%E6%97%A5%E5%BF%97%E8%BF%BD%E8%B8%AA/</link>
-      <pubDate>Mon, 05 Sep 2022 04:29:48 +0000</pubDate>
+      <pubDate>Tue, 06 Sep 2022 04:33:19 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%8F%AF%E8%A7%86%E5%8C%96%E5%85%A8%E9%93%BE%E8%B7%AF%E6%97%A5%E5%BF%97%E8%BF%BD%E8%B8%AA/</guid>
       <description>1. 背景 1.1 业务系统日益复杂 随着互联网产品的快速发展，不断变化的商业环境和用户诉求带来了纷繁复杂的业务需求。业务系统需要支撑的业务场景越来越广、涵盖的业务逻辑越来越多，系统的复杂度也跟着快速提升。与此同时，由于微服务架构的演进，业务逻辑的实现往往需要依赖多个服务间的共同协作。总而言之，业务系统的日益复杂已经成为一种常态。
@@ -54,7 +54,7 @@ public final class Unsafe { // 单例对象 private static final Unsafe theUnsaf
     <item>
       <title>日志导致线程Block的这些坑，你不得不防</title>
       <link>https://wfsui.github.io/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/</link>
-      <pubDate>Mon, 05 Sep 2022 04:29:48 +0000</pubDate>
+      <pubDate>Tue, 06 Sep 2022 04:33:18 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/</guid>
       <description>1. 前言 日志对程序的重要性不言而喻。它很“大”，我们在项目中经常通过日志来记录信息和排查问题，相关代码随处可见。它也很“小”，作为辅助工具，日志使用简单、上手快，我们通常不会花费过多精力耗在日志上。但看似不起眼的日志也隐藏着各种各样的“坑”，如果使用不当，它不仅不能帮助我们，反而还可能降低服务性能，甚至拖垮我们的服务。
@@ -68,7 +68,7 @@ JDK版本 java version &amp;#34;1.8.0_45&amp;#34; Java(TM) SE Runtime Environmen
     <item>
       <title>提升资源利用率与保障服务质量，鱼与熊掌不可兼得？</title>
       <link>https://wfsui.github.io/posts/%E6%8F%90%E5%8D%87%E8%B5%84%E6%BA%90%E5%88%A9%E7%94%A8%E7%8E%87%E4%B8%8E%E4%BF%9D%E9%9A%9C%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E9%B1%BC%E4%B8%8E%E7%86%8A%E6%8E%8C%E4%B8%8D%E5%8F%AF%E5%85%BC%E5%BE%97/</link>
-      <pubDate>Mon, 05 Sep 2022 04:29:47 +0000</pubDate>
+      <pubDate>Tue, 06 Sep 2022 04:33:17 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%8F%90%E5%8D%87%E8%B5%84%E6%BA%90%E5%88%A9%E7%94%A8%E7%8E%87%E4%B8%8E%E4%BF%9D%E9%9A%9C%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E9%B1%BC%E4%B8%8E%E7%86%8A%E6%8E%8C%E4%B8%8D%E5%8F%AF%E5%85%BC%E5%BE%97/</guid>
       <description>随着云计算时代的到来，大规模资源运营面临着如何在保障服务质量的同时提升资源利用率（降本增效）。但这两个目标的达成在当前的软硬件技术水平上，是相互矛盾的。本文介绍的LAR（Load Auto-Regulator）系统，即是探索这两个矛盾方向间的平衡点，在保证质量的前提下，提升资源的利用率。
@@ -84,7 +84,7 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
     <item>
       <title>Replication（下）：事务，一致性与共识</title>
       <link>https://wfsui.github.io/posts/replication%E4%B8%8B%E4%BA%8B%E5%8A%A1%E4%B8%80%E8%87%B4%E6%80%A7%E4%B8%8E%E5%85%B1%E8%AF%86/</link>
-      <pubDate>Mon, 05 Sep 2022 04:29:46 +0000</pubDate>
+      <pubDate>Tue, 06 Sep 2022 04:33:16 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/replication%E4%B8%8B%E4%BA%8B%E5%8A%A1%E4%B8%80%E8%87%B4%E6%80%A7%E4%B8%8E%E5%85%B1%E8%AF%86/</guid>
       <description>1. 前文回顾 在上一篇中，我们主要介绍了分布式系统中常见的复制模型，并描述了每一种模型的优缺点以及使用场景，同时阐述了分布式系统中特有的一些技术挑战。首先，常见的分布式系统复制模型有3种，分别是主从复制模型、多主复制模型以及无主复制模型。此外，复制从客户端的时效性来说分为同步复制&amp;amp;&amp;amp;异步复制，异步复制具有滞后性，可能会造成数据不一致，因为这个不一致，会带来各种各样的问题。
@@ -100,7 +100,7 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
     <item>
       <title>Replication（上）：常见复制模型&amp;分布式系统挑战</title>
       <link>https://wfsui.github.io/posts/replication%E4%B8%8A%E5%B8%B8%E8%A7%81%E5%A4%8D%E5%88%B6%E6%A8%A1%E5%9E%8B%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%8C%91%E6%88%98/</link>
-      <pubDate>Mon, 05 Sep 2022 04:29:45 +0000</pubDate>
+      <pubDate>Tue, 06 Sep 2022 04:33:15 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/replication%E4%B8%8A%E5%B8%B8%E8%A7%81%E5%A4%8D%E5%88%B6%E6%A8%A1%E5%9E%8B%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%8C%91%E6%88%98/</guid>
       <description>本系列文章分上下两篇，以《数据密集型应用系统设计（DDIA）》（下文简称《DDIA》）为主线，文中的核心理论讲解与图片来自于此书。在此基础上，加入了日常工作中对这些概念的理解与个性化的思考，并将它们映射到Kafka中，跟大家分享一下如何将具体的理论应用于实际生产环境中。

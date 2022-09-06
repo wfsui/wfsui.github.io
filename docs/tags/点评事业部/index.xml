@@ -7,11 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 05 Sep 2022 04:29:50 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%82%B9%E8%AF%84%E4%BA%8B%E4%B8%9A%E9%83%A8/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 06 Sep 2022 04:33:22 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%82%B9%E8%AF%84%E4%BA%8B%E4%B8%9A%E9%83%A8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>端智能在大众点评搜索重排序的应用实践</title>
+      <link>https://wfsui.github.io/posts/%E7%AB%AF%E6%99%BA%E8%83%BD%E5%9C%A8%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E9%87%8D%E6%8E%92%E5%BA%8F%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Tue, 06 Sep 2022 04:33:22 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%AB%AF%E6%99%BA%E8%83%BD%E5%9C%A8%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E9%87%8D%E6%8E%92%E5%BA%8F%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</guid>
+      <description>1 引言 随着大数据、人工智能等信息技术的快速发展，云计算已经无法满足特定场景对数据隐私、高实时性的要求。借鉴边缘计算的思想，在终端部署 AI 能力逐渐步入大众的视野，“端智能”的概念应运而生。相比于传统的云计算，在智能手机等终端部署运行 AI 模块有以下几个方面的优势：首先，数据本地化可以缓解云存储的压力，也有利于用户数据的隐私保护；其次，计算的本地化可以缓解云计算过载问题；最后，端智能减少了和云端系统的请求通信成本，可以更好地利用用户在端上的交互，提供更加实时、个性化的服务体验。
+在端智能的应用方面，国内外各大科技公司已经走在了前列。Google 提出了 Recommendation Android App 的概念，根据用户兴趣进行内容推荐；Apple 的 Face ID 识别、Siri 智能助手等一些我们熟知的产品，也都是端智能典型的应用代表。阿里巴巴、快手、字节跳动等企业也在各自的应用场景上进行了端智能的落地，并推出相应的端上模型推理框架。比如，快手上线的短视频特效拍摄、智能识物等功能。另外，在搜索推荐场景下也有一些实践，其中，手机淘宝“猜你喜欢”在端上部署了智能推荐系统，取得较为显著收益（EdgeRec[1]，双十一 IPV 提升 10%+，GMV 提升 5%+）。快手上下滑推荐场景也应用了端上重排的方案，并取得App时长提升了 1%+ 的效果。</description>
+    </item>
+    
     <item>
       <title>大众点评搜索相关性技术探索与实践</title>
       <link>https://wfsui.github.io/posts/%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E7%9B%B8%E5%85%B3%E6%80%A7%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 05 Sep 2022 04:29:50 +0000</pubDate>
+      <pubDate>Tue, 06 Sep 2022 04:33:21 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E7%9B%B8%E5%85%B3%E6%80%A7%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 背景 点评搜索是大众点评App的核心入口之一，用户通过搜索来满足不同场景下对生活服务类商户的找店需求。搜索的长期目标是持续优化搜索体验，提升用户的搜索满意度，这需要我们理解用户搜索意图，准确衡量搜索词与商户之间的相关程度，尽可能展示相关商户并将更相关的商户排序靠前。因此，搜索词与商户的相关性计算是点评搜索的重要环节。
@@ -23,16 +33,6 @@
 文本匹配方法：早期的文本匹配任务仅考虑了Query与Doc的字面匹配程度，通过TF-IDF、BM25等基于Term的匹配特征来计算相关性。字面匹配相关性线上计算效率较高，但基于Term的关键词匹配泛化性能较差，缺少语义和词序信息，且无法处理一词多义或者多词一义的问题，因此漏匹配和误匹配现象严重。
 传统语义匹配模型：为弥补字面匹配的缺陷，语义匹配模型被提出以更好地理解Query与Doc的语义相关性。传统的语义匹配模型主要包括基于隐式空间的匹配：将Query和Doc都映射到同一个空间的向量，再用向量距离或相似度作为匹配分，如Partial Least Square（PLS）[1]；以及基于翻译模型的匹配：将Doc映射到Query空间后进行匹配或计算Doc翻译成Query的概率[2]。
 随着深度学习和预训练模型的发展，深度语义匹配模型也被业界广泛应用。深度语义匹配模型从实现方法上分为基于表示（Representation-based）的方法及基于交互（Interaction-based）的方法。预训练模型作为自然语言处理领域的有效方法，也被广泛使用在语义匹配任务中。</description>
-    </item>
-    
-    <item>
-      <title>端智能在大众点评搜索重排序的应用实践</title>
-      <link>https://wfsui.github.io/posts/%E7%AB%AF%E6%99%BA%E8%83%BD%E5%9C%A8%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E9%87%8D%E6%8E%92%E5%BA%8F%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 05 Sep 2022 04:29:50 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E7%AB%AF%E6%99%BA%E8%83%BD%E5%9C%A8%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E9%87%8D%E6%8E%92%E5%BA%8F%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</guid>
-      <description>1 引言 随着大数据、人工智能等信息技术的快速发展，云计算已经无法满足特定场景对数据隐私、高实时性的要求。借鉴边缘计算的思想，在终端部署 AI 能力逐渐步入大众的视野，“端智能”的概念应运而生。相比于传统的云计算，在智能手机等终端部署运行 AI 模块有以下几个方面的优势：首先，数据本地化可以缓解云存储的压力，也有利于用户数据的隐私保护；其次，计算的本地化可以缓解云计算过载问题；最后，端智能减少了和云端系统的请求通信成本，可以更好地利用用户在端上的交互，提供更加实时、个性化的服务体验。
-在端智能的应用方面，国内外各大科技公司已经走在了前列。Google 提出了 Recommendation Android App 的概念，根据用户兴趣进行内容推荐；Apple 的 Face ID 识别、Siri 智能助手等一些我们熟知的产品，也都是端智能典型的应用代表。阿里巴巴、快手、字节跳动等企业也在各自的应用场景上进行了端智能的落地，并推出相应的端上模型推理框架。比如，快手上线的短视频特效拍摄、智能识物等功能。另外，在搜索推荐场景下也有一些实践，其中，手机淘宝“猜你喜欢”在端上部署了智能推荐系统，取得较为显著收益（EdgeRec[1]，双十一 IPV 提升 10%+，GMV 提升 5%+）。快手上下滑推荐场景也应用了端上重排的方案，并取得App时长提升了 1%+ 的效果。</description>
     </item>
     
   </channel>

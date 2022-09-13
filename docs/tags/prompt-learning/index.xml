@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 12 Sep 2022 04:37:39 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/prompt-learning/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 13 Sep 2022 04:31:57 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/prompt-learning/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>美团获得小样本学习榜单FewCLUE第一！Prompt Learning&#43;自训练实战</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%8E%B7%E5%BE%97%E5%B0%8F%E6%A0%B7%E6%9C%AC%E5%AD%A6%E4%B9%A0%E6%A6%9C%E5%8D%95fewclue%E7%AC%AC%E4%B8%80prompt-learning&#43;%E8%87%AA%E8%AE%AD%E7%BB%83%E5%AE%9E%E6%88%98/</link>
-      <pubDate>Mon, 12 Sep 2022 04:37:39 +0000</pubDate>
+      <pubDate>Tue, 13 Sep 2022 04:31:57 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%8E%B7%E5%BE%97%E5%B0%8F%E6%A0%B7%E6%9C%AC%E5%AD%A6%E4%B9%A0%E6%A6%9C%E5%8D%95fewclue%E7%AC%AC%E4%B8%80prompt-learning&#43;%E8%87%AA%E8%AE%AD%E7%BB%83%E5%AE%9E%E6%88%98/</guid>
       <description>1 概述 CLUE(Chinese Language Understanding Evaluation)[1]是中文语言理解权威测评榜单，包含了文本分类、句间关系、阅读理解等众多语义分析和语义理解类子任务，对学术界和工业界都产生了较大的影响。

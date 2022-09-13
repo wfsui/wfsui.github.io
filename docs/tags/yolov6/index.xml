@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 12 Sep 2022 04:37:37 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/yolov6/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 13 Sep 2022 04:31:56 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/yolov6/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>YOLOv6：又快又准的目标检测框架开源啦</title>
       <link>https://wfsui.github.io/posts/yolov6%E5%8F%88%E5%BF%AB%E5%8F%88%E5%87%86%E7%9A%84%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%BC%80%E6%BA%90%E5%95%A6/</link>
-      <pubDate>Mon, 12 Sep 2022 04:37:37 +0000</pubDate>
+      <pubDate>Tue, 13 Sep 2022 04:31:56 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/yolov6%E5%8F%88%E5%BF%AB%E5%8F%88%E5%87%86%E7%9A%84%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%BC%80%E6%BA%90%E5%95%A6/</guid>
       <description>1. 概述 YOLOv6 是美团视觉智能部研发的一款目标检测框架，致力于工业应用。本框架同时专注于检测的精度和推理效率，在工业界常用的尺寸模型中：YOLOv6-nano 在 COCO 上精度可达 35.0% AP，在 T4 上推理速度可达 1242 FPS；YOLOv6-s 在 COCO 上精度可达 43.1% AP，在 T4 上推理速度可达 520 FPS。在部署方面，YOLOv6 支持 GPU（TensorRT）、CPU（OPENVINO）、ARM（MNN、TNN、NCNN）等不同平台的部署，极大地简化工程部署时的适配工作。</description>

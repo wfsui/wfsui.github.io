@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Wed, 28 Sep 2022 04:30:12 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 30 Sep 2022 04:40:35 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>咱们从头到尾讲一次 Flink 网络流控和反压剖析</title>
       <link>https://wfsui.github.io/posts/%E5%92%B1%E4%BB%AC%E4%BB%8E%E5%A4%B4%E5%88%B0%E5%B0%BE%E8%AE%B2%E4%B8%80%E6%AC%A1-flink-%E7%BD%91%E7%BB%9C%E6%B5%81%E6%8E%A7%E5%92%8C%E5%8F%8D%E5%8E%8B%E5%89%96%E6%9E%90/</link>
-      <pubDate>Wed, 28 Sep 2022 04:30:12 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:35 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%92%B1%E4%BB%AC%E4%BB%8E%E5%A4%B4%E5%88%B0%E5%B0%BE%E8%AE%B2%E4%B8%80%E6%AC%A1-flink-%E7%BD%91%E7%BB%9C%E6%B5%81%E6%8E%A7%E5%92%8C%E5%8F%8D%E5%8E%8B%E5%89%96%E6%9E%90/</guid>
       <description>作者：张俊
@@ -24,7 +24,7 @@
     <item>
       <title>JPA 和 Mybatis 技术选型</title>
       <link>https://wfsui.github.io/posts/jpa-%E5%92%8C-mybatis-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B/</link>
-      <pubDate>Wed, 28 Sep 2022 04:30:11 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:33 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/jpa-%E5%92%8C-mybatis-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B/</guid>
       <description>在我们平时的项目中，大家都知道可以使用 JPA 或者 Mybatis 作为 ORM 层。对 JPA 和 Mybatis 如何进行技术选型？
@@ -39,7 +39,7 @@
     <item>
       <title>算法中七种常见的时间复杂度</title>
       <link>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</link>
-      <pubDate>Wed, 28 Sep 2022 04:30:10 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:33 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</guid>
       <description>这是我的推广信息，以激励自己更好的分享自己的知识和经验！也希望看到的你能够多多支持，谢谢！
@@ -48,21 +48,9 @@
     </item>
     
     <item>
-      <title>Java魔法类：Unsafe应用解析</title>
-      <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Wed, 28 Sep 2022 04:30:09 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
-      <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
-注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
-基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
-public final class Unsafe { // 单例对象 private static final Unsafe theUnsafe; private Unsafe() { } @CallerSensitive public static Unsafe getUnsafe() { Class var0 = Reflection.</description>
-    </item>
-    
-    <item>
       <title>CVPR 2022 | 美团技术团队精选论文解读</title>
       <link>https://wfsui.github.io/posts/cvpr-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Wed, 28 Sep 2022 04:30:08 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:31 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/cvpr-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
       <description>CVPR的全称是IEEE国际计算机视觉与模式识别会议（IEEE Conference on Computer Vision and Pattern Recognition），该会议始于1983年，与ICCV和ECCV并称计算机视觉方向的三大顶级会议。根据谷歌学术公布的2021年最新学术期刊和会议影响力排名，CVPR在所有学术刊物中位居第4，仅次于Nature、NEJM和Science。CVPR今年共收到全球8100多篇论文投稿，最终2067篇被接收，接收率约为25%。
@@ -72,7 +60,7 @@ Paper 01 | Compressing Models with Few Samples: Mimicking then Replacing | 论�
     <item>
       <title>Java动态追踪技术探究</title>
       <link>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</link>
-      <pubDate>Wed, 28 Sep 2022 04:30:08 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:31 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</guid>
       <description>引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：
@@ -94,9 +82,21 @@ Paper 01 | Compressing Models with Few Samples: Mimicking then Replacing | 论�
     </item>
     
     <item>
+      <title>Java魔法类：Unsafe应用解析</title>
+      <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Fri, 30 Sep 2022 04:40:31 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
+      <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
+注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
+基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
+public final class Unsafe { // 单例对象 private static final Unsafe theUnsafe; private Unsafe() { } @CallerSensitive public static Unsafe getUnsafe() { Class var0 = Reflection.</description>
+    </item>
+    
+    <item>
       <title>大众点评搜索相关性技术探索与实践</title>
       <link>https://wfsui.github.io/posts/%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E7%9B%B8%E5%85%B3%E6%80%A7%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Wed, 28 Sep 2022 04:30:07 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:30 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E7%9B%B8%E5%85%B3%E6%80%A7%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 背景 点评搜索是大众点评App的核心入口之一，用户通过搜索来满足不同场景下对生活服务类商户的找店需求。搜索的长期目标是持续优化搜索体验，提升用户的搜索满意度，这需要我们理解用户搜索意图，准确衡量搜索词与商户之间的相关程度，尽可能展示相关商户并将更相关的商户排序靠前。因此，搜索词与商户的相关性计算是点评搜索的重要环节。
@@ -113,7 +113,7 @@ Paper 01 | Compressing Models with Few Samples: Mimicking then Replacing | 论�
     <item>
       <title>外卖广告大规模深度学习模型工程实践 | 美团外卖广告工程实践专题连载</title>
       <link>https://wfsui.github.io/posts/%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5-%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E4%B8%93%E9%A2%98%E8%BF%9E%E8%BD%BD/</link>
-      <pubDate>Wed, 28 Sep 2022 04:30:07 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:30 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5-%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E4%B8%93%E9%A2%98%E8%BF%9E%E8%BD%BD/</guid>
       <description>导语 随着美团外卖业务不断发展，外卖广告引擎团队在多个领域进行了工程上的探索和实践，也取得了一些成果。我们将以连载的方式进行分享，内容主要包括：① 业务平台化的实践；② 大规模深度学习模型工程实践；③ 近线计算的探索与实践；④ 大规模索引构建与在线检索服务实践；⑤ 机制工程平台化实践。
@@ -125,9 +125,18 @@ Paper 01 | Compressing Models with Few Samples: Mimicking then Replacing | 论�
     </item>
     
     <item>
+      <title>ACM SIGIR 2022 | 美团技术团队精选论文解读</title>
+      <link>https://wfsui.github.io/posts/acm-sigir-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
+      <pubDate>Fri, 30 Sep 2022 04:40:28 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/acm-sigir-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
+      <description>SIGIR是信息检索方向的国际顶级会议（CCF-A类）。第 45 届国际信息检索大会（The 45th International ACM SIGIR Conference on Research and Development in Information Retrieval，SIGIR 2022）已于上周（2022年7月11-15日）在西班牙马德里举行，同时也支持线上参会。本次会议共收到 794 篇长文投稿，其中 161 篇长文被录用，录用率约 20%；共收到 667 篇短文投稿，其中 165 篇短文被录用，录用率约 24.</description>
+    </item>
+    
+    <item>
       <title>可视化全链路日志追踪</title>
       <link>https://wfsui.github.io/posts/%E5%8F%AF%E8%A7%86%E5%8C%96%E5%85%A8%E9%93%BE%E8%B7%AF%E6%97%A5%E5%BF%97%E8%BF%BD%E8%B8%AA/</link>
-      <pubDate>Wed, 28 Sep 2022 04:30:05 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:28 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%8F%AF%E8%A7%86%E5%8C%96%E5%85%A8%E9%93%BE%E8%B7%AF%E6%97%A5%E5%BF%97%E8%BF%BD%E8%B8%AA/</guid>
       <description>1. 背景 1.1 业务系统日益复杂 随着互联网产品的快速发展，不断变化的商业环境和用户诉求带来了纷繁复杂的业务需求。业务系统需要支撑的业务场景越来越广、涵盖的业务逻辑越来越多，系统的复杂度也跟着快速提升。与此同时，由于微服务架构的演进，业务逻辑的实现往往需要依赖多个服务间的共同协作。总而言之，业务系统的日益复杂已经成为一种常态。
@@ -142,32 +151,9 @@ Paper 01 | Compressing Models with Few Samples: Mimicking then Replacing | 论�
     </item>
     
     <item>
-      <title>ACM SIGIR 2022 | 美团技术团队精选论文解读</title>
-      <link>https://wfsui.github.io/posts/acm-sigir-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Wed, 28 Sep 2022 04:30:04 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/acm-sigir-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
-      <description>SIGIR是信息检索方向的国际顶级会议（CCF-A类）。第 45 届国际信息检索大会（The 45th International ACM SIGIR Conference on Research and Development in Information Retrieval，SIGIR 2022）已于上周（2022年7月11-15日）在西班牙马德里举行，同时也支持线上参会。本次会议共收到 794 篇长文投稿，其中 161 篇长文被录用，录用率约 20%；共收到 667 篇短文投稿，其中 165 篇短文被录用，录用率约 24.</description>
-    </item>
-    
-    <item>
-      <title>日志导致线程Block的这些坑，你不得不防</title>
-      <link>https://wfsui.github.io/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/</link>
-      <pubDate>Wed, 28 Sep 2022 04:30:04 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/</guid>
-      <description>1. 前言 日志对程序的重要性不言而喻。它很“大”，我们在项目中经常通过日志来记录信息和排查问题，相关代码随处可见。它也很“小”，作为辅助工具，日志使用简单、上手快，我们通常不会花费过多精力耗在日志上。但看似不起眼的日志也隐藏着各种各样的“坑”，如果使用不当，它不仅不能帮助我们，反而还可能降低服务性能，甚至拖垮我们的服务。
-日志导致线程Block的问题，相信你或许已经遇到过，对此应该深有体会；或许你还没遇到过，但不代表没有问题，只是可能还没有触发而已。本文主要介绍美团统一API网关服务Shepherd（参见《百亿规模API网关服务Shepherd的设计与实现》一文）在实践中所踩过的关于日志导致线程Block的那些“坑”，然后再分享一些避“坑”经验。
-2. 背景 API网关服务Shepherd基于Java语言开发，使用业界大名鼎鼎的Apache Log4j2作为主要日志框架，同时使用美团内部的XMD-Log SDK和Scribe-Log SDK对日志内容进行处理，日志处理整体流程如下图1所示。业务打印日志时，日志框架基于Logger配置来决定把日志交给XMDFile处理还是Scribe处理。其中，XMDFile是XMD-Log内部提供的日志Appender名称，负责输出日志到本地磁盘，Scribe是Scribe-Log内部提供的日志Appender名称，负责上报日志到远程日志中心。
-随着业务的快速增长，日志导致的线程Block问题愈发频繁。比如调用后端RPC服务超时，导致调用方大量线程Block；再比如，业务内部输出异常日志导致服务大量线程Block等，这些问题严重影响着服务的稳定性。因此，我们结合项目在过去一段时间暴露出来的各种由于日志导致的线程Block问题，对日志框架存在的稳定性风险因素进行了彻底的排查和修复，并在线下、线上环境进行全方位验证。在此过程中，我们总结了一些日志使用相关的实践经验，希望分享给大家。
-在进入正文前，首先介绍项目当时的运行环境和日志相关配置信息。
-JDK版本 java version &amp;#34;1.8.0_45&amp;#34; Java(TM) SE Runtime Environment (build 1.</description>
-    </item>
-    
-    <item>
       <title>Kafka在美团数据平台的实践</title>
       <link>https://wfsui.github.io/posts/kafka%E5%9C%A8%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Wed, 28 Sep 2022 04:30:03 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:27 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/kafka%E5%9C%A8%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 现状和挑战 1.1 现状 Kafka是一个开源的流处理平台，业界有很多互联网企业也都在使用这款产品。我们首先了解一下Kafka在美团数据平台的现状。
@@ -180,9 +166,23 @@ Kafka在美团的集群规模总体机器数已经超过了15000+台，单集群
     </item>
     
     <item>
+      <title>日志导致线程Block的这些坑，你不得不防</title>
+      <link>https://wfsui.github.io/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/</link>
+      <pubDate>Fri, 30 Sep 2022 04:40:27 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/</guid>
+      <description>1. 前言 日志对程序的重要性不言而喻。它很“大”，我们在项目中经常通过日志来记录信息和排查问题，相关代码随处可见。它也很“小”，作为辅助工具，日志使用简单、上手快，我们通常不会花费过多精力耗在日志上。但看似不起眼的日志也隐藏着各种各样的“坑”，如果使用不当，它不仅不能帮助我们，反而还可能降低服务性能，甚至拖垮我们的服务。
+日志导致线程Block的问题，相信你或许已经遇到过，对此应该深有体会；或许你还没遇到过，但不代表没有问题，只是可能还没有触发而已。本文主要介绍美团统一API网关服务Shepherd（参见《百亿规模API网关服务Shepherd的设计与实现》一文）在实践中所踩过的关于日志导致线程Block的那些“坑”，然后再分享一些避“坑”经验。
+2. 背景 API网关服务Shepherd基于Java语言开发，使用业界大名鼎鼎的Apache Log4j2作为主要日志框架，同时使用美团内部的XMD-Log SDK和Scribe-Log SDK对日志内容进行处理，日志处理整体流程如下图1所示。业务打印日志时，日志框架基于Logger配置来决定把日志交给XMDFile处理还是Scribe处理。其中，XMDFile是XMD-Log内部提供的日志Appender名称，负责输出日志到本地磁盘，Scribe是Scribe-Log内部提供的日志Appender名称，负责上报日志到远程日志中心。
+随着业务的快速增长，日志导致的线程Block问题愈发频繁。比如调用后端RPC服务超时，导致调用方大量线程Block；再比如，业务内部输出异常日志导致服务大量线程Block等，这些问题严重影响着服务的稳定性。因此，我们结合项目在过去一段时间暴露出来的各种由于日志导致的线程Block问题，对日志框架存在的稳定性风险因素进行了彻底的排查和修复，并在线下、线上环境进行全方位验证。在此过程中，我们总结了一些日志使用相关的实践经验，希望分享给大家。
+在进入正文前，首先介绍项目当时的运行环境和日志相关配置信息。
+JDK版本 java version &amp;#34;1.8.0_45&amp;#34; Java(TM) SE Runtime Environment (build 1.</description>
+    </item>
+    
+    <item>
       <title>美团搜索粗排优化的探索与实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E7%B2%97%E6%8E%92%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Wed, 28 Sep 2022 04:30:02 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:26 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E7%B2%97%E6%8E%92%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 前言 众所周知，在搜索、推荐、广告等大规模工业界应用领域，为了平衡性能和效果，排序系统普遍采用级联架构[1,2]，如下图 1 所示。以美团搜索排序系统为例，整个排序分为粗排、精排、重排和混排层；粗排位于召回和精排之间，需要从千级别候选 item 集合中筛选出百级别 item 集合送给精排层。
@@ -195,7 +195,7 @@ Kafka在美团的集群规模总体机器数已经超过了15000+台，单集群
     <item>
       <title>提升资源利用率与保障服务质量，鱼与熊掌不可兼得？</title>
       <link>https://wfsui.github.io/posts/%E6%8F%90%E5%8D%87%E8%B5%84%E6%BA%90%E5%88%A9%E7%94%A8%E7%8E%87%E4%B8%8E%E4%BF%9D%E9%9A%9C%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E9%B1%BC%E4%B8%8E%E7%86%8A%E6%8E%8C%E4%B8%8D%E5%8F%AF%E5%85%BC%E5%BE%97/</link>
-      <pubDate>Wed, 28 Sep 2022 04:30:02 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:26 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%8F%90%E5%8D%87%E8%B5%84%E6%BA%90%E5%88%A9%E7%94%A8%E7%8E%87%E4%B8%8E%E4%BF%9D%E9%9A%9C%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E9%B1%BC%E4%B8%8E%E7%86%8A%E6%8E%8C%E4%B8%8D%E5%8F%AF%E5%85%BC%E5%BE%97/</guid>
       <description>随着云计算时代的到来，大规模资源运营面临着如何在保障服务质量的同时提升资源利用率（降本增效）。但这两个目标的达成在当前的软硬件技术水平上，是相互矛盾的。本文介绍的LAR（Load Auto-Regulator）系统，即是探索这两个矛盾方向间的平衡点，在保证质量的前提下，提升资源的利用率。
@@ -211,7 +211,7 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
     <item>
       <title>KDD 2022 | 美团技术团队精选论文解读</title>
       <link>https://wfsui.github.io/posts/kdd-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Wed, 28 Sep 2022 04:30:01 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:25 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/kdd-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
       <description>ACM SIGKDD国际会议（简称 KDD）是由ACM的数据挖掘及知识发现专委会主办的数据挖掘研究领域的顶级年会，属于CCF A类会议。由于KDD的交叉学科性和广泛应用性，其影响力也越来越大，吸引了来自统计、机器学习、数据库、万维网、生物信息学、多媒体、自然语言处理、人机交互、社会网络计算、高性能计算及大数据挖掘等众多领域的从业者和研究学者。第28届KDD会议于2022于8月14日至18日在美国华盛顿举行。
@@ -224,7 +224,7 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
     <item>
       <title>Replication（下）：事务，一致性与共识</title>
       <link>https://wfsui.github.io/posts/replication%E4%B8%8B%E4%BA%8B%E5%8A%A1%E4%B8%80%E8%87%B4%E6%80%A7%E4%B8%8E%E5%85%B1%E8%AF%86/</link>
-      <pubDate>Wed, 28 Sep 2022 04:30:01 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:25 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/replication%E4%B8%8B%E4%BA%8B%E5%8A%A1%E4%B8%80%E8%87%B4%E6%80%A7%E4%B8%8E%E5%85%B1%E8%AF%86/</guid>
       <description>1. 前文回顾 在上一篇中，我们主要介绍了分布式系统中常见的复制模型，并描述了每一种模型的优缺点以及使用场景，同时阐述了分布式系统中特有的一些技术挑战。首先，常见的分布式系统复制模型有3种，分别是主从复制模型、多主复制模型以及无主复制模型。此外，复制从客户端的时效性来说分为同步复制&amp;amp;&amp;amp;异步复制，异步复制具有滞后性，可能会造成数据不一致，因为这个不一致，会带来各种各样的问题。
@@ -240,7 +240,7 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
     <item>
       <title>Replication（上）：常见复制模型&amp;分布式系统挑战</title>
       <link>https://wfsui.github.io/posts/replication%E4%B8%8A%E5%B8%B8%E8%A7%81%E5%A4%8D%E5%88%B6%E6%A8%A1%E5%9E%8B%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%8C%91%E6%88%98/</link>
-      <pubDate>Wed, 28 Sep 2022 04:30:00 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:24 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/replication%E4%B8%8A%E5%B8%B8%E8%A7%81%E5%A4%8D%E5%88%B6%E6%A8%A1%E5%9E%8B%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%8C%91%E6%88%98/</guid>
       <description>本系列文章分上下两篇，以《数据密集型应用系统设计（DDIA）》（下文简称《DDIA》）为主线，文中的核心理论讲解与图片来自于此书。在此基础上，加入了日常工作中对这些概念的理解与个性化的思考，并将它们映射到Kafka中，跟大家分享一下如何将具体的理论应用于实际生产环境中。
@@ -257,7 +257,7 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
     <item>
       <title>基于AI算法的数据库异常监测系统的设计与实现</title>
       <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai%E7%AE%97%E6%B3%95%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E7%9B%91%E6%B5%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/</link>
-      <pubDate>Wed, 28 Sep 2022 04:29:59 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:23 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai%E7%AE%97%E6%B3%95%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E7%9B%91%E6%B5%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/</guid>
       <description>1. 背景 数据库被广泛用于美团的核心业务场景上，对稳定性要求较高，对异常容忍度非常低。因此，快速的数据库异常发现、定位和止损就变得越来越重要。针对异常监测的问题，传统的固定阈值告警方式，需要依赖专家经验进行规则配置，不能根据不同业务场景灵活动态调整阈值，容易让小问题演变成大故障。
@@ -270,7 +270,7 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
     <item>
       <title>图技术在美团外卖下的场景化应用及探索</title>
       <link>https://wfsui.github.io/posts/%E5%9B%BE%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E4%B8%8B%E7%9A%84%E5%9C%BA%E6%99%AF%E5%8C%96%E5%BA%94%E7%94%A8%E5%8F%8A%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Wed, 28 Sep 2022 04:29:59 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:22 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9B%BE%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E4%B8%8B%E7%9A%84%E5%9C%BA%E6%99%AF%E5%8C%96%E5%BA%94%E7%94%A8%E5%8F%8A%E6%8E%A2%E7%B4%A2/</guid>
       <description>1. 引言 外卖已经成为大众生活中非常的重要组成部分，大家也逐步感受到外卖带来的便利。大数据和深度学习时代的到来，使点击率（Click Through Rate, CTR）/转化率（Conversion Rate, CVR）预估技术得到了长足的发展，深度学习技术已经成为业界的主流方法。美团外卖也通过应用深度模型，在线上取得了显著的收益。预估模型所做的事情，是建模蕴藏在数据中、在特定场景下用户和商品之间的关联性（即“人-货-场”）。以点击率预估为例，可以对画像特征、上下文特征、行为特征等进行建模，模型能够感知在该场景下用户和商品之间的关联。
@@ -285,7 +285,7 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
     <item>
       <title>自动化测试在美团外卖的实践与落地</title>
       <link>https://wfsui.github.io/posts/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E8%90%BD%E5%9C%B0/</link>
-      <pubDate>Wed, 28 Sep 2022 04:29:58 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:22 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E8%90%BD%E5%9C%B0/</guid>
       <description>1. 项目背景 美团外卖的业务场景比较多元化，除了外卖自身的业务，还作为平台承接了闪购、团好货、医药、跑腿等其他业务。除此之外，在全链路动态化的大基调下，外卖各个页面的技术形态也变得越来越复杂，除了Native代码，还包括Mach（外卖自研动态化框架）、React Native、美团小程序、H5等，不同技术栈的底层技术实现不同，渲染机制不同，进而对测试方式要求也有所不同，这也在无形中增加了测试的难度。下图汇总了美团多业务、多技术、多App的一些典型场景。
@@ -299,7 +299,7 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
     <item>
       <title>美团隐私计算平台通过行业权威认证</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%9A%90%E7%A7%81%E8%AE%A1%E7%AE%97%E5%B9%B3%E5%8F%B0%E9%80%9A%E8%BF%87%E8%A1%8C%E4%B8%9A%E6%9D%83%E5%A8%81%E8%AE%A4%E8%AF%81/</link>
-      <pubDate>Wed, 28 Sep 2022 04:29:57 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:21 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%9A%90%E7%A7%81%E8%AE%A1%E7%AE%97%E5%B9%B3%E5%8F%B0%E9%80%9A%E8%BF%87%E8%A1%8C%E4%B8%9A%E6%9D%83%E5%A8%81%E8%AE%A4%E8%AF%81/</guid>
       <description>近日，在2022年隐私计算大会上，中国信通院公布第六批可信隐私计算评测结果，美团隐私计算平台通过“联邦学习安全”和“多方安全计算基础能力”两个专项评测认证。2021年，美团已经通过“联邦学习基础能力”专项评测认证。
@@ -320,7 +320,7 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
     <item>
       <title>目标检测开源框架YOLOv6全面升级，更快更准的2.0版本来啦</title>
       <link>https://wfsui.github.io/posts/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%85%A8%E9%9D%A2%E5%8D%87%E7%BA%A7%E6%9B%B4%E5%BF%AB%E6%9B%B4%E5%87%86%E7%9A%842.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</link>
-      <pubDate>Wed, 28 Sep 2022 04:29:57 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:20 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%85%A8%E9%9D%A2%E5%8D%87%E7%BA%A7%E6%9B%B4%E5%BF%AB%E6%9B%B4%E5%87%86%E7%9A%842.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</guid>
       <description>9月5日，美团视觉智能部发布了YOLOv6 2.0版本，本次更新对轻量级网络进行了全面升级，量化版模型 YOLOv6-S 达到了 869 FPS，同时，还推出了综合性能优异的中大型网络（YOLOv6-M/L），丰富了YOLOv6网络系列。其中，YOLOv6-M/L 在 COCO 上检测精度（AP）分别达到 49.5%/52.5%，在 T4 卡上推理速度分别可达 233⁄121 FPS（batch size =32）。
@@ -331,7 +331,7 @@ GitHub下载地址：https://github.com/meituan/YOLOv6。欢迎Star收藏，随�
     <item>
       <title>数字化新业态下数据安全创新——Token化</title>
       <link>https://wfsui.github.io/posts/%E6%95%B0%E5%AD%97%E5%8C%96%E6%96%B0%E4%B8%9A%E6%80%81%E4%B8%8B%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E5%88%9B%E6%96%B0token%E5%8C%96/</link>
-      <pubDate>Wed, 28 Sep 2022 04:29:56 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:20 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%95%B0%E5%AD%97%E5%8C%96%E6%96%B0%E4%B8%9A%E6%80%81%E4%B8%8B%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E5%88%9B%E6%96%B0token%E5%8C%96/</guid>
       <description>0. 引言 伴随科技创新引领数字化浪潮席卷全球，数据成为企业发展的核心生产要素。像Google、Facebook等高科技公司，通过提供免费、优秀的软件和服务，接入大量的用户，并基于数据资源驱动，获得了巨大的商业成功。然而，在高速发展的同时，公司对数据却疏于治理，引起了大量的数据泄漏、算法滥用以及隐私相关的问题。这种危机伴随着Facebook的“剑桥分析”丑闻、2020年美国大选等标志性事件，推向了高潮。基于对数据安全和隐私的担忧，欧盟的GDPR领衔的现代隐私合规出台，随后风靡全球，成为又一不可逆转的潮流。
@@ -347,7 +347,7 @@ GitHub下载地址：https://github.com/meituan/YOLOv6。欢迎Star收藏，随�
     <item>
       <title>通用目标检测开源框架YOLOv6在美团的量化部署实战</title>
       <link>https://wfsui.github.io/posts/%E9%80%9A%E7%94%A8%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E9%87%8F%E5%8C%96%E9%83%A8%E7%BD%B2%E5%AE%9E%E6%88%98/</link>
-      <pubDate>Wed, 28 Sep 2022 04:29:56 +0000</pubDate>
+      <pubDate>Fri, 30 Sep 2022 04:40:20 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E9%80%9A%E7%94%A8%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E9%87%8F%E5%8C%96%E9%83%A8%E7%BD%B2%E5%AE%9E%E6%88%98/</guid>
       <description>1. 背景和难点## 1. 背景和难点 YOLOv6 是美团发布的一款开源的面向工业应用的 2D 目标检测模型 [1]，主要特点是速度快、精度高、部署友好，在美团众多视觉业务场景中都有着广泛的应用。通过量化（Quantization）提升推理速度是实际工业应用中的基本操作，但由于 YOLOv6 系列模型采用了大量的重参数化模块，如何针对 YOLOv6 进行高效和高精度的量化成为一个亟待解决的问题。本文旨在解决 YOLOv6 量化方面的难题，并以 YOLOv6s 模型为例，从训练后量化（Post-Training Quantization, PTQ）和量化感知训练（Quantization-Aware Training, QAT）两个方面进行分析，探索出了一条切实可行的量化方案。</description>

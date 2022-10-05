@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Tue, 04 Oct 2022 03:58:00 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%95%B0%E6%8D%AE/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 05 Oct 2022 03:50:50 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%95%B0%E6%8D%AE/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Kafka在美团数据平台的实践</title>
       <link>https://wfsui.github.io/posts/kafka%E5%9C%A8%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 04 Oct 2022 03:58:00 +0000</pubDate>
+      <pubDate>Wed, 05 Oct 2022 03:50:50 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/kafka%E5%9C%A8%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 现状和挑战 1.1 现状 Kafka是一个开源的流处理平台，业界有很多互联网企业也都在使用这款产品。我们首先了解一下Kafka在美团数据平台的现状。
@@ -26,7 +26,7 @@ Kafka在美团的集群规模总体机器数已经超过了15000+台，单集群
     <item>
       <title>美团隐私计算平台通过行业权威认证</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%9A%90%E7%A7%81%E8%AE%A1%E7%AE%97%E5%B9%B3%E5%8F%B0%E9%80%9A%E8%BF%87%E8%A1%8C%E4%B8%9A%E6%9D%83%E5%A8%81%E8%AE%A4%E8%AF%81/</link>
-      <pubDate>Tue, 04 Oct 2022 03:57:56 +0000</pubDate>
+      <pubDate>Wed, 05 Oct 2022 03:50:45 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%9A%90%E7%A7%81%E8%AE%A1%E7%AE%97%E5%B9%B3%E5%8F%B0%E9%80%9A%E8%BF%87%E8%A1%8C%E4%B8%9A%E6%9D%83%E5%A8%81%E8%AE%A4%E8%AF%81/</guid>
       <description>近日，在2022年隐私计算大会上，中国信通院公布第六批可信隐私计算评测结果，美团隐私计算平台通过“联邦学习安全”和“多方安全计算基础能力”两个专项评测认证。2021年，美团已经通过“联邦学习基础能力”专项评测认证。

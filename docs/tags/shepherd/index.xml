@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 24 Oct 2022 04:40:49 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/shepherd/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 26 Oct 2022 04:01:55 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/shepherd/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>日志导致线程Block的这些坑，你不得不防</title>
       <link>https://wfsui.github.io/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/</link>
-      <pubDate>Mon, 24 Oct 2022 04:40:49 +0000</pubDate>
+      <pubDate>Wed, 26 Oct 2022 04:01:55 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/</guid>
       <description>1. 前言 日志对程序的重要性不言而喻。它很“大”，我们在项目中经常通过日志来记录信息和排查问题，相关代码随处可见。它也很“小”，作为辅助工具，日志使用简单、上手快，我们通常不会花费过多精力耗在日志上。但看似不起眼的日志也隐藏着各种各样的“坑”，如果使用不当，它不仅不能帮助我们，反而还可能降低服务性能，甚至拖垮我们的服务。

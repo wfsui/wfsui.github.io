@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 31 Oct 2022 03:55:08 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/kdd-2022/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 01 Nov 2022 04:20:39 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/kdd-2022/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>KDD 2022 | 美团技术团队精选论文解读</title>
       <link>https://wfsui.github.io/posts/kdd-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Mon, 31 Oct 2022 03:55:08 +0000</pubDate>
+      <pubDate>Tue, 01 Nov 2022 04:20:39 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/kdd-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
       <description>ACM SIGKDD国际会议（简称 KDD）是由ACM的数据挖掘及知识发现专委会主办的数据挖掘研究领域的顶级年会，属于CCF A类会议。由于KDD的交叉学科性和广泛应用性，其影响力也越来越大，吸引了来自统计、机器学习、数据库、万维网、生物信息学、多媒体、自然语言处理、人机交互、社会网络计算、高性能计算及大数据挖掘等众多领域的从业者和研究学者。第28届KDD会议于2022于8月14日至18日在美国华盛顿举行。

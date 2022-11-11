@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Wed, 09 Nov 2022 03:50:59 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 11 Nov 2022 03:44:48 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>图技术在美团外卖下的场景化应用及探索</title>
       <link>https://wfsui.github.io/posts/%E5%9B%BE%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E4%B8%8B%E7%9A%84%E5%9C%BA%E6%99%AF%E5%8C%96%E5%BA%94%E7%94%A8%E5%8F%8A%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Wed, 09 Nov 2022 03:50:59 +0000</pubDate>
+      <pubDate>Fri, 11 Nov 2022 03:44:48 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9B%BE%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E4%B8%8B%E7%9A%84%E5%9C%BA%E6%99%AF%E5%8C%96%E5%BA%94%E7%94%A8%E5%8F%8A%E6%8E%A2%E7%B4%A2/</guid>
       <description>1. 引言 外卖已经成为大众生活中非常的重要组成部分，大家也逐步感受到外卖带来的便利。大数据和深度学习时代的到来，使点击率（Click Through Rate, CTR）/转化率（Conversion Rate, CVR）预估技术得到了长足的发展，深度学习技术已经成为业界的主流方法。美团外卖也通过应用深度模型，在线上取得了显著的收益。预估模型所做的事情，是建模蕴藏在数据中、在特定场景下用户和商品之间的关联性（即“人-货-场”）。以点击率预估为例，可以对画像特征、上下文特征、行为特征等进行建模，模型能够感知在该场景下用户和商品之间的关联。

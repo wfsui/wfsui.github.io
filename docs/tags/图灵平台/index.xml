@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>图灵平台 on 大峰哥</title>
+    <link>https://wfsui.github.io/tags/%E5%9B%BE%E7%81%B5%E5%B9%B3%E5%8F%B0/</link>
+    <description>Recent content in 图灵平台 on 大峰哥</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Sat, 12 Nov 2022 03:41:20 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%9B%BE%E7%81%B5%E5%B9%B3%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>美团图灵机器学习平台性能起飞的秘密（一）</title>
+      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%9B%BE%E7%81%B5%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E6%80%A7%E8%83%BD%E8%B5%B7%E9%A3%9E%E7%9A%84%E7%A7%98%E5%AF%86%E4%B8%80/</link>
+      <pubDate>Sat, 12 Nov 2022 03:41:20 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%9B%BE%E7%81%B5%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E6%80%A7%E8%83%BD%E8%B5%B7%E9%A3%9E%E7%9A%84%E7%A7%98%E5%AF%86%E4%B8%80/</guid>
+      <description>导语 图灵平台是美团履约平台技术部2018年开始自研的算法平台，提供模型全生命周期的一站式服务，旨在帮助算法同学脱离繁琐的工程化开发，把有限的精力聚焦于业务和算法的迭代优化中。
+随着美团图灵机器学习平台的发展，图灵技术团队在内存优化、计算优化、磁盘IO优化三个方面沉淀了一系列性能优化技术。我们将以连载的方式为大家揭秘这些技术。本文作为该系列的开篇之作，将重点为大家介绍内存优化。
+1. 业务背景 图灵平台主要包括机器学习平台、特征平台、图灵在线服务（Online Serving）、AB实验平台四大功能，具体可参考《一站式机器学习平台建设实践》以及《算法平台在线服务体系的演进与实践》这两篇博客。其中，图灵机器学习平台的离线训练引擎是基于Spark实现的。
+随着图灵的用户增长，越来越多算法模型在图灵平台上完成迭代，优化离线训练引擎的性能和吞吐对于节约离线计算资源显得愈发重要。经过半年持续的迭代，我们积累了一系列独特的优化方法，使图灵机器学习平台的离线资源消耗下降80%，生产任务平均耗时下降63%（如下图所示），图灵全平台的训练任务在性能层面都得到了较为明显的提升。
+资源消耗下降：
+当前平台性能：
+下图是某位图灵用户的实验。使用100万数据训练深度模型，总计约29亿的数据调用深度模型，计算评估指标并保存到Hive，整个实验只需要35分钟。其中Spark开启DynamicAllocation，maxExecutor=400 ，单个Executor为7Core16GB。
+2. 图灵训练引擎优化 那么，图灵训练引擎的性能优化是如何做到的呢？我们的优化分为内存优化、计算优化、磁盘IO优化三个层面。
+内存优化包括列裁切、自适应Cache、算子优化。我们借鉴Spark SQL原理设计了列裁切，可以自动剔除各组件中用户实际没有使用的字段，以降低内存占用。何时对Dataset Persist和Unpersist一直是Spark代码中的取舍问题，针对用户不熟悉Persist和Unpersist时机这个问题，我们将多年的开发经验沉淀在图灵中，结合列裁切技术实现自适应Cache。在计算优化方面，我们完成了图优化、Spark源码优化、XGB源码优化。在磁盘IO优化方面，我们创新性的实现了自动化小文件保存优化，能够使用一个Action实现多级分区表小文件的合并保存。
+此外，我们实现的TFRecord表示优化技术，成功将Spark生成的TFRecord体积减少50%。因图灵平台使用的优化技巧较多，我们将分成多篇文章为大家逐一介绍这些优化技术。
+而在众多优化中，收益最高、适用性最广的技术的就是算子优化，这项技术极大提升了图灵训练引擎的吞吐量。本篇文章首先将为大家介绍内存优化中的算子优化技术。</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="generator" content="Hugo 0.105.0">
+	<meta name="generator" content="Hugo 0.106.0">
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>大峰哥 - 记录日常生活哦 </title><meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="alternate" type="application/rss+xml" href="https://wfsui.github.io/index.xml" title="大峰哥" />
@@ -67,32 +67,35 @@
 				
 				
 				<div class="post">
-					<div class="meta">Nov 12, 2022</div>
-					<a class="title" href="/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/">Java动态追踪技术探究</a> &mdash;
+					<div class="meta">Nov 18, 2022</div>
+					<a class="title" href="/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/">Java魔法类：Unsafe应用解析</a> &mdash;
 					<span class="description">
 						
-						引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：
-“Debug一下吧。”
-“线上机器，没开Debug端口。”
-“看日志，看看请求值和返回值分别是什么？”
-“那段代码没打印日志。”
-“改代码，加日志，重新发布一次。”
-“怀疑是线程池的问题，重启会破坏现场。”
-长达几十秒的沉默之后：“据说，排查问题的最高境界，就是只通过Review代码来发现问题。”
-比几十秒长几十倍的沉默之后：“我轮询了那段代码一十七遍之后，终于得出一个结论。”
-“结论是？”
-“我还没到达只通过Review代码就能发现问题的至高境界。”
-从JSP说起 对于大多数Java程序员来说，早期的时候，都会接触到一个叫做JSP（Java Server Pages）的技术。虽然这种技术，在前后端代码分离、前后端逻辑分离、前后端组织架构分离的今天来看，已经过时了，但是其中还是有一些有意思的东西，值得拿出来说一说。
-当时刚刚处于Java入门时期的我们，大多数精力似乎都放在了JSP的页面展示效果上了：
-“这个表格显示的行数不对”
-“原来是for循环写的有问题，改一下，刷新页面再试一遍”
-“嗯，好了，表格显示没问题了，但是，登录人的姓名没取到啊，是不是Sesstion获取有问题？”&hellip;
+						前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
+注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
+基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
+public final class Unsafe { // 单例对象 private static final Unsafe theUnsafe; private Unsafe() { } @CallerSensitive public static Unsafe getUnsafe() { Class var0 = Reflection.&hellip;
 						
 					</span>
 				</div>
 				
 				<div class="post">
-					<div class="meta">Nov 12, 2022</div>
+					<div class="meta">Nov 18, 2022</div>
+					<a class="title" href="/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/">日志导致线程Block的这些坑，你不得不防</a> &mdash;
+					<span class="description">
+						
+						1. 前言 日志对程序的重要性不言而喻。它很“大”，我们在项目中经常通过日志来记录信息和排查问题，相关代码随处可见。它也很“小”，作为辅助工具，日志使用简单、上手快，我们通常不会花费过多精力耗在日志上。但看似不起眼的日志也隐藏着各种各样的“坑”，如果使用不当，它不仅不能帮助我们，反而还可能降低服务性能，甚至拖垮我们的服务。
+日志导致线程Block的问题，相信你或许已经遇到过，对此应该深有体会；或许你还没遇到过，但不代表没有问题，只是可能还没有触发而已。本文主要介绍美团统一API网关服务Shepherd（参见《百亿规模API网关服务Shepherd的设计与实现》一文）在实践中所踩过的关于日志导致线程Block的那些“坑”，然后再分享一些避“坑”经验。
+2. 背景 API网关服务Shepherd基于Java语言开发，使用业界大名鼎鼎的Apache Log4j2作为主要日志框架，同时使用美团内部的XMD-Log SDK和Scribe-Log SDK对日志内容进行处理，日志处理整体流程如下图1所示。业务打印日志时，日志框架基于Logger配置来决定把日志交给XMDFile处理还是Scribe处理。其中，XMDFile是XMD-Log内部提供的日志Appender名称，负责输出日志到本地磁盘，Scribe是Scribe-Log内部提供的日志Appender名称，负责上报日志到远程日志中心。
+随着业务的快速增长，日志导致的线程Block问题愈发频繁。比如调用后端RPC服务超时，导致调用方大量线程Block；再比如，业务内部输出异常日志导致服务大量线程Block等，这些问题严重影响着服务的稳定性。因此，我们结合项目在过去一段时间暴露出来的各种由于日志导致的线程Block问题，对日志框架存在的稳定性风险因素进行了彻底的排查和修复，并在线下、线上环境进行全方位验证。在此过程中，我们总结了一些日志使用相关的实践经验，希望分享给大家。
+在进入正文前，首先介绍项目当时的运行环境和日志相关配置信息。
+JDK版本 java version &#34;1.8.0_45&#34; Java(TM) SE Runtime Environment (build 1.&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
+					<div class="meta">Nov 18, 2022</div>
 					<a class="title" href="/posts/kafka%E5%9C%A8%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%AE%9E%E8%B7%B5/">Kafka在美团数据平台的实践</a> &mdash;
 					<span class="description">
 						
@@ -108,22 +111,7 @@ Kafka在美团的集群规模总体机器数已经超过了15000+台，单集群
 				</div>
 				
 				<div class="post">
-					<div class="meta">Nov 12, 2022</div>
-					<a class="title" href="/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/">日志导致线程Block的这些坑，你不得不防</a> &mdash;
-					<span class="description">
-						
-						1. 前言 日志对程序的重要性不言而喻。它很“大”，我们在项目中经常通过日志来记录信息和排查问题，相关代码随处可见。它也很“小”，作为辅助工具，日志使用简单、上手快，我们通常不会花费过多精力耗在日志上。但看似不起眼的日志也隐藏着各种各样的“坑”，如果使用不当，它不仅不能帮助我们，反而还可能降低服务性能，甚至拖垮我们的服务。
-日志导致线程Block的问题，相信你或许已经遇到过，对此应该深有体会；或许你还没遇到过，但不代表没有问题，只是可能还没有触发而已。本文主要介绍美团统一API网关服务Shepherd（参见《百亿规模API网关服务Shepherd的设计与实现》一文）在实践中所踩过的关于日志导致线程Block的那些“坑”，然后再分享一些避“坑”经验。
-2. 背景 API网关服务Shepherd基于Java语言开发，使用业界大名鼎鼎的Apache Log4j2作为主要日志框架，同时使用美团内部的XMD-Log SDK和Scribe-Log SDK对日志内容进行处理，日志处理整体流程如下图1所示。业务打印日志时，日志框架基于Logger配置来决定把日志交给XMDFile处理还是Scribe处理。其中，XMDFile是XMD-Log内部提供的日志Appender名称，负责输出日志到本地磁盘，Scribe是Scribe-Log内部提供的日志Appender名称，负责上报日志到远程日志中心。
-随着业务的快速增长，日志导致的线程Block问题愈发频繁。比如调用后端RPC服务超时，导致调用方大量线程Block；再比如，业务内部输出异常日志导致服务大量线程Block等，这些问题严重影响着服务的稳定性。因此，我们结合项目在过去一段时间暴露出来的各种由于日志导致的线程Block问题，对日志框架存在的稳定性风险因素进行了彻底的排查和修复，并在线下、线上环境进行全方位验证。在此过程中，我们总结了一些日志使用相关的实践经验，希望分享给大家。
-在进入正文前，首先介绍项目当时的运行环境和日志相关配置信息。
-JDK版本 java version &#34;1.8.0_45&#34; Java(TM) SE Runtime Environment (build 1.&hellip;
-						
-					</span>
-				</div>
-				
-				<div class="post">
-					<div class="meta">Nov 12, 2022</div>
+					<div class="meta">Nov 18, 2022</div>
 					<a class="title" href="/posts/kdd-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">KDD 2022 | 美团技术团队精选论文解读</a> &mdash;
 					<span class="description">
 						
@@ -137,7 +125,7 @@ JDK版本 java version &#34;1.8.0_45&#34; Java(TM) SE Runtime Environment (build
 				</div>
 				
 				<div class="post">
-					<div class="meta">Nov 12, 2022</div>
+					<div class="meta">Nov 18, 2022</div>
 					<a class="title" href="/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E7%B2%97%E6%8E%92%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/">美团搜索粗排优化的探索与实践</a> &mdash;
 					<span class="description">
 						

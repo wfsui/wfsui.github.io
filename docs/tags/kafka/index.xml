@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sat, 12 Nov 2022 03:41:27 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/kafka/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Nov 2022 03:29:42 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/kafka/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Kafka在美团数据平台的实践</title>
       <link>https://wfsui.github.io/posts/kafka%E5%9C%A8%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sat, 12 Nov 2022 03:41:27 +0000</pubDate>
+      <pubDate>Fri, 18 Nov 2022 03:29:42 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/kafka%E5%9C%A8%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 现状和挑战 1.1 现状 Kafka是一个开源的流处理平台，业界有很多互联网企业也都在使用这款产品。我们首先了解一下Kafka在美团数据平台的现状。
@@ -26,7 +26,7 @@ Kafka在美团的集群规模总体机器数已经超过了15000+台，单集群
     <item>
       <title>Replication（上）：常见复制模型&amp;分布式系统挑战</title>
       <link>https://wfsui.github.io/posts/replication%E4%B8%8A%E5%B8%B8%E8%A7%81%E5%A4%8D%E5%88%B6%E6%A8%A1%E5%9E%8B%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%8C%91%E6%88%98/</link>
-      <pubDate>Sat, 12 Nov 2022 03:41:25 +0000</pubDate>
+      <pubDate>Fri, 18 Nov 2022 03:29:41 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/replication%E4%B8%8A%E5%B8%B8%E8%A7%81%E5%A4%8D%E5%88%B6%E6%A8%A1%E5%9E%8B%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%8C%91%E6%88%98/</guid>
       <description>本系列文章分上下两篇，以《数据密集型应用系统设计（DDIA）》（下文简称《DDIA》）为主线，文中的核心理论讲解与图片来自于此书。在此基础上，加入了日常工作中对这些概念的理解与个性化的思考，并将它们映射到Kafka中，跟大家分享一下如何将具体的理论应用于实际生产环境中。
@@ -43,7 +43,7 @@ Kafka在美团的集群规模总体机器数已经超过了15000+台，单集群
     <item>
       <title>Replication（下）：事务，一致性与共识</title>
       <link>https://wfsui.github.io/posts/replication%E4%B8%8B%E4%BA%8B%E5%8A%A1%E4%B8%80%E8%87%B4%E6%80%A7%E4%B8%8E%E5%85%B1%E8%AF%86/</link>
-      <pubDate>Sat, 12 Nov 2022 03:41:25 +0000</pubDate>
+      <pubDate>Fri, 18 Nov 2022 03:29:41 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/replication%E4%B8%8B%E4%BA%8B%E5%8A%A1%E4%B8%80%E8%87%B4%E6%80%A7%E4%B8%8E%E5%85%B1%E8%AF%86/</guid>
       <description>1. 前文回顾 在上一篇中，我们主要介绍了分布式系统中常见的复制模型，并描述了每一种模型的优缺点以及使用场景，同时阐述了分布式系统中特有的一些技术挑战。首先，常见的分布式系统复制模型有3种，分别是主从复制模型、多主复制模型以及无主复制模型。此外，复制从客户端的时效性来说分为同步复制&amp;amp;&amp;amp;异步复制，异步复制具有滞后性，可能会造成数据不一致，因为这个不一致，会带来各种各样的问题。

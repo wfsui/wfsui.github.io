@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sat, 12 Nov 2022 03:41:27 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%97%A5%E5%BF%97/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Nov 2022 03:29:43 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%97%A5%E5%BF%97/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>日志导致线程Block的这些坑，你不得不防</title>
       <link>https://wfsui.github.io/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/</link>
-      <pubDate>Sat, 12 Nov 2022 03:41:27 +0000</pubDate>
+      <pubDate>Fri, 18 Nov 2022 03:29:43 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/</guid>
       <description>1. 前言 日志对程序的重要性不言而喻。它很“大”，我们在项目中经常通过日志来记录信息和排查问题，相关代码随处可见。它也很“小”，作为辅助工具，日志使用简单、上手快，我们通常不会花费过多精力耗在日志上。但看似不起眼的日志也隐藏着各种各样的“坑”，如果使用不当，它不仅不能帮助我们，反而还可能降低服务性能，甚至拖垮我们的服务。
@@ -25,7 +25,7 @@ JDK版本 java version &amp;#34;1.8.0_45&amp;#34; Java(TM) SE Runtime Environmen
     <item>
       <title>美团高性能终端实时日志系统建设实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%AB%98%E6%80%A7%E8%83%BD%E7%BB%88%E7%AB%AF%E5%AE%9E%E6%97%B6%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sat, 12 Nov 2022 03:41:21 +0000</pubDate>
+      <pubDate>Fri, 18 Nov 2022 03:29:39 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%AB%98%E6%80%A7%E8%83%BD%E7%BB%88%E7%AB%AF%E5%AE%9E%E6%97%B6%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景 1.1 Logan 简介 Logan 是美团面向终端的统一日志服务，已支持移动端App、Web、小程序、IoT等多端环境，具备日志采集、存储、上传、查询与分析等能力，帮助用户定位研发问题，提升故障排查效率。同时，Logan 也是业内开源较早的大前端日志系统，具有写入性能高、安全性高、日志防丢失等优点。

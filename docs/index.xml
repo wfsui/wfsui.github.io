@@ -7,11 +7,86 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sun, 20 Nov 2022 03:34:07 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 21 Nov 2022 03:34:25 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>咱们从头到尾讲一次 Flink 网络流控和反压剖析</title>
+      <link>https://wfsui.github.io/posts/%E5%92%B1%E4%BB%AC%E4%BB%8E%E5%A4%B4%E5%88%B0%E5%B0%BE%E8%AE%B2%E4%B8%80%E6%AC%A1-flink-%E7%BD%91%E7%BB%9C%E6%B5%81%E6%8E%A7%E5%92%8C%E5%8F%8D%E5%8E%8B%E5%89%96%E6%9E%90/</link>
+      <pubDate>Mon, 21 Nov 2022 03:34:25 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E5%92%B1%E4%BB%AC%E4%BB%8E%E5%A4%B4%E5%88%B0%E5%B0%BE%E8%AE%B2%E4%B8%80%E6%AC%A1-flink-%E7%BD%91%E7%BB%9C%E6%B5%81%E6%8E%A7%E5%92%8C%E5%8F%8D%E5%8E%8B%E5%89%96%E6%9E%90/</guid>
+      <description>作者：张俊
+整理：张友亮（Apache Flink 社区志愿者）
+本文共 4745字，预计阅读时间 15min。
+本文根据 Apache Flink 系列直播整理而成，由 Apache Flink Contributor、OPPO 大数据平台研发负责人张俊老师分享。主要内容如下：
+网络流控的概念与背景 TCP的流控机制 Flink TCP-based 反压机制（before V1.</description>
+    </item>
+    
+    <item>
+      <title>JPA 和 Mybatis 技术选型</title>
+      <link>https://wfsui.github.io/posts/jpa-%E5%92%8C-mybatis-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B/</link>
+      <pubDate>Mon, 21 Nov 2022 03:34:23 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/jpa-%E5%92%8C-mybatis-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B/</guid>
+      <description>在我们平时的项目中，大家都知道可以使用 JPA 或者 Mybatis 作为 ORM 层。对 JPA 和 Mybatis 如何进行技术选型？
+下面看看大精华总结如下：
+最佳回答
+首先表达个人观点，JPA必然是首选的。
+个人认为仅仅讨论两者使用起来有何区别，何者更加方便，不足以真正的比较这两个框架。
+要评判出更加优秀的方案，我觉得可以从软件设计的角度来评判。
+个人对 mybatis 并不熟悉，但 JPA 规范和 springdata 的实现，设计理念绝对是超前的。软件开发复杂性的一个解决手段是遵循 DDD（DDD 只是一种手段，但不是唯一手段），而我着重几点来聊聊 JPA 的设计中是如何体现领域驱动设计思想的，抛砖引玉。</description>
+    </item>
+    
+    <item>
+      <title>算法中七种常见的时间复杂度</title>
+      <link>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</link>
+      <pubDate>Mon, 21 Nov 2022 03:34:22 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</guid>
+      <description>这是我的推广信息，以激励自己更好的分享自己的知识和经验！也希望看到的你能够多多支持，谢谢！
+1. 滴滴云AI大师: 目前滴滴云正在大力推广自己的云计算服务，需要购买的朋友们用我的AI大师码 「2049」在滴滴云上购买 GPU / vGPU / 机器学习产品可额外享受 9 折优惠，点击这里前往滴滴云官网：www.didiyun.com。
+原文地址：7 Helpful Time Complexities 原文作者：Ellis Andrews 译文出自：掘金翻译计划 本文永久链接：https://github.</description>
+    </item>
+    
+    <item>
+      <title>Java魔法类：Unsafe应用解析</title>
+      <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Mon, 21 Nov 2022 03:34:21 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
+      <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
+注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
+基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
+public final class Unsafe { // 单例对象 private static final Unsafe theUnsafe; private Unsafe() { } @CallerSensitive public static Unsafe getUnsafe() { Class var0 = Reflection.</description>
+    </item>
+    
+    <item>
+      <title>Java动态追踪技术探究</title>
+      <link>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</link>
+      <pubDate>Mon, 21 Nov 2022 03:34:20 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</guid>
+      <description>引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：
+“Debug一下吧。”
+“线上机器，没开Debug端口。”
+“看日志，看看请求值和返回值分别是什么？”
+“那段代码没打印日志。”
+“改代码，加日志，重新发布一次。”
+“怀疑是线程池的问题，重启会破坏现场。”
+长达几十秒的沉默之后：“据说，排查问题的最高境界，就是只通过Review代码来发现问题。”
+比几十秒长几十倍的沉默之后：“我轮询了那段代码一十七遍之后，终于得出一个结论。”
+“结论是？”
+“我还没到达只通过Review代码就能发现问题的至高境界。”
+从JSP说起 对于大多数Java程序员来说，早期的时候，都会接触到一个叫做JSP（Java Server Pages）的技术。虽然这种技术，在前后端代码分离、前后端逻辑分离、前后端组织架构分离的今天来看，已经过时了，但是其中还是有一些有意思的东西，值得拿出来说一说。
+当时刚刚处于Java入门时期的我们，大多数精力似乎都放在了JSP的页面展示效果上了：
+“这个表格显示的行数不对”
+“原来是for循环写的有问题，改一下，刷新页面再试一遍”
+“嗯，好了，表格显示没问题了，但是，登录人的姓名没取到啊，是不是Sesstion获取有问题？”</description>
+    </item>
+    
     <item>
       <title>Kafka在美团数据平台的实践</title>
       <link>https://wfsui.github.io/posts/kafka%E5%9C%A8%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sun, 20 Nov 2022 03:34:07 +0000</pubDate>
+      <pubDate>Mon, 21 Nov 2022 03:34:20 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/kafka%E5%9C%A8%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 现状和挑战 1.1 现状 Kafka是一个开源的流处理平台，业界有很多互联网企业也都在使用这款产品。我们首先了解一下Kafka在美团数据平台的现状。
@@ -26,7 +101,7 @@ Kafka在美团的集群规模总体机器数已经超过了15000+台，单集群
     <item>
       <title>美团搜索粗排优化的探索与实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E7%B2%97%E6%8E%92%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sun, 20 Nov 2022 03:34:06 +0000</pubDate>
+      <pubDate>Mon, 21 Nov 2022 03:34:20 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E7%B2%97%E6%8E%92%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 前言 众所周知，在搜索、推荐、广告等大规模工业界应用领域，为了平衡性能和效果，排序系统普遍采用级联架构[1,2]，如下图 1 所示。以美团搜索排序系统为例，整个排序分为粗排、精排、重排和混排层；粗排位于召回和精排之间，需要从千级别候选 item 集合中筛选出百级别 item 集合送给精排层。
@@ -37,25 +112,9 @@ Kafka在美团的集群规模总体机器数已经超过了15000+台，单集群
     </item>
     
     <item>
-      <title>提升资源利用率与保障服务质量，鱼与熊掌不可兼得？</title>
-      <link>https://wfsui.github.io/posts/%E6%8F%90%E5%8D%87%E8%B5%84%E6%BA%90%E5%88%A9%E7%94%A8%E7%8E%87%E4%B8%8E%E4%BF%9D%E9%9A%9C%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E9%B1%BC%E4%B8%8E%E7%86%8A%E6%8E%8C%E4%B8%8D%E5%8F%AF%E5%85%BC%E5%BE%97/</link>
-      <pubDate>Sun, 20 Nov 2022 03:34:06 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E6%8F%90%E5%8D%87%E8%B5%84%E6%BA%90%E5%88%A9%E7%94%A8%E7%8E%87%E4%B8%8E%E4%BF%9D%E9%9A%9C%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E9%B1%BC%E4%B8%8E%E7%86%8A%E6%8E%8C%E4%B8%8D%E5%8F%AF%E5%85%BC%E5%BE%97/</guid>
-      <description>随着云计算时代的到来，大规模资源运营面临着如何在保障服务质量的同时提升资源利用率（降本增效）。但这两个目标的达成在当前的软硬件技术水平上，是相互矛盾的。本文介绍的LAR（Load Auto-Regulator）系统，即是探索这两个矛盾方向间的平衡点，在保证质量的前提下，提升资源的利用率。
-LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单机资源调度与隔离，在提升整体资源利用率的同时，能够根据服务的优先级和特征保证服务的质量。LAR的整体设计可以适用于多个场景，包括在线场景和混部场景。目前LAR已经在美团在线场景中投入生产使用，并取得了较好的效果。
-1 背景 1.1 云计算时代数据中心资源规模爆炸 云计算时代的到来，资源规模化运营成为必然的选择，大规模数据中心成为当今企业级互联网应用和云计算系统的关键支撑。为保障日益增长的互联网应用和云计算系统的计算需求，数据中心需要不断扩容，规模和服务器总量呈现快速增长趋势。据权威报告指出，2020年全球数据中心的服务器总量将达到1800万台，并且正以每年100万台的速度增长。然而，伴随着数据中心的急速扩容，资源利用率却始终处于较低状态。统计数据表明，目前全球数据中心资源利用率仅为10%~20%，如此低的资源利用率意味着数据中心大量的资源浪费，进而导致目前数据中心的成本效率极低。
-1.2 资源利用率提升影响巨大 在国家战略层面，数据中心资源利用率低，造成大量的资源浪费，包括物力资源和电能浪费，这与可持续发展的理念是冲突的。2021年7月，工业和信息化部印发《新型数据中心发展三年行动计划（2021-2023年）》，提出用3年时间，基本形成布局合理、技术先进、绿色低碳、算力规模与数字经济增长相适应的新型数据中心发展格局。计划中重点提出建设绿色高效的数据中心目标，将资源利用率提升作为核心目标。
-在公司经营上，提升资源利用率可以提升运营效率降低运营成本。谷歌在2019年发表的论文“Borg-the Next Generation”披露其2011年数据中心核心集群（统计1.2万台服务器）的月平均CPU利用率在30%左右，而到2019年，其数据中心核心集群（统计9.6万台服务器）的月平均CPU利用率达到了50%左右，8年时间内提升了约20%，资源使用效能的大幅提升，帮助谷歌节省成本累计数十亿美元。国内各大云服务提供商和互联网公司，目前投入大量人力物力去做提升数据中心资源利用率的工作，包括阿里巴巴、腾讯、百度、华为等公司均陆续提出了比较完善的资源利用率提升方案，在内部落地实践并取得了一定的成绩。
-提升资源利用率，降本增效，能给数据中心节省大量的成本。以数百万核CPU的规模的数据中心为例，整体资源利用率每提升1个百分点，节省成本（包括采购成本和运营成本，运营成本主要是机房租金、电费以及运维费用等）每年将达到数千万元。如果考虑到集群运营人工成本等，随着资源规模持续扩大，这个收益将持续增长。
-持续提升机器的资源利用率，降低单核成本，提升集群服务质量，是美团Hulk团队的核心目标之一。针对用户对降本增效的需求，Hulk调度团队在集群资源利用率提升和服务质量保障方向率先做出相关探索，提出了一系列的建设方案，并推进落地。本文重点介绍在Hulk整体资源利用率运营体系中的核心系统集群负载自动均衡管理系统。
-2 什么是LAR？ LAR全称是集群负载自动均衡管理系统（LAR，Load Auto-Regulator），是美团Hulk团队基于Kubernetes研发的容器编排系统。LAR在Kubernetes之上，通过提供分级的QoS管理机制和负载管控能力，实现从时空维度对资源的精确调度分配管理。</description>
-    </item>
-    
-    <item>
       <title>KDD 2022 | 美团技术团队精选论文解读</title>
       <link>https://wfsui.github.io/posts/kdd-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Sun, 20 Nov 2022 03:34:05 +0000</pubDate>
+      <pubDate>Mon, 21 Nov 2022 03:34:19 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/kdd-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
       <description>ACM SIGKDD国际会议（简称 KDD）是由ACM的数据挖掘及知识发现专委会主办的数据挖掘研究领域的顶级年会，属于CCF A类会议。由于KDD的交叉学科性和广泛应用性，其影响力也越来越大，吸引了来自统计、机器学习、数据库、万维网、生物信息学、多媒体、自然语言处理、人机交互、社会网络计算、高性能计算及大数据挖掘等众多领域的从业者和研究学者。第28届KDD会议于2022于8月14日至18日在美国华盛顿举行。
@@ -68,7 +127,7 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
     <item>
       <title>Replication（下）：事务，一致性与共识</title>
       <link>https://wfsui.github.io/posts/replication%E4%B8%8B%E4%BA%8B%E5%8A%A1%E4%B8%80%E8%87%B4%E6%80%A7%E4%B8%8E%E5%85%B1%E8%AF%86/</link>
-      <pubDate>Sun, 20 Nov 2022 03:34:05 +0000</pubDate>
+      <pubDate>Mon, 21 Nov 2022 03:34:19 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/replication%E4%B8%8B%E4%BA%8B%E5%8A%A1%E4%B8%80%E8%87%B4%E6%80%A7%E4%B8%8E%E5%85%B1%E8%AF%86/</guid>
       <description>1. 前文回顾 在上一篇中，我们主要介绍了分布式系统中常见的复制模型，并描述了每一种模型的优缺点以及使用场景，同时阐述了分布式系统中特有的一些技术挑战。首先，常见的分布式系统复制模型有3种，分别是主从复制模型、多主复制模型以及无主复制模型。此外，复制从客户端的时效性来说分为同步复制&amp;amp;&amp;amp;异步复制，异步复制具有滞后性，可能会造成数据不一致，因为这个不一致，会带来各种各样的问题。
@@ -82,9 +141,25 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
     </item>
     
     <item>
+      <title>提升资源利用率与保障服务质量，鱼与熊掌不可兼得？</title>
+      <link>https://wfsui.github.io/posts/%E6%8F%90%E5%8D%87%E8%B5%84%E6%BA%90%E5%88%A9%E7%94%A8%E7%8E%87%E4%B8%8E%E4%BF%9D%E9%9A%9C%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E9%B1%BC%E4%B8%8E%E7%86%8A%E6%8E%8C%E4%B8%8D%E5%8F%AF%E5%85%BC%E5%BE%97/</link>
+      <pubDate>Mon, 21 Nov 2022 03:34:19 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E6%8F%90%E5%8D%87%E8%B5%84%E6%BA%90%E5%88%A9%E7%94%A8%E7%8E%87%E4%B8%8E%E4%BF%9D%E9%9A%9C%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E9%B1%BC%E4%B8%8E%E7%86%8A%E6%8E%8C%E4%B8%8D%E5%8F%AF%E5%85%BC%E5%BE%97/</guid>
+      <description>随着云计算时代的到来，大规模资源运营面临着如何在保障服务质量的同时提升资源利用率（降本增效）。但这两个目标的达成在当前的软硬件技术水平上，是相互矛盾的。本文介绍的LAR（Load Auto-Regulator）系统，即是探索这两个矛盾方向间的平衡点，在保证质量的前提下，提升资源的利用率。
+LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单机资源调度与隔离，在提升整体资源利用率的同时，能够根据服务的优先级和特征保证服务的质量。LAR的整体设计可以适用于多个场景，包括在线场景和混部场景。目前LAR已经在美团在线场景中投入生产使用，并取得了较好的效果。
+1 背景 1.1 云计算时代数据中心资源规模爆炸 云计算时代的到来，资源规模化运营成为必然的选择，大规模数据中心成为当今企业级互联网应用和云计算系统的关键支撑。为保障日益增长的互联网应用和云计算系统的计算需求，数据中心需要不断扩容，规模和服务器总量呈现快速增长趋势。据权威报告指出，2020年全球数据中心的服务器总量将达到1800万台，并且正以每年100万台的速度增长。然而，伴随着数据中心的急速扩容，资源利用率却始终处于较低状态。统计数据表明，目前全球数据中心资源利用率仅为10%~20%，如此低的资源利用率意味着数据中心大量的资源浪费，进而导致目前数据中心的成本效率极低。
+1.2 资源利用率提升影响巨大 在国家战略层面，数据中心资源利用率低，造成大量的资源浪费，包括物力资源和电能浪费，这与可持续发展的理念是冲突的。2021年7月，工业和信息化部印发《新型数据中心发展三年行动计划（2021-2023年）》，提出用3年时间，基本形成布局合理、技术先进、绿色低碳、算力规模与数字经济增长相适应的新型数据中心发展格局。计划中重点提出建设绿色高效的数据中心目标，将资源利用率提升作为核心目标。
+在公司经营上，提升资源利用率可以提升运营效率降低运营成本。谷歌在2019年发表的论文“Borg-the Next Generation”披露其2011年数据中心核心集群（统计1.2万台服务器）的月平均CPU利用率在30%左右，而到2019年，其数据中心核心集群（统计9.6万台服务器）的月平均CPU利用率达到了50%左右，8年时间内提升了约20%，资源使用效能的大幅提升，帮助谷歌节省成本累计数十亿美元。国内各大云服务提供商和互联网公司，目前投入大量人力物力去做提升数据中心资源利用率的工作，包括阿里巴巴、腾讯、百度、华为等公司均陆续提出了比较完善的资源利用率提升方案，在内部落地实践并取得了一定的成绩。
+提升资源利用率，降本增效，能给数据中心节省大量的成本。以数百万核CPU的规模的数据中心为例，整体资源利用率每提升1个百分点，节省成本（包括采购成本和运营成本，运营成本主要是机房租金、电费以及运维费用等）每年将达到数千万元。如果考虑到集群运营人工成本等，随着资源规模持续扩大，这个收益将持续增长。
+持续提升机器的资源利用率，降低单核成本，提升集群服务质量，是美团Hulk团队的核心目标之一。针对用户对降本增效的需求，Hulk调度团队在集群资源利用率提升和服务质量保障方向率先做出相关探索，提出了一系列的建设方案，并推进落地。本文重点介绍在Hulk整体资源利用率运营体系中的核心系统集群负载自动均衡管理系统。
+2 什么是LAR？ LAR全称是集群负载自动均衡管理系统（LAR，Load Auto-Regulator），是美团Hulk团队基于Kubernetes研发的容器编排系统。LAR在Kubernetes之上，通过提供分级的QoS管理机制和负载管控能力，实现从时空维度对资源的精确调度分配管理。</description>
+    </item>
+    
+    <item>
       <title>Replication（上）：常见复制模型&amp;分布式系统挑战</title>
       <link>https://wfsui.github.io/posts/replication%E4%B8%8A%E5%B8%B8%E8%A7%81%E5%A4%8D%E5%88%B6%E6%A8%A1%E5%9E%8B%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%8C%91%E6%88%98/</link>
-      <pubDate>Sun, 20 Nov 2022 03:34:04 +0000</pubDate>
+      <pubDate>Mon, 21 Nov 2022 03:34:18 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/replication%E4%B8%8A%E5%B8%B8%E8%A7%81%E5%A4%8D%E5%88%B6%E6%A8%A1%E5%9E%8B%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%8C%91%E6%88%98/</guid>
       <description>本系列文章分上下两篇，以《数据密集型应用系统设计（DDIA）》（下文简称《DDIA》）为主线，文中的核心理论讲解与图片来自于此书。在此基础上，加入了日常工作中对这些概念的理解与个性化的思考，并将它们映射到Kafka中，跟大家分享一下如何将具体的理论应用于实际生产环境中。
@@ -101,7 +176,7 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
     <item>
       <title>基于AI算法的数据库异常监测系统的设计与实现</title>
       <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai%E7%AE%97%E6%B3%95%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E7%9B%91%E6%B5%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/</link>
-      <pubDate>Sun, 20 Nov 2022 03:34:04 +0000</pubDate>
+      <pubDate>Mon, 21 Nov 2022 03:34:17 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai%E7%AE%97%E6%B3%95%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E7%9B%91%E6%B5%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/</guid>
       <description>1. 背景 数据库被广泛用于美团的核心业务场景上，对稳定性要求较高，对异常容忍度非常低。因此，快速的数据库异常发现、定位和止损就变得越来越重要。针对异常监测的问题，传统的固定阈值告警方式，需要依赖专家经验进行规则配置，不能根据不同业务场景灵活动态调整阈值，容易让小问题演变成大故障。
@@ -114,7 +189,7 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
     <item>
       <title>图技术在美团外卖下的场景化应用及探索</title>
       <link>https://wfsui.github.io/posts/%E5%9B%BE%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E4%B8%8B%E7%9A%84%E5%9C%BA%E6%99%AF%E5%8C%96%E5%BA%94%E7%94%A8%E5%8F%8A%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Sun, 20 Nov 2022 03:34:03 +0000</pubDate>
+      <pubDate>Mon, 21 Nov 2022 03:34:17 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9B%BE%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E4%B8%8B%E7%9A%84%E5%9C%BA%E6%99%AF%E5%8C%96%E5%BA%94%E7%94%A8%E5%8F%8A%E6%8E%A2%E7%B4%A2/</guid>
       <description>1. 引言 外卖已经成为大众生活中非常的重要组成部分，大家也逐步感受到外卖带来的便利。大数据和深度学习时代的到来，使点击率（Click Through Rate, CTR）/转化率（Conversion Rate, CVR）预估技术得到了长足的发展，深度学习技术已经成为业界的主流方法。美团外卖也通过应用深度模型，在线上取得了显著的收益。预估模型所做的事情，是建模蕴藏在数据中、在特定场景下用户和商品之间的关联性（即“人-货-场”）。以点击率预估为例，可以对画像特征、上下文特征、行为特征等进行建模，模型能够感知在该场景下用户和商品之间的关联。
@@ -129,7 +204,7 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
     <item>
       <title>自动化测试在美团外卖的实践与落地</title>
       <link>https://wfsui.github.io/posts/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E8%90%BD%E5%9C%B0/</link>
-      <pubDate>Sun, 20 Nov 2022 03:34:03 +0000</pubDate>
+      <pubDate>Mon, 21 Nov 2022 03:34:17 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E8%90%BD%E5%9C%B0/</guid>
       <description>1. 项目背景 美团外卖的业务场景比较多元化，除了外卖自身的业务，还作为平台承接了闪购、团好货、医药、跑腿等其他业务。除此之外，在全链路动态化的大基调下，外卖各个页面的技术形态也变得越来越复杂，除了Native代码，还包括Mach（外卖自研动态化框架）、React Native、美团小程序、H5等，不同技术栈的底层技术实现不同，渲染机制不同，进而对测试方式要求也有所不同，这也在无形中增加了测试的难度。下图汇总了美团多业务、多技术、多App的一些典型场景。
@@ -143,7 +218,7 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
     <item>
       <title>美团隐私计算平台通过行业权威认证</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%9A%90%E7%A7%81%E8%AE%A1%E7%AE%97%E5%B9%B3%E5%8F%B0%E9%80%9A%E8%BF%87%E8%A1%8C%E4%B8%9A%E6%9D%83%E5%A8%81%E8%AE%A4%E8%AF%81/</link>
-      <pubDate>Sun, 20 Nov 2022 03:34:02 +0000</pubDate>
+      <pubDate>Mon, 21 Nov 2022 03:34:16 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%9A%90%E7%A7%81%E8%AE%A1%E7%AE%97%E5%B9%B3%E5%8F%B0%E9%80%9A%E8%BF%87%E8%A1%8C%E4%B8%9A%E6%9D%83%E5%A8%81%E8%AE%A4%E8%AF%81/</guid>
       <description>近日，在2022年隐私计算大会上，中国信通院公布第六批可信隐私计算评测结果，美团隐私计算平台通过“联邦学习安全”和“多方安全计算基础能力”两个专项评测认证。2021年，美团已经通过“联邦学习基础能力”专项评测认证。
@@ -164,7 +239,7 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
     <item>
       <title>目标检测开源框架YOLOv6全面升级，更快更准的2.0版本来啦</title>
       <link>https://wfsui.github.io/posts/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%85%A8%E9%9D%A2%E5%8D%87%E7%BA%A7%E6%9B%B4%E5%BF%AB%E6%9B%B4%E5%87%86%E7%9A%842.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</link>
-      <pubDate>Sun, 20 Nov 2022 03:34:02 +0000</pubDate>
+      <pubDate>Mon, 21 Nov 2022 03:34:16 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%85%A8%E9%9D%A2%E5%8D%87%E7%BA%A7%E6%9B%B4%E5%BF%AB%E6%9B%B4%E5%87%86%E7%9A%842.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</guid>
       <description>9月5日，美团视觉智能部发布了YOLOv6 2.0版本，本次更新对轻量级网络进行了全面升级，量化版模型 YOLOv6-S 达到了 869 FPS，同时，还推出了综合性能优异的中大型网络（YOLOv6-M/L），丰富了YOLOv6网络系列。其中，YOLOv6-M/L 在 COCO 上检测精度（AP）分别达到 49.5%/52.5%，在 T4 卡上推理速度分别可达 233⁄121 FPS（batch size =32）。
@@ -175,7 +250,7 @@ GitHub下载地址：https://github.com/meituan/YOLOv6。欢迎Star收藏，随�
     <item>
       <title>通用目标检测开源框架YOLOv6在美团的量化部署实战</title>
       <link>https://wfsui.github.io/posts/%E9%80%9A%E7%94%A8%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E9%87%8F%E5%8C%96%E9%83%A8%E7%BD%B2%E5%AE%9E%E6%88%98/</link>
-      <pubDate>Sun, 20 Nov 2022 03:34:02 +0000</pubDate>
+      <pubDate>Mon, 21 Nov 2022 03:34:16 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E9%80%9A%E7%94%A8%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E9%87%8F%E5%8C%96%E9%83%A8%E7%BD%B2%E5%AE%9E%E6%88%98/</guid>
       <description>1. 背景和难点## 1. 背景和难点 YOLOv6 是美团发布的一款开源的面向工业应用的 2D 目标检测模型 [1]，主要特点是速度快、精度高、部署友好，在美团众多视觉业务场景中都有着广泛的应用。通过量化（Quantization）提升推理速度是实际工业应用中的基本操作，但由于 YOLOv6 系列模型采用了大量的重参数化模块，如何针对 YOLOv6 进行高效和高精度的量化成为一个亟待解决的问题。本文旨在解决 YOLOv6 量化方面的难题，并以 YOLOv6s 模型为例，从训练后量化（Post-Training Quantization, PTQ）和量化感知训练（Quantization-Aware Training, QAT）两个方面进行分析，探索出了一条切实可行的量化方案。</description>
@@ -184,7 +259,7 @@ GitHub下载地址：https://github.com/meituan/YOLOv6。欢迎Star收藏，随�
     <item>
       <title>深入理解函数式编程（下）</title>
       <link>https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8B/</link>
-      <pubDate>Sun, 20 Nov 2022 03:34:01 +0000</pubDate>
+      <pubDate>Mon, 21 Nov 2022 03:34:15 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8B/</guid>
       <description>1. 前文回顾 在上篇中，我们分析了函数式编程的起源和基本特性，并通过每一个特性的示例来演示这种特性的实际效果。首先，函数式编程起源于数理逻辑，起源于λ演算，这是一种演算法，它定义一些基础的数据结构，然后通过归约和代换来实现更复杂的数据结构，而函数本身也是它的一种数据。其次，我们探讨了很多函数式编程的特性，比如：
@@ -197,7 +272,7 @@ First Class 纯函数 引用透明 表达式 高阶函数 柯里化 函数组合
     <item>
       <title>数字化新业态下数据安全创新——Token化</title>
       <link>https://wfsui.github.io/posts/%E6%95%B0%E5%AD%97%E5%8C%96%E6%96%B0%E4%B8%9A%E6%80%81%E4%B8%8B%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E5%88%9B%E6%96%B0token%E5%8C%96/</link>
-      <pubDate>Sun, 20 Nov 2022 03:34:01 +0000</pubDate>
+      <pubDate>Mon, 21 Nov 2022 03:34:15 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%95%B0%E5%AD%97%E5%8C%96%E6%96%B0%E4%B8%9A%E6%80%81%E4%B8%8B%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E5%88%9B%E6%96%B0token%E5%8C%96/</guid>
       <description>0. 引言 伴随科技创新引领数字化浪潮席卷全球，数据成为企业发展的核心生产要素。像Google、Facebook等高科技公司，通过提供免费、优秀的软件和服务，接入大量的用户，并基于数据资源驱动，获得了巨大的商业成功。然而，在高速发展的同时，公司对数据却疏于治理，引起了大量的数据泄漏、算法滥用以及隐私相关的问题。这种危机伴随着Facebook的“剑桥分析”丑闻、2020年美国大选等标志性事件，推向了高潮。基于对数据安全和隐私的担忧，欧盟的GDPR领衔的现代隐私合规出台，随后风靡全球，成为又一不可逆转的潮流。
@@ -211,24 +286,9 @@ First Class 纯函数 引用透明 表达式 高阶函数 柯里化 函数组合
     </item>
     
     <item>
-      <title>检索式对话系统在美团客服场景的探索与实践</title>
-      <link>https://wfsui.github.io/posts/%E6%A3%80%E7%B4%A2%E5%BC%8F%E5%AF%B9%E8%AF%9D%E7%B3%BB%E7%BB%9F%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%AE%A2%E6%9C%8D%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sun, 20 Nov 2022 03:34:00 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E6%A3%80%E7%B4%A2%E5%BC%8F%E5%AF%B9%E8%AF%9D%E7%B3%BB%E7%BB%9F%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%AE%A2%E6%9C%8D%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
-      <description>1 背景与挑战 对话系统一直是人工智能研究的热门领域之一，近年来随着深度学习技术的发展，人工智能在对话系统上出现了不少的突破性进展。但是，由于自然语言的复杂性，目前的智能对话系统还远远达不到可以直接替代人类的地步。因此在一些复杂的业务场景中，目前的智能对话系统如何更好的去辅助人类做到人机协同，提升沟通效率，也成为了当今研究的一个热点以及实际落地方向。
-作为一家连接用户和商户的生活服务电子商务平台，美团在平台服务的售前、售中、售后全链路的多个场景中，用户向商家都存在有大量的问题咨询情况，如在线坐席CHAT、商家IM等。因此我们希望利用对话系统，以推荐回复的方式，基于对话上文为客服提供候选回复，来帮助商家提升回答用户问题的效率，同时更快地解决用户问题，改善用户咨询体验。一般来说，对话系统可以大致分为三类：
-任务型：一般为受限域，以完成特定领域的特定任务为目的，主流方法是基于有限状态机（FSM）的可配置化TaskFlow，而基于强化学习、监督学习等基于数据驱动的对话管理方法在实际应用中尚不成熟，应用场景如售后退款等流程明确的智能机器人。 问答型：受限域或开放域，主要是回答特定领域的信息咨询或开放领域的知识性问题，主流方法包括图谱问答（KBQA）、社区问答（CQA）、文档问答（MRC）等单轮问答，也可能涉及多轮问答，应用场景如酒店、旅游等领域的售前咨询。 闲聊型：一般为开放域，无特定目的，在开放领域内让对话有意义地进行下去即可，主流方法是基于检索的召回排序二阶段方法或基于生成的端到端模型，应用场景如聊天机器人。 其中，任务型和问答型系统具备较高的准确性，但是需要针对细分领域进行不同程度的适配与优化，在大范围应用上需要较高的成本。本文主要关注基于检索式方案的对话系统，其准确性略低，但是成本较小并且领域迁移性好，非常适合用于如话术推荐等人机协同等场景。
-在后文中，我们主要以话术推荐应用为例，即根据对话上下文为坐席/商家提供候选回复，来介绍检索式对话系统在美团客服场景的探索与实践。以下内容会分为五个部分：第一部分介绍系统的整体架构与指标体系；第二和第三部分分别介绍召回和排序模块的工作；第四部分展示一些具体的应用示例，最后一部分则是总结与展望。
-2 架构与指标 检索式对话系统的整体架构如下图1所示，可以划分为五层：
-数据与平台层：离线对坐席/商家与用户的历史对话Session进行清洗、处理，建立自动化流程，日更新话术索引库。同时，利用对话平台构建知识库，既可以用在智能客服中，也可以用作话术推荐。 召回层：给定对话上文及其它限制条件，从话术索引库和知识库中召回结果，包括文本、向量、标签、知识等多路召回。 排序层：针对召回模块返回的结果集合，进行排序打分，包括规则排序、文本相关性模型排序以及CTR预估排序。 策略层：针对排序模块返回的结果列表，进行重排序或者拒推，例如非活跃商户拒推，推荐列表包含正确答案而商家长期无采纳行为则降低推荐概率；多样性答案选择，尽量选择语义及表达形式不同的答案，避免推荐过于相似的答案；个性化场景策略，针对场景特征定制策略。 应用层：主要用于人工辅助场景，包括在线回复咨询时的话术推荐和输入联想，以及离线填答智能客服知识库时的答案推荐供给。 同时，为了更合理地指导系统相关优化，我们设计了一套离线到在线的指标体系，以话术推荐为例，如下图2所示，具体来说可分为三个部分：
-离线自动指标：主要计算的是Top-N推荐话术与坐席/商家下一句真实回复的语义相关性，我们采用了文本相关性的BLEU、ROUGE指标，以及排序相关性的Recall、MRR指标。 离线人工指标：上述离线自动指标计算比较简单，无需人工参与，但存在一定的局限性。为此我们进一步进行了离线人工满意度评估，通过人工打分来判断系统推荐回复是否满足当前对话回复上下文，并计算了离线人工指标与离线自动指标的相关性，结果表示离线人工指标与离线自动指标基本成正相关，且ROUGE指标相对来说更为客观而且与人工指标相关程度更高。 线上业务指标：此部分指标是系统线上效果的重点观测指标，直接真实反映话术推荐效果（在我们的多次AB试验中，也证实了离线自动指标ROUGE与线上采纳率指标呈正相关性）。 因此在后续离线试验中，我们主要以文本相关性指标，尤其是ROUGE指标作为离线的核心观测指标。</description>
-    </item>
-    
-    <item>
       <title>美团高性能终端实时日志系统建设实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%AB%98%E6%80%A7%E8%83%BD%E7%BB%88%E7%AB%AF%E5%AE%9E%E6%97%B6%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sun, 20 Nov 2022 03:34:00 +0000</pubDate>
+      <pubDate>Mon, 21 Nov 2022 03:34:14 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%AB%98%E6%80%A7%E8%83%BD%E7%BB%88%E7%AB%AF%E5%AE%9E%E6%97%B6%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景 1.1 Logan 简介 Logan 是美团面向终端的统一日志服务，已支持移动端App、Web、小程序、IoT等多端环境，具备日志采集、存储、上传、查询与分析等能力，帮助用户定位研发问题，提升故障排查效率。同时，Logan 也是业内开源较早的大前端日志系统，具有写入性能高、安全性高、日志防丢失等优点。
@@ -239,7 +299,7 @@ First Class 纯函数 引用透明 表达式 高阶函数 柯里化 函数组合
     <item>
       <title>深入理解函数式编程（上）</title>
       <link>https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8A/</link>
-      <pubDate>Sun, 20 Nov 2022 03:34:00 +0000</pubDate>
+      <pubDate>Mon, 21 Nov 2022 03:34:14 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8A/</guid>
       <description>前言 本文分为上下两篇，上篇讲述函数式编程的基础概念和特性，下篇讲述函数式编程的进阶概念、应用及优缺点。函数式编程既不是简单的堆砌函数，也不是语言范式的终极之道。我们将深入浅出地讨论它的特性，以期在日常工作中能在对应场景中进行灵活应用。
@@ -255,9 +315,24 @@ First Class 纯函数 引用透明 表达式 高阶函数 柯里化 函数组合
     </item>
     
     <item>
+      <title>检索式对话系统在美团客服场景的探索与实践</title>
+      <link>https://wfsui.github.io/posts/%E6%A3%80%E7%B4%A2%E5%BC%8F%E5%AF%B9%E8%AF%9D%E7%B3%BB%E7%BB%9F%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%AE%A2%E6%9C%8D%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Mon, 21 Nov 2022 03:34:13 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E6%A3%80%E7%B4%A2%E5%BC%8F%E5%AF%B9%E8%AF%9D%E7%B3%BB%E7%BB%9F%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%AE%A2%E6%9C%8D%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
+      <description>1 背景与挑战 对话系统一直是人工智能研究的热门领域之一，近年来随着深度学习技术的发展，人工智能在对话系统上出现了不少的突破性进展。但是，由于自然语言的复杂性，目前的智能对话系统还远远达不到可以直接替代人类的地步。因此在一些复杂的业务场景中，目前的智能对话系统如何更好的去辅助人类做到人机协同，提升沟通效率，也成为了当今研究的一个热点以及实际落地方向。
+作为一家连接用户和商户的生活服务电子商务平台，美团在平台服务的售前、售中、售后全链路的多个场景中，用户向商家都存在有大量的问题咨询情况，如在线坐席CHAT、商家IM等。因此我们希望利用对话系统，以推荐回复的方式，基于对话上文为客服提供候选回复，来帮助商家提升回答用户问题的效率，同时更快地解决用户问题，改善用户咨询体验。一般来说，对话系统可以大致分为三类：
+任务型：一般为受限域，以完成特定领域的特定任务为目的，主流方法是基于有限状态机（FSM）的可配置化TaskFlow，而基于强化学习、监督学习等基于数据驱动的对话管理方法在实际应用中尚不成熟，应用场景如售后退款等流程明确的智能机器人。 问答型：受限域或开放域，主要是回答特定领域的信息咨询或开放领域的知识性问题，主流方法包括图谱问答（KBQA）、社区问答（CQA）、文档问答（MRC）等单轮问答，也可能涉及多轮问答，应用场景如酒店、旅游等领域的售前咨询。 闲聊型：一般为开放域，无特定目的，在开放领域内让对话有意义地进行下去即可，主流方法是基于检索的召回排序二阶段方法或基于生成的端到端模型，应用场景如聊天机器人。 其中，任务型和问答型系统具备较高的准确性，但是需要针对细分领域进行不同程度的适配与优化，在大范围应用上需要较高的成本。本文主要关注基于检索式方案的对话系统，其准确性略低，但是成本较小并且领域迁移性好，非常适合用于如话术推荐等人机协同等场景。
+在后文中，我们主要以话术推荐应用为例，即根据对话上下文为坐席/商家提供候选回复，来介绍检索式对话系统在美团客服场景的探索与实践。以下内容会分为五个部分：第一部分介绍系统的整体架构与指标体系；第二和第三部分分别介绍召回和排序模块的工作；第四部分展示一些具体的应用示例，最后一部分则是总结与展望。
+2 架构与指标 检索式对话系统的整体架构如下图1所示，可以划分为五层：
+数据与平台层：离线对坐席/商家与用户的历史对话Session进行清洗、处理，建立自动化流程，日更新话术索引库。同时，利用对话平台构建知识库，既可以用在智能客服中，也可以用作话术推荐。 召回层：给定对话上文及其它限制条件，从话术索引库和知识库中召回结果，包括文本、向量、标签、知识等多路召回。 排序层：针对召回模块返回的结果集合，进行排序打分，包括规则排序、文本相关性模型排序以及CTR预估排序。 策略层：针对排序模块返回的结果列表，进行重排序或者拒推，例如非活跃商户拒推，推荐列表包含正确答案而商家长期无采纳行为则降低推荐概率；多样性答案选择，尽量选择语义及表达形式不同的答案，避免推荐过于相似的答案；个性化场景策略，针对场景特征定制策略。 应用层：主要用于人工辅助场景，包括在线回复咨询时的话术推荐和输入联想，以及离线填答智能客服知识库时的答案推荐供给。 同时，为了更合理地指导系统相关优化，我们设计了一套离线到在线的指标体系，以话术推荐为例，如下图2所示，具体来说可分为三个部分：
+离线自动指标：主要计算的是Top-N推荐话术与坐席/商家下一句真实回复的语义相关性，我们采用了文本相关性的BLEU、ROUGE指标，以及排序相关性的Recall、MRR指标。 离线人工指标：上述离线自动指标计算比较简单，无需人工参与，但存在一定的局限性。为此我们进一步进行了离线人工满意度评估，通过人工打分来判断系统推荐回复是否满足当前对话回复上下文，并计算了离线人工指标与离线自动指标的相关性，结果表示离线人工指标与离线自动指标基本成正相关，且ROUGE指标相对来说更为客观而且与人工指标相关程度更高。 线上业务指标：此部分指标是系统线上效果的重点观测指标，直接真实反映话术推荐效果（在我们的多次AB试验中，也证实了离线自动指标ROUGE与线上采纳率指标呈正相关性）。 因此在后续离线试验中，我们主要以文本相关性指标，尤其是ROUGE指标作为离线的核心观测指标。</description>
+    </item>
+    
+    <item>
       <title>美团图灵机器学习平台性能起飞的秘密（一）</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%9B%BE%E7%81%B5%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E6%80%A7%E8%83%BD%E8%B5%B7%E9%A3%9E%E7%9A%84%E7%A7%98%E5%AF%86%E4%B8%80/</link>
-      <pubDate>Sun, 20 Nov 2022 03:33:59 +0000</pubDate>
+      <pubDate>Mon, 21 Nov 2022 03:34:12 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%9B%BE%E7%81%B5%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E6%80%A7%E8%83%BD%E8%B5%B7%E9%A3%9E%E7%9A%84%E7%A7%98%E5%AF%86%E4%B8%80/</guid>
       <description>导语 图灵平台是美团履约平台技术部2018年开始自研的算法平台，提供模型全生命周期的一站式服务，旨在帮助算法同学脱离繁琐的工程化开发，把有限的精力聚焦于业务和算法的迭代优化中。
@@ -276,7 +351,7 @@ First Class 纯函数 引用透明 表达式 高阶函数 柯里化 函数组合
     <item>
       <title>美团外卖搜索基于Elasticsearch的优化实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%90%9C%E7%B4%A2%E5%9F%BA%E4%BA%8Eelasticsearch%E7%9A%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sun, 20 Nov 2022 03:33:59 +0000</pubDate>
+      <pubDate>Mon, 21 Nov 2022 03:34:12 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%90%9C%E7%B4%A2%E5%9F%BA%E4%BA%8Eelasticsearch%E7%9A%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 前言 最近十年，Elasticsearch 已经成为了最受欢迎的开源检索引擎，其作为离线数仓、近线检索、B端检索的经典基建，已沉淀了大量的实践案例及优化总结。然而在高并发、高可用、大数据量的 C 端场景，目前可参考的资料并不多。因此，我们希望通过分享在外卖搜索场景下的优化实践，能为大家提供 Elasticsearch 优化思路上的一些借鉴。
@@ -286,7 +361,7 @@ First Class 纯函数 引用透明 表达式 高阶函数 柯里化 函数组合
     <item>
       <title>ACM MM &amp; ECCV 2022 | 美团视觉8篇论文揭秘内容领域的智能科技</title>
       <link>https://wfsui.github.io/posts/acm-mm-eccv-2022-%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%898%E7%AF%87%E8%AE%BA%E6%96%87%E6%8F%AD%E7%A7%98%E5%86%85%E5%AE%B9%E9%A2%86%E5%9F%9F%E7%9A%84%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80/</link>
-      <pubDate>Sun, 20 Nov 2022 03:33:58 +0000</pubDate>
+      <pubDate>Mon, 21 Nov 2022 03:34:11 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/acm-mm-eccv-2022-%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%898%E7%AF%87%E8%AE%BA%E6%96%87%E6%8F%AD%E7%A7%98%E5%86%85%E5%AE%B9%E9%A2%86%E5%9F%9F%E7%9A%84%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80/</guid>
       <description>人工智能技术正在成为内容领域的中台力量，其中视觉AI已经渗透到内容生产、内容审核、内容分发、用户互动、商业化变现等各个环节。美团视觉智能部以场景化的内容产品、智能化的内容工具助力产业，在内容的创作、内容分发等环节应用广泛。
@@ -297,81 +372,6 @@ ECCV | Adaptive Spatial-BCE Loss for Weakly Supervised Semantic Segmentation（�
 论文下载：PDF
 论文简介：弱监督语义分割旨在解决全监督语义分割任务中所需的像素级标签人工成本和时间开销较大的缺点，通过引入较弱的监督信息来降低相关成本。其中本文所使用的图像级监督成本最低，但其较低的信息量也带来了更大的挑战。当前的通用流程是先通过分类网络生成分割伪标签，经过后处理细化后再用伪标签训练语义分割网络。先前方法主要有以下缺点：1）生成的伪标签物体轮廓不清晰；2）前背景的划分阈值需要人工调节，降低了泛用性；3）性能严重依赖后处理，训练复杂度较高。为了缓解这些缺点，我们提出了一个新的损失函数——空间二元交叉熵损失（Spatial-BCE），通过为前景和背景像素分配不同的优化方向来提高它们之间的特征差异性，进而实现更加清晰的伪标签物体轮廓，如下图1所示：
 此外，我们还引入了自适应阈值，通过在训练中让损失函数自行划分前背景像素的比例，并在推理时可同样将划分阈值交由网络生成。最后，我们还设计了配套的迭代式训练方法，大幅提高了初始伪标签的准确率，即使不使用复杂的后处理方法，我们也可以实现当前的最优性能。大量实验表明，我们的方法在PASCAL VOC 2012和MS-COCO 2014数据集上在均可成为SoTA，如下图2所示：</description>
-    </item>
-    
-    <item>
-      <title>咱们从头到尾讲一次 Flink 网络流控和反压剖析</title>
-      <link>https://wfsui.github.io/posts/%E5%92%B1%E4%BB%AC%E4%BB%8E%E5%A4%B4%E5%88%B0%E5%B0%BE%E8%AE%B2%E4%B8%80%E6%AC%A1-flink-%E7%BD%91%E7%BB%9C%E6%B5%81%E6%8E%A7%E5%92%8C%E5%8F%8D%E5%8E%8B%E5%89%96%E6%9E%90/</link>
-      <pubDate>Sun, 20 Nov 2022 03:33:58 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E5%92%B1%E4%BB%AC%E4%BB%8E%E5%A4%B4%E5%88%B0%E5%B0%BE%E8%AE%B2%E4%B8%80%E6%AC%A1-flink-%E7%BD%91%E7%BB%9C%E6%B5%81%E6%8E%A7%E5%92%8C%E5%8F%8D%E5%8E%8B%E5%89%96%E6%9E%90/</guid>
-      <description>作者：张俊
-整理：张友亮（Apache Flink 社区志愿者）
-本文共 4745字，预计阅读时间 15min。
-本文根据 Apache Flink 系列直播整理而成，由 Apache Flink Contributor、OPPO 大数据平台研发负责人张俊老师分享。主要内容如下：
-网络流控的概念与背景 TCP的流控机制 Flink TCP-based 反压机制（before V1.</description>
-    </item>
-    
-    <item>
-      <title>JPA 和 Mybatis 技术选型</title>
-      <link>https://wfsui.github.io/posts/jpa-%E5%92%8C-mybatis-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B/</link>
-      <pubDate>Sun, 20 Nov 2022 03:33:56 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/jpa-%E5%92%8C-mybatis-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B/</guid>
-      <description>在我们平时的项目中，大家都知道可以使用 JPA 或者 Mybatis 作为 ORM 层。对 JPA 和 Mybatis 如何进行技术选型？
-下面看看大精华总结如下：
-最佳回答
-首先表达个人观点，JPA必然是首选的。
-个人认为仅仅讨论两者使用起来有何区别，何者更加方便，不足以真正的比较这两个框架。
-要评判出更加优秀的方案，我觉得可以从软件设计的角度来评判。
-个人对 mybatis 并不熟悉，但 JPA 规范和 springdata 的实现，设计理念绝对是超前的。软件开发复杂性的一个解决手段是遵循 DDD（DDD 只是一种手段，但不是唯一手段），而我着重几点来聊聊 JPA 的设计中是如何体现领域驱动设计思想的，抛砖引玉。</description>
-    </item>
-    
-    <item>
-      <title>算法中七种常见的时间复杂度</title>
-      <link>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</link>
-      <pubDate>Sun, 20 Nov 2022 03:33:55 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</guid>
-      <description>这是我的推广信息，以激励自己更好的分享自己的知识和经验！也希望看到的你能够多多支持，谢谢！
-1. 滴滴云AI大师: 目前滴滴云正在大力推广自己的云计算服务，需要购买的朋友们用我的AI大师码 「2049」在滴滴云上购买 GPU / vGPU / 机器学习产品可额外享受 9 折优惠，点击这里前往滴滴云官网：www.didiyun.com。
-原文地址：7 Helpful Time Complexities 原文作者：Ellis Andrews 译文出自：掘金翻译计划 本文永久链接：https://github.</description>
-    </item>
-    
-    <item>
-      <title>Java魔法类：Unsafe应用解析</title>
-      <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Sun, 20 Nov 2022 03:33:54 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
-      <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
-注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
-基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
-public final class Unsafe { // 单例对象 private static final Unsafe theUnsafe; private Unsafe() { } @CallerSensitive public static Unsafe getUnsafe() { Class var0 = Reflection.</description>
-    </item>
-    
-    <item>
-      <title>Java动态追踪技术探究</title>
-      <link>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</link>
-      <pubDate>Sun, 20 Nov 2022 03:33:53 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</guid>
-      <description>引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：
-“Debug一下吧。”
-“线上机器，没开Debug端口。”
-“看日志，看看请求值和返回值分别是什么？”
-“那段代码没打印日志。”
-“改代码，加日志，重新发布一次。”
-“怀疑是线程池的问题，重启会破坏现场。”
-长达几十秒的沉默之后：“据说，排查问题的最高境界，就是只通过Review代码来发现问题。”
-比几十秒长几十倍的沉默之后：“我轮询了那段代码一十七遍之后，终于得出一个结论。”
-“结论是？”
-“我还没到达只通过Review代码就能发现问题的至高境界。”
-从JSP说起 对于大多数Java程序员来说，早期的时候，都会接触到一个叫做JSP（Java Server Pages）的技术。虽然这种技术，在前后端代码分离、前后端逻辑分离、前后端组织架构分离的今天来看，已经过时了，但是其中还是有一些有意思的东西，值得拿出来说一说。
-当时刚刚处于Java入门时期的我们，大多数精力似乎都放在了JSP的页面展示效果上了：
-“这个表格显示的行数不对”
-“原来是for循环写的有问题，改一下，刷新页面再试一遍”
-“嗯，好了，表格显示没问题了，但是，登录人的姓名没取到啊，是不是Sesstion获取有问题？”</description>
     </item>
     
     <item>

@@ -11,8 +11,8 @@
 2016 年：基于相关性、质量度、转化率等信息进行线性加权，这种方法简单但是特征的表达能力较弱，权重人工确定，排序效果存在很大的提升空间。 2017 年：采用基于机器学习的简单 LR 模型进行 Pointwise 预估排序。 2018 年：采用基于向量内积的双塔模型，两侧分别输入查询词、用户以及上下文特征和商户特征，经过深度网络计算后，分别产出用户&amp;查询词向量和商户向量，再通过内积计算得到预估分数进行排序。该方法可以提前把商户向量计算保存好，所以在线预测快，但是两侧信息的交叉能力有限。 2019 年：为了解决双塔模型无法很好地建模交叉特征的问题，将双塔模型的输出作为特征与其他交叉特征通过 GBDT 树模型进行融合。 2020 年至今：由于算力的提升，开始探索 NN 端到端粗排模型并且持续迭代 NN 模型。 现阶段，工业界粗排模型常用的有双塔模型，比如腾讯[3]和爱奇艺[4]；交互式 NN 模型，比如阿里巴巴[1,2]。下文主要介绍美团搜索在粗排升级为 NN 模型过程中的相关优化工作，主要包括粗排效果优化、效果&amp;性能联合优化两个部分。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E7%B2%97%E6%8E%92%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-11-21T03:34:20+00:00" />
-<meta property="article:modified_time" content="2022-11-21T03:34:20+00:00" /><meta property="og:site_name" content="大峰哥" />
+<meta property="article:published_time" content="2022-11-22T03:27:32+00:00" />
+<meta property="article:modified_time" content="2022-11-22T03:27:32+00:00" /><meta property="og:site_name" content="大峰哥" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="美团搜索粗排优化的探索与实践"/>
@@ -66,7 +66,7 @@
 
 		<div class="post-header">
 			<h1 class="title">美团搜索粗排优化的探索与实践</h1>
-			<div class="meta">Posted at &mdash; Nov 21, 2022</div>
+			<div class="meta">Posted at &mdash; Nov 22, 2022</div>
 		</div>
 
 		<div class="markdown">

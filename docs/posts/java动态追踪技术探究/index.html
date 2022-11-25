@@ -22,8 +22,8 @@
 “嗯，好了，表格显示没问题了，但是，登录人的姓名没取到啊，是不是Sesstion获取有问题？”" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-11-24T03:08:12+00:00" />
-<meta property="article:modified_time" content="2022-11-24T03:08:12+00:00" /><meta property="og:site_name" content="大峰哥" />
+<meta property="article:published_time" content="2022-11-25T03:24:09+00:00" />
+<meta property="article:modified_time" content="2022-11-25T03:24:09+00:00" /><meta property="og:site_name" content="大峰哥" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Java动态追踪技术探究"/>
@@ -88,7 +88,7 @@
 
 		<div class="post-header">
 			<h1 class="title">Java动态追踪技术探究</h1>
-			<div class="meta">Posted at &mdash; Nov 24, 2022</div>
+			<div class="meta">Posted at &mdash; Nov 25, 2022</div>
 		</div>
 
 		<div class="markdown">
@@ -143,11 +143,11 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
 </span></span></code></pre></div><p>上面Person类中age和name是属性，speak是行为。对象是类的事例，每个对象的属性都属于对象本身，但是每个对象的行为却是公共的。举个例子，比如我们现在基于Person类创建了两个对象，personA和personB：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Person personA <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> Person<span style="color:#719e07">(</span>43<span style="color:#719e07">,</span> <span style="color:#2aa198">&#34;lixunhuan&#34;</span><span style="color:#719e07">);</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Person personA <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> Person<span style="color:#719e07">(</span><span style="color:#2aa198">43</span><span style="color:#719e07">,</span> <span style="color:#2aa198">&#34;lixunhuan&#34;</span><span style="color:#719e07">);</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>personA<span style="color:#719e07">.</span>speak<span style="color:#719e07">(</span><span style="color:#2aa198">&#34;我是李寻欢&#34;</span><span style="color:#719e07">);</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Person personB <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> Person<span style="color:#719e07">(</span>23<span style="color:#719e07">,</span> <span style="color:#2aa198">&#34;afei&#34;</span><span style="color:#719e07">);</span>
+</span></span><span style="display:flex;"><span>Person personB <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> Person<span style="color:#719e07">(</span><span style="color:#2aa198">23</span><span style="color:#719e07">,</span> <span style="color:#2aa198">&#34;afei&#34;</span><span style="color:#719e07">);</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>personB<span style="color:#719e07">.</span>speak<span style="color:#719e07">(</span><span style="color:#2aa198">&#34;我是阿飞&#34;</span><span style="color:#719e07">);</span>
 </span></span></code></pre></div><p>personA和personB有各自的姓名和年龄，但是有共同的行为：speak。想象一下，如果我们是Java语言的设计者，我们会怎么存储对象的行为和属性呢？</p>
@@ -255,7 +255,7 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>        count<span style="color:#719e07">++;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">@OnTimer</span><span style="color:#719e07">(</span>2000<span style="color:#719e07">)</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">@OnTimer</span><span style="color:#719e07">(</span><span style="color:#2aa198">2000</span><span style="color:#719e07">)</span> 
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">ontimer</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#586e75">// we can access counter as &#34;count&#34; as well
 </span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>        <span style="color:#586e75">// as from jvmstat counter directly.

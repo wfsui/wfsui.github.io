@@ -139,7 +139,7 @@
 </span></span></code></pre></div><p>ndk-build 项目的配置方式：</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>LOCAL_CFLAGS += -fvisibility=hidden
 </span></span></code></pre></div><p>另一方面，针对单个变量或函数，可以通过 attribute 方式指定其符号可见性，示例如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span>__attribute__((visibility(<span style="color:#2aa198">&#34;hidden&#34;</span>)))
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#268bd2">__attribute__</span>((<span style="color:#268bd2">visibility</span>(<span style="color:#2aa198">&#34;hidden&#34;</span>)))
 </span></span><span style="display:flex;"><span><span style="color:#dc322f">int</span> hiddenInt<span style="color:#719e07">=</span><span style="color:#2aa198">3</span>;
 </span></span></code></pre></div><p>其常用值也是 default 和 hidden，与 visibility 方式意义类似，这里不再赘述。</p>
 <p>attribute 方式指定的符号可见性的优先级，高于 visibility 方式指定的可见性，相当于 visibility 是全局符号可见性开关，attribute 方式是针对单个符号的可见性开关。这两种方式结合就能控制源码中每个符号的可见性。</p>

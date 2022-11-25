@@ -17,8 +17,8 @@
 而在众多优化中，收益最高、适用性最广的技术的就是算子优化，这项技术极大提升了图灵训练引擎的吞吐量。本篇文章首先将为大家介绍内存优化中的算子优化技术。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%9B%BE%E7%81%B5%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E6%80%A7%E8%83%BD%E8%B5%B7%E9%A3%9E%E7%9A%84%E7%A7%98%E5%AF%86%E4%B8%80/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-11-24T03:08:19+00:00" />
-<meta property="article:modified_time" content="2022-11-24T03:08:19+00:00" /><meta property="og:site_name" content="大峰哥" />
+<meta property="article:published_time" content="2022-11-25T03:24:02+00:00" />
+<meta property="article:modified_time" content="2022-11-25T03:24:02+00:00" /><meta property="og:site_name" content="大峰哥" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="美团图灵机器学习平台性能起飞的秘密（一）"/>
@@ -78,7 +78,7 @@
 
 		<div class="post-header">
 			<h1 class="title">美团图灵机器学习平台性能起飞的秘密（一）</h1>
-			<div class="meta">Posted at &mdash; Nov 24, 2022</div>
+			<div class="meta">Posted at &mdash; Nov 25, 2022</div>
 		</div>
 
 		<div class="markdown">
@@ -267,7 +267,7 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#586e75">// mapPartitions中调用BatchIterator完成计算逻辑
 </span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>Dataset<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;</span> result <span style="color:#719e07">=</span> dataset<span style="color:#719e07">.</span>mapPartitions<span style="color:#719e07">((</span>MapPartitionsFunction<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">,</span> Row<span style="color:#719e07">&gt;)</span> inputIterator <span style="color:#719e07">-&gt;</span> <span style="color:#719e07">new</span> Iterator<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;()</span> <span style="color:#719e07">{</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 一批处理的数据行数
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#268bd2">private</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">final</span> <span style="color:#dc322f">int</span> INPUT_BATCH_PROCESS_SIZE <span style="color:#719e07">=</span> 5<span style="color:#719e07">;</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#268bd2">private</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">final</span> <span style="color:#dc322f">int</span> INPUT_BATCH_PROCESS_SIZE <span style="color:#719e07">=</span> <span style="color:#2aa198">5</span><span style="color:#719e07">;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 当前批次处理的数据集
 </span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#268bd2">private</span> <span style="color:#268bd2">final</span> List<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;</span> batchRows <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> ArrayList<span style="color:#719e07">&lt;&gt;(</span>INPUT_BATCH_PROCESS_SIZE<span style="color:#719e07">);</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 当前批次输出iterator
@@ -278,13 +278,13 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 本轮结果已全部消费，进入下一批次batch
 </span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#719e07">if</span> <span style="color:#719e07">(!</span>batchResult<span style="color:#719e07">.</span>hasNext<span style="color:#719e07">())</span> <span style="color:#719e07">{</span>
 </span></span><span style="display:flex;"><span>      batchRows<span style="color:#719e07">.</span>clear<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#dc322f">int</span> count <span style="color:#719e07">=</span> 0<span style="color:#719e07">;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#dc322f">int</span> count <span style="color:#719e07">=</span> <span style="color:#2aa198">0</span><span style="color:#719e07">;</span>
 </span></span><span style="display:flex;"><span>      <span style="color:#586e75">// 按一个 batch 5条数据加入集合
 </span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>      <span style="color:#719e07">while</span> <span style="color:#719e07">(</span>count<span style="color:#719e07">++</span> <span style="color:#719e07">&lt;</span> INPUT_BATCH_PROCESS_SIZE <span style="color:#719e07">&amp;&amp;</span> inputIterator<span style="color:#719e07">.</span>hasNext<span style="color:#719e07">())</span> <span style="color:#719e07">{</span>
 </span></span><span style="display:flex;"><span>        batchRows<span style="color:#719e07">.</span>add<span style="color:#719e07">(</span>inputIterator<span style="color:#719e07">.</span>next<span style="color:#719e07">());</span>
 </span></span><span style="display:flex;"><span>      <span style="color:#719e07">}</span>
 </span></span><span style="display:flex;"><span>      <span style="color:#586e75">// 上游数据全部消费
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>      <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>batchRows<span style="color:#719e07">.</span>size<span style="color:#719e07">()</span> <span style="color:#719e07">==</span> 0<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>      <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>batchRows<span style="color:#719e07">.</span>size<span style="color:#719e07">()</span> <span style="color:#719e07">==</span> <span style="color:#2aa198">0</span><span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#719e07">return</span> <span style="color:#cb4b16">false</span><span style="color:#719e07">;</span>
 </span></span><span style="display:flex;"><span>      <span style="color:#719e07">}</span>
 </span></span><span style="display:flex;"><span>      <span style="color:#586e75">// 随机获取2条数据

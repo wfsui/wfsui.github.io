@@ -274,8 +274,8 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
 </span></span><span style="display:flex;"><span>...
 </span></span><span style="display:flex;"><span><span style="color:#719e07">const</span> <span style="color:#719e07">volatile</span> <span style="color:#dc322f">char</span> payload_shadow[MAX_PAYLOAD_LEN];
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>SEC(<span style="color:#2aa198">&#34;tracepoint/syscalls/sys_exit_read&#34;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#dc322f">int</span> handle_read_exit(<span style="color:#719e07">struct</span> trace_event_raw_sys_exit <span style="color:#719e07">*</span>ctx)
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">SEC</span>(<span style="color:#2aa198">&#34;tracepoint/syscalls/sys_exit_read&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#dc322f">int</span> <span style="color:#268bd2">handle_read_exit</span>(<span style="color:#719e07">struct</span> trace_event_raw_sys_exit <span style="color:#719e07">*</span>ctx)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 判断是否为rootkit行为，是否需要加载payload
 </span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    ...
@@ -291,7 +291,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
 </span></span><span style="display:flex;"><span>    <span style="color:#719e07">case</span> FILE_TYPE_PASSWD:
 </span></span><span style="display:flex;"><span>        <span style="color:#586e75">// 覆盖payload到buf，不足部分使用原buff内容
 </span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>        {
-</span></span><span style="display:flex;"><span>            bpf_probe_read(<span style="color:#719e07">&amp;</span>local_buff, MAX_PAYLOAD_LEN, (<span style="color:#dc322f">void</span><span style="color:#719e07">*</span>)buff_addr);
+</span></span><span style="display:flex;"><span>            <span style="color:#268bd2">bpf_probe_read</span>(<span style="color:#719e07">&amp;</span>local_buff, MAX_PAYLOAD_LEN, (<span style="color:#dc322f">void</span><span style="color:#719e07">*</span>)buff_addr);
 </span></span><span style="display:flex;"><span>            <span style="color:#719e07">for</span> (<span style="color:#dc322f">unsigned</span> <span style="color:#dc322f">int</span> i <span style="color:#719e07">=</span> <span style="color:#2aa198">0</span>; i <span style="color:#719e07">&lt;</span> MAX_PAYLOAD_LEN; i<span style="color:#719e07">++</span>) {
 </span></span><span style="display:flex;"><span>                <span style="color:#719e07">if</span> (i <span style="color:#719e07">&gt;=</span> payload_passwd_len) {
 </span></span><span style="display:flex;"><span>                    local_buff[i] <span style="color:#719e07">=</span> <span style="color:#2aa198">&#39; &#39;</span>;
@@ -317,7 +317,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 将payload内存写入到buffer
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    ret <span style="color:#719e07">=</span> bpf_probe_write_user((<span style="color:#dc322f">void</span><span style="color:#719e07">*</span>)buff_addr, local_buff, MAX_PAYLOAD_LEN);
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    ret <span style="color:#719e07">=</span> <span style="color:#268bd2">bpf_probe_write_user</span>((<span style="color:#dc322f">void</span><span style="color:#719e07">*</span>)buff_addr, local_buff, MAX_PAYLOAD_LEN);
 </span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 发送事件到用户态
 </span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>   
 </span></span><span style="display:flex;"><span>    <span style="color:#719e07">return</span> <span style="color:#2aa198">0</span>;
@@ -357,7 +357,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
 </span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>
 </span></span><span style="display:flex;"><span><span style="color:#719e07">if</span> (type <span style="color:#719e07">!=</span> BPF_PROG_TYPE_SOCKET_FILTER <span style="color:#719e07">&amp;&amp;</span>
 </span></span><span style="display:flex;"><span>	    type <span style="color:#719e07">!=</span> BPF_PROG_TYPE_CGROUP_SKB <span style="color:#719e07">&amp;&amp;</span>
-</span></span><span style="display:flex;"><span>	    <span style="color:#719e07">!</span>bpf_capable())
+</span></span><span style="display:flex;"><span>	    <span style="color:#719e07">!</span><span style="color:#268bd2">bpf_capable</span>())
 </span></span><span style="display:flex;"><span>		<span style="color:#719e07">return</span> <span style="color:#719e07">-</span>EPERM;
 </span></span></code></pre></div><p><strong>开关确认</strong></p>
 <p>在/proc/sys/kernel/unprivileged_bpf_disabled里，可通过执行<code>sysctl kernel.unprivileged_bpf_disabled=1</code>来修改配置。配置含义见<a href="https://www.kernel.org/doc/html/latest/admin-guide/sysctl/kernel.html#unprivileged-bpf-disabled">Documentation for /proc/sys/kernel/</a>。</p>
@@ -377,14 +377,14 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
 <h3 id="运行时">运行时</h3>
 <h4 id="监控">监控</h4>
 <p>Linux系统中，所有的程序运行，都必须进行系统调用，eBPF程序也不例外。需要调用syscall为321的SYS_BPF指令。并且，所有的eBPF程序执行、map创建都必须进行这个syscall调用。那么，在这个必经之路进行拦截监控，是最好的方案。</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>SEC(<span style="color:#2aa198">&#34;tracepoint/syscalls/sys_enter_bpf&#34;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#dc322f">int</span> tracepoint_sys_enter_bpf(<span style="color:#719e07">struct</span> syscall_bpf_args <span style="color:#719e07">*</span>args) {
-</span></span><span style="display:flex;"><span>	<span style="color:#719e07">struct</span> bpf_context_t <span style="color:#719e07">*</span>bpf_context <span style="color:#719e07">=</span> make_event();
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#268bd2">SEC</span>(<span style="color:#2aa198">&#34;tracepoint/syscalls/sys_enter_bpf&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#dc322f">int</span> <span style="color:#268bd2">tracepoint_sys_enter_bpf</span>(<span style="color:#719e07">struct</span> syscall_bpf_args <span style="color:#719e07">*</span>args) {
+</span></span><span style="display:flex;"><span>	<span style="color:#719e07">struct</span> <span style="color:#dc322f">bpf_context_t</span> <span style="color:#719e07">*</span>bpf_context <span style="color:#719e07">=</span> <span style="color:#268bd2">make_event</span>();
 </span></span><span style="display:flex;"><span>	<span style="color:#719e07">if</span> (<span style="color:#719e07">!</span>bpf_context)
 </span></span><span style="display:flex;"><span>		<span style="color:#719e07">return</span> <span style="color:#2aa198">0</span>;
 </span></span><span style="display:flex;"><span>	bpf_context<span style="color:#719e07">-&gt;</span>cmd <span style="color:#719e07">=</span> args<span style="color:#719e07">-&gt;</span>cmd;
-</span></span><span style="display:flex;"><span>	get_common_proc(<span style="color:#719e07">&amp;</span>bpf_context<span style="color:#719e07">-&gt;</span>procinfo);
-</span></span><span style="display:flex;"><span>	send_event(args, bpf_context);
+</span></span><span style="display:flex;"><span>	<span style="color:#268bd2">get_common_proc</span>(<span style="color:#719e07">&amp;</span>bpf_context<span style="color:#719e07">-&gt;</span>procinfo);
+</span></span><span style="display:flex;"><span>	<span style="color:#268bd2">send_event</span>(args, bpf_context);
 </span></span><span style="display:flex;"><span>    <span style="color:#719e07">return</span> <span style="color:#2aa198">0</span>;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>这里，我们开源的ehids项目做了一个BPF syscall检测的例子，大家可以Fork了解。仓库地址为：<a href="https://github.com/ehids/ehids-agent/blob/master/kern/bpf_call_kern.c">GitHub/ehids</a>。</p>
@@ -555,7 +555,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
 <p>eBPF在网络安全场景的使用，除了做入侵检测外，还可以用于防御。LSM PROBE hook提供了相关功能。以容器逃逸场景为例，行为最明显的特征是“父子进程”的Namespace不一致，子进程创建完成后，判断这个特征是否匹配，返回EPERM覆盖进程创建函数的返回值，从而起到防御的目的。相比内核模块等防御实现，eBPF实现更加安全、稳定、可靠，从而在源头上解决容器逃逸的问题。</p>
 <p>同样，本文认为eBPF也是二进制层最优秀的虚拟补丁、热更新解决方案。</p>
 <p><img src="https://p0.meituan.net/travelcube/d16b623e598dac835cd71f33583638d9319731.png" alt=""></p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>LSM_PROBE(bpf, <span style="color:#dc322f">int</span> cmd, <span style="color:#719e07">union</span> bpf_attr <span style="color:#719e07">*</span>attr, <span style="color:#dc322f">unsigned</span> <span style="color:#dc322f">int</span> size)
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#268bd2">LSM_PROBE</span>(bpf, <span style="color:#dc322f">int</span> cmd, <span style="color:#719e07">union</span> bpf_attr <span style="color:#719e07">*</span>attr, <span style="color:#dc322f">unsigned</span> <span style="color:#dc322f">int</span> size)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#719e07">return</span> <span style="color:#719e07">-</span>EPERM;
 </span></span><span style="display:flex;"><span>}

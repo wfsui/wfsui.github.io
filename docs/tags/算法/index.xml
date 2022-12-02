@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Thu, 01 Dec 2022 03:25:49 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 02 Dec 2022 03:02:59 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>算法中七种常见的时间复杂度</title>
       <link>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</link>
-      <pubDate>Thu, 01 Dec 2022 03:25:49 +0000</pubDate>
+      <pubDate>Fri, 02 Dec 2022 03:02:59 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</guid>
       <description>这是我的推广信息，以激励自己更好的分享自己的知识和经验！也希望看到的你能够多多支持，谢谢！
@@ -22,7 +22,7 @@
     <item>
       <title>KDD 2022 | 美团技术团队精选论文解读</title>
       <link>https://wfsui.github.io/posts/kdd-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Thu, 01 Dec 2022 03:25:46 +0000</pubDate>
+      <pubDate>Fri, 02 Dec 2022 03:02:56 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/kdd-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
       <description>ACM SIGKDD国际会议（简称 KDD）是由ACM的数据挖掘及知识发现专委会主办的数据挖掘研究领域的顶级年会，属于CCF A类会议。由于KDD的交叉学科性和广泛应用性，其影响力也越来越大，吸引了来自统计、机器学习、数据库、万维网、生物信息学、多媒体、自然语言处理、人机交互、社会网络计算、高性能计算及大数据挖掘等众多领域的从业者和研究学者。第28届KDD会议于2022于8月14日至18日在美国华盛顿举行。
@@ -35,7 +35,7 @@
     <item>
       <title>基于AI算法的数据库异常监测系统的设计与实现</title>
       <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai%E7%AE%97%E6%B3%95%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E7%9B%91%E6%B5%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/</link>
-      <pubDate>Thu, 01 Dec 2022 03:25:45 +0000</pubDate>
+      <pubDate>Fri, 02 Dec 2022 03:02:55 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai%E7%AE%97%E6%B3%95%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E7%9B%91%E6%B5%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/</guid>
       <description>1. 背景 数据库被广泛用于美团的核心业务场景上，对稳定性要求较高，对异常容忍度非常低。因此，快速的数据库异常发现、定位和止损就变得越来越重要。针对异常监测的问题，传统的固定阈值告警方式，需要依赖专家经验进行规则配置，不能根据不同业务场景灵活动态调整阈值，容易让小问题演变成大故障。
@@ -48,7 +48,7 @@
     <item>
       <title>图技术在美团外卖下的场景化应用及探索</title>
       <link>https://wfsui.github.io/posts/%E5%9B%BE%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E4%B8%8B%E7%9A%84%E5%9C%BA%E6%99%AF%E5%8C%96%E5%BA%94%E7%94%A8%E5%8F%8A%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Thu, 01 Dec 2022 03:25:45 +0000</pubDate>
+      <pubDate>Fri, 02 Dec 2022 03:02:55 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9B%BE%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E4%B8%8B%E7%9A%84%E5%9C%BA%E6%99%AF%E5%8C%96%E5%BA%94%E7%94%A8%E5%8F%8A%E6%8E%A2%E7%B4%A2/</guid>
       <description>1. 引言 外卖已经成为大众生活中非常的重要组成部分，大家也逐步感受到外卖带来的便利。大数据和深度学习时代的到来，使点击率（Click Through Rate, CTR）/转化率（Conversion Rate, CVR）预估技术得到了长足的发展，深度学习技术已经成为业界的主流方法。美团外卖也通过应用深度模型，在线上取得了显著的收益。预估模型所做的事情，是建模蕴藏在数据中、在特定场景下用户和商品之间的关联性（即“人-货-场”）。以点击率预估为例，可以对画像特征、上下文特征、行为特征等进行建模，模型能够感知在该场景下用户和商品之间的关联。
@@ -63,7 +63,7 @@
     <item>
       <title>目标检测开源框架YOLOv6全面升级，更快更准的2.0版本来啦</title>
       <link>https://wfsui.github.io/posts/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%85%A8%E9%9D%A2%E5%8D%87%E7%BA%A7%E6%9B%B4%E5%BF%AB%E6%9B%B4%E5%87%86%E7%9A%842.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</link>
-      <pubDate>Thu, 01 Dec 2022 03:25:44 +0000</pubDate>
+      <pubDate>Fri, 02 Dec 2022 03:02:53 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%85%A8%E9%9D%A2%E5%8D%87%E7%BA%A7%E6%9B%B4%E5%BF%AB%E6%9B%B4%E5%87%86%E7%9A%842.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</guid>
       <description>9月5日，美团视觉智能部发布了YOLOv6 2.0版本，本次更新对轻量级网络进行了全面升级，量化版模型 YOLOv6-S 达到了 869 FPS，同时，还推出了综合性能优异的中大型网络（YOLOv6-M/L），丰富了YOLOv6网络系列。其中，YOLOv6-M/L 在 COCO 上检测精度（AP）分别达到 49.5%/52.5%，在 T4 卡上推理速度分别可达 233⁄121 FPS（batch size =32）。
@@ -74,7 +74,7 @@ GitHub下载地址：https://github.com/meituan/YOLOv6。欢迎Star收藏，随�
     <item>
       <title>通用目标检测开源框架YOLOv6在美团的量化部署实战</title>
       <link>https://wfsui.github.io/posts/%E9%80%9A%E7%94%A8%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E9%87%8F%E5%8C%96%E9%83%A8%E7%BD%B2%E5%AE%9E%E6%88%98/</link>
-      <pubDate>Thu, 01 Dec 2022 03:25:44 +0000</pubDate>
+      <pubDate>Fri, 02 Dec 2022 03:02:53 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E9%80%9A%E7%94%A8%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E9%87%8F%E5%8C%96%E9%83%A8%E7%BD%B2%E5%AE%9E%E6%88%98/</guid>
       <description>1. 背景和难点## 1. 背景和难点 YOLOv6 是美团发布的一款开源的面向工业应用的 2D 目标检测模型 [1]，主要特点是速度快、精度高、部署友好，在美团众多视觉业务场景中都有着广泛的应用。通过量化（Quantization）提升推理速度是实际工业应用中的基本操作，但由于 YOLOv6 系列模型采用了大量的重参数化模块，如何针对 YOLOv6 进行高效和高精度的量化成为一个亟待解决的问题。本文旨在解决 YOLOv6 量化方面的难题，并以 YOLOv6s 模型为例，从训练后量化（Post-Training Quantization, PTQ）和量化感知训练（Quantization-Aware Training, QAT）两个方面进行分析，探索出了一条切实可行的量化方案。</description>
@@ -83,7 +83,7 @@ GitHub下载地址：https://github.com/meituan/YOLOv6。欢迎Star收藏，随�
     <item>
       <title>检索式对话系统在美团客服场景的探索与实践</title>
       <link>https://wfsui.github.io/posts/%E6%A3%80%E7%B4%A2%E5%BC%8F%E5%AF%B9%E8%AF%9D%E7%B3%BB%E7%BB%9F%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%AE%A2%E6%9C%8D%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Thu, 01 Dec 2022 03:25:41 +0000</pubDate>
+      <pubDate>Fri, 02 Dec 2022 03:02:51 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%A3%80%E7%B4%A2%E5%BC%8F%E5%AF%B9%E8%AF%9D%E7%B3%BB%E7%BB%9F%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%AE%A2%E6%9C%8D%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景与挑战 对话系统一直是人工智能研究的热门领域之一，近年来随着深度学习技术的发展，人工智能在对话系统上出现了不少的突破性进展。但是，由于自然语言的复杂性，目前的智能对话系统还远远达不到可以直接替代人类的地步。因此在一些复杂的业务场景中，目前的智能对话系统如何更好的去辅助人类做到人机协同，提升沟通效率，也成为了当今研究的一个热点以及实际落地方向。
@@ -98,7 +98,7 @@ GitHub下载地址：https://github.com/meituan/YOLOv6。欢迎Star收藏，随�
     <item>
       <title>ACM MM &amp; ECCV 2022 | 美团视觉8篇论文揭秘内容领域的智能科技</title>
       <link>https://wfsui.github.io/posts/acm-mm-eccv-2022-%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%898%E7%AF%87%E8%AE%BA%E6%96%87%E6%8F%AD%E7%A7%98%E5%86%85%E5%AE%B9%E9%A2%86%E5%9F%9F%E7%9A%84%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80/</link>
-      <pubDate>Thu, 01 Dec 2022 03:25:39 +0000</pubDate>
+      <pubDate>Fri, 02 Dec 2022 03:02:49 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/acm-mm-eccv-2022-%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%898%E7%AF%87%E8%AE%BA%E6%96%87%E6%8F%AD%E7%A7%98%E5%86%85%E5%AE%B9%E9%A2%86%E5%9F%9F%E7%9A%84%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80/</guid>
       <description>人工智能技术正在成为内容领域的中台力量，其中视觉AI已经渗透到内容生产、内容审核、内容分发、用户互动、商业化变现等各个环节。美团视觉智能部以场景化的内容产品、智能化的内容工具助力产业，在内容的创作、内容分发等环节应用广泛。
@@ -112,19 +112,9 @@ ECCV | Adaptive Spatial-BCE Loss for Weakly Supervised Semantic Segmentation（�
     </item>
     
     <item>
-      <title>美团SemEval2022结构化情感分析跨语言赛道冠军方法总结</title>
-      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2semeval2022%E7%BB%93%E6%9E%84%E5%8C%96%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B5%9B%E9%81%93%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Thu, 01 Dec 2022 03:25:39 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2semeval2022%E7%BB%93%E6%9E%84%E5%8C%96%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B5%9B%E9%81%93%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</guid>
-      <description>1. 背景 SemEval（International Workshop on Semantic Evaluation）是一系列国际自然语言处理（NLP）研讨会，也是自然语言处理领域的权威国际竞赛，其使命是推进语义分析的研究进展，并帮助一系列日益具有挑战性的自然语言语义问题创建高质量的数据集。本次SemEval-2022（The 16th International Workshop on Semantic Evaluation）包含12个任务，涉及一系列主题，包括习语检测和嵌入、讽刺检测、多语言新闻相似性等任务，吸引了包括特斯拉、阿里巴巴、支付宝、滴滴、华为、字节跳动、斯坦福大学等企业和科研机构参与。
-其中Task 10: 结构化情感分析（Structured Sentiment Analysis）属于信息抽取（Information Extraction）领域。该任务包含两个子任务（分别是Monolingual Subtask-1和Zero-shot Crosslingual Subtask-2 ），包含五种语言共7个数据集（包括英语、西班牙语、加泰罗尼亚语、巴斯克语、挪威语），其中子Subtask-1使用全部七个数据集，Subtask-2使用其中的三个数据集（西班牙语、加泰罗尼亚语、巴斯克语）。我们在参与该评测任务的三十多支队伍中取得Subtask-1第二名和Subtask-2 第一名，相关工作已总结为一篇论文MT-Speech at SemEval-2022 Task 10: Incorporating Data Augmentation and Auxiliary Task with Cross-Lingual Pretrained Language Model for Structured Sentiment Analysis，并收录在NAACL 2022 Workshop SemEval。</description>
-    </item>
-    
-    <item>
       <title>大规模异构图召回在美团到店推荐广告的应用</title>
       <link>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%BC%82%E6%9E%84%E5%9B%BE%E5%8F%AC%E5%9B%9E%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E6%8E%A8%E8%8D%90%E5%B9%BF%E5%91%8A%E7%9A%84%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Thu, 01 Dec 2022 03:25:38 +0000</pubDate>
+      <pubDate>Fri, 02 Dec 2022 03:02:48 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%BC%82%E6%9E%84%E5%9B%BE%E5%8F%AC%E5%9B%9E%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E6%8E%A8%E8%8D%90%E5%B9%BF%E5%91%8A%E7%9A%84%E5%BA%94%E7%94%A8/</guid>
       <description>1. 引言 美团到店推荐广告技术部服务于到店餐饮、休娱亲子、丽人医美等众多本地生活服务商家。其中，召回环节作为推荐广告系统的第一个环节，承担着从海量商品中寻找优质候选的角色，是算法优化的核心问题之一。
@@ -138,6 +128,16 @@ GCN从整图的角度出发，打通了原始图结构和神经网络之间的�
 GraphSAGE等基于消息传递范式的图神经网络方法，其中心节点能聚合到的特征范围取决于其采样的邻居阶数。在使用这类图神经网络训练时，除了使用节点的固有特征作为模型输入外，我们还可以给每个节点加入独立可训练的向量参数，从而更好的学习到高阶邻居的相关性。
 除了上述提到的方法外，图神经网络领域作为研究热点之一，近年来不断涌现出GAT[5]、FastGCN[6]、GIN[7]等优秀算法，并在Pinterest[8]、阿里巴巴[9]、腾讯[10]等公司的大规模推荐场景落地取得良好效果。
 3. 业务场景及挑战 到店推荐广告业务在流量侧主要覆盖美团/大众点评双侧的信息流广告、详情页广告等多种业务场景（如下图4所示），供给侧包括了餐饮、丽人医美、休闲娱乐、结婚、亲子等不同广告主品类，且每一个品类下包含商户、团单、泛商品等不同的推荐候选类型。</description>
+    </item>
+    
+    <item>
+      <title>美团SemEval2022结构化情感分析跨语言赛道冠军方法总结</title>
+      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2semeval2022%E7%BB%93%E6%9E%84%E5%8C%96%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B5%9B%E9%81%93%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Fri, 02 Dec 2022 03:02:48 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2semeval2022%E7%BB%93%E6%9E%84%E5%8C%96%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B5%9B%E9%81%93%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</guid>
+      <description>1. 背景 SemEval（International Workshop on Semantic Evaluation）是一系列国际自然语言处理（NLP）研讨会，也是自然语言处理领域的权威国际竞赛，其使命是推进语义分析的研究进展，并帮助一系列日益具有挑战性的自然语言语义问题创建高质量的数据集。本次SemEval-2022（The 16th International Workshop on Semantic Evaluation）包含12个任务，涉及一系列主题，包括习语检测和嵌入、讽刺检测、多语言新闻相似性等任务，吸引了包括特斯拉、阿里巴巴、支付宝、滴滴、华为、字节跳动、斯坦福大学等企业和科研机构参与。
+其中Task 10: 结构化情感分析（Structured Sentiment Analysis）属于信息抽取（Information Extraction）领域。该任务包含两个子任务（分别是Monolingual Subtask-1和Zero-shot Crosslingual Subtask-2 ），包含五种语言共7个数据集（包括英语、西班牙语、加泰罗尼亚语、巴斯克语、挪威语），其中子Subtask-1使用全部七个数据集，Subtask-2使用其中的三个数据集（西班牙语、加泰罗尼亚语、巴斯克语）。我们在参与该评测任务的三十多支队伍中取得Subtask-1第二名和Subtask-2 第一名，相关工作已总结为一篇论文MT-Speech at SemEval-2022 Task 10: Incorporating Data Augmentation and Auxiliary Task with Cross-Lingual Pretrained Language Model for Structured Sentiment Analysis，并收录在NAACL 2022 Workshop SemEval。</description>
     </item>
     
     <item>

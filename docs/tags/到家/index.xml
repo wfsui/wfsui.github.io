@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 09 Dec 2022 03:00:18 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%88%B0%E5%AE%B6/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 10 Dec 2022 02:54:44 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%88%B0%E5%AE%B6/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>图技术在美团外卖下的场景化应用及探索</title>
       <link>https://wfsui.github.io/posts/%E5%9B%BE%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E4%B8%8B%E7%9A%84%E5%9C%BA%E6%99%AF%E5%8C%96%E5%BA%94%E7%94%A8%E5%8F%8A%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Fri, 09 Dec 2022 03:00:18 +0000</pubDate>
+      <pubDate>Sat, 10 Dec 2022 02:54:44 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9B%BE%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E4%B8%8B%E7%9A%84%E5%9C%BA%E6%99%AF%E5%8C%96%E5%BA%94%E7%94%A8%E5%8F%8A%E6%8E%A2%E7%B4%A2/</guid>
       <description>1. 引言 外卖已经成为大众生活中非常的重要组成部分，大家也逐步感受到外卖带来的便利。大数据和深度学习时代的到来，使点击率（Click Through Rate, CTR）/转化率（Conversion Rate, CVR）预估技术得到了长足的发展，深度学习技术已经成为业界的主流方法。美团外卖也通过应用深度模型，在线上取得了显著的收益。预估模型所做的事情，是建模蕴藏在数据中、在特定场景下用户和商品之间的关联性（即“人-货-场”）。以点击率预估为例，可以对画像特征、上下文特征、行为特征等进行建模，模型能够感知在该场景下用户和商品之间的关联。
@@ -26,7 +26,7 @@
     <item>
       <title>自动化测试在美团外卖的实践与落地</title>
       <link>https://wfsui.github.io/posts/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E8%90%BD%E5%9C%B0/</link>
-      <pubDate>Fri, 09 Dec 2022 03:00:17 +0000</pubDate>
+      <pubDate>Sat, 10 Dec 2022 02:54:43 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E8%90%BD%E5%9C%B0/</guid>
       <description>1. 项目背景 美团外卖的业务场景比较多元化，除了外卖自身的业务，还作为平台承接了闪购、团好货、医药、跑腿等其他业务。除此之外，在全链路动态化的大基调下，外卖各个页面的技术形态也变得越来越复杂，除了Native代码，还包括Mach（外卖自研动态化框架）、React Native、美团小程序、H5等，不同技术栈的底层技术实现不同，渲染机制不同，进而对测试方式要求也有所不同，这也在无形中增加了测试的难度。下图汇总了美团多业务、多技术、多App的一些典型场景。
@@ -40,7 +40,7 @@
     <item>
       <title>深入理解函数式编程（下）</title>
       <link>https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8B/</link>
-      <pubDate>Fri, 09 Dec 2022 03:00:16 +0000</pubDate>
+      <pubDate>Sat, 10 Dec 2022 02:54:42 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8B/</guid>
       <description>1. 前文回顾 在上篇中，我们分析了函数式编程的起源和基本特性，并通过每一个特性的示例来演示这种特性的实际效果。首先，函数式编程起源于数理逻辑，起源于λ演算，这是一种演算法，它定义一些基础的数据结构，然后通过归约和代换来实现更复杂的数据结构，而函数本身也是它的一种数据。其次，我们探讨了很多函数式编程的特性，比如：
@@ -51,27 +51,9 @@ First Class 纯函数 引用透明 表达式 高阶函数 柯里化 函数组合
     </item>
     
     <item>
-      <title>深入理解函数式编程（上）</title>
-      <link>https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8A/</link>
-      <pubDate>Fri, 09 Dec 2022 03:00:15 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8A/</guid>
-      <description>前言 本文分为上下两篇，上篇讲述函数式编程的基础概念和特性，下篇讲述函数式编程的进阶概念、应用及优缺点。函数式编程既不是简单的堆砌函数，也不是语言范式的终极之道。我们将深入浅出地讨论它的特性，以期在日常工作中能在对应场景中进行灵活应用。
-1. 先览：代码组合和复用 在前端代码中，我们现有一些可行的模块复用方式，比如：
-除了上面提到的组件和功能级别的代码复用，我们也可以在软件架构层面上，通过选择一些合理的架构设计来减少重复开发的工作量，比如说很多公司在中后台场景中大量使用的低代码平台。
-可以说，在大部分软件项目中，我们都要去探索代码组合和复用。
-函数式编程，曾经有过一段黄金时代，后来又因面向对象范式的崛起而逐步变为小众范式。但是，函数式编程目前又开始在不同的语言中流行起来了，像Java 8、JS、Rust等语言都有对函数式编程的支持。
-今天我们就来探讨JavaScript的函数，并进一步探讨JavaScript中的函数式编程（关于函数式编程风格软件的组织、组合和复用）。
-2. 什么是函数式编程？ 2.1 定义 函数式编程是一种风格范式，没有一个标准的教条式定义。我们来看一下维基百科的定义：
-函数式编程是一种编程范式，它将电脑运算视为函数运算，并且避免使用程序状态以及易变对象。其中，λ演算是该语言最重要的基础。而且λ演算的函数可以接受函数作为输入的参数和输出的返回值。
-我们可以直接读出以下信息：
-避免状态变更 函数作为输入输出 和λ演算有关 那什么是λ演算呢？</description>
-    </item>
-    
-    <item>
       <title>美团图灵机器学习平台性能起飞的秘密（一）</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%9B%BE%E7%81%B5%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E6%80%A7%E8%83%BD%E8%B5%B7%E9%A3%9E%E7%9A%84%E7%A7%98%E5%AF%86%E4%B8%80/</link>
-      <pubDate>Fri, 09 Dec 2022 03:00:14 +0000</pubDate>
+      <pubDate>Sat, 10 Dec 2022 02:54:41 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%9B%BE%E7%81%B5%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E6%80%A7%E8%83%BD%E8%B5%B7%E9%A3%9E%E7%9A%84%E7%A7%98%E5%AF%86%E4%B8%80/</guid>
       <description>导语 图灵平台是美团履约平台技术部2018年开始自研的算法平台，提供模型全生命周期的一站式服务，旨在帮助算法同学脱离繁琐的工程化开发，把有限的精力聚焦于业务和算法的迭代优化中。
@@ -88,9 +70,27 @@ First Class 纯函数 引用透明 表达式 高阶函数 柯里化 函数组合
     </item>
     
     <item>
+      <title>深入理解函数式编程（上）</title>
+      <link>https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8A/</link>
+      <pubDate>Sat, 10 Dec 2022 02:54:41 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8A/</guid>
+      <description>前言 本文分为上下两篇，上篇讲述函数式编程的基础概念和特性，下篇讲述函数式编程的进阶概念、应用及优缺点。函数式编程既不是简单的堆砌函数，也不是语言范式的终极之道。我们将深入浅出地讨论它的特性，以期在日常工作中能在对应场景中进行灵活应用。
+1. 先览：代码组合和复用 在前端代码中，我们现有一些可行的模块复用方式，比如：
+除了上面提到的组件和功能级别的代码复用，我们也可以在软件架构层面上，通过选择一些合理的架构设计来减少重复开发的工作量，比如说很多公司在中后台场景中大量使用的低代码平台。
+可以说，在大部分软件项目中，我们都要去探索代码组合和复用。
+函数式编程，曾经有过一段黄金时代，后来又因面向对象范式的崛起而逐步变为小众范式。但是，函数式编程目前又开始在不同的语言中流行起来了，像Java 8、JS、Rust等语言都有对函数式编程的支持。
+今天我们就来探讨JavaScript的函数，并进一步探讨JavaScript中的函数式编程（关于函数式编程风格软件的组织、组合和复用）。
+2. 什么是函数式编程？ 2.1 定义 函数式编程是一种风格范式，没有一个标准的教条式定义。我们来看一下维基百科的定义：
+函数式编程是一种编程范式，它将电脑运算视为函数运算，并且避免使用程序状态以及易变对象。其中，λ演算是该语言最重要的基础。而且λ演算的函数可以接受函数作为输入的参数和输出的返回值。
+我们可以直接读出以下信息：
+避免状态变更 函数作为输入输出 和λ演算有关 那什么是λ演算呢？</description>
+    </item>
+    
+    <item>
       <title>美团外卖搜索基于Elasticsearch的优化实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%90%9C%E7%B4%A2%E5%9F%BA%E4%BA%8Eelasticsearch%E7%9A%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 09 Dec 2022 03:00:14 +0000</pubDate>
+      <pubDate>Sat, 10 Dec 2022 02:54:40 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%90%9C%E7%B4%A2%E5%9F%BA%E4%BA%8Eelasticsearch%E7%9A%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 前言 最近十年，Elasticsearch 已经成为了最受欢迎的开源检索引擎，其作为离线数仓、近线检索、B端检索的经典基建，已沉淀了大量的实践案例及优化总结。然而在高并发、高可用、大数据量的 C 端场景，目前可参考的资料并不多。因此，我们希望通过分享在外卖搜索场景下的优化实践，能为大家提供 Elasticsearch 优化思路上的一些借鉴。

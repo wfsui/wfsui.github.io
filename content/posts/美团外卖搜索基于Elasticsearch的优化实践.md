@@ -1,6 +1,6 @@
 ---
 title: "美团外卖搜索基于Elasticsearch的优化实践"
-date: 2022-12-13T03:06:18+0000
+date: 2022-12-14T03:02:29+0000
 tags: [美团技术团队, 到家, 后台, Elasticsearch, 倒排索引, LBS场景下查询优化, Run-Length Encoding]
 ---
 

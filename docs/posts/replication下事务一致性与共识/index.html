@@ -14,8 +14,8 @@
 程序依托的操作系统层，硬件层可能随时都会发生故障（包括一个操作执行到一半时）。 应用程序可能会随时发生故障（包括操作执行到一半时）。 网络中断可能随时会发生，它会切断客户端与服务端的链接或数据库之间的链接。 多个客户端可能会同时访问服务端，并且更新统一批数据，导致数据互相覆盖（临界区）。 客户端可能会读到过期的数据，因为上面说的，可能操作执行一半应用程序就挂了。 假设上述问题都会出现在我们对于存储系统（或者数据库）的访问中，这样我们在开发自己应用程序的同时，还需要额外付出很大代价处理这些问题。事务的核心使命就是尝试帮我们解决这些问题，提供了从它自己层面所看到的安全性保证，让我们在访问存储系统时只专注我们本身的写入和查询逻辑，而非这些额外复杂的异常处理。而说起解决方式，正是通过它那大名鼎鼎的ACID特性来进行保证的。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/replication%E4%B8%8B%E4%BA%8B%E5%8A%A1%E4%B8%80%E8%87%B4%E6%80%A7%E4%B8%8E%E5%85%B1%E8%AF%86/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-12-14T03:02:37+00:00" />
-<meta property="article:modified_time" content="2022-12-14T03:02:37+00:00" /><meta property="og:site_name" content="大峰哥" />
+<meta property="article:published_time" content="2022-12-15T03:02:23+00:00" />
+<meta property="article:modified_time" content="2022-12-15T03:02:23+00:00" /><meta property="og:site_name" content="大峰哥" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Replication（下）：事务，一致性与共识"/>
 <meta name="twitter:description" content="1. 前文回顾 在上一篇中，我们主要介绍了分布式系统中常见的复制模型，并描述了每一种模型的优缺点以及使用场景，同时阐述了分布式系统中特有的一些技术挑战。首先，常见的分布式系统复制模型有3种，分别是主从复制模型、多主复制模型以及无主复制模型。此外，复制从客户端的时效性来说分为同步复制&amp;&amp;异步复制，异步复制具有滞后性，可能会造成数据不一致，因为这个不一致，会带来各种各样的问题。
@@ -71,7 +71,7 @@
 
 		<div class="post-header">
 			<h1 class="title">Replication（下）：事务，一致性与共识</h1>
-			<div class="meta">Posted at &mdash; Dec 14, 2022</div>
+			<div class="meta">Posted at &mdash; Dec 15, 2022</div>
 		</div>
 
 		<div class="markdown">

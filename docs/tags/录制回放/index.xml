@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Wed, 28 Dec 2022 02:51:14 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%BD%95%E5%88%B6%E5%9B%9E%E6%94%BE/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Dec 2022 02:52:09 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%BD%95%E5%88%B6%E5%9B%9E%E6%94%BE/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>自动化测试在美团外卖的实践与落地</title>
       <link>https://wfsui.github.io/posts/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E8%90%BD%E5%9C%B0/</link>
-      <pubDate>Wed, 28 Dec 2022 02:51:14 +0000</pubDate>
+      <pubDate>Thu, 29 Dec 2022 02:52:09 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E8%90%BD%E5%9C%B0/</guid>
       <description>1. 项目背景 美团外卖的业务场景比较多元化，除了外卖自身的业务，还作为平台承接了闪购、团好货、医药、跑腿等其他业务。除此之外，在全链路动态化的大基调下，外卖各个页面的技术形态也变得越来越复杂，除了Native代码，还包括Mach（外卖自研动态化框架）、React Native、美团小程序、H5等，不同技术栈的底层技术实现不同，渲染机制不同，进而对测试方式要求也有所不同，这也在无形中增加了测试的难度。下图汇总了美团多业务、多技术、多App的一些典型场景。

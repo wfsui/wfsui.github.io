@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>2022年 | 美团技术团队公众号最受欢迎的20篇文章 - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="2022年 | 美团技术团队公众号最受欢迎的20篇文章" />
+<meta property="og:description" content="时光匆匆，就要跟2022年说再见了！提前祝大家新年快乐~~
+2013年12月4日，美团技术团队博客诞生，发表了第1篇技术文章。9年多的时间，3311个日夜，目前我们已经发布了548篇技术文章，美团技术团队博客/公众号，感谢大家的一路相伴。
+每年的这个时候，我们都会准备一篇年终总结，将本年度最受欢迎的文章推荐给大家。本期我们汇总了2022年度阅读量比较靠前的20篇文章，欢迎大家品阅。
+01 可视化全链路日志追踪 | 阅读量38722 可观测性作为系统高可用的重要保障，已经成为系统建设中不可或缺的一环。然而随着业务逻辑的日益复杂，传统的ELK方案在日志搜集、筛选和分析等方面愈加耗时耗力，而分布式会话跟踪方案虽然基于追踪能力完善了日志的串联，但更聚焦于调用链路，也难以直接应用于高效的业务追踪。本文介绍了可视化全链路日志追踪的新方案，它以业务链路为载体，通过有效组织业务每次执行的日志，实现了执行现场的可视化还原，支持问题的高效定位。
+02 设计模式二三事 | 阅读量34065 设计模式是众多软件开发人员经过长时间的试错和应用总结出来的，解决特定问题的一系列方案。现行的部分教材在介绍设计模式时，有些会因为案例脱离实际应用场景而令人费解，有些又会因为场景简单而显得有些小题大做。本文会根据在美团金融服务平台设计开发时的经验，结合实际的案例，并采用「师生对话」这种相对诙谐的形式去讲解几类常用设计模式的应用。希望能对想提升系统设计能力的同学有所帮助或启发。
+03 Kafka在美团数据平台的实践 | 阅读量28939 Kafka在美团数据平台承担着统一的数据缓存和分发的角色，随着数据量的增长，集群规模的扩大，Kafka面临的挑战也愈发严峻。本文分享了美团Kafka面临的实际挑战，以及美团针对性的一些优化工作，希望能给从事相关开发工作的同学带来帮助或启发。
+04 基于代价的慢查询优化建议 | 阅读量28166 对于数据库来说，慢查询往往意味着风险。SQL执行得越慢，消耗的CPU资源或IO资源也会越大。大量的慢查询可直接引发业务故障，关注慢查询即是关注故障本身。本文主要介绍了美团如何利用数据库的代价优化器来优化慢查询，并给出索引建议，评估跟踪建议质量，运营治理慢查询。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wfsui.github.io/posts/2022%E5%B9%B4-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E5%85%AC%E4%BC%97%E5%8F%B7%E6%9C%80%E5%8F%97%E6%AC%A2%E8%BF%8E%E7%9A%8420%E7%AF%87%E6%96%87%E7%AB%A0/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-01-03T02:50:21+00:00" />
+<meta property="article:modified_time" content="2023-01-03T02:50:21+00:00" /><meta property="og:site_name" content="大峰哥" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="2022年 | 美团技术团队公众号最受欢迎的20篇文章"/>
+<meta name="twitter:description" content="时光匆匆，就要跟2022年说再见了！提前祝大家新年快乐~~
+2013年12月4日，美团技术团队博客诞生，发表了第1篇技术文章。9年多的时间，3311个日夜，目前我们已经发布了548篇技术文章，美团技术团队博客/公众号，感谢大家的一路相伴。
+每年的这个时候，我们都会准备一篇年终总结，将本年度最受欢迎的文章推荐给大家。本期我们汇总了2022年度阅读量比较靠前的20篇文章，欢迎大家品阅。
+01 可视化全链路日志追踪 | 阅读量38722 可观测性作为系统高可用的重要保障，已经成为系统建设中不可或缺的一环。然而随着业务逻辑的日益复杂，传统的ELK方案在日志搜集、筛选和分析等方面愈加耗时耗力，而分布式会话跟踪方案虽然基于追踪能力完善了日志的串联，但更聚焦于调用链路，也难以直接应用于高效的业务追踪。本文介绍了可视化全链路日志追踪的新方案，它以业务链路为载体，通过有效组织业务每次执行的日志，实现了执行现场的可视化还原，支持问题的高效定位。
+02 设计模式二三事 | 阅读量34065 设计模式是众多软件开发人员经过长时间的试错和应用总结出来的，解决特定问题的一系列方案。现行的部分教材在介绍设计模式时，有些会因为案例脱离实际应用场景而令人费解，有些又会因为场景简单而显得有些小题大做。本文会根据在美团金融服务平台设计开发时的经验，结合实际的案例，并采用「师生对话」这种相对诙谐的形式去讲解几类常用设计模式的应用。希望能对想提升系统设计能力的同学有所帮助或启发。
+03 Kafka在美团数据平台的实践 | 阅读量28939 Kafka在美团数据平台承担着统一的数据缓存和分发的角色，随着数据量的增长，集群规模的扩大，Kafka面临的挑战也愈发严峻。本文分享了美团Kafka面临的实际挑战，以及美团针对性的一些优化工作，希望能给从事相关开发工作的同学带来帮助或启发。
+04 基于代价的慢查询优化建议 | 阅读量28166 对于数据库来说，慢查询往往意味着风险。SQL执行得越慢，消耗的CPU资源或IO资源也会越大。大量的慢查询可直接引发业务故障，关注慢查询即是关注故障本身。本文主要介绍了美团如何利用数据库的代价优化器来优化慢查询，并给出索引建议，评估跟踪建议质量，运营治理慢查询。"/>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://wfsui.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://wfsui.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<base href="https://wfsui.github.io/">
+	<h1 class="site-title"><a href="https://wfsui.github.io/">大峰哥</a></h1>
+	<div class="site-description"><h2>记录日常生活哦</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/wfsui" title="Github"><i data-feather="github"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">文章</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">2022年 | 美团技术团队公众号最受欢迎的20篇文章</h1>
+			<div class="meta">Posted at &mdash; Jan 3, 2023</div>
+		</div>
+
+		<div class="markdown">
+			<p>时光匆匆，就要跟2022年说再见了！提前祝大家新年快乐~~</p>
+<p>2013年12月4日，美团技术团队博客诞生，发表了第1篇技术文章。9年多的时间，3311个日夜，目前我们已经发布了548篇技术文章，美团技术团队博客/公众号，感谢大家的一路相伴。</p>
+<p>每年的这个时候，我们都会准备一篇年终总结，将本年度最受欢迎的文章推荐给大家。本期我们汇总了2022年度阅读量比较靠前的20篇文章，欢迎大家品阅。</p>
+<h2 id="01-可视化全链路日志追踪httpstechmeituancom20220721visualized-log-tracinghtml--阅读量38722">01 <a href="https://tech.meituan.com/2022/07/21/visualized-log-tracing.html">可视化全链路日志追踪</a> | 阅读量38722</h2>
+<p><img src="https://p0.meituan.net/travelcube/a7925ad0addacf4d464e072236808b20438398.jpg" alt=""></p>
+<p>可观测性作为系统高可用的重要保障，已经成为系统建设中不可或缺的一环。然而随着业务逻辑的日益复杂，传统的ELK方案在日志搜集、筛选和分析等方面愈加耗时耗力，而分布式会话跟踪方案虽然基于追踪能力完善了日志的串联，但更聚焦于调用链路，也难以直接应用于高效的业务追踪。本文介绍了可视化全链路日志追踪的新方案，它以业务链路为载体，通过有效组织业务每次执行的日志，实现了执行现场的可视化还原，支持问题的高效定位。</p>
+<h2 id="02-设计模式二三事httpstechmeituancom20220310interesting-talk-about-design-patternshtml--阅读量34065">02 <a href="https://tech.meituan.com/2022/03/10/interesting-talk-about-design-patterns.html">设计模式二三事</a> | 阅读量34065</h2>
+<p><img src="https://p0.meituan.net/travelcube/c488dc861c4ffec33071354536212e58374634.jpg" alt=""></p>
+<p>设计模式是众多软件开发人员经过长时间的试错和应用总结出来的，解决特定问题的一系列方案。现行的部分教材在介绍设计模式时，有些会因为案例脱离实际应用场景而令人费解，有些又会因为场景简单而显得有些小题大做。本文会根据在美团金融服务平台设计开发时的经验，结合实际的案例，并采用「师生对话」这种相对诙谐的形式去讲解几类常用设计模式的应用。希望能对想提升系统设计能力的同学有所帮助或启发。</p>
+<h2 id="03-kafka在美团数据平台的实践httpstechmeituancom20220804the-practice-of-kafka-in-the-meituan-data-platformhtml--阅读量28939">03 <a href="https://tech.meituan.com/2022/08/04/the-practice-of-kafka-in-the-meituan-data-platform.html">Kafka在美团数据平台的实践</a> | 阅读量28939</h2>
+<p><img src="https://p0.meituan.net/travelcube/adb6a8b401e9a577f8acb926718c0f6897401.jpg" alt=""></p>
+<p>Kafka在美团数据平台承担着统一的数据缓存和分发的角色，随着数据量的增长，集群规模的扩大，Kafka面临的挑战也愈发严峻。本文分享了美团Kafka面临的实际挑战，以及美团针对性的一些优化工作，希望能给从事相关开发工作的同学带来帮助或启发。</p>
+<h2 id="04-基于代价的慢查询优化建议httpstechmeituancom20220421slow-query-optimized-advice-driven-by-cost-modelhtml--阅读量28166">04 <a href="https://tech.meituan.com/2022/04/21/slow-query-optimized-advice-driven-by-cost-model.html">基于代价的慢查询优化建议</a> | 阅读量28166</h2>
+<p><img src="https://p0.meituan.net/travelcube/6796c8e202e4e867755fb8de96b8f29d488826.jpg" alt=""></p>
+<p>对于数据库来说，慢查询往往意味着风险。SQL执行得越慢，消耗的CPU资源或IO资源也会越大。大量的慢查询可直接引发业务故障，关注慢查询即是关注故障本身。本文主要介绍了美团如何利用数据库的代价优化器来优化慢查询，并给出索引建议，评估跟踪建议质量，运营治理慢查询。</p>
+<h2 id="05-深入理解函数式编程上httpstechmeituancom20221013dive-into-functional-programming-01html--阅读量28103">05 <a href="https://tech.meituan.com/2022/10/13/dive-into-functional-programming-01.html">深入理解函数式编程（上）</a> | 阅读量28103</h2>
+<p><img src="https://p0.meituan.net/travelcube/0cf03a2b79c35e8b37f29ebf3ccd9b80247895.jpg" alt=""></p>
+<p>函数式编程是一种历史悠久的编程范式。作为演算法，它的历史可以追溯到现代计算机诞生之前的λ演算，本文希望带大家快速了解函数式编程的历史、基础技术、重要特性和实践法则。在内容层面，主要使用JavaScript语言来描述函数式编程的特性，并以演算规则、语言特性、范式特性、副作用处理等方面作为切入点，通过大量演示示例来讲解这种编程范式。同时，文末列举比较一些此范式的优缺点，供读者参考。</p>
+<h2 id="06-美团外卖搜索基于elasticsearch的优化实践httpstechmeituancom20221117elasicsearch-optimization-practice-based-on-run-length-encodinghtml--阅读量26653">06 <a href="https://tech.meituan.com/2022/11/17/elasicsearch-optimization-practice-based-on-run-length-encoding.html">美团外卖搜索基于Elasticsearch的优化实践</a> | 阅读量26653</h2>
+<p><img src="https://p0.meituan.net/travelcube/ba48695013f94b4728cb60e04c798bd5237024.jpg" alt=""></p>
+<p>美团外卖搜索工程团队在Elasticsearch的优化实践中，基于Location-Based Service（LBS）业务场景对Elasticsearch的查询性能进行优化。该优化基于Run-Length Encoding（RLE）设计了一款高效的倒排索引结构，使检索耗时（TP99）降低了84%。本文从问题分析、技术选型、优化方案等方面进行阐述，并给出最终灰度验证的结论。</p>
+<h2 id="07-工程效能cicd之流水线引擎的建设实践httpstechmeituancom20220714cicd-pipelinehtml--阅读量24918">07 <a href="https://tech.meituan.com/2022/07/14/cicd-pipeline.html">工程效能CI/CD之流水线引擎的建设实践</a> | 阅读量24918</h2>
+<p><img src="https://p0.meituan.net/travelcube/e33bd639179fe492d325422e7c197d86459174.jpg" alt=""></p>
+<p>经过近3年的建设打磨，美团流水线引擎完成了服务端的基建统一，每日支撑近十万次的流水线执行量，系统成功率保持在99.99%以上。本文主要介绍在自研引擎建设层面遇到的挑战以及解决方案。</p>
+<h2 id="08-java系列--远程热部署在美团的落地实践httpstechmeituancom20220317java-hotswap-sonichtml--阅读量23622">08 <a href="https://tech.meituan.com/2022/03/17/java-hotswap-sonic.html">Java系列 | 远程热部署在美团的落地实践</a> | 阅读量23622</h2>
+<p><img src="https://p0.meituan.net/travelcube/f5c494efe3e1d46b5e93fb98ba43908d329377.jpg" alt=""></p>
+<p>Sonic是美团内部一款用于热部署的IDEA插件。本文主要讲述Sonic的实现细节以及底层原理，从IDEA插件到自动化部署，再到沉浸式开发产品闭环，全方位讲述了Sonic在美团的落地与实践经验。目前业界对标的产品并不多，希望本文能对从事联调/开发/测试等相关方向的同学有所帮助或启发。</p>
+<h2 id="09-知识图谱可视化技术在美团的实践与探索httpstechmeituancom20220414the-practice-and-exploration-of-knowledge-graph-visualization-technology-in-meituanhtml--阅读量24918">09 <a href="https://tech.meituan.com/2022/04/14/the-practice-and-exploration-of-knowledge-graph-visualization-technology-in-meituan.html">知识图谱可视化技术在美团的实践与探索</a> | 阅读量24918</h2>
+<p><img src="https://p0.meituan.net/travelcube/9803c21e3313f9277859391ccd6b6623626924.jpg" alt=""></p>
+<p>知识图谱可视化可以更直观地查看和分析知识图谱的数据。本文主要介绍了美团平台在布局策略、视觉降噪、交互功能、可视化叙事、3D图谱可视化等方面的一些实践和探索，同时沉淀出了uni-graph图可视化解决方案，并支持了美团的很多业务场景，包括美团大脑、图数据库、智能IT运维、组件依赖分析、行业领域图谱等。希望能对从事知识图谱可视化方向的同学有所帮助或启发。</p>
+<h2 id="10-yolov6又快又准的目标检测框架开源啦httpstechmeituancom20220623yolov6-a-fast-and-accurate-target-detection-framework-is-opening-sourcehtml--阅读量23622">10 <a href="https://tech.meituan.com/2022/06/23/yolov6-a-fast-and-accurate-target-detection-framework-is-opening-source.html">YOLOv6：又快又准的目标检测框架开源啦</a> | 阅读量23622</h2>
+<p><img src="https://p0.meituan.net/travelcube/5ece2f8921af6f4dbc96c70331d9cadb218445.jpg" alt=""></p>
+<p>美团视觉智能部研发了一款致力于工业应用的目标检测框架 YOLOv6，能够同时专注于检测的精度和推理效率。在研发过程中，视觉智能部不断进行了探索和优化，同时吸取借鉴了学术界和工业界的一些前沿进展和科研成果。在目标检测权威数据集 COCO 上的实验结果显示，YOLOv6 在检测精度和速度方面均超越其他同体量的算法，同时支持多种不同平台的部署，极大简化工程部署时的适配工作。</p>
+<h2 id="11-自动化测试在美团外卖的实践与落地httpstechmeituancom20220915automated-testing-in-meituanhtml--阅读量21119">11 <a href="https://tech.meituan.com/2022/09/15/automated-testing-in-meituan.html">自动化测试在美团外卖的实践与落地</a> | 阅读量21119</h2>
+<p><img src="https://p0.meituan.net/travelcube/343e516bf02f16703610e0c329a4c27f193571.jpg" alt=""></p>
+<p>随着美团到家业务的发展，系统复杂度也在持续增长。测试用例数量近两年增长约一倍，单端数量超过1万2千条，而研发人员的工作从大部分时间在开发，转变成一半时间在开发、一半时间在模拟环境和自测。因此，引入自动化测试就显得十分有必要，本文介绍了美团外卖在自动化测试方向做的一些探索和实践，希望对从事相关领域工作的同学能够带来一些启发或帮助。</p>
+<h2 id="12-日志导致线程block的这些坑你不得不防httpstechmeituancom20220729tips-for-avoiding-log-blocking-threadshtml--阅读量20561">12 <a href="https://tech.meituan.com/2022/07/29/tips-for-avoiding-log-blocking-threads.html">日志导致线程Block的这些坑，你不得不防</a> | 阅读量20561</h2>
+<p><img src="https://p1.meituan.net/travelcube/2558864f553f4c1b9293e699d5dda16c204532.jpg" alt=""></p>
+<p>研发人员在项目开发中不可避免地要使用日志，通过它来记录信息和排查问题。Apache Log4j2提供了灵活且强大的日志框架，虽然上手比较快，但稍有不慎也非常容易踩「坑」。本文介绍了美团统一API网关服务Shepherd在实践中所踩过的关于日志导致线程Block的那些「坑」，以及我们如何从日志框架源码层面进行分析和解决问题的过程，并在最后给大家分享一些关于日志避「坑」的实践经验，希望能给大家带来一些帮助。</p>
+<h2 id="13-业务数据治理体系化思考与实践httpstechmeituancom20220512business-data-governancehtml--阅读量19922">13 <a href="https://tech.meituan.com/2022/05/12/business-data-governance.html">业务数据治理体系化思考与实践</a> | 阅读量19922</h2>
+<p><img src="https://p0.meituan.net/travelcube/2e57d6dcf3e5264648e2be209f434646496173.jpg" alt=""></p>
+<p>美团住宿数据治理团队从事数据治理工作多年，从最初的被动、单点治理，发展到后来的主动、专项治理，再发展到现在的体系化、自动化治理。一路走来，他们不断进行积累和沉淀，也在持续思考与实践。目前该团队取得了一些阶段性的成果，并得到美团多个业务线的认可和肯定。过程的经验与教训，希望能和大家分享，也希望能给从事数据治理工作的同学带来一些新思路。</p>
+<h2 id="14-kdd-2022--美团技术团队精选论文解读httpstechmeituancom20220818acm-sigkdd-2022html--阅读量18368">14 <a href="https://tech.meituan.com/2022/08/18/acm-sigkdd-2022.html">KDD 2022 | 美团技术团队精选论文解读</a> | 阅读量18368</h2>
+<p><img src="https://p0.meituan.net/travelcube/37e19b22601101200d44e8da0aedd3d0249894.jpg" alt=""></p>
+<p>今年，美团技术团队有多篇论文被KDD 2022收录，这些论文涵盖了图谱预训练、选择算法、意图自动发现、效果建模、策略学习、概率预测、奖励框架等多个技术领域。本文精选了7篇论文做简要介绍（附下载链接），希望能对从事相关研究方向的同学有所帮助或启发。</p>
+<h2 id="15-美团高性能终端实时日志系统建设实践httpstechmeituancom20221103logan-real-time-loghtml--阅读量18218">15 <a href="https://tech.meituan.com/2022/11/03/logan-real-time-log.html">美团高性能终端实时日志系统建设实践</a> | 阅读量18218</h2>
+<p><img src="https://p0.meituan.net/travelcube/340549830e3e42d4099a8440548a5272733812.jpg" alt=""></p>
+<p>你是否经常遇到线上需要日志排查问题但迟迟联系不上用户上报日志的情况？或者是否经常陷入由于存储空间不足而导致日志写不进去的囧境？本文介绍了美团是如何从0到1搭建高性能终端实时日志系统，从此彻底解决日志丢失和写满问题的。希望能为大家带来一些帮助和启发。</p>
+<h2 id="16-数据治理一体化实践之体系化建模httpstechmeituancom20220224systematic-modeling-of-data-development-and-governance-integration-practicehtml--阅读量17984">16 <a href="https://tech.meituan.com/2022/02/24/systematic-modeling-of-data-development-and-governance-integration-practice.html">数据治理一体化实践之体系化建模</a> | 阅读量17984</h2>
+<p><img src="https://p0.meituan.net/travelcube/9509d38b69f9136ba6af4998e7ebddef507556.jpg" alt=""></p>
+<p>随着数字经济的快速发展，数据已经成为新的生产要素。如何有效地开展数据治理工作，提升数据质量，打破数据孤岛，充分发挥数据的业务价值，已成为业界的热门话题。本文基于美团配送数据治理的历程，重点和大家分享一下配送数据「底座」的建设与实践，如何通过体系化建模建立起数据定义到数据生产的桥梁，达成数据定义、模型设计、数据生产三个环节的统一，消除因数据标准缺失和执行不到位引发的数据信任问题，在高质量地实现数据到信息的转化的同时，为后续的数据便捷消费提供数据和元数据保障。希望能给从事数据治理方向的同学在实现数据到资产的转化过程提供一些参考和借鉴。</p>
+<h2 id="17-广告平台化的探索与实践--美团外卖广告工程实践专题连载httpstechmeituancom20220303exploration-and-practice-of-advertising-engine-platforminghtml--阅读量17086">17 <a href="https://tech.meituan.com/2022/03/03/exploration-and-practice-of-advertising-engine-platforming.html">广告平台化的探索与实践 | 美团外卖广告工程实践专题连载</a> | 阅读量17086</h2>
+<p><img src="https://p0.meituan.net/travelcube/6bf49c26e03ca564dce3eeaa1a03e693382698.jpg" alt=""></p>
+<p>随着美团外卖业务不断发展，外卖广告引擎团队在多个领域进行了工程上的探索和实践，目前已经取得了一些成果。本文是「美团外卖广告工程实践」专题连载的第一篇。本文针对业务提效的目标，介绍了美团外卖广告引擎在平台化过程中的一些思考和实践。</p>
+<h2 id="18-从0到1美团端侧cdn容灾解决方案httpstechmeituancom20220113phoenix-cdnhtml--阅读量16466">18 <a href="https://tech.meituan.com/2022/01/13/phoenix-cdn.html">从0到1：美团端侧CDN容灾解决方案</a> | 阅读量16466</h2>
+<p><img src="https://p0.meituan.net/travelcube/80974603e1c41252cbbda68aae96a0c8428633.jpg" alt=""></p>
+<p>CDN已经成为互联网重要的基建之一，越来越多的网络服务离不开CDN，它的稳定性也直接影响到业务的可用性。CDN的容灾一直由美团的SRE团队在负责，在端侧鲜有方案和实践。本文结合美团外卖业务中的具体实践，介绍了一种在端侧感知CDN可用性状况并进行自动容灾切换的方案，通过该方案可有效降低业务对CDN异常的敏感，提高业务的可用性，同时降低CDN运维压力。希望本方案能够对被CDN问题所困扰的同学有所帮助或者启发。</p>
+<h2 id="19-数据库异常智能分析与诊断httpstechmeituancom20220505meituan-database-autonomy-servicehtml--阅读量16174">19 <a href="https://tech.meituan.com/2022/05/05/meituan-database-autonomy-service.html">数据库异常智能分析与诊断</a> | 阅读量16174</h2>
+<p><img src="https://p1.meituan.net/travelcube/f7686e59c6c7535626e139a8ebf1c9d0475262.jpg" alt=""></p>
+<p>DAS（Database Autonomy Service, 数据库自治服务）面向研发和DBA，是一款为用户提供数据库性能分析、故障诊断、安全管理等功能的数据库自治服务。DAS利用大数据手段、机器学习、专家经验，帮助用户消除数据库管理的复杂性及人工操作引发的服务故障，有效保障数据库服务的稳定和高效运行。本文主要讲述DAS的历史背景、演进策略、重要功能及实现思路，希望能对从事相关开发的同学有所帮助或者启发。</p>
+<h2 id="20-美团集群调度系统的云原生实践httpstechmeituancom20220217kubernetes-cloudnative-practiceshtml--阅读量16119">20 <a href="https://tech.meituan.com/2022/02/17/kubernetes-cloudnative-practices.html">美团集群调度系统的云原生实践</a> | 阅读量16119</h2>
+<p><img src="https://p0.meituan.net/travelcube/0e9dae17f61a68d86a0bf1e484982b5a654491.jpg" alt=""></p>
+<p>本文介绍了美团在如何解决大规模集群管理的难题、设计优秀且合理的集群调度系统方面的实践，阐述了美团在落地以Kubernetes为代表的云原生技术时，比较关心的问题、挑战以及对应的推进策略。同时本文也介绍了针对美团业务需求场景做的一些特色支持，希望本文能够对云原生领域感兴趣的同学有所帮助或者启发。</p>
+<h2 id="写在后面">写在后面</h2>
+<p>再次感谢大家多年来给予美团技术团队公众号的支持和厚爱，我们也会不断努力，为大家提供更多优质的技术内容。祝大家在新的一年里，奋楫笃行，再攀高峰。</p>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F">美团技术团队</a></li>
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F">美团技术团队</a></li>
+								
+								<li><a href="/tags/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93">年度总结</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'wfsui';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="">Wfsui theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div><script>feather.replace()</script>
+</body>
+</html>

@@ -66,7 +66,21 @@
 				
 				
 				<div class="post">
-					<div class="meta">Jan 3, 2023</div>
+					<div class="meta">Jan 4, 2023</div>
+					<a class="title" href="/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8B/">深入理解函数式编程（下）</a> &mdash;
+					<span class="description">
+						
+						1. 前文回顾 在上篇中，我们分析了函数式编程的起源和基本特性，并通过每一个特性的示例来演示这种特性的实际效果。首先，函数式编程起源于数理逻辑，起源于λ演算，这是一种演算法，它定义一些基础的数据结构，然后通过归约和代换来实现更复杂的数据结构，而函数本身也是它的一种数据。其次，我们探讨了很多函数式编程的特性，比如：
+First Class 纯函数 引用透明 表达式 高阶函数 柯里化 函数组合 point-free … 但我们也指出了一个实际问题：不能处理副作用的程序是毫无意义的。我们的计算机程序随时都在产生副作用。我们程序里面有大量的网络请求、多媒体输入输出、内部状态、全局状态等，甚至在提倡“碳中和”的今天，电脑的发热量也是一个不容小觑的副作用。那么我们应该如何处理这些问题呢？
+2. 本文简介 本文通过深入函数式编程的副作用处理及实际应用场景，提供一个学习和使用函数式编程的视角给读者。一方面，这种副作用管理方式是一种高级的抽象形式，不易理解；另一方面，我们在学习和使用函数式编程的过程中，几乎都会遇到类似的副作用问题需要解决，能否解决这个问题也决定了一门函数式编程语言最终是否能走上成功。
+本文主要分为三个部分：
+副作用处理方式 函数式编程的应用 函数式编程的优缺点比较 3.&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
+					<div class="meta">Jan 4, 2023</div>
 					<a class="title" href="/posts/%E6%A3%80%E7%B4%A2%E5%BC%8F%E5%AF%B9%E8%AF%9D%E7%B3%BB%E7%BB%9F%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%AE%A2%E6%9C%8D%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/">检索式对话系统在美团客服场景的探索与实践</a> &mdash;
 					<span class="description">
 						
@@ -82,19 +96,7 @@
 				</div>
 				
 				<div class="post">
-					<div class="meta">Jan 3, 2023</div>
-					<a class="title" href="/posts/%E7%BE%8E%E5%9B%A2%E9%AB%98%E6%80%A7%E8%83%BD%E7%BB%88%E7%AB%AF%E5%AE%9E%E6%97%B6%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/">美团高性能终端实时日志系统建设实践</a> &mdash;
-					<span class="description">
-						
-						1 背景 1.1 Logan 简介 Logan 是美团面向终端的统一日志服务，已支持移动端App、Web、小程序、IoT等多端环境，具备日志采集、存储、上传、查询与分析等能力，帮助用户定位研发问题，提升故障排查效率。同时，Logan 也是业内开源较早的大前端日志系统，具有写入性能高、安全性高、日志防丢失等优点。
-1.2 Logan 工作流程 为了方便读者更好地理解 Logan 系统是如何工作的，下图是简化后的 Logan 系统工作流程图。主要分为以下几个部分：
-主动上报日志：终端设备在需要上报日志时，可以通过 HTTPS 接口主动上传日志到 Logan 接收服务，接收服务再把原始日志文件转存到对象存储平台。 日志解密与解析：当研发人员想要查看主动上报的日志时会触发日志下载与解析流程，原始加密日志从对象存储平台下载成功后进行解密、解析等操作，然后再投递到日志存储系统。 日志查询与检索：日志平台支持对单设备所有日志进行日志类型、标签、进程、关键字、时间等维度的筛选，同时也支持对一些特定类型的日志进行可视化展示。 1.&hellip;
-						
-					</span>
-				</div>
-				
-				<div class="post">
-					<div class="meta">Jan 3, 2023</div>
+					<div class="meta">Jan 4, 2023</div>
 					<a class="title" href="/posts/%E7%BE%8E%E5%9B%A2%E5%9B%BE%E7%81%B5%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E6%80%A7%E8%83%BD%E8%B5%B7%E9%A3%9E%E7%9A%84%E7%A7%98%E5%AF%86%E4%B8%80/">美团图灵机器学习平台性能起飞的秘密（一）</a> &mdash;
 					<span class="description">
 						
@@ -114,7 +116,7 @@
 				</div>
 				
 				<div class="post">
-					<div class="meta">Jan 3, 2023</div>
+					<div class="meta">Jan 4, 2023</div>
 					<a class="title" href="/posts/acm-mm-eccv-2022-%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%898%E7%AF%87%E8%AE%BA%E6%96%87%E6%8F%AD%E7%A7%98%E5%86%85%E5%AE%B9%E9%A2%86%E5%9F%9F%E7%9A%84%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80/">ACM MM &amp; ECCV 2022 | 美团视觉8篇论文揭秘内容领域的智能科技</a> &mdash;
 					<span class="description">
 						
@@ -131,7 +133,7 @@ ECCV | Adaptive Spatial-BCE Loss for Weakly Supervised Semantic Segmentation（�
 				</div>
 				
 				<div class="post">
-					<div class="meta">Jan 3, 2023</div>
+					<div class="meta">Jan 4, 2023</div>
 					<a class="title" href="/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%90%9C%E7%B4%A2%E5%9F%BA%E4%BA%8Eelasticsearch%E7%9A%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/">美团外卖搜索基于Elasticsearch的优化实践</a> &mdash;
 					<span class="description">
 						

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>餐饮SaaS on 大峰哥</title>
+    <link>https://wfsui.github.io/tags/%E9%A4%90%E9%A5%AEsaas/</link>
+    <description>Recent content in 餐饮SaaS on 大峰哥</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Sat, 07 Jan 2023 02:51:52 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E9%A4%90%E9%A5%AEsaas/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>美团开放平台SDK自动生成技术与实践</title>
+      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Sat, 07 Jan 2023 02:51:52 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
+      <description>1. 引言 美团开放平台对外提供了外卖、团购、配送等20余个业务场景的OpenAPI，供第三方开发者搭建应用时使用，是美团系统与外部系统通讯的最重要平台。本文主要讲述开放平台如何通过技术手段自动生成支持接口参数富模型和多种编程语言的SDK，以提高开发者对接开放平台API的效率。
+1.1 背景 美团开放平台将美团各类业务提供的扩展服务封装成一系列应用程序编程接口（API）对外开放，供第三方开发者使用。开发者可通过调用开放平台提供的OpenAPI获取数据和能力，以实现自身系统与美团系统协同工作的业务逻辑。以外卖业务场景为例，开发者可以在自己为外卖商户开发的应用中通过调用美团开放平台提供的API，提供外卖订单查询、接单、订单管理等一系列功能。如下图所示：
+开放平台为开发者提供的OpenAPI以HTTP接口的形式提供。以平台提供的订单查询接口为例，对应的HTTP请求如下所示：
+POST https://api-open-cater.meituan.com/api/order/queryById Content-Type: application/x-www-form-urlencoded;charset=utf-8 appAuthToken=eeee860a3d2a8b73cfb6604b136d6734283510c4e92282&amp;amp; charset=utf-8&amp;amp; developerId=106158&amp;amp; sign=4656285a4c2493e279d929b8b9f4e29310da8b2b&amp;amp; timestamp=1618543567&amp;amp; biz={&amp;#34;orderId&amp;#34;: &amp;#34;10046789912119&amp;#34;} Response:{ &amp;#34;orderId&amp;#34;:&amp;#34;10046789912119&amp;#34;, &amp;#34;payAmount&amp;#34;:&amp;#34;45.</description>
+    </item>
+    
+  </channel>
+</rss>

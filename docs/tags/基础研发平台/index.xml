@@ -7,24 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Thu, 12 Jan 2023 02:55:08 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%9F%BA%E7%A1%80%E7%A0%94%E5%8F%91%E5%B9%B3%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>基于AI算法的数据库异常监测系统的设计与实现</title>
-      <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai%E7%AE%97%E6%B3%95%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E7%9B%91%E6%B5%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/</link>
-      <pubDate>Thu, 12 Jan 2023 02:55:08 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai%E7%AE%97%E6%B3%95%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E7%9B%91%E6%B5%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/</guid>
-      <description>1. 背景 数据库被广泛用于美团的核心业务场景上，对稳定性要求较高，对异常容忍度非常低。因此，快速的数据库异常发现、定位和止损就变得越来越重要。针对异常监测的问题，传统的固定阈值告警方式，需要依赖专家经验进行规则配置，不能根据不同业务场景灵活动态调整阈值，容易让小问题演变成大故障。
-而基于AI的数据库异常发现能力，可以基于数据库历史表现情况，对关键指标进行7 * 24小时巡检，能够在异常萌芽状态就发现风险，更早地将异常暴露，辅助研发人员在问题恶化前进行定位和止损。基于以上这些因素的考量，美团数据库平台研发组决定开发一套数据库异常检测服务系统。接下来，本文将会从特征分析、算法选型、模型训练与实时检测等几个维度阐述我们的一些思考和实践。
-2. 特征分析 2.1 找出数据的变化规律 在具体进行开发编码前，有一项非常重要的工作，就是从已有的历史监控指标中，发现时序数据的变化规律，从而根据数据分布的特点选取合适的算法。以下是我们从历史数据中选取的一些具有代表性的指标分布图：
-从上图我们可以看出，数据的规律主要呈现三种状态：周期、漂移和平稳[1]。因此，我们前期可以针对这些普遍特征的样本进行建模，即可覆盖大部分场景。接下来，我们分别从周期性、漂移性和平稳性这三个角度进行分析，并讨论算法设计的过程。
-2.1.1 周期性变化 在很多业务场景中，指标会由于早晚高峰或是一些定时任务引起规律性波动。我们认为这属于数据的内在规律性波动，模型应该具备识别出周期性成分，检测上下文异常的能力。对于不存在长期趋势成分的时序指标而言，当指标存在周期性成分的情况下，$\int f(x) f(x+t) dx \leqslant \int f(x)f(x+T)dx = \int f^{2}(x)dx$，其中T代表的是时序的周期跨度。可通过计算自相关图，即计算出t取不同值时$\int f(x) f(x+t) dx$ 的值，然后通过分析自相关峰的间隔来确定周期性，主要的流程包括以下几个步骤：</description>
-    </item>
-    
+    <lastBuildDate>Fri, 13 Jan 2023 02:59:43 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%9F%BA%E7%A1%80%E7%A0%94%E5%8F%91%E5%B9%B3%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>美团隐私计算平台通过行业权威认证</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%9A%90%E7%A7%81%E8%AE%A1%E7%AE%97%E5%B9%B3%E5%8F%B0%E9%80%9A%E8%BF%87%E8%A1%8C%E4%B8%9A%E6%9D%83%E5%A8%81%E8%AE%A4%E8%AF%81/</link>
-      <pubDate>Thu, 12 Jan 2023 02:55:07 +0000</pubDate>
+      <pubDate>Fri, 13 Jan 2023 02:59:43 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%9A%90%E7%A7%81%E8%AE%A1%E7%AE%97%E5%B9%B3%E5%8F%B0%E9%80%9A%E8%BF%87%E8%A1%8C%E4%B8%9A%E6%9D%83%E5%A8%81%E8%AE%A4%E8%AF%81/</guid>
       <description>近日，在2022年隐私计算大会上，中国信通院公布第六批可信隐私计算评测结果，美团隐私计算平台通过“联邦学习安全”和“多方安全计算基础能力”两个专项评测认证。2021年，美团已经通过“联邦学习基础能力”专项评测认证。
@@ -45,7 +32,7 @@
     <item>
       <title>目标检测开源框架YOLOv6全面升级，更快更准的2.0版本来啦</title>
       <link>https://wfsui.github.io/posts/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%85%A8%E9%9D%A2%E5%8D%87%E7%BA%A7%E6%9B%B4%E5%BF%AB%E6%9B%B4%E5%87%86%E7%9A%842.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</link>
-      <pubDate>Thu, 12 Jan 2023 02:55:07 +0000</pubDate>
+      <pubDate>Fri, 13 Jan 2023 02:59:42 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%85%A8%E9%9D%A2%E5%8D%87%E7%BA%A7%E6%9B%B4%E5%BF%AB%E6%9B%B4%E5%87%86%E7%9A%842.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</guid>
       <description>9月5日，美团视觉智能部发布了YOLOv6 2.0版本，本次更新对轻量级网络进行了全面升级，量化版模型 YOLOv6-S 达到了 869 FPS，同时，还推出了综合性能优异的中大型网络（YOLOv6-M/L），丰富了YOLOv6网络系列。其中，YOLOv6-M/L 在 COCO 上检测精度（AP）分别达到 49.5%/52.5%，在 T4 卡上推理速度分别可达 233⁄121 FPS（batch size =32）。
@@ -56,7 +43,7 @@ GitHub下载地址：https://github.com/meituan/YOLOv6。欢迎Star收藏，随�
     <item>
       <title>数字化新业态下数据安全创新——Token化</title>
       <link>https://wfsui.github.io/posts/%E6%95%B0%E5%AD%97%E5%8C%96%E6%96%B0%E4%B8%9A%E6%80%81%E4%B8%8B%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E5%88%9B%E6%96%B0token%E5%8C%96/</link>
-      <pubDate>Thu, 12 Jan 2023 02:55:06 +0000</pubDate>
+      <pubDate>Fri, 13 Jan 2023 02:59:42 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%95%B0%E5%AD%97%E5%8C%96%E6%96%B0%E4%B8%9A%E6%80%81%E4%B8%8B%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E5%88%9B%E6%96%B0token%E5%8C%96/</guid>
       <description>0. 引言 伴随科技创新引领数字化浪潮席卷全球，数据成为企业发展的核心生产要素。像Google、Facebook等高科技公司，通过提供免费、优秀的软件和服务，接入大量的用户，并基于数据资源驱动，获得了巨大的商业成功。然而，在高速发展的同时，公司对数据却疏于治理，引起了大量的数据泄漏、算法滥用以及隐私相关的问题。这种危机伴随着Facebook的“剑桥分析”丑闻、2020年美国大选等标志性事件，推向了高潮。基于对数据安全和隐私的担忧，欧盟的GDPR领衔的现代隐私合规出台，随后风靡全球，成为又一不可逆转的潮流。
@@ -72,7 +59,7 @@ GitHub下载地址：https://github.com/meituan/YOLOv6。欢迎Star收藏，随�
     <item>
       <title>通用目标检测开源框架YOLOv6在美团的量化部署实战</title>
       <link>https://wfsui.github.io/posts/%E9%80%9A%E7%94%A8%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E9%87%8F%E5%8C%96%E9%83%A8%E7%BD%B2%E5%AE%9E%E6%88%98/</link>
-      <pubDate>Thu, 12 Jan 2023 02:55:06 +0000</pubDate>
+      <pubDate>Fri, 13 Jan 2023 02:59:42 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E9%80%9A%E7%94%A8%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E9%87%8F%E5%8C%96%E9%83%A8%E7%BD%B2%E5%AE%9E%E6%88%98/</guid>
       <description>1. 背景和难点## 1. 背景和难点 YOLOv6 是美团发布的一款开源的面向工业应用的 2D 目标检测模型 [1]，主要特点是速度快、精度高、部署友好，在美团众多视觉业务场景中都有着广泛的应用。通过量化（Quantization）提升推理速度是实际工业应用中的基本操作，但由于 YOLOv6 系列模型采用了大量的重参数化模块，如何针对 YOLOv6 进行高效和高精度的量化成为一个亟待解决的问题。本文旨在解决 YOLOv6 量化方面的难题，并以 YOLOv6s 模型为例，从训练后量化（Post-Training Quantization, PTQ）和量化感知训练（Quantization-Aware Training, QAT）两个方面进行分析，探索出了一条切实可行的量化方案。</description>
@@ -81,7 +68,7 @@ GitHub下载地址：https://github.com/meituan/YOLOv6。欢迎Star收藏，随�
     <item>
       <title>美团高性能终端实时日志系统建设实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%AB%98%E6%80%A7%E8%83%BD%E7%BB%88%E7%AB%AF%E5%AE%9E%E6%97%B6%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Thu, 12 Jan 2023 02:55:05 +0000</pubDate>
+      <pubDate>Fri, 13 Jan 2023 02:59:41 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%AB%98%E6%80%A7%E8%83%BD%E7%BB%88%E7%AB%AF%E5%AE%9E%E6%97%B6%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景 1.1 Logan 简介 Logan 是美团面向终端的统一日志服务，已支持移动端App、Web、小程序、IoT等多端环境，具备日志采集、存储、上传、查询与分析等能力，帮助用户定位研发问题，提升故障排查效率。同时，Logan 也是业内开源较早的大前端日志系统，具有写入性能高、安全性高、日志防丢失等优点。
@@ -92,7 +79,7 @@ GitHub下载地址：https://github.com/meituan/YOLOv6。欢迎Star收藏，随�
     <item>
       <title>ACM MM &amp; ECCV 2022 | 美团视觉8篇论文揭秘内容领域的智能科技</title>
       <link>https://wfsui.github.io/posts/acm-mm-eccv-2022-%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%898%E7%AF%87%E8%AE%BA%E6%96%87%E6%8F%AD%E7%A7%98%E5%86%85%E5%AE%B9%E9%A2%86%E5%9F%9F%E7%9A%84%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80/</link>
-      <pubDate>Thu, 12 Jan 2023 02:55:03 +0000</pubDate>
+      <pubDate>Fri, 13 Jan 2023 02:59:39 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/acm-mm-eccv-2022-%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%898%E7%AF%87%E8%AE%BA%E6%96%87%E6%8F%AD%E7%A7%98%E5%86%85%E5%AE%B9%E9%A2%86%E5%9F%9F%E7%9A%84%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80/</guid>
       <description>人工智能技术正在成为内容领域的中台力量，其中视觉AI已经渗透到内容生产、内容审核、内容分发、用户互动、商业化变现等各个环节。美团视觉智能部以场景化的内容产品、智能化的内容工具助力产业，在内容的创作、内容分发等环节应用广泛。
@@ -103,6 +90,19 @@ ECCV | Adaptive Spatial-BCE Loss for Weakly Supervised Semantic Segmentation（�
 论文下载：PDF
 论文简介：弱监督语义分割旨在解决全监督语义分割任务中所需的像素级标签人工成本和时间开销较大的缺点，通过引入较弱的监督信息来降低相关成本。其中本文所使用的图像级监督成本最低，但其较低的信息量也带来了更大的挑战。当前的通用流程是先通过分类网络生成分割伪标签，经过后处理细化后再用伪标签训练语义分割网络。先前方法主要有以下缺点：1）生成的伪标签物体轮廓不清晰；2）前背景的划分阈值需要人工调节，降低了泛用性；3）性能严重依赖后处理，训练复杂度较高。为了缓解这些缺点，我们提出了一个新的损失函数——空间二元交叉熵损失（Spatial-BCE），通过为前景和背景像素分配不同的优化方向来提高它们之间的特征差异性，进而实现更加清晰的伪标签物体轮廓，如下图1所示：
 此外，我们还引入了自适应阈值，通过在训练中让损失函数自行划分前背景像素的比例，并在推理时可同样将划分阈值交由网络生成。最后，我们还设计了配套的迭代式训练方法，大幅提高了初始伪标签的准确率，即使不使用复杂的后处理方法，我们也可以实现当前的最优性能。大量实验表明，我们的方法在PASCAL VOC 2012和MS-COCO 2014数据集上在均可成为SoTA，如下图2所示：</description>
+    </item>
+    
+    <item>
+      <title>基于AI算法的数据库异常监测系统的设计与实现</title>
+      <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai%E7%AE%97%E6%B3%95%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E7%9B%91%E6%B5%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Thu, 12 Jan 2023 02:55:08 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai%E7%AE%97%E6%B3%95%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E7%9B%91%E6%B5%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/</guid>
+      <description>1. 背景 数据库被广泛用于美团的核心业务场景上，对稳定性要求较高，对异常容忍度非常低。因此，快速的数据库异常发现、定位和止损就变得越来越重要。针对异常监测的问题，传统的固定阈值告警方式，需要依赖专家经验进行规则配置，不能根据不同业务场景灵活动态调整阈值，容易让小问题演变成大故障。
+而基于AI的数据库异常发现能力，可以基于数据库历史表现情况，对关键指标进行7 * 24小时巡检，能够在异常萌芽状态就发现风险，更早地将异常暴露，辅助研发人员在问题恶化前进行定位和止损。基于以上这些因素的考量，美团数据库平台研发组决定开发一套数据库异常检测服务系统。接下来，本文将会从特征分析、算法选型、模型训练与实时检测等几个维度阐述我们的一些思考和实践。
+2. 特征分析 2.1 找出数据的变化规律 在具体进行开发编码前，有一项非常重要的工作，就是从已有的历史监控指标中，发现时序数据的变化规律，从而根据数据分布的特点选取合适的算法。以下是我们从历史数据中选取的一些具有代表性的指标分布图：
+从上图我们可以看出，数据的规律主要呈现三种状态：周期、漂移和平稳[1]。因此，我们前期可以针对这些普遍特征的样本进行建模，即可覆盖大部分场景。接下来，我们分别从周期性、漂移性和平稳性这三个角度进行分析，并讨论算法设计的过程。
+2.1.1 周期性变化 在很多业务场景中，指标会由于早晚高峰或是一些定时任务引起规律性波动。我们认为这属于数据的内在规律性波动，模型应该具备识别出周期性成分，检测上下文异常的能力。对于不存在长期趋势成分的时序指标而言，当指标存在周期性成分的情况下，$\int f(x) f(x+t) dx \leqslant \int f(x)f(x+T)dx = \int f^{2}(x)dx$，其中T代表的是时序的周期跨度。可通过计算自相关图，即计算出t取不同值时$\int f(x) f(x+t) dx$ 的值，然后通过分析自相关峰的间隔来确定周期性，主要的流程包括以下几个步骤：</description>
     </item>
     
     <item>

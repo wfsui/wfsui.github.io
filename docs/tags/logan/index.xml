@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Tue, 17 Jan 2023 02:54:30 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/logan/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 19 Jan 2023 03:00:08 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/logan/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>美团高性能终端实时日志系统建设实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%AB%98%E6%80%A7%E8%83%BD%E7%BB%88%E7%AB%AF%E5%AE%9E%E6%97%B6%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 17 Jan 2023 02:54:30 +0000</pubDate>
+      <pubDate>Thu, 19 Jan 2023 03:00:08 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%AB%98%E6%80%A7%E8%83%BD%E7%BB%88%E7%AB%AF%E5%AE%9E%E6%97%B6%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景 1.1 Logan 简介 Logan 是美团面向终端的统一日志服务，已支持移动端App、Web、小程序、IoT等多端环境，具备日志采集、存储、上传、查询与分析等能力，帮助用户定位研发问题，提升故障排查效率。同时，Logan 也是业内开源较早的大前端日志系统，具有写入性能高、安全性高、日志防丢失等优点。

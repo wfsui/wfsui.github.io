@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Wed, 25 Jan 2023 02:53:30 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2ai/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 26 Jan 2023 02:54:50 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2ai/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>美团图灵机器学习平台性能起飞的秘密（一）</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%9B%BE%E7%81%B5%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E6%80%A7%E8%83%BD%E8%B5%B7%E9%A3%9E%E7%9A%84%E7%A7%98%E5%AF%86%E4%B8%80/</link>
-      <pubDate>Wed, 25 Jan 2023 02:53:30 +0000</pubDate>
+      <pubDate>Thu, 26 Jan 2023 02:54:50 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%9B%BE%E7%81%B5%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E6%80%A7%E8%83%BD%E8%B5%B7%E9%A3%9E%E7%9A%84%E7%A7%98%E5%AF%86%E4%B8%80/</guid>
       <description>导语 图灵平台是美团履约平台技术部2018年开始自研的算法平台，提供模型全生命周期的一站式服务，旨在帮助算法同学脱离繁琐的工程化开发，把有限的精力聚焦于业务和算法的迭代优化中。

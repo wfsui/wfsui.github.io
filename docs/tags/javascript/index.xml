@@ -7,24 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Wed, 22 Feb 2023 03:01:45 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>深入理解函数式编程（下）</title>
-      <link>https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8B/</link>
-      <pubDate>Wed, 22 Feb 2023 03:01:45 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8B/</guid>
-      <description>1. 前文回顾 在上篇中，我们分析了函数式编程的起源和基本特性，并通过每一个特性的示例来演示这种特性的实际效果。首先，函数式编程起源于数理逻辑，起源于λ演算，这是一种演算法，它定义一些基础的数据结构，然后通过归约和代换来实现更复杂的数据结构，而函数本身也是它的一种数据。其次，我们探讨了很多函数式编程的特性，比如：
-First Class 纯函数 引用透明 表达式 高阶函数 柯里化 函数组合 point-free … 但我们也指出了一个实际问题：不能处理副作用的程序是毫无意义的。我们的计算机程序随时都在产生副作用。我们程序里面有大量的网络请求、多媒体输入输出、内部状态、全局状态等，甚至在提倡“碳中和”的今天，电脑的发热量也是一个不容小觑的副作用。那么我们应该如何处理这些问题呢？
-2. 本文简介 本文通过深入函数式编程的副作用处理及实际应用场景，提供一个学习和使用函数式编程的视角给读者。一方面，这种副作用管理方式是一种高级的抽象形式，不易理解；另一方面，我们在学习和使用函数式编程的过程中，几乎都会遇到类似的副作用问题需要解决，能否解决这个问题也决定了一门函数式编程语言最终是否能走上成功。
-本文主要分为三个部分：
-副作用处理方式 函数式编程的应用 函数式编程的优缺点比较 3.</description>
-    </item>
-    
+    <lastBuildDate>Thu, 23 Feb 2023 02:59:38 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>深入理解函数式编程（上）</title>
       <link>https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8A/</link>
-      <pubDate>Wed, 22 Feb 2023 03:01:44 +0000</pubDate>
+      <pubDate>Thu, 23 Feb 2023 02:59:38 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8A/</guid>
       <description>前言 本文分为上下两篇，上篇讲述函数式编程的基础概念和特性，下篇讲述函数式编程的进阶概念、应用及优缺点。函数式编程既不是简单的堆砌函数，也不是语言范式的终极之道。我们将深入浅出地讨论它的特性，以期在日常工作中能在对应场景中进行灵活应用。
@@ -37,6 +24,19 @@ First Class 纯函数 引用透明 表达式 高阶函数 柯里化 函数组合
 函数式编程是一种编程范式，它将电脑运算视为函数运算，并且避免使用程序状态以及易变对象。其中，λ演算是该语言最重要的基础。而且λ演算的函数可以接受函数作为输入的参数和输出的返回值。
 我们可以直接读出以下信息：
 避免状态变更 函数作为输入输出 和λ演算有关 那什么是λ演算呢？</description>
+    </item>
+    
+    <item>
+      <title>深入理解函数式编程（下）</title>
+      <link>https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8B/</link>
+      <pubDate>Thu, 23 Feb 2023 02:59:38 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8B/</guid>
+      <description>1. 前文回顾 在上篇中，我们分析了函数式编程的起源和基本特性，并通过每一个特性的示例来演示这种特性的实际效果。首先，函数式编程起源于数理逻辑，起源于λ演算，这是一种演算法，它定义一些基础的数据结构，然后通过归约和代换来实现更复杂的数据结构，而函数本身也是它的一种数据。其次，我们探讨了很多函数式编程的特性，比如：
+First Class 纯函数 引用透明 表达式 高阶函数 柯里化 函数组合 point-free … 但我们也指出了一个实际问题：不能处理副作用的程序是毫无意义的。我们的计算机程序随时都在产生副作用。我们程序里面有大量的网络请求、多媒体输入输出、内部状态、全局状态等，甚至在提倡“碳中和”的今天，电脑的发热量也是一个不容小觑的副作用。那么我们应该如何处理这些问题呢？
+2. 本文简介 本文通过深入函数式编程的副作用处理及实际应用场景，提供一个学习和使用函数式编程的视角给读者。一方面，这种副作用管理方式是一种高级的抽象形式，不易理解；另一方面，我们在学习和使用函数式编程的过程中，几乎都会遇到类似的副作用问题需要解决，能否解决这个问题也决定了一门函数式编程语言最终是否能走上成功。
+本文主要分为三个部分：
+副作用处理方式 函数式编程的应用 函数式编程的优缺点比较 3.</description>
     </item>
     
   </channel>

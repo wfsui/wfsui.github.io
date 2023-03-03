@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Thu, 02 Mar 2023 03:07:36 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 03 Mar 2023 04:21:35 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>深入理解函数式编程（上）</title>
       <link>https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8A/</link>
-      <pubDate>Thu, 02 Mar 2023 03:07:36 +0000</pubDate>
+      <pubDate>Fri, 03 Mar 2023 04:21:35 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8A/</guid>
       <description>前言 本文分为上下两篇，上篇讲述函数式编程的基础概念和特性，下篇讲述函数式编程的进阶概念、应用及优缺点。函数式编程既不是简单的堆砌函数，也不是语言范式的终极之道。我们将深入浅出地讨论它的特性，以期在日常工作中能在对应场景中进行灵活应用。
@@ -29,7 +29,7 @@
     <item>
       <title>深入理解函数式编程（下）</title>
       <link>https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8B/</link>
-      <pubDate>Thu, 02 Mar 2023 03:07:36 +0000</pubDate>
+      <pubDate>Fri, 03 Mar 2023 04:21:35 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8B/</guid>
       <description>1. 前文回顾 在上篇中，我们分析了函数式编程的起源和基本特性，并通过每一个特性的示例来演示这种特性的实际效果。首先，函数式编程起源于数理逻辑，起源于λ演算，这是一种演算法，它定义一些基础的数据结构，然后通过归约和代换来实现更复杂的数据结构，而函数本身也是它的一种数据。其次，我们探讨了很多函数式编程的特性，比如：

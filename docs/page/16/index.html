@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="generator" content="Hugo 0.111.0">
+	<meta name="generator" content="Hugo 0.111.1">
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>大峰哥 - 记录日常生活哦 </title><meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="alternate" type="application/rss+xml" href="https://wfsui.github.io/index.xml" title="大峰哥" />
@@ -67,6 +67,18 @@
 				
 				<div class="post">
 					<div class="meta">May 8, 2022</div>
+					<a class="title" href="/posts/dstc10%E5%BC%80%E6%94%BE%E9%A2%86%E5%9F%9F%E5%AF%B9%E8%AF%9D%E8%AF%84%E4%BC%B0%E6%AF%94%E8%B5%9B%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/">DSTC10开放领域对话评估比赛冠军方法总结</a> &mdash;
+					<span class="description">
+						
+						1. 背景 对话系统技术挑战赛DSTC（The Dialog System Technology Challenge）由微软、卡内基梅隆大学的科学家于2013年发起，旨在带动学术与工业界在对话技术上的提升，在对话领域具有极高的权威性和知名度。对话系统挑战赛今年已举办至第十届（DSTC10），吸引了微软、亚马逊、卡内基梅隆大学、Facebook、三菱电子研究实验室、美团、百度等全球知名企业、顶尖大学和机构同台竞技。
+DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务。其中Track5 Task1 Automatic Open-domain Dialogue Evaluation较为系统全面地将开放领域对话的自动评估任务引入DSTC10比赛中。开放领域对话自动评估是对话系统的重要组成部分，致力于自动化地给出符合人类直觉的对话质量评估结果。相比于速度慢、成本高的人工标注，自动化评估方法可以高效率、低成本地对不同对话系统进行打分，有力促进了对话系统的发展。
+不同于任务型对话有一个固定的优化目标，开放领域对话更接近人类真实的对话，评估难度更大，因而吸引了广泛的关注。DSTC10 Track5 Task1比赛共包含14个验证数据集（共包含37种不同的对话评估维度）和5个测试数据集（共包含11个评估维度）。美团语音团队最终以平均0.3104的相关性取得了该比赛的第一名，该部分工作已完成一篇论文MME-CRS: Multi-Metric Evaluation based on Correlation Re-Scaling for Evaluating Open-Domain Dialogue，并收录在AAAI2022 Workshop。&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
+					<div class="meta">May 8, 2022</div>
 					<a class="title" href="/posts/%E4%BB%8E0%E5%88%B01%E7%BE%8E%E5%9B%A2%E7%AB%AF%E4%BE%A7cdn%E5%AE%B9%E7%81%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">从0到1：美团端侧CDN容灾解决方案</a> &mdash;
 					<span class="description">
 						
@@ -113,20 +125,6 @@ ACM SIGKDD （国际数据挖掘与知识发现大会，简称 KDD）是数据�
 					<span class="description">
 						
 						一、背景 1.1 关于FlutterWeb 时间回拨到 2018 年，Google 首次公开 FlutterWeb Beta 版，表露出要实现一份代码、多端运行的愿景。经过无数工程师两年多的努力，在今年年初（2021 年 3 月份），Flutter 2.0 正式对外发布，它将 FlutterWeb 功能并入了 Stable Channel，意味着 Google 更加坚定了多端复用的决心。&hellip;
-						
-					</span>
-				</div>
-				
-				<div class="post">
-					<div class="meta">Apr 17, 2022</div>
-					<a class="title" href="/posts/tensorflow%E5%9C%A8%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/">TensorFlow在推荐系统中的分布式训练优化实践</a> &mdash;
-					<span class="description">
-						
-						1 背景 TensorFlow（下文简称TF）是谷歌推出的一个开源深度学习框架，在美团推荐系统场景中得到了广泛的使用。但TensorFlow官方版本对工业级场景的支持，目前做得并不是特别的完善。美团在大规模生产落地的过程中，遇到了以下几方面的挑战：
-所有参数都是用Variable表达， 对于百亿以上的稀疏参数开辟了大量的内存，造成了资源的浪费； 只支持百级别Worker的分布式扩展，对上千Worker的扩展性较差； 由于不支持大规模稀疏参数动态添加、删除，增量导出，导致无法支持Online Learning； 大规模集群运行时，会遇到慢机和宕机；由于框架层不能处理，导会致任务运行异常。 以上这些问题，并不是TensorFlow设计的问题，更多是底层实现的问题。考虑到美团大量业务的使用习惯以及社区的兼容性，我们基于原生TensorFlow 1.x架构与接口，从大规模稀疏参数的支持、训练模式、分布式通信优化、流水线优化、算子优化融合等多维度进行了深度定制，从而解决了该场景的核心痛点问题。
-首先新系统在支持能力层面，目前可以做到千亿参数模型，上千Worker分布式训练的近线性加速，全年样本数据能够1天内完成训练，并支持Online Learning的能力。同时，新系统的各种架构和接口更加友好，美团内部包括美团外卖、美团优选、美团搜索、广告平台、大众点评Feeds等业务部门都在使用。本文将重点介绍大规模分布式训练优化的工作，希望对大家能够有所帮助或启发。
-2 大规模训练优化挑战 2.1 业务迭代带来的挑战 随着美团业务的发展，推荐系统模型的规模和复杂度也在快速增长，具体表现如下：
-训练数据：训练样本从到百亿增长到千亿，增长了近10倍。 稀疏参数：个数从几百到几千，也增长了近10倍；总参数量从几亿增长到百亿，增长了10~20倍。 模型复杂度：越来越复杂，模型单步计算时间增长10倍以上。 对于大流量业务，一次训练实验，从几个小时增长到了几天，而此场景一次实验保持在1天之内是基本的需求。&hellip;
 						
 					</span>
 				</div>

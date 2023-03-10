@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Thu, 09 Mar 2023 03:06:33 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/yolov6/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 10 Mar 2023 03:09:33 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/yolov6/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SOTA！目标检测开源框架YOLOv6 3.0版本来啦</title>
       <link>https://wfsui.github.io/posts/sota%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6-3.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</link>
-      <pubDate>Thu, 09 Mar 2023 03:06:33 +0000</pubDate>
+      <pubDate>Fri, 10 Mar 2023 03:09:33 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/sota%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6-3.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</guid>
       <description>1. 概述 1 月 6 日，美团视觉智能部发布了 YOLOv6 3.0 版本，再一次将目标检测的综合性能推向新高。本次更新除了对 YOLOv6-N/S/M/L 模型进行全系列升级之外，还推出了大分辨率 P6 模型。其中，YOLOv6-L6 检测精度达到 57.2% AP，在 T4 卡上推理速度可达 29 FPS，超越 YOLOv7-E6E，取得当前实时目标检测榜单 SOTA。</description>

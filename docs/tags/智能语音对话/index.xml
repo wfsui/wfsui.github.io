@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>智能语音对话 on 大峰哥</title>
+    <link>https://wfsui.github.io/tags/%E6%99%BA%E8%83%BD%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/</link>
+    <description>Recent content in 智能语音对话 on 大峰哥</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Fri, 10 Mar 2023 03:09:33 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%99%BA%E8%83%BD%E8%AF%AD%E9%9F%B3%E5%AF%B9%E8%AF%9D/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MRCP在美团语音交互中的实践和应用</title>
+      <link>https://wfsui.github.io/posts/mrcp%E5%9C%A8%E7%BE%8E%E5%9B%A2%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E5%BA%94%E7%94%A8/</link>
+      <pubDate>Fri, 10 Mar 2023 03:09:33 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/mrcp%E5%9C%A8%E7%BE%8E%E5%9B%A2%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E5%BA%94%E7%94%A8/</guid>
+      <description>一、背景 智能语音对话作为人工智能领域最先落地的分支之一，可以实现与人进行自然语言多轮对话，其核心技术在近年来不断地发展成熟，包括语音识别、自然语言理解、对话管理等。伴随着技术的成熟，越来越多的电话机器人开始走进我们的生活，这些电话机器人在客户服务、智能销售、通知触达等场景发挥着重要的作用。
+当你和智能语音机器人对话交互时，你是否好奇电话背后的机器人如何“听懂”你的意思，又如何像人一样“回答”你的问题？经典的技术实现路径是：机器人首先通过“语音识别（ASR）”将用户输入语音识别成文字，再通过“自然语言理解（NLU）”识别意图，之后根据意图、系统信号等输入结合对话管理技术得到相应的回复，最后通过“语音合成（TTS）”生成语音播报给电话对端的用户。但要将 ASR、TTS 这些技术应用到电话系统上，还需要一些额外的工作和技术支撑，其中比较重要的技术之一也就是本文将要介绍的 MRCP。
+备注：本文涉及较多的专业名词，我们特别在文末附上了名词解释，以帮助大家进行阅读。
+1.1 MRCP 是什么 MRCP（Media Resource Control Protocol, MRCP）是一种通讯协议，中文定义是：媒体资源控制协议，用于语音服务器向客户端提供各种语音服务（如语音识别和语音合成）。该协议定义了控制媒体处理资源所必需的请求（Request）、应答（Response）和事件（Event）等消息，它需要借助 RTP（Real-Time Transport Protocol, 实时传输协议）创建一个媒体会话、借助 SIP（Session Initiation Protocol, 会话初始化协议） 和 SDP（Session Description Protocol, 会话描述协议） 创建一个控制会话来实现媒体资源服务器端和客户端之间的控制[1]。</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sat, 18 Mar 2023 02:51:16 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%B3%BB%E7%BB%9F/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 19 Mar 2023 03:00:11 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%B3%BB%E7%BB%9F/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Java动态追踪技术探究</title>
       <link>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</link>
-      <pubDate>Sat, 18 Mar 2023 02:51:16 +0000</pubDate>
+      <pubDate>Sun, 19 Mar 2023 03:00:11 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</guid>
       <description>引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：
@@ -33,9 +33,21 @@
     </item>
     
     <item>
+      <title>美团开放平台SDK自动生成技术与实践</title>
+      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Sun, 19 Mar 2023 03:00:06 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
+      <description>1. 引言 美团开放平台对外提供了外卖、团购、配送等20余个业务场景的OpenAPI，供第三方开发者搭建应用时使用，是美团系统与外部系统通讯的最重要平台。本文主要讲述开放平台如何通过技术手段自动生成支持接口参数富模型和多种编程语言的SDK，以提高开发者对接开放平台API的效率。
+1.1 背景 美团开放平台将美团各类业务提供的扩展服务封装成一系列应用程序编程接口（API）对外开放，供第三方开发者使用。开发者可通过调用开放平台提供的OpenAPI获取数据和能力，以实现自身系统与美团系统协同工作的业务逻辑。以外卖业务场景为例，开发者可以在自己为外卖商户开发的应用中通过调用美团开放平台提供的API，提供外卖订单查询、接单、订单管理等一系列功能。如下图所示：
+开放平台为开发者提供的OpenAPI以HTTP接口的形式提供。以平台提供的订单查询接口为例，对应的HTTP请求如下所示：
+POST https://api-open-cater.meituan.com/api/order/queryById Content-Type: application/x-www-form-urlencoded;charset=utf-8 appAuthToken=eeee860a3d2a8b73cfb6604b136d6734283510c4e92282&amp;amp; charset=utf-8&amp;amp; developerId=106158&amp;amp; sign=4656285a4c2493e279d929b8b9f4e29310da8b2b&amp;amp; timestamp=1618543567&amp;amp; biz={&amp;#34;orderId&amp;#34;: &amp;#34;10046789912119&amp;#34;} Response:{ &amp;#34;orderId&amp;#34;:&amp;#34;10046789912119&amp;#34;, &amp;#34;payAmount&amp;#34;:&amp;#34;45.</description>
+    </item>
+    
+    <item>
       <title>Code：美团代码托管平台的演进与实践</title>
       <link>https://wfsui.github.io/posts/code%E7%BE%8E%E5%9B%A2%E4%BB%A3%E7%A0%81%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%BC%94%E8%BF%9B%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sat, 18 Mar 2023 02:51:11 +0000</pubDate>
+      <pubDate>Sun, 19 Mar 2023 03:00:05 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/code%E7%BE%8E%E5%9B%A2%E4%BB%A3%E7%A0%81%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%BC%94%E8%BF%9B%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 引言 Code是美团自研的代码托管平台，其中包括了代码版本管理、分支管理及代码评审等功能，协同众多研发流程工具平台，支撑内部所有工程师的日常研发工作。经过近3年的建设，目前Code托管了数以万计的仓库，日常处理千万级的Git相关请求，稳定支撑着美团研发流程规范的持续落地。本文主要介绍美团在建设代码托管平台过程中面临的一些挑战和实践经验。
@@ -45,18 +57,6 @@
 存储：由于公司资源限制和地域分配不均等因素，代码托管平台部署机器已配置最大容量的可用SSD磁盘，使用率仍高达80%，可用空间严重不足。 负载：随着研发人员的不断增多，在访问高峰期，CPU和IO负载高达95%以上，页面出现严重的卡顿，仅能通过限流保障系统的持续服务。 因而，单机部署无法再承载高峰期的访问量，系统扩容刻不容缓。于是，我们开始设计了一套能够通过多机负载同一仓库IO的读写分离架构方案，以解决较为严重的IO负载问题。在读写分离架构中，最重要的是要保证用户视角的数据一致性（用户随时可以读取提交的最新代码），这里采取了以下措施：
 写操作仅发生在主节点。 采用懒汉同步模式，在读取数据时触发从节点同步数据，若失败，则路由到主节点。 采用独主兜底模式，遇遇到突发情况时可以迅速禁用从节点，保障数据安全。 如图2所示，我们将仓库访问形式按照应用层协议区分为HTTP和SSH，分别由对应的解析代理模块进行读写分发操作后再下发到主从节点（此处采用了Round-Bobin的算法分发读请求），使得读吞吐量整体扩大了2倍。对于从节点，我们部署了Agent，在用户发起读请求时会触发同步仓库数据的Fetch操作，以保证数据的一致性。
 第三阶段：自研分布式代码托管平台 在第二阶段，虽然通过多机负载IO的读写分离架构短暂性地解决了扩展性瓶颈问题，但仓库数据仍在持续不断地指数增长。同时，除扩展性问题之外，可用性瓶颈也凸显出来，主要表现在以下2个方面：</description>
-    </item>
-    
-    <item>
-      <title>美团开放平台SDK自动生成技术与实践</title>
-      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sat, 18 Mar 2023 02:51:11 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
-      <description>1. 引言 美团开放平台对外提供了外卖、团购、配送等20余个业务场景的OpenAPI，供第三方开发者搭建应用时使用，是美团系统与外部系统通讯的最重要平台。本文主要讲述开放平台如何通过技术手段自动生成支持接口参数富模型和多种编程语言的SDK，以提高开发者对接开放平台API的效率。
-1.1 背景 美团开放平台将美团各类业务提供的扩展服务封装成一系列应用程序编程接口（API）对外开放，供第三方开发者使用。开发者可通过调用开放平台提供的OpenAPI获取数据和能力，以实现自身系统与美团系统协同工作的业务逻辑。以外卖业务场景为例，开发者可以在自己为外卖商户开发的应用中通过调用美团开放平台提供的API，提供外卖订单查询、接单、订单管理等一系列功能。如下图所示：
-开放平台为开发者提供的OpenAPI以HTTP接口的形式提供。以平台提供的订单查询接口为例，对应的HTTP请求如下所示：
-POST https://api-open-cater.meituan.com/api/order/queryById Content-Type: application/x-www-form-urlencoded;charset=utf-8 appAuthToken=eeee860a3d2a8b73cfb6604b136d6734283510c4e92282&amp;amp; charset=utf-8&amp;amp; developerId=106158&amp;amp; sign=4656285a4c2493e279d929b8b9f4e29310da8b2b&amp;amp; timestamp=1618543567&amp;amp; biz={&amp;#34;orderId&amp;#34;: &amp;#34;10046789912119&amp;#34;} Response:{ &amp;#34;orderId&amp;#34;:&amp;#34;10046789912119&amp;#34;, &amp;#34;payAmount&amp;#34;:&amp;#34;45.</description>
     </item>
     
     <item>

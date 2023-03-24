@@ -8,8 +8,8 @@
 美团在外卖搜索业务场景中大规模地使用了 Elasticsearch 作为底层检索引擎。其在过去几年很好地支持了外卖每天十亿以上的检索流量。然而随着供给与数据量的急剧增长，业务检索耗时与 CPU 负载也随之上涨。通过分析我们发现，当前检索的性能热点主要集中在倒排链的检索与合并流程中。针对这个问题，我们基于 Run-length Encoding（RLE）[1] 技术设计实现了一套高效的倒排索引，使倒排链合并时间（TP99）降低了 96%。我们将这一索引能力开发成了一款通用插件集成到 Elasticsearch 中，使得 Elasticsearch 的检索链路时延（TP99）降低了 84%。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%90%9C%E7%B4%A2%E5%9F%BA%E4%BA%8Eelasticsearch%E7%9A%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-03-21T02:45:48+00:00" />
-<meta property="article:modified_time" content="2023-03-21T02:45:48+00:00" /><meta property="og:site_name" content="大峰哥" />
+<meta property="article:published_time" content="2023-03-24T02:48:51+00:00" />
+<meta property="article:modified_time" content="2023-03-24T02:48:51+00:00" /><meta property="og:site_name" content="大峰哥" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="美团外卖搜索基于Elasticsearch的优化实践"/>
 <meta name="twitter:description" content="1. 前言 最近十年，Elasticsearch 已经成为了最受欢迎的开源检索引擎，其作为离线数仓、近线检索、B端检索的经典基建，已沉淀了大量的实践案例及优化总结。然而在高并发、高可用、大数据量的 C 端场景，目前可参考的资料并不多。因此，我们希望通过分享在外卖搜索场景下的优化实践，能为大家提供 Elasticsearch 优化思路上的一些借鉴。
@@ -59,7 +59,7 @@
 
 		<div class="post-header">
 			<h1 class="title">美团外卖搜索基于Elasticsearch的优化实践</h1>
-			<div class="meta">Posted at &mdash; Mar 21, 2023</div>
+			<div class="meta">Posted at &mdash; Mar 24, 2023</div>
 		</div>
 
 		<div class="markdown">

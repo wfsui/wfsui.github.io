@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 17 Apr 2023 02:47:05 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%90%8E%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 19 Apr 2023 02:47:19 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%90%8E%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Java魔法类：Unsafe应用解析</title>
       <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Mon, 17 Apr 2023 02:47:05 +0000</pubDate>
+      <pubDate>Wed, 19 Apr 2023 02:47:19 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
       <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
@@ -23,7 +23,7 @@ public final class Unsafe { // 单例对象 private static final Unsafe theUnsaf
     <item>
       <title>美团图灵机器学习平台性能起飞的秘密（一）</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%9B%BE%E7%81%B5%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E6%80%A7%E8%83%BD%E8%B5%B7%E9%A3%9E%E7%9A%84%E7%A7%98%E5%AF%86%E4%B8%80/</link>
-      <pubDate>Mon, 17 Apr 2023 02:47:04 +0000</pubDate>
+      <pubDate>Wed, 19 Apr 2023 02:47:18 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%9B%BE%E7%81%B5%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E6%80%A7%E8%83%BD%E8%B5%B7%E9%A3%9E%E7%9A%84%E7%A7%98%E5%AF%86%E4%B8%80/</guid>
       <description>导语 图灵平台是美团履约平台技术部2018年开始自研的算法平台，提供模型全生命周期的一站式服务，旨在帮助算法同学脱离繁琐的工程化开发，把有限的精力聚焦于业务和算法的迭代优化中。
@@ -42,7 +42,7 @@ public final class Unsafe { // 单例对象 private static final Unsafe theUnsaf
     <item>
       <title>美团外卖搜索基于Elasticsearch的优化实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%90%9C%E7%B4%A2%E5%9F%BA%E4%BA%8Eelasticsearch%E7%9A%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 17 Apr 2023 02:47:03 +0000</pubDate>
+      <pubDate>Wed, 19 Apr 2023 02:47:18 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%90%9C%E7%B4%A2%E5%9F%BA%E4%BA%8Eelasticsearch%E7%9A%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 前言 最近十年，Elasticsearch 已经成为了最受欢迎的开源检索引擎，其作为离线数仓、近线检索、B端检索的经典基建，已沉淀了大量的实践案例及优化总结。然而在高并发、高可用、大数据量的 C 端场景，目前可参考的资料并不多。因此，我们希望通过分享在外卖搜索场景下的优化实践，能为大家提供 Elasticsearch 优化思路上的一些借鉴。
@@ -52,7 +52,7 @@ public final class Unsafe { // 单例对象 private static final Unsafe theUnsaf
     <item>
       <title>MRCP在美团语音交互中的实践和应用</title>
       <link>https://wfsui.github.io/posts/mrcp%E5%9C%A8%E7%BE%8E%E5%9B%A2%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Mon, 17 Apr 2023 02:46:57 +0000</pubDate>
+      <pubDate>Wed, 19 Apr 2023 02:47:11 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/mrcp%E5%9C%A8%E7%BE%8E%E5%9B%A2%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E5%BA%94%E7%94%A8/</guid>
       <description>一、背景 智能语音对话作为人工智能领域最先落地的分支之一，可以实现与人进行自然语言多轮对话，其核心技术在近年来不断地发展成熟，包括语音识别、自然语言理解、对话管理等。伴随着技术的成熟，越来越多的电话机器人开始走进我们的生活，这些电话机器人在客户服务、智能销售、通知触达等场景发挥着重要的作用。
@@ -64,7 +64,7 @@ public final class Unsafe { // 单例对象 private static final Unsafe theUnsaf
     <item>
       <title>基于AI&#43;数据驱动的慢查询索引推荐</title>
       <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai&#43;%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E7%B4%A2%E5%BC%95%E6%8E%A8%E8%8D%90/</link>
-      <pubDate>Mon, 17 Apr 2023 02:46:56 +0000</pubDate>
+      <pubDate>Wed, 19 Apr 2023 02:47:11 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai&#43;%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E7%B4%A2%E5%BC%95%E6%8E%A8%E8%8D%90/</guid>
       <description>1 背景 随着美团业务量的不断增长，慢查询的数量也日益增多。目前，日均慢查询数量已经超过上亿条，如果仅依靠DBA和开发人员手动地对这些慢查询进行分析并建立合适的索引，显然是不太现实的。为了解决这一难题，美团内部DAS（数据库自治服务）平台已经集成了基于代价的慢查询优化建议来自动地为慢查询推荐索引。然而，仍然存在一些问题：

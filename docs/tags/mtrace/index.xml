@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 21 Apr 2023 02:46:35 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/mtrace/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 22 Apr 2023 02:46:08 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/mtrace/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>一次「找回」TraceId的问题分析与过程思考</title>
       <link>https://wfsui.github.io/posts/%E4%B8%80%E6%AC%A1%E6%89%BE%E5%9B%9Etraceid%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E4%B8%8E%E8%BF%87%E7%A8%8B%E6%80%9D%E8%80%83/</link>
-      <pubDate>Fri, 21 Apr 2023 02:46:35 +0000</pubDate>
+      <pubDate>Sat, 22 Apr 2023 02:46:08 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%B8%80%E6%AC%A1%E6%89%BE%E5%9B%9Etraceid%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E4%B8%8E%E8%BF%87%E7%A8%8B%E6%80%9D%E8%80%83/</guid>
       <description>1. 问题背景和思考 1.1 问题背景 在一次排查线上告警的过程中，突然发现一个链路信息有点不同寻常（这里仅展示测试复现的内容）：

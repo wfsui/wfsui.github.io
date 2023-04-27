@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 24 Apr 2023 02:47:42 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 27 Apr 2023 02:47:29 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>交互式推荐在外卖场景的探索与应用</title>
       <link>https://wfsui.github.io/posts/%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%8E%A8%E8%8D%90%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Mon, 24 Apr 2023 02:47:42 +0000</pubDate>
+      <pubDate>Thu, 27 Apr 2023 02:47:29 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%8E%A8%E8%8D%90%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</guid>
       <description>1. 背景 1.1 什么是交互式推荐？ 交互式推荐是一种互动式实时推荐产品模块，主要通过理解用户需求、以互动的方式进行推荐。交互式推荐由Youtube在2018年提出[1]，主要用于解决推荐系统的延迟[2]和与用户互动偏弱的问题。

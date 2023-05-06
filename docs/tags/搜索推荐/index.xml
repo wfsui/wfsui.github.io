@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 05 May 2023 02:44:19 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%90%9C%E7%B4%A2%E6%8E%A8%E8%8D%90/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 06 May 2023 02:42:02 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%90%9C%E7%B4%A2%E6%8E%A8%E8%8D%90/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>美团外卖推荐情境化智能流量分发的实践与探索</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E6%83%85%E5%A2%83%E5%8C%96%E6%99%BA%E8%83%BD%E6%B5%81%E9%87%8F%E5%88%86%E5%8F%91%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Fri, 05 May 2023 02:44:19 +0000</pubDate>
+      <pubDate>Sat, 06 May 2023 02:42:02 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E6%83%85%E5%A2%83%E5%8C%96%E6%99%BA%E8%83%BD%E6%B5%81%E9%87%8F%E5%88%86%E5%8F%91%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</guid>
       <description>1. 引言 美团外卖推荐服务了数亿用户，通过持续优化用户体验和流量分发精准性，为用户提供品质生活，“帮大家吃得更好，生活更好”。对于“用户”，大家可能会有不同的理解，通常的理解是用户即是自然人。业界主要的推荐场景，如淘宝首页猜你喜欢、抖音快手 Feeds 流推荐等大部分也是这么认为的，在这些电商、短视频等业务中，用户无论何时何地使用推荐服务，他们的需求是大体统一的，商品、信息、视频等供给也是一致的。
@@ -23,7 +23,7 @@
     <item>
       <title>交互式推荐在外卖场景的探索与应用</title>
       <link>https://wfsui.github.io/posts/%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%8E%A8%E8%8D%90%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Fri, 05 May 2023 02:44:16 +0000</pubDate>
+      <pubDate>Sat, 06 May 2023 02:42:01 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%8E%A8%E8%8D%90%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</guid>
       <description>1. 背景 1.1 什么是交互式推荐？ 交互式推荐是一种互动式实时推荐产品模块，主要通过理解用户需求、以互动的方式进行推荐。交互式推荐由Youtube在2018年提出[1]，主要用于解决推荐系统的延迟[2]和与用户互动偏弱的问题。

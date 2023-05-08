@@ -66,7 +66,35 @@
 				
 				
 				<div class="post">
-					<div class="meta">May 6, 2023</div>
+					<div class="meta">May 8, 2023</div>
+					<a class="title" href="/posts/icde-2023-%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E9%A4%90%E9%A5%AE%E6%8E%A8%E8%8D%90%E7%9A%84%E5%AE%9E%E8%B7%B5/">ICDE 2023 | 多场景多任务学习在美团到店餐饮推荐的实践</a> &mdash;
+					<span class="description">
+						
+						随着推荐算法技术的不断发展，跨场景学习已经受到了越来越多的研究人员的关注。美团到餐算法团队受到业界相关技术的启发，不断探索到店餐饮多场景推荐的优化问题，在多场景多任务学习的推荐领域中积累了较多的应用经验。团队使用到店餐饮全域推荐场景数据训练统一的多场景多任务学习模型，减少了重复性开发，并在多个到店餐饮推荐场景进行落地，取得了较为显著的效果。
+本文详细阐述了美团到店餐饮业务中多场景多任务学习的解决方案，基于该方案形成的学术论文《HiNet: Novel Multi-Scenario &amp; Multi-Task Learning with Hierarchical Information Extraction》已经被国际数据工程会议ICDE 2023收录。
+1. 背景 随着网络信息和服务的爆炸式增长，推荐系统已经成为为用户提供高质量个性化决策建议和体验的关键组件。传统的推荐系统，模型服务通常需要为特定场景单独进行定制化的开发，以适配不同场景下数据分布和特征空间的差异。然而在美团等工业互联网平台中通常存在多种多样的推荐场景（例如首页信息流、垂类子频道等）作用于用户访问的决策链路，同时基于每个场景的个性化推荐模型再对展示项目进行排序最终呈现给用户。
+在美团到店餐饮（以下简称到餐）平台中，伴随业务精细化的发展趋势，越来越多的场景需要对推荐系统进行定制化的建设，以满足用户到店就餐的个性化需求。如下图1所示，现实中用户往往会在多个不同场景之间进行浏览、点击，并最终成交。
+但随着推荐场景数量的增加，传统地针对单个场景独立开发推荐模型，往往会导致如下问题：
+仅根据单场景自身的数据进行建模，无法利用到用户在跨场景中丰富的行为信息，忽视了场景共性信息，特别是考虑到多种场景中可能会存在重复展示的商品（在上图1中，红色矩形框圈中的其实是相同的商品）。 一些长尾的业务场景由于流量较小且用户行为较为稀疏，数据量不足以让模型有效地进行建模。 由于每个场景的特征挖掘、模型训练和上线部署是独立开发且相互隔离的，这会大大增加计算成本和维护负担。 总的来讲，推荐算法对各场景单独建模存在诸多的局限性。然而，简单地将多个场景数据集进行合并训练一个排序模型来提供服务，并不能有效地捕获到每个场景的特有信息。&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
+					<div class="meta">May 8, 2023</div>
+					<a class="title" href="/posts/mrcp%E5%9C%A8%E7%BE%8E%E5%9B%A2%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E5%BA%94%E7%94%A8/">MRCP在美团语音交互中的实践和应用</a> &mdash;
+					<span class="description">
+						
+						一、背景 智能语音对话作为人工智能领域最先落地的分支之一，可以实现与人进行自然语言多轮对话，其核心技术在近年来不断地发展成熟，包括语音识别、自然语言理解、对话管理等。伴随着技术的成熟，越来越多的电话机器人开始走进我们的生活，这些电话机器人在客户服务、智能销售、通知触达等场景发挥着重要的作用。
+当你和智能语音机器人对话交互时，你是否好奇电话背后的机器人如何“听懂”你的意思，又如何像人一样“回答”你的问题？经典的技术实现路径是：机器人首先通过“语音识别（ASR）”将用户输入语音识别成文字，再通过“自然语言理解（NLU）”识别意图，之后根据意图、系统信号等输入结合对话管理技术得到相应的回复，最后通过“语音合成（TTS）”生成语音播报给电话对端的用户。但要将 ASR、TTS 这些技术应用到电话系统上，还需要一些额外的工作和技术支撑，其中比较重要的技术之一也就是本文将要介绍的 MRCP。
+备注：本文涉及较多的专业名词，我们特别在文末附上了名词解释，以帮助大家进行阅读。
+1.1 MRCP 是什么 MRCP（Media Resource Control Protocol, MRCP）是一种通讯协议，中文定义是：媒体资源控制协议，用于语音服务器向客户端提供各种语音服务（如语音识别和语音合成）。该协议定义了控制媒体处理资源所必需的请求（Request）、应答（Response）和事件（Event）等消息，它需要借助 RTP（Real-Time Transport Protocol, 实时传输协议）创建一个媒体会话、借助 SIP（Session Initiation Protocol, 会话初始化协议） 和 SDP（Session Description Protocol, 会话描述协议） 创建一个控制会话来实现媒体资源服务器端和客户端之间的控制[1]。&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
+					<div class="meta">May 8, 2023</div>
 					<a class="title" href="/posts/%E5%9F%BA%E4%BA%8Eai&#43;%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E7%B4%A2%E5%BC%95%E6%8E%A8%E8%8D%90/">基于AI&#43;数据驱动的慢查询索引推荐</a> &mdash;
 					<span class="description">
 						
@@ -81,7 +109,7 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !&hellip;
 				</div>
 				
 				<div class="post">
-					<div class="meta">May 6, 2023</div>
+					<div class="meta">May 8, 2023</div>
 					<a class="title" href="/posts/%E4%BA%BA%E6%9C%BA%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF%E4%B8%AD%E7%9A%84%E4%BD%8E%E5%BB%B6%E8%BF%9F%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/">人机语音交互场景中的低延迟流式语音识别技术</a> &mdash;
 					<span class="description">
 						
@@ -94,7 +122,7 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !&hellip;
 				</div>
 				
 				<div class="post">
-					<div class="meta">May 6, 2023</div>
+					<div class="meta">May 8, 2023</div>
 					<a class="title" href="/posts/%E4%B8%80%E6%AC%A1%E6%89%BE%E5%9B%9Etraceid%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E4%B8%8E%E8%BF%87%E7%A8%8B%E6%80%9D%E8%80%83/">一次「找回」TraceId的问题分析与过程思考</a> &mdash;
 					<span class="description">
 						
@@ -102,36 +130,6 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !&hellip;
 在机器中可以清楚的发现“2022-08-02 19:26:34.952 DXMsgRemoteService ”这一行日志信息并没有携带TraceId，导致调用链路信息戛然而止，无法追踪当时的调用情况。
 1.2 问题复现和思考 在处理完线上告警后，我们开始分析“丢失”的TraceId到底去了哪里？首先在代码中定位TraceId没有追踪到的部分，发现问题出现在一个@Async注解下的方法，删除无关的业务信息代码，并增加MTrace埋点方法后的复现代码如下：
 @SpringBootTest @RunWith(SpringRunner.class) @EnableAsync public class DemoServiceTest extends TestCase { @Resource private DemoService demoService; @Test public void testTestAsy() { Tracer.&hellip;
-						
-					</span>
-				</div>
-				
-				<div class="post">
-					<div class="meta">May 6, 2023</div>
-					<a class="title" href="/posts/%E5%92%B1%E4%BB%AC%E4%BB%8E%E5%A4%B4%E5%88%B0%E5%B0%BE%E8%AE%B2%E4%B8%80%E6%AC%A1-flink-%E7%BD%91%E7%BB%9C%E6%B5%81%E6%8E%A7%E5%92%8C%E5%8F%8D%E5%8E%8B%E5%89%96%E6%9E%90/">咱们从头到尾讲一次 Flink 网络流控和反压剖析</a> &mdash;
-					<span class="description">
-						
-						作者：张俊
-整理：张友亮（Apache Flink 社区志愿者）
-本文共 4745字，预计阅读时间 15min。
-本文根据 Apache Flink 系列直播整理而成，由 Apache Flink Contributor、OPPO 大数据平台研发负责人张俊老师分享。主要内容如下：
-网络流控的概念与背景 TCP的流控机制 Flink TCP-based 反压机制（before V1.&hellip;
-						
-					</span>
-				</div>
-				
-				<div class="post">
-					<div class="meta">May 6, 2023</div>
-					<a class="title" href="/posts/jpa-%E5%92%8C-mybatis-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B/">JPA 和 Mybatis 技术选型</a> &mdash;
-					<span class="description">
-						
-						在我们平时的项目中，大家都知道可以使用 JPA 或者 Mybatis 作为 ORM 层。对 JPA 和 Mybatis 如何进行技术选型？
-下面看看大精华总结如下：
-最佳回答
-首先表达个人观点，JPA必然是首选的。
-个人认为仅仅讨论两者使用起来有何区别，何者更加方便，不足以真正的比较这两个框架。
-要评判出更加优秀的方案，我觉得可以从软件设计的角度来评判。
-个人对 mybatis 并不熟悉，但 JPA 规范和 springdata 的实现，设计理念绝对是超前的。软件开发复杂性的一个解决手段是遵循 DDD（DDD 只是一种手段，但不是唯一手段），而我着重几点来聊聊 JPA 的设计中是如何体现领域驱动设计思想的，抛砖引玉。&hellip;
 						
 					</span>
 				</div>

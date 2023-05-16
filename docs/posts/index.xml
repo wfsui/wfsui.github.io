@@ -7,86 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 15 May 2023 02:48:01 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>咱们从头到尾讲一次 Flink 网络流控和反压剖析</title>
-      <link>https://wfsui.github.io/posts/%E5%92%B1%E4%BB%AC%E4%BB%8E%E5%A4%B4%E5%88%B0%E5%B0%BE%E8%AE%B2%E4%B8%80%E6%AC%A1-flink-%E7%BD%91%E7%BB%9C%E6%B5%81%E6%8E%A7%E5%92%8C%E5%8F%8D%E5%8E%8B%E5%89%96%E6%9E%90/</link>
-      <pubDate>Mon, 15 May 2023 02:48:01 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E5%92%B1%E4%BB%AC%E4%BB%8E%E5%A4%B4%E5%88%B0%E5%B0%BE%E8%AE%B2%E4%B8%80%E6%AC%A1-flink-%E7%BD%91%E7%BB%9C%E6%B5%81%E6%8E%A7%E5%92%8C%E5%8F%8D%E5%8E%8B%E5%89%96%E6%9E%90/</guid>
-      <description>作者：张俊
-整理：张友亮（Apache Flink 社区志愿者）
-本文共 4745字，预计阅读时间 15min。
-本文根据 Apache Flink 系列直播整理而成，由 Apache Flink Contributor、OPPO 大数据平台研发负责人张俊老师分享。主要内容如下：
-网络流控的概念与背景 TCP的流控机制 Flink TCP-based 反压机制（before V1.</description>
-    </item>
-    
-    <item>
-      <title>JPA 和 Mybatis 技术选型</title>
-      <link>https://wfsui.github.io/posts/jpa-%E5%92%8C-mybatis-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B/</link>
-      <pubDate>Mon, 15 May 2023 02:48:00 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/jpa-%E5%92%8C-mybatis-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B/</guid>
-      <description>在我们平时的项目中，大家都知道可以使用 JPA 或者 Mybatis 作为 ORM 层。对 JPA 和 Mybatis 如何进行技术选型？
-下面看看大精华总结如下：
-最佳回答
-首先表达个人观点，JPA必然是首选的。
-个人认为仅仅讨论两者使用起来有何区别，何者更加方便，不足以真正的比较这两个框架。
-要评判出更加优秀的方案，我觉得可以从软件设计的角度来评判。
-个人对 mybatis 并不熟悉，但 JPA 规范和 springdata 的实现，设计理念绝对是超前的。软件开发复杂性的一个解决手段是遵循 DDD（DDD 只是一种手段，但不是唯一手段），而我着重几点来聊聊 JPA 的设计中是如何体现领域驱动设计思想的，抛砖引玉。</description>
-    </item>
-    
-    <item>
-      <title>算法中七种常见的时间复杂度</title>
-      <link>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</link>
-      <pubDate>Mon, 15 May 2023 02:47:58 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</guid>
-      <description>这是我的推广信息，以激励自己更好的分享自己的知识和经验！也希望看到的你能够多多支持，谢谢！
-1. 滴滴云AI大师: 目前滴滴云正在大力推广自己的云计算服务，需要购买的朋友们用我的AI大师码 「2049」在滴滴云上购买 GPU / vGPU / 机器学习产品可额外享受 9 折优惠，点击这里前往滴滴云官网：www.didiyun.com。
-原文地址：7 Helpful Time Complexities 原文作者：Ellis Andrews 译文出自：掘金翻译计划 本文永久链接：https://github.</description>
-    </item>
-    
-    <item>
-      <title>Java动态追踪技术探究</title>
-      <link>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</link>
-      <pubDate>Mon, 15 May 2023 02:47:56 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</guid>
-      <description>引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：
-“Debug一下吧。”
-“线上机器，没开Debug端口。”
-“看日志，看看请求值和返回值分别是什么？”
-“那段代码没打印日志。”
-“改代码，加日志，重新发布一次。”
-“怀疑是线程池的问题，重启会破坏现场。”
-长达几十秒的沉默之后：“据说，排查问题的最高境界，就是只通过Review代码来发现问题。”
-比几十秒长几十倍的沉默之后：“我轮询了那段代码一十七遍之后，终于得出一个结论。”
-“结论是？”
-“我还没到达只通过Review代码就能发现问题的至高境界。”
-从JSP说起 对于大多数Java程序员来说，早期的时候，都会接触到一个叫做JSP（Java Server Pages）的技术。虽然这种技术，在前后端代码分离、前后端逻辑分离、前后端组织架构分离的今天来看，已经过时了，但是其中还是有一些有意思的东西，值得拿出来说一说。
-当时刚刚处于Java入门时期的我们，大多数精力似乎都放在了JSP的页面展示效果上了：
-“这个表格显示的行数不对”
-“原来是for循环写的有问题，改一下，刷新页面再试一遍”
-“嗯，好了，表格显示没问题了，但是，登录人的姓名没取到啊，是不是Sesstion获取有问题？”</description>
-    </item>
-    
-    <item>
-      <title>Java魔法类：Unsafe应用解析</title>
-      <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Mon, 15 May 2023 02:47:56 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
-      <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
-注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
-基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
-public final class Unsafe { // 单例对象 private static final Unsafe theUnsafe; private Unsafe() { } @CallerSensitive public static Unsafe getUnsafe() { Class var0 = Reflection.</description>
-    </item>
-    
+    <lastBuildDate>Tue, 16 May 2023 02:46:43 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ACM MM &amp; ECCV 2022 | 美团视觉8篇论文揭秘内容领域的智能科技</title>
       <link>https://wfsui.github.io/posts/acm-mm-eccv-2022-%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%898%E7%AF%87%E8%AE%BA%E6%96%87%E6%8F%AD%E7%A7%98%E5%86%85%E5%AE%B9%E9%A2%86%E5%9F%9F%E7%9A%84%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80/</link>
-      <pubDate>Mon, 15 May 2023 02:47:55 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:43 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/acm-mm-eccv-2022-%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%898%E7%AF%87%E8%AE%BA%E6%96%87%E6%8F%AD%E7%A7%98%E5%86%85%E5%AE%B9%E9%A2%86%E5%9F%9F%E7%9A%84%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80/</guid>
       <description>人工智能技术正在成为内容领域的中台力量，其中视觉AI已经渗透到内容生产、内容审核、内容分发、用户互动、商业化变现等各个环节。美团视觉智能部以场景化的内容产品、智能化的内容工具助力产业，在内容的创作、内容分发等环节应用广泛。
@@ -102,7 +27,7 @@ ECCV | Adaptive Spatial-BCE Loss for Weakly Supervised Semantic Segmentation（�
     <item>
       <title>美团SemEval2022结构化情感分析跨语言赛道冠军方法总结</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2semeval2022%E7%BB%93%E6%9E%84%E5%8C%96%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B5%9B%E9%81%93%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Mon, 15 May 2023 02:47:55 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:43 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2semeval2022%E7%BB%93%E6%9E%84%E5%8C%96%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B5%9B%E9%81%93%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</guid>
       <description>1. 背景 SemEval（International Workshop on Semantic Evaluation）是一系列国际自然语言处理（NLP）研讨会，也是自然语言处理领域的权威国际竞赛，其使命是推进语义分析的研究进展，并帮助一系列日益具有挑战性的自然语言语义问题创建高质量的数据集。本次SemEval-2022（The 16th International Workshop on Semantic Evaluation）包含12个任务，涉及一系列主题，包括习语检测和嵌入、讽刺检测、多语言新闻相似性等任务，吸引了包括特斯拉、阿里巴巴、支付宝、滴滴、华为、字节跳动、斯坦福大学等企业和科研机构参与。
@@ -112,7 +37,7 @@ ECCV | Adaptive Spatial-BCE Loss for Weakly Supervised Semantic Segmentation（�
     <item>
       <title>美团外卖搜索基于Elasticsearch的优化实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%90%9C%E7%B4%A2%E5%9F%BA%E4%BA%8Eelasticsearch%E7%9A%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 15 May 2023 02:47:55 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:43 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%90%9C%E7%B4%A2%E5%9F%BA%E4%BA%8Eelasticsearch%E7%9A%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 前言 最近十年，Elasticsearch 已经成为了最受欢迎的开源检索引擎，其作为离线数仓、近线检索、B端检索的经典基建，已沉淀了大量的实践案例及优化总结。然而在高并发、高可用、大数据量的 C 端场景，目前可参考的资料并不多。因此，我们希望通过分享在外卖搜索场景下的优化实践，能为大家提供 Elasticsearch 优化思路上的一些借鉴。
@@ -122,7 +47,7 @@ ECCV | Adaptive Spatial-BCE Loss for Weakly Supervised Semantic Segmentation（�
     <item>
       <title>大规模异构图召回在美团到店推荐广告的应用</title>
       <link>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%BC%82%E6%9E%84%E5%9B%BE%E5%8F%AC%E5%9B%9E%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E6%8E%A8%E8%8D%90%E5%B9%BF%E5%91%8A%E7%9A%84%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Mon, 15 May 2023 02:47:54 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:42 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%BC%82%E6%9E%84%E5%9B%BE%E5%8F%AC%E5%9B%9E%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E6%8E%A8%E8%8D%90%E5%B9%BF%E5%91%8A%E7%9A%84%E5%BA%94%E7%94%A8/</guid>
       <description>1. 引言 美团到店推荐广告技术部服务于到店餐饮、休娱亲子、丽人医美等众多本地生活服务商家。其中，召回环节作为推荐广告系统的第一个环节，承担着从海量商品中寻找优质候选的角色，是算法优化的核心问题之一。
@@ -141,7 +66,7 @@ GraphSAGE等基于消息传递范式的图神经网络方法，其中心节点�
     <item>
       <title>清华大学课题组联合美团研发无人机声波定位技术获顶会大奖</title>
       <link>https://wfsui.github.io/posts/%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6%E8%AF%BE%E9%A2%98%E7%BB%84%E8%81%94%E5%90%88%E7%BE%8E%E5%9B%A2%E7%A0%94%E5%8F%91%E6%97%A0%E4%BA%BA%E6%9C%BA%E5%A3%B0%E6%B3%A2%E5%AE%9A%E4%BD%8D%E6%8A%80%E6%9C%AF%E8%8E%B7%E9%A1%B6%E4%BC%9A%E5%A4%A7%E5%A5%96/</link>
-      <pubDate>Mon, 15 May 2023 02:47:54 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:42 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6%E8%AF%BE%E9%A2%98%E7%BB%84%E8%81%94%E5%90%88%E7%BE%8E%E5%9B%A2%E7%A0%94%E5%8F%91%E6%97%A0%E4%BA%BA%E6%9C%BA%E5%A3%B0%E6%B3%A2%E5%AE%9A%E4%BD%8D%E6%8A%80%E6%9C%AF%E8%8E%B7%E9%A1%B6%E4%BC%9A%E5%A4%A7%E5%A5%96/</guid>
       <description>11月6日至9日，第20届国际计算机学会（Association for Computing Machinery，简称ACM）嵌入式网络感知系统大会（Conference on Embedded Networked Sensor Systems ，简称SenSys）在美国波士顿召开。清华大学软件学院何源副教授课题组和美团无人机团队合作论文“麦巢：辅助无人机精准降落的远距离即时声源定位技术”（MicNest：Long-Range Instant Acoustic Localization of Drones in Precise Landing）获得了大会最佳论文奖第二名（Best Paper Runner-Up）。</description>
@@ -150,7 +75,7 @@ GraphSAGE等基于消息传递范式的图神经网络方法，其中心节点�
     <item>
       <title>2022年 | 美团技术团队公众号最受欢迎的20篇文章</title>
       <link>https://wfsui.github.io/posts/2022%E5%B9%B4-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E5%85%AC%E4%BC%97%E5%8F%B7%E6%9C%80%E5%8F%97%E6%AC%A2%E8%BF%8E%E7%9A%8420%E7%AF%87%E6%96%87%E7%AB%A0/</link>
-      <pubDate>Mon, 15 May 2023 02:47:53 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:41 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/2022%E5%B9%B4-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E5%85%AC%E4%BC%97%E5%8F%B7%E6%9C%80%E5%8F%97%E6%AC%A2%E8%BF%8E%E7%9A%8420%E7%AF%87%E6%96%87%E7%AB%A0/</guid>
       <description>时光匆匆，就要跟2022年说再见了！提前祝大家新年快乐~~
@@ -163,9 +88,21 @@ GraphSAGE等基于消息传递范式的图神经网络方法，其中心节点�
     </item>
     
     <item>
+      <title>美团开放平台SDK自动生成技术与实践</title>
+      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Tue, 16 May 2023 02:46:41 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
+      <description>1. 引言 美团开放平台对外提供了外卖、团购、配送等20余个业务场景的OpenAPI，供第三方开发者搭建应用时使用，是美团系统与外部系统通讯的最重要平台。本文主要讲述开放平台如何通过技术手段自动生成支持接口参数富模型和多种编程语言的SDK，以提高开发者对接开放平台API的效率。
+1.1 背景 美团开放平台将美团各类业务提供的扩展服务封装成一系列应用程序编程接口（API）对外开放，供第三方开发者使用。开发者可通过调用开放平台提供的OpenAPI获取数据和能力，以实现自身系统与美团系统协同工作的业务逻辑。以外卖业务场景为例，开发者可以在自己为外卖商户开发的应用中通过调用美团开放平台提供的API，提供外卖订单查询、接单、订单管理等一系列功能。如下图所示：
+开放平台为开发者提供的OpenAPI以HTTP接口的形式提供。以平台提供的订单查询接口为例，对应的HTTP请求如下所示：
+POST https://api-open-cater.meituan.com/api/order/queryById Content-Type: application/x-www-form-urlencoded;charset=utf-8 appAuthToken=eeee860a3d2a8b73cfb6604b136d6734283510c4e92282&amp;amp; charset=utf-8&amp;amp; developerId=106158&amp;amp; sign=4656285a4c2493e279d929b8b9f4e29310da8b2b&amp;amp; timestamp=1618543567&amp;amp; biz={&amp;#34;orderId&amp;#34;: &amp;#34;10046789912119&amp;#34;} Response:{ &amp;#34;orderId&amp;#34;:&amp;#34;10046789912119&amp;#34;, &amp;#34;payAmount&amp;#34;:&amp;#34;45.</description>
+    </item>
+    
+    <item>
       <title>美团外卖推荐情境化智能流量分发的实践与探索</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E6%83%85%E5%A2%83%E5%8C%96%E6%99%BA%E8%83%BD%E6%B5%81%E9%87%8F%E5%88%86%E5%8F%91%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Mon, 15 May 2023 02:47:53 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:41 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E6%83%85%E5%A2%83%E5%8C%96%E6%99%BA%E8%83%BD%E6%B5%81%E9%87%8F%E5%88%86%E5%8F%91%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</guid>
       <description>1. 引言 美团外卖推荐服务了数亿用户，通过持续优化用户体验和流量分发精准性，为用户提供品质生活，“帮大家吃得更好，生活更好”。对于“用户”，大家可能会有不同的理解，通常的理解是用户即是自然人。业界主要的推荐场景，如淘宝首页猜你喜欢、抖音快手 Feeds 流推荐等大部分也是这么认为的，在这些电商、短视频等业务中，用户无论何时何地使用推荐服务，他们的需求是大体统一的，商品、信息、视频等供给也是一致的。
@@ -177,7 +114,7 @@ GraphSAGE等基于消息传递范式的图神经网络方法，其中心节点�
     <item>
       <title>Code：美团代码托管平台的演进与实践</title>
       <link>https://wfsui.github.io/posts/code%E7%BE%8E%E5%9B%A2%E4%BB%A3%E7%A0%81%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%BC%94%E8%BF%9B%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 15 May 2023 02:47:52 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:40 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/code%E7%BE%8E%E5%9B%A2%E4%BB%A3%E7%A0%81%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%BC%94%E8%BF%9B%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 引言 Code是美团自研的代码托管平台，其中包括了代码版本管理、分支管理及代码评审等功能，协同众多研发流程工具平台，支撑内部所有工程师的日常研发工作。经过近3年的建设，目前Code托管了数以万计的仓库，日常处理千万级的Git相关请求，稳定支撑着美团研发流程规范的持续落地。本文主要介绍美团在建设代码托管平台过程中面临的一些挑战和实践经验。
@@ -192,7 +129,7 @@ GraphSAGE等基于消息传递范式的图神经网络方法，其中心节点�
     <item>
       <title>美团技术年货来了！1300&#43;页的电子书，涵盖前端、后端、算法、数据、运维、安全</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%B9%B4%E8%B4%A7%E6%9D%A5%E4%BA%861300&#43;%E9%A1%B5%E7%9A%84%E7%94%B5%E5%AD%90%E4%B9%A6%E6%B6%B5%E7%9B%96%E5%89%8D%E7%AB%AF%E5%90%8E%E7%AB%AF%E7%AE%97%E6%B3%95%E6%95%B0%E6%8D%AE%E8%BF%90%E7%BB%B4%E5%AE%89%E5%85%A8/</link>
-      <pubDate>Mon, 15 May 2023 02:47:52 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:40 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%B9%B4%E8%B4%A7%E6%9D%A5%E4%BA%861300&#43;%E9%A1%B5%E7%9A%84%E7%94%B5%E5%AD%90%E4%B9%A6%E6%B6%B5%E7%9B%96%E5%89%8D%E7%AB%AF%E5%90%8E%E7%AB%AF%E7%AE%97%E6%B3%95%E6%95%B0%E6%8D%AE%E8%BF%90%E7%BB%B4%E5%AE%89%E5%85%A8/</guid>
       <description>新春将至，一年一度的美团技术年货也如约到来。
@@ -207,21 +144,18 @@ GraphSAGE等基于消息传递范式的图神经网络方法，其中心节点�
     </item>
     
     <item>
-      <title>美团开放平台SDK自动生成技术与实践</title>
-      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 15 May 2023 02:47:52 +0000</pubDate>
+      <title>大规模食品图像识别：T-PAMI 2023论文解读</title>
+      <link>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%A3%9F%E5%93%81%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%ABt-pami-2023%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
+      <pubDate>Tue, 16 May 2023 02:46:39 +0000</pubDate>
       
-      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
-      <description>1. 引言 美团开放平台对外提供了外卖、团购、配送等20余个业务场景的OpenAPI，供第三方开发者搭建应用时使用，是美团系统与外部系统通讯的最重要平台。本文主要讲述开放平台如何通过技术手段自动生成支持接口参数富模型和多种编程语言的SDK，以提高开发者对接开放平台API的效率。
-1.1 背景 美团开放平台将美团各类业务提供的扩展服务封装成一系列应用程序编程接口（API）对外开放，供第三方开发者使用。开发者可通过调用开放平台提供的OpenAPI获取数据和能力，以实现自身系统与美团系统协同工作的业务逻辑。以外卖业务场景为例，开发者可以在自己为外卖商户开发的应用中通过调用美团开放平台提供的API，提供外卖订单查询、接单、订单管理等一系列功能。如下图所示：
-开放平台为开发者提供的OpenAPI以HTTP接口的形式提供。以平台提供的订单查询接口为例，对应的HTTP请求如下所示：
-POST https://api-open-cater.meituan.com/api/order/queryById Content-Type: application/x-www-form-urlencoded;charset=utf-8 appAuthToken=eeee860a3d2a8b73cfb6604b136d6734283510c4e92282&amp;amp; charset=utf-8&amp;amp; developerId=106158&amp;amp; sign=4656285a4c2493e279d929b8b9f4e29310da8b2b&amp;amp; timestamp=1618543567&amp;amp; biz={&amp;#34;orderId&amp;#34;: &amp;#34;10046789912119&amp;#34;} Response:{ &amp;#34;orderId&amp;#34;:&amp;#34;10046789912119&amp;#34;, &amp;#34;payAmount&amp;#34;:&amp;#34;45.</description>
+      <guid>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%A3%9F%E5%93%81%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%ABt-pami-2023%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
+      <description>1 引言 视觉智能部与中科院计算所于2020-2021年度展开了《细粒度菜品图像识别和检索》科研课题合作，本文系双方联合在IEEE T-PAMI2023发布论文《Large Scale Visual Food Recognition》 (Weiqing Min, Zhiling Wang, Yuxin Liu, Mengjiang Luo, Liping Kang, Xiaoming Wei, Xiaolin Wei, Shuqiang Jiang*) 的解读。IEEE T-PAMI全称为IEEE Transactions on Pattern Analysis and Machine Intelligence，是模式识别、计算机视觉及机器学习领域的国际顶级期刊，2022年公布的影响因子为24.</description>
     </item>
     
     <item>
       <title>交互式推荐在外卖场景的探索与应用</title>
       <link>https://wfsui.github.io/posts/%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%8E%A8%E8%8D%90%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Mon, 15 May 2023 02:47:51 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:39 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%8E%A8%E8%8D%90%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</guid>
       <description>1. 背景 1.1 什么是交互式推荐？ 交互式推荐是一种互动式实时推荐产品模块，主要通过理解用户需求、以互动的方式进行推荐。交互式推荐由Youtube在2018年提出[1]，主要用于解决推荐系统的延迟[2]和与用户互动偏弱的问题。
@@ -237,7 +171,7 @@ POST https://api-open-cater.meituan.com/api/order/queryById Content-Type: applic
     <item>
       <title>美团视觉GPU推理服务部署架构优化实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%89gpu%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 15 May 2023 02:47:51 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:39 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%89gpu%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
       <description>0. 导读 美团视觉面向本地生活服务，在众多场景上落地应用了文字识别、图像质量评价、视频理解等视觉AI技术。此前，在线推理服务使用的GPU资源不断增加，但服务GPU利用率普遍较低，浪费大量计算资源，增加了视觉AI应用成本，这是美团也是很多企业亟需解决的问题。
@@ -253,7 +187,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>MRCP在美团语音交互中的实践和应用</title>
       <link>https://wfsui.github.io/posts/mrcp%E5%9C%A8%E7%BE%8E%E5%9B%A2%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Mon, 15 May 2023 02:47:50 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:38 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/mrcp%E5%9C%A8%E7%BE%8E%E5%9B%A2%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E5%BA%94%E7%94%A8/</guid>
       <description>一、背景 智能语音对话作为人工智能领域最先落地的分支之一，可以实现与人进行自然语言多轮对话，其核心技术在近年来不断地发展成熟，包括语音识别、自然语言理解、对话管理等。伴随着技术的成熟，越来越多的电话机器人开始走进我们的生活，这些电话机器人在客户服务、智能销售、通知触达等场景发挥着重要的作用。
@@ -265,25 +199,16 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>SOTA！目标检测开源框架YOLOv6 3.0版本来啦</title>
       <link>https://wfsui.github.io/posts/sota%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6-3.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</link>
-      <pubDate>Mon, 15 May 2023 02:47:50 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:38 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/sota%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6-3.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</guid>
       <description>1. 概述 1 月 6 日，美团视觉智能部发布了 YOLOv6 3.0 版本，再一次将目标检测的综合性能推向新高。本次更新除了对 YOLOv6-N/S/M/L 模型进行全系列升级之外，还推出了大分辨率 P6 模型。其中，YOLOv6-L6 检测精度达到 57.2% AP，在 T4 卡上推理速度可达 29 FPS，超越 YOLOv7-E6E，取得当前实时目标检测榜单 SOTA。</description>
     </item>
     
     <item>
-      <title>大规模食品图像识别：T-PAMI 2023论文解读</title>
-      <link>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%A3%9F%E5%93%81%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%ABt-pami-2023%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Mon, 15 May 2023 02:47:50 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%A3%9F%E5%93%81%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%ABt-pami-2023%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
-      <description>1 引言 视觉智能部与中科院计算所于2020-2021年度展开了《细粒度菜品图像识别和检索》科研课题合作，本文系双方联合在IEEE T-PAMI2023发布论文《Large Scale Visual Food Recognition》 (Weiqing Min, Zhiling Wang, Yuxin Liu, Mengjiang Luo, Liping Kang, Xiaoming Wei, Xiaolin Wei, Shuqiang Jiang*) 的解读。IEEE T-PAMI全称为IEEE Transactions on Pattern Analysis and Machine Intelligence，是模式识别、计算机视觉及机器学习领域的国际顶级期刊，2022年公布的影响因子为24.</description>
-    </item>
-    
-    <item>
       <title>ICDE 2023 | 多场景多任务学习在美团到店餐饮推荐的实践</title>
       <link>https://wfsui.github.io/posts/icde-2023-%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E9%A4%90%E9%A5%AE%E6%8E%A8%E8%8D%90%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 15 May 2023 02:47:49 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:37 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/icde-2023-%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E9%A4%90%E9%A5%AE%E6%8E%A8%E8%8D%90%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>随着推荐算法技术的不断发展，跨场景学习已经受到了越来越多的研究人员的关注。美团到餐算法团队受到业界相关技术的启发，不断探索到店餐饮多场景推荐的优化问题，在多场景多任务学习的推荐领域中积累了较多的应用经验。团队使用到店餐饮全域推荐场景数据训练统一的多场景多任务学习模型，减少了重复性开发，并在多个到店餐饮推荐场景进行落地，取得了较为显著的效果。
@@ -297,7 +222,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>基于AI&#43;数据驱动的慢查询索引推荐</title>
       <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai&#43;%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E7%B4%A2%E5%BC%95%E6%8E%A8%E8%8D%90/</link>
-      <pubDate>Mon, 15 May 2023 02:47:49 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:37 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai&#43;%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E7%B4%A2%E5%BC%95%E6%8E%A8%E8%8D%90/</guid>
       <description>1 背景 随着美团业务量的不断增长，慢查询的数量也日益增多。目前，日均慢查询数量已经超过上亿条，如果仅依靠DBA和开发人员手动地对这些慢查询进行分析并建立合适的索引，显然是不太现实的。为了解决这一难题，美团内部DAS（数据库自治服务）平台已经集成了基于代价的慢查询优化建议来自动地为慢查询推荐索引。然而，仍然存在一些问题：
@@ -311,7 +236,7 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
     <item>
       <title>人机语音交互场景中的低延迟流式语音识别技术</title>
       <link>https://wfsui.github.io/posts/%E4%BA%BA%E6%9C%BA%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF%E4%B8%AD%E7%9A%84%E4%BD%8E%E5%BB%B6%E8%BF%9F%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/</link>
-      <pubDate>Mon, 15 May 2023 02:47:48 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:36 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%BA%BA%E6%9C%BA%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF%E4%B8%AD%E7%9A%84%E4%BD%8E%E5%BB%B6%E8%BF%9F%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/</guid>
       <description>1. 前言 1.1 语音识别技术简介 人机交互一直都是人工智能大背景下的“热门话题”，语音交互作为人机交互的一个重要分支，具有广泛的应用价值，也被应用到美团的多个业务场景中，如智能客服、电话营销和电话满意度反馈等。而流式语音识别技术是整个交互链条的入口，对交互体验影响巨大。
@@ -323,7 +248,7 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
     <item>
       <title>一次「找回」TraceId的问题分析与过程思考</title>
       <link>https://wfsui.github.io/posts/%E4%B8%80%E6%AC%A1%E6%89%BE%E5%9B%9Etraceid%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E4%B8%8E%E8%BF%87%E7%A8%8B%E6%80%9D%E8%80%83/</link>
-      <pubDate>Mon, 15 May 2023 02:47:48 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:36 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%B8%80%E6%AC%A1%E6%89%BE%E5%9B%9Etraceid%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E4%B8%8E%E8%BF%87%E7%A8%8B%E6%80%9D%E8%80%83/</guid>
       <description>1. 问题背景和思考 1.1 问题背景 在一次排查线上告警的过程中，突然发现一个链路信息有点不同寻常（这里仅展示测试复现的内容）：
@@ -335,7 +260,7 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
     <item>
       <title>超大规模数据库集群保稳系列之一：高可用系统</title>
       <link>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E9%AB%98%E5%8F%AF%E7%94%A8%E7%B3%BB%E7%BB%9F/</link>
-      <pubDate>Mon, 15 May 2023 02:47:47 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:35 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E9%AB%98%E5%8F%AF%E7%94%A8%E7%B3%BB%E7%BB%9F/</guid>
       <description>本文整理自主题分享《美团数据库的高可用系统》，系超大规模数据库集群保稳系列的第一篇文章。对数据库而言，非常核心的就是如何保证其高可用性。本文围绕4个方面的内容展开，包括高可用简介、高可用部署、重点模块的设计思考以及对未来思考。希望能够对大家有所帮助或启发。
@@ -351,6 +276,81 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
 第三个挑战是容灾场景的复杂性。容灾场景主要分成三个层面，第一个是常规容灾，比如日常软件、硬件或者网络故障；第二个是AZ容灾，即机房层面，如机房断网、机房宕机等；第三个是Region容灾，即更大空间容灾，典型的是城市级容灾，目前主要还在解决AZ级容灾，分如下五个阶段：
 从图4可以看到，我们将AZ容灾分设第0至第4共5个阶段，简称L0-L4。随着等级的提高，场景越来越复杂，相应的规模也越大。从容灾规模维度看，单点-&amp;gt;单个集群-&amp;gt;某个业务依赖的集群-&amp;gt;AZ内的集群，不同规模要求的能力是完全不一样的，除了规模之外还有容灾的场景也会在变化。
 “L0-L1”这两个等级侧重面向常规容灾，是实例级容灾。 “L2-L3”这两个等级侧重面向AZ容灾，相比L1有非常大的跨越，因为既要解决“L0-L1”面临的常规容灾问题，还要解决一个很核心的问题，即整高可用自身是否能够快速恢复，以及高可用依赖的下游服务是否具备容灾切换能力。由于高可用本身是一个系统，它有数据面和控制面，有上下游依赖，所以先保证自己是可用的，才能保证数据库的RTO和RPO。 L4，从L3到L4又有一个很大的跨越，因为L3是的规模是相对可控的，而L4直接是断AZ的网络，AZ的大小不同，它涉及更大场景是更真实的AZ容灾。 1.</description>
+    </item>
+    
+    <item>
+      <title>咱们从头到尾讲一次 Flink 网络流控和反压剖析</title>
+      <link>https://wfsui.github.io/posts/%E5%92%B1%E4%BB%AC%E4%BB%8E%E5%A4%B4%E5%88%B0%E5%B0%BE%E8%AE%B2%E4%B8%80%E6%AC%A1-flink-%E7%BD%91%E7%BB%9C%E6%B5%81%E6%8E%A7%E5%92%8C%E5%8F%8D%E5%8E%8B%E5%89%96%E6%9E%90/</link>
+      <pubDate>Tue, 16 May 2023 02:46:35 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E5%92%B1%E4%BB%AC%E4%BB%8E%E5%A4%B4%E5%88%B0%E5%B0%BE%E8%AE%B2%E4%B8%80%E6%AC%A1-flink-%E7%BD%91%E7%BB%9C%E6%B5%81%E6%8E%A7%E5%92%8C%E5%8F%8D%E5%8E%8B%E5%89%96%E6%9E%90/</guid>
+      <description>作者：张俊
+整理：张友亮（Apache Flink 社区志愿者）
+本文共 4745字，预计阅读时间 15min。
+本文根据 Apache Flink 系列直播整理而成，由 Apache Flink Contributor、OPPO 大数据平台研发负责人张俊老师分享。主要内容如下：
+网络流控的概念与背景 TCP的流控机制 Flink TCP-based 反压机制（before V1.</description>
+    </item>
+    
+    <item>
+      <title>JPA 和 Mybatis 技术选型</title>
+      <link>https://wfsui.github.io/posts/jpa-%E5%92%8C-mybatis-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B/</link>
+      <pubDate>Tue, 16 May 2023 02:46:32 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/jpa-%E5%92%8C-mybatis-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B/</guid>
+      <description>在我们平时的项目中，大家都知道可以使用 JPA 或者 Mybatis 作为 ORM 层。对 JPA 和 Mybatis 如何进行技术选型？
+下面看看大精华总结如下：
+最佳回答
+首先表达个人观点，JPA必然是首选的。
+个人认为仅仅讨论两者使用起来有何区别，何者更加方便，不足以真正的比较这两个框架。
+要评判出更加优秀的方案，我觉得可以从软件设计的角度来评判。
+个人对 mybatis 并不熟悉，但 JPA 规范和 springdata 的实现，设计理念绝对是超前的。软件开发复杂性的一个解决手段是遵循 DDD（DDD 只是一种手段，但不是唯一手段），而我着重几点来聊聊 JPA 的设计中是如何体现领域驱动设计思想的，抛砖引玉。</description>
+    </item>
+    
+    <item>
+      <title>算法中七种常见的时间复杂度</title>
+      <link>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</link>
+      <pubDate>Tue, 16 May 2023 02:46:31 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</guid>
+      <description>这是我的推广信息，以激励自己更好的分享自己的知识和经验！也希望看到的你能够多多支持，谢谢！
+1. 滴滴云AI大师: 目前滴滴云正在大力推广自己的云计算服务，需要购买的朋友们用我的AI大师码 「2049」在滴滴云上购买 GPU / vGPU / 机器学习产品可额外享受 9 折优惠，点击这里前往滴滴云官网：www.didiyun.com。
+原文地址：7 Helpful Time Complexities 原文作者：Ellis Andrews 译文出自：掘金翻译计划 本文永久链接：https://github.</description>
+    </item>
+    
+    <item>
+      <title>Java魔法类：Unsafe应用解析</title>
+      <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Tue, 16 May 2023 02:46:29 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
+      <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
+注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
+基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
+public final class Unsafe { // 单例对象 private static final Unsafe theUnsafe; private Unsafe() { } @CallerSensitive public static Unsafe getUnsafe() { Class var0 = Reflection.</description>
+    </item>
+    
+    <item>
+      <title>Java动态追踪技术探究</title>
+      <link>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</link>
+      <pubDate>Tue, 16 May 2023 02:46:28 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</guid>
+      <description>引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：
+“Debug一下吧。”
+“线上机器，没开Debug端口。”
+“看日志，看看请求值和返回值分别是什么？”
+“那段代码没打印日志。”
+“改代码，加日志，重新发布一次。”
+“怀疑是线程池的问题，重启会破坏现场。”
+长达几十秒的沉默之后：“据说，排查问题的最高境界，就是只通过Review代码来发现问题。”
+比几十秒长几十倍的沉默之后：“我轮询了那段代码一十七遍之后，终于得出一个结论。”
+“结论是？”
+“我还没到达只通过Review代码就能发现问题的至高境界。”
+从JSP说起 对于大多数Java程序员来说，早期的时候，都会接触到一个叫做JSP（Java Server Pages）的技术。虽然这种技术，在前后端代码分离、前后端逻辑分离、前后端组织架构分离的今天来看，已经过时了，但是其中还是有一些有意思的东西，值得拿出来说一说。
+当时刚刚处于Java入门时期的我们，大多数精力似乎都放在了JSP的页面展示效果上了：
+“这个表格显示的行数不对”
+“原来是for循环写的有问题，改一下，刷新页面再试一遍”
+“嗯，好了，表格显示没问题了，但是，登录人的姓名没取到啊，是不是Sesstion获取有问题？”</description>
     </item>
     
     <item>

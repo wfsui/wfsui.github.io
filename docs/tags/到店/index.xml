@@ -7,23 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 15 May 2023 02:47:56 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%88%B0%E5%BA%97/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Java魔法类：Unsafe应用解析</title>
-      <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Mon, 15 May 2023 02:47:56 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
-      <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
-注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
-基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
-public final class Unsafe { // 单例对象 private static final Unsafe theUnsafe; private Unsafe() { } @CallerSensitive public static Unsafe getUnsafe() { Class var0 = Reflection.</description>
-    </item>
-    
+    <lastBuildDate>Tue, 16 May 2023 02:46:42 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%88%B0%E5%BA%97/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>大规模异构图召回在美团到店推荐广告的应用</title>
       <link>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%BC%82%E6%9E%84%E5%9B%BE%E5%8F%AC%E5%9B%9E%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E6%8E%A8%E8%8D%90%E5%B9%BF%E5%91%8A%E7%9A%84%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Mon, 15 May 2023 02:47:54 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:42 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%BC%82%E6%9E%84%E5%9B%BE%E5%8F%AC%E5%9B%9E%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E6%8E%A8%E8%8D%90%E5%B9%BF%E5%91%8A%E7%9A%84%E5%BA%94%E7%94%A8/</guid>
       <description>1. 引言 美团到店推荐广告技术部服务于到店餐饮、休娱亲子、丽人医美等众多本地生活服务商家。其中，召回环节作为推荐广告系统的第一个环节，承担着从海量商品中寻找优质候选的角色，是算法优化的核心问题之一。
@@ -42,7 +30,7 @@ GraphSAGE等基于消息传递范式的图神经网络方法，其中心节点�
     <item>
       <title>美团开放平台SDK自动生成技术与实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 15 May 2023 02:47:52 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:41 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 引言 美团开放平台对外提供了外卖、团购、配送等20余个业务场景的OpenAPI，供第三方开发者搭建应用时使用，是美团系统与外部系统通讯的最重要平台。本文主要讲述开放平台如何通过技术手段自动生成支持接口参数富模型和多种编程语言的SDK，以提高开发者对接开放平台API的效率。
@@ -54,7 +42,7 @@ POST https://api-open-cater.meituan.com/api/order/queryById Content-Type: applic
     <item>
       <title>ICDE 2023 | 多场景多任务学习在美团到店餐饮推荐的实践</title>
       <link>https://wfsui.github.io/posts/icde-2023-%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E9%A4%90%E9%A5%AE%E6%8E%A8%E8%8D%90%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 15 May 2023 02:47:49 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:37 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/icde-2023-%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E9%A4%90%E9%A5%AE%E6%8E%A8%E8%8D%90%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>随着推荐算法技术的不断发展，跨场景学习已经受到了越来越多的研究人员的关注。美团到餐算法团队受到业界相关技术的启发，不断探索到店餐饮多场景推荐的优化问题，在多场景多任务学习的推荐领域中积累了较多的应用经验。团队使用到店餐饮全域推荐场景数据训练统一的多场景多任务学习模型，减少了重复性开发，并在多个到店餐饮推荐场景进行落地，取得了较为显著的效果。
@@ -68,13 +56,25 @@ POST https://api-open-cater.meituan.com/api/order/queryById Content-Type: applic
     <item>
       <title>一次「找回」TraceId的问题分析与过程思考</title>
       <link>https://wfsui.github.io/posts/%E4%B8%80%E6%AC%A1%E6%89%BE%E5%9B%9Etraceid%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E4%B8%8E%E8%BF%87%E7%A8%8B%E6%80%9D%E8%80%83/</link>
-      <pubDate>Mon, 15 May 2023 02:47:48 +0000</pubDate>
+      <pubDate>Tue, 16 May 2023 02:46:36 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%B8%80%E6%AC%A1%E6%89%BE%E5%9B%9Etraceid%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E4%B8%8E%E8%BF%87%E7%A8%8B%E6%80%9D%E8%80%83/</guid>
       <description>1. 问题背景和思考 1.1 问题背景 在一次排查线上告警的过程中，突然发现一个链路信息有点不同寻常（这里仅展示测试复现的内容）：
 在机器中可以清楚的发现“2022-08-02 19:26:34.952 DXMsgRemoteService ”这一行日志信息并没有携带TraceId，导致调用链路信息戛然而止，无法追踪当时的调用情况。
 1.2 问题复现和思考 在处理完线上告警后，我们开始分析“丢失”的TraceId到底去了哪里？首先在代码中定位TraceId没有追踪到的部分，发现问题出现在一个@Async注解下的方法，删除无关的业务信息代码，并增加MTrace埋点方法后的复现代码如下：
 @SpringBootTest @RunWith(SpringRunner.class) @EnableAsync public class DemoServiceTest extends TestCase { @Resource private DemoService demoService; @Test public void testTestAsy() { Tracer.</description>
+    </item>
+    
+    <item>
+      <title>Java魔法类：Unsafe应用解析</title>
+      <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Tue, 16 May 2023 02:46:29 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
+      <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
+注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
+基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
+public final class Unsafe { // 单例对象 private static final Unsafe theUnsafe; private Unsafe() { } @CallerSensitive public static Unsafe getUnsafe() { Class var0 = Reflection.</description>
     </item>
     
     <item>

@@ -7,27 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Tue, 16 May 2023 02:46:43 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>ACM MM &amp; ECCV 2022 | 美团视觉8篇论文揭秘内容领域的智能科技</title>
-      <link>https://wfsui.github.io/posts/acm-mm-eccv-2022-%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%898%E7%AF%87%E8%AE%BA%E6%96%87%E6%8F%AD%E7%A7%98%E5%86%85%E5%AE%B9%E9%A2%86%E5%9F%9F%E7%9A%84%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80/</link>
-      <pubDate>Tue, 16 May 2023 02:46:43 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/acm-mm-eccv-2022-%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%898%E7%AF%87%E8%AE%BA%E6%96%87%E6%8F%AD%E7%A7%98%E5%86%85%E5%AE%B9%E9%A2%86%E5%9F%9F%E7%9A%84%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80/</guid>
-      <description>人工智能技术正在成为内容领域的中台力量，其中视觉AI已经渗透到内容生产、内容审核、内容分发、用户互动、商业化变现等各个环节。美团视觉智能部以场景化的内容产品、智能化的内容工具助力产业，在内容的创作、内容分发等环节应用广泛。
-前不久，美团视觉智能部的8篇论文被多媒体和计算机视觉领域顶会ACM MM 与ECCV收录，本文将快速带你了解这8篇论文的研究成果及其可在内容领域的落地应用。
-内容生产 围绕素材解析、创意生成、展示自适应等内容生产链路，需要持续优化智能抠图、智能延拓、图像文案生成等核心功能模块。因此，在驱动视觉语义分割、跨模态生成等底层技术方向需要持续升级与创新。
-ECCV | Adaptive Spatial-BCE Loss for Weakly Supervised Semantic Segmentation（基于自适应空间二元交叉熵的弱监督语义分割）
-论文作者：吴桐（北京理工大学&amp;amp;美团实习生），高广宇（北京理工大学），黄君实（美团），魏晓明（美团），魏晓林（美团），刘驰（北京理工大学）
-论文下载：PDF
-论文简介：弱监督语义分割旨在解决全监督语义分割任务中所需的像素级标签人工成本和时间开销较大的缺点，通过引入较弱的监督信息来降低相关成本。其中本文所使用的图像级监督成本最低，但其较低的信息量也带来了更大的挑战。当前的通用流程是先通过分类网络生成分割伪标签，经过后处理细化后再用伪标签训练语义分割网络。先前方法主要有以下缺点：1）生成的伪标签物体轮廓不清晰；2）前背景的划分阈值需要人工调节，降低了泛用性；3）性能严重依赖后处理，训练复杂度较高。为了缓解这些缺点，我们提出了一个新的损失函数——空间二元交叉熵损失（Spatial-BCE），通过为前景和背景像素分配不同的优化方向来提高它们之间的特征差异性，进而实现更加清晰的伪标签物体轮廓，如下图1所示：
-此外，我们还引入了自适应阈值，通过在训练中让损失函数自行划分前背景像素的比例，并在推理时可同样将划分阈值交由网络生成。最后，我们还设计了配套的迭代式训练方法，大幅提高了初始伪标签的准确率，即使不使用复杂的后处理方法，我们也可以实现当前的最优性能。大量实验表明，我们的方法在PASCAL VOC 2012和MS-COCO 2014数据集上在均可成为SoTA，如下图2所示：</description>
-    </item>
-    
+    <lastBuildDate>Fri, 02 Jun 2023 02:59:42 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>美团SemEval2022结构化情感分析跨语言赛道冠军方法总结</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2semeval2022%E7%BB%93%E6%9E%84%E5%8C%96%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B5%9B%E9%81%93%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Tue, 16 May 2023 02:46:43 +0000</pubDate>
+      <pubDate>Fri, 02 Jun 2023 02:59:42 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2semeval2022%E7%BB%93%E6%9E%84%E5%8C%96%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B5%9B%E9%81%93%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</guid>
       <description>1. 背景 SemEval（International Workshop on Semantic Evaluation）是一系列国际自然语言处理（NLP）研讨会，也是自然语言处理领域的权威国际竞赛，其使命是推进语义分析的研究进展，并帮助一系列日益具有挑战性的自然语言语义问题创建高质量的数据集。本次SemEval-2022（The 16th International Workshop on Semantic Evaluation）包含12个任务，涉及一系列主题，包括习语检测和嵌入、讽刺检测、多语言新闻相似性等任务，吸引了包括特斯拉、阿里巴巴、支付宝、滴滴、华为、字节跳动、斯坦福大学等企业和科研机构参与。
@@ -35,19 +19,9 @@ ECCV | Adaptive Spatial-BCE Loss for Weakly Supervised Semantic Segmentation（�
     </item>
     
     <item>
-      <title>美团外卖搜索基于Elasticsearch的优化实践</title>
-      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%90%9C%E7%B4%A2%E5%9F%BA%E4%BA%8Eelasticsearch%E7%9A%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 16 May 2023 02:46:43 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%90%9C%E7%B4%A2%E5%9F%BA%E4%BA%8Eelasticsearch%E7%9A%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
-      <description>1. 前言 最近十年，Elasticsearch 已经成为了最受欢迎的开源检索引擎，其作为离线数仓、近线检索、B端检索的经典基建，已沉淀了大量的实践案例及优化总结。然而在高并发、高可用、大数据量的 C 端场景，目前可参考的资料并不多。因此，我们希望通过分享在外卖搜索场景下的优化实践，能为大家提供 Elasticsearch 优化思路上的一些借鉴。
-美团在外卖搜索业务场景中大规模地使用了 Elasticsearch 作为底层检索引擎。其在过去几年很好地支持了外卖每天十亿以上的检索流量。然而随着供给与数据量的急剧增长，业务检索耗时与 CPU 负载也随之上涨。通过分析我们发现，当前检索的性能热点主要集中在倒排链的检索与合并流程中。针对这个问题，我们基于 Run-length Encoding（RLE）[1] 技术设计实现了一套高效的倒排索引，使倒排链合并时间（TP99）降低了 96%。我们将这一索引能力开发成了一款通用插件集成到 Elasticsearch 中，使得 Elasticsearch 的检索链路时延（TP99）降低了 84%。</description>
-    </item>
-    
-    <item>
       <title>大规模异构图召回在美团到店推荐广告的应用</title>
       <link>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%BC%82%E6%9E%84%E5%9B%BE%E5%8F%AC%E5%9B%9E%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E6%8E%A8%E8%8D%90%E5%B9%BF%E5%91%8A%E7%9A%84%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Tue, 16 May 2023 02:46:42 +0000</pubDate>
+      <pubDate>Fri, 02 Jun 2023 02:59:41 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%BC%82%E6%9E%84%E5%9B%BE%E5%8F%AC%E5%9B%9E%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E6%8E%A8%E8%8D%90%E5%B9%BF%E5%91%8A%E7%9A%84%E5%BA%94%E7%94%A8/</guid>
       <description>1. 引言 美团到店推荐广告技术部服务于到店餐饮、休娱亲子、丽人医美等众多本地生活服务商家。其中，召回环节作为推荐广告系统的第一个环节，承担着从海量商品中寻找优质候选的角色，是算法优化的核心问题之一。
@@ -66,7 +40,7 @@ GraphSAGE等基于消息传递范式的图神经网络方法，其中心节点�
     <item>
       <title>清华大学课题组联合美团研发无人机声波定位技术获顶会大奖</title>
       <link>https://wfsui.github.io/posts/%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6%E8%AF%BE%E9%A2%98%E7%BB%84%E8%81%94%E5%90%88%E7%BE%8E%E5%9B%A2%E7%A0%94%E5%8F%91%E6%97%A0%E4%BA%BA%E6%9C%BA%E5%A3%B0%E6%B3%A2%E5%AE%9A%E4%BD%8D%E6%8A%80%E6%9C%AF%E8%8E%B7%E9%A1%B6%E4%BC%9A%E5%A4%A7%E5%A5%96/</link>
-      <pubDate>Tue, 16 May 2023 02:46:42 +0000</pubDate>
+      <pubDate>Fri, 02 Jun 2023 02:59:41 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6%E8%AF%BE%E9%A2%98%E7%BB%84%E8%81%94%E5%90%88%E7%BE%8E%E5%9B%A2%E7%A0%94%E5%8F%91%E6%97%A0%E4%BA%BA%E6%9C%BA%E5%A3%B0%E6%B3%A2%E5%AE%9A%E4%BD%8D%E6%8A%80%E6%9C%AF%E8%8E%B7%E9%A1%B6%E4%BC%9A%E5%A4%A7%E5%A5%96/</guid>
       <description>11月6日至9日，第20届国际计算机学会（Association for Computing Machinery，简称ACM）嵌入式网络感知系统大会（Conference on Embedded Networked Sensor Systems ，简称SenSys）在美国波士顿召开。清华大学软件学院何源副教授课题组和美团无人机团队合作论文“麦巢：辅助无人机精准降落的远距离即时声源定位技术”（MicNest：Long-Range Instant Acoustic Localization of Drones in Precise Landing）获得了大会最佳论文奖第二名（Best Paper Runner-Up）。</description>
@@ -75,7 +49,7 @@ GraphSAGE等基于消息传递范式的图神经网络方法，其中心节点�
     <item>
       <title>2022年 | 美团技术团队公众号最受欢迎的20篇文章</title>
       <link>https://wfsui.github.io/posts/2022%E5%B9%B4-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E5%85%AC%E4%BC%97%E5%8F%B7%E6%9C%80%E5%8F%97%E6%AC%A2%E8%BF%8E%E7%9A%8420%E7%AF%87%E6%96%87%E7%AB%A0/</link>
-      <pubDate>Tue, 16 May 2023 02:46:41 +0000</pubDate>
+      <pubDate>Fri, 02 Jun 2023 02:59:40 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/2022%E5%B9%B4-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E5%85%AC%E4%BC%97%E5%8F%B7%E6%9C%80%E5%8F%97%E6%AC%A2%E8%BF%8E%E7%9A%8420%E7%AF%87%E6%96%87%E7%AB%A0/</guid>
       <description>时光匆匆，就要跟2022年说再见了！提前祝大家新年快乐~~
@@ -88,21 +62,9 @@ GraphSAGE等基于消息传递范式的图神经网络方法，其中心节点�
     </item>
     
     <item>
-      <title>美团开放平台SDK自动生成技术与实践</title>
-      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 16 May 2023 02:46:41 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
-      <description>1. 引言 美团开放平台对外提供了外卖、团购、配送等20余个业务场景的OpenAPI，供第三方开发者搭建应用时使用，是美团系统与外部系统通讯的最重要平台。本文主要讲述开放平台如何通过技术手段自动生成支持接口参数富模型和多种编程语言的SDK，以提高开发者对接开放平台API的效率。
-1.1 背景 美团开放平台将美团各类业务提供的扩展服务封装成一系列应用程序编程接口（API）对外开放，供第三方开发者使用。开发者可通过调用开放平台提供的OpenAPI获取数据和能力，以实现自身系统与美团系统协同工作的业务逻辑。以外卖业务场景为例，开发者可以在自己为外卖商户开发的应用中通过调用美团开放平台提供的API，提供外卖订单查询、接单、订单管理等一系列功能。如下图所示：
-开放平台为开发者提供的OpenAPI以HTTP接口的形式提供。以平台提供的订单查询接口为例，对应的HTTP请求如下所示：
-POST https://api-open-cater.meituan.com/api/order/queryById Content-Type: application/x-www-form-urlencoded;charset=utf-8 appAuthToken=eeee860a3d2a8b73cfb6604b136d6734283510c4e92282&amp;amp; charset=utf-8&amp;amp; developerId=106158&amp;amp; sign=4656285a4c2493e279d929b8b9f4e29310da8b2b&amp;amp; timestamp=1618543567&amp;amp; biz={&amp;#34;orderId&amp;#34;: &amp;#34;10046789912119&amp;#34;} Response:{ &amp;#34;orderId&amp;#34;:&amp;#34;10046789912119&amp;#34;, &amp;#34;payAmount&amp;#34;:&amp;#34;45.</description>
-    </item>
-    
-    <item>
       <title>美团外卖推荐情境化智能流量分发的实践与探索</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E6%83%85%E5%A2%83%E5%8C%96%E6%99%BA%E8%83%BD%E6%B5%81%E9%87%8F%E5%88%86%E5%8F%91%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Tue, 16 May 2023 02:46:41 +0000</pubDate>
+      <pubDate>Fri, 02 Jun 2023 02:59:40 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E6%83%85%E5%A2%83%E5%8C%96%E6%99%BA%E8%83%BD%E6%B5%81%E9%87%8F%E5%88%86%E5%8F%91%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</guid>
       <description>1. 引言 美团外卖推荐服务了数亿用户，通过持续优化用户体验和流量分发精准性，为用户提供品质生活，“帮大家吃得更好，生活更好”。对于“用户”，大家可能会有不同的理解，通常的理解是用户即是自然人。业界主要的推荐场景，如淘宝首页猜你喜欢、抖音快手 Feeds 流推荐等大部分也是这么认为的，在这些电商、短视频等业务中，用户无论何时何地使用推荐服务，他们的需求是大体统一的，商品、信息、视频等供给也是一致的。
@@ -112,9 +74,21 @@ POST https://api-open-cater.meituan.com/api/order/queryById Content-Type: applic
     </item>
     
     <item>
+      <title>美团开放平台SDK自动生成技术与实践</title>
+      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Fri, 02 Jun 2023 02:59:40 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
+      <description>1. 引言 美团开放平台对外提供了外卖、团购、配送等20余个业务场景的OpenAPI，供第三方开发者搭建应用时使用，是美团系统与外部系统通讯的最重要平台。本文主要讲述开放平台如何通过技术手段自动生成支持接口参数富模型和多种编程语言的SDK，以提高开发者对接开放平台API的效率。
+1.1 背景 美团开放平台将美团各类业务提供的扩展服务封装成一系列应用程序编程接口（API）对外开放，供第三方开发者使用。开发者可通过调用开放平台提供的OpenAPI获取数据和能力，以实现自身系统与美团系统协同工作的业务逻辑。以外卖业务场景为例，开发者可以在自己为外卖商户开发的应用中通过调用美团开放平台提供的API，提供外卖订单查询、接单、订单管理等一系列功能。如下图所示：
+开放平台为开发者提供的OpenAPI以HTTP接口的形式提供。以平台提供的订单查询接口为例，对应的HTTP请求如下所示：
+POST https://api-open-cater.meituan.com/api/order/queryById Content-Type: application/x-www-form-urlencoded;charset=utf-8 appAuthToken=eeee860a3d2a8b73cfb6604b136d6734283510c4e92282&amp;amp; charset=utf-8&amp;amp; developerId=106158&amp;amp; sign=4656285a4c2493e279d929b8b9f4e29310da8b2b&amp;amp; timestamp=1618543567&amp;amp; biz={&amp;#34;orderId&amp;#34;: &amp;#34;10046789912119&amp;#34;} Response:{ &amp;#34;orderId&amp;#34;:&amp;#34;10046789912119&amp;#34;, &amp;#34;payAmount&amp;#34;:&amp;#34;45.</description>
+    </item>
+    
+    <item>
       <title>Code：美团代码托管平台的演进与实践</title>
       <link>https://wfsui.github.io/posts/code%E7%BE%8E%E5%9B%A2%E4%BB%A3%E7%A0%81%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%BC%94%E8%BF%9B%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 16 May 2023 02:46:40 +0000</pubDate>
+      <pubDate>Fri, 02 Jun 2023 02:59:39 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/code%E7%BE%8E%E5%9B%A2%E4%BB%A3%E7%A0%81%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%BC%94%E8%BF%9B%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 引言 Code是美团自研的代码托管平台，其中包括了代码版本管理、分支管理及代码评审等功能，协同众多研发流程工具平台，支撑内部所有工程师的日常研发工作。经过近3年的建设，目前Code托管了数以万计的仓库，日常处理千万级的Git相关请求，稳定支撑着美团研发流程规范的持续落地。本文主要介绍美团在建设代码托管平台过程中面临的一些挑战和实践经验。
@@ -129,7 +103,7 @@ POST https://api-open-cater.meituan.com/api/order/queryById Content-Type: applic
     <item>
       <title>美团技术年货来了！1300&#43;页的电子书，涵盖前端、后端、算法、数据、运维、安全</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%B9%B4%E8%B4%A7%E6%9D%A5%E4%BA%861300&#43;%E9%A1%B5%E7%9A%84%E7%94%B5%E5%AD%90%E4%B9%A6%E6%B6%B5%E7%9B%96%E5%89%8D%E7%AB%AF%E5%90%8E%E7%AB%AF%E7%AE%97%E6%B3%95%E6%95%B0%E6%8D%AE%E8%BF%90%E7%BB%B4%E5%AE%89%E5%85%A8/</link>
-      <pubDate>Tue, 16 May 2023 02:46:40 +0000</pubDate>
+      <pubDate>Fri, 02 Jun 2023 02:59:39 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%B9%B4%E8%B4%A7%E6%9D%A5%E4%BA%861300&#43;%E9%A1%B5%E7%9A%84%E7%94%B5%E5%AD%90%E4%B9%A6%E6%B6%B5%E7%9B%96%E5%89%8D%E7%AB%AF%E5%90%8E%E7%AB%AF%E7%AE%97%E6%B3%95%E6%95%B0%E6%8D%AE%E8%BF%90%E7%BB%B4%E5%AE%89%E5%85%A8/</guid>
       <description>新春将至，一年一度的美团技术年货也如约到来。
@@ -144,18 +118,9 @@ POST https://api-open-cater.meituan.com/api/order/queryById Content-Type: applic
     </item>
     
     <item>
-      <title>大规模食品图像识别：T-PAMI 2023论文解读</title>
-      <link>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%A3%9F%E5%93%81%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%ABt-pami-2023%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Tue, 16 May 2023 02:46:39 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%A3%9F%E5%93%81%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%ABt-pami-2023%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
-      <description>1 引言 视觉智能部与中科院计算所于2020-2021年度展开了《细粒度菜品图像识别和检索》科研课题合作，本文系双方联合在IEEE T-PAMI2023发布论文《Large Scale Visual Food Recognition》 (Weiqing Min, Zhiling Wang, Yuxin Liu, Mengjiang Luo, Liping Kang, Xiaoming Wei, Xiaolin Wei, Shuqiang Jiang*) 的解读。IEEE T-PAMI全称为IEEE Transactions on Pattern Analysis and Machine Intelligence，是模式识别、计算机视觉及机器学习领域的国际顶级期刊，2022年公布的影响因子为24.</description>
-    </item>
-    
-    <item>
       <title>交互式推荐在外卖场景的探索与应用</title>
       <link>https://wfsui.github.io/posts/%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%8E%A8%E8%8D%90%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Tue, 16 May 2023 02:46:39 +0000</pubDate>
+      <pubDate>Fri, 02 Jun 2023 02:59:38 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%8E%A8%E8%8D%90%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</guid>
       <description>1. 背景 1.1 什么是交互式推荐？ 交互式推荐是一种互动式实时推荐产品模块，主要通过理解用户需求、以互动的方式进行推荐。交互式推荐由Youtube在2018年提出[1]，主要用于解决推荐系统的延迟[2]和与用户互动偏弱的问题。
@@ -169,9 +134,18 @@ POST https://api-open-cater.meituan.com/api/order/queryById Content-Type: applic
     </item>
     
     <item>
+      <title>大规模食品图像识别：T-PAMI 2023论文解读</title>
+      <link>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%A3%9F%E5%93%81%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%ABt-pami-2023%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
+      <pubDate>Fri, 02 Jun 2023 02:59:38 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%A3%9F%E5%93%81%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%ABt-pami-2023%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
+      <description>1 引言 视觉智能部与中科院计算所于2020-2021年度展开了《细粒度菜品图像识别和检索》科研课题合作，本文系双方联合在IEEE T-PAMI2023发布论文《Large Scale Visual Food Recognition》 (Weiqing Min, Zhiling Wang, Yuxin Liu, Mengjiang Luo, Liping Kang, Xiaoming Wei, Xiaolin Wei, Shuqiang Jiang*) 的解读。IEEE T-PAMI全称为IEEE Transactions on Pattern Analysis and Machine Intelligence，是模式识别、计算机视觉及机器学习领域的国际顶级期刊，2022年公布的影响因子为24.</description>
+    </item>
+    
+    <item>
       <title>美团视觉GPU推理服务部署架构优化实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%89gpu%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 16 May 2023 02:46:39 +0000</pubDate>
+      <pubDate>Fri, 02 Jun 2023 02:59:38 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%89gpu%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
       <description>0. 导读 美团视觉面向本地生活服务，在众多场景上落地应用了文字识别、图像质量评价、视频理解等视觉AI技术。此前，在线推理服务使用的GPU资源不断增加，但服务GPU利用率普遍较低，浪费大量计算资源，增加了视觉AI应用成本，这是美团也是很多企业亟需解决的问题。
@@ -187,7 +161,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>MRCP在美团语音交互中的实践和应用</title>
       <link>https://wfsui.github.io/posts/mrcp%E5%9C%A8%E7%BE%8E%E5%9B%A2%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Tue, 16 May 2023 02:46:38 +0000</pubDate>
+      <pubDate>Fri, 02 Jun 2023 02:59:37 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/mrcp%E5%9C%A8%E7%BE%8E%E5%9B%A2%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E5%BA%94%E7%94%A8/</guid>
       <description>一、背景 智能语音对话作为人工智能领域最先落地的分支之一，可以实现与人进行自然语言多轮对话，其核心技术在近年来不断地发展成熟，包括语音识别、自然语言理解、对话管理等。伴随着技术的成熟，越来越多的电话机器人开始走进我们的生活，这些电话机器人在客户服务、智能销售、通知触达等场景发挥着重要的作用。
@@ -199,7 +173,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>SOTA！目标检测开源框架YOLOv6 3.0版本来啦</title>
       <link>https://wfsui.github.io/posts/sota%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6-3.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</link>
-      <pubDate>Tue, 16 May 2023 02:46:38 +0000</pubDate>
+      <pubDate>Fri, 02 Jun 2023 02:59:37 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/sota%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6-3.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</guid>
       <description>1. 概述 1 月 6 日，美团视觉智能部发布了 YOLOv6 3.0 版本，再一次将目标检测的综合性能推向新高。本次更新除了对 YOLOv6-N/S/M/L 模型进行全系列升级之外，还推出了大分辨率 P6 模型。其中，YOLOv6-L6 检测精度达到 57.2% AP，在 T4 卡上推理速度可达 29 FPS，超越 YOLOv7-E6E，取得当前实时目标检测榜单 SOTA。</description>
@@ -208,7 +182,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>ICDE 2023 | 多场景多任务学习在美团到店餐饮推荐的实践</title>
       <link>https://wfsui.github.io/posts/icde-2023-%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E9%A4%90%E9%A5%AE%E6%8E%A8%E8%8D%90%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 16 May 2023 02:46:37 +0000</pubDate>
+      <pubDate>Fri, 02 Jun 2023 02:59:36 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/icde-2023-%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E9%A4%90%E9%A5%AE%E6%8E%A8%E8%8D%90%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>随着推荐算法技术的不断发展，跨场景学习已经受到了越来越多的研究人员的关注。美团到餐算法团队受到业界相关技术的启发，不断探索到店餐饮多场景推荐的优化问题，在多场景多任务学习的推荐领域中积累了较多的应用经验。团队使用到店餐饮全域推荐场景数据训练统一的多场景多任务学习模型，减少了重复性开发，并在多个到店餐饮推荐场景进行落地，取得了较为显著的效果。
@@ -222,7 +196,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>基于AI&#43;数据驱动的慢查询索引推荐</title>
       <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai&#43;%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E7%B4%A2%E5%BC%95%E6%8E%A8%E8%8D%90/</link>
-      <pubDate>Tue, 16 May 2023 02:46:37 +0000</pubDate>
+      <pubDate>Fri, 02 Jun 2023 02:59:36 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai&#43;%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E7%B4%A2%E5%BC%95%E6%8E%A8%E8%8D%90/</guid>
       <description>1 背景 随着美团业务量的不断增长，慢查询的数量也日益增多。目前，日均慢查询数量已经超过上亿条，如果仅依靠DBA和开发人员手动地对这些慢查询进行分析并建立合适的索引，显然是不太现实的。为了解决这一难题，美团内部DAS（数据库自治服务）平台已经集成了基于代价的慢查询优化建议来自动地为慢查询推荐索引。然而，仍然存在一些问题：
@@ -234,21 +208,9 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
     </item>
     
     <item>
-      <title>人机语音交互场景中的低延迟流式语音识别技术</title>
-      <link>https://wfsui.github.io/posts/%E4%BA%BA%E6%9C%BA%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF%E4%B8%AD%E7%9A%84%E4%BD%8E%E5%BB%B6%E8%BF%9F%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/</link>
-      <pubDate>Tue, 16 May 2023 02:46:36 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E4%BA%BA%E6%9C%BA%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF%E4%B8%AD%E7%9A%84%E4%BD%8E%E5%BB%B6%E8%BF%9F%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/</guid>
-      <description>1. 前言 1.1 语音识别技术简介 人机交互一直都是人工智能大背景下的“热门话题”，语音交互作为人机交互的一个重要分支，具有广泛的应用价值，也被应用到美团的多个业务场景中，如智能客服、电话营销和电话满意度反馈等。而流式语音识别技术是整个交互链条的入口，对交互体验影响巨大。
-常见的语音识别大多都是非流式语音识别技术，它是指模型在用户说完一句话或一段话之后再进行识别。这意味着模型需要等待用户停顿或结束说话才能开始识别，并且只能在用户停顿或结束说话后才能输出完整的识别结果。这样做的缺点是会导致较长的延迟和不连贯的交互。例如，在会议场景中，如果使用非流式语音识别技术，就可能出现会议参与者说了很长时间的话才显示出他们所说的内容，而且可能因为网络延迟或其他原因导致内容显示不全或错误。这样就会影响会议参与者之间的沟通和理解，并且降低会议效率和质量。
-而与之对应的是流式语音识别技术，它是指可以在处理音频流的过程中，支持实时返回识别结果的一类语音识别模型。这意味着模型不需要等待用户说完整句或整段话就可以开始识别，并且可以随着用户说话的进度逐渐输出识别结果。这样做的好处是能够大大减少人机交互过程中语音识别的处理时间，提高用户体验和交互效率。例如，在智能客服场景中，使用流式语音识别技术，就可以实现用户说一句话很快就能获得机器人响应，而不是等到用户说完一段话才给出回答。这样就可以让用户更快地得到满意的解决方案，并且减少用户的等待时间和不满情绪，提升用户满意度。在美团内部的众多业务场景中广泛使用了流式语音识别技术。
-本文将详细阐述团队在语音交互场景中的低延迟流式语音识别方案，目前以该方案形成的技术论文《Peak-First CTC: Reducing the Peak Latency of CTC Models by Applying Peak-First Regularization》已经被语音领域国际顶级会议ICASSP 2023收录。</description>
-    </item>
-    
-    <item>
       <title>一次「找回」TraceId的问题分析与过程思考</title>
       <link>https://wfsui.github.io/posts/%E4%B8%80%E6%AC%A1%E6%89%BE%E5%9B%9Etraceid%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E4%B8%8E%E8%BF%87%E7%A8%8B%E6%80%9D%E8%80%83/</link>
-      <pubDate>Tue, 16 May 2023 02:46:36 +0000</pubDate>
+      <pubDate>Fri, 02 Jun 2023 02:59:35 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%B8%80%E6%AC%A1%E6%89%BE%E5%9B%9Etraceid%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E4%B8%8E%E8%BF%87%E7%A8%8B%E6%80%9D%E8%80%83/</guid>
       <description>1. 问题背景和思考 1.1 问题背景 在一次排查线上告警的过程中，突然发现一个链路信息有点不同寻常（这里仅展示测试复现的内容）：
@@ -258,9 +220,21 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
     </item>
     
     <item>
+      <title>人机语音交互场景中的低延迟流式语音识别技术</title>
+      <link>https://wfsui.github.io/posts/%E4%BA%BA%E6%9C%BA%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF%E4%B8%AD%E7%9A%84%E4%BD%8E%E5%BB%B6%E8%BF%9F%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/</link>
+      <pubDate>Fri, 02 Jun 2023 02:59:35 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E4%BA%BA%E6%9C%BA%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF%E4%B8%AD%E7%9A%84%E4%BD%8E%E5%BB%B6%E8%BF%9F%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/</guid>
+      <description>1. 前言 1.1 语音识别技术简介 人机交互一直都是人工智能大背景下的“热门话题”，语音交互作为人机交互的一个重要分支，具有广泛的应用价值，也被应用到美团的多个业务场景中，如智能客服、电话营销和电话满意度反馈等。而流式语音识别技术是整个交互链条的入口，对交互体验影响巨大。
+常见的语音识别大多都是非流式语音识别技术，它是指模型在用户说完一句话或一段话之后再进行识别。这意味着模型需要等待用户停顿或结束说话才能开始识别，并且只能在用户停顿或结束说话后才能输出完整的识别结果。这样做的缺点是会导致较长的延迟和不连贯的交互。例如，在会议场景中，如果使用非流式语音识别技术，就可能出现会议参与者说了很长时间的话才显示出他们所说的内容，而且可能因为网络延迟或其他原因导致内容显示不全或错误。这样就会影响会议参与者之间的沟通和理解，并且降低会议效率和质量。
+而与之对应的是流式语音识别技术，它是指可以在处理音频流的过程中，支持实时返回识别结果的一类语音识别模型。这意味着模型不需要等待用户说完整句或整段话就可以开始识别，并且可以随着用户说话的进度逐渐输出识别结果。这样做的好处是能够大大减少人机交互过程中语音识别的处理时间，提高用户体验和交互效率。例如，在智能客服场景中，使用流式语音识别技术，就可以实现用户说一句话很快就能获得机器人响应，而不是等到用户说完一段话才给出回答。这样就可以让用户更快地得到满意的解决方案，并且减少用户的等待时间和不满情绪，提升用户满意度。在美团内部的众多业务场景中广泛使用了流式语音识别技术。
+本文将详细阐述团队在语音交互场景中的低延迟流式语音识别方案，目前以该方案形成的技术论文《Peak-First CTC: Reducing the Peak Latency of CTC Models by Applying Peak-First Regularization》已经被语音领域国际顶级会议ICASSP 2023收录。</description>
+    </item>
+    
+    <item>
       <title>超大规模数据库集群保稳系列之一：高可用系统</title>
       <link>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E9%AB%98%E5%8F%AF%E7%94%A8%E7%B3%BB%E7%BB%9F/</link>
-      <pubDate>Tue, 16 May 2023 02:46:35 +0000</pubDate>
+      <pubDate>Fri, 02 Jun 2023 02:59:35 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E9%AB%98%E5%8F%AF%E7%94%A8%E7%B3%BB%E7%BB%9F/</guid>
       <description>本文整理自主题分享《美团数据库的高可用系统》，系超大规模数据库集群保稳系列的第一篇文章。对数据库而言，非常核心的就是如何保证其高可用性。本文围绕4个方面的内容展开，包括高可用简介、高可用部署、重点模块的设计思考以及对未来思考。希望能够对大家有所帮助或启发。
@@ -276,6 +250,56 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
 第三个挑战是容灾场景的复杂性。容灾场景主要分成三个层面，第一个是常规容灾，比如日常软件、硬件或者网络故障；第二个是AZ容灾，即机房层面，如机房断网、机房宕机等；第三个是Region容灾，即更大空间容灾，典型的是城市级容灾，目前主要还在解决AZ级容灾，分如下五个阶段：
 从图4可以看到，我们将AZ容灾分设第0至第4共5个阶段，简称L0-L4。随着等级的提高，场景越来越复杂，相应的规模也越大。从容灾规模维度看，单点-&amp;gt;单个集群-&amp;gt;某个业务依赖的集群-&amp;gt;AZ内的集群，不同规模要求的能力是完全不一样的，除了规模之外还有容灾的场景也会在变化。
 “L0-L1”这两个等级侧重面向常规容灾，是实例级容灾。 “L2-L3”这两个等级侧重面向AZ容灾，相比L1有非常大的跨越，因为既要解决“L0-L1”面临的常规容灾问题，还要解决一个很核心的问题，即整高可用自身是否能够快速恢复，以及高可用依赖的下游服务是否具备容灾切换能力。由于高可用本身是一个系统，它有数据面和控制面，有上下游依赖，所以先保证自己是可用的，才能保证数据库的RTO和RPO。 L4，从L3到L4又有一个很大的跨越，因为L3是的规模是相对可控的，而L4直接是断AZ的网络，AZ的大小不同，它涉及更大场景是更真实的AZ容灾。 1.</description>
+    </item>
+    
+    <item>
+      <title>Robust 2.0：支持Android R8的升级版热修复框架</title>
+      <link>https://wfsui.github.io/posts/robust-2.0%E6%94%AF%E6%8C%81android-r8%E7%9A%84%E5%8D%87%E7%BA%A7%E7%89%88%E7%83%AD%E4%BF%AE%E5%A4%8D%E6%A1%86%E6%9E%B6/</link>
+      <pubDate>Fri, 02 Jun 2023 02:59:34 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/robust-2.0%E6%94%AF%E6%8C%81android-r8%E7%9A%84%E5%8D%87%E7%BA%A7%E7%89%88%E7%83%AD%E4%BF%AE%E5%A4%8D%E6%A1%86%E6%9E%B6/</guid>
+      <description>1. 背景 美团 Robust 是基于方法插桩的实时热修复框架，主要优势是实时生效、零 Hook 兼容所有 Android 版本。2016 年，我们在《Android 热更新方案 Robust》一文中对技术原理做了详细介绍，主要通过给每个方法插入 IF 分支来动态控制代码逻辑，进而实现热修复。其核心主要有两部分：一个是代码插桩，一个是自动补丁。
+代码插桩这部分随着 Javassist、ASM 工具的广泛使用，整体方案比较成熟了，迭代改进主要是针对插桩代码体积和性能的优化； 自动补丁这部分在实际使用过程中一直在迭代，跟业界主流热修复方案一样，自动化补丁工具作制作时机是在 Proguard 混淆之后，由于 Proguard 会对代码进行代码优化和混淆处理，在 Proguard 后制作补丁能够降低补丁生成的复杂性。 近年来， Google 推出了新的代码优化混淆工具 R8，用于取代第三方的代码优化混淆工具 Proguard，经过多年功能迭代和缺陷改进，R8 在功能上基本可以替代 Proguard，在结果上更为出色（优化生成的 Android 字节码体积更小）。Google 已经在新版本的构建工具中强制使用 R8 ，国内外已有多个知名 App 完成了 R8 适配并上线，比如微信 Android 在今年正式从 Proguard 切换到了 R8（通过升级 Android 构建工具链）。Android 热修复补丁制作依赖二次构建包和线上包对比，需要对 Proguard 切换到 R8 提前进行适配和改造，本文分享了美团平台技术部 Robust 在适配 R8 以及优化改进中的一些思路和经验。</description>
+    </item>
+    
+    <item>
+      <title>超大规模数据库集群保稳系列之二：数据库攻防演练建设实践</title>
+      <link>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%94%BB%E9%98%B2%E6%BC%94%E7%BB%83%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Fri, 02 Jun 2023 02:59:34 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%94%BB%E9%98%B2%E6%BC%94%E7%BB%83%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</guid>
+      <description>01 背景 1.1 初识混沌工程 首先我们先了解一下什么是混沌工程？简单而言，混沌工程是在系统上进行实验的技术手段，目的是建立对系统抵御生产环境中失控条件的能力以及信心。这主要体现在两个方面，从系统角度来讲，混沌工程可以提升我们架构的容错能力和韧性，降低故障发生率和复发率，提升系统用户在使用时的体验；从人员角度来讲，通过混沌工程我们可以加深对架构的理解，在处理故障时能提高整体的应急效率，并且能主动去探究系统中潜在的一些问题。
+混沌工程最早可以追溯到2008年，当时奈飞公司（Netflix）因数据库故障造成了一次巨大的损失，于是他们便围绕着稳定性体系做出了一些探索和建设。直到2015年，混沌工程的理念才被奈飞正式的提出。2019年，阿里云推出了开源工具Chaos Blade；2020年，PingCAP开源了Chaos Mesh，这也标志着国内在混沌工程领域也有了成熟的产品。
+1.2 现状 下面是当前美团数据库运维的一些现状，这里从五个维度展开：首先集群规模（包括集群的大小和数量）的线性增长；第二，集群访问量的持续增加，当然这也是美团业务增长的必然结果；第三，线上遇到的故障种类也越来越多；第四，单位时间故障的影响也越来越大；第五，一些小概率事件的发生也随着集群规模的扩大成为了可能。
+1.3 痛点&amp;amp;作用 基于以上的问题，我们整体上对于数据库集群的稳定性要求也越来越高。所以，围绕着稳定性建设，数据库团队在故障的预防、发现、分析、恢复以及事后复盘5个方面做了很多工作。其中在故障预防方面，我们会通过故障演练探索不同故障场景对我们业务的影响，提升故障发生时业务系统整体的容错能力。早期的时候，我们通过人工的方式来做故障演练，但人工演练在以下四个方面存在很大的问题：
+在演练场景方面，人工演练能演练的场景比较少，演练场景的复杂度也比较高； 在演练覆盖率方面，人工演练无法覆盖大多数的集群，也就无法保证常态化的故障演练； 在演练规模方面，人工演练没有办法进行大规模演练，在遇到一些机房或者交换机级的故障时，切换能力无法得到有效验证； 在影响范围方面，人工演练在整个演练过程中不能很好地控制爆炸半径，遇到问题不能快速止损。 基于人工演练的这些痛点问题，我们设计并建设了数据库故障演练平台，这个平台的作用主要体现在以下四个方面：第一，验证故障发生时组件的防守能力；第二，通过数据库大规模容灾演练，验证数据库集群的容灾能力；第三，可以验证故障发生时相关预案（业务、DBA）的有效性；第四，可以预知故障对业务造成的各种影响。
+02 建设实践 2.</description>
+    </item>
+    
+    <item>
+      <title>ACM MM &amp; ECCV 2022 | 美团视觉8篇论文揭秘内容领域的智能科技</title>
+      <link>https://wfsui.github.io/posts/acm-mm-eccv-2022-%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%898%E7%AF%87%E8%AE%BA%E6%96%87%E6%8F%AD%E7%A7%98%E5%86%85%E5%AE%B9%E9%A2%86%E5%9F%9F%E7%9A%84%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80/</link>
+      <pubDate>Tue, 16 May 2023 02:46:43 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/acm-mm-eccv-2022-%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%898%E7%AF%87%E8%AE%BA%E6%96%87%E6%8F%AD%E7%A7%98%E5%86%85%E5%AE%B9%E9%A2%86%E5%9F%9F%E7%9A%84%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80/</guid>
+      <description>人工智能技术正在成为内容领域的中台力量，其中视觉AI已经渗透到内容生产、内容审核、内容分发、用户互动、商业化变现等各个环节。美团视觉智能部以场景化的内容产品、智能化的内容工具助力产业，在内容的创作、内容分发等环节应用广泛。
+前不久，美团视觉智能部的8篇论文被多媒体和计算机视觉领域顶会ACM MM 与ECCV收录，本文将快速带你了解这8篇论文的研究成果及其可在内容领域的落地应用。
+内容生产 围绕素材解析、创意生成、展示自适应等内容生产链路，需要持续优化智能抠图、智能延拓、图像文案生成等核心功能模块。因此，在驱动视觉语义分割、跨模态生成等底层技术方向需要持续升级与创新。
+ECCV | Adaptive Spatial-BCE Loss for Weakly Supervised Semantic Segmentation（基于自适应空间二元交叉熵的弱监督语义分割）
+论文作者：吴桐（北京理工大学&amp;amp;美团实习生），高广宇（北京理工大学），黄君实（美团），魏晓明（美团），魏晓林（美团），刘驰（北京理工大学）
+论文下载：PDF
+论文简介：弱监督语义分割旨在解决全监督语义分割任务中所需的像素级标签人工成本和时间开销较大的缺点，通过引入较弱的监督信息来降低相关成本。其中本文所使用的图像级监督成本最低，但其较低的信息量也带来了更大的挑战。当前的通用流程是先通过分类网络生成分割伪标签，经过后处理细化后再用伪标签训练语义分割网络。先前方法主要有以下缺点：1）生成的伪标签物体轮廓不清晰；2）前背景的划分阈值需要人工调节，降低了泛用性；3）性能严重依赖后处理，训练复杂度较高。为了缓解这些缺点，我们提出了一个新的损失函数——空间二元交叉熵损失（Spatial-BCE），通过为前景和背景像素分配不同的优化方向来提高它们之间的特征差异性，进而实现更加清晰的伪标签物体轮廓，如下图1所示：
+此外，我们还引入了自适应阈值，通过在训练中让损失函数自行划分前背景像素的比例，并在推理时可同样将划分阈值交由网络生成。最后，我们还设计了配套的迭代式训练方法，大幅提高了初始伪标签的准确率，即使不使用复杂的后处理方法，我们也可以实现当前的最优性能。大量实验表明，我们的方法在PASCAL VOC 2012和MS-COCO 2014数据集上在均可成为SoTA，如下图2所示：</description>
+    </item>
+    
+    <item>
+      <title>美团外卖搜索基于Elasticsearch的优化实践</title>
+      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%90%9C%E7%B4%A2%E5%9F%BA%E4%BA%8Eelasticsearch%E7%9A%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Tue, 16 May 2023 02:46:43 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%90%9C%E7%B4%A2%E5%9F%BA%E4%BA%8Eelasticsearch%E7%9A%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
+      <description>1. 前言 最近十年，Elasticsearch 已经成为了最受欢迎的开源检索引擎，其作为离线数仓、近线检索、B端检索的经典基建，已沉淀了大量的实践案例及优化总结。然而在高并发、高可用、大数据量的 C 端场景，目前可参考的资料并不多。因此，我们希望通过分享在外卖搜索场景下的优化实践，能为大家提供 Elasticsearch 优化思路上的一些借鉴。
+美团在外卖搜索业务场景中大规模地使用了 Elasticsearch 作为底层检索引擎。其在过去几年很好地支持了外卖每天十亿以上的检索流量。然而随着供给与数据量的急剧增长，业务检索耗时与 CPU 负载也随之上涨。通过分析我们发现，当前检索的性能热点主要集中在倒排链的检索与合并流程中。针对这个问题，我们基于 Run-length Encoding（RLE）[1] 技术设计实现了一套高效的倒排索引，使倒排链合并时间（TP99）降低了 96%。我们将这一索引能力开发成了一款通用插件集成到 Elasticsearch 中，使得 Elasticsearch 的检索链路时延（TP99）降低了 84%。</description>
     </item>
     
     <item>
@@ -515,19 +539,6 @@ Kafka在美团的集群规模总体机器数已经超过了15000+台，单集群
     </item>
     
     <item>
-      <title>美团搜索粗排优化的探索与实践</title>
-      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E7%B2%97%E6%8E%92%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 25 Nov 2022 03:24:08 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E7%B2%97%E6%8E%92%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
-      <description>1. 前言 众所周知，在搜索、推荐、广告等大规模工业界应用领域，为了平衡性能和效果，排序系统普遍采用级联架构[1,2]，如下图 1 所示。以美团搜索排序系统为例，整个排序分为粗排、精排、重排和混排层；粗排位于召回和精排之间，需要从千级别候选 item 集合中筛选出百级别 item 集合送给精排层。
-从美团搜索排序全链路视角审视粗排模块，目前粗排层优化存在如下几个挑战点：
-样本选择偏差：级联排序系统下，粗排离最后的结果展示环节较远，导致粗排模型离线训练样本空间与待预测的样本空间存在较大的差异，存在严重的样本选择偏差。 粗排精排联动：粗排处于召回和精排之间，粗排需要更多获取和利用后续链路的信息来提升效果。 性能约束：线上粗排预测的候选集远远高于精排模型，然而实际整个搜索系统对性能有严格的要求，导致粗排需要重点关注预测性能。 本文将围绕上述挑战点来分享美团搜索粗排层优化的相关探索与实践，其中样本选择偏差问题我们放在精排联动问题中一起解决。本文主要分成三个部分：第一部分会简单介绍美团搜索排序粗排层的演进路线；第二部分介绍粗排优化的相关探索与实践，其中第一个工作是采用知识蒸馏和对比学习使精排和粗排联动来优化粗排效果，第二个工作是考虑粗排性能和效果 trade-off 的粗排优化，相关工作均已全量上线，且效果显著；最后是总结与展望部分，希望这些内容对大家有所帮助和启发。
-2. 粗排演进路线 美团搜索的粗排技术演进分为以下几个阶段：
-2016 年：基于相关性、质量度、转化率等信息进行线性加权，这种方法简单但是特征的表达能力较弱，权重人工确定，排序效果存在很大的提升空间。 2017 年：采用基于机器学习的简单 LR 模型进行 Pointwise 预估排序。 2018 年：采用基于向量内积的双塔模型，两侧分别输入查询词、用户以及上下文特征和商户特征，经过深度网络计算后，分别产出用户&amp;amp;查询词向量和商户向量，再通过内积计算得到预估分数进行排序。该方法可以提前把商户向量计算保存好，所以在线预测快，但是两侧信息的交叉能力有限。 2019 年：为了解决双塔模型无法很好地建模交叉特征的问题，将双塔模型的输出作为特征与其他交叉特征通过 GBDT 树模型进行融合。 2020 年至今：由于算力的提升，开始探索 NN 端到端粗排模型并且持续迭代 NN 模型。 现阶段，工业界粗排模型常用的有双塔模型，比如腾讯[3]和爱奇艺[4]；交互式 NN 模型，比如阿里巴巴[1,2]。下文主要介绍美团搜索在粗排升级为 NN 模型过程中的相关优化工作，主要包括粗排效果优化、效果&amp;amp;性能联合优化两个部分。</description>
-    </item>
-    
-    <item>
       <title>提升资源利用率与保障服务质量，鱼与熊掌不可兼得？</title>
       <link>https://wfsui.github.io/posts/%E6%8F%90%E5%8D%87%E8%B5%84%E6%BA%90%E5%88%A9%E7%94%A8%E7%8E%87%E4%B8%8E%E4%BF%9D%E9%9A%9C%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E9%B1%BC%E4%B8%8E%E7%86%8A%E6%8E%8C%E4%B8%8D%E5%8F%AF%E5%85%BC%E5%BE%97/</link>
       <pubDate>Fri, 25 Nov 2022 03:24:08 +0000</pubDate>
@@ -541,6 +552,19 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
 提升资源利用率，降本增效，能给数据中心节省大量的成本。以数百万核CPU的规模的数据中心为例，整体资源利用率每提升1个百分点，节省成本（包括采购成本和运营成本，运营成本主要是机房租金、电费以及运维费用等）每年将达到数千万元。如果考虑到集群运营人工成本等，随着资源规模持续扩大，这个收益将持续增长。
 持续提升机器的资源利用率，降低单核成本，提升集群服务质量，是美团Hulk团队的核心目标之一。针对用户对降本增效的需求，Hulk调度团队在集群资源利用率提升和服务质量保障方向率先做出相关探索，提出了一系列的建设方案，并推进落地。本文重点介绍在Hulk整体资源利用率运营体系中的核心系统集群负载自动均衡管理系统。
 2 什么是LAR？ LAR全称是集群负载自动均衡管理系统（LAR，Load Auto-Regulator），是美团Hulk团队基于Kubernetes研发的容器编排系统。LAR在Kubernetes之上，通过提供分级的QoS管理机制和负载管控能力，实现从时空维度对资源的精确调度分配管理。</description>
+    </item>
+    
+    <item>
+      <title>美团搜索粗排优化的探索与实践</title>
+      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E7%B2%97%E6%8E%92%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Fri, 25 Nov 2022 03:24:08 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E7%B2%97%E6%8E%92%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
+      <description>1. 前言 众所周知，在搜索、推荐、广告等大规模工业界应用领域，为了平衡性能和效果，排序系统普遍采用级联架构[1,2]，如下图 1 所示。以美团搜索排序系统为例，整个排序分为粗排、精排、重排和混排层；粗排位于召回和精排之间，需要从千级别候选 item 集合中筛选出百级别 item 集合送给精排层。
+从美团搜索排序全链路视角审视粗排模块，目前粗排层优化存在如下几个挑战点：
+样本选择偏差：级联排序系统下，粗排离最后的结果展示环节较远，导致粗排模型离线训练样本空间与待预测的样本空间存在较大的差异，存在严重的样本选择偏差。 粗排精排联动：粗排处于召回和精排之间，粗排需要更多获取和利用后续链路的信息来提升效果。 性能约束：线上粗排预测的候选集远远高于精排模型，然而实际整个搜索系统对性能有严格的要求，导致粗排需要重点关注预测性能。 本文将围绕上述挑战点来分享美团搜索粗排层优化的相关探索与实践，其中样本选择偏差问题我们放在精排联动问题中一起解决。本文主要分成三个部分：第一部分会简单介绍美团搜索排序粗排层的演进路线；第二部分介绍粗排优化的相关探索与实践，其中第一个工作是采用知识蒸馏和对比学习使精排和粗排联动来优化粗排效果，第二个工作是考虑粗排性能和效果 trade-off 的粗排优化，相关工作均已全量上线，且效果显著；最后是总结与展望部分，希望这些内容对大家有所帮助和启发。
+2. 粗排演进路线 美团搜索的粗排技术演进分为以下几个阶段：
+2016 年：基于相关性、质量度、转化率等信息进行线性加权，这种方法简单但是特征的表达能力较弱，权重人工确定，排序效果存在很大的提升空间。 2017 年：采用基于机器学习的简单 LR 模型进行 Pointwise 预估排序。 2018 年：采用基于向量内积的双塔模型，两侧分别输入查询词、用户以及上下文特征和商户特征，经过深度网络计算后，分别产出用户&amp;amp;查询词向量和商户向量，再通过内积计算得到预估分数进行排序。该方法可以提前把商户向量计算保存好，所以在线预测快，但是两侧信息的交叉能力有限。 2019 年：为了解决双塔模型无法很好地建模交叉特征的问题，将双塔模型的输出作为特征与其他交叉特征通过 GBDT 树模型进行融合。 2020 年至今：由于算力的提升，开始探索 NN 端到端粗排模型并且持续迭代 NN 模型。 现阶段，工业界粗排模型常用的有双塔模型，比如腾讯[3]和爱奇艺[4]；交互式 NN 模型，比如阿里巴巴[1,2]。下文主要介绍美团搜索在粗排升级为 NN 模型过程中的相关优化工作，主要包括粗排效果优化、效果&amp;amp;性能联合优化两个部分。</description>
     </item>
     
     <item>
@@ -658,6 +682,18 @@ FSL++整体模型结构如下图2所示。FewCLUE数据集为每个任务提供1
     </item>
     
     <item>
+      <title>数据库全量SQL分析与审计系统性能优化之旅</title>
+      <link>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%A8%E9%87%8Fsql%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E6%97%85/</link>
+      <pubDate>Thu, 15 Sep 2022 04:32:34 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%A8%E9%87%8Fsql%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E6%97%85/</guid>
+      <description>1 背景 数据库安全一直是美团信息安全团队和数据库团队非常注重的领域，但由于历史原因，对数据库的访问只具备采样审计能力，导致对于一些攻击事件无法快速地发现、定损和优化。安全团队根据历史经验，发现攻击访问数据库基本上都存在着某些特征，经常会使用一些特定SQL，我们希望通过对MySQL访问流量进行全量分析，识别出惯用SQL，在数据库安全性上做到有的放矢。
+2 现状及挑战 下图是采样MySQL审计系统的架构图，数据采集端基于pcap抓包方式实现，数据处理端选用美团大数据中心的日志接入方案。所有MySQL实例都部署了用于采集MySQL相关数据的rds-agent、日志收集的log-agent。rds-agent抓取到MySQL访问数据，通过log-agent上报到日志接收端，为了减少延时，上报端与接收端间做了同机房调度优化。日志接收端把数据写入到约定的Kafka中，安全团队通过Storm实时消费Kafka分析出攻击事件，并定期拉数据持久化到Hive中。
+我们发现，通常被攻击的都是一些核心MySQL集群。经统计发现，这些集群单机最大QPS的9995线约5万次左右。rds-agent作为MySQL机器上的一个寄生进程，为了宿主稳定性，资源控制也极为重要。为了评估rds-agent在高QPS下的表现，我们用Sysbench对MySQL进行压测，观察在不同QPS下rds-agent抓取的数据丢失率和CPU消耗情况，从下面的压测数据来看结果比较糟糕：
+QPS 丢失率 CPU利用率 10368.72 1.03% 307.35% 17172.61 7.23% 599.90% 29005.51 28.75% 662.39% 42697.05 51.</description>
+    </item>
+    
+    <item>
       <title>美团综合业务推荐系统的质量模型及实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E7%BB%BC%E5%90%88%E4%B8%9A%E5%8A%A1%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%B4%A8%E9%87%8F%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%AE%9E%E8%B7%B5/</link>
       <pubDate>Thu, 15 Sep 2022 04:32:34 +0000</pubDate>
@@ -668,18 +704,6 @@ FSL++整体模型结构如下图2所示。FewCLUE数据集为每个任务提供1
 2 现状分析 推荐系统是效果类系统，质量特点与功能类系统有所不同。功能类系统一般降级后会较为显性地影响用户体验，但推荐结果返回 A 或者 A’，用户很难有明显感知。但实际上，如果匹配效果变差，就会直接影响到用户的隐性体验，需要被识别。功能类系统一般以可用性为核心来构建质量指标体系，在综合业务推荐系统的业务实践中，我们发现可用性等指标存在以下的局限性：
 可用性对部分缺陷不敏感：可用性是中断频率和持续时间的函数，体现的是系统持续提供服务的能力。只要系统的缺陷不影响对外提供服务，就不影响可用性，但有些实际上影响了用户体验。这里的缺陷可能是意料中的（如主动降级），也可能是意料外的（模型更新延迟），都应该被纳入质量的度量中。 可用性难以覆盖数据的全链路：推荐系统的链路涵盖了数据生产、加工、应用、分析等环节。一是可用性并不涉及数据表的质量，二是在可用性能度量的地方无法反应数据质量的全貌。数据质量需要考虑完整性、准确性、时效性、安全性等特征，超出了可用性的范畴。国际知名学者吴恩达曾说过，人工智能的价值 80% 取决于数据，推荐系统交付推荐效果（点击转化率、交易转化率、用户停留时长等）的质量，也主要取决于数据的质量。 可用性难以反映业务差异性：美团到综覆盖上百个行业、几十个频道页，推荐系统出于效率和成本考虑，业务间无法完全进行隔离，可用性的串并联计算方式难以区分业务进行单独评价。到综不同业务差异很大，访问频次、流量高峰期、业务策略各不相同，从而质量的特点和问题分布也不同。目前可用性的指标缺乏业务维度信息，不利于指导精细化的质量运营。 在质量建设中，过去以故障等级作为目标，验证周期长，具备偶然性，且目标和动作逻辑推导关系不强。另外，故障本身偏事后，这种问题驱动的思路不利于持续运营。总的来说，以可用性为目标，在实际落地计算时存在种种问题，所以我们考虑进行推荐系统的质量模型建设，以可用性为基础，然后调整计算方式，进而指导精细化的质量运营。
 3 建设思路 3.</description>
-    </item>
-    
-    <item>
-      <title>数据库全量SQL分析与审计系统性能优化之旅</title>
-      <link>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%A8%E9%87%8Fsql%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E6%97%85/</link>
-      <pubDate>Thu, 15 Sep 2022 04:32:34 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%A8%E9%87%8Fsql%E5%88%86%E6%9E%90%E4%B8%8E%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%8B%E6%97%85/</guid>
-      <description>1 背景 数据库安全一直是美团信息安全团队和数据库团队非常注重的领域，但由于历史原因，对数据库的访问只具备采样审计能力，导致对于一些攻击事件无法快速地发现、定损和优化。安全团队根据历史经验，发现攻击访问数据库基本上都存在着某些特征，经常会使用一些特定SQL，我们希望通过对MySQL访问流量进行全量分析，识别出惯用SQL，在数据库安全性上做到有的放矢。
-2 现状及挑战 下图是采样MySQL审计系统的架构图，数据采集端基于pcap抓包方式实现，数据处理端选用美团大数据中心的日志接入方案。所有MySQL实例都部署了用于采集MySQL相关数据的rds-agent、日志收集的log-agent。rds-agent抓取到MySQL访问数据，通过log-agent上报到日志接收端，为了减少延时，上报端与接收端间做了同机房调度优化。日志接收端把数据写入到约定的Kafka中，安全团队通过Storm实时消费Kafka分析出攻击事件，并定期拉数据持久化到Hive中。
-我们发现，通常被攻击的都是一些核心MySQL集群。经统计发现，这些集群单机最大QPS的9995线约5万次左右。rds-agent作为MySQL机器上的一个寄生进程，为了宿主稳定性，资源控制也极为重要。为了评估rds-agent在高QPS下的表现，我们用Sysbench对MySQL进行压测，观察在不同QPS下rds-agent抓取的数据丢失率和CPU消耗情况，从下面的压测数据来看结果比较糟糕：
-QPS 丢失率 CPU利用率 10368.72 1.03% 307.35% 17172.61 7.23% 599.90% 29005.51 28.75% 662.39% 42697.05 51.</description>
     </item>
     
     <item>
@@ -702,20 +726,6 @@ QPS 丢失率 CPU利用率 10368.72 1.03% 307.35% 17172.61 7.23% 599.90% 29005.5
     </item>
     
     <item>
-      <title>对话摘要技术在美团的探索（SIGIR）</title>
-      <link>https://wfsui.github.io/posts/%E5%AF%B9%E8%AF%9D%E6%91%98%E8%A6%81%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E6%8E%A2%E7%B4%A2sigir/</link>
-      <pubDate>Thu, 01 Sep 2022 04:18:28 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E5%AF%B9%E8%AF%9D%E6%91%98%E8%A6%81%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E6%8E%A2%E7%B4%A2sigir/</guid>
-      <description>随着互联网产生的文本数据越来越多，文本信息过载问题日益严重，对各类文本进行一个“降维”处理显得非常必要，而文本摘要就是其中一个重要的手段。本文首先介绍了经典的文本摘要方法，包括抽取式摘要方法和生成式摘要方法，随后分析了对话摘要的模型，并分享了美团在真实对话摘要场景中面临的挑战。希望能给从事相关工作的同学带来一些启发或者帮助。
-1. 对话摘要技术背景 文本摘要[65-74]旨在将文本或文本集合转换为包含关键信息的简短摘要，是缓解文本信息过载的一个重要手段。文本摘要按照输入类型，可分为单文档摘要和多文档摘要。单文档摘要从给定的一个文档中生成摘要，多文档摘要从给定的一组主题相关的文档中生成摘要。按照输出类型可分为抽取式摘要和生成式摘要。抽取式摘要从源文档中抽取关键句和关键词组成摘要，摘要信息全部来源于原文。生成式摘要根据原文，允许生成新的词语、短语来组成摘要。此外，按照有无监督数据，文本摘要可以分为有监督摘要和无监督摘要。根据输入数据领域，文本摘要又可以分为新闻摘要、专利摘要、论文摘要、对话摘要等等。
-自动文本摘要可以看作是一个信息压缩的过程，我们将输入的一篇或多篇文档自动压缩为一篇简短的摘要，该过程不可避免地存在信息损失，但要求保留尽可能多的重要信息。自动文摘系统通常涉及对输入文档的理解、要点的筛选以及文摘合成这三个主要步骤。其中，文档理解可浅可深，大多数自动文摘系统只需要进行比较浅层的文档理解，例如段落划分、句子切分、词法分析等，也有文摘系统需要依赖句法解析、语义角色标注、指代消解，甚至深层语义分析等技术。
-对话摘要是文本摘要的一个特例，其核心面向的是对话类数据。对话类数据有着不同的形式，例如：会议、闲聊、邮件、辩论、客服等等。不同形式的对话摘要在自己的特定领域有着不同的应用场景，但是它们的核心与摘要任务的核心是一致的，都是为了捕捉对话中的关键信息，帮助快速理解对话的核心内容。与文本摘要不同的是，对话摘要的关键信息常常散落在不同之处，对话中的说话者、话题不停地转换。此外，当前也缺少对话摘要的数据集，这些都增大了对话摘要的难度[64]。
-基于实际的场景，本文提出了阅读理解的距离监督Span-Level对话摘要方案《Distant Supervision based Machine Reading Comprehension for Extractive Summarization in Customer Service》（已发表在SIGIR 2021），该方法比强基准方法在ROUGE-L指标和BLEU指标上提升了3%左右。
-2. 文本摘要与对话摘要经典模型介绍 文本摘要从生成方式上可分为抽取式摘要和生成式摘要两种模式。抽取式摘要通常使用算法从源文档中提取现成的关键词、句子作为摘要句。在通顺度上，一般优于生成式摘要。但是，抽取式摘要会引入过多的冗余信息，无法体现摘要本身的特点。生成式摘要则是基于NLG（Natural Language Generation）技术，根据源文档内容，由算法模型生成自然语言描述，而非直接提取原文的句子。</description>
-    </item>
-    
-    <item>
       <title>图神经网络训练框架的实践和探索</title>
       <link>https://wfsui.github.io/posts/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%8E%A2%E7%B4%A2/</link>
       <pubDate>Thu, 01 Sep 2022 04:18:28 +0000</pubDate>
@@ -728,6 +738,20 @@ QPS 丢失率 CPU利用率 10368.72 1.03% 307.35% 17172.61 7.23% 599.90% 29005.5
 1.1 问题和挑战 从工业界落地应用的角度来看，一个“好用”的图神经网络框架至少具备以下特点。
 （1）完善支持当前流行的图神经网络模型。
 从图本身的类型来看，图神经网络模型可以分为同质图(Homogeneous Graph)、异质图(Heterogeneous Graph)、动态图(Dynamic Graph)等类型。从训练方式来看，又可以分为全图消息传递[4]和基于子图采样的消息传递[8]等类型。从推理方式来看，还可以分为直推式和归纳式[9]。</description>
+    </item>
+    
+    <item>
+      <title>对话摘要技术在美团的探索（SIGIR）</title>
+      <link>https://wfsui.github.io/posts/%E5%AF%B9%E8%AF%9D%E6%91%98%E8%A6%81%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E6%8E%A2%E7%B4%A2sigir/</link>
+      <pubDate>Thu, 01 Sep 2022 04:18:28 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E5%AF%B9%E8%AF%9D%E6%91%98%E8%A6%81%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E6%8E%A2%E7%B4%A2sigir/</guid>
+      <description>随着互联网产生的文本数据越来越多，文本信息过载问题日益严重，对各类文本进行一个“降维”处理显得非常必要，而文本摘要就是其中一个重要的手段。本文首先介绍了经典的文本摘要方法，包括抽取式摘要方法和生成式摘要方法，随后分析了对话摘要的模型，并分享了美团在真实对话摘要场景中面临的挑战。希望能给从事相关工作的同学带来一些启发或者帮助。
+1. 对话摘要技术背景 文本摘要[65-74]旨在将文本或文本集合转换为包含关键信息的简短摘要，是缓解文本信息过载的一个重要手段。文本摘要按照输入类型，可分为单文档摘要和多文档摘要。单文档摘要从给定的一个文档中生成摘要，多文档摘要从给定的一组主题相关的文档中生成摘要。按照输出类型可分为抽取式摘要和生成式摘要。抽取式摘要从源文档中抽取关键句和关键词组成摘要，摘要信息全部来源于原文。生成式摘要根据原文，允许生成新的词语、短语来组成摘要。此外，按照有无监督数据，文本摘要可以分为有监督摘要和无监督摘要。根据输入数据领域，文本摘要又可以分为新闻摘要、专利摘要、论文摘要、对话摘要等等。
+自动文本摘要可以看作是一个信息压缩的过程，我们将输入的一篇或多篇文档自动压缩为一篇简短的摘要，该过程不可避免地存在信息损失，但要求保留尽可能多的重要信息。自动文摘系统通常涉及对输入文档的理解、要点的筛选以及文摘合成这三个主要步骤。其中，文档理解可浅可深，大多数自动文摘系统只需要进行比较浅层的文档理解，例如段落划分、句子切分、词法分析等，也有文摘系统需要依赖句法解析、语义角色标注、指代消解，甚至深层语义分析等技术。
+对话摘要是文本摘要的一个特例，其核心面向的是对话类数据。对话类数据有着不同的形式，例如：会议、闲聊、邮件、辩论、客服等等。不同形式的对话摘要在自己的特定领域有着不同的应用场景，但是它们的核心与摘要任务的核心是一致的，都是为了捕捉对话中的关键信息，帮助快速理解对话的核心内容。与文本摘要不同的是，对话摘要的关键信息常常散落在不同之处，对话中的说话者、话题不停地转换。此外，当前也缺少对话摘要的数据集，这些都增大了对话摘要的难度[64]。
+基于实际的场景，本文提出了阅读理解的距离监督Span-Level对话摘要方案《Distant Supervision based Machine Reading Comprehension for Extractive Summarization in Customer Service》（已发表在SIGIR 2021），该方法比强基准方法在ROUGE-L指标和BLEU指标上提升了3%左右。
+2. 文本摘要与对话摘要经典模型介绍 文本摘要从生成方式上可分为抽取式摘要和生成式摘要两种模式。抽取式摘要通常使用算法从源文档中提取现成的关键词、句子作为摘要句。在通顺度上，一般优于生成式摘要。但是，抽取式摘要会引入过多的冗余信息，无法体现摘要本身的特点。生成式摘要则是基于NLG（Natural Language Generation）技术，根据源文档内容，由算法模型生成自然语言描述，而非直接提取原文的句子。</description>
     </item>
     
     <item>
@@ -745,20 +769,6 @@ QPS 丢失率 CPU利用率 10368.72 1.03% 307.35% 17172.61 7.23% 599.90% 29005.5
     </item>
     
     <item>
-      <title>数据库异常智能分析与诊断</title>
-      <link>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E6%99%BA%E8%83%BD%E5%88%86%E6%9E%90%E4%B8%8E%E8%AF%8A%E6%96%AD/</link>
-      <pubDate>Fri, 12 Aug 2022 03:44:25 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E6%99%BA%E8%83%BD%E5%88%86%E6%9E%90%E4%B8%8E%E8%AF%8A%E6%96%AD/</guid>
-      <description>1 现状与问题 1.1 规模增长与运维能力发展之间的不平衡问题凸显 伴随着最近几年美团业务的快速发展，数据库的规模也保持着高速增长。而作为整个业务系统的“神经末梢”，数据库一旦出现问题，对业务造成的损失就会非常大。同时，因数据库规模的快速增长，出现问题的数量也大大增加，完全依靠人力的被动分析与定位已经不堪重负。下图是当时数据库实例近年来的增长趋势：
-1.2 理想很丰满，现实很骨感 美团数据库团队当前面临的主要矛盾是：实例规模增长与运维能力发展之间的不平衡，而主要矛盾体现在数据库稳定性要求较高与关键数据缺失。由于产品能力不足，只能依赖专业DBA手动排查问题，异常处理时间较长。因此，我们决定补齐关键信息，提供自助或自动定位问题的能力，缩短处理时长。
-我们复盘了过去一段时间内的故障和告警，深入分析了这些问题的根因，发现任何一个异常其实都可以按时间拆分为异常预防、异常处理和异常复盘三阶段。针对这三阶段，结合MTTR的定义，然后调研了美团内部及业界的解决方案，我们做了一张涵盖数据库异常处理方案的全景图。如下图所示：
-通过对比，我们发现：
-每个环节我们都有相关的工具支撑，但能力又不够强，相比头部云厂商大概20%～30%左右的能力，短板比较明显。 自助化和自动化能力也不足，工具虽多，但整个链条没有打通，未形成合力。 那如何解决这一问题呢？团队成员经过深入分析和讨论后，我们提出了一种比较符合当前发展阶段的解决思路。
-2 解决的思路 2.1 既解决短期矛盾，也立足长远发展 从对历史故障的复盘来看，80%故障中80%的时间都花在分析和定位上。解决异常分析和定位效率短期的ROI（投资回报率）最高。长期来看，只有完善能力版图，才能持续不断地提升整个数据库的稳定性及保障能力。因此，我们当时的一个想法就是既要解决短期矛盾，又要立足长远发展（Think Big Picture, Think Long Term）。新的方案要为未来留足足够的发展空间，不能只是“头痛医头、脚痛医脚”。</description>
-    </item>
-    
-    <item>
       <title>业务数据治理体系化思考与实践</title>
       <link>https://wfsui.github.io/posts/%E4%B8%9A%E5%8A%A1%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86%E4%BD%93%E7%B3%BB%E5%8C%96%E6%80%9D%E8%80%83%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
       <pubDate>Fri, 12 Aug 2022 03:44:25 +0000</pubDate>
@@ -773,6 +783,20 @@ QPS 丢失率 CPU利用率 10368.72 1.03% 307.35% 17172.61 7.23% 599.90% 29005.5
 流程规范缺失：对于每个方向、每类问题的治理缺少理论指导，治理的方法、动作、流程、步骤依赖治理人的经验和判断。 问题难度量追踪：治理的问题缺少衡量标准，更多靠人为来进行判断，治理效果缺少评估体系。 解决方案难落地：解决方案存在于文档中，需要治理人查找理解，缺少工具支撑，成本较高。 治理效率低、效果差
 治理线上化程度低：治理依赖的资产信息、治理动作都分散于多个系统中，信息碎片化，执行效率低。 过程无法标准化，结果无保障：治理过程需要治理人来“人为保障”，存在理解偏差和执行偏差。 数据管治缺乏体系化
 缺乏整体顶层治理方案设计：业务及数据中心对于数据治理的要求，需要治理更全面、更精细、更有效，需要治理的体系化，需要从宏观角度进行思考，层层拆解，需要从整体、从顶层来做方案设计。 问题越来越复杂，单点难解决：过往更多的是从表象去解决问题，从表面来看衡量指标有改善，实际是“头痛医头、脚痛医脚”，并没有从根本上解决问题。或者多个问题具有共性，根本问题是一致的。比如查询资源紧张的根本，可能是分析主题模型建设不足或运营不够。 不同问题的优先级无法确定：不同问题的优先级缺乏衡量标准和方法，主要靠人为判断。 治理不符合MECE原则：每个治理方向由哪些问题组成，哪些最重要，哪些的ROI最高，哪些问题和治理动作可以合并，同一问题在数仓不同主题、不同分层的衡量标准和治理方法应该有哪些差异，都需要在体系化治理中进行考虑。 三、治理体系化思考 从上述背景中不难看出，我们面临着不同业务生命周期阶段对数据建设和治理不同的要求及挑战，同时过往更多的以被动治理、问题驱动的专项治理方式方法也比较落后，这直接导致技术团队很难满足业务方对于财务、业务支持等方面的要求。</description>
+    </item>
+    
+    <item>
+      <title>数据库异常智能分析与诊断</title>
+      <link>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E6%99%BA%E8%83%BD%E5%88%86%E6%9E%90%E4%B8%8E%E8%AF%8A%E6%96%AD/</link>
+      <pubDate>Fri, 12 Aug 2022 03:44:25 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E6%99%BA%E8%83%BD%E5%88%86%E6%9E%90%E4%B8%8E%E8%AF%8A%E6%96%AD/</guid>
+      <description>1 现状与问题 1.1 规模增长与运维能力发展之间的不平衡问题凸显 伴随着最近几年美团业务的快速发展，数据库的规模也保持着高速增长。而作为整个业务系统的“神经末梢”，数据库一旦出现问题，对业务造成的损失就会非常大。同时，因数据库规模的快速增长，出现问题的数量也大大增加，完全依靠人力的被动分析与定位已经不堪重负。下图是当时数据库实例近年来的增长趋势：
+1.2 理想很丰满，现实很骨感 美团数据库团队当前面临的主要矛盾是：实例规模增长与运维能力发展之间的不平衡，而主要矛盾体现在数据库稳定性要求较高与关键数据缺失。由于产品能力不足，只能依赖专业DBA手动排查问题，异常处理时间较长。因此，我们决定补齐关键信息，提供自助或自动定位问题的能力，缩短处理时长。
+我们复盘了过去一段时间内的故障和告警，深入分析了这些问题的根因，发现任何一个异常其实都可以按时间拆分为异常预防、异常处理和异常复盘三阶段。针对这三阶段，结合MTTR的定义，然后调研了美团内部及业界的解决方案，我们做了一张涵盖数据库异常处理方案的全景图。如下图所示：
+通过对比，我们发现：
+每个环节我们都有相关的工具支撑，但能力又不够强，相比头部云厂商大概20%～30%左右的能力，短板比较明显。 自助化和自动化能力也不足，工具虽多，但整个链条没有打通，未形成合力。 那如何解决这一问题呢？团队成员经过深入分析和讨论后，我们提出了一种比较符合当前发展阶段的解决思路。
+2 解决的思路 2.1 既解决短期矛盾，也立足长远发展 从对历史故障的复盘来看，80%故障中80%的时间都花在分析和定位上。解决异常分析和定位效率短期的ROI（投资回报率）最高。长期来看，只有完善能力版图，才能持续不断地提升整个数据库的稳定性及保障能力。因此，我们当时的一个想法就是既要解决短期矛盾，又要立足长远发展（Think Big Picture, Think Long Term）。新的方案要为未来留足足够的发展空间，不能只是“头痛医头、脚痛医脚”。</description>
     </item>
     
     <item>
@@ -1030,6 +1054,19 @@ App 功能引导是用户心智建设的“敲门砖”，只有让用户熟悉�
     </item>
     
     <item>
+      <title>美团搜索中查询改写技术的探索与实践</title>
+      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E4%B8%AD%E6%9F%A5%E8%AF%A2%E6%94%B9%E5%86%99%E6%8A%80%E6%9C%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Mon, 16 May 2022 03:24:31 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E4%B8%AD%E6%9F%A5%E8%AF%A2%E6%94%B9%E5%86%99%E6%8A%80%E6%9C%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
+      <description>1. 引言 在搜索场景中，由于用户搜索词Query和检索文本Document之间存在大量表述不一的情况，在文本检索框架下，此类文本不匹配导致的漏召回问题严重影响着用户的体验。对这类问题业界一般有两种方案：用户端拓展用户的查询词——即查询改写，或Document端拓展文档关键词——即Document标签。本文主要介绍前一种解决漏召回的方案：查询改写（Query Rewriting，或称为查询扩展Query Expansion）。查询改写的应用方式是对原始Query拓展出与用户需求关联度高的改写词，多个改写词与用户搜索词一起做检索，从而用更好的表述，帮用户搜到更多符合需求的商户、商品和服务。
+在美团搜索的技术架构下，查询改写控制召回语法中的文本，命名实体识别（Named Entity Recognition，简称NER）[1]控制召回语法中的检索域，意图识别控制召回的相关性以及各业务的分流和产品形态，这是最为核心的三个查询理解信号。查询改写策略在美团搜索的全部流量上生效，除扩展用户搜索词外，在整个美团搜索技术架构中作为基础语义理解信号，从索引扩展、排序特征、前端高亮等多方面影响着用户体验。对搜索召回结果中的无结果率、召回结果数以及搜索点击率等指标，也有着直接且显著的影响。
+本文会介绍美团搜索场景下查询改写这一任务上的迭代经验，内容主要分为三个部分。第一部分会对查询改写任务在美团搜索场景下的挑战进行简单的介绍；第二部分会介绍查询改写任务上整体技术栈建设的实践经验第三部分是总结与展望。目前，业界在文本召回策略方面公开的分享较少，希望本文能对从事搜索、广告、推荐中召回相关工作的同学有所启发或者帮助。
+2. 背景与挑战 2.1 美团搜索场景下查询改写信号的使用方式 在美团的搜索场景下，查询改写主要用于解决以下四类语义鸿沟导致的漏召回问题：
+语义拓展：主要是同义词、下位词以及常见的大小写数字和繁简转化等，例如“理发”、“剪发”、“造型”、“发艺”、“美发”、“剪头”等等。 用户表达和商家表达上的Gap：非语言上的同义。如用户表述口语化“学吉他”，商户描述书面化“吉他培训”；用户输入不完全匹配商户名：“希尔顿大酒店”（商家更常见的描述为“希尔顿酒店”）。 场景拓展：例如“摘草莓”在美团的搜索场景下，用户基于对平台的认知对应需求是“草莓园”。 其他漏召回问题：部分的多字少字、纠错等问题，如“房屋扫”对应“家政保洁”的需求；理论上查询改写可以通过增加改写词解决所有漏召回问题，诸如“冬日四件套”包括“冰糖葫芦、烤地瓜、炒栗子、热奶茶”这类有时效性的网红概念，也可以通过改写进行解决。 2.2 美团搜索场景下查询改写信号的难点和挑战 搜索是在用户搜索词以及供给两方面约束下尽可能提高用户触达效率以及商业化指标，而美团的搜索场景增加了“地域”第三个约束。具体的行业对比如下图所示：</description>
+    </item>
+    
+    <item>
       <title>美团集群调度系统的云原生实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E9%9B%86%E7%BE%A4%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%BA%91%E5%8E%9F%E7%94%9F%E5%AE%9E%E8%B7%B5/</link>
       <pubDate>Mon, 16 May 2022 03:24:31 +0000</pubDate>
@@ -1042,19 +1079,6 @@ App 功能引导是用户心智建设的“敲门砖”，只有让用户熟悉�
 大规模集群管理的难题 众所周知，业务快速增长带来的是服务器规模和数据中心数量的暴增。对于开发者而言，在大规模集群调度系统的业务场景下，必须要解决的两个难题是：
 如何管理好数据中心大规模集群部署调度，特别是在跨数据中心场景下，如何实现资源的弹性和调度能力，在保障应用服务质量的前提下尽可能地提升资源的利用率，充分降低数据中心成本。 如何改造底层基础设施，为业务方打造云原生操作系统，提升计算服务体验，实现应用的自动化容灾响应和部署升级等，减少业务方对底层资源管理的心智负担，让业务方可以更专注于业务本身。 运营大规模集群的挑战 为了在真实的生产环境解决上述两个难题，具体又可以再拆分成以下四个大规模集群运营管理挑战：
 如何解决用户多样化需求并快速响应。业务的调度需求和场景丰富且动态多变，作为集群调度系统这样的平台型服务，一方面需要能够快速交付功能，及时满足业务需求；另一方面还需要把平台打造得足够通用，将业务个性化需求抽象为可落地到平台的通用能力，并长期进行迭代。这非常考验平台服务团队的技术演进规划，因为一不小心，团队就会陷入无休止的业务功能开发中，虽然满足了业务需求，却会造成团队工作低水平重复的现象。 如何提高在线应用数据中心的资源利用率且同时保障应用服务质量。资源调度一直是业界公认的难题，随着云计算市场快速发展，各云计算厂商不断加大对数据中心的投入。数据中心的资源使用率却非常低，更加剧了问题的严重性。Gartner调研发现全球数据中心服务器CPU利用率只有6%～12%，即使是亚马逊弹性计算云平台（EC2，Elastic Compute Cloud）也只有7%～17%的资源利用率，可见资源浪费有多严重。究其原因，在线应用对于资源利用率非常敏感，业界不得不预留额外资源以保障重要应用的服务质量（QoS，Qualityof Service）。集群调度系统需要在多应用混合运行时消除应用间的干扰，实现不同应用之间的资源隔离。 如何为应用，特别是有状态应用提供实例异常自动处理，屏蔽机房差异，降低用户对底层的感知。随着服务应用规模的持续扩大，以及云计算市场的日趋成熟，分布式应用往往会配置在不同地域的数据中心，甚至是跨越不同的云环境，实现了多云或混合云部署。而集群调度系统需要为业务方提供统一的基础设施，实现混合多云架构，屏蔽底层的异构环境。同时降低应用运维管理的复杂性，提升应用的自动化程度，为业务提供更好的运维体验。 如何解决单集群过大或集群数量过多，而带来的与集群管理相关的性能和稳定性风险。集群本身的生命周期管理复杂度会伴随集群规模和数量的增多而增大。以美团为例，我们所采取的两地多中心多集群方案，虽然在一定程度上规避了集群规模过大的隐患，解决了业务隔离性、地域延迟等问题。随着边缘集群场景和数据库等PaaS组件上云需求的出现，可以预见小集群数量将会有明显的上涨趋势。随之带来的是集群管理复杂度、监控配置成本、运维成本的明显增加，这时集群调度系统需要提供更有效的操作规范，并保证操作安全性、报警自愈和变更效率。 设计集群调度系统时的取舍 为了解决上述挑战，一个好的集群调度器将发挥关键作用。但现实中从来不存在一个完美的系统，所以在设计集群调度系统时，我们需要根据实际场景在几个矛盾中做出取舍：</description>
-    </item>
-    
-    <item>
-      <title>美团搜索中查询改写技术的探索与实践</title>
-      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E4%B8%AD%E6%9F%A5%E8%AF%A2%E6%94%B9%E5%86%99%E6%8A%80%E6%9C%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 16 May 2022 03:24:31 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%90%9C%E7%B4%A2%E4%B8%AD%E6%9F%A5%E8%AF%A2%E6%94%B9%E5%86%99%E6%8A%80%E6%9C%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
-      <description>1. 引言 在搜索场景中，由于用户搜索词Query和检索文本Document之间存在大量表述不一的情况，在文本检索框架下，此类文本不匹配导致的漏召回问题严重影响着用户的体验。对这类问题业界一般有两种方案：用户端拓展用户的查询词——即查询改写，或Document端拓展文档关键词——即Document标签。本文主要介绍前一种解决漏召回的方案：查询改写（Query Rewriting，或称为查询扩展Query Expansion）。查询改写的应用方式是对原始Query拓展出与用户需求关联度高的改写词，多个改写词与用户搜索词一起做检索，从而用更好的表述，帮用户搜到更多符合需求的商户、商品和服务。
-在美团搜索的技术架构下，查询改写控制召回语法中的文本，命名实体识别（Named Entity Recognition，简称NER）[1]控制召回语法中的检索域，意图识别控制召回的相关性以及各业务的分流和产品形态，这是最为核心的三个查询理解信号。查询改写策略在美团搜索的全部流量上生效，除扩展用户搜索词外，在整个美团搜索技术架构中作为基础语义理解信号，从索引扩展、排序特征、前端高亮等多方面影响着用户体验。对搜索召回结果中的无结果率、召回结果数以及搜索点击率等指标，也有着直接且显著的影响。
-本文会介绍美团搜索场景下查询改写这一任务上的迭代经验，内容主要分为三个部分。第一部分会对查询改写任务在美团搜索场景下的挑战进行简单的介绍；第二部分会介绍查询改写任务上整体技术栈建设的实践经验第三部分是总结与展望。目前，业界在文本召回策略方面公开的分享较少，希望本文能对从事搜索、广告、推荐中召回相关工作的同学有所启发或者帮助。
-2. 背景与挑战 2.1 美团搜索场景下查询改写信号的使用方式 在美团的搜索场景下，查询改写主要用于解决以下四类语义鸿沟导致的漏召回问题：
-语义拓展：主要是同义词、下位词以及常见的大小写数字和繁简转化等，例如“理发”、“剪发”、“造型”、“发艺”、“美发”、“剪头”等等。 用户表达和商家表达上的Gap：非语言上的同义。如用户表述口语化“学吉他”，商户描述书面化“吉他培训”；用户输入不完全匹配商户名：“希尔顿大酒店”（商家更常见的描述为“希尔顿酒店”）。 场景拓展：例如“摘草莓”在美团的搜索场景下，用户基于对平台的认知对应需求是“草莓园”。 其他漏召回问题：部分的多字少字、纠错等问题，如“房屋扫”对应“家政保洁”的需求；理论上查询改写可以通过增加改写词解决所有漏召回问题，诸如“冬日四件套”包括“冰糖葫芦、烤地瓜、炒栗子、热奶茶”这类有时效性的网红概念，也可以通过改写进行解决。 2.2 美团搜索场景下查询改写信号的难点和挑战 搜索是在用户搜索词以及供给两方面约束下尽可能提高用户触达效率以及商业化指标，而美团的搜索场景增加了“地域”第三个约束。具体的行业对比如下图所示：</description>
     </item>
     
     <item>

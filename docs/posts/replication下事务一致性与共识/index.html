@@ -15,7 +15,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/replication%E4%B8%8B%E4%BA%8B%E5%8A%A1%E4%B8%80%E8%87%B4%E6%80%A7%E4%B8%8E%E5%85%B1%E8%AF%86/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-01-02T02:52:06+00:00" />
-<meta property="article:modified_time" content="2023-01-02T02:52:06+00:00" /><meta property="og:site_name" content="大峰哥" />
+<meta property="article:modified_time" content="2023-01-02T02:52:06+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Replication（下）：事务，一致性与共识"/>
 <meta name="twitter:description" content="1. 前文回顾 在上一篇中，我们主要介绍了分布式系统中常见的复制模型，并描述了每一种模型的优缺点以及使用场景，同时阐述了分布式系统中特有的一些技术挑战。首先，常见的分布式系统复制模型有3种，分别是主从复制模型、多主复制模型以及无主复制模型。此外，复制从客户端的时效性来说分为同步复制&amp;&amp;异步复制，异步复制具有滞后性，可能会造成数据不一致，因为这个不一致，会带来各种各样的问题。
@@ -224,7 +224,7 @@ a. 数据库是否会存在10KB没法解析的脏数据。 b. 如果恢复之后
 <p>实际上，内部一致性并不是分布式系统特有的问题，在多核领域又称内存一致性，是为了约定多处理器之间协作。如果多处理器间能够满足特定的一致性，那么就能对多处理器所处理的数据，操作顺序做出一定的承诺，应用开发人员可以根据这些承诺对自己的系统做出假设。如下图所示：</p>
 <p><img src="https://p0.meituan.net/travelcube/c0835eb488f8ca238f3961ec9a57e850127827.png" alt="图10 CPU结构"></p>
 <p>每个CPU逻辑核心都有自己的一套独立的寄存器和L1、L2Cache，这就导致如果我们在并发编程时，每个线程如果对某个主存地址中变量进行修改，可能都是优先修改自己的缓存，并且读取变量时同样是会先读缓存。这实际上和我们在分布式中多个客户端读写多个副本的现象是类似的，只不过分布式系统中是操作粒度，而处理器则是指令粒度。在多处理器的内存一致性中，有下面几种常见的模型。</p>
-<p><img src="https://p0.meituan.net/travelcube/c0835eb488f8ca238f3961ec9a57e850127827.png" alt="图11 内存一致性&amp;ndash;百度百科"></p>
+<p><img src="https://p0.meituan.net/travelcube/c0835eb488f8ca238f3961ec9a57e850127827.png" alt="图11 内存一致性&ndash;百度百科"></p>
 <p>可以看到，这些一致性约束的核心区分点就是在产生并发时对顺序的约束，而用更专业一点的词来说，线性一致性需要的是定义“全序”，而其他一致性则是某种“偏序”，也就是说允许一些并发操作间不比较顺序，按所有可能的排列组合执行。</p>
 <h3 id="43-举一反三分布式系统中的内部一致性">4.3 举一反三：分布式系统中的内部一致性</h3>
 <p>如下图所示：</p>

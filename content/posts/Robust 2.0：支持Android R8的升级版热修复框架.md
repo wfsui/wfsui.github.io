@@ -1,0 +1,360 @@
+---
+title: "Robust 2.0：支持Android R8的升级版热修复框架"
+date: 2023-06-02T02:59:34+0000
+tags: [美团技术团队, 美团平台, 前端, Robust, Android, R8, Proguard]
+---
+
+## 1. 背景
+
+
+美团 Robust 是基于方法插桩的实时热修复框架，主要优势是实时生效、零 Hook 兼容所有 Android 版本。2016 年，我们在《[Android 热更新方案 Robust](https://tech.meituan.com/2016/09/14/android-robust.html)》一文中对技术原理做了详细介绍，主要通过给每个方法插入 IF 分支来动态控制代码逻辑，进而实现热修复。其核心主要有两部分：一个是代码插桩，一个是自动补丁。
+
+
+
+* 代码插桩这部分随着 Javassist、ASM 工具的广泛使用，整体方案比较成熟了，迭代改进主要是针对插桩代码体积和性能的优化；
+* 自动补丁这部分在实际使用过程中一直在迭代，跟业界主流热修复方案一样，自动化补丁工具作制作时机是在 Proguard 混淆之后，由于 Proguard 会对代码进行代码优化和混淆处理，在 Proguard 后制作补丁能够降低补丁生成的复杂性。
+
+
+近年来， Google 推出了新的代码优化混淆工具 R8，用于取代第三方的代码优化混淆工具 Proguard，经过多年功能迭代和缺陷改进，R8 在功能上基本可以替代 Proguard，在结果上更为出色（优化生成的 Android 字节码体积更小）。Google 已经在新版本的构建工具中强制使用 R8 ，国内外已有多个知名 App 完成了 R8 适配并上线，比如微信 Android 在今年正式从 Proguard 切换到了 R8（通过升级 Android 构建工具链）。Android 热修复补丁制作依赖二次构建包和线上包对比，需要对 Proguard 切换到 R8 提前进行适配和改造，本文分享了美团平台技术部 Robust 在适配 R8 以及优化改进中的一些思路和经验。
+
+
+
+## 2. 主要挑战
+
+
+Android 热修复补丁的大致制作流程：首先基于线上代码进行逻辑修复并二次打包，然后补丁生成工具自动比较修复包和线上包的差异，最后制作出轻量的补丁包。因此在补丁制作的过程中，需要解决两个主要问题：
+
+
+
+* 对于没有变动的代码，如何在二次打包时保证和线上包一致；
+* 对于本次修复的代码，如何在经过编译、优化、混淆之后准确识别出来并生成补丁代码。
+
+
+要解决这两个问题，需要对 Android 编译和构建过程有一定了解，弄清楚问题产生的原因。下图 1 是一个 Android 项目从源码到 APK（Android 应用安装包）的构建过程（椭圆形对应构建工具链）：
+
+
+
+![图1 从源码到 APK 的构建过程](https://p0.meituan.net/travelcube/917a04eb9894180bc0f8bc64ee930384564569.png)
+
+
+
+上图有些工具已被新出现的工具所取代，但是整体的流程并没有太大变化。对照这个图，我们分析一下其中对补丁制作/二次打包有影响的几个环节：
+
+
+
+1. **资源编译器（aapt/aapt2）**：资源编译环节会生成一个 R.java 文件（记录着资源 id，便于代码中引用），一般为了解决 R field 过多以及减少包大小，大型 Android 项目会在构建过程中会将资源 id 直接内联到调用处（发生在 javac 和 proguard 之间）。如果前后两次打包出现资源 id 不一致，会影响 diff 识别的结果。
+2. **代码编译器（javac）**：Java 代码经过 javac 编译成字节码之后，除了有一些简单的优化（如常量表达式折叠、条件编译），还有一些基础的脱糖（Java 8 之前的语法特性）操作会生成一些新的类/方法/指令，如匿名内部类会被编译成一个名为 `OuterClass$1.class` 的新类，以及命名为 `access$200` 之类的桥方法。如果改动涉及内部类、泛型，二次打包$后面的数字编号可能和线上包出现乱序。
+3. **代码优化器（ProGuard/R8）**：目前主要使用第三方开源工具 ProGuard （Google 推出 R8 计划取代 Proguard），通过 30\+ 可选优化项，对前面生成的 Java 字节码进一步压缩、优化、混淆，可以使得 Android 安装包更小、更加安全、运行效率更高：
+    * **压缩**：通过静态分析并删除未被使用的 class/field/method，即源码中存在的 class/field/method，线上包中不一定存在。
+    * **优化**：通过一系列优化算法或者模版，对字节码进行优化，使得构建产物更小、运行更高效/安全，优化手段有合并类/接口、内联短方法、裁剪方法参数、删除不可达分支、外联代码（R8 新增）、删除无副作用代码（如 Log.d\(\)）、修改方法/变量可见性等等。优化后的字节码相比源码，可能出现 class/field/method 数量减少、field/method 访问修饰符发生变化、method 签名发生变化、code 指令变少，另外二次构建优化结果可能和线上包不一致。
+    * **混淆**：通过将 class/field/method 的名称重命名为一个无意义的短字符，增加逆向难度，减少包大小。二次打包需要保证和线上包的混淆保持一致，不然补丁加载后因调用异常而发生崩溃。
+4. **脱糖工具**（图中未标出，旧版本使用三方插件 Lambda/Desugar，新版本中使用自带的 R8）：由于低版本 Android 设备不支持 Java 8\+ 语法特性，这一步需要将 Lambda 表达式、方法引用、默认和静态接口方法等高版本的语法特性转为低版本实现。其中 Lambda 表达式会被编译成一个内部类，会有类似（2）中的问题。
+
+
+至此，我们对本章开头提到的2个问题的产生原因有了一定认识，经过 Android 构建过程生成的字节码相比源码在 class/field/method/code 维度上有了“结构性”的变化，比如修复代码中调用的 class/field/method 在线上包中不存在（被 shrink、被 merge、被 inline），或者源码中可以访问、但在补丁中无法访问的 field/method（修饰符被标记为 private）、method parameter 列表匹配不上（之前没有被用到的 parameter 被裁剪了）等等。
+
+
+
+Proguard 提供的这些优化项是可选的，一般情况下大型 Android 项目中会结合实际收益、稳定性以及构建耗时等多方因素综合考量后，会禁用一部分优化项，但并不是完全禁用。因此，二次打包时和线上包会产生一些差异，补丁制作准确性会受此影响。过去 Robust 补丁制作过程经常遇到此类问题，通过特殊字符检测、白名单等方式能够提升识别的准确性，但实现方案不够自动化。Robust 补丁制作流程如下：
+
+
+
+![图2 Robust 补丁制作流程](https://p0.meituan.net/travelcube/aba2c88f481bf836394ba7259e733d62267622.png)
+
+
+
+如果将 Android 项目的构建工具链（Android Gradle Plugin）升级到官方较新版本，上图中的 Proguard（Java字节码优化和） \+ Dex（Android 字节码生成） 两个环节将被合并成一个，并被替换成 R8：
+
+
+
+![图3 两种构建流](https://p1.meituan.net/travelcube/4f391378f3bfe7d6f44a69f07e889730115304.png)
+
+
+
+上述构建工具链的升级变化，给 Robust 补丁制作带来 2 个新的问题：
+
+
+
+1. 没有合适时机制作补丁。如果将基于 JAR 的改动识别方案，改成基于 DEX 或者 Smali，等同于更换补丁制作方案，前者需要基于 DEX 文件格式和指令，后者需要处理大量寄存器，更容易出错，兼容性和稳定性不够好。
+2. Proguard 可以禁用一部分优化选项，但是 R8 官方文档明确表示不支持禁用部分优化，相比之前会产生更多的差异，对改动识别造成干扰。
+
+
+## 三、解决思路
+
+
+### 3.1 整体方案介绍
+
+
+基于 R8 构建的补丁制作思路是将改动识别提到优化混淆之前，对比 Java 字节码，同时结合对线上 APK 结构化解析（class/field/method），校正补丁代码对线上代码的调用，得到 patch.jar，最后借助 R8 对 patch.jar 进行混淆（applymapping）、脱糖、生成 Dex，打包得到 patch.apk，完整流程如下图所示：
+
+
+
+![图4 完整流程](https://p0.meituan.net/travelcube/5cdccf1d11fbb25df345ae9774129ce6257267.png)
+
+
+
+### 3.2 问题和解决方法
+
+
+#### 3.2.1 R8 与 Proguard 优化对比
+
+
+部分 ProGuard 的配置项在切换到 R8 后失效，R8 官方文档对此做出的解释是：随着 R8 的不断改进，维护标准的优化行为有助于 Android Studio 团队轻松排查并解决您可能遇到的任何问题。
+
+
+
+![图5 R8 官方解释](https://p1.meituan.net/travelcube/e2c79ae14f8a0ed92882dcc9b9a54afa1395360.png)
+
+
+
+截至目前，仍能在网上搜到不少因 R8 优化带来的问题，没有公开文档介绍优化规则的使用和禁用说明。只能通过阅读 ProGuard 官方文档和 R8 源码，对比分析两者优化规则的相似和差异。通过 R8 源码发现可以通过隐藏的构建参数、反射或者直接修改 R8 源码实现一部分规则禁用，虽然 R8 的优化规则并不是和 Proguard 一一对应，但也基本可以实现和之前使用 Proguard 时相同的优化效果。
+
+
+
+```
+com.android.tools.r8.utils.InternalOptions.enableEnumUnboxing
+com.android.tools.r8.utils.InternalOptions.enableVerticalClassMerging
+com.android.tools.r8.utils.InternalOptions.enableClassInlining
+com.android.tools.r8.utils.InternalOptions.inlinerOptions().enableInlining//方法内联
+com.android.tools.r8.utils.InternalOptions.outline.enabled)//方法外联
+com.android.tools.r8.utils.InternalOptions.testing.disableMarkingMethodsFinal
+com.android.tools.r8.utils.InternalOptions.testing.disableMarkingClassesFinal
+```
+
+
+一些规则可以通过构建参数\-Dcom.android.tools.r8.disableMarkingMethodsFinal 来控制关闭/开启，其他不支持的参数也可以参考如下方式简单改造一下：
+
+
+
+![图6 改造方式](https://p0.meituan.net/travelcube/a9e187cfda7f5da2d6c463225bdfcc3d57187.png)
+
+
+
+如果某个项目中不希望禁用这些规则呢？在之前的补丁制作流程中，可能会影响改动识别的准确性。而在新的补丁制作流程中，改动识别不受影响，但在识别之后，还需要结合线上 APK 检查补丁中的外部调用是否合法。进一步仔细分析这些优化规则，可以分为 class、field、method、code 四类，其中对 Robust 补丁制作影响较大的是方法内联、参数移除、被标记为 private，后面的小节里将会介绍相应的处理方法。
+
+
+
+#### 3.2.2 “真”“假”改动识别
+
+
+如果源码中有匿名内部类，javac 会编译生成一个命名为 {外部类名}${数字编号} 的类，后面的数字编号是根据该匿名内部类在外部类中出现的先后顺序，依次累加计算出来的。
+
+
+
+![](https://p0.meituan.net/travelcube/d4b4e670cc90bc9b71277e10d2cac1a4380537.png)
+
+
+
+当修复代码中有新增/删除匿名内部类时，仅通过类名无法比较（所以在一些以类为最小粒度的热修复框架使用文档里，会看到类似“不支持新增匿名内部类”、“只支持在外部类的末尾增加匿名内部类”之类的描述），这时候 Robust 会模糊处理后面的数字编号，通过字节码对比进一步查找到真实变化的匿名内部类，识别出哪些是真改，哪些是假改。
+
+
+
+此外，如果嵌套类之间涉及私有 field/method 访问，javac 编译器会生成命名规则为 `access$100`、`access$200` 的桥接方法，`access$` 后面的数字编号（和出现的先后顺序有关）也会影响改动识别（最终 R8 会将修饰符改成 public 并删除桥接方法），这里的解决办法和上面识别真实内部类改动的方式类似。
+
+
+
+还有一种情况值得注意，大一点的 Android 项目通常会采用组件化的方式，每个组件以 AAR 形式参与 App 构建打包，在组件二进制发版（源码\-\> AAR）过程中，可以使用 R8 进行脱糖（For Android）得到 Java 7 字节码，典型的例子是 Lambda 表达式，经过脱糖处理生成 {外部类}$$ExternalSyntheticLambda{数字} （甚至有多重数字的情况如$2$1） 之类的 class，以及在外部类中生成命名规则为 lambda${方法名}${数字} 的静态方法（不同的脱糖器，命名规则不一样），补丁生成工具处理方法和上面类似。
+
+
+
+最终识别出来的代码改动，不仅包含源码有改动的方法或者新增方法/类（如果有），还包括与之有关的、由 javac 编译器脱糖生成的字节码，以及由组件二进制发版过程中经 R8 脱糖生成的字节码。
+
+
+
+#### 3.2.3 内联识别与处理
+
+
+通过第二章节的介绍，可以看到线上代码在经 javac 编译之后还会经过字节码优化、混淆等处理，因此，通过上面字节码比对识别出来的代码变更（class/method 维度），如果涉及对线上代码的调用，还需要确保这些 Field/Method 的调用是“合法”的，避免运行时崩溃。
+
+
+
+在众多优化项当中，主要需要关注的是 class/field/method 是否存在、是否可访问。如果线上包中不存在（上次构建过程中被移除或者被内联），补丁生成阶段需要当做新增类/方法加进来；如果线上包中不可以被外部访问（上次构建过程中 public 被改为 private），补丁生成阶段需要将直接调用改成反射调用；如果线上包中方法签名发生变化（上次构建过程中参数被裁剪），需要修改调用或者当做新方法加进来。
+
+
+
+由于 Dex 文件与标准的 class 文件在结构设计上有着本质的区别（Dex 工具将所有的 class 文件整合到一个或几个 Dex 文件，目的是其中各个类能够共享数据，使得文件结构更加经凑），两者无法直接对比。具体检测方法是先通过 ASM 分析补丁 class 中的外部引用，然后借助 dexlib2 库解析 APK 中的 Dex，提取出 class/field/method 结构化信息（还需反混淆处理），最后再兼容性分析和处理。
+
+
+
+R8 外联优化是一种高级优化技术，生效条件非常苛刻，需要在合适的环境下合理使用，R8的外联优化会将多个方法中的相同代码提取到新方法中，以降低代码体积，但是会增加一次方法调用开销。如果恰好想修复的代码是被外联出去的方法，直接将外联方法当成新增方法来修复即可。
+
+
+
+#### 3.2.4 混淆问题与优化
+
+
+不同于前面对在二次打包过程中对整个项目进行 ApplyMapping，这里只需要对少数发生变更的类进行 ApplyMapping，出现混淆不一致的概率会小很多。Robust 补丁制作过程中，仅将改动的类传递给 Proguard 进行二次混淆，这个过程中会自动应用线上包的 mapping 文件：
+
+
+
+```
+-applymapping {线上包的 mapping.txt}
+```
+
+
+但在某些特殊情形下，比如删了一个旧方法、同时又增加了一个新方法，或者是 ApplyMapping 的缺陷，还是会出现补丁中的混淆和线上混淆实际并不一致的情况，因此在生成补丁之后，还需要根据线上 APK 进行对比校验，如果发现错误混淆，进一步反编译成 Smali 之后进行字符替换。
+
+
+
+#### 3.2.5 其他方面的优化
+
+
+**（1）super 指令**
+
+
+
+在 Android 开发中，invoke\-super 指令经常被用来重写某个系统方法，同时保留父类方法中的一些逻辑。以 Activity 类的 onCreate 方法为例：
+
+
+
+```
+public class MyActivity extends Activity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState); // 调用父类的 onCreate 方法
+    }
+}
+```
+
+
+其中 super.onCreate\(savedInstanceState\) 就是一种典型的 super 调用，经过 Dex 编译后，在 Smali 语法层面看到的就是 invoke\-super 指令。但在 patch 类中，无法编写类似 myActivity.super.onCreate\(savedInstanceState\)，因为 super 只能在原类使用；即使采用字节码技术强行编写了，在运行时会提示 java.lang.NoSuchMethodError，因为 patch 不是目标方法的子类。
+
+
+
+为了模拟实现 JVM 的 invoke\-super 指令，需要为每个 patch 类生成一个继承了被修复类父类的辅助类（解决 super 调用只能在目标子类使用的问题），并且在辅助类里面将 patch.onCreate 转换为原始类的调用 origin.super.onCreate。Robust 早期是在 Smali 层面进行处理的，需要将 Dex 转换为 Smali，处理完以后，再把 Smali 转换为 Dex。用 ASM 字节码直接对 Class 字节码进行处理更方便，不需要再转换为 Smali，针对该辅助类的ASM字节码转换关键代码如下：
+
+
+
+```
+public class SuperMethodVisitor extends MethodVisitor {
+    ...
+    @Override
+    public void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf) {
+        if (opcode == Opcodes.INVOKEVIRTUAL) {
+            // 将 INVOKEVIRTUAL 指令替换成 INVOKESPECIAL
+            super.visitMethodInsn(Opcodes.INVOKESPECIAL, owner, name, desc, itf);
+        } else {
+            super.visitMethodInsn(opcode, owner, name, desc, itf);
+        }
+    }
+
+    @Override
+    public void visitVarInsn(int opcode, int var) {
+        if (opcode == Opcodes.ALOAD && var == 0) {
+            //保证super调用在原始类
+            mv.visitVarInsn(opcode, 1);
+            return;
+        }
+        mv.visitVarInsn(opcode, var);
+    }
+    ...
+}
+```
+
+
+上述方式是采用了一个辅助类来实现的，下面介绍另一种改进的方法。
+
+
+
+在 JNI 层，常见的 CallObjectMethod 函数适用于调用虚方法，即调用方法时依赖于对象的类层次结构，类似于 Java 的 invoke\-virtual；与之对应的是 CallNonvirtualObjectMethod 函数，它适用于非虚方法调用，即调用的对象为指定的类的对象，无论这个类有没有被继承或覆盖，也就是说可以通过 CallNonvirtualObjectMethod 调用父类 super 方法。
+
+
+
+Java 语言中的 invoke\-super 指令可以通过 CallNonvirtualObjectMethod、GetMethodID 组合来实现，关键代码如下：
+
+
+
+```
+jmethodID methodID = env->GetMethodID(parentClass, "superMethodName", "()V");
+jvalue args[] = {};
+jobject result = env->CallNonvirtualObjectMethod(parentObj, parentClass, methodID, args);
+```
+
+
+（2）**\<init\> 函数的插桩与修复**
+
+
+
+在部分子类 \<init\> 函数会显式调用父类的构造函数 super\(\) ，且 super\(\) 必须是子类 \<init\> 函数中的第一句语句，否则编译失败。因此对于 \<init\> 函数，不能在第一行进行 Robust 插桩，需要在父类的构造函数 super\(\) 之后插桩。
+
+
+
+那么 \<init\> 函数如何修复呢？原始类 \<init\> 函数修改后，在 patch 类也是 \<init\> 函数，这里需要将该 \<init\> 函数拷贝成普通函数，并将原始类的 Robust 插桩关联到该普通函数。
+
+
+
+复制构造函数并将其转换为方法需要注意：
+
+
+
+* 原始类函数名称 \<init\> 需要改成普通方法名称，避免与 patch 类的 \<init\> 函数冲突。
+* 原始类 \<init\> 函数如果有方法参数，则需要保留成一致的。
+* patch 类新方法的 return type 是 void。
+* 原始类 \<init\> 函数如果有调用 this\(\) 或 super\(\) 构造函数，则需要在 patch 新方法里删除它们。
+
+
+（3）**\<clinit\> 函数的插桩与修复**
+
+
+
+\<clinit\> 函数是由编译器生成的一个特殊的静态构造方法，它被用来初始化类中的静态变量和复杂的静态表达式。如果在一个类中定义了静态变量或代码块，那么编译器会为这些静态变量和代码块生成一个 \<clinit\> 函数。\<clinit\> 函数只会被执行一次，虚拟机会保证只有一个线程能够执行 \<clinit\> 方法，确保对共享的类级别变量的线程安全访问。
+
+
+
+因此，对 \<clinit\> 函数进行插桩和修复时，需要特别注意 \<clinit\> 方法的执行时机：
+
+
+
+* 在类实例化时，如果该类的 \<clinit\> 方法还没有执行，则会执行该方法，以初始化类的静态变量和复杂的静态表达式。
+* 在通过反射获取该类的某个静态成员时，如果该类的 \<clinit\> 方法还没有执行，则会执行该方法，以初始化类的静态变量和复杂的静态表达式。
+* 如果该类被子类继承，而子类中也定义了 \<clinit\> 方法，则在创建子类实例时，会先执行父类的 \<clinit\> 方法，然后再执行子类的 \<clinit\> 方法。
+
+
+根据上述 \<clinit\> 函数执行时机分析，插桩时不能访问类的静态成员变量（访问静态变量时 clinit 函数就已经执行了，无法被有效修复），因此无法借助于Robust常规插桩方法（给 Class 插入一个静态接口 Field），需要借助一个辅助类 ClintPatchProxy 来实现插桩逻辑。
+
+
+
+```
+/**
+ * 线上 MainActiviy clinit 插桩
+ */
+public class MainActivity {
+    static {
+        String classLongName = "com.app.MainActivity";
+        if (ClintPatchProxy.isSupport(classLongName)) {
+            ClintPatchProxy.accessDispatch(classLongName);
+        } else {
+            // MainActitiy Clinit origin code
+        }
+        
+```
+
+
+clinit 函数修复时，在补丁入口类的静态代码块里面设置好 ClintPatchProxy 的跳转接口实现即可，原 MainActivity 的 clinit 代码将不再执行，转而执行 MainActivityPatch的clinit 代码（对应 MainActivity 的新 clinit 代码）。
+
+
+
+（4）**修复新增类/新增成员变量/新增方法**
+
+
+
+基于方法插桩的方法，天然支持新增类；对于新增 Field 和新增 Method，分两种情况：静态的 Field 和 Method 可以用一个新增类来包裹；新增非静态 Field 可以使用一个辅助类来维持 this 对象与该 Field 的映射关系，补丁里面原本使用`this.newFieldName`的代码，通过字节码工具转换为 `FieldHelper.get(this).getNewFieldName()` 即可。
+
+
+
+## 4 总结
+
+
+回顾 Robust 热修复补丁制作过程，主要是对构建编译过程和字节码编辑技术的巧妙结合。通过分析 Android 应用打包过程、Java 语言编译和优化过程，补丁制作过程中可能会遇到的各种问题就有了答案，再借助字节码工具分析、处理就能够生成一个热修复补丁。当然，这其中涉及大量的细节处理，仅通过一篇文章不足以涵盖各种细节，还需要结合实际项目才能有更全面的了解。
+
+
+
+## 本文作者
+
+
+常强，美团平台\-App技术部工程师。
+
+
+
+
+

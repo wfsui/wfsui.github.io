@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sat, 03 Jun 2023 02:57:10 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/gpu/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 04 Jun 2023 03:16:39 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/gpu/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>美团视觉GPU推理服务部署架构优化实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%89gpu%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sat, 03 Jun 2023 02:57:10 +0000</pubDate>
+      <pubDate>Sun, 04 Jun 2023 03:16:39 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%89gpu%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
       <description>0. 导读 美团视觉面向本地生活服务，在众多场景上落地应用了文字识别、图像质量评价、视频理解等视觉AI技术。此前，在线推理服务使用的GPU资源不断增加，但服务GPU利用率普遍较低，浪费大量计算资源，增加了视觉AI应用成本，这是美团也是很多企业亟需解决的问题。

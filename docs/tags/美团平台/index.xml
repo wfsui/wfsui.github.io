@@ -7,21 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 09 Jun 2023 03:06:54 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E5%B9%B3%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>美团SemEval2022结构化情感分析跨语言赛道冠军方法总结</title>
-      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2semeval2022%E7%BB%93%E6%9E%84%E5%8C%96%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B5%9B%E9%81%93%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Fri, 09 Jun 2023 03:06:54 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2semeval2022%E7%BB%93%E6%9E%84%E5%8C%96%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B5%9B%E9%81%93%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</guid>
-      <description>1. 背景 SemEval（International Workshop on Semantic Evaluation）是一系列国际自然语言处理（NLP）研讨会，也是自然语言处理领域的权威国际竞赛，其使命是推进语义分析的研究进展，并帮助一系列日益具有挑战性的自然语言语义问题创建高质量的数据集。本次SemEval-2022（The 16th International Workshop on Semantic Evaluation）包含12个任务，涉及一系列主题，包括习语检测和嵌入、讽刺检测、多语言新闻相似性等任务，吸引了包括特斯拉、阿里巴巴、支付宝、滴滴、华为、字节跳动、斯坦福大学等企业和科研机构参与。
-其中Task 10: 结构化情感分析（Structured Sentiment Analysis）属于信息抽取（Information Extraction）领域。该任务包含两个子任务（分别是Monolingual Subtask-1和Zero-shot Crosslingual Subtask-2 ），包含五种语言共7个数据集（包括英语、西班牙语、加泰罗尼亚语、巴斯克语、挪威语），其中子Subtask-1使用全部七个数据集，Subtask-2使用其中的三个数据集（西班牙语、加泰罗尼亚语、巴斯克语）。我们在参与该评测任务的三十多支队伍中取得Subtask-1第二名和Subtask-2 第一名，相关工作已总结为一篇论文MT-Speech at SemEval-2022 Task 10: Incorporating Data Augmentation and Auxiliary Task with Cross-Lingual Pretrained Language Model for Structured Sentiment Analysis，并收录在NAACL 2022 Workshop SemEval。</description>
-    </item>
-    
+    <lastBuildDate>Sun, 11 Jun 2023 03:11:58 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E5%B9%B3%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MRCP在美团语音交互中的实践和应用</title>
       <link>https://wfsui.github.io/posts/mrcp%E5%9C%A8%E7%BE%8E%E5%9B%A2%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Fri, 09 Jun 2023 03:06:50 +0000</pubDate>
+      <pubDate>Sun, 11 Jun 2023 03:11:58 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/mrcp%E5%9C%A8%E7%BE%8E%E5%9B%A2%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E5%BA%94%E7%94%A8/</guid>
       <description>一、背景 智能语音对话作为人工智能领域最先落地的分支之一，可以实现与人进行自然语言多轮对话，其核心技术在近年来不断地发展成熟，包括语音识别、自然语言理解、对话管理等。伴随着技术的成熟，越来越多的电话机器人开始走进我们的生活，这些电话机器人在客户服务、智能销售、通知触达等场景发挥着重要的作用。
@@ -33,7 +23,7 @@
     <item>
       <title>人机语音交互场景中的低延迟流式语音识别技术</title>
       <link>https://wfsui.github.io/posts/%E4%BA%BA%E6%9C%BA%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF%E4%B8%AD%E7%9A%84%E4%BD%8E%E5%BB%B6%E8%BF%9F%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/</link>
-      <pubDate>Fri, 09 Jun 2023 03:06:49 +0000</pubDate>
+      <pubDate>Sun, 11 Jun 2023 03:11:56 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%BA%BA%E6%9C%BA%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF%E4%B8%AD%E7%9A%84%E4%BD%8E%E5%BB%B6%E8%BF%9F%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/</guid>
       <description>1. 前言 1.1 语音识别技术简介 人机交互一直都是人工智能大背景下的“热门话题”，语音交互作为人机交互的一个重要分支，具有广泛的应用价值，也被应用到美团的多个业务场景中，如智能客服、电话营销和电话满意度反馈等。而流式语音识别技术是整个交互链条的入口，对交互体验影响巨大。
@@ -45,11 +35,21 @@
     <item>
       <title>Robust 2.0：支持Android R8的升级版热修复框架</title>
       <link>https://wfsui.github.io/posts/robust-2.0%E6%94%AF%E6%8C%81android-r8%E7%9A%84%E5%8D%87%E7%BA%A7%E7%89%88%E7%83%AD%E4%BF%AE%E5%A4%8D%E6%A1%86%E6%9E%B6/</link>
-      <pubDate>Fri, 09 Jun 2023 03:06:48 +0000</pubDate>
+      <pubDate>Sun, 11 Jun 2023 03:11:54 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/robust-2.0%E6%94%AF%E6%8C%81android-r8%E7%9A%84%E5%8D%87%E7%BA%A7%E7%89%88%E7%83%AD%E4%BF%AE%E5%A4%8D%E6%A1%86%E6%9E%B6/</guid>
       <description>1. 背景 美团 Robust 是基于方法插桩的实时热修复框架，主要优势是实时生效、零 Hook 兼容所有 Android 版本。2016 年，我们在《Android 热更新方案 Robust》一文中对技术原理做了详细介绍，主要通过给每个方法插入 IF 分支来动态控制代码逻辑，进而实现热修复。其核心主要有两部分：一个是代码插桩，一个是自动补丁。
 代码插桩这部分随着 Javassist、ASM 工具的广泛使用，整体方案比较成熟了，迭代改进主要是针对插桩代码体积和性能的优化； 自动补丁这部分在实际使用过程中一直在迭代，跟业界主流热修复方案一样，自动化补丁工具作制作时机是在 Proguard 混淆之后，由于 Proguard 会对代码进行代码优化和混淆处理，在 Proguard 后制作补丁能够降低补丁生成的复杂性。 近年来， Google 推出了新的代码优化混淆工具 R8，用于取代第三方的代码优化混淆工具 Proguard，经过多年功能迭代和缺陷改进，R8 在功能上基本可以替代 Proguard，在结果上更为出色（优化生成的 Android 字节码体积更小）。Google 已经在新版本的构建工具中强制使用 R8 ，国内外已有多个知名 App 完成了 R8 适配并上线，比如微信 Android 在今年正式从 Proguard 切换到了 R8（通过升级 Android 构建工具链）。Android 热修复补丁制作依赖二次构建包和线上包对比，需要对 Proguard 切换到 R8 提前进行适配和改造，本文分享了美团平台技术部 Robust 在适配 R8 以及优化改进中的一些思路和经验。</description>
+    </item>
+    
+    <item>
+      <title>美团SemEval2022结构化情感分析跨语言赛道冠军方法总结</title>
+      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2semeval2022%E7%BB%93%E6%9E%84%E5%8C%96%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B5%9B%E9%81%93%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Fri, 09 Jun 2023 03:06:54 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2semeval2022%E7%BB%93%E6%9E%84%E5%8C%96%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B5%9B%E9%81%93%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</guid>
+      <description>1. 背景 SemEval（International Workshop on Semantic Evaluation）是一系列国际自然语言处理（NLP）研讨会，也是自然语言处理领域的权威国际竞赛，其使命是推进语义分析的研究进展，并帮助一系列日益具有挑战性的自然语言语义问题创建高质量的数据集。本次SemEval-2022（The 16th International Workshop on Semantic Evaluation）包含12个任务，涉及一系列主题，包括习语检测和嵌入、讽刺检测、多语言新闻相似性等任务，吸引了包括特斯拉、阿里巴巴、支付宝、滴滴、华为、字节跳动、斯坦福大学等企业和科研机构参与。
+其中Task 10: 结构化情感分析（Structured Sentiment Analysis）属于信息抽取（Information Extraction）领域。该任务包含两个子任务（分别是Monolingual Subtask-1和Zero-shot Crosslingual Subtask-2 ），包含五种语言共7个数据集（包括英语、西班牙语、加泰罗尼亚语、巴斯克语、挪威语），其中子Subtask-1使用全部七个数据集，Subtask-2使用其中的三个数据集（西班牙语、加泰罗尼亚语、巴斯克语）。我们在参与该评测任务的三十多支队伍中取得Subtask-1第二名和Subtask-2 第一名，相关工作已总结为一篇论文MT-Speech at SemEval-2022 Task 10: Incorporating Data Augmentation and Auxiliary Task with Cross-Lingual Pretrained Language Model for Structured Sentiment Analysis，并收录在NAACL 2022 Workshop SemEval。</description>
     </item>
     
     <item>

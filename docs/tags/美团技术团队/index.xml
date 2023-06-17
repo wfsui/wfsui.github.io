@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 16 Jun 2023 02:52:40 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 17 Jun 2023 02:48:36 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>大规模异构图召回在美团到店推荐广告的应用</title>
       <link>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%BC%82%E6%9E%84%E5%9B%BE%E5%8F%AC%E5%9B%9E%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E6%8E%A8%E8%8D%90%E5%B9%BF%E5%91%8A%E7%9A%84%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Fri, 16 Jun 2023 02:52:40 +0000</pubDate>
+      <pubDate>Sat, 17 Jun 2023 02:48:36 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%BC%82%E6%9E%84%E5%9B%BE%E5%8F%AC%E5%9B%9E%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E6%8E%A8%E8%8D%90%E5%B9%BF%E5%91%8A%E7%9A%84%E5%BA%94%E7%94%A8/</guid>
       <description>1. 引言 美团到店推荐广告技术部服务于到店餐饮、休娱亲子、丽人医美等众多本地生活服务商家。其中，召回环节作为推荐广告系统的第一个环节，承担着从海量商品中寻找优质候选的角色，是算法优化的核心问题之一。
@@ -28,9 +28,21 @@ GraphSAGE等基于消息传递范式的图神经网络方法，其中心节点�
     </item>
     
     <item>
+      <title>美团外卖推荐情境化智能流量分发的实践与探索</title>
+      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E6%83%85%E5%A2%83%E5%8C%96%E6%99%BA%E8%83%BD%E6%B5%81%E9%87%8F%E5%88%86%E5%8F%91%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</link>
+      <pubDate>Sat, 17 Jun 2023 02:48:36 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E6%83%85%E5%A2%83%E5%8C%96%E6%99%BA%E8%83%BD%E6%B5%81%E9%87%8F%E5%88%86%E5%8F%91%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</guid>
+      <description>1. 引言 美团外卖推荐服务了数亿用户，通过持续优化用户体验和流量分发精准性，为用户提供品质生活，“帮大家吃得更好，生活更好”。对于“用户”，大家可能会有不同的理解，通常的理解是用户即是自然人。业界主要的推荐场景，如淘宝首页猜你喜欢、抖音快手 Feeds 流推荐等大部分也是这么认为的，在这些电商、短视频等业务中，用户无论何时何地使用推荐服务，他们的需求是大体统一的，商品、信息、视频等供给也是一致的。
+但实际上，在美团外卖场景下，用户不仅是自然人，更是需求的集合。需求是与情境依存的，也就是有情境就有需求。美团外卖在不同的时间、空间以及其他更广义的环境下，用户需求、商家供给等都有显著区别。因此，本地化、餐饮习惯、即时履约共同构建了美团外卖多种多样的情境，进而衍生出用户多种多样的需求集合，推荐算法情境化可以帮助算法更好地理解并满足不同情境下用户需求。
+2. 问题与挑战 外卖场景具有很强的地理位置和就餐文化约束，用户在不同地点（如公司、住所）的需求有较大差异。而且，所处时间也是决定用户下单的一个关键因素。以北京某地区高消费用户为例，工作日和周末在成单品类、成单价格、成单商家配送距离上有着明显的不同。如下图 1 所示，工作日与周末用户在口味、心态上有明显变化，工作日多为单人餐，以饭类套餐、轻食、米线为主，更加适应工作时的快节奏；而在周末，用户会适当犒劳自己、兼顾家人，倾向于选择更适合多人就餐的烧烤、韩国料理、火锅。从图 1 也可以发现，从工作日到周末时，用户的成单价格中位数由 30 元提高至 50 元，能够接受的配送距离也在变长。
+美团外卖推荐需要满足“用户 X 时间 X 地点”等情境下的需求总和，应对需求的不断拓展和演化。为了更好的理解我们所面对的用户需求，如下图 2 所示，将其定义到一个魔方内（Magic Cube），用户、时间和地点是魔方的三个维度。其中，魔方中的每个点，如图 2 中黄色点，代表一个用户在一个特定情境下的需求；魔方中的每个小立方体，如图 2 中黄色立方体，代表一组相似用户在一组相近情境下的需求。此外，在问题定义上，为了支持情境维度的进一步扩展，我们使用超立方体（Hyper Cube）来定义更多维度的用户需求。</description>
+    </item>
+    
+    <item>
       <title>2022年 | 美团技术团队公众号最受欢迎的20篇文章</title>
       <link>https://wfsui.github.io/posts/2022%E5%B9%B4-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E5%85%AC%E4%BC%97%E5%8F%B7%E6%9C%80%E5%8F%97%E6%AC%A2%E8%BF%8E%E7%9A%8420%E7%AF%87%E6%96%87%E7%AB%A0/</link>
-      <pubDate>Fri, 16 Jun 2023 02:52:39 +0000</pubDate>
+      <pubDate>Sat, 17 Jun 2023 02:48:35 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/2022%E5%B9%B4-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E5%85%AC%E4%BC%97%E5%8F%B7%E6%9C%80%E5%8F%97%E6%AC%A2%E8%BF%8E%E7%9A%8420%E7%AF%87%E6%96%87%E7%AB%A0/</guid>
       <description>时光匆匆，就要跟2022年说再见了！提前祝大家新年快乐~~
@@ -43,21 +55,9 @@ GraphSAGE等基于消息传递范式的图神经网络方法，其中心节点�
     </item>
     
     <item>
-      <title>美团外卖推荐情境化智能流量分发的实践与探索</title>
-      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E6%83%85%E5%A2%83%E5%8C%96%E6%99%BA%E8%83%BD%E6%B5%81%E9%87%8F%E5%88%86%E5%8F%91%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Fri, 16 Jun 2023 02:52:39 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E6%83%85%E5%A2%83%E5%8C%96%E6%99%BA%E8%83%BD%E6%B5%81%E9%87%8F%E5%88%86%E5%8F%91%E7%9A%84%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%8E%A2%E7%B4%A2/</guid>
-      <description>1. 引言 美团外卖推荐服务了数亿用户，通过持续优化用户体验和流量分发精准性，为用户提供品质生活，“帮大家吃得更好，生活更好”。对于“用户”，大家可能会有不同的理解，通常的理解是用户即是自然人。业界主要的推荐场景，如淘宝首页猜你喜欢、抖音快手 Feeds 流推荐等大部分也是这么认为的，在这些电商、短视频等业务中，用户无论何时何地使用推荐服务，他们的需求是大体统一的，商品、信息、视频等供给也是一致的。
-但实际上，在美团外卖场景下，用户不仅是自然人，更是需求的集合。需求是与情境依存的，也就是有情境就有需求。美团外卖在不同的时间、空间以及其他更广义的环境下，用户需求、商家供给等都有显著区别。因此，本地化、餐饮习惯、即时履约共同构建了美团外卖多种多样的情境，进而衍生出用户多种多样的需求集合，推荐算法情境化可以帮助算法更好地理解并满足不同情境下用户需求。
-2. 问题与挑战 外卖场景具有很强的地理位置和就餐文化约束，用户在不同地点（如公司、住所）的需求有较大差异。而且，所处时间也是决定用户下单的一个关键因素。以北京某地区高消费用户为例，工作日和周末在成单品类、成单价格、成单商家配送距离上有着明显的不同。如下图 1 所示，工作日与周末用户在口味、心态上有明显变化，工作日多为单人餐，以饭类套餐、轻食、米线为主，更加适应工作时的快节奏；而在周末，用户会适当犒劳自己、兼顾家人，倾向于选择更适合多人就餐的烧烤、韩国料理、火锅。从图 1 也可以发现，从工作日到周末时，用户的成单价格中位数由 30 元提高至 50 元，能够接受的配送距离也在变长。
-美团外卖推荐需要满足“用户 X 时间 X 地点”等情境下的需求总和，应对需求的不断拓展和演化。为了更好的理解我们所面对的用户需求，如下图 2 所示，将其定义到一个魔方内（Magic Cube），用户、时间和地点是魔方的三个维度。其中，魔方中的每个点，如图 2 中黄色点，代表一个用户在一个特定情境下的需求；魔方中的每个小立方体，如图 2 中黄色立方体，代表一组相似用户在一组相近情境下的需求。此外，在问题定义上，为了支持情境维度的进一步扩展，我们使用超立方体（Hyper Cube）来定义更多维度的用户需求。</description>
-    </item>
-    
-    <item>
       <title>Code：美团代码托管平台的演进与实践</title>
       <link>https://wfsui.github.io/posts/code%E7%BE%8E%E5%9B%A2%E4%BB%A3%E7%A0%81%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%BC%94%E8%BF%9B%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 16 Jun 2023 02:52:38 +0000</pubDate>
+      <pubDate>Sat, 17 Jun 2023 02:48:35 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/code%E7%BE%8E%E5%9B%A2%E4%BB%A3%E7%A0%81%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%BC%94%E8%BF%9B%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 引言 Code是美团自研的代码托管平台，其中包括了代码版本管理、分支管理及代码评审等功能，协同众多研发流程工具平台，支撑内部所有工程师的日常研发工作。经过近3年的建设，目前Code托管了数以万计的仓库，日常处理千万级的Git相关请求，稳定支撑着美团研发流程规范的持续落地。本文主要介绍美团在建设代码托管平台过程中面临的一些挑战和实践经验。
@@ -72,7 +72,7 @@ GraphSAGE等基于消息传递范式的图神经网络方法，其中心节点�
     <item>
       <title>美团开放平台SDK自动生成技术与实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 16 Jun 2023 02:52:38 +0000</pubDate>
+      <pubDate>Sat, 17 Jun 2023 02:48:35 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 引言 美团开放平台对外提供了外卖、团购、配送等20余个业务场景的OpenAPI，供第三方开发者搭建应用时使用，是美团系统与外部系统通讯的最重要平台。本文主要讲述开放平台如何通过技术手段自动生成支持接口参数富模型和多种编程语言的SDK，以提高开发者对接开放平台API的效率。
@@ -84,7 +84,7 @@ POST https://api-open-cater.meituan.com/api/order/queryById Content-Type: applic
     <item>
       <title>美团技术年货来了！1300&#43;页的电子书，涵盖前端、后端、算法、数据、运维、安全</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%B9%B4%E8%B4%A7%E6%9D%A5%E4%BA%861300&#43;%E9%A1%B5%E7%9A%84%E7%94%B5%E5%AD%90%E4%B9%A6%E6%B6%B5%E7%9B%96%E5%89%8D%E7%AB%AF%E5%90%8E%E7%AB%AF%E7%AE%97%E6%B3%95%E6%95%B0%E6%8D%AE%E8%BF%90%E7%BB%B4%E5%AE%89%E5%85%A8/</link>
-      <pubDate>Fri, 16 Jun 2023 02:52:38 +0000</pubDate>
+      <pubDate>Sat, 17 Jun 2023 02:48:35 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%B9%B4%E8%B4%A7%E6%9D%A5%E4%BA%861300&#43;%E9%A1%B5%E7%9A%84%E7%94%B5%E5%AD%90%E4%B9%A6%E6%B6%B5%E7%9B%96%E5%89%8D%E7%AB%AF%E5%90%8E%E7%AB%AF%E7%AE%97%E6%B3%95%E6%95%B0%E6%8D%AE%E8%BF%90%E7%BB%B4%E5%AE%89%E5%85%A8/</guid>
       <description>新春将至，一年一度的美团技术年货也如约到来。
@@ -99,25 +99,9 @@ POST https://api-open-cater.meituan.com/api/order/queryById Content-Type: applic
     </item>
     
     <item>
-      <title>美团视觉GPU推理服务部署架构优化实践</title>
-      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%89gpu%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 16 Jun 2023 02:52:38 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%89gpu%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
-      <description>0. 导读 美团视觉面向本地生活服务，在众多场景上落地应用了文字识别、图像质量评价、视频理解等视觉AI技术。此前，在线推理服务使用的GPU资源不断增加，但服务GPU利用率普遍较低，浪费大量计算资源，增加了视觉AI应用成本，这是美团也是很多企业亟需解决的问题。
-美团视觉智能部通过实验分析发现，造成视觉推理服务GPU利用率低下的一个重要原因是模型结构问题：模型中预处理或者后处理部分CPU运算速度慢，导致推理主干网络无法充分发挥GPU运算性能。基于此，视觉研发团队通过模型结构拆分和微服务化，提出一种通用高效的部署架构，解决这种常见的性能瓶颈问题。
-目前，该解决方案已经在多个核心服务上成功应用。以“图像检测+分类”服务为例，优化后的服务压测性能指标GPU利用率由40%提升至100%，QPS提升超过3倍。本文将会重点介绍推理服务部署架构优化的工程实践，希望对从事相关工作的同学们有所帮助或启发。
-1. 背景 随着越来越多的AI应用进入生产应用阶段，推理服务所需要的GPU资源也在迅速增加。调研数据表明，国内AI相关行业推理服务的资源使用量占比已经超过55%，且比例未来还会持续升高。但很多公司面临的实际问题是，线上推理服务GPU利用率普遍较低，还具备很大的提升空间。
-而造成服务GPU利用率低的重要原因之一是：推理服务本身存在性能瓶颈，在极限压力情况下也无法充分利用GPU资源。在这种背景下，“优化推理服务性能、提高GPU资源使用效率、降低资源使用成本”具有非常重要的意义。本文主要介绍如何通过架构部署优化，在保证准确率、推理时延等指标的前提下，提升推理服务的性能和GPU利用率。
-2. 视觉模型服务的特点与挑战 近年来，深度学习方法在计算机视觉任务上取得显著进展，已经成为主流方法。视觉模型在结构上具有一些特殊性，如果使用现有推理框架部署，服务在性能和GPU利用率方面可能无法满足要求。
-2.1 模型优化工具与部署框架 深度学习模型部署前通常会使用优化工具进行优化，常见的优化工具包括TensorRT、TF-TRT、TVM和OpenVINO等。这些工具通过算子融合、动态显存分配和精度校准等方法提高模型运行速度。模型部署是生产应用的最后一环，它将深度学习模型推理过程封装成服务，内部实现模型加载、模型版本管理、批处理以及服务接口封装等功能，对外提供RPC/HTTP接口。业界主流的部署框架有以下几种：
-TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用于机器学习模型部署的高性能开源框架，内部集成了TF-TRT优化工具，但是对非TensorFlow格式的模型支持不够友好。 Torch Serve：TorchServe是AWS和Facebook联合推出的Pytorch模型部署推理框架，具有部署简单、高性能、轻量化等优点。 Triton：Triton是Nvidia发布的高性能推理服务框架，支持TensorFlow、TensorRT、PyTorch和ONNX等多种框架模型，适用于多模型联合推理场景。 在实际部署中，无论选择哪种框架，需要同时考虑模型格式、优化工具、框架功能特点等多种因素。</description>
-    </item>
-    
-    <item>
       <title>交互式推荐在外卖场景的探索与应用</title>
       <link>https://wfsui.github.io/posts/%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%8E%A8%E8%8D%90%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Fri, 16 Jun 2023 02:52:37 +0000</pubDate>
+      <pubDate>Sat, 17 Jun 2023 02:48:34 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%8E%A8%E8%8D%90%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</guid>
       <description>1. 背景 1.1 什么是交互式推荐？ 交互式推荐是一种互动式实时推荐产品模块，主要通过理解用户需求、以互动的方式进行推荐。交互式推荐由Youtube在2018年提出[1]，主要用于解决推荐系统的延迟[2]和与用户互动偏弱的问题。
@@ -131,18 +115,25 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     </item>
     
     <item>
-      <title>大规模食品图像识别：T-PAMI 2023论文解读</title>
-      <link>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%A3%9F%E5%93%81%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%ABt-pami-2023%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Fri, 16 Jun 2023 02:52:37 +0000</pubDate>
+      <title>美团视觉GPU推理服务部署架构优化实践</title>
+      <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%89gpu%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Sat, 17 Jun 2023 02:48:34 +0000</pubDate>
       
-      <guid>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%A3%9F%E5%93%81%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%ABt-pami-2023%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
-      <description>1 引言 视觉智能部与中科院计算所于2020-2021年度展开了《细粒度菜品图像识别和检索》科研课题合作，本文系双方联合在IEEE T-PAMI2023发布论文《Large Scale Visual Food Recognition》 (Weiqing Min, Zhiling Wang, Yuxin Liu, Mengjiang Luo, Liping Kang, Xiaoming Wei, Xiaolin Wei, Shuqiang Jiang*) 的解读。IEEE T-PAMI全称为IEEE Transactions on Pattern Analysis and Machine Intelligence，是模式识别、计算机视觉及机器学习领域的国际顶级期刊，2022年公布的影响因子为24.</description>
+      <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%89gpu%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
+      <description>0. 导读 美团视觉面向本地生活服务，在众多场景上落地应用了文字识别、图像质量评价、视频理解等视觉AI技术。此前，在线推理服务使用的GPU资源不断增加，但服务GPU利用率普遍较低，浪费大量计算资源，增加了视觉AI应用成本，这是美团也是很多企业亟需解决的问题。
+美团视觉智能部通过实验分析发现，造成视觉推理服务GPU利用率低下的一个重要原因是模型结构问题：模型中预处理或者后处理部分CPU运算速度慢，导致推理主干网络无法充分发挥GPU运算性能。基于此，视觉研发团队通过模型结构拆分和微服务化，提出一种通用高效的部署架构，解决这种常见的性能瓶颈问题。
+目前，该解决方案已经在多个核心服务上成功应用。以“图像检测+分类”服务为例，优化后的服务压测性能指标GPU利用率由40%提升至100%，QPS提升超过3倍。本文将会重点介绍推理服务部署架构优化的工程实践，希望对从事相关工作的同学们有所帮助或启发。
+1. 背景 随着越来越多的AI应用进入生产应用阶段，推理服务所需要的GPU资源也在迅速增加。调研数据表明，国内AI相关行业推理服务的资源使用量占比已经超过55%，且比例未来还会持续升高。但很多公司面临的实际问题是，线上推理服务GPU利用率普遍较低，还具备很大的提升空间。
+而造成服务GPU利用率低的重要原因之一是：推理服务本身存在性能瓶颈，在极限压力情况下也无法充分利用GPU资源。在这种背景下，“优化推理服务性能、提高GPU资源使用效率、降低资源使用成本”具有非常重要的意义。本文主要介绍如何通过架构部署优化，在保证准确率、推理时延等指标的前提下，提升推理服务的性能和GPU利用率。
+2. 视觉模型服务的特点与挑战 近年来，深度学习方法在计算机视觉任务上取得显著进展，已经成为主流方法。视觉模型在结构上具有一些特殊性，如果使用现有推理框架部署，服务在性能和GPU利用率方面可能无法满足要求。
+2.1 模型优化工具与部署框架 深度学习模型部署前通常会使用优化工具进行优化，常见的优化工具包括TensorRT、TF-TRT、TVM和OpenVINO等。这些工具通过算子融合、动态显存分配和精度校准等方法提高模型运行速度。模型部署是生产应用的最后一环，它将深度学习模型推理过程封装成服务，内部实现模型加载、模型版本管理、批处理以及服务接口封装等功能，对外提供RPC/HTTP接口。业界主流的部署框架有以下几种：
+TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用于机器学习模型部署的高性能开源框架，内部集成了TF-TRT优化工具，但是对非TensorFlow格式的模型支持不够友好。 Torch Serve：TorchServe是AWS和Facebook联合推出的Pytorch模型部署推理框架，具有部署简单、高性能、轻量化等优点。 Triton：Triton是Nvidia发布的高性能推理服务框架，支持TensorFlow、TensorRT、PyTorch和ONNX等多种框架模型，适用于多模型联合推理场景。 在实际部署中，无论选择哪种框架，需要同时考虑模型格式、优化工具、框架功能特点等多种因素。</description>
     </item>
     
     <item>
       <title>MRCP在美团语音交互中的实践和应用</title>
       <link>https://wfsui.github.io/posts/mrcp%E5%9C%A8%E7%BE%8E%E5%9B%A2%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Fri, 16 Jun 2023 02:52:36 +0000</pubDate>
+      <pubDate>Sat, 17 Jun 2023 02:48:33 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/mrcp%E5%9C%A8%E7%BE%8E%E5%9B%A2%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E5%BA%94%E7%94%A8/</guid>
       <description>一、背景 智能语音对话作为人工智能领域最先落地的分支之一，可以实现与人进行自然语言多轮对话，其核心技术在近年来不断地发展成熟，包括语音识别、自然语言理解、对话管理等。伴随着技术的成熟，越来越多的电话机器人开始走进我们的生活，这些电话机器人在客户服务、智能销售、通知触达等场景发挥着重要的作用。
@@ -154,16 +145,25 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>SOTA！目标检测开源框架YOLOv6 3.0版本来啦</title>
       <link>https://wfsui.github.io/posts/sota%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6-3.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</link>
-      <pubDate>Fri, 16 Jun 2023 02:52:36 +0000</pubDate>
+      <pubDate>Sat, 17 Jun 2023 02:48:33 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/sota%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6-3.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</guid>
       <description>1. 概述 1 月 6 日，美团视觉智能部发布了 YOLOv6 3.0 版本，再一次将目标检测的综合性能推向新高。本次更新除了对 YOLOv6-N/S/M/L 模型进行全系列升级之外，还推出了大分辨率 P6 模型。其中，YOLOv6-L6 检测精度达到 57.2% AP，在 T4 卡上推理速度可达 29 FPS，超越 YOLOv7-E6E，取得当前实时目标检测榜单 SOTA。</description>
     </item>
     
     <item>
+      <title>大规模食品图像识别：T-PAMI 2023论文解读</title>
+      <link>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%A3%9F%E5%93%81%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%ABt-pami-2023%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
+      <pubDate>Sat, 17 Jun 2023 02:48:33 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%A3%9F%E5%93%81%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%ABt-pami-2023%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
+      <description>1 引言 视觉智能部与中科院计算所于2020-2021年度展开了《细粒度菜品图像识别和检索》科研课题合作，本文系双方联合在IEEE T-PAMI2023发布论文《Large Scale Visual Food Recognition》 (Weiqing Min, Zhiling Wang, Yuxin Liu, Mengjiang Luo, Liping Kang, Xiaoming Wei, Xiaolin Wei, Shuqiang Jiang*) 的解读。IEEE T-PAMI全称为IEEE Transactions on Pattern Analysis and Machine Intelligence，是模式识别、计算机视觉及机器学习领域的国际顶级期刊，2022年公布的影响因子为24.</description>
+    </item>
+    
+    <item>
       <title>ICDE 2023 | 多场景多任务学习在美团到店餐饮推荐的实践</title>
       <link>https://wfsui.github.io/posts/icde-2023-%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E9%A4%90%E9%A5%AE%E6%8E%A8%E8%8D%90%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 16 Jun 2023 02:52:35 +0000</pubDate>
+      <pubDate>Sat, 17 Jun 2023 02:48:32 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/icde-2023-%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E9%A4%90%E9%A5%AE%E6%8E%A8%E8%8D%90%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>随着推荐算法技术的不断发展，跨场景学习已经受到了越来越多的研究人员的关注。美团到餐算法团队受到业界相关技术的启发，不断探索到店餐饮多场景推荐的优化问题，在多场景多任务学习的推荐领域中积累了较多的应用经验。团队使用到店餐饮全域推荐场景数据训练统一的多场景多任务学习模型，减少了重复性开发，并在多个到店餐饮推荐场景进行落地，取得了较为显著的效果。
@@ -177,7 +177,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>人机语音交互场景中的低延迟流式语音识别技术</title>
       <link>https://wfsui.github.io/posts/%E4%BA%BA%E6%9C%BA%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF%E4%B8%AD%E7%9A%84%E4%BD%8E%E5%BB%B6%E8%BF%9F%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/</link>
-      <pubDate>Fri, 16 Jun 2023 02:52:35 +0000</pubDate>
+      <pubDate>Sat, 17 Jun 2023 02:48:32 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%BA%BA%E6%9C%BA%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF%E4%B8%AD%E7%9A%84%E4%BD%8E%E5%BB%B6%E8%BF%9F%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/</guid>
       <description>1. 前言 1.1 语音识别技术简介 人机交互一直都是人工智能大背景下的“热门话题”，语音交互作为人机交互的一个重要分支，具有广泛的应用价值，也被应用到美团的多个业务场景中，如智能客服、电话营销和电话满意度反馈等。而流式语音识别技术是整个交互链条的入口，对交互体验影响巨大。
@@ -189,7 +189,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>基于AI&#43;数据驱动的慢查询索引推荐</title>
       <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai&#43;%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E7%B4%A2%E5%BC%95%E6%8E%A8%E8%8D%90/</link>
-      <pubDate>Fri, 16 Jun 2023 02:52:35 +0000</pubDate>
+      <pubDate>Sat, 17 Jun 2023 02:48:32 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai&#43;%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E7%B4%A2%E5%BC%95%E6%8E%A8%E8%8D%90/</guid>
       <description>1 背景 随着美团业务量的不断增长，慢查询的数量也日益增多。目前，日均慢查询数量已经超过上亿条，如果仅依靠DBA和开发人员手动地对这些慢查询进行分析并建立合适的索引，显然是不太现实的。为了解决这一难题，美团内部DAS（数据库自治服务）平台已经集成了基于代价的慢查询优化建议来自动地为慢查询推荐索引。然而，仍然存在一些问题：
@@ -203,7 +203,7 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
     <item>
       <title>一次「找回」TraceId的问题分析与过程思考</title>
       <link>https://wfsui.github.io/posts/%E4%B8%80%E6%AC%A1%E6%89%BE%E5%9B%9Etraceid%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E4%B8%8E%E8%BF%87%E7%A8%8B%E6%80%9D%E8%80%83/</link>
-      <pubDate>Fri, 16 Jun 2023 02:52:34 +0000</pubDate>
+      <pubDate>Sat, 17 Jun 2023 02:48:31 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%B8%80%E6%AC%A1%E6%89%BE%E5%9B%9Etraceid%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E4%B8%8E%E8%BF%87%E7%A8%8B%E6%80%9D%E8%80%83/</guid>
       <description>1. 问题背景和思考 1.1 问题背景 在一次排查线上告警的过程中，突然发现一个链路信息有点不同寻常（这里仅展示测试复现的内容）：
@@ -215,7 +215,7 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
     <item>
       <title>超大规模数据库集群保稳系列之一：高可用系统</title>
       <link>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E9%AB%98%E5%8F%AF%E7%94%A8%E7%B3%BB%E7%BB%9F/</link>
-      <pubDate>Fri, 16 Jun 2023 02:52:34 +0000</pubDate>
+      <pubDate>Sat, 17 Jun 2023 02:48:31 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E9%AB%98%E5%8F%AF%E7%94%A8%E7%B3%BB%E7%BB%9F/</guid>
       <description>本文整理自主题分享《美团数据库的高可用系统》，系超大规模数据库集群保稳系列的第一篇文章。对数据库而言，非常核心的就是如何保证其高可用性。本文围绕4个方面的内容展开，包括高可用简介、高可用部署、重点模块的设计思考以及对未来思考。希望能够对大家有所帮助或启发。
@@ -236,7 +236,7 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
     <item>
       <title>Robust 2.0：支持Android R8的升级版热修复框架</title>
       <link>https://wfsui.github.io/posts/robust-2.0%E6%94%AF%E6%8C%81android-r8%E7%9A%84%E5%8D%87%E7%BA%A7%E7%89%88%E7%83%AD%E4%BF%AE%E5%A4%8D%E6%A1%86%E6%9E%B6/</link>
-      <pubDate>Fri, 16 Jun 2023 02:52:33 +0000</pubDate>
+      <pubDate>Sat, 17 Jun 2023 02:48:30 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/robust-2.0%E6%94%AF%E6%8C%81android-r8%E7%9A%84%E5%8D%87%E7%BA%A7%E7%89%88%E7%83%AD%E4%BF%AE%E5%A4%8D%E6%A1%86%E6%9E%B6/</guid>
       <description>1. 背景 美团 Robust 是基于方法插桩的实时热修复框架，主要优势是实时生效、零 Hook 兼容所有 Android 版本。2016 年，我们在《Android 热更新方案 Robust》一文中对技术原理做了详细介绍，主要通过给每个方法插入 IF 分支来动态控制代码逻辑，进而实现热修复。其核心主要有两部分：一个是代码插桩，一个是自动补丁。
@@ -244,9 +244,25 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
     </item>
     
     <item>
+      <title>超大规模数据库集群保稳系列之三：美团数据库容灾体系建设实践</title>
+      <link>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%B9%E7%81%BE%E4%BD%93%E7%B3%BB%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Sat, 17 Jun 2023 02:48:30 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%B9%E7%81%BE%E4%BD%93%E7%B3%BB%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</guid>
+      <description>1 容灾介绍 我们通常会把故障分为三大类，一是主机故障，二是机房故障，三是地域故障。每类故障都有各自的诱发因素，而从主机到机房再到地域，故障发生概率依次越来越小，而故障的影响却越来越大。
+容灾能力的建设目标是非常明确的，就是要能够应对和处理这种机房级和地域级的大规模故障，从而来保障业务的连续性。近几年，业界也发生了多次数据中心级别的故障，对相关公司的业务和品牌产生了非常大的负面影响。当前容灾能力已经成为众多IT企业建设信息化系统的必选项。
+2 业务容灾架构 2.1 容灾架构演进 容灾架构从最早期的单活形态（同城主备）到同城多活形态，再演化到异地多活，根据这个路径可以将容灾分为容灾1.0、容灾2.0、容灾3.0三个阶段。
+容灾1.0：容灾体系围绕数据建设，多以主-备的方式部署，但备用机房不承担流量，基本上都是单活结构。 容灾2.0：容灾视角从数据转换为应用系统，业务具有同城双活或同城多活能力，采用同城双活或同城双活加异地冷备（两地三中心）的部署架构，除冷备以外的每个机房都有流量处理能力。 容灾3.0：以业务为中心，多采用单元化架构，容灾基于单元间的两两互备实现，根据单元的部署位置可以实现同城多活和异地多活。采用单元化架构的应用本身具有很好的容灾能力和扩展能力。 由于各公司所处发展阶段不同，采用的方案也会有所区别，美团大部分业务处于2.0阶段（即同城双活或多活架构），但对于大体量、有地域容灾及有地域扩展性要求的业务则处在容灾3.0阶段。下面会介绍一下美团的容灾架构。
+2.2 美团容灾架构 美团的容灾架构主要包括两种，一种是N+1容灾架构，一种是SET化架构。
+N+1架构：在业界也称散部或者多AZ部署⽅案，将容量为C的系统部署在N+1个机房，每个机房能提供至少C/N的容量，挂掉任何一个机房时，剩余系统仍能支撑C的容量。该方案的核心是把容灾能力下沉到PaaS组件来完成，在出现机房级或者地域级故障的时候，由各个PaaS组件独立完成容灾切换，实现业务恢复。整体架构如下图所示，业务上表现是多机房、多活形态，数据库采用这种主从架构，单机房处理写流量、多机房的负载均摊读流量。下面要讲“数据库容灾体系建设实践” 就是面向N+1架构的。
+单元化架构：也叫SET化架构，这是一种偏应用层的容灾架构，它将应用，数据，基础组件按照统一的维度切分成多个单元，每个单元处理一部分闭环流量。业务以单元作为部署单位，通过单元互备方式实现同城容灾或者异地容灾。一般金融业务或者超大规模的业务会选择此类架构，它的好处就是流量可以闭环且资源隔离，具有很强的容灾能力和跨域扩展能力，不过SET化架构的落地需要业务系统做大量的改造，运维管理也较为复杂。简化示意图如下：
+美团内部的大部分业务都是N+1架构，外卖和金融等业务采用了单元化架构。总体上美团内部既有同城多活，也有异地多活，两种容灾方案并存。</description>
+    </item>
+    
+    <item>
       <title>超大规模数据库集群保稳系列之二：数据库攻防演练建设实践</title>
       <link>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%94%BB%E9%98%B2%E6%BC%94%E7%BB%83%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 16 Jun 2023 02:52:33 +0000</pubDate>
+      <pubDate>Sat, 17 Jun 2023 02:48:30 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%94%BB%E9%98%B2%E6%BC%94%E7%BB%83%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</guid>
       <description>01 背景 1.1 初识混沌工程 首先我们先了解一下什么是混沌工程？简单而言，混沌工程是在系统上进行实验的技术手段，目的是建立对系统抵御生产环境中失控条件的能力以及信心。这主要体现在两个方面，从系统角度来讲，混沌工程可以提升我们架构的容错能力和韧性，降低故障发生率和复发率，提升系统用户在使用时的体验；从人员角度来讲，通过混沌工程我们可以加深对架构的理解，在处理故障时能提高整体的应急效率，并且能主动去探究系统中潜在的一些问题。
@@ -260,27 +276,11 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
     <item>
       <title>CVPR 2023 | 美团技术团队精选论文解读</title>
       <link>https://wfsui.github.io/posts/cvpr-2023-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Fri, 16 Jun 2023 02:52:32 +0000</pubDate>
+      <pubDate>Sat, 17 Jun 2023 02:48:29 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/cvpr-2023-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
       <description>写在前面 CVPR 全称为 IEEE Conference on Computer Vision and Pattern Recognition，国际计算机视觉与模式识别会议。该会议始于1983年，与ICCV和ECCV并称计算机视觉方向的三大顶级会议。根据谷歌学术公布的2022年最新学术期刊和会议影响力排名，CVPR在所有学术刊物中位居第4，仅次于Nature、NEJM和Science。2023年，CVPR共收到全球9155篇论文投稿，最终2360篇被接收，接收率约为25.78%。
 | 01 Divide and Adapt: Active Domain Adaptation via Customized Learning 论文作者：黄铎峻（中山大学，美团实习生），李继昌（香港大学），陈伟凯（腾讯-美国），黄君实（美团），柴振华（美团），李冠彬（中山大学）</description>
-    </item>
-    
-    <item>
-      <title>超大规模数据库集群保稳系列之三：美团数据库容灾体系建设实践</title>
-      <link>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%B9%E7%81%BE%E4%BD%93%E7%B3%BB%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 16 Jun 2023 02:52:32 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%B9%E7%81%BE%E4%BD%93%E7%B3%BB%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</guid>
-      <description>1 容灾介绍 我们通常会把故障分为三大类，一是主机故障，二是机房故障，三是地域故障。每类故障都有各自的诱发因素，而从主机到机房再到地域，故障发生概率依次越来越小，而故障的影响却越来越大。
-容灾能力的建设目标是非常明确的，就是要能够应对和处理这种机房级和地域级的大规模故障，从而来保障业务的连续性。近几年，业界也发生了多次数据中心级别的故障，对相关公司的业务和品牌产生了非常大的负面影响。当前容灾能力已经成为众多IT企业建设信息化系统的必选项。
-2 业务容灾架构 2.1 容灾架构演进 容灾架构从最早期的单活形态（同城主备）到同城多活形态，再演化到异地多活，根据这个路径可以将容灾分为容灾1.0、容灾2.0、容灾3.0三个阶段。
-容灾1.0：容灾体系围绕数据建设，多以主-备的方式部署，但备用机房不承担流量，基本上都是单活结构。 容灾2.0：容灾视角从数据转换为应用系统，业务具有同城双活或同城多活能力，采用同城双活或同城双活加异地冷备（两地三中心）的部署架构，除冷备以外的每个机房都有流量处理能力。 容灾3.0：以业务为中心，多采用单元化架构，容灾基于单元间的两两互备实现，根据单元的部署位置可以实现同城多活和异地多活。采用单元化架构的应用本身具有很好的容灾能力和扩展能力。 由于各公司所处发展阶段不同，采用的方案也会有所区别，美团大部分业务处于2.0阶段（即同城双活或多活架构），但对于大体量、有地域容灾及有地域扩展性要求的业务则处在容灾3.0阶段。下面会介绍一下美团的容灾架构。
-2.2 美团容灾架构 美团的容灾架构主要包括两种，一种是N+1容灾架构，一种是SET化架构。
-N+1架构：在业界也称散部或者多AZ部署⽅案，将容量为C的系统部署在N+1个机房，每个机房能提供至少C/N的容量，挂掉任何一个机房时，剩余系统仍能支撑C的容量。该方案的核心是把容灾能力下沉到PaaS组件来完成，在出现机房级或者地域级故障的时候，由各个PaaS组件独立完成容灾切换，实现业务恢复。整体架构如下图所示，业务上表现是多机房、多活形态，数据库采用这种主从架构，单机房处理写流量、多机房的负载均摊读流量。下面要讲“数据库容灾体系建设实践” 就是面向N+1架构的。
-单元化架构：也叫SET化架构，这是一种偏应用层的容灾架构，它将应用，数据，基础组件按照统一的维度切分成多个单元，每个单元处理一部分闭环流量。业务以单元作为部署单位，通过单元互备方式实现同城容灾或者异地容灾。一般金融业务或者超大规模的业务会选择此类架构，它的好处就是流量可以闭环且资源隔离，具有很强的容灾能力和跨域扩展能力，不过SET化架构的落地需要业务系统做大量的改造，运维管理也较为复杂。简化示意图如下：
-美团内部的大部分业务都是N+1架构，外卖和金融等业务采用了单元化架构。总体上美团内部既有同城多活，也有异地多活，两种容灾方案并存。</description>
     </item>
     
     <item>

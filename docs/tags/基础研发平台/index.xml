@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sun, 25 Jun 2023 03:23:58 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%9F%BA%E7%A1%80%E7%A0%94%E5%8F%91%E5%B9%B3%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 26 Jun 2023 03:22:03 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%9F%BA%E7%A1%80%E7%A0%94%E5%8F%91%E5%B9%B3%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Code：美团代码托管平台的演进与实践</title>
       <link>https://wfsui.github.io/posts/code%E7%BE%8E%E5%9B%A2%E4%BB%A3%E7%A0%81%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%BC%94%E8%BF%9B%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sun, 25 Jun 2023 03:23:58 +0000</pubDate>
+      <pubDate>Mon, 26 Jun 2023 03:22:03 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/code%E7%BE%8E%E5%9B%A2%E4%BB%A3%E7%A0%81%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%BC%94%E8%BF%9B%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 引言 Code是美团自研的代码托管平台，其中包括了代码版本管理、分支管理及代码评审等功能，协同众多研发流程工具平台，支撑内部所有工程师的日常研发工作。经过近3年的建设，目前Code托管了数以万计的仓库，日常处理千万级的Git相关请求，稳定支撑着美团研发流程规范的持续落地。本文主要介绍美团在建设代码托管平台过程中面临的一些挑战和实践经验。
@@ -26,7 +26,7 @@
     <item>
       <title>美团视觉GPU推理服务部署架构优化实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%89gpu%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sun, 25 Jun 2023 03:23:58 +0000</pubDate>
+      <pubDate>Mon, 26 Jun 2023 03:22:02 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%89gpu%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
       <description>0. 导读 美团视觉面向本地生活服务，在众多场景上落地应用了文字识别、图像质量评价、视频理解等视觉AI技术。此前，在线推理服务使用的GPU资源不断增加，但服务GPU利用率普遍较低，浪费大量计算资源，增加了视觉AI应用成本，这是美团也是很多企业亟需解决的问题。
@@ -42,7 +42,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>SOTA！目标检测开源框架YOLOv6 3.0版本来啦</title>
       <link>https://wfsui.github.io/posts/sota%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6-3.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</link>
-      <pubDate>Sun, 25 Jun 2023 03:23:57 +0000</pubDate>
+      <pubDate>Mon, 26 Jun 2023 03:22:01 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/sota%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6-3.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</guid>
       <description>1. 概述 1 月 6 日，美团视觉智能部发布了 YOLOv6 3.0 版本，再一次将目标检测的综合性能推向新高。本次更新除了对 YOLOv6-N/S/M/L 模型进行全系列升级之外，还推出了大分辨率 P6 模型。其中，YOLOv6-L6 检测精度达到 57.2% AP，在 T4 卡上推理速度可达 29 FPS，超越 YOLOv7-E6E，取得当前实时目标检测榜单 SOTA。</description>
@@ -51,7 +51,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>大规模食品图像识别：T-PAMI 2023论文解读</title>
       <link>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%A3%9F%E5%93%81%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%ABt-pami-2023%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Sun, 25 Jun 2023 03:23:57 +0000</pubDate>
+      <pubDate>Mon, 26 Jun 2023 03:22:01 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%A3%9F%E5%93%81%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%ABt-pami-2023%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
       <description>1 引言 视觉智能部与中科院计算所于2020-2021年度展开了《细粒度菜品图像识别和检索》科研课题合作，本文系双方联合在IEEE T-PAMI2023发布论文《Large Scale Visual Food Recognition》 (Weiqing Min, Zhiling Wang, Yuxin Liu, Mengjiang Luo, Liping Kang, Xiaoming Wei, Xiaolin Wei, Shuqiang Jiang*) 的解读。IEEE T-PAMI全称为IEEE Transactions on Pattern Analysis and Machine Intelligence，是模式识别、计算机视觉及机器学习领域的国际顶级期刊，2022年公布的影响因子为24.</description>
@@ -60,7 +60,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>基于AI&#43;数据驱动的慢查询索引推荐</title>
       <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai&#43;%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E7%B4%A2%E5%BC%95%E6%8E%A8%E8%8D%90/</link>
-      <pubDate>Sun, 25 Jun 2023 03:23:56 +0000</pubDate>
+      <pubDate>Mon, 26 Jun 2023 03:22:00 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai&#43;%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E7%B4%A2%E5%BC%95%E6%8E%A8%E8%8D%90/</guid>
       <description>1 背景 随着美团业务量的不断增长，慢查询的数量也日益增多。目前，日均慢查询数量已经超过上亿条，如果仅依靠DBA和开发人员手动地对这些慢查询进行分析并建立合适的索引，显然是不太现实的。为了解决这一难题，美团内部DAS（数据库自治服务）平台已经集成了基于代价的慢查询优化建议来自动地为慢查询推荐索引。然而，仍然存在一些问题：
@@ -74,7 +74,7 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
     <item>
       <title>超大规模数据库集群保稳系列之一：高可用系统</title>
       <link>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E9%AB%98%E5%8F%AF%E7%94%A8%E7%B3%BB%E7%BB%9F/</link>
-      <pubDate>Sun, 25 Jun 2023 03:23:55 +0000</pubDate>
+      <pubDate>Mon, 26 Jun 2023 03:21:58 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E9%AB%98%E5%8F%AF%E7%94%A8%E7%B3%BB%E7%BB%9F/</guid>
       <description>本文整理自主题分享《美团数据库的高可用系统》，系超大规模数据库集群保稳系列的第一篇文章。对数据库而言，非常核心的就是如何保证其高可用性。本文围绕4个方面的内容展开，包括高可用简介、高可用部署、重点模块的设计思考以及对未来思考。希望能够对大家有所帮助或启发。
@@ -93,9 +93,23 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
     </item>
     
     <item>
+      <title>超大规模数据库集群保稳系列之二：数据库攻防演练建设实践</title>
+      <link>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%94%BB%E9%98%B2%E6%BC%94%E7%BB%83%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Mon, 26 Jun 2023 03:21:57 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%94%BB%E9%98%B2%E6%BC%94%E7%BB%83%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</guid>
+      <description>01 背景 1.1 初识混沌工程 首先我们先了解一下什么是混沌工程？简单而言，混沌工程是在系统上进行实验的技术手段，目的是建立对系统抵御生产环境中失控条件的能力以及信心。这主要体现在两个方面，从系统角度来讲，混沌工程可以提升我们架构的容错能力和韧性，降低故障发生率和复发率，提升系统用户在使用时的体验；从人员角度来讲，通过混沌工程我们可以加深对架构的理解，在处理故障时能提高整体的应急效率，并且能主动去探究系统中潜在的一些问题。
+混沌工程最早可以追溯到2008年，当时奈飞公司（Netflix）因数据库故障造成了一次巨大的损失，于是他们便围绕着稳定性体系做出了一些探索和建设。直到2015年，混沌工程的理念才被奈飞正式的提出。2019年，阿里云推出了开源工具Chaos Blade；2020年，PingCAP开源了Chaos Mesh，这也标志着国内在混沌工程领域也有了成熟的产品。
+1.2 现状 下面是当前美团数据库运维的一些现状，这里从五个维度展开：首先集群规模（包括集群的大小和数量）的线性增长；第二，集群访问量的持续增加，当然这也是美团业务增长的必然结果；第三，线上遇到的故障种类也越来越多；第四，单位时间故障的影响也越来越大；第五，一些小概率事件的发生也随着集群规模的扩大成为了可能。
+1.3 痛点&amp;amp;作用 基于以上的问题，我们整体上对于数据库集群的稳定性要求也越来越高。所以，围绕着稳定性建设，数据库团队在故障的预防、发现、分析、恢复以及事后复盘5个方面做了很多工作。其中在故障预防方面，我们会通过故障演练探索不同故障场景对我们业务的影响，提升故障发生时业务系统整体的容错能力。早期的时候，我们通过人工的方式来做故障演练，但人工演练在以下四个方面存在很大的问题：
+在演练场景方面，人工演练能演练的场景比较少，演练场景的复杂度也比较高； 在演练覆盖率方面，人工演练无法覆盖大多数的集群，也就无法保证常态化的故障演练； 在演练规模方面，人工演练没有办法进行大规模演练，在遇到一些机房或者交换机级的故障时，切换能力无法得到有效验证； 在影响范围方面，人工演练在整个演练过程中不能很好地控制爆炸半径，遇到问题不能快速止损。 基于人工演练的这些痛点问题，我们设计并建设了数据库故障演练平台，这个平台的作用主要体现在以下四个方面：第一，验证故障发生时组件的防守能力；第二，通过数据库大规模容灾演练，验证数据库集群的容灾能力；第三，可以验证故障发生时相关预案（业务、DBA）的有效性；第四，可以预知故障对业务造成的各种影响。
+02 建设实践 2.</description>
+    </item>
+    
+    <item>
       <title>超大规模数据库集群保稳系列之三：美团数据库容灾体系建设实践</title>
       <link>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%B9%E7%81%BE%E4%BD%93%E7%B3%BB%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sun, 25 Jun 2023 03:23:55 +0000</pubDate>
+      <pubDate>Mon, 26 Jun 2023 03:21:56 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%B9%E7%81%BE%E4%BD%93%E7%B3%BB%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 容灾介绍 我们通常会把故障分为三大类，一是主机故障，二是机房故障，三是地域故障。每类故障都有各自的诱发因素，而从主机到机房再到地域，故障发生概率依次越来越小，而故障的影响却越来越大。
@@ -106,20 +120,6 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
 N+1架构：在业界也称散部或者多AZ部署⽅案，将容量为C的系统部署在N+1个机房，每个机房能提供至少C/N的容量，挂掉任何一个机房时，剩余系统仍能支撑C的容量。该方案的核心是把容灾能力下沉到PaaS组件来完成，在出现机房级或者地域级故障的时候，由各个PaaS组件独立完成容灾切换，实现业务恢复。整体架构如下图所示，业务上表现是多机房、多活形态，数据库采用这种主从架构，单机房处理写流量、多机房的负载均摊读流量。下面要讲“数据库容灾体系建设实践” 就是面向N+1架构的。
 单元化架构：也叫SET化架构，这是一种偏应用层的容灾架构，它将应用，数据，基础组件按照统一的维度切分成多个单元，每个单元处理一部分闭环流量。业务以单元作为部署单位，通过单元互备方式实现同城容灾或者异地容灾。一般金融业务或者超大规模的业务会选择此类架构，它的好处就是流量可以闭环且资源隔离，具有很强的容灾能力和跨域扩展能力，不过SET化架构的落地需要业务系统做大量的改造，运维管理也较为复杂。简化示意图如下：
 美团内部的大部分业务都是N+1架构，外卖和金融等业务采用了单元化架构。总体上美团内部既有同城多活，也有异地多活，两种容灾方案并存。</description>
-    </item>
-    
-    <item>
-      <title>超大规模数据库集群保稳系列之二：数据库攻防演练建设实践</title>
-      <link>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%94%BB%E9%98%B2%E6%BC%94%E7%BB%83%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sun, 25 Jun 2023 03:23:55 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%94%BB%E9%98%B2%E6%BC%94%E7%BB%83%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</guid>
-      <description>01 背景 1.1 初识混沌工程 首先我们先了解一下什么是混沌工程？简单而言，混沌工程是在系统上进行实验的技术手段，目的是建立对系统抵御生产环境中失控条件的能力以及信心。这主要体现在两个方面，从系统角度来讲，混沌工程可以提升我们架构的容错能力和韧性，降低故障发生率和复发率，提升系统用户在使用时的体验；从人员角度来讲，通过混沌工程我们可以加深对架构的理解，在处理故障时能提高整体的应急效率，并且能主动去探究系统中潜在的一些问题。
-混沌工程最早可以追溯到2008年，当时奈飞公司（Netflix）因数据库故障造成了一次巨大的损失，于是他们便围绕着稳定性体系做出了一些探索和建设。直到2015年，混沌工程的理念才被奈飞正式的提出。2019年，阿里云推出了开源工具Chaos Blade；2020年，PingCAP开源了Chaos Mesh，这也标志着国内在混沌工程领域也有了成熟的产品。
-1.2 现状 下面是当前美团数据库运维的一些现状，这里从五个维度展开：首先集群规模（包括集群的大小和数量）的线性增长；第二，集群访问量的持续增加，当然这也是美团业务增长的必然结果；第三，线上遇到的故障种类也越来越多；第四，单位时间故障的影响也越来越大；第五，一些小概率事件的发生也随着集群规模的扩大成为了可能。
-1.3 痛点&amp;amp;作用 基于以上的问题，我们整体上对于数据库集群的稳定性要求也越来越高。所以，围绕着稳定性建设，数据库团队在故障的预防、发现、分析、恢复以及事后复盘5个方面做了很多工作。其中在故障预防方面，我们会通过故障演练探索不同故障场景对我们业务的影响，提升故障发生时业务系统整体的容错能力。早期的时候，我们通过人工的方式来做故障演练，但人工演练在以下四个方面存在很大的问题：
-在演练场景方面，人工演练能演练的场景比较少，演练场景的复杂度也比较高； 在演练覆盖率方面，人工演练无法覆盖大多数的集群，也就无法保证常态化的故障演练； 在演练规模方面，人工演练没有办法进行大规模演练，在遇到一些机房或者交换机级的故障时，切换能力无法得到有效验证； 在影响范围方面，人工演练在整个演练过程中不能很好地控制爆炸半径，遇到问题不能快速止损。 基于人工演练的这些痛点问题，我们设计并建设了数据库故障演练平台，这个平台的作用主要体现在以下四个方面：第一，验证故障发生时组件的防守能力；第二，通过数据库大规模容灾演练，验证数据库集群的容灾能力；第三，可以验证故障发生时相关预案（业务、DBA）的有效性；第四，可以预知故障对业务造成的各种影响。
-02 建设实践 2.</description>
     </item>
     
     <item>

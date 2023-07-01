@@ -1,6 +1,6 @@
 ---
 title: "Robust 2.0：支持Android R8的升级版热修复框架"
-date: 2023-06-30T03:04:22+0000
+date: 2023-07-01T03:22:36+0000
 tags: [美团技术团队, 美团平台, 前端, Robust, Android, R8, Proguard]
 ---
 

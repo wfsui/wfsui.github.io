@@ -14,8 +14,8 @@
 TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用于机器学习模型部署的高性能开源框架，内部集成了TF-TRT优化工具，但是对非TensorFlow格式的模型支持不够友好。 Torch Serve：TorchServe是AWS和Facebook联合推出的Pytorch模型部署推理框架，具有部署简单、高性能、轻量化等优点。 Triton：Triton是Nvidia发布的高性能推理服务框架，支持TensorFlow、TensorRT、PyTorch和ONNX等多种框架模型，适用于多模型联合推理场景。 在实际部署中，无论选择哪种框架，需要同时考虑模型格式、优化工具、框架功能特点等多种因素。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%89gpu%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-06-30T03:04:26+00:00" />
-<meta property="article:modified_time" content="2023-06-30T03:04:26+00:00" />
+<meta property="article:published_time" content="2023-07-01T03:22:41+00:00" />
+<meta property="article:modified_time" content="2023-07-01T03:22:41+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="美团视觉GPU推理服务部署架构优化实践"/>
 <meta name="twitter:description" content="0. 导读 美团视觉面向本地生活服务，在众多场景上落地应用了文字识别、图像质量评价、视频理解等视觉AI技术。此前，在线推理服务使用的GPU资源不断增加，但服务GPU利用率普遍较低，浪费大量计算资源，增加了视觉AI应用成本，这是美团也是很多企业亟需解决的问题。
@@ -71,7 +71,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
 
 		<div class="post-header">
 			<h1 class="title">美团视觉GPU推理服务部署架构优化实践</h1>
-			<div class="meta">Posted at &mdash; Jun 30, 2023</div>
+			<div class="meta">Posted at &mdash; Jul 1, 2023</div>
 		</div>
 
 		<div class="markdown">

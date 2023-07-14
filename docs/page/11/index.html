@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="generator" content="Hugo 0.115.2">
+	<meta name="generator" content="Hugo 0.115.3">
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>大峰哥 - 记录日常生活哦 </title><meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="alternate" type="application/rss+xml" href="https://wfsui.github.io/index.xml" title="大峰哥" />
@@ -67,6 +67,16 @@
 				
 				<div class="post">
 					<div class="meta">Nov 18, 2022</div>
+					<a class="title" href="/posts/acm-sigir-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">ACM SIGIR 2022 | 美团技术团队精选论文解读</a> &mdash;
+					<span class="description">
+						
+						SIGIR是信息检索方向的国际顶级会议（CCF-A类）。第 45 届国际信息检索大会（The 45th International ACM SIGIR Conference on Research and Development in Information Retrieval，SIGIR 2022）已于上周（2022年7月11-15日）在西班牙马德里举行，同时也支持线上参会。本次会议共收到 794 篇长文投稿，其中 161 篇长文被录用，录用率约 20%；共收到 667 篇短文投稿，其中 165 篇短文被录用，录用率约 24.&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
+					<div class="meta">Nov 18, 2022</div>
 					<a class="title" href="/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/">日志导致线程Block的这些坑，你不得不防</a> &mdash;
 					<span class="description">
 						
@@ -120,24 +130,6 @@ JDK版本 java version &#34;1.8.0_45&#34; Java(TM) SE Runtime Environment (build
 						
 						CVPR的全称是IEEE国际计算机视觉与模式识别会议（IEEE Conference on Computer Vision and Pattern Recognition），该会议始于1983年，与ICCV和ECCV并称计算机视觉方向的三大顶级会议。根据谷歌学术公布的2021年最新学术期刊和会议影响力排名，CVPR在所有学术刊物中位居第4，仅次于Nature、NEJM和Science。CVPR今年共收到全球8100多篇论文投稿，最终2067篇被接收，接收率约为25%。
 Paper 01 | Compressing Models with Few Samples: Mimicking then Replacing | 论文下载| 论文作者：王环宇（美团实习生&amp;南京大学），刘俊杰（美团），马鑫（美团），雍洋（美团实习生&amp;西安交通大学），柴振华（美团），吴建鑫（南京大学） | 备注：括号内的为论文发表时，论文作者所在的单位。 | 论文类型：CVPR Main Conference（Long Paper）&hellip;
-						
-					</span>
-				</div>
-				
-				<div class="post">
-					<div class="meta">Oct 27, 2022</div>
-					<a class="title" href="/posts/%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E7%9B%B8%E5%85%B3%E6%80%A7%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/">大众点评搜索相关性技术探索与实践</a> &mdash;
-					<span class="description">
-						
-						1. 背景 点评搜索是大众点评App的核心入口之一，用户通过搜索来满足不同场景下对生活服务类商户的找店需求。搜索的长期目标是持续优化搜索体验，提升用户的搜索满意度，这需要我们理解用户搜索意图，准确衡量搜索词与商户之间的相关程度，尽可能展示相关商户并将更相关的商户排序靠前。因此，搜索词与商户的相关性计算是点评搜索的重要环节。
-大众点评搜索场景面临的相关性问题复杂多样，用户的搜索词比较多样，例如搜索商户名、菜品、地址、类目以及它们之间的各种复杂组合，同时商户也有多种类型的信息，包括商户名、地址信息、团单信息、菜品信息以及其他各种设施和标签信息等，导致Query与商户的匹配模式异常复杂，容易滋生出各种各样的相关性问题。具体来说，可以分为如下几种类型：
-文本误匹配：在搜索时，为保证更多商户被检索和曝光，Query可能会被拆分成更细粒度的词进行检索，因此会带来Query错误匹配到商户不同字段的问题，如图1(a)所示的用户搜“生蚝火锅”应该想找汤底中包含生蚝的火锅，而“生蚝”和“火锅”分别匹配到商户的两个不同菜品。 语义偏移：Query与商户字面匹配，但商户与Query的主要意图在语义上不相关，如“奶茶”-“黑糖珍珠奶茶包”，如图1(b)所示。 类目偏移：Query与商户字面匹配且语义相关，但主营类目与用户需求不符，例如用户搜索“水果”时一家提供“果盘”的KTV商户明显与用户的需求不相关。 图1 点评搜索相关性问题示例
-基于字面匹配的相关性方法无法有效应对上述问题，为了解决搜索列表中的各类不符合用户意图的不相关问题，需要更准确地刻画搜索词与商户的深度语义相关性。本文在基于美团海量业务语料训练的MT-BERT预训练模型的基础上，在大众点评搜索场景下优化Query与商户（POI，对应通用搜索引擎中的Doc）的深度语义相关性模型，并将Query与POI的相关性信息应用在搜索链路各环节。
-本文将从搜索相关性现有技术综述、点评搜索相关性计算方案、应用实战、总结与展望四个方面对点评搜索相关性技术进行介绍。其中点评搜索相关性计算章节将介绍我们如何解决商户输入信息构造、使模型适配点评搜索相关性计算及模型上线的性能优化等三项主要挑战，应用实战章节将介绍点评搜索相关性模型的离线及线上效果。
-2. 搜索相关性现有技术 搜索相关性旨在计算Query和返回Doc之间的相关程度，也就是判断Doc中的内容是否满足用户Query的需求，对应NLP中的语义匹配任务（Semantic Matching）。在大众点评的搜索场景下，搜索相关性就是计算用户Query和商户POI之间的相关程度。
-文本匹配方法：早期的文本匹配任务仅考虑了Query与Doc的字面匹配程度，通过TF-IDF、BM25等基于Term的匹配特征来计算相关性。字面匹配相关性线上计算效率较高，但基于Term的关键词匹配泛化性能较差，缺少语义和词序信息，且无法处理一词多义或者多词一义的问题，因此漏匹配和误匹配现象严重。
-传统语义匹配模型：为弥补字面匹配的缺陷，语义匹配模型被提出以更好地理解Query与Doc的语义相关性。传统的语义匹配模型主要包括基于隐式空间的匹配：将Query和Doc都映射到同一个空间的向量，再用向量距离或相似度作为匹配分，如Partial Least Square（PLS）[1]；以及基于翻译模型的匹配：将Doc映射到Query空间后进行匹配或计算Doc翻译成Query的概率[2]。
-随着深度学习和预训练模型的发展，深度语义匹配模型也被业界广泛应用。深度语义匹配模型从实现方法上分为基于表示（Representation-based）的方法及基于交互（Interaction-based）的方法。预训练模型作为自然语言处理领域的有效方法，也被广泛使用在语义匹配任务中。&hellip;
 						
 					</span>
 				</div>

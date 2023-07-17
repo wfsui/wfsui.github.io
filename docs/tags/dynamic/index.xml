@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sat, 15 Jul 2023 03:19:40 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/dynamic/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 17 Jul 2023 03:19:40 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/dynamic/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Java动态追踪技术探究</title>
       <link>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:40 +0000</pubDate>
+      <pubDate>Mon, 17 Jul 2023 03:19:40 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</guid>
       <description>引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：

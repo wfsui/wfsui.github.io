@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sat, 15 Jul 2023 03:19:39 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 17 Jul 2023 03:19:40 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>美团开放平台SDK自动生成技术与实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:39 +0000</pubDate>
+      <pubDate>Mon, 17 Jul 2023 03:19:40 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 引言 美团开放平台对外提供了外卖、团购、配送等20余个业务场景的OpenAPI，供第三方开发者搭建应用时使用，是美团系统与外部系统通讯的最重要平台。本文主要讲述开放平台如何通过技术手段自动生成支持接口参数富模型和多种编程语言的SDK，以提高开发者对接开放平台API的效率。
@@ -21,9 +21,24 @@ POST https://api-open-cater.meituan.com/api/order/queryById Content-Type: applic
     </item>
     
     <item>
+      <title>Code：美团代码托管平台的演进与实践</title>
+      <link>https://wfsui.github.io/posts/code%E7%BE%8E%E5%9B%A2%E4%BB%A3%E7%A0%81%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%BC%94%E8%BF%9B%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Mon, 17 Jul 2023 03:19:39 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/code%E7%BE%8E%E5%9B%A2%E4%BB%A3%E7%A0%81%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%BC%94%E8%BF%9B%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
+      <description>1. 引言 Code是美团自研的代码托管平台，其中包括了代码版本管理、分支管理及代码评审等功能，协同众多研发流程工具平台，支撑内部所有工程师的日常研发工作。经过近3年的建设，目前Code托管了数以万计的仓库，日常处理千万级的Git相关请求，稳定支撑着美团研发流程规范的持续落地。本文主要介绍美团在建设代码托管平台过程中面临的一些挑战和实践经验。
+2. 美团代码托管平台建设之路 2.1 代码托管平台的发展史 回顾美团代码托管平台的发展史，整个历程可以划分为三个阶段：单机部署、多机部署以及自研分布式代码托管平台。
+第一阶段：单机部署 美团最初的代码托管平台，和绝大多数Web系统一样，单机部署即可运行，所有用户的请求均通过Web应用进行响应。由于Git使用基于文件组织形式的存储模式，无论是通过页面访问还是执行Git命令操作，最终都会表现为磁盘的文件读写，高IO磁盘尤为重要。整体架构如下图1所示：
+第二阶段：多机部署 在访问规模不大的情况下，第一阶段这种单机架构可以满足日常的开发需求。但随着研发团队业务需求的不断增长，测试自动化流程的逐步完善，扩展性瓶颈也愈发明显，主要表现为以下2个方面：
+存储：由于公司资源限制和地域分配不均等因素，代码托管平台部署机器已配置最大容量的可用SSD磁盘，使用率仍高达80%，可用空间严重不足。 负载：随着研发人员的不断增多，在访问高峰期，CPU和IO负载高达95%以上，页面出现严重的卡顿，仅能通过限流保障系统的持续服务。 因而，单机部署无法再承载高峰期的访问量，系统扩容刻不容缓。于是，我们开始设计了一套能够通过多机负载同一仓库IO的读写分离架构方案，以解决较为严重的IO负载问题。在读写分离架构中，最重要的是要保证用户视角的数据一致性（用户随时可以读取提交的最新代码），这里采取了以下措施：
+写操作仅发生在主节点。 采用懒汉同步模式，在读取数据时触发从节点同步数据，若失败，则路由到主节点。 采用独主兜底模式，遇遇到突发情况时可以迅速禁用从节点，保障数据安全。 如图2所示，我们将仓库访问形式按照应用层协议区分为HTTP和SSH，分别由对应的解析代理模块进行读写分发操作后再下发到主从节点（此处采用了Round-Bobin的算法分发读请求），使得读吞吐量整体扩大了2倍。对于从节点，我们部署了Agent，在用户发起读请求时会触发同步仓库数据的Fetch操作，以保证数据的一致性。
+第三阶段：自研分布式代码托管平台 在第二阶段，虽然通过多机负载IO的读写分离架构短暂性地解决了扩展性瓶颈问题，但仓库数据仍在持续不断地指数增长。同时，除扩展性问题之外，可用性瓶颈也凸显出来，主要表现在以下2个方面：</description>
+    </item>
+    
+    <item>
       <title>美团技术年货来了！1300&#43;页的电子书，涵盖前端、后端、算法、数据、运维、安全</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%B9%B4%E8%B4%A7%E6%9D%A5%E4%BA%861300&#43;%E9%A1%B5%E7%9A%84%E7%94%B5%E5%AD%90%E4%B9%A6%E6%B6%B5%E7%9B%96%E5%89%8D%E7%AB%AF%E5%90%8E%E7%AB%AF%E7%AE%97%E6%B3%95%E6%95%B0%E6%8D%AE%E8%BF%90%E7%BB%B4%E5%AE%89%E5%85%A8/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:39 +0000</pubDate>
+      <pubDate>Mon, 17 Jul 2023 03:19:39 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%B9%B4%E8%B4%A7%E6%9D%A5%E4%BA%861300&#43;%E9%A1%B5%E7%9A%84%E7%94%B5%E5%AD%90%E4%B9%A6%E6%B6%B5%E7%9B%96%E5%89%8D%E7%AB%AF%E5%90%8E%E7%AB%AF%E7%AE%97%E6%B3%95%E6%95%B0%E6%8D%AE%E8%BF%90%E7%BB%B4%E5%AE%89%E5%85%A8/</guid>
       <description>新春将至，一年一度的美团技术年货也如约到来。
@@ -38,24 +53,9 @@ POST https://api-open-cater.meituan.com/api/order/queryById Content-Type: applic
     </item>
     
     <item>
-      <title>Code：美团代码托管平台的演进与实践</title>
-      <link>https://wfsui.github.io/posts/code%E7%BE%8E%E5%9B%A2%E4%BB%A3%E7%A0%81%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%BC%94%E8%BF%9B%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:38 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/code%E7%BE%8E%E5%9B%A2%E4%BB%A3%E7%A0%81%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%BC%94%E8%BF%9B%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
-      <description>1. 引言 Code是美团自研的代码托管平台，其中包括了代码版本管理、分支管理及代码评审等功能，协同众多研发流程工具平台，支撑内部所有工程师的日常研发工作。经过近3年的建设，目前Code托管了数以万计的仓库，日常处理千万级的Git相关请求，稳定支撑着美团研发流程规范的持续落地。本文主要介绍美团在建设代码托管平台过程中面临的一些挑战和实践经验。
-2. 美团代码托管平台建设之路 2.1 代码托管平台的发展史 回顾美团代码托管平台的发展史，整个历程可以划分为三个阶段：单机部署、多机部署以及自研分布式代码托管平台。
-第一阶段：单机部署 美团最初的代码托管平台，和绝大多数Web系统一样，单机部署即可运行，所有用户的请求均通过Web应用进行响应。由于Git使用基于文件组织形式的存储模式，无论是通过页面访问还是执行Git命令操作，最终都会表现为磁盘的文件读写，高IO磁盘尤为重要。整体架构如下图1所示：
-第二阶段：多机部署 在访问规模不大的情况下，第一阶段这种单机架构可以满足日常的开发需求。但随着研发团队业务需求的不断增长，测试自动化流程的逐步完善，扩展性瓶颈也愈发明显，主要表现为以下2个方面：
-存储：由于公司资源限制和地域分配不均等因素，代码托管平台部署机器已配置最大容量的可用SSD磁盘，使用率仍高达80%，可用空间严重不足。 负载：随着研发人员的不断增多，在访问高峰期，CPU和IO负载高达95%以上，页面出现严重的卡顿，仅能通过限流保障系统的持续服务。 因而，单机部署无法再承载高峰期的访问量，系统扩容刻不容缓。于是，我们开始设计了一套能够通过多机负载同一仓库IO的读写分离架构方案，以解决较为严重的IO负载问题。在读写分离架构中，最重要的是要保证用户视角的数据一致性（用户随时可以读取提交的最新代码），这里采取了以下措施：
-写操作仅发生在主节点。 采用懒汉同步模式，在读取数据时触发从节点同步数据，若失败，则路由到主节点。 采用独主兜底模式，遇遇到突发情况时可以迅速禁用从节点，保障数据安全。 如图2所示，我们将仓库访问形式按照应用层协议区分为HTTP和SSH，分别由对应的解析代理模块进行读写分发操作后再下发到主从节点（此处采用了Round-Bobin的算法分发读请求），使得读吞吐量整体扩大了2倍。对于从节点，我们部署了Agent，在用户发起读请求时会触发同步仓库数据的Fetch操作，以保证数据的一致性。
-第三阶段：自研分布式代码托管平台 在第二阶段，虽然通过多机负载IO的读写分离架构短暂性地解决了扩展性瓶颈问题，但仓库数据仍在持续不断地指数增长。同时，除扩展性问题之外，可用性瓶颈也凸显出来，主要表现在以下2个方面：</description>
-    </item>
-    
-    <item>
       <title>交互式推荐在外卖场景的探索与应用</title>
       <link>https://wfsui.github.io/posts/%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%8E%A8%E8%8D%90%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:38 +0000</pubDate>
+      <pubDate>Mon, 17 Jul 2023 03:19:38 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%8E%A8%E8%8D%90%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</guid>
       <description>1. 背景 1.1 什么是交互式推荐？ 交互式推荐是一种互动式实时推荐产品模块，主要通过理解用户需求、以互动的方式进行推荐。交互式推荐由Youtube在2018年提出[1]，主要用于解决推荐系统的延迟[2]和与用户互动偏弱的问题。
@@ -71,7 +71,7 @@ POST https://api-open-cater.meituan.com/api/order/queryById Content-Type: applic
     <item>
       <title>美团视觉GPU推理服务部署架构优化实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%89gpu%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:38 +0000</pubDate>
+      <pubDate>Mon, 17 Jul 2023 03:19:38 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%89gpu%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
       <description>0. 导读 美团视觉面向本地生活服务，在众多场景上落地应用了文字识别、图像质量评价、视频理解等视觉AI技术。此前，在线推理服务使用的GPU资源不断增加，但服务GPU利用率普遍较低，浪费大量计算资源，增加了视觉AI应用成本，这是美团也是很多企业亟需解决的问题。
@@ -85,9 +85,21 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     </item>
     
     <item>
+      <title>MRCP在美团语音交互中的实践和应用</title>
+      <link>https://wfsui.github.io/posts/mrcp%E5%9C%A8%E7%BE%8E%E5%9B%A2%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E5%BA%94%E7%94%A8/</link>
+      <pubDate>Mon, 17 Jul 2023 03:19:37 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/mrcp%E5%9C%A8%E7%BE%8E%E5%9B%A2%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E5%BA%94%E7%94%A8/</guid>
+      <description>一、背景 智能语音对话作为人工智能领域最先落地的分支之一，可以实现与人进行自然语言多轮对话，其核心技术在近年来不断地发展成熟，包括语音识别、自然语言理解、对话管理等。伴随着技术的成熟，越来越多的电话机器人开始走进我们的生活，这些电话机器人在客户服务、智能销售、通知触达等场景发挥着重要的作用。
+当你和智能语音机器人对话交互时，你是否好奇电话背后的机器人如何“听懂”你的意思，又如何像人一样“回答”你的问题？经典的技术实现路径是：机器人首先通过“语音识别（ASR）”将用户输入语音识别成文字，再通过“自然语言理解（NLU）”识别意图，之后根据意图、系统信号等输入结合对话管理技术得到相应的回复，最后通过“语音合成（TTS）”生成语音播报给电话对端的用户。但要将 ASR、TTS 这些技术应用到电话系统上，还需要一些额外的工作和技术支撑，其中比较重要的技术之一也就是本文将要介绍的 MRCP。
+备注：本文涉及较多的专业名词，我们特别在文末附上了名词解释，以帮助大家进行阅读。
+1.1 MRCP 是什么 MRCP（Media Resource Control Protocol, MRCP）是一种通讯协议，中文定义是：媒体资源控制协议，用于语音服务器向客户端提供各种语音服务（如语音识别和语音合成）。该协议定义了控制媒体处理资源所必需的请求（Request）、应答（Response）和事件（Event）等消息，它需要借助 RTP（Real-Time Transport Protocol, 实时传输协议）创建一个媒体会话、借助 SIP（Session Initiation Protocol, 会话初始化协议） 和 SDP（Session Description Protocol, 会话描述协议） 创建一个控制会话来实现媒体资源服务器端和客户端之间的控制[1]。</description>
+    </item>
+    
+    <item>
       <title>SOTA！目标检测开源框架YOLOv6 3.0版本来啦</title>
       <link>https://wfsui.github.io/posts/sota%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6-3.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:37 +0000</pubDate>
+      <pubDate>Mon, 17 Jul 2023 03:19:37 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/sota%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6-3.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</guid>
       <description>1. 概述 1 月 6 日，美团视觉智能部发布了 YOLOv6 3.0 版本，再一次将目标检测的综合性能推向新高。本次更新除了对 YOLOv6-N/S/M/L 模型进行全系列升级之外，还推出了大分辨率 P6 模型。其中，YOLOv6-L6 检测精度达到 57.2% AP，在 T4 卡上推理速度可达 29 FPS，超越 YOLOv7-E6E，取得当前实时目标检测榜单 SOTA。</description>
@@ -96,7 +108,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>大规模食品图像识别：T-PAMI 2023论文解读</title>
       <link>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%A3%9F%E5%93%81%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%ABt-pami-2023%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:37 +0000</pubDate>
+      <pubDate>Mon, 17 Jul 2023 03:19:37 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%A3%9F%E5%93%81%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%ABt-pami-2023%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
       <description>1 引言 视觉智能部与中科院计算所于2020-2021年度展开了《细粒度菜品图像识别和检索》科研课题合作，本文系双方联合在IEEE T-PAMI2023发布论文《Large Scale Visual Food Recognition》 (Weiqing Min, Zhiling Wang, Yuxin Liu, Mengjiang Luo, Liping Kang, Xiaoming Wei, Xiaolin Wei, Shuqiang Jiang*) 的解读。IEEE T-PAMI全称为IEEE Transactions on Pattern Analysis and Machine Intelligence，是模式识别、计算机视觉及机器学习领域的国际顶级期刊，2022年公布的影响因子为24.</description>
@@ -105,7 +117,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>ICDE 2023 | 多场景多任务学习在美团到店餐饮推荐的实践</title>
       <link>https://wfsui.github.io/posts/icde-2023-%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E9%A4%90%E9%A5%AE%E6%8E%A8%E8%8D%90%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:36 +0000</pubDate>
+      <pubDate>Mon, 17 Jul 2023 03:19:36 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/icde-2023-%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E9%A4%90%E9%A5%AE%E6%8E%A8%E8%8D%90%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>随着推荐算法技术的不断发展，跨场景学习已经受到了越来越多的研究人员的关注。美团到餐算法团队受到业界相关技术的启发，不断探索到店餐饮多场景推荐的优化问题，在多场景多任务学习的推荐领域中积累了较多的应用经验。团队使用到店餐饮全域推荐场景数据训练统一的多场景多任务学习模型，减少了重复性开发，并在多个到店餐饮推荐场景进行落地，取得了较为显著的效果。
@@ -117,33 +129,9 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     </item>
     
     <item>
-      <title>MRCP在美团语音交互中的实践和应用</title>
-      <link>https://wfsui.github.io/posts/mrcp%E5%9C%A8%E7%BE%8E%E5%9B%A2%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:36 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/mrcp%E5%9C%A8%E7%BE%8E%E5%9B%A2%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E5%BA%94%E7%94%A8/</guid>
-      <description>一、背景 智能语音对话作为人工智能领域最先落地的分支之一，可以实现与人进行自然语言多轮对话，其核心技术在近年来不断地发展成熟，包括语音识别、自然语言理解、对话管理等。伴随着技术的成熟，越来越多的电话机器人开始走进我们的生活，这些电话机器人在客户服务、智能销售、通知触达等场景发挥着重要的作用。
-当你和智能语音机器人对话交互时，你是否好奇电话背后的机器人如何“听懂”你的意思，又如何像人一样“回答”你的问题？经典的技术实现路径是：机器人首先通过“语音识别（ASR）”将用户输入语音识别成文字，再通过“自然语言理解（NLU）”识别意图，之后根据意图、系统信号等输入结合对话管理技术得到相应的回复，最后通过“语音合成（TTS）”生成语音播报给电话对端的用户。但要将 ASR、TTS 这些技术应用到电话系统上，还需要一些额外的工作和技术支撑，其中比较重要的技术之一也就是本文将要介绍的 MRCP。
-备注：本文涉及较多的专业名词，我们特别在文末附上了名词解释，以帮助大家进行阅读。
-1.1 MRCP 是什么 MRCP（Media Resource Control Protocol, MRCP）是一种通讯协议，中文定义是：媒体资源控制协议，用于语音服务器向客户端提供各种语音服务（如语音识别和语音合成）。该协议定义了控制媒体处理资源所必需的请求（Request）、应答（Response）和事件（Event）等消息，它需要借助 RTP（Real-Time Transport Protocol, 实时传输协议）创建一个媒体会话、借助 SIP（Session Initiation Protocol, 会话初始化协议） 和 SDP（Session Description Protocol, 会话描述协议） 创建一个控制会话来实现媒体资源服务器端和客户端之间的控制[1]。</description>
-    </item>
-    
-    <item>
-      <title>一次「找回」TraceId的问题分析与过程思考</title>
-      <link>https://wfsui.github.io/posts/%E4%B8%80%E6%AC%A1%E6%89%BE%E5%9B%9Etraceid%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E4%B8%8E%E8%BF%87%E7%A8%8B%E6%80%9D%E8%80%83/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:35 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E4%B8%80%E6%AC%A1%E6%89%BE%E5%9B%9Etraceid%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E4%B8%8E%E8%BF%87%E7%A8%8B%E6%80%9D%E8%80%83/</guid>
-      <description>1. 问题背景和思考 1.1 问题背景 在一次排查线上告警的过程中，突然发现一个链路信息有点不同寻常（这里仅展示测试复现的内容）：
-在机器中可以清楚的发现“2022-08-02 19:26:34.952 DXMsgRemoteService ”这一行日志信息并没有携带TraceId，导致调用链路信息戛然而止，无法追踪当时的调用情况。
-1.2 问题复现和思考 在处理完线上告警后，我们开始分析“丢失”的TraceId到底去了哪里？首先在代码中定位TraceId没有追踪到的部分，发现问题出现在一个@Async注解下的方法，删除无关的业务信息代码，并增加MTrace埋点方法后的复现代码如下：
-@SpringBootTest @RunWith(SpringRunner.class) @EnableAsync public class DemoServiceTest extends TestCase { @Resource private DemoService demoService; @Test public void testTestAsy() { Tracer.</description>
-    </item>
-    
-    <item>
       <title>人机语音交互场景中的低延迟流式语音识别技术</title>
       <link>https://wfsui.github.io/posts/%E4%BA%BA%E6%9C%BA%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF%E4%B8%AD%E7%9A%84%E4%BD%8E%E5%BB%B6%E8%BF%9F%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:35 +0000</pubDate>
+      <pubDate>Mon, 17 Jul 2023 03:19:35 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%BA%BA%E6%9C%BA%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF%E4%B8%AD%E7%9A%84%E4%BD%8E%E5%BB%B6%E8%BF%9F%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/</guid>
       <description>1. 前言 1.1 语音识别技术简介 人机交互一直都是人工智能大背景下的“热门话题”，语音交互作为人机交互的一个重要分支，具有广泛的应用价值，也被应用到美团的多个业务场景中，如智能客服、电话营销和电话满意度反馈等。而流式语音识别技术是整个交互链条的入口，对交互体验影响巨大。
@@ -155,7 +143,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>基于AI&#43;数据驱动的慢查询索引推荐</title>
       <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai&#43;%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E7%B4%A2%E5%BC%95%E6%8E%A8%E8%8D%90/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:35 +0000</pubDate>
+      <pubDate>Mon, 17 Jul 2023 03:19:35 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai&#43;%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E7%B4%A2%E5%BC%95%E6%8E%A8%E8%8D%90/</guid>
       <description>1 背景 随着美团业务量的不断增长，慢查询的数量也日益增多。目前，日均慢查询数量已经超过上亿条，如果仅依靠DBA和开发人员手动地对这些慢查询进行分析并建立合适的索引，显然是不太现实的。为了解决这一难题，美团内部DAS（数据库自治服务）平台已经集成了基于代价的慢查询优化建议来自动地为慢查询推荐索引。然而，仍然存在一些问题：
@@ -167,9 +155,21 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
     </item>
     
     <item>
+      <title>一次「找回」TraceId的问题分析与过程思考</title>
+      <link>https://wfsui.github.io/posts/%E4%B8%80%E6%AC%A1%E6%89%BE%E5%9B%9Etraceid%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E4%B8%8E%E8%BF%87%E7%A8%8B%E6%80%9D%E8%80%83/</link>
+      <pubDate>Mon, 17 Jul 2023 03:19:34 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E4%B8%80%E6%AC%A1%E6%89%BE%E5%9B%9Etraceid%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E4%B8%8E%E8%BF%87%E7%A8%8B%E6%80%9D%E8%80%83/</guid>
+      <description>1. 问题背景和思考 1.1 问题背景 在一次排查线上告警的过程中，突然发现一个链路信息有点不同寻常（这里仅展示测试复现的内容）：
+在机器中可以清楚的发现“2022-08-02 19:26:34.952 DXMsgRemoteService ”这一行日志信息并没有携带TraceId，导致调用链路信息戛然而止，无法追踪当时的调用情况。
+1.2 问题复现和思考 在处理完线上告警后，我们开始分析“丢失”的TraceId到底去了哪里？首先在代码中定位TraceId没有追踪到的部分，发现问题出现在一个@Async注解下的方法，删除无关的业务信息代码，并增加MTrace埋点方法后的复现代码如下：
+@SpringBootTest @RunWith(SpringRunner.class) @EnableAsync public class DemoServiceTest extends TestCase { @Resource private DemoService demoService; @Test public void testTestAsy() { Tracer.</description>
+    </item>
+    
+    <item>
       <title>超大规模数据库集群保稳系列之一：高可用系统</title>
       <link>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E9%AB%98%E5%8F%AF%E7%94%A8%E7%B3%BB%E7%BB%9F/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:34 +0000</pubDate>
+      <pubDate>Mon, 17 Jul 2023 03:19:34 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E9%AB%98%E5%8F%AF%E7%94%A8%E7%B3%BB%E7%BB%9F/</guid>
       <description>本文整理自主题分享《美团数据库的高可用系统》，系超大规模数据库集群保稳系列的第一篇文章。对数据库而言，非常核心的就是如何保证其高可用性。本文围绕4个方面的内容展开，包括高可用简介、高可用部署、重点模块的设计思考以及对未来思考。希望能够对大家有所帮助或启发。
@@ -190,7 +190,7 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
     <item>
       <title>Robust 2.0：支持Android R8的升级版热修复框架</title>
       <link>https://wfsui.github.io/posts/robust-2.0%E6%94%AF%E6%8C%81android-r8%E7%9A%84%E5%8D%87%E7%BA%A7%E7%89%88%E7%83%AD%E4%BF%AE%E5%A4%8D%E6%A1%86%E6%9E%B6/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:33 +0000</pubDate>
+      <pubDate>Mon, 17 Jul 2023 03:19:33 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/robust-2.0%E6%94%AF%E6%8C%81android-r8%E7%9A%84%E5%8D%87%E7%BA%A7%E7%89%88%E7%83%AD%E4%BF%AE%E5%A4%8D%E6%A1%86%E6%9E%B6/</guid>
       <description>1. 背景 美团 Robust 是基于方法插桩的实时热修复框架，主要优势是实时生效、零 Hook 兼容所有 Android 版本。2016 年，我们在《Android 热更新方案 Robust》一文中对技术原理做了详细介绍，主要通过给每个方法插入 IF 分支来动态控制代码逻辑，进而实现热修复。其核心主要有两部分：一个是代码插桩，一个是自动补丁。
@@ -200,7 +200,7 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
     <item>
       <title>超大规模数据库集群保稳系列之二：数据库攻防演练建设实践</title>
       <link>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%94%BB%E9%98%B2%E6%BC%94%E7%BB%83%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:33 +0000</pubDate>
+      <pubDate>Mon, 17 Jul 2023 03:19:33 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%94%BB%E9%98%B2%E6%BC%94%E7%BB%83%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</guid>
       <description>01 背景 1.1 初识混沌工程 首先我们先了解一下什么是混沌工程？简单而言，混沌工程是在系统上进行实验的技术手段，目的是建立对系统抵御生产环境中失控条件的能力以及信心。这主要体现在两个方面，从系统角度来讲，混沌工程可以提升我们架构的容错能力和韧性，降低故障发生率和复发率，提升系统用户在使用时的体验；从人员角度来讲，通过混沌工程我们可以加深对架构的理解，在处理故障时能提高整体的应急效率，并且能主动去探究系统中潜在的一些问题。
@@ -214,7 +214,7 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
     <item>
       <title>CVPR 2023 | 美团技术团队精选论文解读</title>
       <link>https://wfsui.github.io/posts/cvpr-2023-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:32 +0000</pubDate>
+      <pubDate>Mon, 17 Jul 2023 03:19:32 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/cvpr-2023-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
       <description>写在前面 CVPR 全称为 IEEE Conference on Computer Vision and Pattern Recognition，国际计算机视觉与模式识别会议。该会议始于1983年，与ICCV和ECCV并称计算机视觉方向的三大顶级会议。根据谷歌学术公布的2022年最新学术期刊和会议影响力排名，CVPR在所有学术刊物中位居第4，仅次于Nature、NEJM和Science。2023年，CVPR共收到全球9155篇论文投稿，最终2360篇被接收，接收率约为25.78%。
@@ -222,9 +222,23 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
     </item>
     
     <item>
+      <title>MySQL自治平台建设的内核原理及实践（下）</title>
+      <link>https://wfsui.github.io/posts/mysql%E8%87%AA%E6%B2%BB%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE%E7%9A%84%E5%86%85%E6%A0%B8%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E8%B7%B5%E4%B8%8B/</link>
+      <pubDate>Mon, 17 Jul 2023 03:19:32 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/mysql%E8%87%AA%E6%B2%BB%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE%E7%9A%84%E5%86%85%E6%A0%B8%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E8%B7%B5%E4%B8%8B/</guid>
+      <description>| B站视频：美团数据库自治服务平台建设
+0 前文回顾 在《MySQL自治平台建设的内核原理及实践（上）》一文中，我们主要介绍了数据库的异常发现与诊断方面的内容，在诊断方面经常会碰到一些难以找出根因的Case。针对这些疑难杂症Case，通过本篇可以了解到，如何通过内核可观测性以及全量SQL来解决这些问题。除此之外，在得出根因后，如何处理异常，如何对SQL进行优化，以及如何进行SQL治理等相关方面问题，也将在本篇中给予解答。
+1 内核可观测性建设 1.1 内核可观测性建设 1.1.1 性能诊断挑战 在自治性能诊断平台的建设过程中，我们发现如下两大挑战：
+很多SQL性能抖动的问题找不出根因，比如SQL的执行时长莫名其妙的突然变大，其执行计划良好、扫描跟返回的行数都很少，也没有行锁、MDL锁相关锁阻塞；查看慢查询日志，也没有哪个字段的耗时比较高，但是SQL的执行时长就是突然变长，有时候达到几十秒长，而平时往往是几毫秒，各种分析后找不出原因。 有时候在诊断一些指标异常的根因时，凭借的是不太严格的经验，而不是量化分析，比如thread_running或者slow_queries值突然升高的时候，可能会通过表information_schema.processlist查看当前的活跃会话中线程的状态，看一下状态是不是有行锁或者MDL锁之类的阻塞，或者通过慢查询日志里的相关数据来诊断根因。这里的挑战是：我们看到的是整个SQL某个时间点的瞬时状态，或者只是整个SQL执行过程中的部分数据，而不是整体的数据，所以得出的根因诊断可能是片面的，也许一瞬间看到的是行锁，但是大部分时间被MDL锁阻塞。 1.1.2 解决思路 如果使用的是社区版本的MySQL，基本上都会面临上面两大问题。我们先从内核的角度分析一下这两个挑战，对于第一个挑战，主要是对MySQL在内核层面执行细节不够了解，比如一条SQL执行了10s，而从内核层面来看的话，这十秒的时间可能会有几百个步骤组成，检查后可能发现row或者MDL锁等待时间加起来只有1秒，那么其他的9秒的耗时在哪里呢？可能发生在这几百个步骤中的任何一个或者多个，所以如果没有这几百个步骤的明细数据，就无法诊断出突然出现的性能问题的根因。
+第二个问题跟第一个问题从本质上来说是一样的。由于采集的数据是某个时间点的快照数据（通过活跃会话），或者只是部分指标的数据（通过慢查询日志），所以我们看到的只是片面的信息，而没有办法获取到整个SQL的完整的耗时分布信息。
+1.1.3 Wait耗时量化分析法 在分析完原因之后，我们参考了TSA的思想，同时结合MySQL自身的特点来做基于Wait的内核可观测性的建设。从TSA可以看出，SQL执行的总耗时无非就是由Off-CPU跟ON-CPU两大部分组成，如果SQL有耗时长的问题，首先要确认是在OnCPU还是在OffCPU上耗时多。如果是前者，那么说明SQL本身有问题，比如消耗资源太多（比如无效索引造成扫描行数过多）；如果是后者，那么说明SQL本身没有问题，而是受到干扰或者系统资源不足，进而造成OffCPU层面耗时过多。</description>
+    </item>
+    
+    <item>
       <title>超大规模数据库集群保稳系列之三：美团数据库容灾体系建设实践</title>
       <link>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%B9%E7%81%BE%E4%BD%93%E7%B3%BB%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:32 +0000</pubDate>
+      <pubDate>Mon, 17 Jul 2023 03:19:32 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%B9%E7%81%BE%E4%BD%93%E7%B3%BB%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 容灾介绍 我们通常会把故障分为三大类，一是主机故障，二是机房故障，三是地域故障。每类故障都有各自的诱发因素，而从主机到机房再到地域，故障发生概率依次越来越小，而故障的影响却越来越大。
@@ -240,7 +254,7 @@ N+1架构：在业界也称散部或者多AZ部署⽅案，将容量为C的系�
     <item>
       <title>MySQL自治平台建设的内核原理及实践（上）</title>
       <link>https://wfsui.github.io/posts/mysql%E8%87%AA%E6%B2%BB%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE%E7%9A%84%E5%86%85%E6%A0%B8%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E8%B7%B5%E4%B8%8A/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:31 +0000</pubDate>
+      <pubDate>Mon, 17 Jul 2023 03:19:31 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/mysql%E8%87%AA%E6%B2%BB%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE%E7%9A%84%E5%86%85%E6%A0%B8%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E8%B7%B5%E4%B8%8A/</guid>
       <description>| B站视频：美团数据库自治服务平台建设
@@ -251,23 +265,9 @@ N+1架构：在业界也称散部或者多AZ部署⽅案，将容量为C的系�
     </item>
     
     <item>
-      <title>MySQL自治平台建设的内核原理及实践（下）</title>
-      <link>https://wfsui.github.io/posts/mysql%E8%87%AA%E6%B2%BB%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE%E7%9A%84%E5%86%85%E6%A0%B8%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E8%B7%B5%E4%B8%8B/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:31 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/mysql%E8%87%AA%E6%B2%BB%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE%E7%9A%84%E5%86%85%E6%A0%B8%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E8%B7%B5%E4%B8%8B/</guid>
-      <description>| B站视频：美团数据库自治服务平台建设
-0 前文回顾 在《MySQL自治平台建设的内核原理及实践（上）》一文中，我们主要介绍了数据库的异常发现与诊断方面的内容，在诊断方面经常会碰到一些难以找出根因的Case。针对这些疑难杂症Case，通过本篇可以了解到，如何通过内核可观测性以及全量SQL来解决这些问题。除此之外，在得出根因后，如何处理异常，如何对SQL进行优化，以及如何进行SQL治理等相关方面问题，也将在本篇中给予解答。
-1 内核可观测性建设 1.1 内核可观测性建设 1.1.1 性能诊断挑战 在自治性能诊断平台的建设过程中，我们发现如下两大挑战：
-很多SQL性能抖动的问题找不出根因，比如SQL的执行时长莫名其妙的突然变大，其执行计划良好、扫描跟返回的行数都很少，也没有行锁、MDL锁相关锁阻塞；查看慢查询日志，也没有哪个字段的耗时比较高，但是SQL的执行时长就是突然变长，有时候达到几十秒长，而平时往往是几毫秒，各种分析后找不出原因。 有时候在诊断一些指标异常的根因时，凭借的是不太严格的经验，而不是量化分析，比如thread_running或者slow_queries值突然升高的时候，可能会通过表information_schema.processlist查看当前的活跃会话中线程的状态，看一下状态是不是有行锁或者MDL锁之类的阻塞，或者通过慢查询日志里的相关数据来诊断根因。这里的挑战是：我们看到的是整个SQL某个时间点的瞬时状态，或者只是整个SQL执行过程中的部分数据，而不是整体的数据，所以得出的根因诊断可能是片面的，也许一瞬间看到的是行锁，但是大部分时间被MDL锁阻塞。 1.1.2 解决思路 如果使用的是社区版本的MySQL，基本上都会面临上面两大问题。我们先从内核的角度分析一下这两个挑战，对于第一个挑战，主要是对MySQL在内核层面执行细节不够了解，比如一条SQL执行了10s，而从内核层面来看的话，这十秒的时间可能会有几百个步骤组成，检查后可能发现row或者MDL锁等待时间加起来只有1秒，那么其他的9秒的耗时在哪里呢？可能发生在这几百个步骤中的任何一个或者多个，所以如果没有这几百个步骤的明细数据，就无法诊断出突然出现的性能问题的根因。
-第二个问题跟第一个问题从本质上来说是一样的。由于采集的数据是某个时间点的快照数据（通过活跃会话），或者只是部分指标的数据（通过慢查询日志），所以我们看到的只是片面的信息，而没有办法获取到整个SQL的完整的耗时分布信息。
-1.1.3 Wait耗时量化分析法 在分析完原因之后，我们参考了TSA的思想，同时结合MySQL自身的特点来做基于Wait的内核可观测性的建设。从TSA可以看出，SQL执行的总耗时无非就是由Off-CPU跟ON-CPU两大部分组成，如果SQL有耗时长的问题，首先要确认是在OnCPU还是在OffCPU上耗时多。如果是前者，那么说明SQL本身有问题，比如消耗资源太多（比如无效索引造成扫描行数过多）；如果是后者，那么说明SQL本身没有问题，而是受到干扰或者系统资源不足，进而造成OffCPU层面耗时过多。</description>
-    </item>
-    
-    <item>
       <title>美团外卖智能陪伴型导购的探索与实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%99%BA%E8%83%BD%E9%99%AA%E4%BC%B4%E5%9E%8B%E5%AF%BC%E8%B4%AD%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sat, 15 Jul 2023 03:19:30 +0000</pubDate>
+      <pubDate>Mon, 17 Jul 2023 03:19:31 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%99%BA%E8%83%BD%E9%99%AA%E4%BC%B4%E5%9E%8B%E5%AF%BC%E8%B4%AD%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景 1.1 什么是外卖搜索导购？ 搜索导购是外卖搜索中的个性化搜索词建议模块的统称，在搜索路径中的各处为用户提供引导，提升用户的选购效率。下面按照用户使用外卖搜索的路径来介绍搜索导购的各个模块：① 用户进入外卖首页，美团在顶部搜索框的内部和下方分别提供搜索建议，即框内词和框下词；② 用户点击搜索框会进入到搜索引导页中，我们在历史搜索下方的搜索发现中提供搜索建议；③ 用户在搜索框中主动输入搜索词后，将会唤起搜索词联想功能，即搜索SUG，为用户提供补全搜索词的建议；④ 用户发起搜索后将进入到搜索结果页。

@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Thu, 27 Jul 2023 02:40:37 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%89%8D%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 28 Jul 2023 02:43:06 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%89%8D%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Robust 2.0：支持Android R8的升级版热修复框架</title>
       <link>https://wfsui.github.io/posts/robust-2.0%E6%94%AF%E6%8C%81android-r8%E7%9A%84%E5%8D%87%E7%BA%A7%E7%89%88%E7%83%AD%E4%BF%AE%E5%A4%8D%E6%A1%86%E6%9E%B6/</link>
-      <pubDate>Thu, 27 Jul 2023 02:40:37 +0000</pubDate>
+      <pubDate>Fri, 28 Jul 2023 02:43:06 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/robust-2.0%E6%94%AF%E6%8C%81android-r8%E7%9A%84%E5%8D%87%E7%BA%A7%E7%89%88%E7%83%AD%E4%BF%AE%E5%A4%8D%E6%A1%86%E6%9E%B6/</guid>
       <description>1. 背景 美团 Robust 是基于方法插桩的实时热修复框架，主要优势是实时生效、零 Hook 兼容所有 Android 版本。2016 年，我们在《Android 热更新方案 Robust》一文中对技术原理做了详细介绍，主要通过给每个方法插入 IF 分支来动态控制代码逻辑，进而实现热修复。其核心主要有两部分：一个是代码插桩，一个是自动补丁。

@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 31 Jul 2023 02:45:34 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 01 Aug 2023 02:48:54 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>算法中七种常见的时间复杂度</title>
       <link>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</link>
-      <pubDate>Mon, 31 Jul 2023 02:45:34 +0000</pubDate>
+      <pubDate>Tue, 01 Aug 2023 02:48:54 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</guid>
       <description>这是我的推广信息，以激励自己更好的分享自己的知识和经验！也希望看到的你能够多多支持，谢谢！
@@ -22,7 +22,7 @@
     <item>
       <title>交互式推荐在外卖场景的探索与应用</title>
       <link>https://wfsui.github.io/posts/%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%8E%A8%E8%8D%90%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Mon, 31 Jul 2023 02:45:30 +0000</pubDate>
+      <pubDate>Tue, 01 Aug 2023 02:48:50 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%8E%A8%E8%8D%90%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</guid>
       <description>1. 背景 1.1 什么是交互式推荐？ 交互式推荐是一种互动式实时推荐产品模块，主要通过理解用户需求、以互动的方式进行推荐。交互式推荐由Youtube在2018年提出[1]，主要用于解决推荐系统的延迟[2]和与用户互动偏弱的问题。
@@ -38,7 +38,7 @@
     <item>
       <title>大规模食品图像识别：T-PAMI 2023论文解读</title>
       <link>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%A3%9F%E5%93%81%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%ABt-pami-2023%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Mon, 31 Jul 2023 02:45:30 +0000</pubDate>
+      <pubDate>Tue, 01 Aug 2023 02:48:50 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%A3%9F%E5%93%81%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%ABt-pami-2023%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
       <description>1 引言 视觉智能部与中科院计算所于2020-2021年度展开了《细粒度菜品图像识别和检索》科研课题合作，本文系双方联合在IEEE T-PAMI2023发布论文《Large Scale Visual Food Recognition》 (Weiqing Min, Zhiling Wang, Yuxin Liu, Mengjiang Luo, Liping Kang, Xiaoming Wei, Xiaolin Wei, Shuqiang Jiang*) 的解读。IEEE T-PAMI全称为IEEE Transactions on Pattern Analysis and Machine Intelligence，是模式识别、计算机视觉及机器学习领域的国际顶级期刊，2022年公布的影响因子为24.</description>
@@ -47,7 +47,7 @@
     <item>
       <title>美团视觉GPU推理服务部署架构优化实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%89gpu%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 31 Jul 2023 02:45:30 +0000</pubDate>
+      <pubDate>Tue, 01 Aug 2023 02:48:50 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%89gpu%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
       <description>0. 导读 美团视觉面向本地生活服务，在众多场景上落地应用了文字识别、图像质量评价、视频理解等视觉AI技术。此前，在线推理服务使用的GPU资源不断增加，但服务GPU利用率普遍较低，浪费大量计算资源，增加了视觉AI应用成本，这是美团也是很多企业亟需解决的问题。
@@ -63,7 +63,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>SOTA！目标检测开源框架YOLOv6 3.0版本来啦</title>
       <link>https://wfsui.github.io/posts/sota%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6-3.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</link>
-      <pubDate>Mon, 31 Jul 2023 02:45:29 +0000</pubDate>
+      <pubDate>Tue, 01 Aug 2023 02:48:49 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/sota%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6-3.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</guid>
       <description>1. 概述 1 月 6 日，美团视觉智能部发布了 YOLOv6 3.0 版本，再一次将目标检测的综合性能推向新高。本次更新除了对 YOLOv6-N/S/M/L 模型进行全系列升级之外，还推出了大分辨率 P6 模型。其中，YOLOv6-L6 检测精度达到 57.2% AP，在 T4 卡上推理速度可达 29 FPS，超越 YOLOv7-E6E，取得当前实时目标检测榜单 SOTA。</description>
@@ -72,7 +72,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>ICDE 2023 | 多场景多任务学习在美团到店餐饮推荐的实践</title>
       <link>https://wfsui.github.io/posts/icde-2023-%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E9%A4%90%E9%A5%AE%E6%8E%A8%E8%8D%90%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 31 Jul 2023 02:45:28 +0000</pubDate>
+      <pubDate>Tue, 01 Aug 2023 02:48:48 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/icde-2023-%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E9%A4%90%E9%A5%AE%E6%8E%A8%E8%8D%90%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>随着推荐算法技术的不断发展，跨场景学习已经受到了越来越多的研究人员的关注。美团到餐算法团队受到业界相关技术的启发，不断探索到店餐饮多场景推荐的优化问题，在多场景多任务学习的推荐领域中积累了较多的应用经验。团队使用到店餐饮全域推荐场景数据训练统一的多场景多任务学习模型，减少了重复性开发，并在多个到店餐饮推荐场景进行落地，取得了较为显著的效果。
@@ -86,7 +86,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>低延迟流式语音识别技术在人机语音交互场景中的实践</title>
       <link>https://wfsui.github.io/posts/%E4%BD%8E%E5%BB%B6%E8%BF%9F%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF%E5%9C%A8%E4%BA%BA%E6%9C%BA%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 31 Jul 2023 02:45:27 +0000</pubDate>
+      <pubDate>Tue, 01 Aug 2023 02:48:47 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%BD%8E%E5%BB%B6%E8%BF%9F%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF%E5%9C%A8%E4%BA%BA%E6%9C%BA%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 前言 1.1 语音识别技术简介 人机交互一直都是人工智能大背景下的“热门话题”，语音交互作为人机交互的一个重要分支，具有广泛的应用价值，也被应用到美团的多个业务场景中，如智能客服、电话营销和电话满意度反馈等。而流式语音识别技术是整个交互链条的入口，对交互体验影响巨大。
@@ -98,7 +98,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>CVPR 2023 | 美团技术团队精选论文解读</title>
       <link>https://wfsui.github.io/posts/cvpr-2023-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Mon, 31 Jul 2023 02:45:25 +0000</pubDate>
+      <pubDate>Tue, 01 Aug 2023 02:48:44 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/cvpr-2023-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
       <description>写在前面 CVPR 全称为 IEEE Conference on Computer Vision and Pattern Recognition，国际计算机视觉与模式识别会议。该会议始于1983年，与ICCV和ECCV并称计算机视觉方向的三大顶级会议。根据谷歌学术公布的2022年最新学术期刊和会议影响力排名，CVPR在所有学术刊物中位居第4，仅次于Nature、NEJM和Science。2023年，CVPR共收到全球9155篇论文投稿，最终2360篇被接收，接收率约为25.78%。
@@ -108,7 +108,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>美团外卖智能陪伴型导购的探索与实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%99%BA%E8%83%BD%E9%99%AA%E4%BC%B4%E5%9E%8B%E5%AF%BC%E8%B4%AD%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 31 Jul 2023 02:45:24 +0000</pubDate>
+      <pubDate>Tue, 01 Aug 2023 02:48:43 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%99%BA%E8%83%BD%E9%99%AA%E4%BC%B4%E5%9E%8B%E5%AF%BC%E8%B4%AD%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景 1.1 什么是外卖搜索导购？ 搜索导购是外卖搜索中的个性化搜索词建议模块的统称，在搜索路径中的各处为用户提供引导，提升用户的选购效率。下面按照用户使用外卖搜索的路径来介绍搜索导购的各个模块：① 用户进入外卖首页，美团在顶部搜索框的内部和下方分别提供搜索建议，即框内词和框下词；② 用户点击搜索框会进入到搜索引导页中，我们在历史搜索下方的搜索发现中提供搜索建议；③ 用户在搜索框中主动输入搜索词后，将会唤起搜索词联想功能，即搜索SUG，为用户提供补全搜索词的建议；④ 用户发起搜索后将进入到搜索结果页。
@@ -122,7 +122,7 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
     <item>
       <title>美团外卖推荐关于用户新颖体验优化的技术探索</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E5%85%B3%E4%BA%8E%E7%94%A8%E6%88%B7%E6%96%B0%E9%A2%96%E4%BD%93%E9%AA%8C%E4%BC%98%E5%8C%96%E7%9A%84%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Mon, 31 Jul 2023 02:45:23 +0000</pubDate>
+      <pubDate>Tue, 01 Aug 2023 02:48:42 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E5%85%B3%E4%BA%8E%E7%94%A8%E6%88%B7%E6%96%B0%E9%A2%96%E4%BD%93%E9%AA%8C%E4%BC%98%E5%8C%96%E7%9A%84%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%B4%A2/</guid>
       <description>1 背景介绍 1.1 为什么要优化用户新颖性？ 2022年初，美团外卖搜索推荐技术团队通过内部访谈、外部用研，发现用户对外卖首页Feed推荐的新颖性问题诟病较多：首页Feed推荐了过多的复购复点商家，无法满足用户尝新的诉求。

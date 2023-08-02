@@ -331,10 +331,10 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">@AllArgsConstructor</span>
 </span></span><span style="display:flex;"><span><span style="color:#268bd2">@Getter</span>
 </span></span><span style="display:flex;"><span><span style="color:#268bd2">enum</span> ActionType <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    START<span style="color:#719e07">(</span><span style="color:#2aa198">1</span><span style="color:#719e07">,</span> <span style="color:#2aa198">&#34;开始&#34;</span><span style="color:#719e07">),</span>
-</span></span><span style="display:flex;"><span>    STOP<span style="color:#719e07">(</span><span style="color:#2aa198">2</span><span style="color:#719e07">,</span> <span style="color:#2aa198">&#34;暂停&#34;</span><span style="color:#719e07">),</span>
-</span></span><span style="display:flex;"><span>    ACHIEVE<span style="color:#719e07">(</span><span style="color:#2aa198">3</span><span style="color:#719e07">,</span> <span style="color:#2aa198">&#34;完成&#34;</span><span style="color:#719e07">),</span>
-</span></span><span style="display:flex;"><span>    EXPIRE<span style="color:#719e07">(</span><span style="color:#2aa198">4</span><span style="color:#719e07">,</span> <span style="color:#2aa198">&#34;过期&#34;</span><span style="color:#719e07">)</span>
+</span></span><span style="display:flex;"><span>    START<span style="color:#719e07">(</span>1<span style="color:#719e07">,</span> <span style="color:#2aa198">&#34;开始&#34;</span><span style="color:#719e07">),</span>
+</span></span><span style="display:flex;"><span>    STOP<span style="color:#719e07">(</span>2<span style="color:#719e07">,</span> <span style="color:#2aa198">&#34;暂停&#34;</span><span style="color:#719e07">),</span>
+</span></span><span style="display:flex;"><span>    ACHIEVE<span style="color:#719e07">(</span>3<span style="color:#719e07">,</span> <span style="color:#2aa198">&#34;完成&#34;</span><span style="color:#719e07">),</span>
+</span></span><span style="display:flex;"><span>    EXPIRE<span style="color:#719e07">(</span>4<span style="color:#719e07">,</span> <span style="color:#2aa198">&#34;过期&#34;</span><span style="color:#719e07">)</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#719e07">;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> <span style="color:#268bd2">final</span> <span style="color:#dc322f">int</span> code<span style="color:#719e07">;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> <span style="color:#268bd2">final</span> String message<span style="color:#719e07">;</span>
@@ -566,7 +566,7 @@
 </span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span><span style="color:#719e07">.</span>type <span style="color:#719e07">=</span> type<span style="color:#719e07">;</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#586e75">// id的构建部分依赖于活动的type
 </span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>        <span style="color:#719e07">if</span> <span style="color:#719e07">(</span><span style="color:#2aa198">&#34;period&#34;</span><span style="color:#719e07">.</span>equals<span style="color:#719e07">(</span>type<span style="color:#719e07">))</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            id <span style="color:#719e07">=</span> <span style="color:#2aa198">0</span>L<span style="color:#719e07">;</span>
+</span></span><span style="display:flex;"><span>            id <span style="color:#719e07">=</span> 0L<span style="color:#719e07">;</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">Activity</span><span style="color:#719e07">(</span>String type<span style="color:#719e07">,</span> Long id<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
@@ -584,7 +584,7 @@
 </span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span><span style="color:#719e07">.</span>material <span style="color:#719e07">=</span> material<span style="color:#719e07">;</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#586e75">// name的构建完全依赖于活动的type
 </span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>        <span style="color:#719e07">if</span> <span style="color:#719e07">(</span><span style="color:#2aa198">&#34;period&#34;</span><span style="color:#719e07">.</span>equals<span style="color:#719e07">(</span>type<span style="color:#719e07">))</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">this</span><span style="color:#719e07">.</span>id <span style="color:#719e07">=</span> <span style="color:#2aa198">0</span>L<span style="color:#719e07">;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">this</span><span style="color:#719e07">.</span>id <span style="color:#719e07">=</span> 0L<span style="color:#719e07">;</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#719e07">this</span><span style="color:#719e07">.</span>name <span style="color:#719e07">=</span> <span style="color:#2aa198">&#34;period&#34;</span> <span style="color:#719e07">+</span> name<span style="color:#719e07">;</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span> <span style="color:#719e07">else</span> <span style="color:#719e07">{</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#719e07">this</span><span style="color:#719e07">.</span>name <span style="color:#719e07">=</span> <span style="color:#2aa198">&#34;normal&#34;</span> <span style="color:#719e07">+</span> name<span style="color:#719e07">;</span>
@@ -662,7 +662,7 @@
 </span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#268bd2">public</span> T <span style="color:#268bd2">setId</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#719e07">if</span> <span style="color:#719e07">(</span><span style="color:#2aa198">&#34;period&#34;</span><span style="color:#719e07">.</span>equals<span style="color:#719e07">(</span><span style="color:#719e07">this</span><span style="color:#719e07">.</span>type<span style="color:#719e07">))</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#719e07">this</span><span style="color:#719e07">.</span>id <span style="color:#719e07">=</span> <span style="color:#2aa198">0</span>L<span style="color:#719e07">;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#719e07">this</span><span style="color:#719e07">.</span>id <span style="color:#719e07">=</span> 0L<span style="color:#719e07">;</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#719e07">}</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#719e07">return</span> <span style="color:#719e07">(</span>T<span style="color:#719e07">)</span> <span style="color:#719e07">this</span><span style="color:#719e07">;</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>

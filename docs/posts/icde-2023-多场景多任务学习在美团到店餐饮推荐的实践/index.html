@@ -12,8 +12,8 @@
 仅根据单场景自身的数据进行建模，无法利用到用户在跨场景中丰富的行为信息，忽视了场景共性信息，特别是考虑到多种场景中可能会存在重复展示的商品（在上图1中，红色矩形框圈中的其实是相同的商品）。 一些长尾的业务场景由于流量较小且用户行为较为稀疏，数据量不足以让模型有效地进行建模。 由于每个场景的特征挖掘、模型训练和上线部署是独立开发且相互隔离的，这会大大增加计算成本和维护负担。 总的来讲，推荐算法对各场景单独建模存在诸多的局限性。然而，简单地将多个场景数据集进行合并训练一个排序模型来提供服务，并不能有效地捕获到每个场景的特有信息。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/icde-2023-%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E9%A4%90%E9%A5%AE%E6%8E%A8%E8%8D%90%E7%9A%84%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-08-04T02:42:55+00:00" />
-<meta property="article:modified_time" content="2023-08-04T02:42:55+00:00" />
+<meta property="article:published_time" content="2023-08-06T02:40:05+00:00" />
+<meta property="article:modified_time" content="2023-08-06T02:40:05+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="ICDE 2023 | 多场景多任务学习在美团到店餐饮推荐的实践"/>
 <meta name="twitter:description" content="随着推荐算法技术的不断发展，跨场景学习已经受到了越来越多的研究人员的关注。美团到餐算法团队受到业界相关技术的启发，不断探索到店餐饮多场景推荐的优化问题，在多场景多任务学习的推荐领域中积累了较多的应用经验。团队使用到店餐饮全域推荐场景数据训练统一的多场景多任务学习模型，减少了重复性开发，并在多个到店餐饮推荐场景进行落地，取得了较为显著的效果。
@@ -67,7 +67,7 @@
 
 		<div class="post-header">
 			<h1 class="title">ICDE 2023 | 多场景多任务学习在美团到店餐饮推荐的实践</h1>
-			<div class="meta">Posted at &mdash; Aug 4, 2023</div>
+			<div class="meta">Posted at &mdash; Aug 6, 2023</div>
 		</div>
 
 		<div class="markdown">

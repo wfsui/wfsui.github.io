@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sun, 03 Sep 2023 02:40:04 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/rome/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 05 Sep 2023 02:39:48 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/rome/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>美团前端研发框架Rome实践和演进趋势</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%89%8D%E7%AB%AF%E7%A0%94%E5%8F%91%E6%A1%86%E6%9E%B6rome%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%BC%94%E8%BF%9B%E8%B6%8B%E5%8A%BF/</link>
-      <pubDate>Sun, 03 Sep 2023 02:40:04 +0000</pubDate>
+      <pubDate>Tue, 05 Sep 2023 02:39:48 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%89%8D%E7%AB%AF%E7%A0%94%E5%8F%91%E6%A1%86%E6%9E%B6rome%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%BC%94%E8%BF%9B%E8%B6%8B%E5%8A%BF/</guid>
       <description>1 背景介绍 1.1 业务背景 首先介绍一下业务的背景，这里主要从3个维度展开。第一个维度是组织维度，在立项之初，恰逢美团的多个事业群合并，因前端规模比较大，横向的流动协同比较多（需要跨部门支持需求，进行跨系统协作等等）。此外，美团到店事业群新人比例比较高，校招和新员工比例很高，我们会帮助新同学快速融入团队，需要完成一些较为基础的开发工作。

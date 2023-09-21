@@ -1,6 +1,6 @@
 ---
 title: "JPA 和 Mybatis 技术选型"
-date: 2023-09-20T02:40:04+0000
+date: 2023-09-21T02:40:29+0000
 tags: [面试, DDD, Java体系架构]
 ---
 
@@ -34,7 +34,7 @@ tags: [面试, DDD, Java体系架构]
 
 
 
-# 聚合根和值对象
+## 聚合根和值对象
 
 
 领域驱动设计中有两个广为大家熟知的概念，entity（实体）和 value object（值对象）。
@@ -71,7 +71,7 @@ public class Order {
 
 
 
-# **仓储**
+## **仓储**
 
 
 Repository 模式是领域驱动设计中另一个经典的模式。
@@ -126,7 +126,7 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 > 5. 真正做到了面向领域开发，而不是面向数据库 SQL 开发，面向对象的拥趸者也必然会觉得，这更加的 OO。
 
 
-# Specification
+## Specification
 
 
 上面提到 SpringData JPA 可以借助 Specification 模式代替复杂的 findByOrderNoAndXxxx 一类 SQL 脚本的查询。试想一下，业务不停在变，你怎么知道将来的查询会不会多一个条件 变成 findByOrderNoAndXxxxAndXxxxAndXxxx.... 。SpringData JPA 为了实现领域驱动设计中的 Specification 模式，提供了一些列的 Specification 接口，其中最常用的便是 ：JpaSpecificationExecutor
@@ -145,14 +145,14 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 
 
 
-## 乐观锁
+### 乐观锁
 
 
 为了解决数据并发问题，JPA 中提供了 @Version ，一般在 Entity 中 添加一个 Long version 字段，配合 @Version 注解，SpringData JPA 也考虑到了这一点。这一点侧面体现出，JPA 设计的理念和 SpringData 作为一个工程解决方案的双剑合璧，造就出了一个伟大的设计方案。
 
 
 
-## 复杂的多表查询
+### 复杂的多表查询
 
 
 > 1. 很多人青睐 Mybatis ，原因是其提供了便利的 SQL 操作，自由度高，封装性好…
@@ -166,7 +166,7 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 > **解决方案是**：使用 elasticSearch做视图查询 或者 mongodb 一类的Nosql 去完成。问题本不是问题。
 
 
-# 总结
+## 总结
 
 
 真正走进 JPA，真正走进 SpringData 会发现，我们并不是在解决一个数据库查询问题，并不是在使用一个 ORM 框架，而是真正地在实践领域驱动设计。
@@ -185,10 +185,10 @@ spring data jpa 的好处我相信大家都了解，就是开发速度很快，�
 
 
 
-# JPA复杂 SQL 的支持
+## JPA复杂 SQL 的支持
 
 
-## 第一种方式:@query 注解指定nativeQuery
+### 第一种方式:@query 注解指定nativeQuery
 
 
 这样就可以使用原生sql查询了,示例代码来自官方文档:
@@ -204,7 +204,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 ```
 
 
-## 第二种方式:Customizing individual repositories 提供的功能去实现
+### 第二种方式:Customizing individual repositories 提供的功能去实现
 
 
 如果单靠sql搞不定怎么办？必须要写逻辑怎么办?可以使用官方文档3.6.1 节：Customizing individual repositories 提供的功能去实现，先看官方文档的代码:
@@ -239,14 +239,14 @@ interface UserRepository extends CrudRepository<User, Long>,             Customi
 3. 最后在用UserRepository 去继CustomizedUserRepository接口，就实现了和其他dao 框架的组合使用！！
 
 
-## 结语
+### 结语
 
 
 1. 有了上面介绍的2种功能，你还在担心，使用spring data jpa 会有局限么，他只会加速你的开发速度，并允许你组合使用其他框架，只有好处，没有坏处。。
 2. 学会spring data 其中某1个系列以后，在看其他的，我发现我都不用花时间学。。直接就可以用，对就是这么神奇～～
 
 
-# 其他
+## 其他
 
 
 **市场现状**
@@ -257,7 +257,7 @@ interface UserRepository extends CrudRepository<User, Long>,             Customi
 
 
 
-## **互联网公司更青睐于 mybatis**
+### **互联网公司更青睐于 mybatis**
 
 
 1. **mybatis 更加灵活**。开发迭代模式决定的
@@ -269,7 +269,7 @@ interface UserRepository extends CrudRepository<User, Long>,             Customi
 7. hibernate 使用需要对他有深入的理解，尤其是缓存方面，作为一个持久层框架，性能依然是第一位的。
 
 
-## hibernate 它有着三级缓存
+### hibernate 它有着三级缓存
 
 
 1. 一级缓存是默认开启的
@@ -277,21 +277,21 @@ interface UserRepository extends CrudRepository<User, Long>,             Customi
 3. 三级缓存可以整合业界流行的缓存技术 redis，ecache 等等一起去实现
 
 
-## hibernate 使用中的优化点：
+### hibernate 使用中的优化点：
 
 
 * 缓存的优化
 * 关联查询的懒加载（在开发中，还是不建议过多使用外键去关联操作）
 
 
-## jpa（Java Persistence API） 与 hibernate 的关系：
+### jpa（Java Persistence API） 与 hibernate 的关系：
 
 
 * **Jpa是一种规范，hibernate 也是遵从他的规范的**。
 * springDataJpa 是对 repository 的封装,简化了 repository 的操作
 
 
-## 适用场景
+### 适用场景
 
 
 * 数据分析型的OLAP应用适合用MyBatis，事务处理型OLTP应用适合用JPA。
@@ -300,7 +300,7 @@ interface UserRepository extends CrudRepository<User, Long>,             Customi
 * 从目前的趋势来看OLAP交给NoSQL数据库可能更合适
 
 
-## 两个框架比较
+### 两个框架比较
 
 
 * 从国内开源的应用框架来看，国内使用jpa做orm的人还是比较少，如果换成hibernate还会多一些，所以面临的风险可能就是你会用，和你合作的人不一定会用，如果要多方协作，肯定要考虑这个问题！
@@ -312,7 +312,7 @@ interface UserRepository extends CrudRepository<User, Long>,             Customi
 * 就方言来讲，一般公司选定数据库后再变更微乎其微，所以此处方言的优势可以忽略
 
 
-## JPA和MyBatis的比较
+### JPA和MyBatis的比较
 
 
 `JPA`是个全自动化的对象持久化规范，它使得开发人员只需要针对领域模型编写面向对象的代码，而不必关心底层数据存储和`SQL`查询；而`MyBatis`则是一个能够灵活编写`SQL`语句，并将`SQL`的入参和查询结果映射成`POJOs`的一个持久层框架。所以，从表面上看，`JPA`能方便、自动化更强，而`MyBatis` 在`SQL`语句编写方面则更灵活自由。
@@ -323,7 +323,7 @@ interface UserRepository extends CrudRepository<User, Long>,             Customi
 
 
 
-## 优缺点比较：
+### 优缺点比较：
 
 
 * JPA/Hibernate更自动化而MyBatis更灵活。

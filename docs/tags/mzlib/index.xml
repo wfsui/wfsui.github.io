@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sun, 24 Sep 2023 02:40:26 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/mzlib/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 25 Sep 2023 02:39:54 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/mzlib/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MJDK 如何实现压缩速率的 5 倍提升？</title>
       <link>https://wfsui.github.io/posts/mjdk-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%8E%8B%E7%BC%A9%E9%80%9F%E7%8E%87%E7%9A%84-5-%E5%80%8D%E6%8F%90%E5%8D%87/</link>
-      <pubDate>Sun, 24 Sep 2023 02:40:26 +0000</pubDate>
+      <pubDate>Mon, 25 Sep 2023 02:39:54 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/mjdk-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%8E%8B%E7%BC%A9%E9%80%9F%E7%8E%87%E7%9A%84-5-%E5%80%8D%E6%8F%90%E5%8D%87/</guid>
       <description>1 前言 数据压缩技术[1]因可有效降低数据存储及传输成本，在计算机领域有非常广泛的应用（包括网络传输、文件传输、数据库、操作系统等场景）。主流压缩技术按其原理可划分为无损压缩[2]、有损压缩[3]两类，工作中我们最常用的压缩工具 zip 和 gzip ，压缩函数库 zlib，都是无损压缩技术的应用。Java 应用中对压缩库的使用包括：处理 HTTP 请求时对 body 的压缩/解压缩操作、使用消息队列服务时对大消息体（如&amp;gt;1M）的压缩/解压缩、数据库写入前及读取后对大字段的压缩/解压缩操作等。常见于监控、广告等涉及大数据传输/存储的业务场景。

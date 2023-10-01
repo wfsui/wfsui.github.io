@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sat, 30 Sep 2023 02:40:00 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/code-review/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 01 Oct 2023 02:41:13 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/code-review/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>代码变更风险可视化系统建设与实践</title>
       <link>https://wfsui.github.io/posts/%E4%BB%A3%E7%A0%81%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9%E5%8F%AF%E8%A7%86%E5%8C%96%E7%B3%BB%E7%BB%9F%E5%BB%BA%E8%AE%BE%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sat, 30 Sep 2023 02:40:00 +0000</pubDate>
+      <pubDate>Sun, 01 Oct 2023 02:41:13 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%BB%A3%E7%A0%81%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9%E5%8F%AF%E8%A7%86%E5%8C%96%E7%B3%BB%E7%BB%9F%E5%BB%BA%E8%AE%BE%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 软件系统风险与变更 变更是软件系统进化的推动力，同时也是孕育风险的温床。如果一个系统没有了相应的迭代和变更，那这个系统就会逐渐失去了活性和价值。不过，随着系统进行了变更迭代，软件风险也会慢慢衍生，而规避变更引发的软件风险在质量保障领域是一个较大的挑战。通过对下面典型软件系统架构图分析，我们可提炼出3大类变更维度：

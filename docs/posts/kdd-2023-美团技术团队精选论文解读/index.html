@@ -12,8 +12,8 @@
 只考虑位置偏置和上文信息，但忽略下文影响效果； 同时考虑上下文，Listwise预估后重新排序，该方案存在Evaluation Before Reranking的问题。 以上两个方案在效果上均有损，因此如何在重排阶段同时考虑上下文，并且降低复杂度兼顾可落地性，是一个非常重要的问题。针对以上问题，论文提出了一个名为PIER的端到端重新排序框架，该框架遵循两阶段范式并包含两个主要模块，分别称为FPSM 和OCPM。基于用户页面兴趣偏好，在FPSM中应用SimHash从全排列中快速的生成候选列表集合，降低了落地复杂度；然后在OCPM中设计了一种新颖的全向注意力建模机制，以更好地捕获列表中的上下文信息；最后，通过引入对比学习损失以端到端的方式联合训练这两个模块，使用OCPM的预测值来指导FPSM生成更好的列表。离线实验结果表明，PIER在公开和工业数据集上均优于基线模型，目前已经部署到美团外卖广告场景，取得了较为显著的成果。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/kdd-2023-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-10-01T02:41:16+00:00" />
-<meta property="article:modified_time" content="2023-10-01T02:41:16+00:00" />
+<meta property="article:published_time" content="2023-10-02T02:40:04+00:00" />
+<meta property="article:modified_time" content="2023-10-02T02:40:04+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="KDD 2023 | 美团技术团队精选论文解读"/>
 <meta name="twitter:description" content="ACM SIGKDD（国际数据挖掘与知识发现大会，简称KDD）于1995年首次举办，自此成为数据挖掘领域的重要国际会议之一，也是研究数据挖掘和知识发现这一领域的学者和企业人士分享研究成果、讨论前沿话题、推动技术进步和发展的重要平台。ACM SIGKDD的宗旨是促进数据挖掘的应用和理论研究，支持和推动先进技术和方法的开发和创新，并推广数据挖掘和知识发现领域的教育、培训和普及。该组织致力于提高数据挖掘和知识发现的社会价值，推动其在各个领域的应用和发展。
@@ -67,7 +67,7 @@
 
 		<div class="post-header">
 			<h1 class="title">KDD 2023 | 美团技术团队精选论文解读</h1>
-			<div class="meta">Posted at &mdash; Oct 1, 2023</div>
+			<div class="meta">Posted at &mdash; Oct 2, 2023</div>
 		</div>
 
 		<div class="markdown">

@@ -11,8 +11,8 @@
 数据库采集层：要进行数据库的诊断与分析，需要依靠关键的指标以及SQL文本数据，当前在每个数据库实例上部署一个数据采集程序（rds-agent）统一负责采集、上报关键数值指标以及SQL文本数据。 数据计算与存储层：数据采集层上报上来的数据，依托Kafka、Flink&amp;Spark作为数据缓冲，对关键组件进行相关的数据处理，如SQL解析、SQL模版化、数据聚合等操作，再把处理的结果存入ES、Blade（美团自研的分布式数据库）、Hive等分布式数据库或者大数据平台，提供给上层的平台功能层使用。 平台功能层：此层是整个系统最为重要的部分，由于平台同时服务于DBA运维团队及研发团队，所以平台的建设分成了两条路：1）主要面向DBA用户，按照可观测性建设、异常发现、故障根因分析、故障处理几个阶段来进行建设；2）主要面向研发同学，按照SQL优化建议、风险SQL的发现、分析与SQL治理等跟SQL相关的几个阶段来建设。当然，两者并没有严格界限，这些功能所有的用户都可以同时使用。 接口与展示：平台功能层提供的核心功能会通过Portal来展示，同时为了让平台提供的功能更好地集成在用户自己的系统中，我们也通过OpenAPI的方式对外提供服务。 3 异常发现 数据库产生异常时需要尽早地发现，才能防止异常一进步放大，避免造成真正的故障。异常发现的主要方式是对数据库或者OS的关键数值指标进行监控，相关指标包括seconds_behind_master、slow_queries、thread_running、system load、Threads_connected等等，也可以是业务端研发关注的关键指标，如“应用程序访问数据库的报错数量”、“SQL执行平均耗时”等指标来进行监控。如果这些指标短时间内发生比较大的波动，那么数据库很可能出现了一些异常，这就需要及时进行处理。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/mysql%E8%87%AA%E6%B2%BB%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE%E7%9A%84%E5%86%85%E6%A0%B8%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E8%B7%B5%E4%B8%8A/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-10-02T02:40:06+00:00" />
-<meta property="article:modified_time" content="2023-10-02T02:40:06+00:00" />
+<meta property="article:published_time" content="2023-10-03T02:40:20+00:00" />
+<meta property="article:modified_time" content="2023-10-03T02:40:20+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="MySQL自治平台建设的内核原理及实践（上）"/>
 <meta name="twitter:description" content="| B站视频：美团数据库自治服务平台建设
@@ -65,7 +65,7 @@
 
 		<div class="post-header">
 			<h1 class="title">MySQL自治平台建设的内核原理及实践（上）</h1>
-			<div class="meta">Posted at &mdash; Oct 2, 2023</div>
+			<div class="meta">Posted at &mdash; Oct 3, 2023</div>
 		</div>
 
 		<div class="markdown">

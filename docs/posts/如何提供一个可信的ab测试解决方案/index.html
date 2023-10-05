@@ -16,8 +16,8 @@
 然而在美团履约业务场景中，如调度场景，要测试不同的调度策略对区域内用户体验的影响，策略施加单位是区域，由于区域数量少，同时区域之间各项指标（商家、运力、消费者）差异较大，采用随机分组难以得出同质的实验组、对照组，而且由于区域之间可以共享运力，施加不同策略的实验组、对照组区域之间相互影响，不满足实验单位独立的条件。在这种场景下，我们不能对实验对象进行随机分配，只能有选择的进行实验组和对照组的分配，这种虽然能够控制策略分配但不能控制策略随机分配的实验，我们称之为准实验，常用的准实验方法如双重差分。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/%E5%A6%82%E4%BD%95%E6%8F%90%E4%BE%9B%E4%B8%80%E4%B8%AA%E5%8F%AF%E4%BF%A1%E7%9A%84ab%E6%B5%8B%E8%AF%95%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-10-03T02:40:18+00:00" />
-<meta property="article:modified_time" content="2023-10-03T02:40:18+00:00" />
+<meta property="article:published_time" content="2023-10-05T02:40:28+00:00" />
+<meta property="article:modified_time" content="2023-10-05T02:40:28+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="如何提供一个可信的AB测试解决方案"/>
 <meta name="twitter:description" content="1 背景 虽然AB测试（AB实验）的统计基础已经有一个世纪的历史了，但大规模地构建一个正确可靠的A/B测试平台仍然是一个巨大的挑战：不仅要在实验设计环节应对溢出效应和小样本的双重挑战，平衡好实验偏差与方差以确定合适的实验单元、分组方法和分析方法，给出合理的实验设计，而且要在分析环节应对方差计算、P值计算、多重比较、混淆因素、假阴性（实际策略有效果，但是检测显示无效果）等多种统计陷阱。因此，要获得高质量的结果需要对实验和统计有专家级的理解，这无疑增加了实验门槛，难以达成任何人进行实验都可得出可信结论的目标。
@@ -75,7 +75,7 @@
 
 		<div class="post-header">
 			<h1 class="title">如何提供一个可信的AB测试解决方案</h1>
-			<div class="meta">Posted at &mdash; Oct 3, 2023</div>
+			<div class="meta">Posted at &mdash; Oct 5, 2023</div>
 		</div>
 
 		<div class="markdown">

@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 13 Oct 2023 02:41:08 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%9F%BA%E7%A1%80%E7%A0%94%E5%8F%91%E5%B9%B3%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 16 Oct 2023 02:40:14 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%9F%BA%E7%A1%80%E7%A0%94%E5%8F%91%E5%B9%B3%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>基于AI&#43;数据驱动的慢查询索引推荐</title>
       <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai&#43;%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E7%B4%A2%E5%BC%95%E6%8E%A8%E8%8D%90/</link>
-      <pubDate>Fri, 13 Oct 2023 02:41:08 +0000</pubDate>
+      <pubDate>Mon, 16 Oct 2023 02:40:14 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai&#43;%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E7%B4%A2%E5%BC%95%E6%8E%A8%E8%8D%90/</guid>
       <description>1 背景 随着美团业务量的不断增长，慢查询的数量也日益增多。目前，日均慢查询数量已经超过上亿条，如果仅依靠DBA和开发人员手动地对这些慢查询进行分析并建立合适的索引，显然是不太现实的。为了解决这一难题，美团内部DAS（数据库自治服务）平台已经集成了基于代价的慢查询优化建议来自动地为慢查询推荐索引。然而，仍然存在一些问题：
@@ -25,7 +25,7 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
     <item>
       <title>超大规模数据库集群保稳系列之一：高可用系统</title>
       <link>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E9%AB%98%E5%8F%AF%E7%94%A8%E7%B3%BB%E7%BB%9F/</link>
-      <pubDate>Fri, 13 Oct 2023 02:41:07 +0000</pubDate>
+      <pubDate>Mon, 16 Oct 2023 02:40:13 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%80%E9%AB%98%E5%8F%AF%E7%94%A8%E7%B3%BB%E7%BB%9F/</guid>
       <description>本文整理自主题分享《美团数据库的高可用系统》，系超大规模数据库集群保稳系列的第一篇文章。对数据库而言，非常核心的就是如何保证其高可用性。本文围绕4个方面的内容展开，包括高可用简介、高可用部署、重点模块的设计思考以及对未来思考。希望能够对大家有所帮助或启发。
@@ -44,9 +44,23 @@ $$ C_{N}^{M}=\frac{N *(N-1) \ldots(N-M+1)}{M !</description>
     </item>
     
     <item>
+      <title>MySQL自治平台建设的内核原理及实践（下）</title>
+      <link>https://wfsui.github.io/posts/mysql%E8%87%AA%E6%B2%BB%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE%E7%9A%84%E5%86%85%E6%A0%B8%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E8%B7%B5%E4%B8%8B/</link>
+      <pubDate>Mon, 16 Oct 2023 02:40:12 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/mysql%E8%87%AA%E6%B2%BB%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE%E7%9A%84%E5%86%85%E6%A0%B8%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E8%B7%B5%E4%B8%8B/</guid>
+      <description>| B站视频：美团数据库自治服务平台建设
+0 前文回顾 在《MySQL自治平台建设的内核原理及实践（上）》一文中，我们主要介绍了数据库的异常发现与诊断方面的内容，在诊断方面经常会碰到一些难以找出根因的Case。针对这些疑难杂症Case，通过本篇可以了解到，如何通过内核可观测性以及全量SQL来解决这些问题。除此之外，在得出根因后，如何处理异常，如何对SQL进行优化，以及如何进行SQL治理等相关方面问题，也将在本篇中给予解答。
+1 内核可观测性建设 1.1 内核可观测性建设 1.1.1 性能诊断挑战 在自治性能诊断平台的建设过程中，我们发现如下两大挑战：
+很多SQL性能抖动的问题找不出根因，比如SQL的执行时长莫名其妙的突然变大，其执行计划良好、扫描跟返回的行数都很少，也没有行锁、MDL锁相关锁阻塞；查看慢查询日志，也没有哪个字段的耗时比较高，但是SQL的执行时长就是突然变长，有时候达到几十秒长，而平时往往是几毫秒，各种分析后找不出原因。 有时候在诊断一些指标异常的根因时，凭借的是不太严格的经验，而不是量化分析，比如thread_running或者slow_queries值突然升高的时候，可能会通过表information_schema.processlist查看当前的活跃会话中线程的状态，看一下状态是不是有行锁或者MDL锁之类的阻塞，或者通过慢查询日志里的相关数据来诊断根因。这里的挑战是：我们看到的是整个SQL某个时间点的瞬时状态，或者只是整个SQL执行过程中的部分数据，而不是整体的数据，所以得出的根因诊断可能是片面的，也许一瞬间看到的是行锁，但是大部分时间被MDL锁阻塞。 1.1.2 解决思路 如果使用的是社区版本的MySQL，基本上都会面临上面两大问题。我们先从内核的角度分析一下这两个挑战，对于第一个挑战，主要是对MySQL在内核层面执行细节不够了解，比如一条SQL执行了10s，而从内核层面来看的话，这十秒的时间可能会有几百个步骤组成，检查后可能发现row或者MDL锁等待时间加起来只有1秒，那么其他的9秒的耗时在哪里呢？可能发生在这几百个步骤中的任何一个或者多个，所以如果没有这几百个步骤的明细数据，就无法诊断出突然出现的性能问题的根因。
+第二个问题跟第一个问题从本质上来说是一样的。由于采集的数据是某个时间点的快照数据（通过活跃会话），或者只是部分指标的数据（通过慢查询日志），所以我们看到的只是片面的信息，而没有办法获取到整个SQL的完整的耗时分布信息。
+1.1.3 Wait耗时量化分析法 在分析完原因之后，我们参考了TSA的思想，同时结合MySQL自身的特点来做基于Wait的内核可观测性的建设。从TSA可以看出，SQL执行的总耗时无非就是由Off-CPU跟ON-CPU两大部分组成，如果SQL有耗时长的问题，首先要确认是在OnCPU还是在OffCPU上耗时多。如果是前者，那么说明SQL本身有问题，比如消耗资源太多（比如无效索引造成扫描行数过多）；如果是后者，那么说明SQL本身没有问题，而是受到干扰或者系统资源不足，进而造成OffCPU层面耗时过多。</description>
+    </item>
+    
+    <item>
       <title>超大规模数据库集群保稳系列之三：美团数据库容灾体系建设实践</title>
       <link>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%B9%E7%81%BE%E4%BD%93%E7%B3%BB%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 13 Oct 2023 02:41:06 +0000</pubDate>
+      <pubDate>Mon, 16 Oct 2023 02:40:12 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%B8%89%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%B9%E7%81%BE%E4%BD%93%E7%B3%BB%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 容灾介绍 我们通常会把故障分为三大类，一是主机故障，二是机房故障，三是地域故障。每类故障都有各自的诱发因素，而从主机到机房再到地域，故障发生概率依次越来越小，而故障的影响却越来越大。
@@ -62,7 +76,7 @@ N+1架构：在业界也称散部或者多AZ部署⽅案，将容量为C的系�
     <item>
       <title>超大规模数据库集群保稳系列之二：数据库攻防演练建设实践</title>
       <link>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%94%BB%E9%98%B2%E6%BC%94%E7%BB%83%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 13 Oct 2023 02:41:06 +0000</pubDate>
+      <pubDate>Mon, 16 Oct 2023 02:40:12 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E8%B6%85%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E4%BF%9D%E7%A8%B3%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%94%BB%E9%98%B2%E6%BC%94%E7%BB%83%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/</guid>
       <description>01 背景 1.1 初识混沌工程 首先我们先了解一下什么是混沌工程？简单而言，混沌工程是在系统上进行实验的技术手段，目的是建立对系统抵御生产环境中失控条件的能力以及信心。这主要体现在两个方面，从系统角度来讲，混沌工程可以提升我们架构的容错能力和韧性，降低故障发生率和复发率，提升系统用户在使用时的体验；从人员角度来讲，通过混沌工程我们可以加深对架构的理解，在处理故障时能提高整体的应急效率，并且能主动去探究系统中潜在的一些问题。
@@ -76,7 +90,7 @@ N+1架构：在业界也称散部或者多AZ部署⽅案，将容量为C的系�
     <item>
       <title>MySQL自治平台建设的内核原理及实践（上）</title>
       <link>https://wfsui.github.io/posts/mysql%E8%87%AA%E6%B2%BB%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE%E7%9A%84%E5%86%85%E6%A0%B8%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E8%B7%B5%E4%B8%8A/</link>
-      <pubDate>Fri, 13 Oct 2023 02:41:05 +0000</pubDate>
+      <pubDate>Mon, 16 Oct 2023 02:40:11 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/mysql%E8%87%AA%E6%B2%BB%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE%E7%9A%84%E5%86%85%E6%A0%B8%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E8%B7%B5%E4%B8%8A/</guid>
       <description>| B站视频：美团数据库自治服务平台建设
@@ -87,23 +101,9 @@ N+1架构：在业界也称散部或者多AZ部署⽅案，将容量为C的系�
     </item>
     
     <item>
-      <title>MySQL自治平台建设的内核原理及实践（下）</title>
-      <link>https://wfsui.github.io/posts/mysql%E8%87%AA%E6%B2%BB%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE%E7%9A%84%E5%86%85%E6%A0%B8%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E8%B7%B5%E4%B8%8B/</link>
-      <pubDate>Fri, 13 Oct 2023 02:41:05 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/mysql%E8%87%AA%E6%B2%BB%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE%E7%9A%84%E5%86%85%E6%A0%B8%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E8%B7%B5%E4%B8%8B/</guid>
-      <description>| B站视频：美团数据库自治服务平台建设
-0 前文回顾 在《MySQL自治平台建设的内核原理及实践（上）》一文中，我们主要介绍了数据库的异常发现与诊断方面的内容，在诊断方面经常会碰到一些难以找出根因的Case。针对这些疑难杂症Case，通过本篇可以了解到，如何通过内核可观测性以及全量SQL来解决这些问题。除此之外，在得出根因后，如何处理异常，如何对SQL进行优化，以及如何进行SQL治理等相关方面问题，也将在本篇中给予解答。
-1 内核可观测性建设 1.1 内核可观测性建设 1.1.1 性能诊断挑战 在自治性能诊断平台的建设过程中，我们发现如下两大挑战：
-很多SQL性能抖动的问题找不出根因，比如SQL的执行时长莫名其妙的突然变大，其执行计划良好、扫描跟返回的行数都很少，也没有行锁、MDL锁相关锁阻塞；查看慢查询日志，也没有哪个字段的耗时比较高，但是SQL的执行时长就是突然变长，有时候达到几十秒长，而平时往往是几毫秒，各种分析后找不出原因。 有时候在诊断一些指标异常的根因时，凭借的是不太严格的经验，而不是量化分析，比如thread_running或者slow_queries值突然升高的时候，可能会通过表information_schema.processlist查看当前的活跃会话中线程的状态，看一下状态是不是有行锁或者MDL锁之类的阻塞，或者通过慢查询日志里的相关数据来诊断根因。这里的挑战是：我们看到的是整个SQL某个时间点的瞬时状态，或者只是整个SQL执行过程中的部分数据，而不是整体的数据，所以得出的根因诊断可能是片面的，也许一瞬间看到的是行锁，但是大部分时间被MDL锁阻塞。 1.1.2 解决思路 如果使用的是社区版本的MySQL，基本上都会面临上面两大问题。我们先从内核的角度分析一下这两个挑战，对于第一个挑战，主要是对MySQL在内核层面执行细节不够了解，比如一条SQL执行了10s，而从内核层面来看的话，这十秒的时间可能会有几百个步骤组成，检查后可能发现row或者MDL锁等待时间加起来只有1秒，那么其他的9秒的耗时在哪里呢？可能发生在这几百个步骤中的任何一个或者多个，所以如果没有这几百个步骤的明细数据，就无法诊断出突然出现的性能问题的根因。
-第二个问题跟第一个问题从本质上来说是一样的。由于采集的数据是某个时间点的快照数据（通过活跃会话），或者只是部分指标的数据（通过慢查询日志），所以我们看到的只是片面的信息，而没有办法获取到整个SQL的完整的耗时分布信息。
-1.1.3 Wait耗时量化分析法 在分析完原因之后，我们参考了TSA的思想，同时结合MySQL自身的特点来做基于Wait的内核可观测性的建设。从TSA可以看出，SQL执行的总耗时无非就是由Off-CPU跟ON-CPU两大部分组成，如果SQL有耗时长的问题，首先要确认是在OnCPU还是在OffCPU上耗时多。如果是前者，那么说明SQL本身有问题，比如消耗资源太多（比如无效索引造成扫描行数过多）；如果是后者，那么说明SQL本身没有问题，而是受到干扰或者系统资源不足，进而造成OffCPU层面耗时过多。</description>
-    </item>
-    
-    <item>
       <title>斩获CVPR 2023竞赛2项冠军｜美团街景理解中视觉分割技术的探索与应用</title>
       <link>https://wfsui.github.io/posts/%E6%96%A9%E8%8E%B7cvpr-2023%E7%AB%9E%E8%B5%9B2%E9%A1%B9%E5%86%A0%E5%86%9B%E7%BE%8E%E5%9B%A2%E8%A1%97%E6%99%AF%E7%90%86%E8%A7%A3%E4%B8%AD%E8%A7%86%E8%A7%89%E5%88%86%E5%89%B2%E6%8A%80%E6%9C%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Fri, 13 Oct 2023 02:41:04 +0000</pubDate>
+      <pubDate>Mon, 16 Oct 2023 02:40:10 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%96%A9%E8%8E%B7cvpr-2023%E7%AB%9E%E8%B5%9B2%E9%A1%B9%E5%86%A0%E5%86%9B%E7%BE%8E%E5%9B%A2%E8%A1%97%E6%99%AF%E7%90%86%E8%A7%A3%E4%B8%AD%E8%A7%86%E8%A7%89%E5%88%86%E5%89%B2%E6%8A%80%E6%9C%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</guid>
       <description>1 问题背景 街景数据通过不同设备进行采集获取，以各种摄像头采集的视频图像及各种雷达采集的点云为主要载体。其中，摄像头采集的视频图像具有低成本、易获取的特点，是最为常见的街景数据类型，而本文处理的街景数据主要为视频图像数据。街景视频图像数据作为室内外场景的重要信息载体，是计算机视觉众多任务的关键研究对象。
@@ -121,7 +121,7 @@ N+1架构：在业界也称散部或者多AZ部署⽅案，将容量为C的系�
     <item>
       <title>MJDK 如何实现压缩速率的 5 倍提升？</title>
       <link>https://wfsui.github.io/posts/mjdk-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%8E%8B%E7%BC%A9%E9%80%9F%E7%8E%87%E7%9A%84-5-%E5%80%8D%E6%8F%90%E5%8D%87/</link>
-      <pubDate>Fri, 13 Oct 2023 02:41:02 +0000</pubDate>
+      <pubDate>Mon, 16 Oct 2023 02:40:09 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/mjdk-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%8E%8B%E7%BC%A9%E9%80%9F%E7%8E%87%E7%9A%84-5-%E5%80%8D%E6%8F%90%E5%8D%87/</guid>
       <description>1 前言 数据压缩技术[1]因可有效降低数据存储及传输成本，在计算机领域有非常广泛的应用（包括网络传输、文件传输、数据库、操作系统等场景）。主流压缩技术按其原理可划分为无损压缩[2]、有损压缩[3]两类，工作中我们最常用的压缩工具 zip 和 gzip ，压缩函数库 zlib，都是无损压缩技术的应用。Java 应用中对压缩库的使用包括：处理 HTTP 请求时对 body 的压缩/解压缩操作、使用消息队列服务时对大消息体（如&amp;gt;1M）的压缩/解压缩、数据库写入前及读取后对大字段的压缩/解压缩操作等。常见于监控、广告等涉及大数据传输/存储的业务场景。

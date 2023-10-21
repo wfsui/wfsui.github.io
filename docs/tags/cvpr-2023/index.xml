@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Wed, 18 Oct 2023 02:40:20 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/cvpr-2023/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 21 Oct 2023 02:40:16 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/cvpr-2023/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CVPR 2023 | 美团技术团队精选论文解读</title>
       <link>https://wfsui.github.io/posts/cvpr-2023-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Wed, 18 Oct 2023 02:40:20 +0000</pubDate>
+      <pubDate>Sat, 21 Oct 2023 02:40:16 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/cvpr-2023-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
       <description>写在前面 CVPR 全称为 IEEE Conference on Computer Vision and Pattern Recognition，国际计算机视觉与模式识别会议。该会议始于1983年，与ICCV和ECCV并称计算机视觉方向的三大顶级会议。根据谷歌学术公布的2022年最新学术期刊和会议影响力排名，CVPR在所有学术刊物中位居第4，仅次于Nature、NEJM和Science。2023年，CVPR共收到全球9155篇论文投稿，最终2360篇被接收，接收率约为25.78%。

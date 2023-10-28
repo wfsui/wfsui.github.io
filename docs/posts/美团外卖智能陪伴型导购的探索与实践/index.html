@@ -12,8 +12,8 @@
 挑战1：线下的导购追求一对一的极致实时的个性化体验，而外卖搜索的导购如何由被动导购（用户手动刷新才会触发导购系统的刷新）变为主动导购（智能感知和判断用户在什么时间、什么场景需要针对性的刷新导购），强化用户实时的个性化体验，智能感知和判断用户每一个需要服务的场景？解决方案：借助美团自研的Alita端智能[1][2]的意图感知能力，智能判断何时需要针对性地刷新。同时，对模型引入实时异构行为序列进行建模，打造端云结合排序模型，感知用户实时多变的兴趣。 挑战2：导购的优化除了满足用户体验之外，还需要为整体的转化目标负责，如何让导购的优化与下游场景/整体场景的优化目标保持一致？解决方案：对全场景数据进行统一建模，打造基于自监督学习的统一模型，在对样本进行“无效”过滤以及归因的基础上，同时联动搜索结果页进行全链路的多目标效率优化。 挑战3：如何像基于大模型对话入口一样将用户在物理世界的行为转化为机器/算法可以理解的信息，并像真人导购一样和用户“对话”？解决方案：我们后续计划通过对用户行为的理解，尝试在适当时机主动将用户引导到大模型的对话入口，满足其深度对话的需求。 3 主要工作 我们将以上提到的问题和挑战作为主线，分为两个章节进行详细介绍。其中在3." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%99%BA%E8%83%BD%E9%99%AA%E4%BC%B4%E5%9E%8B%E5%AF%BC%E8%B4%AD%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-10-26T02:40:05+00:00" />
-<meta property="article:modified_time" content="2023-10-26T02:40:05+00:00" />
+<meta property="article:published_time" content="2023-10-28T02:40:12+00:00" />
+<meta property="article:modified_time" content="2023-10-28T02:40:12+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="美团外卖智能陪伴型导购的探索与实践"/>
 <meta name="twitter:description" content="1 背景 1.1 什么是外卖搜索导购？ 搜索导购是外卖搜索中的个性化搜索词建议模块的统称，在搜索路径中的各处为用户提供引导，提升用户的选购效率。下面按照用户使用外卖搜索的路径来介绍搜索导购的各个模块：① 用户进入外卖首页，美团在顶部搜索框的内部和下方分别提供搜索建议，即框内词和框下词；② 用户点击搜索框会进入到搜索引导页中，我们在历史搜索下方的搜索发现中提供搜索建议；③ 用户在搜索框中主动输入搜索词后，将会唤起搜索词联想功能，即搜索SUG，为用户提供补全搜索词的建议；④ 用户发起搜索后将进入到搜索结果页。
@@ -67,7 +67,7 @@
 
 		<div class="post-header">
 			<h1 class="title">美团外卖智能陪伴型导购的探索与实践</h1>
-			<div class="meta">Posted at &mdash; Oct 26, 2023</div>
+			<div class="meta">Posted at &mdash; Oct 28, 2023</div>
 		</div>
 
 		<div class="markdown">

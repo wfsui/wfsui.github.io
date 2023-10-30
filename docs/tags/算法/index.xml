@@ -7,22 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sat, 28 Oct 2023 02:40:17 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>算法中七种常见的时间复杂度</title>
-      <link>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</link>
-      <pubDate>Sat, 28 Oct 2023 02:40:17 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</guid>
-      <description>这是我的推广信息，以激励自己更好的分享自己的知识和经验！也希望看到的你能够多多支持，谢谢！
-1. 滴滴云AI大师: 目前滴滴云正在大力推广自己的云计算服务，需要购买的朋友们用我的AI大师码 「2049」在滴滴云上购买 GPU / vGPU / 机器学习产品可额外享受 9 折优惠，点击这里前往滴滴云官网：www.didiyun.com。
-原文地址：7 Helpful Time Complexities 原文作者：Ellis Andrews 译文出自：掘金翻译计划 本文永久链接：https://github.</description>
-    </item>
-    
+    <lastBuildDate>Mon, 30 Oct 2023 02:40:28 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>低延迟流式语音识别技术在人机语音交互场景中的实践</title>
       <link>https://wfsui.github.io/posts/%E4%BD%8E%E5%BB%B6%E8%BF%9F%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF%E5%9C%A8%E4%BA%BA%E6%9C%BA%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sat, 28 Oct 2023 02:40:15 +0000</pubDate>
+      <pubDate>Mon, 30 Oct 2023 02:40:28 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E4%BD%8E%E5%BB%B6%E8%BF%9F%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF%E5%9C%A8%E4%BA%BA%E6%9C%BA%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 前言 1.1 语音识别技术简介 人机交互一直都是人工智能大背景下的“热门话题”，语音交互作为人机交互的一个重要分支，具有广泛的应用价值，也被应用到美团的多个业务场景中，如智能客服、电话营销和电话满意度反馈等。而流式语音识别技术是整个交互链条的入口，对交互体验影响巨大。
@@ -34,7 +23,7 @@
     <item>
       <title>CVPR 2023 | 美团技术团队精选论文解读</title>
       <link>https://wfsui.github.io/posts/cvpr-2023-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Sat, 28 Oct 2023 02:40:13 +0000</pubDate>
+      <pubDate>Mon, 30 Oct 2023 02:40:24 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/cvpr-2023-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
       <description>写在前面 CVPR 全称为 IEEE Conference on Computer Vision and Pattern Recognition，国际计算机视觉与模式识别会议。该会议始于1983年，与ICCV和ECCV并称计算机视觉方向的三大顶级会议。根据谷歌学术公布的2022年最新学术期刊和会议影响力排名，CVPR在所有学术刊物中位居第4，仅次于Nature、NEJM和Science。2023年，CVPR共收到全球9155篇论文投稿，最终2360篇被接收，接收率约为25.78%。
@@ -44,7 +33,7 @@
     <item>
       <title>美团外卖推荐关于用户新颖体验优化的技术探索</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E5%85%B3%E4%BA%8E%E7%94%A8%E6%88%B7%E6%96%B0%E9%A2%96%E4%BD%93%E9%AA%8C%E4%BC%98%E5%8C%96%E7%9A%84%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Sat, 28 Oct 2023 02:40:12 +0000</pubDate>
+      <pubDate>Mon, 30 Oct 2023 02:40:22 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%8E%A8%E8%8D%90%E5%85%B3%E4%BA%8E%E7%94%A8%E6%88%B7%E6%96%B0%E9%A2%96%E4%BD%93%E9%AA%8C%E4%BC%98%E5%8C%96%E7%9A%84%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%B4%A2/</guid>
       <description>1 背景介绍 1.1 为什么要优化用户新颖性？ 2022年初，美团外卖搜索推荐技术团队通过内部访谈、外部用研，发现用户对外卖首页Feed推荐的新颖性问题诟病较多：首页Feed推荐了过多的复购复点商家，无法满足用户尝新的诉求。
@@ -59,7 +48,7 @@
     <item>
       <title>美团外卖智能陪伴型导购的探索与实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%99%BA%E8%83%BD%E9%99%AA%E4%BC%B4%E5%9E%8B%E5%AF%BC%E8%B4%AD%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sat, 28 Oct 2023 02:40:12 +0000</pubDate>
+      <pubDate>Mon, 30 Oct 2023 02:40:22 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E6%99%BA%E8%83%BD%E9%99%AA%E4%BC%B4%E5%9E%8B%E5%AF%BC%E8%B4%AD%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景 1.1 什么是外卖搜索导购？ 搜索导购是外卖搜索中的个性化搜索词建议模块的统称，在搜索路径中的各处为用户提供引导，提升用户的选购效率。下面按照用户使用外卖搜索的路径来介绍搜索导购的各个模块：① 用户进入外卖首页，美团在顶部搜索框的内部和下方分别提供搜索建议，即框内词和框下词；② 用户点击搜索框会进入到搜索引导页中，我们在历史搜索下方的搜索发现中提供搜索建议；③ 用户在搜索框中主动输入搜索词后，将会唤起搜索词联想功能，即搜索SUG，为用户提供补全搜索词的建议；④ 用户发起搜索后将进入到搜索结果页。
@@ -71,23 +60,9 @@
     </item>
     
     <item>
-      <title>KDD 2023 | 美团技术团队精选论文解读</title>
-      <link>https://wfsui.github.io/posts/kdd-2023-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Sat, 28 Oct 2023 02:40:11 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/kdd-2023-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
-      <description>ACM SIGKDD（国际数据挖掘与知识发现大会，简称KDD）于1995年首次举办，自此成为数据挖掘领域的重要国际会议之一，也是研究数据挖掘和知识发现这一领域的学者和企业人士分享研究成果、讨论前沿话题、推动技术进步和发展的重要平台。ACM SIGKDD的宗旨是促进数据挖掘的应用和理论研究，支持和推动先进技术和方法的开发和创新，并推广数据挖掘和知识发现领域的教育、培训和普及。该组织致力于提高数据挖掘和知识发现的社会价值，推动其在各个领域的应用和发展。
-01《PIER: Permutation-Level Interest-Based End-to-End Re-ranking Framework in E-commerce》 论文作者：晓文、杨凡（共同一作）、王泽、晓旭、国钢、永康、兴星、王栋等，均来自美团技术团队。
-论文类型：长文
-论文下载：PDF
-论文简介：Feed流推荐作为目前最主流的推荐载体，其推荐质量直接影响用户体验/商家效益/平台收入等多个核心指标。Feed推荐特点是为每个用户的请求生成并展示多个items，用户的点击行为会同时受到上文和下文影响。由于传统point-CTR预测是在展现items产生之前进行的，导致无法利用上下文信息，推荐质量受损。目前工业届更多考虑重排方案，然而由于排列的多样性，穷举会导致排列个数过多，实际很难落地。目前业界通常存在两种近似方案：
-只考虑位置偏置和上文信息，但忽略下文影响效果； 同时考虑上下文，Listwise预估后重新排序，该方案存在Evaluation Before Reranking的问题。 以上两个方案在效果上均有损，因此如何在重排阶段同时考虑上下文，并且降低复杂度兼顾可落地性，是一个非常重要的问题。针对以上问题，论文提出了一个名为PIER的端到端重新排序框架，该框架遵循两阶段范式并包含两个主要模块，分别称为FPSM 和OCPM。基于用户页面兴趣偏好，在FPSM中应用SimHash从全排列中快速的生成候选列表集合，降低了落地复杂度；然后在OCPM中设计了一种新颖的全向注意力建模机制，以更好地捕获列表中的上下文信息；最后，通过引入对比学习损失以端到端的方式联合训练这两个模块，使用OCPM的预测值来指导FPSM生成更好的列表。离线实验结果表明，PIER在公开和工业数据集上均优于基线模型，目前已经部署到美团外卖广告场景，取得了较为显著的成果。</description>
-    </item>
-    
-    <item>
       <title>斩获CVPR 2023竞赛2项冠军｜美团街景理解中视觉分割技术的探索与应用</title>
       <link>https://wfsui.github.io/posts/%E6%96%A9%E8%8E%B7cvpr-2023%E7%AB%9E%E8%B5%9B2%E9%A1%B9%E5%86%A0%E5%86%9B%E7%BE%8E%E5%9B%A2%E8%A1%97%E6%99%AF%E7%90%86%E8%A7%A3%E4%B8%AD%E8%A7%86%E8%A7%89%E5%88%86%E5%89%B2%E6%8A%80%E6%9C%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Sat, 28 Oct 2023 02:40:11 +0000</pubDate>
+      <pubDate>Mon, 30 Oct 2023 02:40:21 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E6%96%A9%E8%8E%B7cvpr-2023%E7%AB%9E%E8%B5%9B2%E9%A1%B9%E5%86%A0%E5%86%9B%E7%BE%8E%E5%9B%A2%E8%A1%97%E6%99%AF%E7%90%86%E8%A7%A3%E4%B8%AD%E8%A7%86%E8%A7%89%E5%88%86%E5%89%B2%E6%8A%80%E6%9C%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</guid>
       <description>1 问题背景 街景数据通过不同设备进行采集获取，以各种摄像头采集的视频图像及各种雷达采集的点云为主要载体。其中，摄像头采集的视频图像具有低成本、易获取的特点，是最为常见的街景数据类型，而本文处理的街景数据主要为视频图像数据。街景视频图像数据作为室内外场景的重要信息载体，是计算机视觉众多任务的关键研究对象。
@@ -103,9 +78,23 @@
     </item>
     
     <item>
+      <title>KDD 2023 | 美团技术团队精选论文解读</title>
+      <link>https://wfsui.github.io/posts/kdd-2023-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
+      <pubDate>Mon, 30 Oct 2023 02:40:20 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/kdd-2023-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
+      <description>ACM SIGKDD（国际数据挖掘与知识发现大会，简称KDD）于1995年首次举办，自此成为数据挖掘领域的重要国际会议之一，也是研究数据挖掘和知识发现这一领域的学者和企业人士分享研究成果、讨论前沿话题、推动技术进步和发展的重要平台。ACM SIGKDD的宗旨是促进数据挖掘的应用和理论研究，支持和推动先进技术和方法的开发和创新，并推广数据挖掘和知识发现领域的教育、培训和普及。该组织致力于提高数据挖掘和知识发现的社会价值，推动其在各个领域的应用和发展。
+01《PIER: Permutation-Level Interest-Based End-to-End Re-ranking Framework in E-commerce》 论文作者：晓文、杨凡（共同一作）、王泽、晓旭、国钢、永康、兴星、王栋等，均来自美团技术团队。
+论文类型：长文
+论文下载：PDF
+论文简介：Feed流推荐作为目前最主流的推荐载体，其推荐质量直接影响用户体验/商家效益/平台收入等多个核心指标。Feed推荐特点是为每个用户的请求生成并展示多个items，用户的点击行为会同时受到上文和下文影响。由于传统point-CTR预测是在展现items产生之前进行的，导致无法利用上下文信息，推荐质量受损。目前工业届更多考虑重排方案，然而由于排列的多样性，穷举会导致排列个数过多，实际很难落地。目前业界通常存在两种近似方案：
+只考虑位置偏置和上文信息，但忽略下文影响效果； 同时考虑上下文，Listwise预估后重新排序，该方案存在Evaluation Before Reranking的问题。 以上两个方案在效果上均有损，因此如何在重排阶段同时考虑上下文，并且降低复杂度兼顾可落地性，是一个非常重要的问题。针对以上问题，论文提出了一个名为PIER的端到端重新排序框架，该框架遵循两阶段范式并包含两个主要模块，分别称为FPSM 和OCPM。基于用户页面兴趣偏好，在FPSM中应用SimHash从全排列中快速的生成候选列表集合，降低了落地复杂度；然后在OCPM中设计了一种新颖的全向注意力建模机制，以更好地捕获列表中的上下文信息；最后，通过引入对比学习损失以端到端的方式联合训练这两个模块，使用OCPM的预测值来指导FPSM生成更好的列表。离线实验结果表明，PIER在公开和工业数据集上均优于基线模型，目前已经部署到美团外卖广告场景，取得了较为显著的成果。</description>
+    </item>
+    
+    <item>
       <title>美团多场景建模的探索与实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%BB%BA%E6%A8%A1%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sat, 28 Oct 2023 02:40:10 +0000</pubDate>
+      <pubDate>Mon, 30 Oct 2023 02:40:19 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%BB%BA%E6%A8%A1%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 引言 美团到家Demand-Side Platform（下文简称DSP）平台，主要负责在美团外部媒体上进行商品或者物料的推荐和投放，并不断优化转化效果。随着业务的不断发展与扩大，DSP对接的外部渠道越来越丰富、展示形式越来越多样，物料展示场景的差异性愈发明显（如开屏、插屏、信息流、弹窗等）。
@@ -114,6 +103,17 @@
 负迁移现象：以推荐渠道为例，由于不同推荐渠道的流量在用户分布、行为习惯、物料展示形式等方面存在差异，其曝光数、点击率也不在同一个数量级（如下图1所示，不同渠道间点击率相差十分显著），数据呈现典型的“长尾”现象。如果使用推荐渠道进行多场景建模的依据，一方面模型会更倾向于学习到头部渠道的信息，对于尾部渠道会存在学习不充分的问题，另一方面尾部渠道的数据也会给头部渠道的学习带来“噪声”，导致出现负迁移。 数据稀疏难以收敛：DSP会在外部不同媒体上进行物料展示，而用户在访问外部媒体时，其所处的时空背景、上下文信息、不同App以及物料展示位等信息共同构成了当前的场景，这样的场景在十万的量级，每个场景的数据又十分稀疏，导致模型难以在每个场景上得到充分的训练。 在面对此类建模任务时，业界现有的方法是在不同场景间进行知识迁移。例如，SAML[2]模型采用辅助网络来学习场景的共享知识并迁移至各场景的独有网络；ADIN[3]和SASS[4]模型使用门控单元以一种细粒度的方式来选择和融合全局信息到单场景信息中。然而，在DSP背景中复杂多变的流量背景下，场景差异性导致了场景数量的急剧增长，现有方法无法在巨量稀疏场景下有效。
 因此，在本文中我们提出了DSP背景下的自适应场景建模方案（AdaScene, Adaptive Scenario Model），同时从知识迁移和场景聚合两个角度进行建模。AdaScene通过控制知识迁移的程度来最大化不同场景共性信息的利用，并使用稀疏专家聚合的方式利用门控网络自动选择专家组成场景表征，缓解了负迁移现象；同时，我们利用损失函数梯度指导场景聚合，将巨大的推荐场景空间约束到有限范围内，缓解了数据稀疏问题，并实现了自适应场景建模方案。
 2 自适应场景建模 在本节开始前，我们先介绍多场景模型的建模方式。多场景模型采用输入层 Embedding + 混合专家（Mixture-of-Experts, MoE）的建模范式，其中输入信息包括了用户侧、商家侧以及场景上下文特征。多场景模型的损失由各场景的损失聚合而成，其损失函数形式如下：</description>
+    </item>
+    
+    <item>
+      <title>算法中七种常见的时间复杂度</title>
+      <link>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</link>
+      <pubDate>Mon, 30 Oct 2023 02:40:13 +0000</pubDate>
+      
+      <guid>https://wfsui.github.io/posts/%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%83%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</guid>
+      <description>这是我的推广信息，以激励自己更好的分享自己的知识和经验！也希望看到的你能够多多支持，谢谢！
+1. 滴滴云AI大师: 目前滴滴云正在大力推广自己的云计算服务，需要购买的朋友们用我的AI大师码 「2049」在滴滴云上购买 GPU / vGPU / 机器学习产品可额外享受 9 折优惠，点击这里前往滴滴云官网：www.didiyun.com。
+原文地址：7 Helpful Time Complexities 原文作者：Ellis Andrews 译文出自：掘金翻译计划 本文永久链接：https://github.</description>
     </item>
     
     <item>

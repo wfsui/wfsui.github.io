@@ -15,8 +15,8 @@
 第一种是Cache-Aside（旁路缓存），也是使用比较广泛的一种方式，它只有在缓存没有命中时，才会查询数据库并更新缓存。 另外一种是Write-throught（只写模式），这种模式在每次数据库变更时都会同步更新缓存。 对比第一种模式，第二种模式的优点是逻辑更清晰、操作简单、缓存命中率更高；缺点是不常请求的数据会被写到缓存中，导致缓存更大。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%BC%8F%E6%8C%96%E6%8E%98%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7%E6%B2%BB%E7%90%86%E6%8E%A2%E7%B4%A2/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-10-28T02:40:09+00:00" />
-<meta property="article:modified_time" content="2023-10-28T02:40:09+00:00" />
+<meta property="article:published_time" content="2023-10-30T02:40:18+00:00" />
+<meta property="article:modified_time" content="2023-10-30T02:40:18+00:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="基于模式挖掘的可靠性治理探索"/>
 <meta name="twitter:description" content="1 可靠性治理的痛点 对于亿级流量的线上系统来说，可靠性是至关重要的。从字面上理解，可靠性要求故障少、可信赖。与安全性一样，它们都是信息系统的固有属性之一，也是保障产品质量的关键因素。
@@ -73,7 +73,7 @@
 
 		<div class="post-header">
 			<h1 class="title">基于模式挖掘的可靠性治理探索</h1>
-			<div class="meta">Posted at &mdash; Oct 28, 2023</div>
+			<div class="meta">Posted at &mdash; Oct 30, 2023</div>
 		</div>
 
 		<div class="markdown">

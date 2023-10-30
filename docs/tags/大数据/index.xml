@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sat, 28 Oct 2023 02:40:09 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 30 Oct 2023 02:40:18 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>基于模式挖掘的可靠性治理探索</title>
       <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%BC%8F%E6%8C%96%E6%8E%98%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7%E6%B2%BB%E7%90%86%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Sat, 28 Oct 2023 02:40:09 +0000</pubDate>
+      <pubDate>Mon, 30 Oct 2023 02:40:18 +0000</pubDate>
       
       <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%BC%8F%E6%8C%96%E6%8E%98%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7%E6%B2%BB%E7%90%86%E6%8E%A2%E7%B4%A2/</guid>
       <description>1 可靠性治理的痛点 对于亿级流量的线上系统来说，可靠性是至关重要的。从字面上理解，可靠性要求故障少、可信赖。与安全性一样，它们都是信息系统的固有属性之一，也是保障产品质量的关键因素。

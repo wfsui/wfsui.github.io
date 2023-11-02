@@ -19,6 +19,7 @@
 <meta property="og:url" content="https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%9B%BE%E7%81%B5%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E6%80%A7%E8%83%BD%E8%B5%B7%E9%A3%9E%E7%9A%84%E7%A7%98%E5%AF%86%E4%B8%80/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-05-12T02:44:15+00:00" />
 <meta property="article:modified_time" content="2023-05-12T02:44:15+00:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="美团图灵机器学习平台性能起飞的秘密（一）"/>
 <meta name="twitter:description" content="导语 图灵平台是美团履约平台技术部2018年开始自研的算法平台，提供模型全生命周期的一站式服务，旨在帮助算法同学脱离繁琐的工程化开发，把有限的精力聚焦于业务和算法的迭代优化中。
@@ -126,21 +127,21 @@
 <h2 id="4-mappartitions之殇">4. mapPartitions之殇</h2>
 <p>相信大部分读者都曾经写过这样的代码，创建一个重量级对象在Partition内完成复用，而不是像map算子那样每处理一行数据创建一个对象。</p>
 <p><strong>mapPartitions模板，重量级对象复用</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>dataset<span style="color:#719e07">.</span>mapPartitions<span style="color:#719e07">((</span>MapPartitionsFunction<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">,</span> Row<span style="color:#719e07">&gt;)</span> iterator <span style="color:#719e07">-&gt;</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>  HeavyObject obj <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> HeavyObject<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>  List<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;</span> list <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> ArrayList<span style="color:#719e07">&lt;&gt;();</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 遍历处理数据
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#719e07">while</span> <span style="color:#719e07">(</span>iterator<span style="color:#719e07">.</span>hasNext<span style="color:#719e07">())</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    Row row <span style="color:#719e07">=</span> iterator<span style="color:#719e07">.</span>next<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 拼凑batch或逐条处理
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#586e75">// ....
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    obj<span style="color:#719e07">.</span>process<span style="color:#719e07">(</span>row<span style="color:#719e07">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// batch add或逐条add
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    list<span style="color:#719e07">.</span>add<span style="color:#719e07">(...);</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 返回list的迭代器
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#719e07">return</span> list<span style="color:#719e07">.</span>iterator<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">},</span> RowEncoder<span style="color:#719e07">.</span>apply<span style="color:#719e07">(</span>schema<span style="color:#719e07">));</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>dataset.mapPartitions((MapPartitionsFunction<span style="color:#719e07">&lt;</span>Row, Row<span style="color:#719e07">&gt;</span>) iterator <span style="color:#719e07">-&gt;</span> {
+</span></span><span style="display:flex;"><span>  HeavyObject obj <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> HeavyObject();
+</span></span><span style="display:flex;"><span>  List<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;</span> list <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> ArrayList<span style="color:#719e07">&lt;&gt;</span>();
+</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 遍历处理数据</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">while</span> (iterator.hasNext()) {
+</span></span><span style="display:flex;"><span>    Row row <span style="color:#719e07">=</span> iterator.next();
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 拼凑batch或逐条处理</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// ....</span>
+</span></span><span style="display:flex;"><span>    obj.process(row)
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// batch add或逐条add</span>
+</span></span><span style="display:flex;"><span>    list.add(...);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 返回list的迭代器</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">return</span> list.iterator();
+</span></span><span style="display:flex;"><span>}, RowEncoder.apply(schema));
 </span></span></code></pre></div><p>熟悉mapPartitions的同学都知道，这段代码完成了重量级对象的复用，相比map算子好像已经减少了大量GC，但这样仍旧非常容易溢出。那么：</p>
 <ol>
 <li>为什么mapPartitions算子容易溢出呢？</li>
@@ -262,41 +263,41 @@
 <h2 id="6-最佳实践">6. 最佳实践</h2>
 <p>以多输入多输出为例，假设我们需要处理一批单个分区数据量达到千万级别的数据集，以单个分区中每5行数据为一批次，每批次随机输出2行数据，那么在mapPartitions基础上，可以这样写：</p>
 <p><strong>BatchIteratorDemo：mapPartitions处理多输入-&gt;多输出——以单分区每5行数据为一批次，每批次随机输出2行数据的Demo</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Dataset<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;</span> dataset <span style="color:#719e07">=</span> initDataset<span style="color:#719e07">();</span><span style="color:#586e75">// 初始化数据集
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75">// mapPartitions中调用BatchIterator完成计算逻辑
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>Dataset<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;</span> result <span style="color:#719e07">=</span> dataset<span style="color:#719e07">.</span>mapPartitions<span style="color:#719e07">((</span>MapPartitionsFunction<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">,</span> Row<span style="color:#719e07">&gt;)</span> inputIterator <span style="color:#719e07">-&gt;</span> <span style="color:#719e07">new</span> Iterator<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;()</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 一批处理的数据行数
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#268bd2">private</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">final</span> <span style="color:#dc322f">int</span> INPUT_BATCH_PROCESS_SIZE <span style="color:#719e07">=</span> <span style="color:#2aa198">5</span><span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 当前批次处理的数据集
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#268bd2">private</span> <span style="color:#268bd2">final</span> List<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;</span> batchRows <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> ArrayList<span style="color:#719e07">&lt;&gt;(</span>INPUT_BATCH_PROCESS_SIZE<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 当前批次输出iterator
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#268bd2">private</span> Iterator<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;</span> batchResult <span style="color:#719e07">=</span> Collections<span style="color:#719e07">.</span>emptyIterator<span style="color:#719e07">();</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Dataset<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;</span> dataset <span style="color:#719e07">=</span> initDataset();<span style="color:#586e75">// 初始化数据集</span>
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// mapPartitions中调用BatchIterator完成计算逻辑</span>
+</span></span><span style="display:flex;"><span>Dataset<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;</span> result <span style="color:#719e07">=</span> dataset.mapPartitions((MapPartitionsFunction<span style="color:#719e07">&lt;</span>Row, Row<span style="color:#719e07">&gt;</span>) inputIterator <span style="color:#719e07">-&gt;</span> <span style="color:#719e07">new</span> Iterator<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 一批处理的数据行数</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">private</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">final</span> <span style="color:#dc322f">int</span> INPUT_BATCH_PROCESS_SIZE <span style="color:#719e07">=</span> 5;
+</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 当前批次处理的数据集</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">private</span> <span style="color:#268bd2">final</span> List<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;</span> batchRows <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> ArrayList<span style="color:#719e07">&lt;&gt;</span>(INPUT_BATCH_PROCESS_SIZE);
+</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 当前批次输出iterator</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">private</span> Iterator<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;</span> batchResult <span style="color:#719e07">=</span> Collections.emptyIterator();
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>  <span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">public</span> <span style="color:#dc322f">boolean</span> <span style="color:#268bd2">hasNext</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 本轮结果已全部消费，进入下一批次batch
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#719e07">if</span> <span style="color:#719e07">(!</span>batchResult<span style="color:#719e07">.</span>hasNext<span style="color:#719e07">())</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>      batchRows<span style="color:#719e07">.</span>clear<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#dc322f">int</span> count <span style="color:#719e07">=</span> <span style="color:#2aa198">0</span><span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#586e75">// 按一个 batch 5条数据加入集合
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>      <span style="color:#719e07">while</span> <span style="color:#719e07">(</span>count<span style="color:#719e07">++</span> <span style="color:#719e07">&lt;</span> INPUT_BATCH_PROCESS_SIZE <span style="color:#719e07">&amp;&amp;</span> inputIterator<span style="color:#719e07">.</span>hasNext<span style="color:#719e07">())</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        batchRows<span style="color:#719e07">.</span>add<span style="color:#719e07">(</span>inputIterator<span style="color:#719e07">.</span>next<span style="color:#719e07">());</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#586e75">// 上游数据全部消费
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>      <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>batchRows<span style="color:#719e07">.</span>size<span style="color:#719e07">()</span> <span style="color:#719e07">==</span> <span style="color:#2aa198">0</span><span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">return</span> <span style="color:#cb4b16">false</span><span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#586e75">// 随机获取2条数据
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>      batchResult <span style="color:#719e07">=</span> processBatch<span style="color:#719e07">(</span>batchRows<span style="color:#719e07">);</span><span style="color:#586e75">// 随机抽取2条数据创建新对象返回
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">return</span> <span style="color:#cb4b16">true</span><span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">public</span> <span style="color:#dc322f">boolean</span> <span style="color:#268bd2">hasNext</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 本轮结果已全部消费，进入下一批次batch</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">if</span> (<span style="color:#719e07">!</span>batchResult.hasNext()) {
+</span></span><span style="display:flex;"><span>      batchRows.clear();
+</span></span><span style="display:flex;"><span>      <span style="color:#dc322f">int</span> count <span style="color:#719e07">=</span> 0;
+</span></span><span style="display:flex;"><span>      <span style="color:#586e75">// 按一个 batch 5条数据加入集合</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#719e07">while</span> (count<span style="color:#719e07">++</span> <span style="color:#719e07">&lt;</span> INPUT_BATCH_PROCESS_SIZE <span style="color:#719e07">&amp;&amp;</span> inputIterator.hasNext()) {
+</span></span><span style="display:flex;"><span>        batchRows.add(inputIterator.next());
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#586e75">// 上游数据全部消费</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#719e07">if</span> (batchRows.size() <span style="color:#719e07">==</span> 0) {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">return</span> <span style="color:#cb4b16">false</span>;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#586e75">// 随机获取2条数据</span>
+</span></span><span style="display:flex;"><span>      batchResult <span style="color:#719e07">=</span> processBatch(batchRows);<span style="color:#586e75">// 随机抽取2条数据创建新对象返回</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">return</span> <span style="color:#cb4b16">true</span>;
+</span></span><span style="display:flex;"><span>  }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>  <span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> Row <span style="color:#268bd2">next</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#719e07">return</span> batchResult<span style="color:#719e07">.</span>next<span style="color:#719e07">();</span><span style="color:#586e75">// 消费当前批次的结果
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">},</span> RowEncoder<span style="color:#719e07">.</span>apply<span style="color:#719e07">(</span>dataset<span style="color:#719e07">.</span>schema<span style="color:#719e07">()));</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> Row <span style="color:#268bd2">next</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#719e07">return</span> batchResult.next();<span style="color:#586e75">// 消费当前批次的结果</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}, RowEncoder.apply(dataset.schema()));
 </span></span></code></pre></div><p>当该方式应用到fCount(funcC(funcB(funcA(rddA.iterator=&gt;iterator))))构成的Pipeline时，以多个mapPartitions + ArrayList.iterator()串联的代码展开则如下所示：</p>
 <p><strong>Example</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span>iteratorA <span style="color:#719e07">=&gt;</span> iteratorB <span style="color:#719e07">=</span>  <span style="color:#586e75">// iteratorA：初始RDD对应Partition的输出迭代器

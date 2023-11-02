@@ -7,24 +7,32 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 30 Oct 2023 02:40:27 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%88%B0%E5%BA%97/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 02 Nov 2023 02:40:12 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/%E5%88%B0%E5%BA%97/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java魔法类：Unsafe应用解析</title>
+      <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Thu, 02 Nov 2023 02:40:12 +0000</pubDate>
+      <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
+      <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
+注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
+基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
+public final class Unsafe { // 单例对象 private static final Unsafe theUnsafe; private Unsafe() { } @CallerSensitive public static Unsafe getUnsafe() { Class var0 = Reflection.</description>
+    </item>
     <item>
       <title>一次「找回」TraceId的问题分析与过程思考</title>
       <link>https://wfsui.github.io/posts/%E4%B8%80%E6%AC%A1%E6%89%BE%E5%9B%9Etraceid%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E4%B8%8E%E8%BF%87%E7%A8%8B%E6%80%9D%E8%80%83/</link>
-      <pubDate>Mon, 30 Oct 2023 02:40:27 +0000</pubDate>
-      
+      <pubDate>Thu, 02 Nov 2023 02:40:11 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/%E4%B8%80%E6%AC%A1%E6%89%BE%E5%9B%9Etraceid%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E4%B8%8E%E8%BF%87%E7%A8%8B%E6%80%9D%E8%80%83/</guid>
       <description>1. 问题背景和思考 1.1 问题背景 在一次排查线上告警的过程中，突然发现一个链路信息有点不同寻常（这里仅展示测试复现的内容）：
 在机器中可以清楚的发现“2022-08-02 19:26:34.952 DXMsgRemoteService ”这一行日志信息并没有携带TraceId，导致调用链路信息戛然而止，无法追踪当时的调用情况。
 1.2 问题复现和思考 在处理完线上告警后，我们开始分析“丢失”的TraceId到底去了哪里？首先在代码中定位TraceId没有追踪到的部分，发现问题出现在一个@Async注解下的方法，删除无关的业务信息代码，并增加MTrace埋点方法后的复现代码如下：
 @SpringBootTest @RunWith(SpringRunner.class) @EnableAsync public class DemoServiceTest extends TestCase { @Resource private DemoService demoService; @Test public void testTestAsy() { Tracer.</description>
     </item>
-    
     <item>
       <title>美团前端研发框架Rome实践和演进趋势</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%89%8D%E7%AB%AF%E7%A0%94%E5%8F%91%E6%A1%86%E6%9E%B6rome%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%BC%94%E8%BF%9B%E8%B6%8B%E5%8A%BF/</link>
-      <pubDate>Mon, 30 Oct 2023 02:40:21 +0000</pubDate>
-      
+      <pubDate>Thu, 02 Nov 2023 02:40:08 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%89%8D%E7%AB%AF%E7%A0%94%E5%8F%91%E6%A1%86%E6%9E%B6rome%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%BC%94%E8%BF%9B%E8%B6%8B%E5%8A%BF/</guid>
       <description>1 背景介绍 1.1 业务背景 首先介绍一下业务的背景，这里主要从3个维度展开。第一个维度是组织维度，在立项之初，恰逢美团的多个事业群合并，因前端规模比较大，横向的流动协同比较多（需要跨部门支持需求，进行跨系统协作等等）。此外，美团到店事业群新人比例比较高，校招和新员工比例很高，我们会帮助新同学快速融入团队，需要完成一些较为基础的开发工作。
 第二维度是业务维度，美团到店业务迭代频次比较高，基础工程框架不仅要保证交付速度快，同时还对质量有很高的要求。
@@ -35,24 +43,10 @@
 2 工程生态、演变路径和规模化升级 2.1 工程生态 2.1.1 降学习成本 框架约束
 根据前文所述，我们一开始要解决的核心问题是学习成本，因此我们会做框架约束。</description>
     </item>
-    
-    <item>
-      <title>Java魔法类：Unsafe应用解析</title>
-      <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Mon, 30 Oct 2023 02:40:11 +0000</pubDate>
-      
-      <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
-      <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
-注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
-基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
-public final class Unsafe { // 单例对象 private static final Unsafe theUnsafe; private Unsafe() { } @CallerSensitive public static Unsafe getUnsafe() { Class var0 = Reflection.</description>
-    </item>
-    
     <item>
       <title>ICDE 2023 | 多场景多任务学习在美团到店餐饮推荐的实践</title>
       <link>https://wfsui.github.io/posts/icde-2023-%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E9%A4%90%E9%A5%AE%E6%8E%A8%E8%8D%90%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
       <pubDate>Wed, 11 Oct 2023 02:40:04 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/icde-2023-%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E9%A4%90%E9%A5%AE%E6%8E%A8%E8%8D%90%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>随着推荐算法技术的不断发展，跨场景学习已经受到了越来越多的研究人员的关注。美团到餐算法团队受到业界相关技术的启发，不断探索到店餐饮多场景推荐的优化问题，在多场景多任务学习的推荐领域中积累了较多的应用经验。团队使用到店餐饮全域推荐场景数据训练统一的多场景多任务学习模型，减少了重复性开发，并在多个到店餐饮推荐场景进行落地，取得了较为显著的效果。
 本文详细阐述了美团到店餐饮业务中多场景多任务学习的解决方案，基于该方案形成的学术论文《HiNet: Novel Multi-Scenario &amp;amp; Multi-Task Learning with Hierarchical Information Extraction》已经被国际数据工程会议ICDE 2023收录。
@@ -61,24 +55,20 @@ public final class Unsafe { // 单例对象 private static final Unsafe theUnsaf
 但随着推荐场景数量的增加，传统地针对单个场景独立开发推荐模型，往往会导致如下问题：
 仅根据单场景自身的数据进行建模，无法利用到用户在跨场景中丰富的行为信息，忽视了场景共性信息，特别是考虑到多种场景中可能会存在重复展示的商品（在上图1中，红色矩形框圈中的其实是相同的商品）。 一些长尾的业务场景由于流量较小且用户行为较为稀疏，数据量不足以让模型有效地进行建模。 由于每个场景的特征挖掘、模型训练和上线部署是独立开发且相互隔离的，这会大大增加计算成本和维护负担。 总的来讲，推荐算法对各场景单独建模存在诸多的局限性。然而，简单地将多个场景数据集进行合并训练一个排序模型来提供服务，并不能有效地捕获到每个场景的特有信息。</description>
     </item>
-    
     <item>
       <title>美团开放平台SDK自动生成技术与实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
       <pubDate>Wed, 19 Jul 2023 03:47:50 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0sdk%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 引言 美团开放平台对外提供了外卖、团购、配送等20余个业务场景的OpenAPI，供第三方开发者搭建应用时使用，是美团系统与外部系统通讯的最重要平台。本文主要讲述开放平台如何通过技术手段自动生成支持接口参数富模型和多种编程语言的SDK，以提高开发者对接开放平台API的效率。
 1.1 背景 美团开放平台将美团各类业务提供的扩展服务封装成一系列应用程序编程接口（API）对外开放，供第三方开发者使用。开发者可通过调用开放平台提供的OpenAPI获取数据和能力，以实现自身系统与美团系统协同工作的业务逻辑。以外卖业务场景为例，开发者可以在自己为外卖商户开发的应用中通过调用美团开放平台提供的API，提供外卖订单查询、接单、订单管理等一系列功能。如下图所示：
 开放平台为开发者提供的OpenAPI以HTTP接口的形式提供。以平台提供的订单查询接口为例，对应的HTTP请求如下所示：
 POST https://api-open-cater.meituan.com/api/order/queryById Content-Type: application/x-www-form-urlencoded;charset=utf-8 appAuthToken=eeee860a3d2a8b73cfb6604b136d6734283510c4e92282&amp;amp; charset=utf-8&amp;amp; developerId=106158&amp;amp; sign=4656285a4c2493e279d929b8b9f4e29310da8b2b&amp;amp; timestamp=1618543567&amp;amp; biz={&amp;#34;orderId&amp;#34;: &amp;#34;10046789912119&amp;#34;} Response:{ &amp;#34;orderId&amp;#34;:&amp;#34;10046789912119&amp;#34;, &amp;#34;payAmount&amp;#34;:&amp;#34;45.</description>
     </item>
-    
     <item>
       <title>大规模异构图召回在美团到店推荐广告的应用</title>
       <link>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%BC%82%E6%9E%84%E5%9B%BE%E5%8F%AC%E5%9B%9E%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E6%8E%A8%E8%8D%90%E5%B9%BF%E5%91%8A%E7%9A%84%E5%BA%94%E7%94%A8/</link>
       <pubDate>Wed, 05 Jul 2023 03:14:26 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%BC%82%E6%9E%84%E5%9B%BE%E5%8F%AC%E5%9B%9E%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E6%8E%A8%E8%8D%90%E5%B9%BF%E5%91%8A%E7%9A%84%E5%BA%94%E7%94%A8/</guid>
       <description>1. 引言 美团到店推荐广告技术部服务于到店餐饮、休娱亲子、丽人医美等众多本地生活服务商家。其中，召回环节作为推荐广告系统的第一个环节，承担着从海量商品中寻找优质候选的角色，是算法优化的核心问题之一。
 推荐系统中经典的召回范式有两类：基于标签构建倒排索引的显式召回和基于模型端到端建模用户兴趣的隐式召回。在隐式召回中，历史交互行为建模对于准确刻画用户兴趣非常关键。电商场景中，用户与商家、商品之间的交互关系适合通过图网络来表达。相较于传统模型，图神经网络可以构建用户与商品间的多种交互关系，然后借助高阶网络结构的传递性合理扩充用户行为的丰富度，将用户行为、用户基础属性和商品的内容属性等各种异质信息在统一的框架中进行融合，带来更大的效果空间。
@@ -92,12 +82,10 @@ GraphSAGE等基于消息传递范式的图神经网络方法，其中心节点�
 除了上述提到的方法外，图神经网络领域作为研究热点之一，近年来不断涌现出GAT[5]、FastGCN[6]、GIN[7]等优秀算法，并在Pinterest[8]、阿里巴巴[9]、腾讯[10]等公司的大规模推荐场景落地取得良好效果。
 3. 业务场景及挑战 到店推荐广告业务在流量侧主要覆盖美团/大众点评双侧的信息流广告、详情页广告等多种业务场景（如下图4所示），供给侧包括了餐饮、丽人医美、休闲娱乐、结婚、亲子等不同广告主品类，且每一个品类下包含商户、团单、泛商品等不同的推荐候选类型。</description>
     </item>
-    
     <item>
       <title>美团综合业务推荐系统的质量模型及实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E7%BB%BC%E5%90%88%E4%B8%9A%E5%8A%A1%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%B4%A8%E9%87%8F%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%AE%9E%E8%B7%B5/</link>
       <pubDate>Thu, 15 Sep 2022 04:32:34 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E7%BB%BC%E5%90%88%E4%B8%9A%E5%8A%A1%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%B4%A8%E9%87%8F%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 前言 美团到店综合业务（以下简称到综）是美团到店业务的重要板块之一，涵盖洗浴、KTV、美业、医美、亲子、结婚、运动健身、玩乐、教育培训、家居、宠物、酒吧、生活服务等数十个重点细分行业，满足数以亿计用户多样化的本地生活需求。推荐系统在其中是实现供给和需求高效匹配的重要环节，是传递数据价值的出口，而推荐系统的质量决定了匹配效果的折损。如下图 1 所示，数据经过数仓处理、算法加工，再通过数据服务到各个业务系统，最后通过客户端埋点又重新流转回数仓，形成了数据的“飞轮效应”，而质量恰恰是这条链路中齿轮啮合的关键点，是提升效率和保障效果的重要前提。
 质量保障要围绕着度量开展，才能“看得见”、“理得清”、“改得准”。但是传统的后台服务质量指标并不能很好地描述当前“数据飞轮”的质量。我们希望通过综合业务推荐系统的质量模型建设，为类似多业务线、效果导向的系统质量度量提供一种新的思考角度和实践参考。
@@ -105,12 +93,10 @@ GraphSAGE等基于消息传递范式的图神经网络方法，其中心节点�
 可用性对部分缺陷不敏感：可用性是中断频率和持续时间的函数，体现的是系统持续提供服务的能力。只要系统的缺陷不影响对外提供服务，就不影响可用性，但有些实际上影响了用户体验。这里的缺陷可能是意料中的（如主动降级），也可能是意料外的（模型更新延迟），都应该被纳入质量的度量中。 可用性难以覆盖数据的全链路：推荐系统的链路涵盖了数据生产、加工、应用、分析等环节。一是可用性并不涉及数据表的质量，二是在可用性能度量的地方无法反应数据质量的全貌。数据质量需要考虑完整性、准确性、时效性、安全性等特征，超出了可用性的范畴。国际知名学者吴恩达曾说过，人工智能的价值 80% 取决于数据，推荐系统交付推荐效果（点击转化率、交易转化率、用户停留时长等）的质量，也主要取决于数据的质量。 可用性难以反映业务差异性：美团到综覆盖上百个行业、几十个频道页，推荐系统出于效率和成本考虑，业务间无法完全进行隔离，可用性的串并联计算方式难以区分业务进行单独评价。到综不同业务差异很大，访问频次、流量高峰期、业务策略各不相同，从而质量的特点和问题分布也不同。目前可用性的指标缺乏业务维度信息，不利于指导精细化的质量运营。 在质量建设中，过去以故障等级作为目标，验证周期长，具备偶然性，且目标和动作逻辑推导关系不强。另外，故障本身偏事后，这种问题驱动的思路不利于持续运营。总的来说，以可用性为目标，在实际落地计算时存在种种问题，所以我们考虑进行推荐系统的质量模型建设，以可用性为基础，然后调整计算方式，进而指导精细化的质量运营。
 3 建设思路 3.</description>
     </item>
-    
     <item>
       <title>标准化思想及组装式架构在后端BFF中的实践</title>
       <link>https://wfsui.github.io/posts/%E6%A0%87%E5%87%86%E5%8C%96%E6%80%9D%E6%83%B3%E5%8F%8A%E7%BB%84%E8%A3%85%E5%BC%8F%E6%9E%B6%E6%9E%84%E5%9C%A8%E5%90%8E%E7%AB%AFbff%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
       <pubDate>Thu, 04 Aug 2022 03:45:20 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/%E6%A0%87%E5%87%86%E5%8C%96%E6%80%9D%E6%83%B3%E5%8F%8A%E7%BB%84%E8%A3%85%E5%BC%8F%E6%9E%B6%E6%9E%84%E5%9C%A8%E5%90%8E%E7%AB%AFbff%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 前言 在本地生活服务领域，面向C端的信息展示类功能存在着类生物系统的复杂性，具体体现在以下三个方面：功能多，为了帮助用户高效找店、找服务，信息会在尽可能多的地方展示；差异大，同样的信息，在不同客户端、不同页面及模块下的展示逻辑会存在一些差异；功能易变，产品逻辑经常调整。以上三个方面的特点给研发同学带来了很大的挑战，比如当我们面临数千个功能模块，数十个行业产品的持续需求时，如何快速响应呢？
 进入互联网“下半场”，靠“堆人力”的研发方式已经不再具备竞争力了，真正可行且有效的方式是让系统能力变得可沉淀、可组合复用、可灵活应对各种变化。在多业态、大规模定制需求的背景下，本文分享了如何通过组装式开发的方法来提升业务的竞争力。
@@ -120,12 +106,10 @@ GraphSAGE等基于消息传递范式的图神经网络方法，其中心节点�
 2.2 研发挑战 在分享技术挑战之前，可以先看看研发同学的日常。这里有两个小场景：
 场景一，由B端（商家/运营）直接生产出来的信息，不能直接展示给用户。B端主要关注信息能否高效录入，录入的信息不适合直接展示给用户，需要经过一些逻辑加工，同一份B端录入的信息可能会有多种加工展示规则。 场景二，由于B/C端业务领域问题差别较大，为降低开发难度，B/C端一般会做精细化分工，一拨人专注B端的信息录入能力建设，一拨人专注C端的信息展示。 而我们就是专注信息展示的这拨人。这类系统业界也有一些标准的术语，叫BFF（Backend For Frontend）。BFF的主要职责是组合使用底层数据，额外处理C端展示逻辑。综上所述，我们研发同学具体的工作通常是：通过外部数据源将原始数据查到，然后按照产品的要求，把查到的原始信息加工成可以展示给用户的信息，最后发送给客户端使用。如下图所示，这部分工作主要由中间的BFF API服务负责：</description>
     </item>
-    
     <item>
       <title>异构广告混排在美团到店业务的探索与实践</title>
       <link>https://wfsui.github.io/posts/%E5%BC%82%E6%9E%84%E5%B9%BF%E5%91%8A%E6%B7%B7%E6%8E%92%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
       <pubDate>Sun, 05 Jun 2022 03:24:36 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/%E5%BC%82%E6%9E%84%E5%B9%BF%E5%91%8A%E6%B7%B7%E6%8E%92%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 背景与简介 1.1 背景 美团到店广告负责美团搜索流量的商业变现，服务于到店餐饮、休娱亲子、丽人医美、酒店旅游等众多本地生活服务商家。质量预估团队负责广告系统中CTR/CVR以及客单价/交易额等质量分预估，在过去几年中，我们通过位次上下文建模[1]、时空超长序列建模[2]等创新技术，在CTR预估问题中的用户、上下文等方向都取得了一些突破[3]，并整理成论文发表在SIGIR、ICDE、CIKM等国际会议上。
 不过以上论文重在模型精度，而模型精度与广告候选共同决定着排序系统的质量。但在广告候选角度，相比于传统电商的候选集合，美团搜索广告因LBS（Location Based Services, 基于位置的服务）的限制，所以在某些类目上门店候选较少，而候选较少又严重制约了整个排序系统的潜力空间。当用传统方式来增加候选数量的方法无法取得收益时，我们考虑将广告候选进行扩展与优化，以期提升本地生活场景排序系统的潜能上限。
@@ -133,12 +117,10 @@ GraphSAGE等基于消息传递范式的图神经网络方法，其中心节点�
 竞争关系异构广告：门店和商品两种类型广告竞争混排，通过比较混排模型中pCTR确定广告展示类型。如下图1所示，左列首位为门店类型广告胜出，展示内容为门店图片、门店标题和门店星级评论数；右列首位为商品类型广告胜出，展示内容为商品图片、商品标题和对应门店。广告系统决定广告的排列顺序和展示类型，当商品类型广告获胜时，系统确定展示的具体商品。 组合关系异构广告：门店广告和其商品广告组合为一个展示单元（蓝色框体）进行列表排序，商品从属于门店，两种类型异构广告组合混排展示。如下图2所示，门店广告展示门店的头图、标题价格等信息；两个商品广告展示商品价格、标题和销量等信息。广告系统确定展示单元的排列顺序，并在门店的商品集合中确定展示的Top2商品。 1.3 挑战与做法简介 目前，搜索广告模型线上为基于DNN（深度神经网络）[4-6]的门店粒度排序模型，门店候选数量受限（约150）且缺失商品等更直接且重要的决策信息。因此，我们将商品广告作为门店的候选补充，通过门店与门店下多商品的混排打开候选空间，候选量可以达到1500+。此外，考虑广告上下文影响，同时进一步扩展打分候选以提升排序上限，我们将门店粒度升级为异构广告组合粒度的排序，基于此构建生成式广告组合预估系统，候选极限达到了1500X（考虑线上性能我们最终选择1500X)。而在探索过程中，我们遇到了以下三大挑战：
 商品粒度预估性能压力：下沉到商品粒度后增加至少10倍的候选量，造成线上预估服务无法承受的耗时增加。 组合间关系建模困难：门店同组合商品的上下文关系使用Pointwise-Loss建模难以刻画。 商品广告冷启动问题：仅使用经过模型选择后曝光的候选，容易形成马太效应。 针对上述挑战，技术团队经过思考与实践，分别进行如下针对性的优化：</description>
     </item>
-    
     <item>
       <title>7次KDD Cup&amp;Kaggle冠军的经验分享：从多领域优化到AutoML框架</title>
       <link>https://wfsui.github.io/posts/7%E6%AC%A1kdd-cupkaggle%E5%86%A0%E5%86%9B%E7%9A%84%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB%E4%BB%8E%E5%A4%9A%E9%A2%86%E5%9F%9F%E4%BC%98%E5%8C%96%E5%88%B0automl%E6%A1%86%E6%9E%B6/</link>
       <pubDate>Thu, 21 Apr 2022 03:49:42 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/7%E6%AC%A1kdd-cupkaggle%E5%86%A0%E5%86%9B%E7%9A%84%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB%E4%BB%8E%E5%A4%9A%E9%A2%86%E5%9F%9F%E4%BC%98%E5%8C%96%E5%88%B0automl%E6%A1%86%E6%9E%B6/</guid>
       <description>1 背景与简介 反馈快速、竞争激烈的算法比赛是算法从业者提升技术水平的重要方式。从若干行业核心问题中抽象出的算法比赛题目具有很强的实际意义，而比赛的实时积分榜促使参加者不断改进，以试图超越当前的最佳实践，而且获胜方案对于工业界与学术界也有很强的推动作用，例如KDD Cup比赛产出的Field-Aware Factorization Machine(FFM)算法[1]、ImageNet比赛产出的ResNet模型[2]在业界都有着广泛的应用。
 美团到店广告质量预估团队在美团内部算法大赛MDD Cup中获得了第一名，受大赛组委会的邀请，希望分享一些比较通用的比赛经验。本文是笔者7次Kaggle/KDD Cup冠军经验（如下图1所示）的分享，希望能帮助到更多的同学。
@@ -147,6 +129,5 @@ ACM SIGKDD （国际数据挖掘与知识发现大会，简称 KDD）是数据�
 通过分析不难发现，KDD Cup举办20年来，一直紧密结合工业界前沿与热点问题，演进主要分为三个阶段。第一阶段从2002年左右开始，专注于互联网的热点推荐系统方面问题，包括推荐、广告，行为预测等；第二阶段聚焦在传统行业问题，比较关注教育、环境、医疗等领域；而在第三阶段，自2019年以来，重点关注非监督问题，例如AutoML、Debiasing、强化学习等问题，这类比赛的共同特点是通过以前方法难以解决现有的新问题。这三个阶段趋势也一定程度反应着当前工业界与学术界的难点与重点，无论从方式、方法，还是从问题维度，都呈现出从窄到宽，从标准向非标准演进的趋势。
 本文会先介绍笔者的7次KDD Cup/Kaggle比赛冠军的方案与理解，问题涉及推荐、广告、交通、环境、人工智能公平性等多个领域问题。接着会介绍在以上比赛中发挥关键作用的AutoML技术框架，包括自动化特征工程，自动化模型优化，自动化模型融合等，以及如何通过该技术框架系统性建模不同的问题。最后再介绍以上比赛形成的通用方法，即面对一个新问题，如何进行分析、理解、建模、与挑战解决、从而实现问题的深度优化。</description>
     </item>
-    
   </channel>
 </rss>

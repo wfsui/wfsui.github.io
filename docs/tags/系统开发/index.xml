@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Thu, 12 Jan 2023 02:55:08 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 12 Jan 2023 02:55:08 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>基于AI算法的数据库异常监测系统的设计与实现</title>
       <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai%E7%AE%97%E6%B3%95%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E7%9B%91%E6%B5%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/</link>
       <pubDate>Thu, 12 Jan 2023 02:55:08 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8Eai%E7%AE%97%E6%B3%95%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E7%9B%91%E6%B5%8B%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/</guid>
       <description>1. 背景 数据库被广泛用于美团的核心业务场景上，对稳定性要求较高，对异常容忍度非常低。因此，快速的数据库异常发现、定位和止损就变得越来越重要。针对异常监测的问题，传统的固定阈值告警方式，需要依赖专家经验进行规则配置，不能根据不同业务场景灵活动态调整阈值，容易让小问题演变成大故障。
 而基于AI的数据库异常发现能力，可以基于数据库历史表现情况，对关键指标进行7 * 24小时巡检，能够在异常萌芽状态就发现风险，更早地将异常暴露，辅助研发人员在问题恶化前进行定位和止损。基于以上这些因素的考量，美团数据库平台研发组决定开发一套数据库异常检测服务系统。接下来，本文将会从特征分析、算法选型、模型训练与实时检测等几个维度阐述我们的一些思考和实践。
@@ -20,12 +20,10 @@
 从上图我们可以看出，数据的规律主要呈现三种状态：周期、漂移和平稳[1]。因此，我们前期可以针对这些普遍特征的样本进行建模，即可覆盖大部分场景。接下来，我们分别从周期性、漂移性和平稳性这三个角度进行分析，并讨论算法设计的过程。
 2.1.1 周期性变化 在很多业务场景中，指标会由于早晚高峰或是一些定时任务引起规律性波动。我们认为这属于数据的内在规律性波动，模型应该具备识别出周期性成分，检测上下文异常的能力。对于不存在长期趋势成分的时序指标而言，当指标存在周期性成分的情况下，$\int f(x) f(x+t) dx \leqslant \int f(x)f(x+T)dx = \int f^{2}(x)dx$，其中T代表的是时序的周期跨度。可通过计算自相关图，即计算出t取不同值时$\int f(x) f(x+t) dx$ 的值，然后通过分析自相关峰的间隔来确定周期性，主要的流程包括以下几个步骤：</description>
     </item>
-    
     <item>
       <title>设计模式二三事</title>
       <link>https://wfsui.github.io/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BA%8C%E4%B8%89%E4%BA%8B/</link>
       <pubDate>Fri, 27 May 2022 03:42:14 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BA%8C%E4%B8%89%E4%BA%8B/</guid>
       <description>设计模式是众多软件开发人员经过长时间的试错和应用总结出来的，解决特定问题的一系列方案。现行的部分教材在介绍设计模式时，有些会因为案例脱离实际应用场景而令人费解，有些又会因为场景简单而显得有些小题大做。本文会结合在美团金融服务平台设计开发时的经验，结合实际的案例，并采用“师生对话”这种相对诙谐的形式去讲解三类常用设计模式的应用。希望能对想提升系统设计能力的同学有所帮助或启发。
 引言 话说这是在程序员世界里一对师徒的对话：
@@ -45,6 +43,5 @@
 因为之前有过类似的开发经验，拿到需求的小明二话不说开始了编写起了代码：
 // 奖励服务 class RewardService { // 外部服务 private WaimaiService waimaiService; private HotelService hotelService; private FoodService foodService; // 使用对入参的条件判断进行发奖 public void issueReward(String rewardType, Object .</description>
     </item>
-    
   </channel>
 </rss>

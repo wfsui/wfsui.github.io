@@ -10,6 +10,7 @@
 <meta property="og:url" content="https://wfsui.github.io/posts/android%E5%AF%B9so%E4%BD%93%E7%A7%AF%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-09-12T04:37:40+00:00" />
 <meta property="article:modified_time" content="2022-09-12T04:37:40+00:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Android对so体积优化的探索与实践"/>
 <meta name="twitter:description" content="1. 背景 应用安装包的体积影响着用户的下载时长、安装时长、磁盘占用空间等诸多方面，因此减小安装包的体积对于提升用户体验和下载转化率都大有益处。Android 应用安装包其实是一个 zip 文件，主要由 dex、assets、resource、so 等各类型文件压缩而成。目前业内常见的包体积优化方案大体分为以下几类：
@@ -99,7 +100,7 @@
 <p>注：为什么 AGP 要先编译出带调试信息和符号表的 so，而不直接编译出最终的 so 呢（通过添加 <code>-s</code> 参数是可以做到直接编译出没有调试信息和符号表的 so 的）？原因就在于需要使用带调试信息和符号表的 so 对崩溃调用栈进行还原。删除了调试信息和符号表的 so 完全可以正常运行，但是当它发生崩溃时，只能保证获取到崩溃调用栈的每个栈帧的相应指令在 so 中的位置，不一定能获取到符号。但是排查崩溃问题时，我们希望得知 so 崩溃在源码的哪个位置。带调试信息和符号表的 so 可以将崩溃调用栈的每个栈帧还原成其对应的源码文件名、文件行号、函数名等，大大方便了崩溃问题的排查。所以说，虽然带调试信息和符号表的 so 不会打包到最终的 apk 中，但它对排查问题来说非常重要。</p>
 </blockquote>
 <p>AGP 通过开启 strip 优化，可以大幅缩减 so 的体积，甚至可以达到十倍以上。以一个测试 so 为例，其最终 so 大小为14 KB，但是对应的带调试信息和符号表的 so 大小为 136 KB。不过在使用中，我们需要注意的是，如果 AGP 找不到对应的 strip 命令，就会把带调试信息和符号表的 so 直接打包到 apk 或 aar 中，并不会打包失败。例如缺少 armeabi 架构对应的 strip 命令时提示信息如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Unable to strip library &#39;XXX.so&#39; due to missing strip tool for ABI &#39;ARMEABI&#39;. Packaging it as is.
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>Unable to strip library <span style="color:#2aa198">&#39;XXX.so&#39;</span> due to missing strip <span style="color:#719e07">tool</span> <span style="color:#719e07">for</span> ABI <span style="color:#2aa198">&#39;ARMEABI&#39;</span><span style="color:#719e07">.</span> Packaging it as is<span style="color:#719e07">.</span>
 </span></span></code></pre></div><p>除了上述 Android 构建工具默认为 so 体积做的优化，我们还能做哪些优化呢？首先明确我们优化的原则：</p>
 <ul>
 <li>对于必须保留的内容考虑进行缩减，减小体积占用；</li>
@@ -241,9 +242,9 @@
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>LOCAL_CFLAGS += -Oz -flto -fdata-sections -ffunction-sections
 </span></span><span style="display:flex;"><span>LOCAL_LDFLAGS += -O3 -flto -Wl,--gc-sections -Wl,--version-script=${LOCAL_PATH}/version_script.txt #version_script.txt 与当前 Android.mk 同目录
 </span></span></code></pre></div><p>其中 <code>version_script.txt</code> 较为通用的配置如下，可根据实际情况添加需要保留的导出符号：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    global:JNI_OnLoad;JNI_OnUnload;Java_*;
-</span></span><span style="display:flex;"><span>    local:*;
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    global:JNI_OnLoad;JNI_OnUnload;Java_<span style="color:#719e07">*</span>;
+</span></span><span style="display:flex;"><span>    local:<span style="color:#719e07">*</span>;
 </span></span><span style="display:flex;"><span>};
 </span></span></code></pre></div><p><strong>说明</strong>：version script 方式指定所有需要导出的符号，不再需要 visibility 方式、attribute 方式、static 关键字和 exclude libs 方式控制导出符号。是否禁用 C++ 的异常机制和 RTTI 机制、合并 so 以及提取多 so 共同依赖库取决于具体项目，不具有通用性。</p>
 <p>至此，我们总结出一套可行的 so 体积优化方案。但在工程实践中，还有一些问题要解决。</p>

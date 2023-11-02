@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Thu, 23 Jun 2022 03:47:05 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E7%89%B9%E5%BE%81%E5%8C%B9%E9%85%8D/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 23 Jun 2022 03:47:05 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/%E7%89%B9%E5%BE%81%E5%8C%B9%E9%85%8D/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>终端新玩法：技术栈无关的剧本式引导</title>
       <link>https://wfsui.github.io/posts/%E7%BB%88%E7%AB%AF%E6%96%B0%E7%8E%A9%E6%B3%95%E6%8A%80%E6%9C%AF%E6%A0%88%E6%97%A0%E5%85%B3%E7%9A%84%E5%89%A7%E6%9C%AC%E5%BC%8F%E5%BC%95%E5%AF%BC/</link>
       <pubDate>Thu, 23 Jun 2022 03:47:05 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/%E7%BB%88%E7%AB%AF%E6%96%B0%E7%8E%A9%E6%B3%95%E6%8A%80%E6%9C%AF%E6%A0%88%E6%97%A0%E5%85%B3%E7%9A%84%E5%89%A7%E6%9C%AC%E5%BC%8F%E5%BC%95%E5%AF%BC/</guid>
       <description>背景 互联网行业节奏偏快，App 的更新愈发频繁，如何让用户跟上更新节奏，理解产品功能，完成认知迭代，是业务发展中不可忽视的一环。同时“低代码/零代码”的理念也逐步被大众认可，相关调研报告指出“低代码/零代码”可以加速企业的数字化转型。以美团到家事业群为例，在宅经济再度升温后，即时配送应用的增长速度高于其他配送时长的应用。大量新用户的涌入既是机遇，也是挑战。目前美团到家事业群已经涵盖了医药、团餐、闪购、跑腿、团好货、无人配送等 10+ 业务线。新的商业模式意味着新领域的尝试，主业务外卖平均数日也会上线新的功能模块，这些都需要关注用户心智建设与效率提升。
 现状 在提升用户心智，获得服务认同方面，业界内也做了很多尝试，包括丰富多样的轻交互，也有“保姆式”的游戏引导教学。这些实现方式归结到技术层面，都是 App 中的功能引导，它可以让用户在短时间内快速了解产品特色以及产品使用方式。相对于 “广告投放”、“口号传播”、“地推介绍”等传统方案，App 中的功能引导，具备成本低、覆盖准、可复用等特点。
@@ -20,6 +20,5 @@ App 功能引导是用户心智建设的“敲门砖”，只有让用户熟悉�
 为了让商户“用得明白”，2021 年第一季度，美团外卖商家端在功能引导类需求层面耗费了大量人力，平台产品侧重点对商家进行了扶持，并试点了“情感化引导”等项目，虽然业务效果取得了正向收益，但由于后续的研发估时较大，空有想法却难以落地。类似的营销、广告、商品、订单等业务也由于快速迭代，也需要配套生产一系列产品功能的引导需求，也因为人力问题而一直处于积压状态。
 目标与挑战 基于上述背景与现状，我们迫切需要提供一种解决方案，让业务方可以更快捷地落地自己的想法，在控制好成本的情况下，更好地建设用户心智。同时，解决目前积压的业务任务，包括但不限操作教学、功能介绍、情感化、严肃化等等场景。于是 ASG（Application Scripted Guidance） 剧本式引导项目就应运而生了。</description>
     </item>
-    
   </channel>
 </rss>

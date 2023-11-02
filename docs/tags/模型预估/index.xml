@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 27 May 2022 03:42:14 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%A8%A1%E5%9E%8B%E9%A2%84%E4%BC%B0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 27 May 2022 03:42:14 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/%E6%A8%A1%E5%9E%8B%E9%A2%84%E4%BC%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>GPU在外卖场景精排模型预估中的应用实践</title>
       <link>https://wfsui.github.io/posts/gpu%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%B2%BE%E6%8E%92%E6%A8%A1%E5%9E%8B%E9%A2%84%E4%BC%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</link>
       <pubDate>Fri, 27 May 2022 03:42:14 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/gpu%E5%9C%A8%E5%A4%96%E5%8D%96%E5%9C%BA%E6%99%AF%E7%B2%BE%E6%8E%92%E6%A8%A1%E5%9E%8B%E9%A2%84%E4%BC%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 前言 近些年，随着机器学习技术的蓬勃发展，以GPU为代表的一系列专用芯片以优越的高性能计算能力和愈发低廉的成本，在机器学习领域得到广泛认可和青睐，且与传统的CPU体系不断融合，形成了新的异构硬件生态。
 在这种技术浪潮之中，很多技术研发者会面临着这样的问题：在我们的业务上应用GPU硬件能获得什么？如何快速、平滑地从传统CPU体系基础上完成切换？站在机器学习算法设计的角度，又会带来什么影响和改变？在GPU生态下众多的技术路线和架构选型中，如何找到一条最适合自身场景的路径？
@@ -25,6 +25,5 @@
 3 外卖搜推场景下的精排模型 本章节主要介绍在外卖场景下多模型统一的演进思路、模型特点以及在实践中的挑战。本文只对模型设计思路做简单的说明，引出后续模型计算在GPU落地中的实践思考。
 3.1 精排模型的设计思路 如前文所述，在美团外卖多入口联动的场景特点下，经典的单体模型设计存在着以下局限：</description>
     </item>
-    
   </channel>
 </rss>

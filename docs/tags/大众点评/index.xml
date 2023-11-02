@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 11 Nov 2022 03:44:51 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 11 Nov 2022 03:44:51 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>可视化全链路日志追踪</title>
       <link>https://wfsui.github.io/posts/%E5%8F%AF%E8%A7%86%E5%8C%96%E5%85%A8%E9%93%BE%E8%B7%AF%E6%97%A5%E5%BF%97%E8%BF%BD%E8%B8%AA/</link>
       <pubDate>Fri, 11 Nov 2022 03:44:51 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/%E5%8F%AF%E8%A7%86%E5%8C%96%E5%85%A8%E9%93%BE%E8%B7%AF%E6%97%A5%E5%BF%97%E8%BF%BD%E8%B8%AA/</guid>
       <description>1. 背景 1.1 业务系统日益复杂 随着互联网产品的快速发展，不断变化的商业环境和用户诉求带来了纷繁复杂的业务需求。业务系统需要支撑的业务场景越来越广、涵盖的业务逻辑越来越多，系统的复杂度也跟着快速提升。与此同时，由于微服务架构的演进，业务逻辑的实现往往需要依赖多个服务间的共同协作。总而言之，业务系统的日益复杂已经成为一种常态。
 1.2 业务追踪面临挑战 业务系统往往面临着多样的日常客诉和突发问题，“业务追踪”就成为了关键的应对手段。业务追踪可以看做一次业务执行的现场还原过程，通过执行中的各种记录还原出原始现场，可用于业务逻辑执行情况的分析和问题的定位，是整个系统建设中重要的一环。
@@ -24,6 +24,5 @@
 1.2.2 分布式会话跟踪方案 在分布式系统，尤其是微服务系统中，业务场景的某次请求往往需要经过多个服务、多个中间件、多台机器的复杂链路处理才能完成。为了解决复杂链路排查困难的问题，“分布式会话跟踪方案”诞生。该方案的理论知识由Google在2010年《Dapper》论文[3]中发表，随后Twitter开发出了一个开源版本Zipkin[4]。
 市面上的同类型框架几乎都是以Google Dapper论文为基础进行实现，整体大同小异，都是通过一个分布式全局唯一的id（即traceId），将分布在各个服务节点上的同一次请求串联起来，还原调用关系、追踪系统问题、分析调用数据、统计系统指标。分布式会话跟踪，是一种会话级别的追踪能力，如下图2所示，单个分布式请求被还原成一条调用链路，从客户端发起请求抵达系统的边界开始，记录请求流经的每一个服务，直到向客户端返回响应为止。</description>
     </item>
-    
   </channel>
 </rss>

@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Thu, 03 Aug 2023 02:41:53 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 03 Aug 2023 02:41:53 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Code：美团代码托管平台的演进与实践</title>
       <link>https://wfsui.github.io/posts/code%E7%BE%8E%E5%9B%A2%E4%BB%A3%E7%A0%81%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%BC%94%E8%BF%9B%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
       <pubDate>Thu, 03 Aug 2023 02:41:53 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/code%E7%BE%8E%E5%9B%A2%E4%BB%A3%E7%A0%81%E6%89%98%E7%AE%A1%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%BC%94%E8%BF%9B%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 引言 Code是美团自研的代码托管平台，其中包括了代码版本管理、分支管理及代码评审等功能，协同众多研发流程工具平台，支撑内部所有工程师的日常研发工作。经过近3年的建设，目前Code托管了数以万计的仓库，日常处理千万级的Git相关请求，稳定支撑着美团研发流程规范的持续落地。本文主要介绍美团在建设代码托管平台过程中面临的一些挑战和实践经验。
 2. 美团代码托管平台建设之路 2.1 代码托管平台的发展史 回顾美团代码托管平台的发展史，整个历程可以划分为三个阶段：单机部署、多机部署以及自研分布式代码托管平台。
@@ -22,6 +22,5 @@
 写操作仅发生在主节点。 采用懒汉同步模式，在读取数据时触发从节点同步数据，若失败，则路由到主节点。 采用独主兜底模式，遇遇到突发情况时可以迅速禁用从节点，保障数据安全。 如图2所示，我们将仓库访问形式按照应用层协议区分为HTTP和SSH，分别由对应的解析代理模块进行读写分发操作后再下发到主从节点（此处采用了Round-Bobin的算法分发读请求），使得读吞吐量整体扩大了2倍。对于从节点，我们部署了Agent，在用户发起读请求时会触发同步仓库数据的Fetch操作，以保证数据的一致性。
 第三阶段：自研分布式代码托管平台 在第二阶段，虽然通过多机负载IO的读写分离架构短暂性地解决了扩展性瓶颈问题，但仓库数据仍在持续不断地指数增长。同时，除扩展性问题之外，可用性瓶颈也凸显出来，主要表现在以下2个方面：</description>
     </item>
-    
   </channel>
 </rss>

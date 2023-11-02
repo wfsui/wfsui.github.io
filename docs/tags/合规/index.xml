@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Thu, 09 Mar 2023 03:06:38 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%90%88%E8%A7%84/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 09 Mar 2023 03:06:38 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/%E5%90%88%E8%A7%84/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>数字化新业态下数据安全创新——Token化</title>
       <link>https://wfsui.github.io/posts/%E6%95%B0%E5%AD%97%E5%8C%96%E6%96%B0%E4%B8%9A%E6%80%81%E4%B8%8B%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E5%88%9B%E6%96%B0token%E5%8C%96/</link>
       <pubDate>Thu, 09 Mar 2023 03:06:38 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/%E6%95%B0%E5%AD%97%E5%8C%96%E6%96%B0%E4%B8%9A%E6%80%81%E4%B8%8B%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E5%88%9B%E6%96%B0token%E5%8C%96/</guid>
       <description>0. 引言 伴随科技创新引领数字化浪潮席卷全球，数据成为企业发展的核心生产要素。像Google、Facebook等高科技公司，通过提供免费、优秀的软件和服务，接入大量的用户，并基于数据资源驱动，获得了巨大的商业成功。然而，在高速发展的同时，公司对数据却疏于治理，引起了大量的数据泄漏、算法滥用以及隐私相关的问题。这种危机伴随着Facebook的“剑桥分析”丑闻、2020年美国大选等标志性事件，推向了高潮。基于对数据安全和隐私的担忧，欧盟的GDPR领衔的现代隐私合规出台，随后风靡全球，成为又一不可逆转的潮流。
 摆在企业面前是两条路，既要通过数据科技创新保证生存发展，又要保证用户数据的安全。在这两条路的选择与平衡上，有些企业倒下了，有些企业存活下来，并迸发出新的勃勃生机。
@@ -23,6 +23,5 @@
 2. Token化-数字世界银行体系 Token化方案参考现实世界的银行系统。银行体系出现前，市面上经济活动主要以现金交易为主。现金的过度暴露，产生了大量的盗窃、抢劫案件，虽然镖局生意盛行，但只有少数富豪才雇佣得起，因此社会资产大量流失。银行体系应运而生：用户获得现金后，第一时间去银行将现金兑换成存款（等价代替物），随后在整个社会中流通的都是这个代替物-电子现金，只有在极个别场景兑换成现金。随着银行系统的渗透，加上各类线上支付应用的普及，这种现金使用场景越来越少。要想抢钱，只能到银行去，而银行是经过重点防护。
 同样，数据作为核心资产，可以通过方案在个人敏感数据数据（PII）刚进入组织业务系统时，就将明文数据（P）替换成与其一一对应的假名-Token。在随后的整个组织应用环境中以Token高效流通。因为Token与明文是一一对应的，可以在生命周期绝大多数场景代替明文传输、交换、存储和使用，而Token只有通过安全可靠的Token化服务，才能兑换成明文。黑客和内外部恶意攻击者即便拿到了也毫无用处（不可见）。由于Token的自带安全属性，只要在组织内控制住主要数据源和数据枢纽只使用Token流通。新的明文数据需主动换成Token，实现数据默认安全，也就从根本上解决了个人敏感数据的治理难题。</description>
     </item>
-    
   </channel>
 </rss>

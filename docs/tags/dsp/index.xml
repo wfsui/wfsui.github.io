@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 30 Oct 2023 02:40:19 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/dsp/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 02 Nov 2023 02:40:06 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/dsp/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>美团多场景建模的探索与实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%BB%BA%E6%A8%A1%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 30 Oct 2023 02:40:19 +0000</pubDate>
-      
+      <pubDate>Thu, 02 Nov 2023 02:40:06 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%BB%BA%E6%A8%A1%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 引言 美团到家Demand-Side Platform（下文简称DSP）平台，主要负责在美团外部媒体上进行商品或者物料的推荐和投放，并不断优化转化效果。随着业务的不断发展与扩大，DSP对接的外部渠道越来越丰富、展示形式越来越多样，物料展示场景的差异性愈发明显（如开屏、插屏、信息流、弹窗等）。
 例如，用户在午餐时间更容易点击【某推荐渠道下】【某App】【开屏展示位】的快餐类商家的物料而不是【信息流展示位】的啤酒烧烤类商家物料。场景间差异的背后本质上是用户意图和需求的差异，因此模型需要对越来越多的场景进行定制化建设，以适配不同场景下用户的个性化需求。
@@ -21,6 +21,5 @@
 因此，在本文中我们提出了DSP背景下的自适应场景建模方案（AdaScene, Adaptive Scenario Model），同时从知识迁移和场景聚合两个角度进行建模。AdaScene通过控制知识迁移的程度来最大化不同场景共性信息的利用，并使用稀疏专家聚合的方式利用门控网络自动选择专家组成场景表征，缓解了负迁移现象；同时，我们利用损失函数梯度指导场景聚合，将巨大的推荐场景空间约束到有限范围内，缓解了数据稀疏问题，并实现了自适应场景建模方案。
 2 自适应场景建模 在本节开始前，我们先介绍多场景模型的建模方式。多场景模型采用输入层 Embedding + 混合专家（Mixture-of-Experts, MoE）的建模范式，其中输入信息包括了用户侧、商家侧以及场景上下文特征。多场景模型的损失由各场景的损失聚合而成，其损失函数形式如下：</description>
     </item>
-    
   </channel>
 </rss>

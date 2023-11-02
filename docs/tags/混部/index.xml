@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 25 Nov 2022 03:24:08 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%B7%B7%E9%83%A8/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 25 Nov 2022 03:24:08 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/%E6%B7%B7%E9%83%A8/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>提升资源利用率与保障服务质量，鱼与熊掌不可兼得？</title>
       <link>https://wfsui.github.io/posts/%E6%8F%90%E5%8D%87%E8%B5%84%E6%BA%90%E5%88%A9%E7%94%A8%E7%8E%87%E4%B8%8E%E4%BF%9D%E9%9A%9C%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E9%B1%BC%E4%B8%8E%E7%86%8A%E6%8E%8C%E4%B8%8D%E5%8F%AF%E5%85%BC%E5%BE%97/</link>
       <pubDate>Fri, 25 Nov 2022 03:24:08 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/%E6%8F%90%E5%8D%87%E8%B5%84%E6%BA%90%E5%88%A9%E7%94%A8%E7%8E%87%E4%B8%8E%E4%BF%9D%E9%9A%9C%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E9%B1%BC%E4%B8%8E%E7%86%8A%E6%8E%8C%E4%B8%8D%E5%8F%AF%E5%85%BC%E5%BE%97/</guid>
       <description>随着云计算时代的到来，大规模资源运营面临着如何在保障服务质量的同时提升资源利用率（降本增效）。但这两个目标的达成在当前的软硬件技术水平上，是相互矛盾的。本文介绍的LAR（Load Auto-Regulator）系统，即是探索这两个矛盾方向间的平衡点，在保证质量的前提下，提升资源的利用率。
 LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单机资源调度与隔离，在提升整体资源利用率的同时，能够根据服务的优先级和特征保证服务的质量。LAR的整体设计可以适用于多个场景，包括在线场景和混部场景。目前LAR已经在美团在线场景中投入生产使用，并取得了较好的效果。
@@ -23,6 +23,5 @@ LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单�
 持续提升机器的资源利用率，降低单核成本，提升集群服务质量，是美团Hulk团队的核心目标之一。针对用户对降本增效的需求，Hulk调度团队在集群资源利用率提升和服务质量保障方向率先做出相关探索，提出了一系列的建设方案，并推进落地。本文重点介绍在Hulk整体资源利用率运营体系中的核心系统集群负载自动均衡管理系统。
 2 什么是LAR？ LAR全称是集群负载自动均衡管理系统（LAR，Load Auto-Regulator），是美团Hulk团队基于Kubernetes研发的容器编排系统。LAR在Kubernetes之上，通过提供分级的QoS管理机制和负载管控能力，实现从时空维度对资源的精确调度分配管理。</description>
     </item>
-    
   </channel>
 </rss>

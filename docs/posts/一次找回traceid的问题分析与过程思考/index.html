@@ -10,8 +10,9 @@
 @SpringBootTest @RunWith(SpringRunner.class) @EnableAsync public class DemoServiceTest extends TestCase { @Resource private DemoService demoService; @Test public void testTestAsy() { Tracer." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/%E4%B8%80%E6%AC%A1%E6%89%BE%E5%9B%9Etraceid%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%E4%B8%8E%E8%BF%87%E7%A8%8B%E6%80%9D%E8%80%83/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-10-30T02:40:27+00:00" />
-<meta property="article:modified_time" content="2023-10-30T02:40:27+00:00" />
+<meta property="article:published_time" content="2023-11-02T02:40:11+00:00" />
+<meta property="article:modified_time" content="2023-11-02T02:40:11+00:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="一次「找回」TraceId的问题分析与过程思考"/>
 <meta name="twitter:description" content="1. 问题背景和思考 1.1 问题背景 在一次排查线上告警的过程中，突然发现一个链路信息有点不同寻常（这里仅展示测试复现的内容）：
@@ -63,7 +64,7 @@
 
 		<div class="post-header">
 			<h1 class="title">一次「找回」TraceId的问题分析与过程思考</h1>
-			<div class="meta">Posted at &mdash; Oct 30, 2023</div>
+			<div class="meta">Posted at &mdash; Nov 2, 2023</div>
 		</div>
 
 		<div class="markdown">
@@ -74,29 +75,29 @@
 <p>在机器中可以清楚的发现“2022-08-02 19:26:34.952 DXMsgRemoteService ”这一行日志信息并没有携带TraceId，导致调用链路信息戛然而止，无法追踪当时的调用情况。</p>
 <h3 id="12-问题复现和思考">1.2 问题复现和思考</h3>
 <p>在处理完线上告警后，我们开始分析“丢失”的TraceId到底去了哪里？首先在代码中定位TraceId没有追踪到的部分，发现问题出现在一个@Async注解下的方法，删除无关的业务信息代码，并增加MTrace埋点方法后的复现代码如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript" data-lang="gdscript"><span style="display:flex;"><span>@SpringBootTest
-</span></span><span style="display:flex;"><span>@<span style="color:#268bd2">RunWith</span>(SpringRunner<span style="color:#719e07">.</span>class)
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>@SpringBootTest
+</span></span><span style="display:flex;"><span>@RunWith(SpringRunner<span style="color:#719e07">.</span><span style="color:#719e07">class</span>)
 </span></span><span style="display:flex;"><span>@EnableAsync
-</span></span><span style="display:flex;"><span>public <span style="color:#268bd2">class</span> <span style="color:#268bd2">DemoServiceTest</span> <span style="color:#268bd2">extends</span> <span style="color:#268bd2">TestCase</span> {
-</span></span><span style="display:flex;"><span>	@<span style="color:#268bd2">Resource</span>
+</span></span><span style="display:flex;"><span>public <span style="color:#719e07">class</span> DemoServiceTest <span style="color:#719e07">extends</span> TestCase {
+</span></span><span style="display:flex;"><span>	@<span style="color:#cb4b16">Resource</span>
 </span></span><span style="display:flex;"><span>		private DemoService demoService;
 </span></span><span style="display:flex;"><span>	@Test
-</span></span><span style="display:flex;"><span>		public <span style="color:#dc322f">void</span> <span style="color:#268bd2">testTestAsy</span>() {
-</span></span><span style="display:flex;"><span>		Tracer<span style="color:#719e07">.</span><span style="color:#268bd2">serverRecv</span>(<span style="color:#2aa198">&#34;test&#34;</span>);
-</span></span><span style="display:flex;"><span>		<span style="color:#268bd2">String</span> mainThreadName <span style="color:#719e07">=</span> <span style="color:#268bd2">Thread</span><span style="color:#719e07">.</span><span style="color:#268bd2">currentThread</span>()<span style="color:#719e07">.</span><span style="color:#268bd2">getName</span>();
-</span></span><span style="display:flex;"><span>		long mainThreadId <span style="color:#719e07">=</span> <span style="color:#268bd2">Thread</span><span style="color:#719e07">.</span><span style="color:#268bd2">currentThread</span>()<span style="color:#719e07">.</span><span style="color:#268bd2">getId</span>();
-</span></span><span style="display:flex;"><span>		System<span style="color:#719e07">.</span>out<span style="color:#719e07">.</span><span style="color:#268bd2">println</span>(<span style="color:#2aa198">&#34;------We got main thread: &#34;</span><span style="color:#719e07">+</span> mainThreadName <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34; - &#34;</span> <span style="color:#719e07">+</span>  mainThreadId <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34;  Trace Id: &#34;</span> <span style="color:#719e07">+</span> Tracer<span style="color:#719e07">.</span><span style="color:#268bd2">id</span>() <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34;----------&#34;</span>);
-</span></span><span style="display:flex;"><span>		demoService<span style="color:#719e07">.</span><span style="color:#268bd2">testAsy</span>();
+</span></span><span style="display:flex;"><span>		public void testTestAsy() {
+</span></span><span style="display:flex;"><span>		Tracer<span style="color:#719e07">.</span>serverRecv(<span style="color:#2aa198">&#34;test&#34;</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#cb4b16">String</span> mainThreadName <span style="color:#719e07">=</span> <span style="color:#cb4b16">Thread</span><span style="color:#719e07">.</span>currentThread()<span style="color:#719e07">.</span>getName();
+</span></span><span style="display:flex;"><span>		long mainThreadId <span style="color:#719e07">=</span> <span style="color:#cb4b16">Thread</span><span style="color:#719e07">.</span>currentThread()<span style="color:#719e07">.</span>getId();
+</span></span><span style="display:flex;"><span>		System<span style="color:#719e07">.</span>out<span style="color:#719e07">.</span>println(<span style="color:#2aa198">&#34;------We got main thread: &#34;</span><span style="color:#719e07">+</span> mainThreadName <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34; - &#34;</span> <span style="color:#719e07">+</span>  mainThreadId <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34;  Trace Id: &#34;</span> <span style="color:#719e07">+</span> Tracer<span style="color:#719e07">.</span>id() <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34;----------&#34;</span>);
+</span></span><span style="display:flex;"><span>		demoService<span style="color:#719e07">.</span>testAsy();
 </span></span><span style="display:flex;"><span>	}
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>@Component
-</span></span><span style="display:flex;"><span>public <span style="color:#268bd2">class</span> <span style="color:#268bd2">DemoService</span> {
+</span></span><span style="display:flex;"><span>public <span style="color:#719e07">class</span> DemoService {
 </span></span><span style="display:flex;"><span>	@Async
-</span></span><span style="display:flex;"><span>		public <span style="color:#dc322f">void</span> <span style="color:#268bd2">testAsy</span>(){
-</span></span><span style="display:flex;"><span>		<span style="color:#268bd2">String</span> asyThreadName <span style="color:#719e07">=</span> <span style="color:#268bd2">Thread</span><span style="color:#719e07">.</span><span style="color:#268bd2">currentThread</span>()<span style="color:#719e07">.</span><span style="color:#268bd2">getName</span>();
-</span></span><span style="display:flex;"><span>		long asyThreadId <span style="color:#719e07">=</span> <span style="color:#268bd2">Thread</span><span style="color:#719e07">.</span><span style="color:#268bd2">currentThread</span>()<span style="color:#719e07">.</span><span style="color:#268bd2">getId</span>();
-</span></span><span style="display:flex;"><span>		System<span style="color:#719e07">.</span>out<span style="color:#719e07">.</span><span style="color:#268bd2">println</span>(<span style="color:#2aa198">&#34;======Async====&#34;</span>);
-</span></span><span style="display:flex;"><span>		System<span style="color:#719e07">.</span>out<span style="color:#719e07">.</span><span style="color:#268bd2">println</span>(<span style="color:#2aa198">&#34;------We got asy thread: &#34;</span><span style="color:#719e07">+</span> asyThreadName <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34; - &#34;</span> <span style="color:#719e07">+</span>  asyThreadId <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34;  Trace Id: &#34;</span> <span style="color:#719e07">+</span> Tracer<span style="color:#719e07">.</span><span style="color:#268bd2">id</span>() <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34;----------&#34;</span>);
+</span></span><span style="display:flex;"><span>		public void testAsy(){
+</span></span><span style="display:flex;"><span>		<span style="color:#cb4b16">String</span> asyThreadName <span style="color:#719e07">=</span> <span style="color:#cb4b16">Thread</span><span style="color:#719e07">.</span>currentThread()<span style="color:#719e07">.</span>getName();
+</span></span><span style="display:flex;"><span>		long asyThreadId <span style="color:#719e07">=</span> <span style="color:#cb4b16">Thread</span><span style="color:#719e07">.</span>currentThread()<span style="color:#719e07">.</span>getId();
+</span></span><span style="display:flex;"><span>		System<span style="color:#719e07">.</span>out<span style="color:#719e07">.</span>println(<span style="color:#2aa198">&#34;======Async====&#34;</span>);
+</span></span><span style="display:flex;"><span>		System<span style="color:#719e07">.</span>out<span style="color:#719e07">.</span>println(<span style="color:#2aa198">&#34;------We got asy thread: &#34;</span><span style="color:#719e07">+</span> asyThreadName <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34; - &#34;</span> <span style="color:#719e07">+</span>  asyThreadId <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34;  Trace Id: &#34;</span> <span style="color:#719e07">+</span> Tracer<span style="color:#719e07">.</span>id() <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34;----------&#34;</span>);
 </span></span><span style="display:flex;"><span>	}
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>运行这段代码后，我们看看控制台实际的输出结果：</p>
@@ -139,32 +140,32 @@
 <li>可以在@Async中自定义执行器。</li>
 </ol>
 <p>我们以@EnableAsync为入口开始分析异步过程，除了基本的配置方法外，我们重点关注下配置类AsyncConfigurationSelector的内部逻辑，由于默认条件下我们使用JDK接口代理，这里重点看看ProxyAsyncConfiguration类的代码逻辑：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript" data-lang="gdscript"><span style="display:flex;"><span>@Configuration
-</span></span><span style="display:flex;"><span>@<span style="color:#268bd2">Role</span>(BeanDefinition<span style="color:#719e07">.</span>ROLE_INFRASTRUCTURE)
-</span></span><span style="display:flex;"><span>public <span style="color:#268bd2">class</span> <span style="color:#268bd2">ProxyAsyncConfiguration</span> <span style="color:#268bd2">extends</span> <span style="color:#268bd2">AbstractAsyncConfiguration</span> {
-</span></span><span style="display:flex;"><span>	@<span style="color:#268bd2">Bean</span>(name <span style="color:#719e07">=</span> TaskManagementConfigUtils<span style="color:#719e07">.</span>ASYNC_ANNOTATION_PROCESSOR_BEAN_NAME)
-</span></span><span style="display:flex;"><span>		@<span style="color:#268bd2">Role</span>(BeanDefinition<span style="color:#719e07">.</span>ROLE_INFRASTRUCTURE)
-</span></span><span style="display:flex;"><span>		public AsyncAnnotationBeanPostProcessor <span style="color:#268bd2">asyncAdvisor</span>() {
-</span></span><span style="display:flex;"><span>		Assert<span style="color:#719e07">.</span><span style="color:#268bd2">notNull</span>(this<span style="color:#719e07">.</span>enableAsync, <span style="color:#2aa198">&#34;@EnableAsync annotation metadata was not injected&#34;</span>);
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>@Configuration
+</span></span><span style="display:flex;"><span>@Role(BeanDefinition<span style="color:#719e07">.</span>ROLE_INFRASTRUCTURE)
+</span></span><span style="display:flex;"><span>public <span style="color:#719e07">class</span> ProxyAsyncConfiguration <span style="color:#719e07">extends</span> AbstractAsyncConfiguration {
+</span></span><span style="display:flex;"><span>	@Bean(name <span style="color:#719e07">=</span> TaskManagementConfigUtils<span style="color:#719e07">.</span>ASYNC_ANNOTATION_PROCESSOR_BEAN_NAME)
+</span></span><span style="display:flex;"><span>		@Role(BeanDefinition<span style="color:#719e07">.</span>ROLE_INFRASTRUCTURE)
+</span></span><span style="display:flex;"><span>		public AsyncAnnotationBeanPostProcessor asyncAdvisor() {
+</span></span><span style="display:flex;"><span>		Assert<span style="color:#719e07">.</span>notNull(this<span style="color:#719e07">.</span>enableAsync, <span style="color:#2aa198">&#34;@EnableAsync annotation metadata was not injected&#34;</span>);
 </span></span><span style="display:flex;"><span>		<span style="color:#719e07">//</span>新建一个异步注解bean后置处理器
-</span></span><span style="display:flex;"><span>		AsyncAnnotationBeanPostProcessor bpp <span style="color:#719e07">=</span> new <span style="color:#268bd2">AsyncAnnotationBeanPostProcessor</span>();
+</span></span><span style="display:flex;"><span>		AsyncAnnotationBeanPostProcessor bpp <span style="color:#719e07">=</span> new AsyncAnnotationBeanPostProcessor();
 </span></span><span style="display:flex;"><span>		<span style="color:#719e07">//</span>如果@EnableAsync注解中有自定义annotation配置则进行设置
-</span></span><span style="display:flex;"><span>		Class<span style="color:#719e07">&lt;</span>? <span style="color:#268bd2">extends</span> <span style="color:#268bd2">Annotation</span><span style="color:#719e07">&gt;</span> customAsyncAnnotation <span style="color:#719e07">=</span> this<span style="color:#719e07">.</span>enableAsync<span style="color:#719e07">.</span><span style="color:#268bd2">getClass</span>(<span style="color:#2aa198">&#34;annotation&#34;</span>);
-</span></span><span style="display:flex;"><span>		<span style="color:#719e07">if</span> (customAsyncAnnotation <span style="color:#719e07">!=</span> AnnotationUtils<span style="color:#719e07">.</span><span style="color:#268bd2">getDefaultValue</span>(EnableAsync<span style="color:#719e07">.</span>class, <span style="color:#2aa198">&#34;annotation&#34;</span>)) {
-</span></span><span style="display:flex;"><span>			bpp<span style="color:#719e07">.</span><span style="color:#268bd2">setAsyncAnnotationType</span>(customAsyncAnnotation);
+</span></span><span style="display:flex;"><span>		Class<span style="color:#719e07">&lt;</span>? <span style="color:#719e07">extends</span> Annotation<span style="color:#719e07">&gt;</span> customAsyncAnnotation <span style="color:#719e07">=</span> this<span style="color:#719e07">.</span>enableAsync<span style="color:#719e07">.</span>getClass(<span style="color:#2aa198">&#34;annotation&#34;</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#719e07">if</span> (customAsyncAnnotation <span style="color:#719e07">!=</span> AnnotationUtils<span style="color:#719e07">.</span>getDefaultValue(EnableAsync<span style="color:#719e07">.</span><span style="color:#719e07">class</span>, <span style="color:#2aa198">&#34;annotation&#34;</span>)) {
+</span></span><span style="display:flex;"><span>			bpp<span style="color:#719e07">.</span>setAsyncAnnotationType(customAsyncAnnotation);
 </span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>		<span style="color:#719e07">if</span> (this<span style="color:#719e07">.</span>executor <span style="color:#719e07">!=</span> <span style="color:#dc322f">null</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#719e07">if</span> (this<span style="color:#719e07">.</span>executor <span style="color:#719e07">!=</span> null) {
 </span></span><span style="display:flex;"><span>			<span style="color:#719e07">//</span>设置线程处理器
-</span></span><span style="display:flex;"><span>			bpp<span style="color:#719e07">.</span><span style="color:#268bd2">setExecutor</span>(this<span style="color:#719e07">.</span>executor);
+</span></span><span style="display:flex;"><span>			bpp<span style="color:#719e07">.</span>setExecutor(this<span style="color:#719e07">.</span>executor);
 </span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>		<span style="color:#719e07">if</span> (this<span style="color:#719e07">.</span>exceptionHandler <span style="color:#719e07">!=</span> <span style="color:#dc322f">null</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#719e07">if</span> (this<span style="color:#719e07">.</span>exceptionHandler <span style="color:#719e07">!=</span> null) {
 </span></span><span style="display:flex;"><span>			<span style="color:#719e07">//</span>设置异常处理器
-</span></span><span style="display:flex;"><span>			bpp<span style="color:#719e07">.</span><span style="color:#268bd2">setExceptionHandler</span>(this<span style="color:#719e07">.</span>exceptionHandler);
+</span></span><span style="display:flex;"><span>			bpp<span style="color:#719e07">.</span>setExceptionHandler(this<span style="color:#719e07">.</span>exceptionHandler);
 </span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>		<span style="color:#719e07">//</span>设置是否需要创建CGLIB子类代理，默认为false
-</span></span><span style="display:flex;"><span>		bpp<span style="color:#719e07">.</span><span style="color:#268bd2">setProxyTargetClass</span>(this<span style="color:#719e07">.</span>enableAsync<span style="color:#719e07">.</span><span style="color:#268bd2">getBoolean</span>(<span style="color:#2aa198">&#34;proxyTargetClass&#34;</span>));
+</span></span><span style="display:flex;"><span>		<span style="color:#719e07">//</span>设置是否需要创建CGLIB子类代理，默认为<span style="color:#268bd2">false</span>
+</span></span><span style="display:flex;"><span>		bpp<span style="color:#719e07">.</span>setProxyTargetClass(this<span style="color:#719e07">.</span>enableAsync<span style="color:#719e07">.</span>getBoolean(<span style="color:#2aa198">&#34;proxyTargetClass&#34;</span>));
 </span></span><span style="display:flex;"><span>		<span style="color:#719e07">//</span>设置异步注解bean处理器应该遵循的执行顺序，默认最低的优先级
-</span></span><span style="display:flex;"><span>		bpp<span style="color:#719e07">.</span><span style="color:#268bd2">setOrder</span>(this<span style="color:#719e07">.</span>enableAsync<span style="color:#719e07">.&lt;</span>Integer<span style="color:#719e07">&gt;</span><span style="color:#268bd2">getNumber</span>(<span style="color:#2aa198">&#34;order&#34;</span>));
+</span></span><span style="display:flex;"><span>		bpp<span style="color:#719e07">.</span>setOrder(this<span style="color:#719e07">.</span>enableAsync<span style="color:#719e07">.&lt;</span>Integer<span style="color:#719e07">&gt;</span>getNumber(<span style="color:#2aa198">&#34;order&#34;</span>));
 </span></span><span style="display:flex;"><span>		<span style="color:#719e07">return</span> bpp;
 </span></span><span style="display:flex;"><span>	}
 </span></span><span style="display:flex;"><span>}
@@ -200,11 +201,11 @@
 </span></span><span style="display:flex;"><span>	return doSubmit(task, executor, invocation.getMethod().getReturnType());
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>我们再接着看看@Async用了什么线程池，重点关注determineAsyncExecutor方法中getExecutorQualifier指定获取的默认线程池是哪一个：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript" data-lang="gdscript"><span style="display:flex;"><span>@Override
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>@Override
 </span></span><span style="display:flex;"><span>@Nullable
-</span></span><span style="display:flex;"><span>protected Executor <span style="color:#268bd2">getDefaultExecutor</span>(@Nullable BeanFactory beanFactory) {
-</span></span><span style="display:flex;"><span>	Executor defaultExecutor <span style="color:#719e07">=</span> <span style="color:#719e07">super</span><span style="color:#719e07">.</span><span style="color:#268bd2">getDefaultExecutor</span>(beanFactory);   
-</span></span><span style="display:flex;"><span>	<span style="color:#719e07">return</span> (defaultExecutor <span style="color:#719e07">!=</span> <span style="color:#dc322f">null</span> ? defaultExecutor : new <span style="color:#268bd2">SimpleAsyncTaskExecutor</span>()); <span style="color:#719e07">//</span>其中默认线程池是SimpleAsyncTaskExecutor
+</span></span><span style="display:flex;"><span>protected Executor getDefaultExecutor(@Nullable BeanFactory beanFactory) {
+</span></span><span style="display:flex;"><span>	Executor defaultExecutor = super.getDefaultExecutor(beanFactory);   
+</span></span><span style="display:flex;"><span>	return (defaultExecutor != null ? defaultExecutor : new SimpleAsyncTaskExecutor()); //其中默认线程池是SimpleAsyncTaskExecutor
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>至此，我们了解到在未指定线程池的情况下调用被标记为@Async的方法时，Spring会自动创建SimpleAsyncTaskExecutor线程池来执行该方法，从而完成异步执行过程。</p>
 <h3 id="23-丢失traceid的原因">2.3. “丢失”TraceId的原因</h3>
@@ -234,64 +235,64 @@
 <ul>
 <li>TransmissibleThreadLocal是继承了InheritableThreadLocal类并重写了get()、set()和remove()方法，TransmissibleThreadLocal的实现方式和TransmittableThreadLocal类似，主要的执行逻辑在Transmitter的capture()方法复制holder中的变量，replay()方法过滤非父线程的holder的变量，restore()来恢复经过replay()过滤后holder的变量：</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>public class TransmissibleThreadLocal&lt;T&gt; extends InheritableThreadLocal&lt;T&gt; {
-</span></span><span style="display:flex;"><span>	public static class Transmitter {
-</span></span><span style="display:flex;"><span>		public static Object capture() {
-</span></span><span style="display:flex;"><span>			Map&lt;TransmissibleThreadLocal&lt;?&gt;, Object&gt; captured = new HashMap&lt;TransmissibleThreadLocal&lt;?&gt;, Object&gt;();
-</span></span><span style="display:flex;"><span>      //获取所有存储在holder中的变量
-</span></span><span style="display:flex;"><span>			for (TransmissibleThreadLocal&lt;?&gt; threadLocal : holder.get().keySet()) { 
-</span></span><span style="display:flex;"><span>				captured.put(threadLocal, threadLocal.copyValue());
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>public <span style="color:#719e07">class</span> TransmissibleThreadLocal<span style="color:#719e07">&lt;</span>T<span style="color:#719e07">&gt;</span> <span style="color:#719e07">extends</span> InheritableThreadLocal<span style="color:#719e07">&lt;</span>T<span style="color:#719e07">&gt;</span> {
+</span></span><span style="display:flex;"><span>	public <span style="color:#719e07">static</span> <span style="color:#719e07">class</span> Transmitter {
+</span></span><span style="display:flex;"><span>		public <span style="color:#719e07">static</span> <span style="color:#cb4b16">Object</span> capture() {
+</span></span><span style="display:flex;"><span>			Map<span style="color:#719e07">&lt;</span>TransmissibleThreadLocal<span style="color:#719e07">&lt;</span>?<span style="color:#719e07">&gt;</span>, <span style="color:#cb4b16">Object</span><span style="color:#719e07">&gt;</span> captured <span style="color:#719e07">=</span> new HashMap<span style="color:#719e07">&lt;</span>TransmissibleThreadLocal<span style="color:#719e07">&lt;</span>?<span style="color:#719e07">&gt;</span>, <span style="color:#cb4b16">Object</span><span style="color:#719e07">&gt;</span>();
+</span></span><span style="display:flex;"><span>      <span style="color:#719e07">//</span>获取所有存储在holder中的变量
+</span></span><span style="display:flex;"><span>			<span style="color:#719e07">for</span> (TransmissibleThreadLocal<span style="color:#719e07">&lt;</span>?<span style="color:#719e07">&gt;</span> threadLocal : holder<span style="color:#719e07">.</span>get()<span style="color:#719e07">.</span>keySet()) { 
+</span></span><span style="display:flex;"><span>				captured<span style="color:#719e07">.</span>put(threadLocal, threadLocal<span style="color:#719e07">.</span>copyValue());
 </span></span><span style="display:flex;"><span>			}
-</span></span><span style="display:flex;"><span>			return captured;
+</span></span><span style="display:flex;"><span>			<span style="color:#719e07">return</span> captured;
 </span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>		public static Object replay(Object captured) {
-</span></span><span style="display:flex;"><span>			@SuppressWarnings(&#34;unchecked&#34;)
-</span></span><span style="display:flex;"><span>			Map&lt;TransmissibleThreadLocal&lt;?&gt;, Object&gt; capturedMap = (Map&lt;TransmissibleThreadLocal&lt;?&gt;, Object&gt;) captured;
-</span></span><span style="display:flex;"><span>			Map&lt;TransmissibleThreadLocal&lt;?&gt;, Object&gt; backup = new HashMap&lt;TransmissibleThreadLocal&lt;?&gt;, Object&gt;();
-</span></span><span style="display:flex;"><span>			for (Iterator&lt;? extends Map.Entry&lt;TransmissibleThreadLocal&lt;?&gt;, ?&gt;&gt; iterator = holder.get().entrySet().iterator();iterator.hasNext(); ) {
-</span></span><span style="display:flex;"><span>				Map.Entry&lt;TransmissibleThreadLocal&lt;?&gt;, ?&gt; next = iterator.next();
-</span></span><span style="display:flex;"><span>				TransmissibleThreadLocal&lt;?&gt; threadLocal = next.getKey();
-</span></span><span style="display:flex;"><span>				// backup
-</span></span><span style="display:flex;"><span>				backup.put(threadLocal, threadLocal.get());
-</span></span><span style="display:flex;"><span>				// clear the TTL value only in captured
-</span></span><span style="display:flex;"><span>				// avoid extra TTL value in captured, when run task.
-</span></span><span style="display:flex;"><span>        //过滤非传递的变量
-</span></span><span style="display:flex;"><span>				if (!capturedMap.containsKey(threadLocal)) { 
-</span></span><span style="display:flex;"><span>					iterator.remove();
-</span></span><span style="display:flex;"><span>					threadLocal.superRemove();
+</span></span><span style="display:flex;"><span>		public <span style="color:#719e07">static</span> <span style="color:#cb4b16">Object</span> replay(<span style="color:#cb4b16">Object</span> captured) {
+</span></span><span style="display:flex;"><span>			@SuppressWarnings(<span style="color:#2aa198">&#34;unchecked&#34;</span>)
+</span></span><span style="display:flex;"><span>			Map<span style="color:#719e07">&lt;</span>TransmissibleThreadLocal<span style="color:#719e07">&lt;</span>?<span style="color:#719e07">&gt;</span>, <span style="color:#cb4b16">Object</span><span style="color:#719e07">&gt;</span> capturedMap <span style="color:#719e07">=</span> (Map<span style="color:#719e07">&lt;</span>TransmissibleThreadLocal<span style="color:#719e07">&lt;</span>?<span style="color:#719e07">&gt;</span>, <span style="color:#cb4b16">Object</span><span style="color:#719e07">&gt;</span>) captured;
+</span></span><span style="display:flex;"><span>			Map<span style="color:#719e07">&lt;</span>TransmissibleThreadLocal<span style="color:#719e07">&lt;</span>?<span style="color:#719e07">&gt;</span>, <span style="color:#cb4b16">Object</span><span style="color:#719e07">&gt;</span> backup <span style="color:#719e07">=</span> new HashMap<span style="color:#719e07">&lt;</span>TransmissibleThreadLocal<span style="color:#719e07">&lt;</span>?<span style="color:#719e07">&gt;</span>, <span style="color:#cb4b16">Object</span><span style="color:#719e07">&gt;</span>();
+</span></span><span style="display:flex;"><span>			<span style="color:#719e07">for</span> (Iterator<span style="color:#719e07">&lt;</span>? <span style="color:#719e07">extends</span> Map<span style="color:#719e07">.</span>Entry<span style="color:#719e07">&lt;</span>TransmissibleThreadLocal<span style="color:#719e07">&lt;</span>?<span style="color:#719e07">&gt;</span>, ?<span style="color:#719e07">&gt;&gt;</span> iterator <span style="color:#719e07">=</span> holder<span style="color:#719e07">.</span>get()<span style="color:#719e07">.</span>entrySet()<span style="color:#719e07">.</span>iterator();iterator<span style="color:#719e07">.</span>hasNext(); ) {
+</span></span><span style="display:flex;"><span>				Map<span style="color:#719e07">.</span>Entry<span style="color:#719e07">&lt;</span>TransmissibleThreadLocal<span style="color:#719e07">&lt;</span>?<span style="color:#719e07">&gt;</span>, ?<span style="color:#719e07">&gt;</span> next <span style="color:#719e07">=</span> iterator<span style="color:#719e07">.</span>next();
+</span></span><span style="display:flex;"><span>				TransmissibleThreadLocal<span style="color:#719e07">&lt;</span>?<span style="color:#719e07">&gt;</span> threadLocal <span style="color:#719e07">=</span> next<span style="color:#719e07">.</span>getKey();
+</span></span><span style="display:flex;"><span>				<span style="color:#719e07">//</span> backup
+</span></span><span style="display:flex;"><span>				backup<span style="color:#719e07">.</span>put(threadLocal, threadLocal<span style="color:#719e07">.</span>get());
+</span></span><span style="display:flex;"><span>				<span style="color:#719e07">//</span> clear the TTL value only <span style="color:#719e07">in</span> captured
+</span></span><span style="display:flex;"><span>				<span style="color:#719e07">//</span> avoid extra TTL value <span style="color:#719e07">in</span> captured, when run task<span style="color:#719e07">.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">//</span>过滤非传递的变量
+</span></span><span style="display:flex;"><span>				<span style="color:#719e07">if</span> (<span style="color:#719e07">!</span>capturedMap<span style="color:#719e07">.</span>containsKey(threadLocal)) { 
+</span></span><span style="display:flex;"><span>					iterator<span style="color:#719e07">.</span>remove();
+</span></span><span style="display:flex;"><span>					threadLocal<span style="color:#719e07">.</span>superRemove();
 </span></span><span style="display:flex;"><span>				}
 </span></span><span style="display:flex;"><span>			}
-</span></span><span style="display:flex;"><span>			// set value to captured TTL
-</span></span><span style="display:flex;"><span>			for (Map.Entry&lt;TransmissibleThreadLocal&lt;?&gt;, Object&gt; entry : capturedMap.entrySet()) {
-</span></span><span style="display:flex;"><span>				@SuppressWarnings(&#34;unchecked&#34;)
-</span></span><span style="display:flex;"><span>				TransmissibleThreadLocal&lt;Object&gt; threadLocal = (TransmissibleThreadLocal&lt;Object&gt;) entry.getKey();
-</span></span><span style="display:flex;"><span>				threadLocal.set(entry.getValue());
+</span></span><span style="display:flex;"><span>			<span style="color:#719e07">//</span> set value to captured TTL
+</span></span><span style="display:flex;"><span>			<span style="color:#719e07">for</span> (Map<span style="color:#719e07">.</span>Entry<span style="color:#719e07">&lt;</span>TransmissibleThreadLocal<span style="color:#719e07">&lt;</span>?<span style="color:#719e07">&gt;</span>, <span style="color:#cb4b16">Object</span><span style="color:#719e07">&gt;</span> entry : capturedMap<span style="color:#719e07">.</span>entrySet()) {
+</span></span><span style="display:flex;"><span>				@SuppressWarnings(<span style="color:#2aa198">&#34;unchecked&#34;</span>)
+</span></span><span style="display:flex;"><span>				TransmissibleThreadLocal<span style="color:#719e07">&lt;</span><span style="color:#cb4b16">Object</span><span style="color:#719e07">&gt;</span> threadLocal <span style="color:#719e07">=</span> (TransmissibleThreadLocal<span style="color:#719e07">&lt;</span><span style="color:#cb4b16">Object</span><span style="color:#719e07">&gt;</span>) entry<span style="color:#719e07">.</span>getKey();
+</span></span><span style="display:flex;"><span>				threadLocal<span style="color:#719e07">.</span>set(entry<span style="color:#719e07">.</span>getValue());
 </span></span><span style="display:flex;"><span>			}
-</span></span><span style="display:flex;"><span>			// call beforeExecute callback
-</span></span><span style="display:flex;"><span>			doExecuteCallback(true);
-</span></span><span style="display:flex;"><span>			return backup;
+</span></span><span style="display:flex;"><span>			<span style="color:#719e07">//</span> call beforeExecute callback
+</span></span><span style="display:flex;"><span>			doExecuteCallback(<span style="color:#268bd2">true</span>);
+</span></span><span style="display:flex;"><span>			<span style="color:#719e07">return</span> backup;
 </span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>		public static void restore(Object backup) {
-</span></span><span style="display:flex;"><span>			@SuppressWarnings(&#34;unchecked&#34;)
-</span></span><span style="display:flex;"><span>			Map&lt;TransmissibleThreadLocal&lt;?&gt;, Object&gt; backupMap = (Map&lt;TransmissibleThreadLocal&lt;?&gt;, Object&gt;) backup;
-</span></span><span style="display:flex;"><span>			// call afterExecute callback
-</span></span><span style="display:flex;"><span>			doExecuteCallback(false);
-</span></span><span style="display:flex;"><span>			for (Iterator&lt;? extends Map.Entry&lt;TransmissibleThreadLocal&lt;?&gt;, ?&gt;&gt; iterator = holder.get().entrySet().iterator();
-</span></span><span style="display:flex;"><span>						                 iterator.hasNext(); ) {
-</span></span><span style="display:flex;"><span>				Map.Entry&lt;TransmissibleThreadLocal&lt;?&gt;, ?&gt; next = iterator.next();
-</span></span><span style="display:flex;"><span>				TransmissibleThreadLocal&lt;?&gt; threadLocal = next.getKey();
-</span></span><span style="display:flex;"><span>				// clear the TTL value only in backup
-</span></span><span style="display:flex;"><span>				// avoid the extra value of backup after restore
-</span></span><span style="display:flex;"><span>				if (!backupMap.containsKey(threadLocal)) { 
-</span></span><span style="display:flex;"><span>					iterator.remove();
-</span></span><span style="display:flex;"><span>					threadLocal.superRemove();
+</span></span><span style="display:flex;"><span>		public <span style="color:#719e07">static</span> void restore(<span style="color:#cb4b16">Object</span> backup) {
+</span></span><span style="display:flex;"><span>			@SuppressWarnings(<span style="color:#2aa198">&#34;unchecked&#34;</span>)
+</span></span><span style="display:flex;"><span>			Map<span style="color:#719e07">&lt;</span>TransmissibleThreadLocal<span style="color:#719e07">&lt;</span>?<span style="color:#719e07">&gt;</span>, <span style="color:#cb4b16">Object</span><span style="color:#719e07">&gt;</span> backupMap <span style="color:#719e07">=</span> (Map<span style="color:#719e07">&lt;</span>TransmissibleThreadLocal<span style="color:#719e07">&lt;</span>?<span style="color:#719e07">&gt;</span>, <span style="color:#cb4b16">Object</span><span style="color:#719e07">&gt;</span>) backup;
+</span></span><span style="display:flex;"><span>			<span style="color:#719e07">//</span> call afterExecute callback
+</span></span><span style="display:flex;"><span>			doExecuteCallback(<span style="color:#268bd2">false</span>);
+</span></span><span style="display:flex;"><span>			<span style="color:#719e07">for</span> (Iterator<span style="color:#719e07">&lt;</span>? <span style="color:#719e07">extends</span> Map<span style="color:#719e07">.</span>Entry<span style="color:#719e07">&lt;</span>TransmissibleThreadLocal<span style="color:#719e07">&lt;</span>?<span style="color:#719e07">&gt;</span>, ?<span style="color:#719e07">&gt;&gt;</span> iterator <span style="color:#719e07">=</span> holder<span style="color:#719e07">.</span>get()<span style="color:#719e07">.</span>entrySet()<span style="color:#719e07">.</span>iterator();
+</span></span><span style="display:flex;"><span>						                 iterator<span style="color:#719e07">.</span>hasNext(); ) {
+</span></span><span style="display:flex;"><span>				Map<span style="color:#719e07">.</span>Entry<span style="color:#719e07">&lt;</span>TransmissibleThreadLocal<span style="color:#719e07">&lt;</span>?<span style="color:#719e07">&gt;</span>, ?<span style="color:#719e07">&gt;</span> next <span style="color:#719e07">=</span> iterator<span style="color:#719e07">.</span>next();
+</span></span><span style="display:flex;"><span>				TransmissibleThreadLocal<span style="color:#719e07">&lt;</span>?<span style="color:#719e07">&gt;</span> threadLocal <span style="color:#719e07">=</span> next<span style="color:#719e07">.</span>getKey();
+</span></span><span style="display:flex;"><span>				<span style="color:#719e07">//</span> clear the TTL value only <span style="color:#719e07">in</span> backup
+</span></span><span style="display:flex;"><span>				<span style="color:#719e07">//</span> avoid the extra value of backup after restore
+</span></span><span style="display:flex;"><span>				<span style="color:#719e07">if</span> (<span style="color:#719e07">!</span>backupMap<span style="color:#719e07">.</span>containsKey(threadLocal)) { 
+</span></span><span style="display:flex;"><span>					iterator<span style="color:#719e07">.</span>remove();
+</span></span><span style="display:flex;"><span>					threadLocal<span style="color:#719e07">.</span>superRemove();
 </span></span><span style="display:flex;"><span>				}
 </span></span><span style="display:flex;"><span>			}
-</span></span><span style="display:flex;"><span>			// restore TTL value
-</span></span><span style="display:flex;"><span>			for (Map.Entry&lt;TransmissibleThreadLocal&lt;?&gt;, Object&gt; entry : backupMap.entrySet()) {
-</span></span><span style="display:flex;"><span>				@SuppressWarnings(&#34;unchecked&#34;)
-</span></span><span style="display:flex;"><span>				TransmissibleThreadLocal&lt;Object&gt; threadLocal = (TransmissibleThreadLocal&lt;Object&gt;) entry.getKey();
-</span></span><span style="display:flex;"><span>				threadLocal.set(entry.getValue());
+</span></span><span style="display:flex;"><span>			<span style="color:#719e07">//</span> restore TTL value
+</span></span><span style="display:flex;"><span>			<span style="color:#719e07">for</span> (Map<span style="color:#719e07">.</span>Entry<span style="color:#719e07">&lt;</span>TransmissibleThreadLocal<span style="color:#719e07">&lt;</span>?<span style="color:#719e07">&gt;</span>, <span style="color:#cb4b16">Object</span><span style="color:#719e07">&gt;</span> entry : backupMap<span style="color:#719e07">.</span>entrySet()) {
+</span></span><span style="display:flex;"><span>				@SuppressWarnings(<span style="color:#2aa198">&#34;unchecked&#34;</span>)
+</span></span><span style="display:flex;"><span>				TransmissibleThreadLocal<span style="color:#719e07">&lt;</span><span style="color:#cb4b16">Object</span><span style="color:#719e07">&gt;</span> threadLocal <span style="color:#719e07">=</span> (TransmissibleThreadLocal<span style="color:#719e07">&lt;</span><span style="color:#cb4b16">Object</span><span style="color:#719e07">&gt;</span>) entry<span style="color:#719e07">.</span>getKey();
+</span></span><span style="display:flex;"><span>				threadLocal<span style="color:#719e07">.</span>set(entry<span style="color:#719e07">.</span>getValue());
 </span></span><span style="display:flex;"><span>			}
 </span></span><span style="display:flex;"><span>		}
 </span></span><span style="display:flex;"><span>	}
@@ -315,33 +316,33 @@
 <p>回归到本次的问题中来，目前使用的MDP本身就已经集成了MTrace-agent的模式，但是为什么还是会“弄丢”TraceId呢？查看MTrace的ThreadPoolTransformer类和ForkJoinPoolTransformer类我们可以知道，MTrace修改了ThreadPoolExecutor类、ScheduledThreadPoolExecutor类和ForkJoinTask类的字节码，顺着这个思路我们再看看@Async用到的SimpleAsyncTaskExecutor线程池是怎么一回事。</p>
 <h3 id="233-simpleasynctaskexecutor是怎么一回事">2.3.3 SimpleAsyncTaskExecutor是怎么一回事</h3>
 <p>我们先深入SimpleAsyncTaskExecutor的代码中，看看执行逻辑：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>public class SimpleAsyncTaskExecutor extends CustomizableThreadCreator implements AsyncListenableTaskExecutor, Serializable {
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>public <span style="color:#719e07">class</span> SimpleAsyncTaskExecutor <span style="color:#719e07">extends</span> CustomizableThreadCreator implements AsyncListenableTaskExecutor, Serializable {
 </span></span><span style="display:flex;"><span>	private ThreadFactory threadFactory;
 </span></span><span style="display:flex;"><span>	public void execute(Runnable task, long startTimeout) {
-</span></span><span style="display:flex;"><span>		Assert.notNull(task, &#34;Runnable must not be null&#34;);
-</span></span><span style="display:flex;"><span>    //isThrottleActive是否开启限流（默认concurrencyLimit=-1，不开启限流）
-</span></span><span style="display:flex;"><span>		if(this.isThrottleActive() &amp;&amp; startTimeout &gt; 0L) {		
-</span></span><span style="display:flex;"><span>			this.concurrencyThrottle.beforeAccess();
-</span></span><span style="display:flex;"><span>			this.doExecute(new SimpleAsyncTaskExecutor.ConcurrencyThrottlingRunnable(task));
-</span></span><span style="display:flex;"><span>			this.concurrencyThrottle.beforeAccess();
-</span></span><span style="display:flex;"><span>			this.doExecute(new SimpleAsyncTaskExecutor.ConcurrencyThrottlingRunnable(task));
-</span></span><span style="display:flex;"><span>			this.concurrencyThrottle.beforeAccess();
-</span></span><span style="display:flex;"><span>			this.doExecute(new SimpleAsyncTaskExecutor.ConcurrencyThrottlingRunnable(task));
-</span></span><span style="display:flex;"><span>		} else {
-</span></span><span style="display:flex;"><span>			this.doExecute(task);
+</span></span><span style="display:flex;"><span>		Assert<span style="color:#719e07">.</span>notNull(task, <span style="color:#2aa198">&#34;Runnable must not be null&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">//</span>isThrottleActive是否开启限流（默认concurrencyLimit<span style="color:#719e07">=-</span><span style="color:#2aa198">1</span>，不开启限流）
+</span></span><span style="display:flex;"><span>		<span style="color:#719e07">if</span>(this<span style="color:#719e07">.</span>isThrottleActive() <span style="color:#719e07">&amp;&amp;</span> startTimeout <span style="color:#719e07">&gt;</span> <span style="color:#2aa198">0</span>L) {		
+</span></span><span style="display:flex;"><span>			this<span style="color:#719e07">.</span>concurrencyThrottle<span style="color:#719e07">.</span>beforeAccess();
+</span></span><span style="display:flex;"><span>			this<span style="color:#719e07">.</span>doExecute(new SimpleAsyncTaskExecutor<span style="color:#719e07">.</span>ConcurrencyThrottlingRunnable(task));
+</span></span><span style="display:flex;"><span>			this<span style="color:#719e07">.</span>concurrencyThrottle<span style="color:#719e07">.</span>beforeAccess();
+</span></span><span style="display:flex;"><span>			this<span style="color:#719e07">.</span>doExecute(new SimpleAsyncTaskExecutor<span style="color:#719e07">.</span>ConcurrencyThrottlingRunnable(task));
+</span></span><span style="display:flex;"><span>			this<span style="color:#719e07">.</span>concurrencyThrottle<span style="color:#719e07">.</span>beforeAccess();
+</span></span><span style="display:flex;"><span>			this<span style="color:#719e07">.</span>doExecute(new SimpleAsyncTaskExecutor<span style="color:#719e07">.</span>ConcurrencyThrottlingRunnable(task));
+</span></span><span style="display:flex;"><span>		} <span style="color:#719e07">else</span> {
+</span></span><span style="display:flex;"><span>			this<span style="color:#719e07">.</span>doExecute(task);
 </span></span><span style="display:flex;"><span>		}
 </span></span><span style="display:flex;"><span>	}
 </span></span><span style="display:flex;"><span>	protected void doExecute(Runnable task) {
-</span></span><span style="display:flex;"><span>    //没有线程工厂的话默认创建线程
-</span></span><span style="display:flex;"><span>		Thread thread = this.threadFactory != null?this.threadFactory.newThread(task):this.createThread(task);		
-</span></span><span style="display:flex;"><span>		thread.start();
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">//</span>没有线程工厂的话默认创建线程
+</span></span><span style="display:flex;"><span>		<span style="color:#cb4b16">Thread</span> thread <span style="color:#719e07">=</span> this<span style="color:#719e07">.</span>threadFactory <span style="color:#719e07">!=</span> null?this<span style="color:#719e07">.</span>threadFactory<span style="color:#719e07">.</span>newThread(task):this<span style="color:#719e07">.</span>createThread(task);		
+</span></span><span style="display:flex;"><span>		thread<span style="color:#719e07">.</span>start();
 </span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	public Thread createThread(Runnable runnable) {
-</span></span><span style="display:flex;"><span>    //和线程池不同，每次都是创建新的线程
-</span></span><span style="display:flex;"><span>		Thread thread = new Thread(getThreadGroup(), runnable, nextThreadName());
-</span></span><span style="display:flex;"><span>		thread.setPriority(getThreadPriority());
-</span></span><span style="display:flex;"><span>		thread.setDaemon(isDaemon());
-</span></span><span style="display:flex;"><span>		return thread;
+</span></span><span style="display:flex;"><span>	public <span style="color:#cb4b16">Thread</span> createThread(Runnable runnable) {
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">//</span>和线程池不同，每次都是创建新的线程
+</span></span><span style="display:flex;"><span>		<span style="color:#cb4b16">Thread</span> thread <span style="color:#719e07">=</span> new <span style="color:#cb4b16">Thread</span>(getThreadGroup(), runnable, nextThreadName());
+</span></span><span style="display:flex;"><span>		thread<span style="color:#719e07">.</span>setPriority(getThreadPriority());
+</span></span><span style="display:flex;"><span>		thread<span style="color:#719e07">.</span>setDaemon(isDaemon());
+</span></span><span style="display:flex;"><span>		<span style="color:#719e07">return</span> thread;
 </span></span><span style="display:flex;"><span>	}
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>看到这里我们可以得出以下几个特性：</p>
@@ -355,48 +356,48 @@
 <p>可以发现，其继承了spring的TaskExecutor接口，其实质是java.util.concurrent.Executor，结合我们这次“丢失”的TraceId问题来看，我们已经找到了Mtrace的跨线程传递方案“失效”的原因：虽然MTrace已经通过javaagent&amp;instrument技术可以完成Trace信息跨线程传递，但是目前只覆盖到ThreadPoolExecutor类、ScheduledThreadPoolExecutor类和ForkJoinTask类的字节码，而@Async在未指定线程池的情况下默认会启用SimpleAsyncTaskExecutor，其本质是java.util.concurrent.Executor没有被覆盖到，就会造成ThreadLocal中的get方法获取信息为空，导致最终TraceId传递丢失。</p>
 <h2 id="3-解决方案">3. 解决方案</h2>
 <p>实际上@Async支持我们使用自定义的线程池，可以手动自定义Configuration来配置ThreadPoolExecutor线程池，然后在注解里面指定bean的名称，就可以切换到对应的线程池去，可以看看下面的代码：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript" data-lang="gdscript"><span style="display:flex;"><span>@Configuration
-</span></span><span style="display:flex;"><span>public <span style="color:#268bd2">class</span> <span style="color:#268bd2">ThreadPoolConfig</span> {
-</span></span><span style="display:flex;"><span>	@<span style="color:#268bd2">Bean</span>(<span style="color:#2aa198">&#34;taskExecutor&#34;</span>)
-</span></span><span style="display:flex;"><span>	    public Executor <span style="color:#268bd2">taskExecutor</span>() {
-</span></span><span style="display:flex;"><span>		ThreadPoolTaskExecutor taskExecutor <span style="color:#719e07">=</span> new <span style="color:#268bd2">ThreadPoolTaskExecutor</span>();
-</span></span><span style="display:flex;"><span>		<span style="color:#719e07">//</span>设置线程池参数信息
-</span></span><span style="display:flex;"><span>		taskExecutor<span style="color:#719e07">.</span><span style="color:#268bd2">setCorePoolSize</span>(<span style="color:#2aa198">10</span>);
-</span></span><span style="display:flex;"><span>		taskExecutor<span style="color:#719e07">.</span><span style="color:#268bd2">setMaxPoolSize</span>(<span style="color:#2aa198">50</span>);
-</span></span><span style="display:flex;"><span>		taskExecutor<span style="color:#719e07">.</span><span style="color:#268bd2">setQueueCapacity</span>(<span style="color:#2aa198">200</span>);
-</span></span><span style="display:flex;"><span>		taskExecutor<span style="color:#719e07">.</span><span style="color:#268bd2">setKeepAliveSeconds</span>(<span style="color:#2aa198">60</span>);
-</span></span><span style="display:flex;"><span>		taskExecutor<span style="color:#719e07">.</span><span style="color:#268bd2">setThreadNamePrefix</span>(<span style="color:#2aa198">&#34;myExecutor--&#34;</span>);
-</span></span><span style="display:flex;"><span>		taskExecutor<span style="color:#719e07">.</span><span style="color:#268bd2">setWaitForTasksToCompleteOnShutdown</span>(<span style="color:#cb4b16">true</span>);
-</span></span><span style="display:flex;"><span>		taskExecutor<span style="color:#719e07">.</span><span style="color:#268bd2">setAwaitTerminationSeconds</span>(<span style="color:#2aa198">60</span>);
-</span></span><span style="display:flex;"><span>		taskExecutor<span style="color:#719e07">.</span><span style="color:#268bd2">setRejectedExecutionHandler</span>(new ThreadPoolExecutor<span style="color:#719e07">.</span><span style="color:#268bd2">CallerRunsPolicy</span>());
-</span></span><span style="display:flex;"><span>		taskExecutor<span style="color:#719e07">.</span><span style="color:#268bd2">initialize</span>();
-</span></span><span style="display:flex;"><span>		<span style="color:#719e07">return</span> taskExecutor;
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>@Configuration
+</span></span><span style="display:flex;"><span>public class ThreadPoolConfig {
+</span></span><span style="display:flex;"><span>	@Bean(&#34;taskExecutor&#34;)
+</span></span><span style="display:flex;"><span>	    public Executor taskExecutor() {
+</span></span><span style="display:flex;"><span>		ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
+</span></span><span style="display:flex;"><span>		//设置线程池参数信息
+</span></span><span style="display:flex;"><span>		taskExecutor.setCorePoolSize(10);
+</span></span><span style="display:flex;"><span>		taskExecutor.setMaxPoolSize(50);
+</span></span><span style="display:flex;"><span>		taskExecutor.setQueueCapacity(200);
+</span></span><span style="display:flex;"><span>		taskExecutor.setKeepAliveSeconds(60);
+</span></span><span style="display:flex;"><span>		taskExecutor.setThreadNamePrefix(&#34;myExecutor--&#34;);
+</span></span><span style="display:flex;"><span>		taskExecutor.setWaitForTasksToCompleteOnShutdown(true);
+</span></span><span style="display:flex;"><span>		taskExecutor.setAwaitTerminationSeconds(60);
+</span></span><span style="display:flex;"><span>		taskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+</span></span><span style="display:flex;"><span>		taskExecutor.initialize();
+</span></span><span style="display:flex;"><span>		return taskExecutor;
 </span></span><span style="display:flex;"><span>	}
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>然后在注解中标注这个线程池：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript" data-lang="gdscript"><span style="display:flex;"><span>@SpringBootTest
-</span></span><span style="display:flex;"><span>@<span style="color:#268bd2">RunWith</span>(SpringRunner<span style="color:#719e07">.</span>class)
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>@SpringBootTest
+</span></span><span style="display:flex;"><span>@RunWith(SpringRunner<span style="color:#719e07">.</span><span style="color:#719e07">class</span>)
 </span></span><span style="display:flex;"><span>@EnableAsync
-</span></span><span style="display:flex;"><span>public <span style="color:#268bd2">class</span> <span style="color:#268bd2">DemoServiceTest</span> <span style="color:#268bd2">extends</span> <span style="color:#268bd2">TestCase</span> {
-</span></span><span style="display:flex;"><span>	@<span style="color:#268bd2">Resource</span>
+</span></span><span style="display:flex;"><span>public <span style="color:#719e07">class</span> DemoServiceTest <span style="color:#719e07">extends</span> TestCase {
+</span></span><span style="display:flex;"><span>	@<span style="color:#cb4b16">Resource</span>
 </span></span><span style="display:flex;"><span>	  private DemoService demoService;
 </span></span><span style="display:flex;"><span>	@Test
-</span></span><span style="display:flex;"><span>	  public <span style="color:#dc322f">void</span> <span style="color:#268bd2">testTestAsy</span>() {
-</span></span><span style="display:flex;"><span>		Tracer<span style="color:#719e07">.</span><span style="color:#268bd2">serverRecv</span>(<span style="color:#2aa198">&#34;test&#34;</span>);
-</span></span><span style="display:flex;"><span>		<span style="color:#268bd2">String</span> mainThreadName <span style="color:#719e07">=</span> <span style="color:#268bd2">Thread</span><span style="color:#719e07">.</span><span style="color:#268bd2">currentThread</span>()<span style="color:#719e07">.</span><span style="color:#268bd2">getName</span>();
-</span></span><span style="display:flex;"><span>		long mainThreadId <span style="color:#719e07">=</span> <span style="color:#268bd2">Thread</span><span style="color:#719e07">.</span><span style="color:#268bd2">currentThread</span>()<span style="color:#719e07">.</span><span style="color:#268bd2">getId</span>();
-</span></span><span style="display:flex;"><span>		System<span style="color:#719e07">.</span>out<span style="color:#719e07">.</span><span style="color:#268bd2">println</span>(<span style="color:#2aa198">&#34;------We got main thread: &#34;</span><span style="color:#719e07">+</span> mainThreadName <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34; - &#34;</span> <span style="color:#719e07">+</span>  mainThreadId <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34;  Trace Id: &#34;</span> <span style="color:#719e07">+</span> Tracer<span style="color:#719e07">.</span><span style="color:#268bd2">id</span>() <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34;----------&#34;</span>);
-</span></span><span style="display:flex;"><span>		demoService<span style="color:#719e07">.</span><span style="color:#268bd2">testAsy</span>();
+</span></span><span style="display:flex;"><span>	  public void testTestAsy() {
+</span></span><span style="display:flex;"><span>		Tracer<span style="color:#719e07">.</span>serverRecv(<span style="color:#2aa198">&#34;test&#34;</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#cb4b16">String</span> mainThreadName <span style="color:#719e07">=</span> <span style="color:#cb4b16">Thread</span><span style="color:#719e07">.</span>currentThread()<span style="color:#719e07">.</span>getName();
+</span></span><span style="display:flex;"><span>		long mainThreadId <span style="color:#719e07">=</span> <span style="color:#cb4b16">Thread</span><span style="color:#719e07">.</span>currentThread()<span style="color:#719e07">.</span>getId();
+</span></span><span style="display:flex;"><span>		System<span style="color:#719e07">.</span>out<span style="color:#719e07">.</span>println(<span style="color:#2aa198">&#34;------We got main thread: &#34;</span><span style="color:#719e07">+</span> mainThreadName <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34; - &#34;</span> <span style="color:#719e07">+</span>  mainThreadId <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34;  Trace Id: &#34;</span> <span style="color:#719e07">+</span> Tracer<span style="color:#719e07">.</span>id() <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34;----------&#34;</span>);
+</span></span><span style="display:flex;"><span>		demoService<span style="color:#719e07">.</span>testAsy();
 </span></span><span style="display:flex;"><span>	}
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>@Component
-</span></span><span style="display:flex;"><span>public <span style="color:#268bd2">class</span> <span style="color:#268bd2">DemoService</span> {
-</span></span><span style="display:flex;"><span>	@<span style="color:#268bd2">Async</span>(<span style="color:#2aa198">&#34;taskExecutor&#34;</span>)
-</span></span><span style="display:flex;"><span>	  public <span style="color:#dc322f">void</span> <span style="color:#268bd2">testAsy</span>(){
-</span></span><span style="display:flex;"><span>		<span style="color:#268bd2">String</span> asyThreadName <span style="color:#719e07">=</span> <span style="color:#268bd2">Thread</span><span style="color:#719e07">.</span><span style="color:#268bd2">currentThread</span>()<span style="color:#719e07">.</span><span style="color:#268bd2">getName</span>();
-</span></span><span style="display:flex;"><span>		long asyThreadId <span style="color:#719e07">=</span> <span style="color:#268bd2">Thread</span><span style="color:#719e07">.</span><span style="color:#268bd2">currentThread</span>()<span style="color:#719e07">.</span><span style="color:#268bd2">getId</span>();
-</span></span><span style="display:flex;"><span>		System<span style="color:#719e07">.</span>out<span style="color:#719e07">.</span><span style="color:#268bd2">println</span>(<span style="color:#2aa198">&#34;======Async====&#34;</span>);
-</span></span><span style="display:flex;"><span>		System<span style="color:#719e07">.</span>out<span style="color:#719e07">.</span><span style="color:#268bd2">println</span>(<span style="color:#2aa198">&#34;------We got asy thread: &#34;</span><span style="color:#719e07">+</span> asyThreadName <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34; - &#34;</span> <span style="color:#719e07">+</span>  asyThreadId <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34;  Trace Id: &#34;</span> <span style="color:#719e07">+</span> Tracer<span style="color:#719e07">.</span><span style="color:#268bd2">id</span>() <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34;----------&#34;</span>);
+</span></span><span style="display:flex;"><span>public <span style="color:#719e07">class</span> DemoService {
+</span></span><span style="display:flex;"><span>	@Async(<span style="color:#2aa198">&#34;taskExecutor&#34;</span>)
+</span></span><span style="display:flex;"><span>	  public void testAsy(){
+</span></span><span style="display:flex;"><span>		<span style="color:#cb4b16">String</span> asyThreadName <span style="color:#719e07">=</span> <span style="color:#cb4b16">Thread</span><span style="color:#719e07">.</span>currentThread()<span style="color:#719e07">.</span>getName();
+</span></span><span style="display:flex;"><span>		long asyThreadId <span style="color:#719e07">=</span> <span style="color:#cb4b16">Thread</span><span style="color:#719e07">.</span>currentThread()<span style="color:#719e07">.</span>getId();
+</span></span><span style="display:flex;"><span>		System<span style="color:#719e07">.</span>out<span style="color:#719e07">.</span>println(<span style="color:#2aa198">&#34;======Async====&#34;</span>);
+</span></span><span style="display:flex;"><span>		System<span style="color:#719e07">.</span>out<span style="color:#719e07">.</span>println(<span style="color:#2aa198">&#34;------We got asy thread: &#34;</span><span style="color:#719e07">+</span> asyThreadName <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34; - &#34;</span> <span style="color:#719e07">+</span>  asyThreadId <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34;  Trace Id: &#34;</span> <span style="color:#719e07">+</span> Tracer<span style="color:#719e07">.</span>id() <span style="color:#719e07">+</span> <span style="color:#2aa198">&#34;----------&#34;</span>);
 </span></span><span style="display:flex;"><span>	}
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>看看输出台的打印：</p>

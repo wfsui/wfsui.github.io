@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 30 Oct 2023 02:40:21 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 02 Nov 2023 02:40:08 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>美团前端研发框架Rome实践和演进趋势</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%89%8D%E7%AB%AF%E7%A0%94%E5%8F%91%E6%A1%86%E6%9E%B6rome%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%BC%94%E8%BF%9B%E8%B6%8B%E5%8A%BF/</link>
-      <pubDate>Mon, 30 Oct 2023 02:40:21 +0000</pubDate>
-      
+      <pubDate>Thu, 02 Nov 2023 02:40:08 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%89%8D%E7%AB%AF%E7%A0%94%E5%8F%91%E6%A1%86%E6%9E%B6rome%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%BC%94%E8%BF%9B%E8%B6%8B%E5%8A%BF/</guid>
       <description>1 背景介绍 1.1 业务背景 首先介绍一下业务的背景，这里主要从3个维度展开。第一个维度是组织维度，在立项之初，恰逢美团的多个事业群合并，因前端规模比较大，横向的流动协同比较多（需要跨部门支持需求，进行跨系统协作等等）。此外，美团到店事业群新人比例比较高，校招和新员工比例很高，我们会帮助新同学快速融入团队，需要完成一些较为基础的开发工作。
 第二维度是业务维度，美团到店业务迭代频次比较高，基础工程框架不仅要保证交付速度快，同时还对质量有很高的要求。
@@ -23,12 +23,10 @@
 2 工程生态、演变路径和规模化升级 2.1 工程生态 2.1.1 降学习成本 框架约束
 根据前文所述，我们一开始要解决的核心问题是学习成本，因此我们会做框架约束。</description>
     </item>
-    
     <item>
       <title>外卖广告大规模深度学习模型工程实践 | 美团外卖广告工程实践专题连载</title>
       <link>https://wfsui.github.io/posts/%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5-%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E4%B8%93%E9%A2%98%E8%BF%9E%E8%BD%BD/</link>
       <pubDate>Thu, 03 Nov 2022 03:45:54 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%A4%A7%E8%A7%84%E6%A8%A1%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5-%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%B9%BF%E5%91%8A%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E4%B8%93%E9%A2%98%E8%BF%9E%E8%BD%BD/</guid>
       <description>导语 随着美团外卖业务不断发展，外卖广告引擎团队在多个领域进行了工程上的探索和实践，也取得了一些成果。我们将以连载的方式进行分享，内容主要包括：① 业务平台化的实践；② 大规模深度学习模型工程实践；③ 近线计算的探索与实践；④ 大规模索引构建与在线检索服务实践；⑤ 机制工程平台化实践。
 不久前，我们已发表过业务平台化的实践（详情请参阅《美团外卖广告平台化的探索与实践》一文）。本文为连载文章的第二篇，我们将重点针对大规模深度模型在全链路层面带来的挑战，从在线时延、离线效率两个方面进行展开，阐述广告在大规模深度模型上的工程实践，希望能为大家带来一些帮助或者启发。
@@ -37,12 +35,10 @@
 根据上图所示，在数据规模、模型规模增长的情况下，所对应的“时长”变得会越来越长。这个“时长”对应到离线层面，体现在效率上；对应到在线层面，就体现在Latency上。而我们的工作就是围绕这个“时长”的优化来开展。
 2 分析 相比普通小模型，大模型的核心问题在于：随着数据量、模型规模增加数十倍甚至百倍，整体链路上的存储、通信、计算等都将面临新的挑战，进而影响算法离线的迭代效率。如何突破在线时延约束等一系列问题？我们先从全链路进行分析，如下所示：</description>
     </item>
-    
     <item>
       <title>图神经网络训练框架的实践和探索</title>
       <link>https://wfsui.github.io/posts/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%8E%A2%E7%B4%A2/</link>
       <pubDate>Thu, 01 Sep 2022 04:18:28 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%8E%A2%E7%B4%A2/</guid>
       <description>1. 前言 万物之间皆有联系。图作为一种通用的数据结构，可以很好地描述实体与实体之间的关系。例如，在社交网络中，用图来表示用户与用户之间的好友关系；在电商网站中，用图表示用户与商品之间的点击购买行为；在知识图谱构建中，还可以用图表示实体与实体间多样的关系。另一方面，深度学习技术在计算机视觉、自然语言处理、语音处理等领域均已取得了巨大的成功。深度学习技术将图像、文本、语音等多种多样的数据转化为稠密的向量表示，提供了表示数据的另一种方式。借助于硬件日益强大的计算能力，深度学习可以从海量数据中学习到数据之间复杂多样的相关性。
 这会让人不禁思考，深度学习能否应用到更广阔的领域，比如——图？事实上，早在深度学习兴起之前，业界就已经开始了图嵌入(Graph Embedding)技术的探索[1]。早期的图嵌入算法多以启发式的矩阵分解、概率图模型为主；随后出现了以DeepWalk[2]和Node2vec[3]为代表的、较为“浅层”的神经网络模型；最后，以GCN[4]为代表的一系列研究工作，打通了图信号处理与神经网络之间的壁垒，奠定了当前基于消息传递机制的图神经网络(GNN: Graph Neural Network)模型的基本范式。
@@ -52,6 +48,5 @@
 （1）完善支持当前流行的图神经网络模型。
 从图本身的类型来看，图神经网络模型可以分为同质图(Homogeneous Graph)、异质图(Heterogeneous Graph)、动态图(Dynamic Graph)等类型。从训练方式来看，又可以分为全图消息传递[4]和基于子图采样的消息传递[8]等类型。从推理方式来看，还可以分为直推式和归纳式[9]。</description>
     </item>
-    
   </channel>
 </rss>

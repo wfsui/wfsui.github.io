@@ -6,6 +6,7 @@
     <description>Recent content in Tags on Wfsui</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <copyright>© Copyright notice</copyright><atom:link href="https://wfsui.github.io/en/tags/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>© Copyright notice</copyright>
+    <atom:link href="https://wfsui.github.io/en/tags/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

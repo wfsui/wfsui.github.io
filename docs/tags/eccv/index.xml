@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Tue, 16 May 2023 02:46:43 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/eccv/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 16 May 2023 02:46:43 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/eccv/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ACM MM &amp; ECCV 2022 | 美团视觉8篇论文揭秘内容领域的智能科技</title>
       <link>https://wfsui.github.io/posts/acm-mm-eccv-2022-%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%898%E7%AF%87%E8%AE%BA%E6%96%87%E6%8F%AD%E7%A7%98%E5%86%85%E5%AE%B9%E9%A2%86%E5%9F%9F%E7%9A%84%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80/</link>
       <pubDate>Tue, 16 May 2023 02:46:43 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/acm-mm-eccv-2022-%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%898%E7%AF%87%E8%AE%BA%E6%96%87%E6%8F%AD%E7%A7%98%E5%86%85%E5%AE%B9%E9%A2%86%E5%9F%9F%E7%9A%84%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80/</guid>
       <description>人工智能技术正在成为内容领域的中台力量，其中视觉AI已经渗透到内容生产、内容审核、内容分发、用户互动、商业化变现等各个环节。美团视觉智能部以场景化的内容产品、智能化的内容工具助力产业，在内容的创作、内容分发等环节应用广泛。
 前不久，美团视觉智能部的8篇论文被多媒体和计算机视觉领域顶会ACM MM 与ECCV收录，本文将快速带你了解这8篇论文的研究成果及其可在内容领域的落地应用。
@@ -23,6 +23,5 @@ ECCV | Adaptive Spatial-BCE Loss for Weakly Supervised Semantic Segmentation（�
 论文简介：弱监督语义分割旨在解决全监督语义分割任务中所需的像素级标签人工成本和时间开销较大的缺点，通过引入较弱的监督信息来降低相关成本。其中本文所使用的图像级监督成本最低，但其较低的信息量也带来了更大的挑战。当前的通用流程是先通过分类网络生成分割伪标签，经过后处理细化后再用伪标签训练语义分割网络。先前方法主要有以下缺点：1）生成的伪标签物体轮廓不清晰；2）前背景的划分阈值需要人工调节，降低了泛用性；3）性能严重依赖后处理，训练复杂度较高。为了缓解这些缺点，我们提出了一个新的损失函数——空间二元交叉熵损失（Spatial-BCE），通过为前景和背景像素分配不同的优化方向来提高它们之间的特征差异性，进而实现更加清晰的伪标签物体轮廓，如下图1所示：
 此外，我们还引入了自适应阈值，通过在训练中让损失函数自行划分前背景像素的比例，并在推理时可同样将划分阈值交由网络生成。最后，我们还设计了配套的迭代式训练方法，大幅提高了初始伪标签的准确率，即使不使用复杂的后处理方法，我们也可以实现当前的最优性能。大量实验表明，我们的方法在PASCAL VOC 2012和MS-COCO 2014数据集上在均可成为SoTA，如下图2所示：</description>
     </item>
-    
   </channel>
 </rss>

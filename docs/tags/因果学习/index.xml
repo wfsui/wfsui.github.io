@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 10 Jun 2022 03:35:21 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 10 Jun 2022 03:35:21 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>美团内部讲座 | 清华大学崔鹏：因果启发的学习、推断和决策</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%86%85%E9%83%A8%E8%AE%B2%E5%BA%A7-%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6%E5%B4%94%E9%B9%8F%E5%9B%A0%E6%9E%9C%E5%90%AF%E5%8F%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%8E%A8%E6%96%AD%E5%92%8C%E5%86%B3%E7%AD%96/</link>
       <pubDate>Fri, 10 Jun 2022 03:35:21 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%86%85%E9%83%A8%E8%AE%B2%E5%BA%A7-%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6%E5%B4%94%E9%B9%8F%E5%9B%A0%E6%9E%9C%E5%90%AF%E5%8F%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%8E%A8%E6%96%AD%E5%92%8C%E5%86%B3%E7%AD%96/</guid>
       <description>| 分享嘉宾：崔鹏，清华大学计算机系长聘副教授，博士生导师
 | 研究兴趣聚焦于大数据驱动的因果推理和稳定预测、大规模网络表征学习等。在数据挖掘及人工智能领域顶级国际会议发表论文100余篇，先后5次获得顶级国际会议或期刊论文奖，并先后两次入选数据挖掘领域顶级国际会议KDD最佳论文专刊。担任IEEE TKDE、ACM TOMM、ACM TIST、IEEE TBD等国际顶级期刊编委。曾获得国家自然科学二等奖、教育部自然科学一等奖、电子学会自然科学一等奖、北京市科技进步一等奖、中国计算机学会青年科学家奖、国际计算机协会（ACM）杰出科学家。
@@ -25,6 +25,5 @@
 那么，怎样去弥合因果推理和机器学习之间的鸿沟呢？我们提出了一个因果启发的学习推理和决策评估的一套方法体系。第一个要解决问题的是如何在大规模数据中识别出其中的因果结构。第二个要解决的问题是在有了因果结构后怎样去和机器学习做融合，现在的因果启发的稳定学习模型、公平无偏见的学习模型都是以此为目标。第三个要解决的问题是从预测问题进一步到设计决策机制，怎样利用这些因果结构去帮助我们做决策上的优化，也就是反事实推理和决策优化机制。
 因果推理的两个基本范式 结构因果模型 因果推理有两个基本范式。第一种范式是结构因果模型（Structure Causal Model），这个框架的核心是怎样在一个已知的因果图中去做推理。比如怎样去识别其中的任意一个变量，这个变量对另一个变量的影响程度是多少。目前已有较为成熟的判断准则如后门准则（Back Door）、前门准则（Front Door）等去除其中的混淆，通过Do-Calculus方式进行因果估计（Causal Estimation）。目前这种方法面对的核心问题是我们无法在做观测研究时定义因果图，虽然在一些领域（比如考古）可以通过专家知识来定义因果图，但这就又走到了“专家系统”的老路上。总的来说，核心问题还是怎样去发现因果结构。</description>
     </item>
-    
   </channel>
 </rss>

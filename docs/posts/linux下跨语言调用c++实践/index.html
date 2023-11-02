@@ -15,6 +15,7 @@
 <meta property="og:url" content="https://wfsui.github.io/posts/linux%E4%B8%8B%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8c&#43;&#43;%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-07-25T03:58:24+00:00" />
 <meta property="article:modified_time" content="2022-07-25T03:58:24+00:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Linux下跨语言调用C&#43;&#43;实践"/>
 <meta name="twitter:description" content="1 背景 查询理解（QU, Query Understanding）是美团搜索的核心模块，主要职责是理解用户查询，生成查询意图、成分、改写等基础信号，应用于搜索的召回、排序、展示等多个环节，对搜索基础体验至关重要。该服务的线上主体程序基于C&#43;&#43;语言开发，服务中会加载大量的词表数据、预估模型等，这些数据与模型的离线生产过程有很多文本解析能力需要与线上服务保持一致，从而保证效果层面的一致性，如文本归一化、分词等。
@@ -109,12 +110,12 @@
 </span></span></code></pre></div><h4 id="312-c_wrapper代码">3.1.2 c_wrapper代码</h4>
 <p>如上文所述，需要对C++库进行封装，改造成对外提供C语言格式的接口。</p>
 <p>c_wrapper.cpp</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#include &#34;str_print.h&#34;
-</span></span><span style="display:flex;"><span>extern &#34;C&#34; {
-</span></span><span style="display:flex;"><span>void str_print(const char* text) {
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#586e75">#include &#34;str_print.h&#34;</span>
+</span></span><span style="display:flex;"><span>extern <span style="color:#2aa198">&#34;C&#34;</span> {
+</span></span><span style="display:flex;"><span>void str_print(<span style="color:#719e07">const</span> char<span style="color:#719e07">*</span> text) {
 </span></span><span style="display:flex;"><span>    StrPrint cpp_ins;
-</span></span><span style="display:flex;"><span>    std::string str = text;
-</span></span><span style="display:flex;"><span>    cpp_ins.print(str);
+</span></span><span style="display:flex;"><span>    std::string <span style="color:#b58900">str</span> <span style="color:#719e07">=</span> text;
+</span></span><span style="display:flex;"><span>    cpp_ins<span style="color:#719e07">.</span>print(<span style="color:#b58900">str</span>);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h4 id="313-生成动态库">3.1.3 生成动态库</h4>
@@ -150,21 +151,21 @@
 <h5 id="3151-jni接入">3.1.5.1 JNI接入</h5>
 <p>Java从1.1版本开始支持JNI接口协议，用于实现Java语言调用C/C++动态库。JNI方式下，前文提到的c_wrapper模块不再适用，JNI协议本身提供了适配层的接口定义，需要按照这个定义进行实现。JNI方式的具体接入步骤为：</p>
 <p>Java代码里，在需要跨语言调用的方法上，增加native关键字，用以声明这是一个本地方法。</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#719e07">import</span> java.lang.String<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">JniDemo</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">print</span><span style="color:#719e07">(</span>String text<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#719e07">import</span> java.lang.String;
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">JniDemo</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">print</span>(String text);
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>通过javah命令，将代码中的native方法生成对应的C语言的头文件。这个头文件类似于前文提到的c_wrapper作用。</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>javah JniDemo
 </span></span></code></pre></div><p>得到的头文件如下（为节省篇幅，这里简化了一些注释和宏）：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>#include <span style="color:#719e07">&lt;</span>jni<span style="color:#719e07">.</span>h<span style="color:#719e07">&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>#include <span style="color:#719e07">&lt;</span>jni.h<span style="color:#719e07">&gt;</span>
 </span></span><span style="display:flex;"><span>#ifdef __cplusplus
-</span></span><span style="display:flex;"><span>extern <span style="color:#2aa198">&#34;C&#34;</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>extern <span style="color:#2aa198">&#34;C&#34;</span> {
 </span></span><span style="display:flex;"><span>#endif
 </span></span><span style="display:flex;"><span>JNIEXPORT <span style="color:#dc322f">void</span> JNICALL <span style="color:#268bd2">Java_JniDemo_print</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#719e07">(</span>JNIEnv <span style="color:#719e07">*,</span> jobject<span style="color:#719e07">,</span> jstring<span style="color:#719e07">);</span>
+</span></span><span style="display:flex;"><span>  (JNIEnv <span style="color:#719e07">*</span>, jobject, jstring);
 </span></span><span style="display:flex;"><span>#ifdef __cplusplus
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>#endif
 </span></span></code></pre></div><p>jni.h在JDK中提供，其中定义了Java与C语言调用所必需的相关实现。</p>
 <p>JNIEXPORT和JNICALL是JNI中定义的两个宏，JNIEXPORT标识了支持在外部程序代码中调用该动态库中的方法，JNICALL定义了函数调用时参数的入栈出栈约定。</p>
@@ -197,29 +198,29 @@
 </span></span><span style="display:flex;"><span>  <span style="color:#268bd2">&lt;version&gt;</span>5.4.0<span style="color:#268bd2">&lt;/version&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#268bd2">&lt;/dependency&gt;</span>
 </span></span></code></pre></div><p>声明与动态库对应的Java接口类。</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">interface</span> <span style="color:#268bd2">CLibrary</span> <span style="color:#268bd2">extends</span> Library <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#dc322f">void</span> <span style="color:#268bd2">str_print</span><span style="color:#719e07">(</span>String text<span style="color:#719e07">);</span> <span style="color:#586e75">// 方法名和动态库接口一致，参数类型需要用Java里的类型表示，执行时会做类型映射，原理介绍章节会有详细解释
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#719e07">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">interface</span> <span style="color:#268bd2">CLibrary</span> <span style="color:#268bd2">extends</span> Library {
+</span></span><span style="display:flex;"><span>    <span style="color:#dc322f">void</span> <span style="color:#268bd2">str_print</span>(String text); <span style="color:#586e75">// 方法名和动态库接口一致，参数类型需要用Java里的类型表示，执行时会做类型映射，原理介绍章节会有详细解释</span>
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>加载动态链接库，并实现接口方法。</p>
 <p>JnaDemo.java</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#719e07">package</span> com.jna.demo<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">import</span> com.sun.jna.Library<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">import</span> com.sun.jna.Native<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">JnaDemo</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> CLibrary cLibrary<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">interface</span> <span style="color:#268bd2">CLibrary</span> <span style="color:#268bd2">extends</span> Library <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#dc322f">void</span> <span style="color:#268bd2">str_print</span><span style="color:#719e07">(</span>String text<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#719e07">package</span> com.jna.demo;
+</span></span><span style="display:flex;"><span><span style="color:#719e07">import</span> com.sun.jna.Library;
+</span></span><span style="display:flex;"><span><span style="color:#719e07">import</span> com.sun.jna.Native;
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">JnaDemo</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> CLibrary cLibrary;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">interface</span> <span style="color:#268bd2">CLibrary</span> <span style="color:#268bd2">extends</span> Library {
+</span></span><span style="display:flex;"><span>        <span style="color:#dc322f">void</span> <span style="color:#268bd2">str_print</span>(String text);
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">JnaDemo</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        cLibrary <span style="color:#719e07">=</span> Native<span style="color:#719e07">.</span>load<span style="color:#719e07">(</span><span style="color:#2aa198">&#34;str_print&#34;</span><span style="color:#719e07">,</span> CLibrary<span style="color:#719e07">.</span>class<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">JnaDemo</span>() {
+</span></span><span style="display:flex;"><span>        cLibrary <span style="color:#719e07">=</span> Native.load(<span style="color:#2aa198">&#34;str_print&#34;</span>, CLibrary.class);
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">str_print</span><span style="color:#719e07">(</span>String text<span style="color:#719e07">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        cLibrary<span style="color:#719e07">.</span>str_print<span style="color:#719e07">(</span>text<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">str_print</span>(String text)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        cLibrary.str_print(text);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>对比可以发现，相比于JNI，JNA不再需要指定native关键字，不再需要生成JNI部分C代码，也不再需要显示的做参数类型转化，极大地提高了调用动态库的效率。</p>
 <h3 id="32-打包发布">3.2 打包发布</h3>
 <p>为了做到开箱即用，我们将动态库与对应语言代码打包在一起，并自动准备好对应依赖环境。这样使用方只需要安装对应的库，并引入到工程中，就可以直接开始调用。这里需要解释的是，我们没有将so发布到运行机器上，而是将其和接口代码一并发布至代码仓库，原因是我们所开发的工具代码可能被不同业务、不同背景（非C++）团队使用，不能保证各个业务方团队都使用统一的、标准化的运行环境，无法做到so的统一发布、更新。</p>
@@ -263,29 +264,29 @@
 </span></span></code></pre></div><h4 id="322-java接口">3.2.2 Java接口</h4>
 <p>对于Java接口，将其打包成JAR包，并发布至Maven仓库中。</p>
 <p>编写封装接口代码<code>JnaDemo.java</code>。</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  <span style="color:#719e07">package</span> com.jna.demo<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#719e07">import</span> com.sun.jna.Library<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#719e07">import</span> com.sun.jna.Native<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#719e07">import</span> com.sun.jna.Pointer<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">public</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">JnaDemo</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#268bd2">private</span> CLibrary cLibrary<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#268bd2">public</span> <span style="color:#268bd2">interface</span> <span style="color:#268bd2">CLibrary</span> <span style="color:#268bd2">extends</span> Library <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>          Pointer <span style="color:#268bd2">create</span><span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#dc322f">void</span> <span style="color:#268bd2">str_print</span><span style="color:#719e07">(</span>String text<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#719e07">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  <span style="color:#719e07">package</span> com.jna.demo;
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">import</span> com.sun.jna.Library;
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">import</span> com.sun.jna.Native;
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">import</span> com.sun.jna.Pointer;
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">public</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">JnaDemo</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#268bd2">private</span> CLibrary cLibrary;
+</span></span><span style="display:flex;"><span>      <span style="color:#268bd2">public</span> <span style="color:#268bd2">interface</span> <span style="color:#268bd2">CLibrary</span> <span style="color:#268bd2">extends</span> Library {
+</span></span><span style="display:flex;"><span>          Pointer <span style="color:#268bd2">create</span>();
+</span></span><span style="display:flex;"><span>          <span style="color:#dc322f">void</span> <span style="color:#268bd2">str_print</span>(String text);
+</span></span><span style="display:flex;"><span>      }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>      <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> JnaDemo <span style="color:#268bd2">create</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>          JnaDemo jnademo <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> JnaDemo<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>          jnademo<span style="color:#719e07">.</span>cLibrary <span style="color:#719e07">=</span> Native<span style="color:#719e07">.</span>load<span style="color:#719e07">(</span><span style="color:#2aa198">&#34;str_print&#34;</span><span style="color:#719e07">,</span> CLibrary<span style="color:#719e07">.</span>class<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#586e75">//System.out.println(&#34;test&#34;);
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>          <span style="color:#719e07">return</span> jnademo<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> JnaDemo <span style="color:#268bd2">create</span>() {
+</span></span><span style="display:flex;"><span>          JnaDemo jnademo <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> JnaDemo();
+</span></span><span style="display:flex;"><span>          jnademo.cLibrary <span style="color:#719e07">=</span> Native.load(<span style="color:#2aa198">&#34;str_print&#34;</span>, CLibrary.class);
+</span></span><span style="display:flex;"><span>          <span style="color:#586e75">//System.out.println(&#34;test&#34;);</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#719e07">return</span> jnademo;
+</span></span><span style="display:flex;"><span>      }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>      <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">print</span><span style="color:#719e07">(</span>String text<span style="color:#719e07">)</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>          cLibrary<span style="color:#719e07">.</span>str_print<span style="color:#719e07">(</span>text<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">print</span>(String text)
+</span></span><span style="display:flex;"><span>      {
+</span></span><span style="display:flex;"><span>          cLibrary.str_print(text);
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>  }
 </span></span></code></pre></div><p>创建resources目录，并将依赖的动态库放到该目录。</p>
 <p>通过打包插件，将依赖的库一并打包到JAR包中。</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>  <span style="color:#268bd2">&lt;plugin&gt;</span>
@@ -318,13 +319,13 @@
 </span></span></code></pre></div><h4 id="332-java使用">3.3.2 Java使用</h4>
 <p>pom引入JAR包。</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  <span style="color:#719e07">&lt;</span>dependency<span style="color:#719e07">&gt;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#719e07">&lt;</span>groupId<span style="color:#719e07">&gt;</span>com<span style="color:#719e07">.</span>jna<span style="color:#719e07">.</span>demo<span style="color:#719e07">&lt;/</span>groupId<span style="color:#719e07">&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#719e07">&lt;</span>groupId<span style="color:#719e07">&gt;</span>com.jna.demo<span style="color:#719e07">&lt;/</span>groupId<span style="color:#719e07">&gt;</span>
 </span></span><span style="display:flex;"><span>      <span style="color:#719e07">&lt;</span>artifactId<span style="color:#719e07">&gt;</span>jnademo<span style="color:#719e07">&lt;/</span>artifactId<span style="color:#719e07">&gt;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#719e07">&lt;</span>version<span style="color:#719e07">&gt;</span><span style="color:#2aa198">1</span><span style="color:#719e07">.</span>0<span style="color:#719e07">&lt;/</span>version<span style="color:#719e07">&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#719e07">&lt;</span>version<span style="color:#719e07">&gt;</span>1.0<span style="color:#719e07">&lt;/</span>version<span style="color:#719e07">&gt;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#719e07">&lt;/</span>dependency<span style="color:#719e07">&gt;</span>
 </span></span></code></pre></div><p>使用示例：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  JnaDemo jnademo <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> JnaDemo<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>  jnademo<span style="color:#719e07">.</span>str_print<span style="color:#719e07">(</span><span style="color:#2aa198">&#34;hello jna&#34;</span><span style="color:#719e07">);</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  JnaDemo jnademo <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> JnaDemo();
+</span></span><span style="display:flex;"><span>  jnademo.str_print(<span style="color:#2aa198">&#34;hello jna&#34;</span>);
 </span></span></code></pre></div><h3 id="34-易用性优化">3.4 易用性优化</h3>
 <h4 id="341-python版本兼容">3.4.1 Python版本兼容</h4>
 <p>Python2与Python3版本的问题，是Python开发用户一直诟病的槽点。因为工具面向不同的业务团队，我们没有办法强制要求使用统一的Python版本，但是我们可以通过对工具库做一下简单处理，实现两个版本的兼容。Python版本兼容里，需要注意两方面的问题：</p>
@@ -435,55 +436,55 @@
 <p>JNA还额外提供了一种“直接映射”(DirectMapping)的调用方式来弥补这一不足。但是直接映射对于参数有着较为严格的限制，只能传递原生类型、对应数组以及Native引用类型，并且不支持不定参数，方法返回类型只能是原生类型。</p>
 <p>直接映射的Java代码中需要增加native关键字，这与JNI的写法一致。</p>
 <p><code>DirectMapping</code>示例</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#719e07">import</span> com.sun.jna.*<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">JnaDemo</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">double</span> <span style="color:#268bd2">cos</span><span style="color:#719e07">(</span>DoubleByReference x<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">static</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        Native<span style="color:#719e07">.</span>register<span style="color:#719e07">(</span>Platform<span style="color:#719e07">.</span>C_LIBRARY_NAME<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#719e07">import</span> com.sun.jna.*;
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">JnaDemo</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">double</span> <span style="color:#268bd2">cos</span>(DoubleByReference x);
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">static</span> {
+</span></span><span style="display:flex;"><span>        Native.register(Platform.C_LIBRARY_NAME);
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">main</span><span style="color:#719e07">(</span>String<span style="color:#719e07">[]</span> args<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        System<span style="color:#719e07">.</span>out<span style="color:#719e07">.</span>println<span style="color:#719e07">(</span>cos<span style="color:#719e07">(</span><span style="color:#719e07">new</span> DoubleByReference<span style="color:#719e07">(</span><span style="color:#2aa198">1</span><span style="color:#719e07">.</span>0<span style="color:#719e07">)));</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">main</span>(String<span style="color:#719e07">[]</span> args) {
+</span></span><span style="display:flex;"><span>        System.out.println(cos(<span style="color:#719e07">new</span> DoubleByReference(1.0)));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>DoubleByReference即是双精度浮点数的Native引用类型的实现，它的JNA源码定义如下（仅截取相关代码）：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">//DoubleByReference
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">public</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">DoubleByReference</span> <span style="color:#268bd2">extends</span> ByReference <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">DoubleByReference</span><span style="color:#719e07">(</span><span style="color:#dc322f">double</span> value<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">super</span><span style="color:#719e07">(</span><span style="color:#2aa198">8</span><span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        setValue<span style="color:#719e07">(</span>value<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">//DoubleByReference</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">DoubleByReference</span> <span style="color:#268bd2">extends</span> ByReference {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">DoubleByReference</span>(<span style="color:#dc322f">double</span> value) {
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">super</span>(8);
+</span></span><span style="display:flex;"><span>        setValue(value);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// ByReference
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">public</span> <span style="color:#268bd2">abstract</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">ByReference</span> <span style="color:#268bd2">extends</span> PointerType <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">protected</span> <span style="color:#268bd2">ByReference</span><span style="color:#719e07">(</span><span style="color:#dc322f">int</span> dataSize<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        setPointer<span style="color:#719e07">(</span><span style="color:#719e07">new</span> Memory<span style="color:#719e07">(</span>dataSize<span style="color:#719e07">));</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// ByReference</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">abstract</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">ByReference</span> <span style="color:#268bd2">extends</span> PointerType {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">protected</span> <span style="color:#268bd2">ByReference</span>(<span style="color:#dc322f">int</span> dataSize) {
+</span></span><span style="display:flex;"><span>        setPointer(<span style="color:#719e07">new</span> Memory(dataSize));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Memory类型是Java版的shared_ptr实现，它通过引用引数的方式，封装了内存分配、引用、释放的相关细节。这种类型的数据内存实际上是分配在native的堆中，Java代码中，只能拿到指向该内存的引用。JNA在构造Memory对象的时候通过调用malloc在堆中分配新内存，并记录指向该内存的指针。</p>
 <p>在ByReference的对象释放时，调用free，释放该内存。JNA的源码中ByReference基类的finalize 方法会在GC时调用，此时会去释放对应申请的内存。因此在JNA的实现中，动态库中的分配的内存由动态库的代码管理，JNA框架分配的内存由JNA中的代码显示释放，但是其触发时机，则是靠JVM中的GC机制释放JNA对象时来触发运行。这与前文提到的Native Heap中不存在GC机制，遵循谁分配谁释放的原则是一致的。</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span><span style="color:#268bd2">protected</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">finalize</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    dispose<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">protected</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">finalize</span>() {
+</span></span><span style="display:flex;"><span>    dispose();
+</span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#586e75">/** Free the native memory and set peer to zero */</span>
-</span></span><span style="display:flex;"><span><span style="color:#268bd2">protected</span> <span style="color:#268bd2">synchronized</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">dispose</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>peer <span style="color:#719e07">==</span> <span style="color:#2aa198">0</span><span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// someone called dispose before, the finalizer will call dispose again
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>        <span style="color:#719e07">return</span><span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">protected</span> <span style="color:#268bd2">synchronized</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">dispose</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">if</span> (peer <span style="color:#719e07">==</span> 0) {
+</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// someone called dispose before, the finalizer will call dispose again</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">return</span>;
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">try</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        free<span style="color:#719e07">(</span>peer<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span> <span style="color:#719e07">finally</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        peer <span style="color:#719e07">=</span> <span style="color:#2aa198">0</span><span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// no null check here, tracking is only null for SharedMemory
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>        <span style="color:#586e75">// SharedMemory is overriding the dispose method
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>        reference<span style="color:#719e07">.</span>unlink<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">try</span> {
+</span></span><span style="display:flex;"><span>        free(peer);
+</span></span><span style="display:flex;"><span>    } <span style="color:#719e07">finally</span> {
+</span></span><span style="display:flex;"><span>        peer <span style="color:#719e07">=</span> 0;
+</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// no null check here, tracking is only null for SharedMemory</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// SharedMemory is overriding the dispose method</span>
+</span></span><span style="display:flex;"><span>        reference.unlink();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h3 id="44-性能分析">4.4 性能分析</h3>
 <p>提高运算效率是Native调用中的一个重要目的，但是经过上述分析也不难发现，在一次跨语言本地化的调用过程中，仍然有大量的跨语言工作需要完成，这些过程也需要支出对应的算力。因此并不是所有Native调用，都能提高运算效率。为此我们需要理解语言间的性能差异在哪儿，以及跨语言调用需要耗费多大的算力支出。</p>
 <p>语言间的性能差异主要体现在三个方面：</p>

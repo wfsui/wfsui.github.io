@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Thu, 01 Sep 2022 04:18:28 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/gnn/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 01 Sep 2022 04:18:28 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/gnn/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>图神经网络训练框架的实践和探索</title>
       <link>https://wfsui.github.io/posts/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%8E%A2%E7%B4%A2/</link>
       <pubDate>Thu, 01 Sep 2022 04:18:28 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%8E%A2%E7%B4%A2/</guid>
       <description>1. 前言 万物之间皆有联系。图作为一种通用的数据结构，可以很好地描述实体与实体之间的关系。例如，在社交网络中，用图来表示用户与用户之间的好友关系；在电商网站中，用图表示用户与商品之间的点击购买行为；在知识图谱构建中，还可以用图表示实体与实体间多样的关系。另一方面，深度学习技术在计算机视觉、自然语言处理、语音处理等领域均已取得了巨大的成功。深度学习技术将图像、文本、语音等多种多样的数据转化为稠密的向量表示，提供了表示数据的另一种方式。借助于硬件日益强大的计算能力，深度学习可以从海量数据中学习到数据之间复杂多样的相关性。
 这会让人不禁思考，深度学习能否应用到更广阔的领域，比如——图？事实上，早在深度学习兴起之前，业界就已经开始了图嵌入(Graph Embedding)技术的探索[1]。早期的图嵌入算法多以启发式的矩阵分解、概率图模型为主；随后出现了以DeepWalk[2]和Node2vec[3]为代表的、较为“浅层”的神经网络模型；最后，以GCN[4]为代表的一系列研究工作，打通了图信号处理与神经网络之间的壁垒，奠定了当前基于消息传递机制的图神经网络(GNN: Graph Neural Network)模型的基本范式。
@@ -22,6 +22,5 @@
 （1）完善支持当前流行的图神经网络模型。
 从图本身的类型来看，图神经网络模型可以分为同质图(Homogeneous Graph)、异质图(Heterogeneous Graph)、动态图(Dynamic Graph)等类型。从训练方式来看，又可以分为全图消息传递[4]和基于子图采样的消息传递[8]等类型。从推理方式来看，还可以分为直推式和归纳式[9]。</description>
     </item>
-    
   </channel>
 </rss>

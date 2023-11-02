@@ -13,8 +13,9 @@
 个人对 mybatis 并不熟悉，但 JPA 规范和 springdata 的实现，设计理念绝对是超前的。软件开发复杂性的一个解决手段是遵循 DDD（DDD 只是一种手段，但不是唯一手段），而我着重几点来聊聊 JPA 的设计中是如何体现领域驱动设计思想的，抛砖引玉。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/jpa-%E5%92%8C-mybatis-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-10-30T02:40:14+00:00" />
-<meta property="article:modified_time" content="2023-10-30T02:40:14+00:00" />
+<meta property="article:published_time" content="2023-11-02T02:40:15+00:00" />
+<meta property="article:modified_time" content="2023-11-02T02:40:15+00:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="JPA 和 Mybatis 技术选型"/>
 <meta name="twitter:description" content="在我们平时的项目中，大家都知道可以使用 JPA 或者 Mybatis 作为 ORM 层。对 JPA 和 Mybatis 如何进行技术选型？
@@ -69,7 +70,7 @@
 
 		<div class="post-header">
 			<h1 class="title">JPA 和 Mybatis 技术选型</h1>
-			<div class="meta">Posted at &mdash; Oct 30, 2023</div>
+			<div class="meta">Posted at &mdash; Nov 2, 2023</div>
 		</div>
 
 		<div class="markdown">
@@ -83,18 +84,18 @@
 <h2 id="聚合根和值对象">聚合根和值对象</h2>
 <p>领域驱动设计中有两个广为大家熟知的概念，entity（实体）和 value object（值对象）。</p>
 <p>entity 的特点是具有生命周期的，有标识的，而值对象是起到一个修饰的作用，其具有不可变性，无标识。在 JPA中 ，需要为数据库的实体类添加 @Entity 注解，相信大家也注意到了，这并不是巧合。</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript" data-lang="gdscript"><span style="display:flex;"><span>@Entity
-</span></span><span style="display:flex;"><span>@<span style="color:#268bd2">Table</span>(name <span style="color:#719e07">=</span> <span style="color:#2aa198">&#34;t_order&#34;</span>)
-</span></span><span style="display:flex;"><span>public <span style="color:#268bd2">class</span> <span style="color:#268bd2">Order</span> {
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>@Entity
+</span></span><span style="display:flex;"><span>@Table(name = &#34;t_order&#34;)
+</span></span><span style="display:flex;"><span>public class Order {
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    @Id
-</span></span><span style="display:flex;"><span>    private <span style="color:#268bd2">String</span> oid;
+</span></span><span style="display:flex;"><span>    private String oid;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    @Embedded
 </span></span><span style="display:flex;"><span>    private CustomerVo customer;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    @<span style="color:#268bd2">OneToMany</span>(cascade <span style="color:#719e07">=</span> {CascadeType<span style="color:#719e07">.</span>ALL}, orphanRemoval <span style="color:#719e07">=</span> <span style="color:#cb4b16">true</span>, fetch <span style="color:#719e07">=</span> F    etchType<span style="color:#719e07">.</span>LAZY, mappedBy <span style="color:#719e07">=</span> <span style="color:#2aa198">&#34;order&#34;</span>)
-</span></span><span style="display:flex;"><span>    private List<span style="color:#719e07">&lt;</span>OrderItem<span style="color:#719e07">&gt;</span> orderItems;
+</span></span><span style="display:flex;"><span>    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = F    etchType.LAZY, mappedBy = &#34;order&#34;)
+</span></span><span style="display:flex;"><span>    private List&lt;OrderItem&gt; orderItems;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>如上述的代码，Order 便是 DDD 中的实体，而 CustomerVo，OrderItem 则是值对象。</p>
@@ -109,14 +110,14 @@
 <li>}</li>
 </ol>
 <p>那么仓储和DAO到底有什么区别呢？这就要提到一些遗留问题，以及一些软件设计方面的因素。在这次SpringForAll 的议题中我能够预想到有很多会强调 SpringData JPA 具有方便可扩展的 API，像下面这样：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>public interface OrderRepository extends JpaRepository&lt;Order, String&gt;{
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>public interface OrderRepository <span style="color:#719e07">extends</span> JpaRepository<span style="color:#719e07">&lt;</span>Order, <span style="color:#cb4b16">String</span><span style="color:#719e07">&gt;</span>{
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    findByOrderNoAndXxxx(String orderNo,Xxx xx);
+</span></span><span style="display:flex;"><span>    findByOrderNoAndXxxx(<span style="color:#cb4b16">String</span> orderNo,Xxx xx);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    @Transactional
-</span></span><span style="display:flex;"><span>    @Modifying(clearAutomatically = true)
-</span></span><span style="display:flex;"><span>    @Query(&#34;update t_order set order_status =?1 where id=?2&#34;)
-</span></span><span style="display:flex;"><span>    int updateOrderStatusById(String orderStatus, String id);
+</span></span><span style="display:flex;"><span>    @Modifying(clearAutomatically <span style="color:#719e07">=</span> <span style="color:#268bd2">true</span>)
+</span></span><span style="display:flex;"><span>    @Query(<span style="color:#2aa198">&#34;update t_order set order_status =?1 where id=?2&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#cb4b16">int</span> updateOrderStatusById(<span style="color:#cb4b16">String</span> orderStatus, <span style="color:#cb4b16">String</span> id);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>但我要强调的是，这是 SpringData JPA 的妥协，其支持这一特性，<strong>并不代表其建议使用</strong>。因为这并<strong>不符合</strong>领域驱动设计的理念。</p>
 <blockquote>
@@ -156,27 +157,27 @@
 <h2 id="jpa复杂-sql-的支持">JPA复杂 SQL 的支持</h2>
 <h3 id="第一种方式query-注解指定nativequery">第一种方式:@query 注解指定nativeQuery</h3>
 <p>这样就可以使用原生sql查询了,示例代码来自官方文档:</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>public interface UserRepository extends JpaRepository&lt;User, Long&gt; {
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>public interface UserRepository <span style="color:#719e07">extends</span> JpaRepository<span style="color:#719e07">&lt;</span>User, Long<span style="color:#719e07">&gt;</span> {
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    @Query(value = &#34;SELECT * FROM USERS WHERE EMAIL_ADDRESS = ?1&#34;, nativeQuery = true)
-</span></span><span style="display:flex;"><span>    User findByEmailAddress(String emailAddress);
+</span></span><span style="display:flex;"><span>    @Query(value <span style="color:#719e07">=</span> <span style="color:#2aa198">&#34;SELECT * FROM USERS WHERE EMAIL_ADDRESS = ?1&#34;</span>, nativeQuery <span style="color:#719e07">=</span> <span style="color:#268bd2">true</span>)
+</span></span><span style="display:flex;"><span>    User findByEmailAddress(<span style="color:#cb4b16">String</span> emailAddress);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h3 id="第二种方式customizing-individual-repositories-提供的功能去实现">第二种方式:Customizing individual repositories 提供的功能去实现</h3>
 <p>如果单靠sql搞不定怎么办？必须要写逻辑怎么办?可以使用官方文档3.6.1 节：Customizing individual repositories 提供的功能去实现，先看官方文档的代码:</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>interface CustomizedUserRepository {
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>interface CustomizedUserRepository {
 </span></span><span style="display:flex;"><span>    void someCustomMethod(User user);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>class CustomizedUserRepositoryImpl implements CustomizedUserRepository {
+</span></span><span style="display:flex;"><span><span style="color:#719e07">class</span> CustomizedUserRepositoryImpl implements CustomizedUserRepository {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    public void someCustomMethod(User user) {
-</span></span><span style="display:flex;"><span>        // Your custom implementation
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">//</span> Your custom implementation
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>interface UserRepository extends CrudRepository&lt;User, Long&gt;,             CustomizedUserRepository {
+</span></span><span style="display:flex;"><span>interface UserRepository <span style="color:#719e07">extends</span> CrudRepository<span style="color:#719e07">&lt;</span>User, Long<span style="color:#719e07">&gt;</span>,             CustomizedUserRepository {
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    // Declare query methods here
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">//</span> Declare query methods here
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>我来解释下上面的代码，</p>
 <ol>

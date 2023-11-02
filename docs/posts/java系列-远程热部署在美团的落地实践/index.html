@@ -13,6 +13,7 @@
 <meta property="og:url" content="https://wfsui.github.io/posts/java%E7%B3%BB%E5%88%97-%E8%BF%9C%E7%A8%8B%E7%83%AD%E9%83%A8%E7%BD%B2%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E8%90%BD%E5%9C%B0%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-06-10T03:35:20+00:00" />
 <meta property="article:modified_time" content="2022-06-10T03:35:20+00:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Java系列 | 远程热部署在美团的落地实践"/>
 <meta name="twitter:description" content="Sonic是美团内部研发设计的一款用于热部署的IDEA插件，本文其实现原理及落地的一些技术细节。在阅读本文之前，建议大家先熟悉一下Spring源码、Spring MVC 源码 、Spring Boot源码 、Agent字节码增强、Javassist、Classloader等相关知识。
@@ -385,37 +386,37 @@
 <p><img src="https://p0.meituan.net/travelcube/7814c318ac86644df71522e3e2dda24a734242.png" alt="图 7"></p>
 <h3 id="22-走进agent">2.2 走进Agent</h3>
 <h4 id="221-instrumentation类常用api">2.2.1 Instrumentation类常用API</h4>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">interface</span> <span style="color:#268bd2">Instrumentation</span> <span style="color:#719e07">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">interface</span> <span style="color:#268bd2">Instrumentation</span> {
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">//增加一个Class 文件的转换器，转换器用于改变 Class 二进制流的数据，参数 canRetransform 设置是否允许重新转换。
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#dc322f">void</span> <span style="color:#268bd2">addTransformer</span><span style="color:#719e07">(</span>ClassFileTransformer transformer<span style="color:#719e07">,</span> <span style="color:#dc322f">boolean</span> canRetransform<span style="color:#719e07">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">//增加一个Class 文件的转换器，转换器用于改变 Class 二进制流的数据，参数 canRetransform 设置是否允许重新转换。</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dc322f">void</span> <span style="color:#268bd2">addTransformer</span>(ClassFileTransformer transformer, <span style="color:#dc322f">boolean</span> canRetransform);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">//在类加载之前，重新定义 Class 文件，ClassDefinition 表示对一个类新的定义，
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#586e75">//如果在类加载之后，需要使用 retransformClasses 方法重新定义。addTransformer方法配置之后，后续的类加载都会被Transformer拦截。
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#586e75">//对于已经加载过的类，可以执行retransformClasses来重新触发这个Transformer的拦截。类加载的字节码被修改后，除非再次被retransform，否则不会恢复。
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#dc322f">void</span> <span style="color:#268bd2">addTransformer</span><span style="color:#719e07">(</span>ClassFileTransformer transformer<span style="color:#719e07">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">//在类加载之前，重新定义 Class 文件，ClassDefinition 表示对一个类新的定义，</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">//如果在类加载之后，需要使用 retransformClasses 方法重新定义。addTransformer方法配置之后，后续的类加载都会被Transformer拦截。</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">//对于已经加载过的类，可以执行retransformClasses来重新触发这个Transformer的拦截。类加载的字节码被修改后，除非再次被retransform，否则不会恢复。</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dc322f">void</span> <span style="color:#268bd2">addTransformer</span>(ClassFileTransformer transformer);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">//删除一个类转换器
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#dc322f">boolean</span> <span style="color:#268bd2">removeTransformer</span><span style="color:#719e07">(</span>ClassFileTransformer transformer<span style="color:#719e07">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">//删除一个类转换器</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dc322f">boolean</span> <span style="color:#268bd2">removeTransformer</span>(ClassFileTransformer transformer);
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">//是否允许对class retransform
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#dc322f">boolean</span> <span style="color:#268bd2">isRetransformClassesSupported</span><span style="color:#719e07">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">//是否允许对class retransform</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dc322f">boolean</span> <span style="color:#268bd2">isRetransformClassesSupported</span>();
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">//在类加载之后，重新定义 Class。这个很重要，该方法是1.6 之后加入的，事实上，该方法是 update 了一个类。
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#dc322f">void</span> <span style="color:#268bd2">retransformClasses</span><span style="color:#719e07">(</span>Class<span style="color:#719e07">&lt;?&gt;...</span> classes<span style="color:#719e07">)</span> <span style="color:#268bd2">throws</span> UnmodifiableClassException<span style="color:#719e07">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">//在类加载之后，重新定义 Class。这个很重要，该方法是1.6 之后加入的，事实上，该方法是 update 了一个类。</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dc322f">void</span> <span style="color:#268bd2">retransformClasses</span>(Class<span style="color:#719e07">&lt;?&gt;</span>... classes) <span style="color:#268bd2">throws</span> UnmodifiableClassException;
 </span></span><span style="display:flex;"><span>   
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">//是否允许对class重新定义
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#dc322f">boolean</span> <span style="color:#268bd2">isRedefineClassesSupported</span><span style="color:#719e07">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">//是否允许对class重新定义</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dc322f">boolean</span> <span style="color:#268bd2">isRedefineClassesSupported</span>();
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">//此方法用于替换类的定义，而不引用现有的类文件字节，就像从源代码重新编译以进行修复和继续调试时所做的那样。
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#586e75">//在要转换现有类文件字节的地方（例如在字节码插装中），应该使用retransformClasses。
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#586e75">//该方法可以修改方法体、常量池和属性值，但不能新增、删除、重命名属性或方法，也不能修改方法的签名
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#dc322f">void</span> <span style="color:#268bd2">redefineClasses</span><span style="color:#719e07">(</span>ClassDefinition<span style="color:#719e07">...</span> definitions<span style="color:#719e07">)</span> <span style="color:#268bd2">throws</span>  ClassNotFoundException<span style="color:#719e07">,</span> UnmodifiableClassException<span style="color:#719e07">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">//此方法用于替换类的定义，而不引用现有的类文件字节，就像从源代码重新编译以进行修复和继续调试时所做的那样。</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">//在要转换现有类文件字节的地方（例如在字节码插装中），应该使用retransformClasses。</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">//该方法可以修改方法体、常量池和属性值，但不能新增、删除、重命名属性或方法，也不能修改方法的签名</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dc322f">void</span> <span style="color:#268bd2">redefineClasses</span>(ClassDefinition... definitions) <span style="color:#268bd2">throws</span>  ClassNotFoundException, UnmodifiableClassException;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">//获取已经被JVM加载的class，有className可能重复（可能存在多个classloader）
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#268bd2">@SuppressWarnings</span><span style="color:#719e07">(</span><span style="color:#2aa198">&#34;rawtypes&#34;</span><span style="color:#719e07">)</span>
-</span></span><span style="display:flex;"><span>    Class<span style="color:#719e07">[]</span> <span style="color:#268bd2">getAllLoadedClasses</span><span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">//获取已经被JVM加载的class，有className可能重复（可能存在多个classloader）</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">@SuppressWarnings</span>(<span style="color:#2aa198">&#34;rawtypes&#34;</span>)
+</span></span><span style="display:flex;"><span>    Class<span style="color:#719e07">[]</span> <span style="color:#268bd2">getAllLoadedClasses</span>();
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h4 id="222-instrument简介">2.2.2 Instrument简介</h4>
 <p>Instrument的底层实现依赖于JVMTI（JVM Tool Interface），它是JVM暴露出来的一些供用户扩展的接口集合，JVMTI是基于事件驱动的，JVM每执行到一定的逻辑就会调用一些事件的回调接口（如果存在），这些接口可以供开发者去扩展自己的逻辑。</p>
 <p>JVMTIAgent是一个利用JVMTI暴露出来的接口提供了代理启动时加载（Agent On Load）、代理通过Attach形式加载（Agent On Attach）和代理卸载（Agent On Unload）功能的动态库。而Instrument Agent可以理解为一类JVMTIAgent动态库，别名是JPLISAgent（Java Programming Language Instrumentation Services Agent），也就是专门为Java语言编写的插桩服务提供支持的代理。</p>

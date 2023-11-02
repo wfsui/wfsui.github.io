@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 30 Oct 2023 02:40:21 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E8%A7%86%E8%A7%89%E6%99%BA%E8%83%BD%E9%83%A8/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 02 Nov 2023 02:40:08 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/%E8%A7%86%E8%A7%89%E6%99%BA%E8%83%BD%E9%83%A8/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>斩获CVPR 2023竞赛2项冠军｜美团街景理解中视觉分割技术的探索与应用</title>
       <link>https://wfsui.github.io/posts/%E6%96%A9%E8%8E%B7cvpr-2023%E7%AB%9E%E8%B5%9B2%E9%A1%B9%E5%86%A0%E5%86%9B%E7%BE%8E%E5%9B%A2%E8%A1%97%E6%99%AF%E7%90%86%E8%A7%A3%E4%B8%AD%E8%A7%86%E8%A7%89%E5%88%86%E5%89%B2%E6%8A%80%E6%9C%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Mon, 30 Oct 2023 02:40:21 +0000</pubDate>
-      
+      <pubDate>Thu, 02 Nov 2023 02:40:08 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/%E6%96%A9%E8%8E%B7cvpr-2023%E7%AB%9E%E8%B5%9B2%E9%A1%B9%E5%86%A0%E5%86%9B%E7%BE%8E%E5%9B%A2%E8%A1%97%E6%99%AF%E7%90%86%E8%A7%A3%E4%B8%AD%E8%A7%86%E8%A7%89%E5%88%86%E5%89%B2%E6%8A%80%E6%9C%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</guid>
       <description>1 问题背景 街景数据通过不同设备进行采集获取，以各种摄像头采集的视频图像及各种雷达采集的点云为主要载体。其中，摄像头采集的视频图像具有低成本、易获取的特点，是最为常见的街景数据类型，而本文处理的街景数据主要为视频图像数据。街景视频图像数据作为室内外场景的重要信息载体，是计算机视觉众多任务的关键研究对象。
 为了从视频图像数据中解析有效的街景信息，计算机视觉各项技术融汇互补，实现对交通道路、室内外空间等街景进行深度全面的理解，这个过程通常被称为街景理解。街景理解相关技术的发展在计算机视觉技术演进中扮演着非常重要的角色，同时也对众多下游任务（例如场景重建、自动驾驶、机器人导航等）发挥着重要的作用。
@@ -25,12 +25,10 @@
 为了解决以上难题，美团街景理解团队在分割技术上做了大量探索，构建了一系列真实复杂场景下的高精度分割算法，实现了复杂目标精准分割及困难目标的发现识别。同时，也对高效率分割技术进行了实践，实现了分割模型的高效迭代与应用，并探索了统一开放的的街景视觉分割技术。最终，提出的相关技术在街景理解中取得了明显的效果，相关算法被CVPR 2023接收为Workshop论文，并且在国际竞赛中取得了2项冠军1项季军的成绩。
 2 研究现状 2.1 分割技术体系 分割作为计算机视觉三大基础任务（分类、检测、分割）之一，对目标进行像素粒度的位置和轮廓信息表示。计算机视觉进入深度学习时代之后，分割任务根据不同的应用场景进一步细分发展出各种子任务，按照数据形式的不同分为两大类：图像分割和视频分割，如下图3所示（图片来自[3][15]等文献）：</description>
     </item>
-    
     <item>
       <title>美团视觉GPU推理服务部署架构优化实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%89gpu%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
       <pubDate>Thu, 10 Aug 2023 02:47:54 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%89gpu%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
       <description>0. 导读 美团视觉面向本地生活服务，在众多场景上落地应用了文字识别、图像质量评价、视频理解等视觉AI技术。此前，在线推理服务使用的GPU资源不断增加，但服务GPU利用率普遍较低，浪费大量计算资源，增加了视觉AI应用成本，这是美团也是很多企业亟需解决的问题。
 美团视觉智能部通过实验分析发现，造成视觉推理服务GPU利用率低下的一个重要原因是模型结构问题：模型中预处理或者后处理部分CPU运算速度慢，导致推理主干网络无法充分发挥GPU运算性能。基于此，视觉研发团队通过模型结构拆分和微服务化，提出一种通用高效的部署架构，解决这种常见的性能瓶颈问题。
@@ -41,21 +39,17 @@
 2.1 模型优化工具与部署框架 深度学习模型部署前通常会使用优化工具进行优化，常见的优化工具包括TensorRT、TF-TRT、TVM和OpenVINO等。这些工具通过算子融合、动态显存分配和精度校准等方法提高模型运行速度。模型部署是生产应用的最后一环，它将深度学习模型推理过程封装成服务，内部实现模型加载、模型版本管理、批处理以及服务接口封装等功能，对外提供RPC/HTTP接口。业界主流的部署框架有以下几种：
 TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用于机器学习模型部署的高性能开源框架，内部集成了TF-TRT优化工具，但是对非TensorFlow格式的模型支持不够友好。 Torch Serve：TorchServe是AWS和Facebook联合推出的Pytorch模型部署推理框架，具有部署简单、高性能、轻量化等优点。 Triton：Triton是Nvidia发布的高性能推理服务框架，支持TensorFlow、TensorRT、PyTorch和ONNX等多种框架模型，适用于多模型联合推理场景。 在实际部署中，无论选择哪种框架，需要同时考虑模型格式、优化工具、框架功能特点等多种因素。</description>
     </item>
-    
     <item>
       <title>YOLOv6：又快又准的目标检测框架开源啦</title>
       <link>https://wfsui.github.io/posts/yolov6%E5%8F%88%E5%BF%AB%E5%8F%88%E5%87%86%E7%9A%84%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%BC%80%E6%BA%90%E5%95%A6/</link>
       <pubDate>Mon, 26 Sep 2022 04:38:58 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/yolov6%E5%8F%88%E5%BF%AB%E5%8F%88%E5%87%86%E7%9A%84%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%BC%80%E6%BA%90%E5%95%A6/</guid>
       <description>1. 概述 YOLOv6 是美团视觉智能部研发的一款目标检测框架，致力于工业应用。本框架同时专注于检测的精度和推理效率，在工业界常用的尺寸模型中：YOLOv6-nano 在 COCO 上精度可达 35.0% AP，在 T4 上推理速度可达 1242 FPS；YOLOv6-s 在 COCO 上精度可达 43.1% AP，在 T4 上推理速度可达 520 FPS。在部署方面，YOLOv6 支持 GPU（TensorRT）、CPU（OPENVINO）、ARM（MNN、TNN、NCNN）等不同平台的部署，极大地简化工程部署时的适配工作。</description>
     </item>
-    
     <item>
       <title>短视频内容理解与生成技术在美团的创新实践</title>
       <link>https://wfsui.github.io/posts/%E7%9F%AD%E8%A7%86%E9%A2%91%E5%86%85%E5%AE%B9%E7%90%86%E8%A7%A3%E4%B8%8E%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%88%9B%E6%96%B0%E5%AE%9E%E8%B7%B5/</link>
       <pubDate>Mon, 04 Jul 2022 03:58:59 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/%E7%9F%AD%E8%A7%86%E9%A2%91%E5%86%85%E5%AE%B9%E7%90%86%E8%A7%A3%E4%B8%8E%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%88%9B%E6%96%B0%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 背景 美团围绕丰富的本地生活服务电商场景，积累了丰富的视频数据。
 美团场景下的短视频示例
@@ -71,6 +65,5 @@ TensorFlow Serving：TensorFlow Serving（简称TF-Serving）是Google发布用�
 从应用场景来看，短视频在线上的应用主要包括：内容运营管理、内容搜索推荐、广告营销、创意生产。底层的支撑技术，主要可以分为两类：内容理解和内容生产。内容理解主要回答视频中什么时间点，出现什么样的内容的问题。内容生产通常建立在内容理解基础上，对视频素材进行加工处理。典型的技术包括，视频智能封面、智能剪辑。下面我将分别介绍这两类技术在美团场景下的实践。
 2. 短视频内容理解和生成技术实践 2.1 短视频内容理解 2.1.1 视频标签 视频内容理解的主要目标是，概括视频中出现的重要概念，打开视频内容的“黑盒”，让机器知道盒子里有什么，为下游应用提供语义信息，以便更好地对视频做管理和分发。根据结果的形式，内容理解可以分为显式和隐式两种。其中，显式是指通过视频分类相关技术，给视频打上人可以理解的文本标签。隐式主要指以向量形式表示的嵌入特征，在推荐、搜索等场景下与模型结合直接面向最终任务建模。可以粗略地理解为，前者主要面向人，后者主要面向机器学习算法。</description>
     </item>
-    
   </channel>
 </rss>

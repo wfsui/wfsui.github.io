@@ -25,6 +25,7 @@
 <meta property="og:url" content="https://wfsui.github.io/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BA%8C%E4%B8%89%E4%BA%8B/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-05-27T03:42:14+00:00" />
 <meta property="article:modified_time" content="2022-05-27T03:42:14+00:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="设计模式二三事"/>
 <meta name="twitter:description" content="设计模式是众多软件开发人员经过长时间的试错和应用总结出来的，解决特定问题的一系列方案。现行的部分教材在介绍设计模式时，有些会因为案例脱离实际应用场景而令人费解，有些又会因为场景简单而显得有些小题大做。本文会结合在美团金融服务平台设计开发时的经验，结合实际的案例，并采用“师生对话”这种相对诙谐的形式去讲解三类常用设计模式的应用。希望能对想提升系统设计能力的同学有所帮助或启发。
@@ -111,31 +112,31 @@
 <p>“这我知道，活动营销是指企业通过参与社会关注度高的已有活动，或整合有效的资源自主策划大型活动，从而迅速提高企业及其品牌的知名度、美誉度和影响力，常见的比如有抽奖、红包等。”</p>
 <p>老师点点头：“是的。我们假设现在就要做一个营销，需要用户参与一个活动，然后完成一系列的任务，最后可以得到一些奖励作为回报。活动的奖励包含美团外卖、酒旅和美食等多种品类券，现在需要你帮忙设计一套奖励发放方案。”</p>
 <p>因为之前有过类似的开发经验，拿到需求的小明二话不说开始了编写起了代码：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 奖励服务
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">RewardService</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 外部服务
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#268bd2">private</span> WaimaiService waimaiService<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> HotelService hotelService<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> FoodService foodService<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 使用对入参的条件判断进行发奖
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">issueReward</span><span style="color:#719e07">(</span>String rewardType<span style="color:#719e07">,</span> Object <span style="color:#719e07">...</span> params<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">if</span> <span style="color:#719e07">(</span><span style="color:#2aa198">&#34;Waimai&#34;</span><span style="color:#719e07">.</span>equals<span style="color:#719e07">(</span>rewardType<span style="color:#719e07">))</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            WaimaiRequest request <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> WaimaiRequest<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#586e75">// 构建入参
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>            request<span style="color:#719e07">.</span>setWaimaiReq<span style="color:#719e07">(</span>params<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>            waimaiService<span style="color:#719e07">.</span>issueWaimai<span style="color:#719e07">(</span>request<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span> <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> <span style="color:#719e07">(</span><span style="color:#2aa198">&#34;Hotel&#34;</span><span style="color:#719e07">.</span>equals<span style="color:#719e07">(</span>rewardType<span style="color:#719e07">))</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            HotelRequest request <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> HotelRequest<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>            request<span style="color:#719e07">.</span>addHotelReq<span style="color:#719e07">(</span>params<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>            hotelService<span style="color:#719e07">.</span>sendPrize<span style="color:#719e07">(</span>request<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span> <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> <span style="color:#719e07">(</span><span style="color:#2aa198">&#34;Food&#34;</span><span style="color:#719e07">.</span>equals<span style="color:#719e07">(</span>rewardType<span style="color:#719e07">))</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            FoodRequest request <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> FoodRequest<span style="color:#719e07">(</span>params<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>            foodService<span style="color:#719e07">.</span>getCoupon<span style="color:#719e07">(</span>request<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span> <span style="color:#719e07">else</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>          	<span style="color:#719e07">throw</span> <span style="color:#719e07">new</span> IllegalArgumentException<span style="color:#719e07">(</span><span style="color:#2aa198">&#34;rewardType error!&#34;</span><span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 奖励服务</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">RewardService</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 外部服务</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> WaimaiService waimaiService;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> HotelService hotelService;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> FoodService foodService;
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 使用对入参的条件判断进行发奖</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">issueReward</span>(String rewardType, Object ... params) {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">if</span> (<span style="color:#2aa198">&#34;Waimai&#34;</span>.equals(rewardType)) {
+</span></span><span style="display:flex;"><span>            WaimaiRequest request <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> WaimaiRequest();
+</span></span><span style="display:flex;"><span>            <span style="color:#586e75">// 构建入参</span>
+</span></span><span style="display:flex;"><span>            request.setWaimaiReq(params);
+</span></span><span style="display:flex;"><span>            waimaiService.issueWaimai(request);
+</span></span><span style="display:flex;"><span>        } <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> (<span style="color:#2aa198">&#34;Hotel&#34;</span>.equals(rewardType)) {
+</span></span><span style="display:flex;"><span>            HotelRequest request <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> HotelRequest();
+</span></span><span style="display:flex;"><span>            request.addHotelReq(params);
+</span></span><span style="display:flex;"><span>            hotelService.sendPrize(request);
+</span></span><span style="display:flex;"><span>        } <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> (<span style="color:#2aa198">&#34;Food&#34;</span>.equals(rewardType)) {
+</span></span><span style="display:flex;"><span>            FoodRequest request <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> FoodRequest(params);
+</span></span><span style="display:flex;"><span>            foodService.getCoupon(request);
+</span></span><span style="display:flex;"><span>        } <span style="color:#719e07">else</span> {
+</span></span><span style="display:flex;"><span>          	<span style="color:#719e07">throw</span> <span style="color:#719e07">new</span> IllegalArgumentException(<span style="color:#2aa198">&#34;rewardType error!&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>小明很快写好了Demo，然后发给老师看。</p>
 <p>“假如我们即将接入新的打车券，这是否意味着你必须要修改这部分代码？”老师问道。</p>
 <p>小明愣了一愣，没等反应过来老师又问：”假如后面美团外卖的发券接口发生了改变或者替换，这段逻辑是否必须要同步进行修改？”</p>
@@ -162,63 +163,63 @@
 </ul>
 </blockquote>
 <p>结合优化思路，小明首先设计出了策略接口，并通过适配器的思想将各个下游接口类适配成策略类：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 策略接口
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">interface</span> <span style="color:#268bd2">Strategy</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#dc322f">void</span> <span style="color:#268bd2">issue</span><span style="color:#719e07">(</span>Object <span style="color:#719e07">...</span> params<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 外卖策略
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">Waimai</span> <span style="color:#268bd2">implements</span> Strategy <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>  	<span style="color:#268bd2">private</span> WaimaiService waimaiService<span style="color:#719e07">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 策略接口</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">interface</span> <span style="color:#268bd2">Strategy</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#dc322f">void</span> <span style="color:#268bd2">issue</span>(Object ... params);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 外卖策略</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">Waimai</span> <span style="color:#268bd2">implements</span> Strategy {
+</span></span><span style="display:flex;"><span>  	<span style="color:#268bd2">private</span> WaimaiService waimaiService;
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">issue</span><span style="color:#719e07">(</span>Object<span style="color:#719e07">...</span> params<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        WaimaiRequest request <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> WaimaiRequest<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// 构建入参
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>        request<span style="color:#719e07">.</span>setWaimaiReq<span style="color:#719e07">(</span>params<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        waimaiService<span style="color:#719e07">.</span>issueWaimai<span style="color:#719e07">(</span>request<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 酒旅策略
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">Hotel</span> <span style="color:#268bd2">implements</span> Strategy <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>  	<span style="color:#268bd2">private</span> HotelService hotelService<span style="color:#719e07">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">issue</span>(Object... params) {
+</span></span><span style="display:flex;"><span>        WaimaiRequest request <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> WaimaiRequest();
+</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// 构建入参</span>
+</span></span><span style="display:flex;"><span>        request.setWaimaiReq(params);
+</span></span><span style="display:flex;"><span>        waimaiService.issueWaimai(request);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 酒旅策略</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">Hotel</span> <span style="color:#268bd2">implements</span> Strategy {
+</span></span><span style="display:flex;"><span>  	<span style="color:#268bd2">private</span> HotelService hotelService;
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">issue</span><span style="color:#719e07">(</span>Object<span style="color:#719e07">...</span> params<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        HotelRequest request <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> HotelRequest<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>        request<span style="color:#719e07">.</span>addHotelReq<span style="color:#719e07">(</span>params<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        hotelService<span style="color:#719e07">.</span>sendPrize<span style="color:#719e07">(</span>request<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 美食策略
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">Food</span> <span style="color:#268bd2">implements</span> Strategy <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>  	<span style="color:#268bd2">private</span> FoodService foodService<span style="color:#719e07">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">issue</span>(Object... params) {
+</span></span><span style="display:flex;"><span>        HotelRequest request <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> HotelRequest();
+</span></span><span style="display:flex;"><span>        request.addHotelReq(params);
+</span></span><span style="display:flex;"><span>        hotelService.sendPrize(request);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 美食策略</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">Food</span> <span style="color:#268bd2">implements</span> Strategy {
+</span></span><span style="display:flex;"><span>  	<span style="color:#268bd2">private</span> FoodService foodService;
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">issue</span><span style="color:#719e07">(</span>Object<span style="color:#719e07">...</span> params<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        FoodRequest request <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> FoodRequest<span style="color:#719e07">(</span>params<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        foodService<span style="color:#719e07">.</span>payCoupon<span style="color:#719e07">(</span>request<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">issue</span>(Object... params) {
+</span></span><span style="display:flex;"><span>        FoodRequest request <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> FoodRequest(params);
+</span></span><span style="display:flex;"><span>        foodService.payCoupon(request);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>然后，小明创建策略模式的环境类，并供奖励服务调用：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 使用分支判断获取的策略上下文
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">StrategyContext</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> Strategy <span style="color:#268bd2">getStrategy</span><span style="color:#719e07">(</span>String rewardType<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">switch</span> <span style="color:#719e07">(</span>rewardType<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">case</span> <span style="color:#2aa198">&#34;Waimai&#34;</span><span style="color:#719e07">:</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#719e07">return</span> <span style="color:#719e07">new</span> Waimai<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">case</span> <span style="color:#2aa198">&#34;Hotel&#34;</span><span style="color:#719e07">:</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#719e07">return</span> <span style="color:#719e07">new</span> Hotel<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">case</span> <span style="color:#2aa198">&#34;Food&#34;</span><span style="color:#719e07">:</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#719e07">return</span> <span style="color:#719e07">new</span> Food<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">default</span><span style="color:#719e07">:</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#719e07">throw</span> <span style="color:#719e07">new</span> IllegalArgumentException<span style="color:#719e07">(</span><span style="color:#2aa198">&#34;rewardType error!&#34;</span><span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 优化后的策略服务
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">RewardService</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">issueReward</span><span style="color:#719e07">(</span>String rewardType<span style="color:#719e07">,</span> Object <span style="color:#719e07">...</span> params<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        Strategy strategy <span style="color:#719e07">=</span> StrategyContext<span style="color:#719e07">.</span>getStrategy<span style="color:#719e07">(</span>rewardType<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        strategy<span style="color:#719e07">.</span>issue<span style="color:#719e07">(</span>params<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 使用分支判断获取的策略上下文</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">StrategyContext</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> Strategy <span style="color:#268bd2">getStrategy</span>(String rewardType) {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">switch</span> (rewardType) {
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">case</span> <span style="color:#2aa198">&#34;Waimai&#34;</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#719e07">return</span> <span style="color:#719e07">new</span> Waimai();
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">case</span> <span style="color:#2aa198">&#34;Hotel&#34;</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#719e07">return</span> <span style="color:#719e07">new</span> Hotel();
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">case</span> <span style="color:#2aa198">&#34;Food&#34;</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#719e07">return</span> <span style="color:#719e07">new</span> Food();
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">default</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#719e07">throw</span> <span style="color:#719e07">new</span> IllegalArgumentException(<span style="color:#2aa198">&#34;rewardType error!&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 优化后的策略服务</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">RewardService</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">issueReward</span>(String rewardType, Object ... params) {
+</span></span><span style="display:flex;"><span>        Strategy strategy <span style="color:#719e07">=</span> StrategyContext.getStrategy(rewardType);
+</span></span><span style="display:flex;"><span>        strategy.issue(params);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>小明的代码经过优化后，虽然结构和设计上比之前要复杂不少，但考虑到健壮性和拓展性，还是非常值得的。</p>
 <p>“看，我这次优化后的版本是不是很完美？”小明洋洋得意地说。</p>
 <p>“耦合度确实降低了，但还能做的更好。”</p>
@@ -233,76 +234,76 @@
 <p>这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。</p>
 </blockquote>
 <p>最终，小明在策略环境类中使用一个注册表来记录各个策略类的注册信息，并提供接口供策略类调用进行注册。同时使用<strong>饿汉式单例模式</strong>去优化策略类的设计：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 策略上下文，用于管理策略的注册和获取
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">StrategyContext</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">final</span> Map<span style="color:#719e07">&lt;</span>String<span style="color:#719e07">,</span> Strategy<span style="color:#719e07">&gt;</span> registerMap <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> HashMap<span style="color:#719e07">&lt;&gt;();</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 注册策略
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">registerStrategy</span><span style="color:#719e07">(</span>String rewardType<span style="color:#719e07">,</span> Strategy strategy<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        registerMap<span style="color:#719e07">.</span>putIfAbsent<span style="color:#719e07">(</span>rewardType<span style="color:#719e07">,</span> strategy<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 获取策略
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> Strategy <span style="color:#268bd2">getStrategy</span><span style="color:#719e07">(</span>String rewardType<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">return</span> registerMap<span style="color:#719e07">.</span>get<span style="color:#719e07">(</span>rewardType<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 抽象策略类
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">abstract</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">AbstractStrategy</span> <span style="color:#268bd2">implements</span> Strategy <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 类注册方法
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">register</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        StrategyContext<span style="color:#719e07">.</span>registerStrategy<span style="color:#719e07">(</span>getClass<span style="color:#719e07">().</span>getSimpleName<span style="color:#719e07">(),</span> <span style="color:#719e07">this</span><span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 单例外卖策略
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">Waimai</span> <span style="color:#268bd2">extends</span> AbstractStrategy <span style="color:#268bd2">implements</span> Strategy <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">final</span> Waimai instance <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> Waimai<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>  	<span style="color:#268bd2">private</span> WaimaiService waimaiService<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> <span style="color:#268bd2">Waimai</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        register<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> Waimai <span style="color:#268bd2">getInstance</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">return</span> instance<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 策略上下文，用于管理策略的注册和获取</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">StrategyContext</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">final</span> Map<span style="color:#719e07">&lt;</span>String, Strategy<span style="color:#719e07">&gt;</span> registerMap <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> HashMap<span style="color:#719e07">&lt;&gt;</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 注册策略</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">registerStrategy</span>(String rewardType, Strategy strategy) {
+</span></span><span style="display:flex;"><span>        registerMap.putIfAbsent(rewardType, strategy);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 获取策略</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> Strategy <span style="color:#268bd2">getStrategy</span>(String rewardType) {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">return</span> registerMap.get(rewardType);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 抽象策略类</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">abstract</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">AbstractStrategy</span> <span style="color:#268bd2">implements</span> Strategy {
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 类注册方法</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">register</span>() {
+</span></span><span style="display:flex;"><span>        StrategyContext.registerStrategy(getClass().getSimpleName(), <span style="color:#719e07">this</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 单例外卖策略</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">Waimai</span> <span style="color:#268bd2">extends</span> AbstractStrategy <span style="color:#268bd2">implements</span> Strategy {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">final</span> Waimai instance <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> Waimai();
+</span></span><span style="display:flex;"><span>  	<span style="color:#268bd2">private</span> WaimaiService waimaiService;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> <span style="color:#268bd2">Waimai</span>() {
+</span></span><span style="display:flex;"><span>        register();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> Waimai <span style="color:#268bd2">getInstance</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">return</span> instance;
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">issue</span><span style="color:#719e07">(</span>Object<span style="color:#719e07">...</span> params<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        WaimaiRequest request <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> WaimaiRequest<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// 构建入参
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>        request<span style="color:#719e07">.</span>setWaimaiReq<span style="color:#719e07">(</span>params<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        waimaiService<span style="color:#719e07">.</span>issueWaimai<span style="color:#719e07">(</span>request<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 单例酒旅策略
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">Hotel</span> <span style="color:#268bd2">extends</span> AbstractStrategy <span style="color:#268bd2">implements</span> Strategy <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>  	<span style="color:#268bd2">private</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">final</span> Hotel instance <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> Hotel<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>  	<span style="color:#268bd2">private</span> HotelService hotelService<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> <span style="color:#268bd2">Hotel</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        register<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> Hotel <span style="color:#268bd2">getInstance</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">return</span> instance<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">issue</span>(Object... params) {
+</span></span><span style="display:flex;"><span>        WaimaiRequest request <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> WaimaiRequest();
+</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// 构建入参</span>
+</span></span><span style="display:flex;"><span>        request.setWaimaiReq(params);
+</span></span><span style="display:flex;"><span>        waimaiService.issueWaimai(request);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 单例酒旅策略</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">Hotel</span> <span style="color:#268bd2">extends</span> AbstractStrategy <span style="color:#268bd2">implements</span> Strategy {
+</span></span><span style="display:flex;"><span>  	<span style="color:#268bd2">private</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">final</span> Hotel instance <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> Hotel();
+</span></span><span style="display:flex;"><span>  	<span style="color:#268bd2">private</span> HotelService hotelService;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> <span style="color:#268bd2">Hotel</span>() {
+</span></span><span style="display:flex;"><span>        register();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> Hotel <span style="color:#268bd2">getInstance</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">return</span> instance;
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">issue</span><span style="color:#719e07">(</span>Object<span style="color:#719e07">...</span> params<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        HotelRequest request <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> HotelRequest<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>        request<span style="color:#719e07">.</span>addHotelReq<span style="color:#719e07">(</span>params<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        hotelService<span style="color:#719e07">.</span>sendPrize<span style="color:#719e07">(</span>request<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 单例美食策略
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">Food</span> <span style="color:#268bd2">extends</span> AbstractStrategy <span style="color:#268bd2">implements</span> Strategy <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>  	<span style="color:#268bd2">private</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">final</span> Food instance <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> Food<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>  	<span style="color:#268bd2">private</span> FoodService foodService<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> <span style="color:#268bd2">Food</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        register<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> Food <span style="color:#268bd2">getInstance</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">return</span> instance<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">issue</span>(Object... params) {
+</span></span><span style="display:flex;"><span>        HotelRequest request <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> HotelRequest();
+</span></span><span style="display:flex;"><span>        request.addHotelReq(params);
+</span></span><span style="display:flex;"><span>        hotelService.sendPrize(request);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 单例美食策略</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">Food</span> <span style="color:#268bd2">extends</span> AbstractStrategy <span style="color:#268bd2">implements</span> Strategy {
+</span></span><span style="display:flex;"><span>  	<span style="color:#268bd2">private</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">final</span> Food instance <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> Food();
+</span></span><span style="display:flex;"><span>  	<span style="color:#268bd2">private</span> FoodService foodService;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> <span style="color:#268bd2">Food</span>() {
+</span></span><span style="display:flex;"><span>        register();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> Food <span style="color:#268bd2">getInstance</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">return</span> instance;
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">issue</span><span style="color:#719e07">(</span>Object<span style="color:#719e07">...</span> params<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        FoodRequest request <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> FoodRequest<span style="color:#719e07">(</span>params<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        foodService<span style="color:#719e07">.</span>payCoupon<span style="color:#719e07">(</span>request<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">issue</span>(Object... params) {
+</span></span><span style="display:flex;"><span>        FoodRequest request <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> FoodRequest(params);
+</span></span><span style="display:flex;"><span>        foodService.payCoupon(request);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>最终，小明设计完成的结构类图如下：</p>
 <p><img src="https://p1.meituan.net/travelcube/5191a78f3ef8d0f1f3ec2315678dace881565.png" alt="奖励发放策略_类图"></p>
 <p>如果使用了Spring框架，还可以利用Spring的Bean机制来代替上述的部分设计，直接使用<code>@Component</code>和<code>@PostConstruct</code>注解即可完成单例的创建和注册，代码会更加简洁。</p>
@@ -315,65 +316,65 @@
 <p>“嗯，那会提到了活动营销的组成部分，除了奖励之外，貌似还有任务吧。”</p>
 <p>小明点了点头，老师接着说：“现在，我想让你去完成任务模型的设计。你需要重点关注状态的流转变更，以及状态变更后的消息通知。”</p>
 <p>小明欣然接下了老师给的难题。他首先定义了一套任务状态的枚举和行为的枚举：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 任务状态枚举
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">@AllArgsConstructor</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 任务状态枚举</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">@AllArgsConstructor</span>
 </span></span><span style="display:flex;"><span><span style="color:#268bd2">@Getter</span>
-</span></span><span style="display:flex;"><span><span style="color:#268bd2">enum</span> TaskState <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    INIT<span style="color:#719e07">(</span><span style="color:#2aa198">&#34;初始化&#34;</span><span style="color:#719e07">),</span>
-</span></span><span style="display:flex;"><span>    ONGOING<span style="color:#719e07">(</span> <span style="color:#2aa198">&#34;进行中&#34;</span><span style="color:#719e07">),</span>
-</span></span><span style="display:flex;"><span>    PAUSED<span style="color:#719e07">(</span><span style="color:#2aa198">&#34;暂停中&#34;</span><span style="color:#719e07">),</span>
-</span></span><span style="display:flex;"><span>    FINISHED<span style="color:#719e07">(</span><span style="color:#2aa198">&#34;已完成&#34;</span><span style="color:#719e07">),</span>
-</span></span><span style="display:flex;"><span>    EXPIRED<span style="color:#719e07">(</span><span style="color:#2aa198">&#34;已过期&#34;</span><span style="color:#719e07">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> <span style="color:#268bd2">final</span> String message<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 行为枚举
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">@AllArgsConstructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">enum</span> TaskState {
+</span></span><span style="display:flex;"><span>    INIT(<span style="color:#2aa198">&#34;初始化&#34;</span>),
+</span></span><span style="display:flex;"><span>    ONGOING( <span style="color:#2aa198">&#34;进行中&#34;</span>),
+</span></span><span style="display:flex;"><span>    PAUSED(<span style="color:#2aa198">&#34;暂停中&#34;</span>),
+</span></span><span style="display:flex;"><span>    FINISHED(<span style="color:#2aa198">&#34;已完成&#34;</span>),
+</span></span><span style="display:flex;"><span>    EXPIRED(<span style="color:#2aa198">&#34;已过期&#34;</span>)
+</span></span><span style="display:flex;"><span>    ;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> <span style="color:#268bd2">final</span> String message;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 行为枚举</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">@AllArgsConstructor</span>
 </span></span><span style="display:flex;"><span><span style="color:#268bd2">@Getter</span>
-</span></span><span style="display:flex;"><span><span style="color:#268bd2">enum</span> ActionType <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    START<span style="color:#719e07">(</span><span style="color:#2aa198">1</span><span style="color:#719e07">,</span> <span style="color:#2aa198">&#34;开始&#34;</span><span style="color:#719e07">),</span>
-</span></span><span style="display:flex;"><span>    STOP<span style="color:#719e07">(</span><span style="color:#2aa198">2</span><span style="color:#719e07">,</span> <span style="color:#2aa198">&#34;暂停&#34;</span><span style="color:#719e07">),</span>
-</span></span><span style="display:flex;"><span>    ACHIEVE<span style="color:#719e07">(</span><span style="color:#2aa198">3</span><span style="color:#719e07">,</span> <span style="color:#2aa198">&#34;完成&#34;</span><span style="color:#719e07">),</span>
-</span></span><span style="display:flex;"><span>    EXPIRE<span style="color:#719e07">(</span><span style="color:#2aa198">4</span><span style="color:#719e07">,</span> <span style="color:#2aa198">&#34;过期&#34;</span><span style="color:#719e07">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> <span style="color:#268bd2">final</span> <span style="color:#dc322f">int</span> code<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> <span style="color:#268bd2">final</span> String message<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">enum</span> ActionType {
+</span></span><span style="display:flex;"><span>    START(1, <span style="color:#2aa198">&#34;开始&#34;</span>),
+</span></span><span style="display:flex;"><span>    STOP(2, <span style="color:#2aa198">&#34;暂停&#34;</span>),
+</span></span><span style="display:flex;"><span>    ACHIEVE(3, <span style="color:#2aa198">&#34;完成&#34;</span>),
+</span></span><span style="display:flex;"><span>    EXPIRE(4, <span style="color:#2aa198">&#34;过期&#34;</span>)
+</span></span><span style="display:flex;"><span>    ;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> <span style="color:#268bd2">final</span> <span style="color:#dc322f">int</span> code;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> <span style="color:#268bd2">final</span> String message;
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>然后，小明对开始编写状态变更功能：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">Task</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> Long taskId<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 任务的默认状态为初始化
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#268bd2">private</span> TaskState state <span style="color:#719e07">=</span> TaskState<span style="color:#719e07">.</span>INIT<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 活动服务
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#268bd2">private</span> ActivityService activityService<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 任务管理器
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#268bd2">private</span> TaskManager taskManager<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 使用条件分支进行任务更新
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">updateState</span><span style="color:#719e07">(</span>ActionType actionType<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>state <span style="color:#719e07">==</span> TaskState<span style="color:#719e07">.</span>INIT<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>actionType <span style="color:#719e07">==</span> ActionType<span style="color:#719e07">.</span>START<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>                state <span style="color:#719e07">=</span> TaskState<span style="color:#719e07">.</span>ONGOING<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span> <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>state <span style="color:#719e07">==</span> TaskState<span style="color:#719e07">.</span>ONGOING<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>actionType <span style="color:#719e07">==</span> ActionType<span style="color:#719e07">.</span>ACHIEVE<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>                state <span style="color:#719e07">=</span> TaskState<span style="color:#719e07">.</span>FINISHED<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#586e75">// 任务完成后进对外部服务进行通知
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>                activityService<span style="color:#719e07">.</span>notifyFinished<span style="color:#719e07">(</span>taskId<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>                taskManager<span style="color:#719e07">.</span>release<span style="color:#719e07">(</span>taskId<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">}</span> <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>actionType <span style="color:#719e07">==</span> ActionType<span style="color:#719e07">.</span>STOP<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>                state <span style="color:#719e07">=</span> TaskState<span style="color:#719e07">.</span>PAUSED<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">}</span> <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>actionType <span style="color:#719e07">==</span> ActionType<span style="color:#719e07">.</span>EXPIRE<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>                state <span style="color:#719e07">=</span> TaskState<span style="color:#719e07">.</span>EXPIRED<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span> <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>state <span style="color:#719e07">==</span> TaskState<span style="color:#719e07">.</span>PAUSED<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>actionType <span style="color:#719e07">==</span> ActionType<span style="color:#719e07">.</span>START<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>                state <span style="color:#719e07">=</span> TaskState<span style="color:#719e07">.</span>ONGOING<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">}</span> <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>actionType <span style="color:#719e07">==</span> ActionType<span style="color:#719e07">.</span>EXPIRE<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>                state <span style="color:#719e07">=</span> TaskState<span style="color:#719e07">.</span>EXPIRED<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">Task</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> Long taskId;
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 任务的默认状态为初始化</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> TaskState state <span style="color:#719e07">=</span> TaskState.INIT;
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 活动服务</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> ActivityService activityService;
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 任务管理器</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> TaskManager taskManager;
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 使用条件分支进行任务更新</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">updateState</span>(ActionType actionType) {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">if</span> (state <span style="color:#719e07">==</span> TaskState.INIT) {
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">if</span> (actionType <span style="color:#719e07">==</span> ActionType.START) {
+</span></span><span style="display:flex;"><span>                state <span style="color:#719e07">=</span> TaskState.ONGOING;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        } <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> (state <span style="color:#719e07">==</span> TaskState.ONGOING) {
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">if</span> (actionType <span style="color:#719e07">==</span> ActionType.ACHIEVE) {
+</span></span><span style="display:flex;"><span>                state <span style="color:#719e07">=</span> TaskState.FINISHED;
+</span></span><span style="display:flex;"><span>                <span style="color:#586e75">// 任务完成后进对外部服务进行通知</span>
+</span></span><span style="display:flex;"><span>                activityService.notifyFinished(taskId);
+</span></span><span style="display:flex;"><span>                taskManager.release(taskId);
+</span></span><span style="display:flex;"><span>            } <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> (actionType <span style="color:#719e07">==</span> ActionType.STOP) {
+</span></span><span style="display:flex;"><span>                state <span style="color:#719e07">=</span> TaskState.PAUSED;
+</span></span><span style="display:flex;"><span>            } <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> (actionType <span style="color:#719e07">==</span> ActionType.EXPIRE) {
+</span></span><span style="display:flex;"><span>                state <span style="color:#719e07">=</span> TaskState.EXPIRED;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        } <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> (state <span style="color:#719e07">==</span> TaskState.PAUSED) {
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">if</span> (actionType <span style="color:#719e07">==</span> ActionType.START) {
+</span></span><span style="display:flex;"><span>                state <span style="color:#719e07">=</span> TaskState.ONGOING;
+</span></span><span style="display:flex;"><span>            } <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> (actionType <span style="color:#719e07">==</span> ActionType.EXPIRE) {
+</span></span><span style="display:flex;"><span>                state <span style="color:#719e07">=</span> TaskState.EXPIRED;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>在上述的实现中，小明在<code>updateState</code>方法中完成了2个重要的功能：</p>
 <ol>
 <li>接收不同的行为，然后更新当前任务的状态；</li>
@@ -397,69 +398,69 @@
 </ul>
 </blockquote>
 <p>根据状态模式的定义，小明将TaskState枚举类扩展成多个状态类，并具备完成状态的流转的能力；然后优化了任务类的实现：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 任务状态抽象接口
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">interface</span> <span style="color:#268bd2">State</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 默认实现，不做任何处理
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#719e07">default</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">update</span><span style="color:#719e07">(</span>Task task<span style="color:#719e07">,</span> ActionType actionType<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// do nothing
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 任务初始状态
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">TaskInit</span> <span style="color:#268bd2">implements</span> State <span style="color:#719e07">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 任务状态抽象接口</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">interface</span> <span style="color:#268bd2">State</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 默认实现，不做任何处理</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">default</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">update</span>(Task task, ActionType actionType) {
+</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// do nothing</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 任务初始状态</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">TaskInit</span> <span style="color:#268bd2">implements</span> State {
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">update</span><span style="color:#719e07">(</span>Task task<span style="color:#719e07">,</span> ActionType actionType<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">if</span>  <span style="color:#719e07">(</span>actionType <span style="color:#719e07">==</span> ActionType<span style="color:#719e07">.</span>START<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            task<span style="color:#719e07">.</span>setState<span style="color:#719e07">(</span><span style="color:#719e07">new</span> TaskOngoing<span style="color:#719e07">());</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 任务进行状态
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">TaskOngoing</span> <span style="color:#268bd2">implements</span> State <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> ActivityService activityService<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> TaskManager taskManager<span style="color:#719e07">;</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">update</span>(Task task, ActionType actionType) {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">if</span>  (actionType <span style="color:#719e07">==</span> ActionType.START) {
+</span></span><span style="display:flex;"><span>            task.setState(<span style="color:#719e07">new</span> TaskOngoing());
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 任务进行状态</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">TaskOngoing</span> <span style="color:#268bd2">implements</span> State {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> ActivityService activityService;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> TaskManager taskManager; 
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">update</span><span style="color:#719e07">(</span>Task task<span style="color:#719e07">,</span> ActionType actionType<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>actionType <span style="color:#719e07">==</span> ActionType<span style="color:#719e07">.</span>ACHIEVE<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            task<span style="color:#719e07">.</span>setState<span style="color:#719e07">(</span><span style="color:#719e07">new</span> TaskFinished<span style="color:#719e07">());</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#586e75">// 通知
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>            activityService<span style="color:#719e07">.</span>notifyFinished<span style="color:#719e07">(</span>taskId<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>            taskManager<span style="color:#719e07">.</span>release<span style="color:#719e07">(</span>taskId<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span> <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>actionType <span style="color:#719e07">==</span> ActionType<span style="color:#719e07">.</span>STOP<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            task<span style="color:#719e07">.</span>setState<span style="color:#719e07">(</span><span style="color:#719e07">new</span> TaskPaused<span style="color:#719e07">());</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span> <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>actionType <span style="color:#719e07">==</span> ActionType<span style="color:#719e07">.</span>EXPIRE<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            task<span style="color:#719e07">.</span>setState<span style="color:#719e07">(</span><span style="color:#719e07">new</span> TaskExpired<span style="color:#719e07">());</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 任务暂停状态
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">TaskPaused</span> <span style="color:#268bd2">implements</span> State <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">update</span>(Task task, ActionType actionType) {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">if</span> (actionType <span style="color:#719e07">==</span> ActionType.ACHIEVE) {
+</span></span><span style="display:flex;"><span>            task.setState(<span style="color:#719e07">new</span> TaskFinished());
+</span></span><span style="display:flex;"><span>            <span style="color:#586e75">// 通知</span>
+</span></span><span style="display:flex;"><span>            activityService.notifyFinished(taskId);
+</span></span><span style="display:flex;"><span>            taskManager.release(taskId);
+</span></span><span style="display:flex;"><span>        } <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> (actionType <span style="color:#719e07">==</span> ActionType.STOP) {
+</span></span><span style="display:flex;"><span>            task.setState(<span style="color:#719e07">new</span> TaskPaused());
+</span></span><span style="display:flex;"><span>        } <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> (actionType <span style="color:#719e07">==</span> ActionType.EXPIRE) {
+</span></span><span style="display:flex;"><span>            task.setState(<span style="color:#719e07">new</span> TaskExpired());
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 任务暂停状态</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">TaskPaused</span> <span style="color:#268bd2">implements</span> State {
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">update</span><span style="color:#719e07">(</span>Task task<span style="color:#719e07">,</span> ActionType actionType<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>actionType <span style="color:#719e07">==</span> ActionType<span style="color:#719e07">.</span>START<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            task<span style="color:#719e07">.</span>setState<span style="color:#719e07">(</span><span style="color:#719e07">new</span> TaskOngoing<span style="color:#719e07">());</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span> <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>actionType <span style="color:#719e07">==</span> ActionType<span style="color:#719e07">.</span>EXPIRE<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            task<span style="color:#719e07">.</span>setState<span style="color:#719e07">(</span><span style="color:#719e07">new</span> TaskExpired<span style="color:#719e07">());</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 任务完成状态
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">TaskFinished</span> <span style="color:#268bd2">implements</span> State <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">update</span>(Task task, ActionType actionType) {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">if</span> (actionType <span style="color:#719e07">==</span> ActionType.START) {
+</span></span><span style="display:flex;"><span>            task.setState(<span style="color:#719e07">new</span> TaskOngoing());
+</span></span><span style="display:flex;"><span>        } <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> (actionType <span style="color:#719e07">==</span> ActionType.EXPIRE) {
+</span></span><span style="display:flex;"><span>            task.setState(<span style="color:#719e07">new</span> TaskExpired());
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 任务完成状态</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">TaskFinished</span> <span style="color:#268bd2">implements</span> State {
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 任务过期状态
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">TaskExpired</span> <span style="color:#268bd2">implements</span> State <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 任务过期状态</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">TaskExpired</span> <span style="color:#268bd2">implements</span> State {
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span><span style="color:#268bd2">@Data</span>
-</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">Task</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> Long taskId<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 初始化为初始态
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#268bd2">private</span> State state <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> TaskInit<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 更新状态
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">updateState</span><span style="color:#719e07">(</span>ActionType actionType<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        state<span style="color:#719e07">.</span>update<span style="color:#719e07">(</span><span style="color:#719e07">this</span><span style="color:#719e07">,</span> actionType<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">Task</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> Long taskId;
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 初始化为初始态</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> State state <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> TaskInit();
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 更新状态</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">updateState</span>(ActionType actionType) {
+</span></span><span style="display:flex;"><span>        state.update(<span style="color:#719e07">this</span>, actionType);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>小明欣喜地看到，经过状态模式处理后的任务类的耦合度得到降低，符合开闭原则。状态模式的优点在于符合单一职责原则，状态类职责明确，有利于程序的扩展。但是这样设计的代价是状态类的数目增加了，因此状态流转逻辑越复杂、需要处理的动作越多，越有利于状态模式的应用。除此之外，状态类的自身对于开闭原则的支持并没有足够好，如果状态流转逻辑变化频繁，那么可能要慎重使用。</p>
 <p>处理完状态后，小明又根据老师的指导使用<strong>观察者模式</strong>去优化任务完成时的通知：</p>
 <blockquote>
@@ -472,72 +473,72 @@
 </ul>
 </blockquote>
 <p>小明首先设计好抽象目标和抽象观察者，然后将活动和任务管理器的接收通知功能定制成具体观察者：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 抽象观察者
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">interface</span> <span style="color:#268bd2">Observer</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#dc322f">void</span> <span style="color:#268bd2">response</span><span style="color:#719e07">(</span>Long taskId<span style="color:#719e07">);</span> <span style="color:#586e75">// 反应
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 抽象目标
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">abstract</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">Subject</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">protected</span> List<span style="color:#719e07">&lt;</span>Observer<span style="color:#719e07">&gt;</span> observers <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> ArrayList<span style="color:#719e07">&lt;</span>Observer<span style="color:#719e07">&gt;();</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 增加观察者方法
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">add</span><span style="color:#719e07">(</span>Observer observer<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        observers<span style="color:#719e07">.</span>add<span style="color:#719e07">(</span>observer<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 删除观察者方法
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">remove</span><span style="color:#719e07">(</span>Observer observer<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        observers<span style="color:#719e07">.</span>remove<span style="color:#719e07">(</span>observer<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 通知观察者方法
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">notifyObserver</span><span style="color:#719e07">(</span>Long taskId<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">for</span> <span style="color:#719e07">(</span>Observer observer <span style="color:#719e07">:</span> observers<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            observer<span style="color:#719e07">.</span>response<span style="color:#719e07">(</span>taskId<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 活动观察者
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">ActivityObserver</span> <span style="color:#268bd2">implements</span> Observer <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> ActivityService activityService<span style="color:#719e07">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 抽象观察者</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">interface</span> <span style="color:#268bd2">Observer</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#dc322f">void</span> <span style="color:#268bd2">response</span>(Long taskId); <span style="color:#586e75">// 反应</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 抽象目标</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">abstract</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">Subject</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">protected</span> List<span style="color:#719e07">&lt;</span>Observer<span style="color:#719e07">&gt;</span> observers <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> ArrayList<span style="color:#719e07">&lt;</span>Observer<span style="color:#719e07">&gt;</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 增加观察者方法</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">add</span>(Observer observer) {
+</span></span><span style="display:flex;"><span>        observers.add(observer);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 删除观察者方法</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">remove</span>(Observer observer) {
+</span></span><span style="display:flex;"><span>        observers.remove(observer);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 通知观察者方法</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">notifyObserver</span>(Long taskId) {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">for</span> (Observer observer : observers) {
+</span></span><span style="display:flex;"><span>            observer.response(taskId);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 活动观察者</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">ActivityObserver</span> <span style="color:#268bd2">implements</span> Observer {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> ActivityService activityService;
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">response</span><span style="color:#719e07">(</span>Long taskId<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        activityService<span style="color:#719e07">.</span>notifyFinished<span style="color:#719e07">(</span>taskId<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 任务管理观察者
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">TaskManageObserver</span> <span style="color:#268bd2">implements</span> Observer <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> TaskManager taskManager<span style="color:#719e07">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">response</span>(Long taskId) {
+</span></span><span style="display:flex;"><span>        activityService.notifyFinished(taskId);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 任务管理观察者</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">TaskManageObserver</span> <span style="color:#268bd2">implements</span> Observer {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> TaskManager taskManager;
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">response</span><span style="color:#719e07">(</span>Long taskId<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        taskManager<span style="color:#719e07">.</span>release<span style="color:#719e07">(</span>taskId<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">response</span>(Long taskId) {
+</span></span><span style="display:flex;"><span>        taskManager.release(taskId);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>最后，小明将任务进行状态类优化成使用通用的通知方法，并在任务初始态执行状态流转时定义任务进行态所需的观察者：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 任务进行状态
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">TaskOngoing</span> <span style="color:#268bd2">extends</span> Subject <span style="color:#268bd2">implements</span> State <span style="color:#719e07">{</span>  
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 任务进行状态</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">TaskOngoing</span> <span style="color:#268bd2">extends</span> Subject <span style="color:#268bd2">implements</span> State {  
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">update</span><span style="color:#719e07">(</span>Task task<span style="color:#719e07">,</span> ActionType actionType<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>actionType <span style="color:#719e07">==</span> ActionType<span style="color:#719e07">.</span>ACHIEVE<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            task<span style="color:#719e07">.</span>setState<span style="color:#719e07">(</span><span style="color:#719e07">new</span> TaskFinished<span style="color:#719e07">());</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#586e75">// 通知
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>            notifyObserver<span style="color:#719e07">(</span>task<span style="color:#719e07">.</span>getTaskId<span style="color:#719e07">());</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span> <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>actionType <span style="color:#719e07">==</span> ActionType<span style="color:#719e07">.</span>STOP<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            task<span style="color:#719e07">.</span>setState<span style="color:#719e07">(</span><span style="color:#719e07">new</span> TaskPaused<span style="color:#719e07">());</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span> <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>actionType <span style="color:#719e07">==</span> ActionType<span style="color:#719e07">.</span>EXPIRE<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            task<span style="color:#719e07">.</span>setState<span style="color:#719e07">(</span><span style="color:#719e07">new</span> TaskExpired<span style="color:#719e07">());</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 任务初始状态
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">TaskInit</span> <span style="color:#268bd2">implements</span> State <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">update</span>(Task task, ActionType actionType) {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">if</span> (actionType <span style="color:#719e07">==</span> ActionType.ACHIEVE) {
+</span></span><span style="display:flex;"><span>            task.setState(<span style="color:#719e07">new</span> TaskFinished());
+</span></span><span style="display:flex;"><span>            <span style="color:#586e75">// 通知</span>
+</span></span><span style="display:flex;"><span>            notifyObserver(task.getTaskId());
+</span></span><span style="display:flex;"><span>        } <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> (actionType <span style="color:#719e07">==</span> ActionType.STOP) {
+</span></span><span style="display:flex;"><span>            task.setState(<span style="color:#719e07">new</span> TaskPaused());
+</span></span><span style="display:flex;"><span>        } <span style="color:#719e07">else</span> <span style="color:#719e07">if</span> (actionType <span style="color:#719e07">==</span> ActionType.EXPIRE) {
+</span></span><span style="display:flex;"><span>            task.setState(<span style="color:#719e07">new</span> TaskExpired());
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 任务初始状态</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">TaskInit</span> <span style="color:#268bd2">implements</span> State {
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">update</span><span style="color:#719e07">(</span>Task task<span style="color:#719e07">,</span> ActionType actionType<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">if</span>  <span style="color:#719e07">(</span>actionType <span style="color:#719e07">==</span> ActionType<span style="color:#719e07">.</span>START<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            TaskOngoing taskOngoing <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> TaskOngoing<span style="color:#719e07">();</span>
-</span></span><span style="display:flex;"><span>            taskOngoing<span style="color:#719e07">.</span>add<span style="color:#719e07">(</span><span style="color:#719e07">new</span> ActivityObserver<span style="color:#719e07">());</span>
-</span></span><span style="display:flex;"><span>            taskOngoing<span style="color:#719e07">.</span>add<span style="color:#719e07">(</span><span style="color:#719e07">new</span> TaskManageObserver<span style="color:#719e07">());</span>
-</span></span><span style="display:flex;"><span>            task<span style="color:#719e07">.</span>setState<span style="color:#719e07">(</span>taskOngoing<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">update</span>(Task task, ActionType actionType) {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">if</span>  (actionType <span style="color:#719e07">==</span> ActionType.START) {
+</span></span><span style="display:flex;"><span>            TaskOngoing taskOngoing <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> TaskOngoing();
+</span></span><span style="display:flex;"><span>            taskOngoing.add(<span style="color:#719e07">new</span> ActivityObserver());
+</span></span><span style="display:flex;"><span>            taskOngoing.add(<span style="color:#719e07">new</span> TaskManageObserver());
+</span></span><span style="display:flex;"><span>            task.setState(taskOngoing);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>最终，小明设计完成的结构类图如下：</p>
 <p><img src="https://p0.meituan.net/travelcube/99711cc44579650a42e7dd602f83f53b92977.png" alt="任务模型设计_类图"></p>
 <p>通过观察者模式，小明让任务状态和通知方实现松耦合（实际上观察者模式还没能做到完全的解耦，如果要做进一步的解耦可以考虑学习并使用<strong>发布-订阅模式</strong>，这里也不再赘述）。</p>
@@ -550,66 +551,66 @@
 <p>“之前你设计开发了活动模型，现在我们需要在任务型活动的参与方法上增加一层风险控制。”</p>
 <p>“OK。借此机会，我也想重构一下之前的设计。”</p>
 <p>活动模型的特点在于其组成部分较多，小明原先的活动模型的构建方式是这样的：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 抽象活动接口
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">interface</span> <span style="color:#268bd2">ActivityInterface</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>  	<span style="color:#dc322f">void</span> <span style="color:#268bd2">participate</span><span style="color:#719e07">(</span>Long userId<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 活动类
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">Activity</span> <span style="color:#268bd2">implements</span> ActivityInterface <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> String type<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> Long id<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> String name<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> Integer scene<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> String material<span style="color:#719e07">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 抽象活动接口</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">interface</span> <span style="color:#268bd2">ActivityInterface</span> {
+</span></span><span style="display:flex;"><span>  	<span style="color:#dc322f">void</span> <span style="color:#268bd2">participate</span>(Long userId);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 活动类</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">Activity</span> <span style="color:#268bd2">implements</span> ActivityInterface {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> String type;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> Long id;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> String name;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> Integer scene;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> String material;
 </span></span><span style="display:flex;"><span>      
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">Activity</span><span style="color:#719e07">(</span>String type<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span><span style="color:#719e07">.</span>type <span style="color:#719e07">=</span> type<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// id的构建部分依赖于活动的type
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>        <span style="color:#719e07">if</span> <span style="color:#719e07">(</span><span style="color:#2aa198">&#34;period&#34;</span><span style="color:#719e07">.</span>equals<span style="color:#719e07">(</span>type<span style="color:#719e07">))</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            id <span style="color:#719e07">=</span> <span style="color:#2aa198">0L</span><span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">Activity</span><span style="color:#719e07">(</span>String type<span style="color:#719e07">,</span> Long id<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span><span style="color:#719e07">.</span>type <span style="color:#719e07">=</span> type<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span><span style="color:#719e07">.</span>id <span style="color:#719e07">=</span> id<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">Activity</span><span style="color:#719e07">(</span>String type<span style="color:#719e07">,</span> Long id<span style="color:#719e07">,</span> Integer scene<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span><span style="color:#719e07">.</span>type <span style="color:#719e07">=</span> type<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span><span style="color:#719e07">.</span>id <span style="color:#719e07">=</span> id<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span><span style="color:#719e07">.</span>scene <span style="color:#719e07">=</span> scene<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">Activity</span><span style="color:#719e07">(</span>String type<span style="color:#719e07">,</span> String name<span style="color:#719e07">,</span> Integer scene<span style="color:#719e07">,</span> String material<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span><span style="color:#719e07">.</span>type <span style="color:#719e07">=</span> type<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span><span style="color:#719e07">.</span>scene <span style="color:#719e07">=</span> scene<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span><span style="color:#719e07">.</span>material <span style="color:#719e07">=</span> material<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// name的构建完全依赖于活动的type
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>        <span style="color:#719e07">if</span> <span style="color:#719e07">(</span><span style="color:#2aa198">&#34;period&#34;</span><span style="color:#719e07">.</span>equals<span style="color:#719e07">(</span>type<span style="color:#719e07">))</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">this</span><span style="color:#719e07">.</span>id <span style="color:#719e07">=</span> <span style="color:#2aa198">0L</span><span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">this</span><span style="color:#719e07">.</span>name <span style="color:#719e07">=</span> <span style="color:#2aa198">&#34;period&#34;</span> <span style="color:#719e07">+</span> name<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span> <span style="color:#719e07">else</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">this</span><span style="color:#719e07">.</span>name <span style="color:#719e07">=</span> <span style="color:#2aa198">&#34;normal&#34;</span> <span style="color:#719e07">+</span> name<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 参与活动
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  	<span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">participate</span><span style="color:#719e07">(</span>Long userId<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// do nothing
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 任务型活动
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">TaskActivity</span> <span style="color:#268bd2">extends</span> Activity <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> Task task<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">TaskActivity</span><span style="color:#719e07">(</span>String type<span style="color:#719e07">,</span> String name<span style="color:#719e07">,</span> Integer scene<span style="color:#719e07">,</span> String material<span style="color:#719e07">,</span> Task task<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">super</span><span style="color:#719e07">(</span>type<span style="color:#719e07">,</span> name<span style="color:#719e07">,</span> scene<span style="color:#719e07">,</span> material<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span><span style="color:#719e07">.</span>task <span style="color:#719e07">=</span> task<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 参与任务型活动
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">participate</span><span style="color:#719e07">(</span>Long userId<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// 更新任务状态为进行中
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>        task<span style="color:#719e07">.</span>getState<span style="color:#719e07">().</span>update<span style="color:#719e07">(</span>task<span style="color:#719e07">,</span> ActionType<span style="color:#719e07">.</span>START<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">Activity</span>(String type) {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span>.type <span style="color:#719e07">=</span> type;
+</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// id的构建部分依赖于活动的type</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">if</span> (<span style="color:#2aa198">&#34;period&#34;</span>.equals(type)) {
+</span></span><span style="display:flex;"><span>            id <span style="color:#719e07">=</span> 0L;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">Activity</span>(String type, Long id) {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span>.type <span style="color:#719e07">=</span> type;
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span>.id <span style="color:#719e07">=</span> id;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">Activity</span>(String type, Long id, Integer scene) {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span>.type <span style="color:#719e07">=</span> type;
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span>.id <span style="color:#719e07">=</span> id;
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span>.scene <span style="color:#719e07">=</span> scene;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">Activity</span>(String type, String name, Integer scene, String material) {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span>.type <span style="color:#719e07">=</span> type;
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span>.scene <span style="color:#719e07">=</span> scene;
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span>.material <span style="color:#719e07">=</span> material;
+</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// name的构建完全依赖于活动的type</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">if</span> (<span style="color:#2aa198">&#34;period&#34;</span>.equals(type)) {
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">this</span>.id <span style="color:#719e07">=</span> 0L;
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">this</span>.name <span style="color:#719e07">=</span> <span style="color:#2aa198">&#34;period&#34;</span> <span style="color:#719e07">+</span> name;
+</span></span><span style="display:flex;"><span>        } <span style="color:#719e07">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">this</span>.name <span style="color:#719e07">=</span> <span style="color:#2aa198">&#34;normal&#34;</span> <span style="color:#719e07">+</span> name;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 参与活动</span>
+</span></span><span style="display:flex;"><span>  	<span style="color:#268bd2">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">participate</span>(Long userId) {
+</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// do nothing</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 任务型活动</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">TaskActivity</span> <span style="color:#268bd2">extends</span> Activity {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">private</span> Task task;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">TaskActivity</span>(String type, String name, Integer scene, String material, Task task) {
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">super</span>(type, name, scene, material);
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span>.task <span style="color:#719e07">=</span> task;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 参与任务型活动</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">participate</span>(Long userId) {
+</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// 更新任务状态为进行中</span>
+</span></span><span style="display:flex;"><span>        task.getState().update(task, ActionType.START);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>经过自主分析，小明发现活动的构造不够合理，主要问题表现在：</p>
 <ol>
 <li>活动的构造组件较多，导致可以组合的构造函数太多，尤其是在模型增加字段时还需要去修改构造函数；</li>
@@ -626,101 +627,101 @@
 </ol>
 </blockquote>
 <p>根据建造者模式的定义，上述活动的每个字段都是一个产品。于是，小明可以通过在活动里面实现静态的建造者类来简易地实现：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 活动类
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">Activity</span> <span style="color:#268bd2">implements</span> ActivityInterface <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">protected</span> String type<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">protected</span> Long id<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">protected</span> String name<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">protected</span> Integer scene<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">protected</span> String material<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 全参构造函数
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  	<span style="color:#268bd2">public</span> <span style="color:#268bd2">Activity</span><span style="color:#719e07">(</span>String type<span style="color:#719e07">,</span> Long id<span style="color:#719e07">,</span> String name<span style="color:#719e07">,</span> Integer scene<span style="color:#719e07">,</span> String material<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span><span style="color:#719e07">.</span>type <span style="color:#719e07">=</span> type<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span><span style="color:#719e07">.</span>id <span style="color:#719e07">=</span> id<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span><span style="color:#719e07">.</span>name <span style="color:#719e07">=</span> name<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span><span style="color:#719e07">.</span>scene <span style="color:#719e07">=</span> scene<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span><span style="color:#719e07">.</span>material <span style="color:#719e07">=</span> material<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 活动类</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">Activity</span> <span style="color:#268bd2">implements</span> ActivityInterface {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">protected</span> String type;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">protected</span> Long id;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">protected</span> String name;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">protected</span> Integer scene;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">protected</span> String material;
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 全参构造函数</span>
+</span></span><span style="display:flex;"><span>  	<span style="color:#268bd2">public</span> <span style="color:#268bd2">Activity</span>(String type, Long id, String name, Integer scene, String material) {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span>.type <span style="color:#719e07">=</span> type;
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span>.id <span style="color:#719e07">=</span> id;
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span>.name <span style="color:#719e07">=</span> name;
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span>.scene <span style="color:#719e07">=</span> scene;
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span>.material <span style="color:#719e07">=</span> material;
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">participate</span><span style="color:#719e07">(</span>Long userId<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// do nothing
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 静态建造器类，使用奇异递归模板模式允许继承并返回继承建造器类
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">Builder</span><span style="color:#719e07">&lt;</span>T <span style="color:#268bd2">extends</span> Builder<span style="color:#719e07">&lt;</span>T<span style="color:#719e07">&gt;&gt;</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">protected</span> String type<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">protected</span> Long id<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">protected</span> String name<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">protected</span> Integer scene<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">protected</span> String material<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">public</span> T <span style="color:#268bd2">setType</span><span style="color:#719e07">(</span>String type<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">this</span><span style="color:#719e07">.</span>type <span style="color:#719e07">=</span> type<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">return</span> <span style="color:#719e07">(</span>T<span style="color:#719e07">)</span> <span style="color:#719e07">this</span><span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">public</span> T <span style="color:#268bd2">setId</span><span style="color:#719e07">(</span>Long id<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">this</span><span style="color:#719e07">.</span>id <span style="color:#719e07">=</span> id<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">return</span> <span style="color:#719e07">(</span>T<span style="color:#719e07">)</span> <span style="color:#719e07">this</span><span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">public</span> T <span style="color:#268bd2">setId</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">if</span> <span style="color:#719e07">(</span><span style="color:#2aa198">&#34;period&#34;</span><span style="color:#719e07">.</span>equals<span style="color:#719e07">(</span><span style="color:#719e07">this</span><span style="color:#719e07">.</span>type<span style="color:#719e07">))</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#719e07">this</span><span style="color:#719e07">.</span>id <span style="color:#719e07">=</span> <span style="color:#2aa198">0L</span><span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">return</span> <span style="color:#719e07">(</span>T<span style="color:#719e07">)</span> <span style="color:#719e07">this</span><span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">public</span> T <span style="color:#268bd2">setScene</span><span style="color:#719e07">(</span>Integer scene<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">this</span><span style="color:#719e07">.</span>scene <span style="color:#719e07">=</span> scene<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">return</span> <span style="color:#719e07">(</span>T<span style="color:#719e07">)</span> <span style="color:#719e07">this</span><span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">public</span> T <span style="color:#268bd2">setMaterial</span><span style="color:#719e07">(</span>String material<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">this</span><span style="color:#719e07">.</span>material <span style="color:#719e07">=</span> material<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">return</span> <span style="color:#719e07">(</span>T<span style="color:#719e07">)</span> <span style="color:#719e07">this</span><span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">public</span> T <span style="color:#268bd2">setName</span><span style="color:#719e07">(</span>String name<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">if</span> <span style="color:#719e07">(</span><span style="color:#2aa198">&#34;period&#34;</span><span style="color:#719e07">.</span>equals<span style="color:#719e07">(</span><span style="color:#719e07">this</span><span style="color:#719e07">.</span>type<span style="color:#719e07">))</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#719e07">this</span><span style="color:#719e07">.</span>name <span style="color:#719e07">=</span> <span style="color:#2aa198">&#34;period&#34;</span> <span style="color:#719e07">+</span> name<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">}</span> <span style="color:#719e07">else</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#719e07">this</span><span style="color:#719e07">.</span>name <span style="color:#719e07">=</span> <span style="color:#2aa198">&#34;normal&#34;</span> <span style="color:#719e07">+</span> name<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">return</span> <span style="color:#719e07">(</span>T<span style="color:#719e07">)</span> <span style="color:#719e07">this</span><span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">public</span> Activity <span style="color:#268bd2">build</span><span style="color:#719e07">(){</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">return</span> <span style="color:#719e07">new</span> Activity<span style="color:#719e07">(</span>type<span style="color:#719e07">,</span> id<span style="color:#719e07">,</span> name<span style="color:#719e07">,</span> scene<span style="color:#719e07">,</span> material<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 任务型活动
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">TaskActivity</span> <span style="color:#268bd2">extends</span> Activity <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">protected</span> Task task<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>  	<span style="color:#586e75">// 全参构造函数
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">TaskActivity</span><span style="color:#719e07">(</span>String type<span style="color:#719e07">,</span> Long id<span style="color:#719e07">,</span> String name<span style="color:#719e07">,</span> Integer scene<span style="color:#719e07">,</span> String material<span style="color:#719e07">,</span> Task task<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">super</span><span style="color:#719e07">(</span>type<span style="color:#719e07">,</span> id<span style="color:#719e07">,</span> name<span style="color:#719e07">,</span> scene<span style="color:#719e07">,</span> material<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span><span style="color:#719e07">.</span>task <span style="color:#719e07">=</span> task<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>  	<span style="color:#586e75">// 参与任务型活动
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">participate</span><span style="color:#719e07">(</span>Long userId<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// 更新任务状态为进行中
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>        task<span style="color:#719e07">.</span>getState<span style="color:#719e07">().</span>update<span style="color:#719e07">(</span>task<span style="color:#719e07">,</span> ActionType<span style="color:#719e07">.</span>START<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 继承建造器类
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">Builder</span> <span style="color:#268bd2">extends</span> Activity<span style="color:#719e07">.</span>Builder<span style="color:#719e07">&lt;</span>Builder<span style="color:#719e07">&gt;</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">private</span> Task task<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">public</span> Builder <span style="color:#268bd2">setTask</span><span style="color:#719e07">(</span>Task task<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">this</span><span style="color:#719e07">.</span>task <span style="color:#719e07">=</span> task<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">return</span> <span style="color:#719e07">this</span><span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">public</span> TaskActivity <span style="color:#268bd2">build</span><span style="color:#719e07">(){</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#719e07">return</span> <span style="color:#719e07">new</span> TaskActivity<span style="color:#719e07">(</span>type<span style="color:#719e07">,</span> id<span style="color:#719e07">,</span> name<span style="color:#719e07">,</span> scene<span style="color:#719e07">,</span> material<span style="color:#719e07">,</span> task<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">participate</span>(Long userId) {
+</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// do nothing</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 静态建造器类，使用奇异递归模板模式允许继承并返回继承建造器类</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">Builder</span><span style="color:#719e07">&lt;</span>T <span style="color:#268bd2">extends</span> Builder<span style="color:#719e07">&lt;</span>T<span style="color:#719e07">&gt;&gt;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">protected</span> String type;
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">protected</span> Long id;
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">protected</span> String name;
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">protected</span> Integer scene;
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">protected</span> String material;
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">public</span> T <span style="color:#268bd2">setType</span>(String type) {
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">this</span>.type <span style="color:#719e07">=</span> type;
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">return</span> (T) <span style="color:#719e07">this</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">public</span> T <span style="color:#268bd2">setId</span>(Long id) {
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">this</span>.id <span style="color:#719e07">=</span> id;
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">return</span> (T) <span style="color:#719e07">this</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">public</span> T <span style="color:#268bd2">setId</span>() {
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">if</span> (<span style="color:#2aa198">&#34;period&#34;</span>.equals(<span style="color:#719e07">this</span>.type)) {
+</span></span><span style="display:flex;"><span>                <span style="color:#719e07">this</span>.id <span style="color:#719e07">=</span> 0L;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">return</span> (T) <span style="color:#719e07">this</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">public</span> T <span style="color:#268bd2">setScene</span>(Integer scene) {
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">this</span>.scene <span style="color:#719e07">=</span> scene;
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">return</span> (T) <span style="color:#719e07">this</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">public</span> T <span style="color:#268bd2">setMaterial</span>(String material) {
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">this</span>.material <span style="color:#719e07">=</span> material;
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">return</span> (T) <span style="color:#719e07">this</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">public</span> T <span style="color:#268bd2">setName</span>(String name) {
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">if</span> (<span style="color:#2aa198">&#34;period&#34;</span>.equals(<span style="color:#719e07">this</span>.type)) {
+</span></span><span style="display:flex;"><span>                <span style="color:#719e07">this</span>.name <span style="color:#719e07">=</span> <span style="color:#2aa198">&#34;period&#34;</span> <span style="color:#719e07">+</span> name;
+</span></span><span style="display:flex;"><span>            } <span style="color:#719e07">else</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#719e07">this</span>.name <span style="color:#719e07">=</span> <span style="color:#2aa198">&#34;normal&#34;</span> <span style="color:#719e07">+</span> name;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">return</span> (T) <span style="color:#719e07">this</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">public</span> Activity <span style="color:#268bd2">build</span>(){
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">return</span> <span style="color:#719e07">new</span> Activity(type, id, name, scene, material);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 任务型活动</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">TaskActivity</span> <span style="color:#268bd2">extends</span> Activity {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">protected</span> Task task;
+</span></span><span style="display:flex;"><span>  	<span style="color:#586e75">// 全参构造函数</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">TaskActivity</span>(String type, Long id, String name, Integer scene, String material, Task task) {
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">super</span>(type, id, name, scene, material);
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span>.task <span style="color:#719e07">=</span> task;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  	<span style="color:#586e75">// 参与任务型活动</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">participate</span>(Long userId) {
+</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// 更新任务状态为进行中</span>
+</span></span><span style="display:flex;"><span>        task.getState().update(task, ActionType.START);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 继承建造器类</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">Builder</span> <span style="color:#268bd2">extends</span> Activity.Builder<span style="color:#719e07">&lt;</span>Builder<span style="color:#719e07">&gt;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">private</span> Task task;
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">public</span> Builder <span style="color:#268bd2">setTask</span>(Task task) {
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">this</span>.task <span style="color:#719e07">=</span> task;
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">return</span> <span style="color:#719e07">this</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">public</span> TaskActivity <span style="color:#268bd2">build</span>(){
+</span></span><span style="display:flex;"><span>            <span style="color:#719e07">return</span> <span style="color:#719e07">new</span> TaskActivity(type, id, name, scene, material, task);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>小明发现，上面的建造器没有使用诸如抽象建造器类等完整的实现，但是基本是完成了活动各个组件的建造流程。使用建造器的模式下，可以先按顺序构建字段type，然后依次构建其他组件，最后使用build方法获取建造完成的活动。这种设计一方面封装性好，构建和表示分离；另一方面扩展性好，各个具体的建造者相互独立，有利于系统的解耦。可以说是一次比较有价值的重构。在实际的应用中，如果字段类型多，同时各个字段只需要简单的赋值，可以直接引用Lombok的@Builder注解来实现轻量的建造者。</p>
 <p>重构完活动构建的设计后，小明开始对参加活动方法增加风控。最简单的方式肯定是直接修改目标方法：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">participate</span><span style="color:#719e07">(</span>Long userId<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 对目标用户做风险控制，失败则抛出异常
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    Risk<span style="color:#719e07">.</span>doControl<span style="color:#719e07">(</span>userId<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 更新任务状态为进行中
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    task<span style="color:#719e07">.</span>state<span style="color:#719e07">.</span>update<span style="color:#719e07">(</span>task<span style="color:#719e07">,</span> ActionType<span style="color:#719e07">.</span>START<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">participate</span>(Long userId) {
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 对目标用户做风险控制，失败则抛出异常</span>
+</span></span><span style="display:flex;"><span>    Risk.doControl(userId);
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 更新任务状态为进行中</span>
+</span></span><span style="display:flex;"><span>    task.state.update(task, ActionType.START);
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>但是考虑到，最好能尽可能避免对旧方法的直接修改，同时为方法增加风控，也是一类比较常见的功能新增，可能会在多处使用。</p>
 <p>“老师，风险控制会出现在多种活动的参与方法中吗？”</p>
 <p>“有这个可能性。有的活动需要风险控制，有的不需要。风控像是在适当的时候对参与这个方法的装饰。”</p>
@@ -736,27 +737,27 @@
 </ol>
 </blockquote>
 <p>小明使用了装饰器模式后，新的代码就变成了这样：</p>
-<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 抽象装饰角色
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">abstract</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">ActivityDecorator</span> <span style="color:#268bd2">implements</span> ActivityInterface <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">protected</span> ActivityInterface activity<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">ActivityDecorator</span><span style="color:#719e07">(</span>ActivityInterface activity<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span><span style="color:#719e07">.</span>activity <span style="color:#719e07">=</span> activity<span style="color:#719e07">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">abstract</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">participate</span><span style="color:#719e07">(</span>Long userId<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#586e75">// 能够对活动做风险控制的包装类
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#268bd2">class</span> <span style="color:#268bd2">RiskControlDecorator</span> <span style="color:#268bd2">extends</span> ActivityDecorator <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">RiskControlDecorator</span><span style="color:#719e07">(</span>ActivityInterface activity<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">super</span><span style="color:#719e07">(</span>activity<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// 抽象装饰角色</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">abstract</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">ActivityDecorator</span> <span style="color:#268bd2">implements</span> ActivityInterface {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">protected</span> ActivityInterface activity;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">ActivityDecorator</span>(ActivityInterface activity) {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">this</span>.activity <span style="color:#719e07">=</span> activity;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">abstract</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">participate</span>(Long userId);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 能够对活动做风险控制的包装类</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">RiskControlDecorator</span> <span style="color:#268bd2">extends</span> ActivityDecorator {
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> <span style="color:#268bd2">RiskControlDecorator</span>(ActivityInterface activity) {
+</span></span><span style="display:flex;"><span>        <span style="color:#268bd2">super</span>(activity);
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    <span style="color:#268bd2">@Override</span>
-</span></span><span style="display:flex;"><span>  	<span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">participate</span><span style="color:#719e07">(</span>Long userId<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// 对目标用户做风险控制，失败则抛出异常
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>      	Risk<span style="color:#719e07">.</span>doControl<span style="color:#719e07">(</span>userId<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// 更新任务状态为进行中
-</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>        activity<span style="color:#719e07">.</span>participate<span style="color:#719e07">(</span>userId<span style="color:#719e07">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#719e07">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>  	<span style="color:#268bd2">public</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">participate</span>(Long userId) {
+</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// 对目标用户做风险控制，失败则抛出异常</span>
+</span></span><span style="display:flex;"><span>      	Risk.doControl(userId);
+</span></span><span style="display:flex;"><span>        <span style="color:#586e75">// 更新任务状态为进行中</span>
+</span></span><span style="display:flex;"><span>        activity.participate(userId);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>最终，小明设计完成的结构类图如下：</p>
 <p><img src="https://p1.meituan.net/travelcube/949e07da5c87e9ab2ede4ce80ede921296791.png" alt="活动迭代重构_类图"></p>
 <p>最终，小明通过自己的思考分析，结合学习的设计模式知识，完成了活动模型的重构和迭代。</p>

@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 18 Nov 2022 03:29:43 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/shepherd/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Nov 2022 03:29:43 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/shepherd/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>日志导致线程Block的这些坑，你不得不防</title>
       <link>https://wfsui.github.io/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/</link>
       <pubDate>Fri, 18 Nov 2022 03:29:43 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/</guid>
       <description>1. 前言 日志对程序的重要性不言而喻。它很“大”，我们在项目中经常通过日志来记录信息和排查问题，相关代码随处可见。它也很“小”，作为辅助工具，日志使用简单、上手快，我们通常不会花费过多精力耗在日志上。但看似不起眼的日志也隐藏着各种各样的“坑”，如果使用不当，它不仅不能帮助我们，反而还可能降低服务性能，甚至拖垮我们的服务。
 日志导致线程Block的问题，相信你或许已经遇到过，对此应该深有体会；或许你还没遇到过，但不代表没有问题，只是可能还没有触发而已。本文主要介绍美团统一API网关服务Shepherd（参见《百亿规模API网关服务Shepherd的设计与实现》一文）在实践中所踩过的关于日志导致线程Block的那些“坑”，然后再分享一些避“坑”经验。
@@ -21,6 +21,5 @@
 在进入正文前，首先介绍项目当时的运行环境和日志相关配置信息。
 JDK版本 java version &amp;#34;1.8.0_45&amp;#34; Java(TM) SE Runtime Environment (build 1.</description>
     </item>
-    
   </channel>
 </rss>

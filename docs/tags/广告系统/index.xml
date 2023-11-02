@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Wed, 05 Jul 2023 03:14:26 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%B9%BF%E5%91%8A%E7%B3%BB%E7%BB%9F/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 05 Jul 2023 03:14:26 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/%E5%B9%BF%E5%91%8A%E7%B3%BB%E7%BB%9F/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>大规模异构图召回在美团到店推荐广告的应用</title>
       <link>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%BC%82%E6%9E%84%E5%9B%BE%E5%8F%AC%E5%9B%9E%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E6%8E%A8%E8%8D%90%E5%B9%BF%E5%91%8A%E7%9A%84%E5%BA%94%E7%94%A8/</link>
       <pubDate>Wed, 05 Jul 2023 03:14:26 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%BC%82%E6%9E%84%E5%9B%BE%E5%8F%AC%E5%9B%9E%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E6%8E%A8%E8%8D%90%E5%B9%BF%E5%91%8A%E7%9A%84%E5%BA%94%E7%94%A8/</guid>
       <description>1. 引言 美团到店推荐广告技术部服务于到店餐饮、休娱亲子、丽人医美等众多本地生活服务商家。其中，召回环节作为推荐广告系统的第一个环节，承担着从海量商品中寻找优质候选的角色，是算法优化的核心问题之一。
 推荐系统中经典的召回范式有两类：基于标签构建倒排索引的显式召回和基于模型端到端建模用户兴趣的隐式召回。在隐式召回中，历史交互行为建模对于准确刻画用户兴趣非常关键。电商场景中，用户与商家、商品之间的交互关系适合通过图网络来表达。相较于传统模型，图神经网络可以构建用户与商品间的多种交互关系，然后借助高阶网络结构的传递性合理扩充用户行为的丰富度，将用户行为、用户基础属性和商品的内容属性等各种异质信息在统一的框架中进行融合，带来更大的效果空间。
@@ -26,6 +26,5 @@ GraphSAGE等基于消息传递范式的图神经网络方法，其中心节点�
 除了上述提到的方法外，图神经网络领域作为研究热点之一，近年来不断涌现出GAT[5]、FastGCN[6]、GIN[7]等优秀算法，并在Pinterest[8]、阿里巴巴[9]、腾讯[10]等公司的大规模推荐场景落地取得良好效果。
 3. 业务场景及挑战 到店推荐广告业务在流量侧主要覆盖美团/大众点评双侧的信息流广告、详情页广告等多种业务场景（如下图4所示），供给侧包括了餐饮、丽人医美、休闲娱乐、结婚、亲子等不同广告主品类，且每一个品类下包含商户、团单、泛商品等不同的推荐候选类型。</description>
     </item>
-    
   </channel>
 </rss>

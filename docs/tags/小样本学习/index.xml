@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Thu, 15 Sep 2022 04:32:35 +0000</lastBuildDate><atom:link href="https://wfsui.github.io/tags/%E5%B0%8F%E6%A0%B7%E6%9C%AC%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 15 Sep 2022 04:32:35 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/%E5%B0%8F%E6%A0%B7%E6%9C%AC%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>美团获得小样本学习榜单FewCLUE第一！Prompt Learning&#43;自训练实战</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%8E%B7%E5%BE%97%E5%B0%8F%E6%A0%B7%E6%9C%AC%E5%AD%A6%E4%B9%A0%E6%A6%9C%E5%8D%95fewclue%E7%AC%AC%E4%B8%80prompt-learning&#43;%E8%87%AA%E8%AE%AD%E7%BB%83%E5%AE%9E%E6%88%98/</link>
       <pubDate>Thu, 15 Sep 2022 04:32:35 +0000</pubDate>
-      
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E8%8E%B7%E5%BE%97%E5%B0%8F%E6%A0%B7%E6%9C%AC%E5%AD%A6%E4%B9%A0%E6%A6%9C%E5%8D%95fewclue%E7%AC%AC%E4%B8%80prompt-learning&#43;%E8%87%AA%E8%AE%AD%E7%BB%83%E5%AE%9E%E6%88%98/</guid>
       <description>1 概述 CLUE(Chinese Language Understanding Evaluation)[1]是中文语言理解权威测评榜单，包含了文本分类、句间关系、阅读理解等众多语义分析和语义理解类子任务，对学术界和工业界都产生了较大的影响。
 FewCLUE[2,3]是CLUE中专门用于中文小样本学习评测的一个子榜，旨在结合预训练语言模型通用和强大的泛化能力，探索小样本学习最佳模型和在中文上的实践。FewCLUE的部分数据集只有一百多条有标签样本，可以衡量模型在极少有标签样本下的泛化性能，发布后吸引了包括网易、微信AI、阿里巴巴、IDEA研究院、浪潮人工智能研究院等多家企业与研究院的参与。不久前，美团平台搜索与NLP部NLP中心语义理解团队的小样本学习模型FSL++以优越的性能在FewCLUE榜单上取得第一名，达到SOTA水平。
@@ -21,6 +21,5 @@ FewCLUE[2,3]是CLUE中专门用于中文小样本学习评测的一个子榜，�
 FewCLUE发布后，网易伏羲使用自研的EET模型[4]，并通过二次训练增强模型的语义理解能力，再加入模版进行多任务学习；IDEA研究院的二郎神模型[5]在BERT模型的基础上使用更先进的预训练技术训练大模型，在下游任务微调的过程中用加入动态Mask策略的Masked Language Model(MLM)作为辅助任务。这些方法都使用Prompt Learning作为基本的任务架构，跟这些自研的大模型相比，我们的方法主要在Prompt Learning框架的基础上加入了样本增强、集成学习以及自学习等模型优化策略，极大地提高模型的任务表现和鲁棒性，同时这套方法可以适用于各种预训练模型，更加灵活便捷。
 FSL++整体模型结构如下图2所示。FewCLUE数据集为每个任务提供160条有标签数据以及接近两万条无标签数据。本次FewCLUE实践中，我们先在Fine-Tune阶段构造多模板Prompt Learning，并对有标签数据采用对抗训练、对比学习、Mixup等增强策略。由于这些数据增强策略采用不同的增强原理，可以认为这些模型之间差异性比较显著，经过集成学习之后会有比较好的效果。所以在采用数据增强策略进行训练以后，我们拥有了多个弱监督模型，并且用这些弱监督模型在无标签数据上进行预测，得到无标签数据的伪标签分布。之后，我们将多个经过不同的数据增强模型预测得到的无标签数据的伪标签分布整合起来，得到一份总的无标签数据的伪标签分布，接着重新构造多模板Prompt Learning，并再次使用数据增强策略，选择最优策略。目前，我们的实验只进行一轮迭代，也可以尝试多轮迭代，不过随着迭代次数增加，提升也不再明显。</description>
     </item>
-    
   </channel>
 </rss>

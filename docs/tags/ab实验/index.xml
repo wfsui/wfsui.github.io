@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Thu, 02 Nov 2023 02:40:07 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Nov 2023 02:40:02 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/ab%E5%AE%9E%E9%AA%8C/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>如何提供一个可信的AB测试解决方案</title>
       <link>https://wfsui.github.io/posts/%E5%A6%82%E4%BD%95%E6%8F%90%E4%BE%9B%E4%B8%80%E4%B8%AA%E5%8F%AF%E4%BF%A1%E7%9A%84ab%E6%B5%8B%E8%AF%95%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</link>
-      <pubDate>Thu, 02 Nov 2023 02:40:07 +0000</pubDate>
+      <pubDate>Fri, 03 Nov 2023 02:40:02 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/%E5%A6%82%E4%BD%95%E6%8F%90%E4%BE%9B%E4%B8%80%E4%B8%AA%E5%8F%AF%E4%BF%A1%E7%9A%84ab%E6%B5%8B%E8%AF%95%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</guid>
       <description>1 背景 虽然AB测试（AB实验）的统计基础已经有一个世纪的历史了，但大规模地构建一个正确可靠的A/B测试平台仍然是一个巨大的挑战：不仅要在实验设计环节应对溢出效应和小样本的双重挑战，平衡好实验偏差与方差以确定合适的实验单元、分组方法和分析方法，给出合理的实验设计，而且要在分析环节应对方差计算、P值计算、多重比较、混淆因素、假阴性（实际策略有效果，但是检测显示无效果）等多种统计陷阱。因此，要获得高质量的结果需要对实验和统计有专家级的理解，这无疑增加了实验门槛，难以达成任何人进行实验都可得出可信结论的目标。
 本文将从实验方法和平台建设的两个视角，分别介绍如何正确地使用统计方法避免统计陷阱，以及输出什么样的平台能力，从而确保任何人使用该平台时都可得出可信结论。同时，我们也积累了如何进行更好的实验，以及如何利用实验来做出更好的决策，希望能给从事相关工作的同学有所帮助，也真诚地希望欢迎大家给出反馈或者建议，不断优化我们的工作。

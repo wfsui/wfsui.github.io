@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 03 Nov 2023 02:40:05 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Nov 2023 02:40:45 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MySQL自治平台建设的内核原理及实践（上）</title>
       <link>https://wfsui.github.io/posts/mysql%E8%87%AA%E6%B2%BB%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE%E7%9A%84%E5%86%85%E6%A0%B8%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E8%B7%B5%E4%B8%8A/</link>
-      <pubDate>Fri, 03 Nov 2023 02:40:05 +0000</pubDate>
+      <pubDate>Sun, 05 Nov 2023 02:40:45 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/mysql%E8%87%AA%E6%B2%BB%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE%E7%9A%84%E5%86%85%E6%A0%B8%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E8%B7%B5%E4%B8%8A/</guid>
       <description>| B站视频：美团数据库自治服务平台建设
 1 背景&amp;amp;目标 MySQL的故障与SQL的性能，是DBA跟研发同学每天都需要关注的两个重要问题，它们直接影响着数据库跟业务应用程序的稳定性。而当故障或者SQL性能问题发生时，如何快速发现、分析以及处理这些问题，使得数据库或者业务系统快速恢复，是一项比较大的挑战。
@@ -23,7 +23,7 @@
     <item>
       <title>MySQL自治平台建设的内核原理及实践（下）</title>
       <link>https://wfsui.github.io/posts/mysql%E8%87%AA%E6%B2%BB%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE%E7%9A%84%E5%86%85%E6%A0%B8%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E8%B7%B5%E4%B8%8B/</link>
-      <pubDate>Fri, 03 Nov 2023 02:40:05 +0000</pubDate>
+      <pubDate>Sun, 05 Nov 2023 02:40:45 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/mysql%E8%87%AA%E6%B2%BB%E5%B9%B3%E5%8F%B0%E5%BB%BA%E8%AE%BE%E7%9A%84%E5%86%85%E6%A0%B8%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E8%B7%B5%E4%B8%8B/</guid>
       <description>| B站视频：美团数据库自治服务平台建设
 0 前文回顾 在《MySQL自治平台建设的内核原理及实践（上）》一文中，我们主要介绍了数据库的异常发现与诊断方面的内容，在诊断方面经常会碰到一些难以找出根因的Case。针对这些疑难杂症Case，通过本篇可以了解到，如何通过内核可观测性以及全量SQL来解决这些问题。除此之外，在得出根因后，如何处理异常，如何对SQL进行优化，以及如何进行SQL治理等相关方面问题，也将在本篇中给予解答。

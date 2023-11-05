@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 03 Nov 2023 02:40:03 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Nov 2023 02:40:44 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/%E8%A7%86%E8%A7%89%E5%88%86%E5%89%B2%E6%8A%80%E6%9C%AF/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>斩获CVPR 2023竞赛2项冠军｜美团街景理解中视觉分割技术的探索与应用</title>
       <link>https://wfsui.github.io/posts/%E6%96%A9%E8%8E%B7cvpr-2023%E7%AB%9E%E8%B5%9B2%E9%A1%B9%E5%86%A0%E5%86%9B%E7%BE%8E%E5%9B%A2%E8%A1%97%E6%99%AF%E7%90%86%E8%A7%A3%E4%B8%AD%E8%A7%86%E8%A7%89%E5%88%86%E5%89%B2%E6%8A%80%E6%9C%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Fri, 03 Nov 2023 02:40:03 +0000</pubDate>
+      <pubDate>Sun, 05 Nov 2023 02:40:44 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/%E6%96%A9%E8%8E%B7cvpr-2023%E7%AB%9E%E8%B5%9B2%E9%A1%B9%E5%86%A0%E5%86%9B%E7%BE%8E%E5%9B%A2%E8%A1%97%E6%99%AF%E7%90%86%E8%A7%A3%E4%B8%AD%E8%A7%86%E8%A7%89%E5%88%86%E5%89%B2%E6%8A%80%E6%9C%AF%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%BA%94%E7%94%A8/</guid>
       <description>1 问题背景 街景数据通过不同设备进行采集获取，以各种摄像头采集的视频图像及各种雷达采集的点云为主要载体。其中，摄像头采集的视频图像具有低成本、易获取的特点，是最为常见的街景数据类型，而本文处理的街景数据主要为视频图像数据。街景视频图像数据作为室内外场景的重要信息载体，是计算机视觉众多任务的关键研究对象。
 为了从视频图像数据中解析有效的街景信息，计算机视觉各项技术融汇互补，实现对交通道路、室内外空间等街景进行深度全面的理解，这个过程通常被称为街景理解。街景理解相关技术的发展在计算机视觉技术演进中扮演着非常重要的角色，同时也对众多下游任务（例如场景重建、自动驾驶、机器人导航等）发挥着重要的作用。

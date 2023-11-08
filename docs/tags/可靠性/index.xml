@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sun, 05 Nov 2023 02:40:41 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Nov 2023 02:39:55 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/%E5%8F%AF%E9%9D%A0%E6%80%A7/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>基于模式挖掘的可靠性治理探索</title>
       <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%BC%8F%E6%8C%96%E6%8E%98%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7%E6%B2%BB%E7%90%86%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Sun, 05 Nov 2023 02:40:41 +0000</pubDate>
+      <pubDate>Wed, 08 Nov 2023 02:39:55 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%BC%8F%E6%8C%96%E6%8E%98%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7%E6%B2%BB%E7%90%86%E6%8E%A2%E7%B4%A2/</guid>
       <description>1 可靠性治理的痛点 对于亿级流量的线上系统来说，可靠性是至关重要的。从字面上理解，可靠性要求故障少、可信赖。与安全性一样，它们都是信息系统的固有属性之一，也是保障产品质量的关键因素。
 对照Google的可靠性模型来看，测试同学会投入很多精力在用例设计、测试执行、持续交付等环节上，研发同学则会更多关注监控、应急和故障分析等。但往往由于项目进度和人力因素，在设计和编码阶段对可靠性的投入和关注不足，导致后续需要付出更高的成本发现和解决潜在隐患。有鉴于此，我们希望能找到更低成本且以更有效的方式发现和治理这些隐患，从而提升系统整体的可靠性。

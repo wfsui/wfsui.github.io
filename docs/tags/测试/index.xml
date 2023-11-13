@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Wed, 08 Nov 2023 02:39:56 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Nov 2023 02:41:36 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/%E6%B5%8B%E8%AF%95/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>代码变更风险可视化系统建设与实践</title>
       <link>https://wfsui.github.io/posts/%E4%BB%A3%E7%A0%81%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9%E5%8F%AF%E8%A7%86%E5%8C%96%E7%B3%BB%E7%BB%9F%E5%BB%BA%E8%AE%BE%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Wed, 08 Nov 2023 02:39:56 +0000</pubDate>
+      <pubDate>Mon, 13 Nov 2023 02:41:36 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/%E4%BB%A3%E7%A0%81%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9%E5%8F%AF%E8%A7%86%E5%8C%96%E7%B3%BB%E7%BB%9F%E5%BB%BA%E8%AE%BE%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 软件系统风险与变更 变更是软件系统进化的推动力，同时也是孕育风险的温床。如果一个系统没有了相应的迭代和变更，那这个系统就会逐渐失去了活性和价值。不过，随着系统进行了变更迭代，软件风险也会慢慢衍生，而规避变更引发的软件风险在质量保障领域是一个较大的挑战。通过对下面典型软件系统架构图分析，我们可提炼出3大类变更维度：
 基础设施变更：主要包括基础硬件变更、运营商网络变更、云服务容器变更、开发语言变更、操作系统变更以及机房集群的变更，这些基础设施迭代极大提升了系统底层的服务能力，一旦变更引发系统风险，其影响面通常也比较大。 系统外部变更：比如用户流量突增、用户需求变化以及相关三方服务及三方组件变更，这些帮助系统不断衍生出新的迭代能力，同时也增加了系统稳定性风险的发生。 系统内部变更：比如技术人员迭代、新功能发布以及系统整体架构的升级等，这是驱动系统软件进化的核心变更因子，也是最频繁的变更风险发生地。 在这里，我们先列举了一些比较常见的、因变更风险所引发的典型线上事故：
@@ -25,7 +25,7 @@
     <item>
       <title>基于模式挖掘的可靠性治理探索</title>
       <link>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%BC%8F%E6%8C%96%E6%8E%98%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7%E6%B2%BB%E7%90%86%E6%8E%A2%E7%B4%A2/</link>
-      <pubDate>Wed, 08 Nov 2023 02:39:55 +0000</pubDate>
+      <pubDate>Mon, 13 Nov 2023 02:41:36 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E6%A8%A1%E5%BC%8F%E6%8C%96%E6%8E%98%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7%E6%B2%BB%E7%90%86%E6%8E%A2%E7%B4%A2/</guid>
       <description>1 可靠性治理的痛点 对于亿级流量的线上系统来说，可靠性是至关重要的。从字面上理解，可靠性要求故障少、可信赖。与安全性一样，它们都是信息系统的固有属性之一，也是保障产品质量的关键因素。
 对照Google的可靠性模型来看，测试同学会投入很多精力在用例设计、测试执行、持续交付等环节上，研发同学则会更多关注监控、应急和故障分析等。但往往由于项目进度和人力因素，在设计和编码阶段对可靠性的投入和关注不足，导致后续需要付出更高的成本发现和解决潜在隐患。有鉴于此，我们希望能找到更低成本且以更有效的方式发现和治理这些隐患，从而提升系统整体的可靠性。

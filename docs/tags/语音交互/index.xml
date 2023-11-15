@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 13 Nov 2023 02:41:44 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Nov 2023 02:42:20 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>低延迟流式语音识别技术在人机语音交互场景中的实践</title>
       <link>https://wfsui.github.io/posts/%E4%BD%8E%E5%BB%B6%E8%BF%9F%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF%E5%9C%A8%E4%BA%BA%E6%9C%BA%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Mon, 13 Nov 2023 02:41:44 +0000</pubDate>
+      <pubDate>Wed, 15 Nov 2023 02:42:20 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/%E4%BD%8E%E5%BB%B6%E8%BF%9F%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF%E5%9C%A8%E4%BA%BA%E6%9C%BA%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>1. 前言 1.1 语音识别技术简介 人机交互一直都是人工智能大背景下的“热门话题”，语音交互作为人机交互的一个重要分支，具有广泛的应用价值，也被应用到美团的多个业务场景中，如智能客服、电话营销和电话满意度反馈等。而流式语音识别技术是整个交互链条的入口，对交互体验影响巨大。
 常见的语音识别大多都是非流式语音识别技术，它是指模型在用户说完一句话或一段话之后再进行识别。这意味着模型需要等待用户停顿或结束说话才能开始识别，并且只能在用户停顿或结束说话后才能输出完整的识别结果。这样做的缺点是会导致较长的延迟和不连贯的交互。例如，在会议场景中，如果使用非流式语音识别技术，就可能出现会议参与者说了很长时间的话才显示出他们所说的内容，而且可能因为网络延迟或其他原因导致内容显示不全或错误。这样就会影响会议参与者之间的沟通和理解，并且降低会议效率和质量。

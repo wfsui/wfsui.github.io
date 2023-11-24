@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sun, 19 Nov 2023 02:43:48 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Nov 2023 02:40:54 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>代码变更风险可视化系统建设与实践</title>
       <link>https://wfsui.github.io/posts/%E4%BB%A3%E7%A0%81%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9%E5%8F%AF%E8%A7%86%E5%8C%96%E7%B3%BB%E7%BB%9F%E5%BB%BA%E8%AE%BE%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Sun, 19 Nov 2023 02:43:48 +0000</pubDate>
+      <pubDate>Fri, 24 Nov 2023 02:40:54 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/%E4%BB%A3%E7%A0%81%E5%8F%98%E6%9B%B4%E9%A3%8E%E9%99%A9%E5%8F%AF%E8%A7%86%E5%8C%96%E7%B3%BB%E7%BB%9F%E5%BB%BA%E8%AE%BE%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 软件系统风险与变更 变更是软件系统进化的推动力，同时也是孕育风险的温床。如果一个系统没有了相应的迭代和变更，那这个系统就会逐渐失去了活性和价值。不过，随着系统进行了变更迭代，软件风险也会慢慢衍生，而规避变更引发的软件风险在质量保障领域是一个较大的挑战。通过对下面典型软件系统架构图分析，我们可提炼出3大类变更维度：
 基础设施变更：主要包括基础硬件变更、运营商网络变更、云服务容器变更、开发语言变更、操作系统变更以及机房集群的变更，这些基础设施迭代极大提升了系统底层的服务能力，一旦变更引发系统风险，其影响面通常也比较大。 系统外部变更：比如用户流量突增、用户需求变化以及相关三方服务及三方组件变更，这些帮助系统不断衍生出新的迭代能力，同时也增加了系统稳定性风险的发生。 系统内部变更：比如技术人员迭代、新功能发布以及系统整体架构的升级等，这是驱动系统软件进化的核心变更因子，也是最频繁的变更风险发生地。 在这里，我们先列举了一些比较常见的、因变更风险所引发的典型线上事故：

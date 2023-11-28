@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 24 Nov 2023 02:40:59 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Nov 2023 02:43:34 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/%E5%89%8D%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Robust 2.0：支持Android R8的升级版热修复框架</title>
       <link>https://wfsui.github.io/posts/robust-2.0%E6%94%AF%E6%8C%81android-r8%E7%9A%84%E5%8D%87%E7%BA%A7%E7%89%88%E7%83%AD%E4%BF%AE%E5%A4%8D%E6%A1%86%E6%9E%B6/</link>
-      <pubDate>Fri, 24 Nov 2023 02:40:59 +0000</pubDate>
+      <pubDate>Tue, 28 Nov 2023 02:43:34 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/robust-2.0%E6%94%AF%E6%8C%81android-r8%E7%9A%84%E5%8D%87%E7%BA%A7%E7%89%88%E7%83%AD%E4%BF%AE%E5%A4%8D%E6%A1%86%E6%9E%B6/</guid>
       <description>1. 背景 美团 Robust 是基于方法插桩的实时热修复框架，主要优势是实时生效、零 Hook 兼容所有 Android 版本。2016 年，我们在《Android 热更新方案 Robust》一文中对技术原理做了详细介绍，主要通过给每个方法插入 IF 分支来动态控制代码逻辑，进而实现热修复。其核心主要有两部分：一个是代码插桩，一个是自动补丁。
 代码插桩这部分随着 Javassist、ASM 工具的广泛使用，整体方案比较成熟了，迭代改进主要是针对插桩代码体积和性能的优化； 自动补丁这部分在实际使用过程中一直在迭代，跟业界主流热修复方案一样，自动化补丁工具作制作时机是在 Proguard 混淆之后，由于 Proguard 会对代码进行代码优化和混淆处理，在 Proguard 后制作补丁能够降低补丁生成的复杂性。 近年来， Google 推出了新的代码优化混淆工具 R8，用于取代第三方的代码优化混淆工具 Proguard，经过多年功能迭代和缺陷改进，R8 在功能上基本可以替代 Proguard，在结果上更为出色（优化生成的 Android 字节码体积更小）。Google 已经在新版本的构建工具中强制使用 R8 ，国内外已有多个知名 App 完成了 R8 适配并上线，比如微信 Android 在今年正式从 Proguard 切换到了 R8（通过升级 Android 构建工具链）。Android 热修复补丁制作依赖二次构建包和线上包对比，需要对 Proguard 切换到 R8 提前进行适配和改造，本文分享了美团平台技术部 Robust 在适配 R8 以及优化改进中的一些思路和经验。</description>
@@ -20,7 +20,7 @@
     <item>
       <title>美团前端研发框架Rome实践和演进趋势</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%89%8D%E7%AB%AF%E7%A0%94%E5%8F%91%E6%A1%86%E6%9E%B6rome%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%BC%94%E8%BF%9B%E8%B6%8B%E5%8A%BF/</link>
-      <pubDate>Fri, 24 Nov 2023 02:40:56 +0000</pubDate>
+      <pubDate>Tue, 28 Nov 2023 02:43:30 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%89%8D%E7%AB%AF%E7%A0%94%E5%8F%91%E6%A1%86%E6%9E%B6rome%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%BC%94%E8%BF%9B%E8%B6%8B%E5%8A%BF/</guid>
       <description>1 背景介绍 1.1 业务背景 首先介绍一下业务的背景，这里主要从3个维度展开。第一个维度是组织维度，在立项之初，恰逢美团的多个事业群合并，因前端规模比较大，横向的流动协同比较多（需要跨部门支持需求，进行跨系统协作等等）。此外，美团到店事业群新人比例比较高，校招和新员工比例很高，我们会帮助新同学快速融入团队，需要完成一些较为基础的开发工作。
 第二维度是业务维度，美团到店业务迭代频次比较高，基础工程框架不仅要保证交付速度快，同时还对质量有很高的要求。

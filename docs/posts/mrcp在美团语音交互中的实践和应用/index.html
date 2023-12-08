@@ -13,8 +13,7 @@
 <meta property="article:published_time" content="2023-09-22T02:40:11+00:00" />
 <meta property="article:modified_time" content="2023-09-22T02:40:11+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="MRCP在美团语音交互中的实践和应用"/>
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="MRCP在美团语音交互中的实践和应用"/>
 <meta name="twitter:description" content="一、背景 智能语音对话作为人工智能领域最先落地的分支之一，可以实现与人进行自然语言多轮对话，其核心技术在近年来不断地发展成熟，包括语音识别、自然语言理解、对话管理等。伴随着技术的成熟，越来越多的电话机器人开始走进我们的生活，这些电话机器人在客户服务、智能销售、通知触达等场景发挥着重要的作用。
 当你和智能语音机器人对话交互时，你是否好奇电话背后的机器人如何“听懂”你的意思，又如何像人一样“回答”你的问题？经典的技术实现路径是：机器人首先通过“语音识别（ASR）”将用户输入语音识别成文字，再通过“自然语言理解（NLU）”识别意图，之后根据意图、系统信号等输入结合对话管理技术得到相应的回复，最后通过“语音合成（TTS）”生成语音播报给电话对端的用户。但要将 ASR、TTS 这些技术应用到电话系统上，还需要一些额外的工作和技术支撑，其中比较重要的技术之一也就是本文将要介绍的 MRCP。
 备注：本文涉及较多的专业名词，我们特别在文末附上了名词解释，以帮助大家进行阅读。

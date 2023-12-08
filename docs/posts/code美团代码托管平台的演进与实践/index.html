@@ -16,8 +16,7 @@
 <meta property="article:published_time" content="2023-08-03T02:41:53+00:00" />
 <meta property="article:modified_time" content="2023-08-03T02:41:53+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Code：美团代码托管平台的演进与实践"/>
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Code：美团代码托管平台的演进与实践"/>
 <meta name="twitter:description" content="1. 引言 Code是美团自研的代码托管平台，其中包括了代码版本管理、分支管理及代码评审等功能，协同众多研发流程工具平台，支撑内部所有工程师的日常研发工作。经过近3年的建设，目前Code托管了数以万计的仓库，日常处理千万级的Git相关请求，稳定支撑着美团研发流程规范的持续落地。本文主要介绍美团在建设代码托管平台过程中面临的一些挑战和实践经验。
 2. 美团代码托管平台建设之路 2.1 代码托管平台的发展史 回顾美团代码托管平台的发展史，整个历程可以划分为三个阶段：单机部署、多机部署以及自研分布式代码托管平台。
 第一阶段：单机部署 美团最初的代码托管平台，和绝大多数Web系统一样，单机部署即可运行，所有用户的请求均通过Web应用进行响应。由于Git使用基于文件组织形式的存储模式，无论是通过页面访问还是执行Git命令操作，最终都会表现为磁盘的文件读写，高IO磁盘尤为重要。整体架构如下图1所示：

@@ -14,9 +14,7 @@
       <link>https://wfsui.github.io/posts/neurips-2021-twins%E9%87%8D%E6%96%B0%E6%80%9D%E8%80%83%E9%AB%98%E6%95%88%E7%9A%84%E8%A7%86%E8%A7%89%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/</link>
       <pubDate>Thu, 23 Jun 2022 03:47:05 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/neurips-2021-twins%E9%87%8D%E6%96%B0%E6%80%9D%E8%80%83%E9%AB%98%E6%95%88%E7%9A%84%E8%A7%86%E8%A7%89%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1/</guid>
-      <description>导读 Twins [1] 是美团和阿德莱德大学合作提出的视觉注意力模型，相关论文已被 NeurIPS 2021 会议接收，代码也已在GitHub上进行开源。NeurIPS（Conference on Neural Information Processing Systems）是机器学习和计算神经科学相关的学术会议，也是人工智能方向的国际顶级会议。
-Twins 提出了两类结构，分别是 Twins-PCPVT 和 Twins-SVT：
-Twins-PCPVT 将金字塔 Transformer 模型 PVT [2] 中的固定位置编码（Positional Encoding）更改为团队在 CPVT [3] 中提出的条件式位置编码 （Coditional Position Encoding, CPE），从而使得模型具有平移等变性（即输入图像发生平移后，输出同时相应发生变化），可以灵活处理来自不同空间尺度的特征，从而能够广泛应用于图像分割、检测等变长输入的场景。 Twins-SVT 提出了空间可分离自注意力机制（Spatially Separable Self-Attention，SSSA）来对图像特征的空间维度进行分组，分别计算各局部空间的自注意力，再利用全局自注意力机制对其进行融合。这种机制在计算上更高效，性能更优。 Twins 系列模型实现简单，部署友好，在 ImageNet 分类、ADE20K 语义分割、COCO 目标检测等多个经典视觉任务中均取得了业界领先的结果。</description>
+      <description>导读 Twins [1] 是美团和阿德莱德大学合作提出的视觉注意力模型，相关论文已被 NeurIPS 2021 会议接收，代码也已在GitHub上进行开源。NeurIPS（Conference on Neural Information Processing Systems）是机器学习和计算神经科学相关的学术会议，也是人工智能方向的国际顶级会议。&#xA;Twins 提出了两类结构，分别是 Twins-PCPVT 和 Twins-SVT：&#xA;Twins-PCPVT 将金字塔 Transformer 模型 PVT [2] 中的固定位置编码（Positional Encoding）更改为团队在 CPVT [3] 中提出的条件式位置编码 （Coditional Position Encoding, CPE），从而使得模型具有平移等变性（即输入图像发生平移后，输出同时相应发生变化），可以灵活处理来自不同空间尺度的特征，从而能够广泛应用于图像分割、检测等变长输入的场景。 Twins-SVT 提出了空间可分离自注意力机制（Spatially Separable Self-Attention，SSSA）来对图像特征的空间维度进行分组，分别计算各局部空间的自注意力，再利用全局自注意力机制对其进行融合。这种机制在计算上更高效，性能更优。 Twins 系列模型实现简单，部署友好，在 ImageNet 分类、ADE20K 语义分割、COCO 目标检测等多个经典视觉任务中均取得了业界领先的结果。</description>
     </item>
   </channel>
 </rss>

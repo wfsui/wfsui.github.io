@@ -16,8 +16,7 @@ Kafka在美团的集群规模总体机器数已经超过了15000&#43;台，单�
 <meta property="article:published_time" content="2022-11-25T03:24:09+00:00" />
 <meta property="article:modified_time" content="2022-11-25T03:24:09+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Kafka在美团数据平台的实践"/>
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Kafka在美团数据平台的实践"/>
 <meta name="twitter:description" content="1. 现状和挑战 1.1 现状 Kafka是一个开源的流处理平台，业界有很多互联网企业也都在使用这款产品。我们首先了解一下Kafka在美团数据平台的现状。
 如图1-1所示，蓝色部分描述了Kafka在数据平台定位为流存储层。主要的职责是做数据的缓存和分发，它会将收集到的日志分发到不同的数据系统里，这些日志来源于系统日志、客户端日志以及业务数据库。下游的数据消费系统包括通过ODS入仓提供离线计算使用、直接供实时计算使用、通过DataLink同步到日志中心，以及做OLAP分析使用。
 Kafka在美团的集群规模总体机器数已经超过了15000&#43;台，单集群的最大机器数也已经到了2000&#43;台。在数据规模上，天级消息量已经超过了30&#43;P，天级消息量峰值也达到了4&#43;亿/秒。不过随着集群规模的增大，数据量的增长，Kafka面临的挑战也愈发严峻，下面讲一下具体的挑战都有哪些。

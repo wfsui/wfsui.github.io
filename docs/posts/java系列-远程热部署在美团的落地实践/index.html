@@ -14,8 +14,7 @@
 <meta property="article:published_time" content="2022-06-10T03:35:20+00:00" />
 <meta property="article:modified_time" content="2022-06-10T03:35:20+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Java系列 | 远程热部署在美团的落地实践"/>
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Java系列 | 远程热部署在美团的落地实践"/>
 <meta name="twitter:description" content="Sonic是美团内部研发设计的一款用于热部署的IDEA插件，本文其实现原理及落地的一些技术细节。在阅读本文之前，建议大家先熟悉一下Spring源码、Spring MVC 源码 、Spring Boot源码 、Agent字节码增强、Javassist、Classloader等相关知识。
 1 前言 1.1 什么是热部署 所谓热部署，就是在应用正在运行时升级软件，却不需要重新启动应用。对于Java应用程序来说，热部署就是在运行时更新Java类文件，同时触发Spring以及其他常用第三方框架的一系列重新加载的过程。在这个过程中不需要重新启动，并且修改的代码实时生效，好比是战斗机在空中完成加油，不需要战斗机熄火降落，一系列操作都在“运行”状态来完成。
 1.2 为什么我们需要热部署 据了解，美团内部很多工程师每天本地重启服务高达5~12次，单次大概3~8分钟，每天向Cargo（美团内部测试环境管理工具）部署3~5次，单次时长20~45分钟，部署频繁频次高、耗时长，严重影响了系统上线的效率。而插件提供的本地和远程热部署功能，可让将代码变更“秒级”生效。一般而言，开发者日常工作主要分为开发自测和联调两个场景，下面将分别介绍热部署在每个场景中发挥的作用。

@@ -7,29 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Tue, 28 Nov 2023 02:43:33 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 08 Dec 2023 02:43:39 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/%E8%A7%86%E8%A7%89/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CVPR 2023 | 美团技术团队精选论文解读</title>
       <link>https://wfsui.github.io/posts/cvpr-2023-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Tue, 28 Nov 2023 02:43:33 +0000</pubDate>
+      <pubDate>Fri, 08 Dec 2023 02:43:39 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/cvpr-2023-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
-      <description>写在前面 CVPR 全称为 IEEE Conference on Computer Vision and Pattern Recognition，国际计算机视觉与模式识别会议。该会议始于1983年，与ICCV和ECCV并称计算机视觉方向的三大顶级会议。根据谷歌学术公布的2022年最新学术期刊和会议影响力排名，CVPR在所有学术刊物中位居第4，仅次于Nature、NEJM和Science。2023年，CVPR共收到全球9155篇论文投稿，最终2360篇被接收，接收率约为25.78%。
-| 01 Divide and Adapt: Active Domain Adaptation via Customized Learning 论文作者：黄铎峻（中山大学，美团实习生），李继昌（香港大学），陈伟凯（腾讯-美国），黄君实（美团），柴振华（美团），李冠彬（中山大学）</description>
+      <description>写在前面 CVPR 全称为 IEEE Conference on Computer Vision and Pattern Recognition，国际计算机视觉与模式识别会议。该会议始于1983年，与ICCV和ECCV并称计算机视觉方向的三大顶级会议。根据谷歌学术公布的2022年最新学术期刊和会议影响力排名，CVPR在所有学术刊物中位居第4，仅次于Nature、NEJM和Science。2023年，CVPR共收到全球9155篇论文投稿，最终2360篇被接收，接收率约为25.78%。&#xA;| 01 Divide and Adapt: Active Domain Adaptation via Customized Learning 论文作者：黄铎峻（中山大学，美团实习生），李继昌（香港大学），陈伟凯（腾讯-美国），黄君实（美团），柴振华（美团），李冠彬（中山大学）</description>
     </item>
     <item>
       <title>ACM MM &amp; ECCV 2022 | 美团视觉8篇论文揭秘内容领域的智能科技</title>
       <link>https://wfsui.github.io/posts/acm-mm-eccv-2022-%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%898%E7%AF%87%E8%AE%BA%E6%96%87%E6%8F%AD%E7%A7%98%E5%86%85%E5%AE%B9%E9%A2%86%E5%9F%9F%E7%9A%84%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80/</link>
       <pubDate>Tue, 16 May 2023 02:46:43 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/acm-mm-eccv-2022-%E7%BE%8E%E5%9B%A2%E8%A7%86%E8%A7%898%E7%AF%87%E8%AE%BA%E6%96%87%E6%8F%AD%E7%A7%98%E5%86%85%E5%AE%B9%E9%A2%86%E5%9F%9F%E7%9A%84%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80/</guid>
-      <description>人工智能技术正在成为内容领域的中台力量，其中视觉AI已经渗透到内容生产、内容审核、内容分发、用户互动、商业化变现等各个环节。美团视觉智能部以场景化的内容产品、智能化的内容工具助力产业，在内容的创作、内容分发等环节应用广泛。
-前不久，美团视觉智能部的8篇论文被多媒体和计算机视觉领域顶会ACM MM 与ECCV收录，本文将快速带你了解这8篇论文的研究成果及其可在内容领域的落地应用。
-内容生产 围绕素材解析、创意生成、展示自适应等内容生产链路，需要持续优化智能抠图、智能延拓、图像文案生成等核心功能模块。因此，在驱动视觉语义分割、跨模态生成等底层技术方向需要持续升级与创新。
-ECCV | Adaptive Spatial-BCE Loss for Weakly Supervised Semantic Segmentation（基于自适应空间二元交叉熵的弱监督语义分割）
-论文作者：吴桐（北京理工大学&amp;amp;美团实习生），高广宇（北京理工大学），黄君实（美团），魏晓明（美团），魏晓林（美团），刘驰（北京理工大学）
-论文下载：PDF
-论文简介：弱监督语义分割旨在解决全监督语义分割任务中所需的像素级标签人工成本和时间开销较大的缺点，通过引入较弱的监督信息来降低相关成本。其中本文所使用的图像级监督成本最低，但其较低的信息量也带来了更大的挑战。当前的通用流程是先通过分类网络生成分割伪标签，经过后处理细化后再用伪标签训练语义分割网络。先前方法主要有以下缺点：1）生成的伪标签物体轮廓不清晰；2）前背景的划分阈值需要人工调节，降低了泛用性；3）性能严重依赖后处理，训练复杂度较高。为了缓解这些缺点，我们提出了一个新的损失函数——空间二元交叉熵损失（Spatial-BCE），通过为前景和背景像素分配不同的优化方向来提高它们之间的特征差异性，进而实现更加清晰的伪标签物体轮廓，如下图1所示：
-此外，我们还引入了自适应阈值，通过在训练中让损失函数自行划分前背景像素的比例，并在推理时可同样将划分阈值交由网络生成。最后，我们还设计了配套的迭代式训练方法，大幅提高了初始伪标签的准确率，即使不使用复杂的后处理方法，我们也可以实现当前的最优性能。大量实验表明，我们的方法在PASCAL VOC 2012和MS-COCO 2014数据集上在均可成为SoTA，如下图2所示：</description>
+      <description>人工智能技术正在成为内容领域的中台力量，其中视觉AI已经渗透到内容生产、内容审核、内容分发、用户互动、商业化变现等各个环节。美团视觉智能部以场景化的内容产品、智能化的内容工具助力产业，在内容的创作、内容分发等环节应用广泛。&#xA;前不久，美团视觉智能部的8篇论文被多媒体和计算机视觉领域顶会ACM MM 与ECCV收录，本文将快速带你了解这8篇论文的研究成果及其可在内容领域的落地应用。&#xA;内容生产 围绕素材解析、创意生成、展示自适应等内容生产链路，需要持续优化智能抠图、智能延拓、图像文案生成等核心功能模块。因此，在驱动视觉语义分割、跨模态生成等底层技术方向需要持续升级与创新。&#xA;ECCV | Adaptive Spatial-BCE Loss for Weakly Supervised Semantic Segmentation（基于自适应空间二元交叉熵的弱监督语义分割）&#xA;论文作者：吴桐（北京理工大学&amp;amp;美团实习生），高广宇（北京理工大学），黄君实（美团），魏晓明（美团），魏晓林（美团），刘驰（北京理工大学）&#xA;论文下载：PDF&#xA;论文简介：弱监督语义分割旨在解决全监督语义分割任务中所需的像素级标签人工成本和时间开销较大的缺点，通过引入较弱的监督信息来降低相关成本。其中本文所使用的图像级监督成本最低，但其较低的信息量也带来了更大的挑战。当前的通用流程是先通过分类网络生成分割伪标签，经过后处理细化后再用伪标签训练语义分割网络。先前方法主要有以下缺点：1）生成的伪标签物体轮廓不清晰；2）前背景的划分阈值需要人工调节，降低了泛用性；3）性能严重依赖后处理，训练复杂度较高。为了缓解这些缺点，我们提出了一个新的损失函数——空间二元交叉熵损失（Spatial-BCE），通过为前景和背景像素分配不同的优化方向来提高它们之间的特征差异性，进而实现更加清晰的伪标签物体轮廓，如下图1所示：&#xA;此外，我们还引入了自适应阈值，通过在训练中让损失函数自行划分前背景像素的比例，并在推理时可同样将划分阈值交由网络生成。最后，我们还设计了配套的迭代式训练方法，大幅提高了初始伪标签的准确率，即使不使用复杂的后处理方法，我们也可以实现当前的最优性能。大量实验表明，我们的方法在PASCAL VOC 2012和MS-COCO 2014数据集上在均可成为SoTA，如下图2所示：</description>
     </item>
     <item>
       <title>通用目标检测开源框架YOLOv6在美团的量化部署实战</title>
@@ -43,17 +35,14 @@ ECCV | Adaptive Spatial-BCE Loss for Weakly Supervised Semantic Segmentation（�
       <link>https://wfsui.github.io/posts/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%85%A8%E9%9D%A2%E5%8D%87%E7%BA%A7%E6%9B%B4%E5%BF%AB%E6%9B%B4%E5%87%86%E7%9A%842.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</link>
       <pubDate>Thu, 23 Feb 2023 02:59:39 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%85%A8%E9%9D%A2%E5%8D%87%E7%BA%A7%E6%9B%B4%E5%BF%AB%E6%9B%B4%E5%87%86%E7%9A%842.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</guid>
-      <description>9月5日，美团视觉智能部发布了YOLOv6 2.0版本，本次更新对轻量级网络进行了全面升级，量化版模型 YOLOv6-S 达到了 869 FPS，同时，还推出了综合性能优异的中大型网络（YOLOv6-M/L），丰富了YOLOv6网络系列。其中，YOLOv6-M/L 在 COCO 上检测精度（AP）分别达到 49.5%/52.5%，在 T4 卡上推理速度分别可达 233⁄121 FPS（batch size =32）。
-GitHub下载地址：https://github.com/meituan/YOLOv6。欢迎Star收藏，随时取用。
-官方出品详细的Tech Report带你解构YOLOv6：YOLOv6: A Single-Stage Object Detection Framework for Industrial Applications。</description>
+      <description>9月5日，美团视觉智能部发布了YOLOv6 2.0版本，本次更新对轻量级网络进行了全面升级，量化版模型 YOLOv6-S 达到了 869 FPS，同时，还推出了综合性能优异的中大型网络（YOLOv6-M/L），丰富了YOLOv6网络系列。其中，YOLOv6-M/L 在 COCO 上检测精度（AP）分别达到 49.5%/52.5%，在 T4 卡上推理速度分别可达 233⁄121 FPS（batch size =32）。&#xA;GitHub下载地址：https://github.com/meituan/YOLOv6。欢迎Star收藏，随时取用。&#xA;官方出品详细的Tech Report带你解构YOLOv6：YOLOv6: A Single-Stage Object Detection Framework for Industrial Applications。</description>
     </item>
     <item>
       <title>CVPR 2022 | 美团技术团队精选论文解读</title>
       <link>https://wfsui.github.io/posts/cvpr-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
       <pubDate>Thu, 27 Oct 2022 03:57:47 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/cvpr-2022-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
-      <description>CVPR的全称是IEEE国际计算机视觉与模式识别会议（IEEE Conference on Computer Vision and Pattern Recognition），该会议始于1983年，与ICCV和ECCV并称计算机视觉方向的三大顶级会议。根据谷歌学术公布的2021年最新学术期刊和会议影响力排名，CVPR在所有学术刊物中位居第4，仅次于Nature、NEJM和Science。CVPR今年共收到全球8100多篇论文投稿，最终2067篇被接收，接收率约为25%。
-Paper 01 | Compressing Models with Few Samples: Mimicking then Replacing | 论文下载| 论文作者：王环宇（美团实习生&amp;amp;南京大学），刘俊杰（美团），马鑫（美团），雍洋（美团实习生&amp;amp;西安交通大学），柴振华（美团），吴建鑫（南京大学） | 备注：括号内的为论文发表时，论文作者所在的单位。 | 论文类型：CVPR Main Conference（Long Paper）</description>
+      <description>CVPR的全称是IEEE国际计算机视觉与模式识别会议（IEEE Conference on Computer Vision and Pattern Recognition），该会议始于1983年，与ICCV和ECCV并称计算机视觉方向的三大顶级会议。根据谷歌学术公布的2021年最新学术期刊和会议影响力排名，CVPR在所有学术刊物中位居第4，仅次于Nature、NEJM和Science。CVPR今年共收到全球8100多篇论文投稿，最终2067篇被接收，接收率约为25%。&#xA;Paper 01 | Compressing Models with Few Samples: Mimicking then Replacing | 论文下载| 论文作者：王环宇（美团实习生&amp;amp;南京大学），刘俊杰（美团），马鑫（美团），雍洋（美团实习生&amp;amp;西安交通大学），柴振华（美团），吴建鑫（南京大学） | 备注：括号内的为论文发表时，论文作者所在的单位。 | 论文类型：CVPR Main Conference（Long Paper）</description>
     </item>
   </channel>
 </rss>

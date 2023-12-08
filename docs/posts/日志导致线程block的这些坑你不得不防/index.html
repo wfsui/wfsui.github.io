@@ -15,8 +15,7 @@ JDK版本 java version &#34;1.8.0_45&#34; Java(TM) SE Runtime Environment (build
 <meta property="article:published_time" content="2022-11-18T03:29:43+00:00" />
 <meta property="article:modified_time" content="2022-11-18T03:29:43+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="日志导致线程Block的这些坑，你不得不防"/>
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="日志导致线程Block的这些坑，你不得不防"/>
 <meta name="twitter:description" content="1. 前言 日志对程序的重要性不言而喻。它很“大”，我们在项目中经常通过日志来记录信息和排查问题，相关代码随处可见。它也很“小”，作为辅助工具，日志使用简单、上手快，我们通常不会花费过多精力耗在日志上。但看似不起眼的日志也隐藏着各种各样的“坑”，如果使用不当，它不仅不能帮助我们，反而还可能降低服务性能，甚至拖垮我们的服务。
 日志导致线程Block的问题，相信你或许已经遇到过，对此应该深有体会；或许你还没遇到过，但不代表没有问题，只是可能还没有触发而已。本文主要介绍美团统一API网关服务Shepherd（参见《百亿规模API网关服务Shepherd的设计与实现》一文）在实践中所踩过的关于日志导致线程Block的那些“坑”，然后再分享一些避“坑”经验。
 2. 背景 API网关服务Shepherd基于Java语言开发，使用业界大名鼎鼎的Apache Log4j2作为主要日志框架，同时使用美团内部的XMD-Log SDK和Scribe-Log SDK对日志内容进行处理，日志处理整体流程如下图1所示。业务打印日志时，日志框架基于Logger配置来决定把日志交给XMDFile处理还是Scribe处理。其中，XMDFile是XMD-Log内部提供的日志Appender名称，负责输出日志到本地磁盘，Scribe是Scribe-Log内部提供的日志Appender名称，负责上报日志到远程日志中心。

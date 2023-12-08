@@ -14,9 +14,7 @@
       <link>https://wfsui.github.io/posts/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%85%A8%E9%9D%A2%E5%8D%87%E7%BA%A7%E6%9B%B4%E5%BF%AB%E6%9B%B4%E5%87%86%E7%9A%842.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</link>
       <pubDate>Thu, 23 Feb 2023 02:59:39 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%85%A8%E9%9D%A2%E5%8D%87%E7%BA%A7%E6%9B%B4%E5%BF%AB%E6%9B%B4%E5%87%86%E7%9A%842.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/</guid>
-      <description>9月5日，美团视觉智能部发布了YOLOv6 2.0版本，本次更新对轻量级网络进行了全面升级，量化版模型 YOLOv6-S 达到了 869 FPS，同时，还推出了综合性能优异的中大型网络（YOLOv6-M/L），丰富了YOLOv6网络系列。其中，YOLOv6-M/L 在 COCO 上检测精度（AP）分别达到 49.5%/52.5%，在 T4 卡上推理速度分别可达 233⁄121 FPS（batch size =32）。
-GitHub下载地址：https://github.com/meituan/YOLOv6。欢迎Star收藏，随时取用。
-官方出品详细的Tech Report带你解构YOLOv6：YOLOv6: A Single-Stage Object Detection Framework for Industrial Applications。</description>
+      <description>9月5日，美团视觉智能部发布了YOLOv6 2.0版本，本次更新对轻量级网络进行了全面升级，量化版模型 YOLOv6-S 达到了 869 FPS，同时，还推出了综合性能优异的中大型网络（YOLOv6-M/L），丰富了YOLOv6网络系列。其中，YOLOv6-M/L 在 COCO 上检测精度（AP）分别达到 49.5%/52.5%，在 T4 卡上推理速度分别可达 233⁄121 FPS（batch size =32）。&#xA;GitHub下载地址：https://github.com/meituan/YOLOv6。欢迎Star收藏，随时取用。&#xA;官方出品详细的Tech Report带你解构YOLOv6：YOLOv6: A Single-Stage Object Detection Framework for Industrial Applications。</description>
     </item>
   </channel>
 </rss>

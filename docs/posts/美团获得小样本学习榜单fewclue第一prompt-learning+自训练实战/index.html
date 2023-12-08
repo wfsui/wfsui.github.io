@@ -15,8 +15,7 @@ FSL&#43;&#43;整体模型结构如下图2所示。FewCLUE数据集为每个任�
 <meta property="article:published_time" content="2022-09-15T04:32:35+00:00" />
 <meta property="article:modified_time" content="2022-09-15T04:32:35+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="美团获得小样本学习榜单FewCLUE第一！Prompt Learning&#43;自训练实战"/>
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="美团获得小样本学习榜单FewCLUE第一！Prompt Learning&#43;自训练实战"/>
 <meta name="twitter:description" content="1 概述 CLUE(Chinese Language Understanding Evaluation)[1]是中文语言理解权威测评榜单，包含了文本分类、句间关系、阅读理解等众多语义分析和语义理解类子任务，对学术界和工业界都产生了较大的影响。
 FewCLUE[2,3]是CLUE中专门用于中文小样本学习评测的一个子榜，旨在结合预训练语言模型通用和强大的泛化能力，探索小样本学习最佳模型和在中文上的实践。FewCLUE的部分数据集只有一百多条有标签样本，可以衡量模型在极少有标签样本下的泛化性能，发布后吸引了包括网易、微信AI、阿里巴巴、IDEA研究院、浪潮人工智能研究院等多家企业与研究院的参与。不久前，美团平台搜索与NLP部NLP中心语义理解团队的小样本学习模型FSL&#43;&#43;以优越的性能在FewCLUE榜单上取得第一名，达到SOTA水平。
 2 方法介绍 大规模预训练模型虽然在各大任务里面取得非常好的效果，但是在特定的任务上，还是需要许多标注数据。美团的各个业务中，有着丰富的NLP场景，往往需要较高的人工标注成本。在业务发展早期或者新的业务需求需要快速上线时，往往会出现标注样本不足的现象，使用传统Pretrain（预训练）&#43; Fine-Tune（微调）的深度学习训练方法往往达不到理想的指标要求，因此研究小样本场景的模型训练问题就变得非常必要。

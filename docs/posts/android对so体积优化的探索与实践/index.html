@@ -11,8 +11,7 @@
 <meta property="article:published_time" content="2022-09-12T04:37:40+00:00" />
 <meta property="article:modified_time" content="2022-09-12T04:37:40+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Android对so体积优化的探索与实践"/>
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Android对so体积优化的探索与实践"/>
 <meta name="twitter:description" content="1. 背景 应用安装包的体积影响着用户的下载时长、安装时长、磁盘占用空间等诸多方面，因此减小安装包的体积对于提升用户体验和下载转化率都大有益处。Android 应用安装包其实是一个 zip 文件，主要由 dex、assets、resource、so 等各类型文件压缩而成。目前业内常见的包体积优化方案大体分为以下几类：
 针对 dex 的优化，例如 Proguard、dex 的 DebugItem 删除、字节码优化等； 针对 resource 的优化，例如 AndResGuard、webp 优化等； 针对 assets 的优化，例如压缩、动态下发等； 针对 so 的优化，同 assets，另外还有移除调试符号等。 随着动态化、端智能等技术的广泛应用，在采用上述优化手段后， so 在安装包体积中的比重依然很高，我们开始思索这部分体积是否能进一步优化。"/>
 <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">

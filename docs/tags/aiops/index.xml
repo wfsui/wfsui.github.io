@@ -7,8 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 12 Aug 2022 03:44:25 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 23 Dec 2023 02:39:59 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/aiops/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AIOps在美团的探索与实践——事件管理篇</title>
+      <link>https://wfsui.github.io/posts/aiops%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5%E4%BA%8B%E4%BB%B6%E7%AE%A1%E7%90%86%E7%AF%87/</link>
+      <pubDate>Sat, 23 Dec 2023 02:39:59 +0000</pubDate>
+      <guid>https://wfsui.github.io/posts/aiops%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5%E4%BA%8B%E4%BB%B6%E7%AE%A1%E7%90%86%E7%AF%87/</guid>
+      <description>0 写在最前 文中所提及的事件并不仅限于故障，还包括运维工作中的告警、异常等。&#xA;“An incident is an unplanned interruption to an IT Service or a reduction in the Quality of an IT Service.</description>
+    </item>
     <item>
       <title>数据库异常智能分析与诊断</title>
       <link>https://wfsui.github.io/posts/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%82%E5%B8%B8%E6%99%BA%E8%83%BD%E5%88%86%E6%9E%90%E4%B8%8E%E8%AF%8A%E6%96%AD/</link>

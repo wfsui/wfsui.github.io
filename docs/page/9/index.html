@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="generator" content="Hugo 0.121.1">
+	<meta name="generator" content="Hugo 0.121.2">
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>大峰哥 - 记录日常生活哦 </title><meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="alternate" type="application/rss+xml" href="https://wfsui.github.io/index.xml" title="大峰哥" />
@@ -66,6 +66,19 @@
 				
 				
 				<div class="post">
+					<div class="meta">Jul 17, 2023</div>
+					<a class="title" href="/posts/%E4%BA%BA%E6%9C%BA%E8%AF%AD%E9%9F%B3%E4%BA%A4%E4%BA%92%E5%9C%BA%E6%99%AF%E4%B8%AD%E7%9A%84%E4%BD%8E%E5%BB%B6%E8%BF%9F%E6%B5%81%E5%BC%8F%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/">人机语音交互场景中的低延迟流式语音识别技术</a> &mdash;
+					<span class="description">
+						
+						1. 前言 1.1 语音识别技术简介 人机交互一直都是人工智能大背景下的“热门话题”，语音交互作为人机交互的一个重要分支，具有广泛的应用价值，也被应用到美团的多个业务场景中，如智能客服、电话营销和电话满意度反馈等。而流式语音识别技术是整个交互链条的入口，对交互体验影响巨大。
+常见的语音识别大多都是非流式语音识别技术，它是指模型在用户说完一句话或一段话之后再进行识别。这意味着模型需要等待用户停顿或结束说话才能开始识别，并且只能在用户停顿或结束说话后才能输出完整的识别结果。这样做的缺点是会导致较长的延迟和不连贯的交互。例如，在会议场景中，如果使用非流式语音识别技术，就可能出现会议参与者说了很长时间的话才显示出他们所说的内容，而且可能因为网络延迟或其他原因导致内容显示不全或错误。这样就会影响会议参与者之间的沟通和理解，并且降低会议效率和质量。
+而与之对应的是流式语音识别技术，它是指可以在处理音频流的过程中，支持实时返回识别结果的一类语音识别模型。这意味着模型不需要等待用户说完整句或整段话就可以开始识别，并且可以随着用户说话的进度逐渐输出识别结果。这样做的好处是能够大大减少人机交互过程中语音识别的处理时间，提高用户体验和交互效率。例如，在智能客服场景中，使用流式语音识别技术，就可以实现用户说一句话很快就能获得机器人响应，而不是等到用户说完一段话才给出回答。这样就可以让用户更快地得到满意的解决方案，并且减少用户的等待时间和不满情绪，提升用户满意度。在美团内部的众多业务场景中广泛使用了流式语音识别技术。
+本文将详细阐述团队在语音交互场景中的低延迟流式语音识别方案，目前以该方案形成的技术论文《Peak-First CTC: Reducing the Peak Latency of CTC Models by Applying Peak-First Regularization》已经被语音领域国际顶级会议ICASSP 2023收录。&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
 					<div class="meta">Jul 13, 2023</div>
 					<a class="title" href="/posts/2022%E5%B9%B4-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E5%85%AC%E4%BC%97%E5%8F%B7%E6%9C%80%E5%8F%97%E6%AC%A2%E8%BF%8E%E7%9A%8420%E7%AF%87%E6%96%87%E7%AB%A0/">2022年 | 美团技术团队公众号最受欢迎的20篇文章</a> &mdash;
 					<span class="description">
@@ -120,17 +133,6 @@ GraphSAGE等基于消息传递范式的图神经网络方法，其中心节点�
 					<span class="description">
 						
 						11月6日至9日，第20届国际计算机学会（Association for Computing Machinery，简称ACM）嵌入式网络感知系统大会（Conference on Embedded Networked Sensor Systems ，简称SenSys）在美国波士顿召开。清华大学软件学院何源副教授课题组和美团无人机团队合作论文“麦巢：辅助无人机精准降落的远距离即时声源定位技术”（MicNest：Long-Range Instant Acoustic Localization of Drones in Precise Landing）获得了大会最佳论文奖第二名（Best Paper Runner-Up）。&hellip;
-						
-					</span>
-				</div>
-				
-				<div class="post">
-					<div class="meta">Jun 9, 2023</div>
-					<a class="title" href="/posts/%E7%BE%8E%E5%9B%A2semeval2022%E7%BB%93%E6%9E%84%E5%8C%96%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B5%9B%E9%81%93%E5%86%A0%E5%86%9B%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/">美团SemEval2022结构化情感分析跨语言赛道冠军方法总结</a> &mdash;
-					<span class="description">
-						
-						1. 背景 SemEval（International Workshop on Semantic Evaluation）是一系列国际自然语言处理（NLP）研讨会，也是自然语言处理领域的权威国际竞赛，其使命是推进语义分析的研究进展，并帮助一系列日益具有挑战性的自然语言语义问题创建高质量的数据集。本次SemEval-2022（The 16th International Workshop on Semantic Evaluation）包含12个任务，涉及一系列主题，包括习语检测和嵌入、讽刺检测、多语言新闻相似性等任务，吸引了包括特斯拉、阿里巴巴、支付宝、滴滴、华为、字节跳动、斯坦福大学等企业和科研机构参与。
-其中Task 10: 结构化情感分析（Structured Sentiment Analysis）属于信息抽取（Information Extraction）领域。该任务包含两个子任务（分别是Monolingual Subtask-1和Zero-shot Crosslingual Subtask-2 ），包含五种语言共7个数据集（包括英语、西班牙语、加泰罗尼亚语、巴斯克语、挪威语），其中子Subtask-1使用全部七个数据集，Subtask-2使用其中的三个数据集（西班牙语、加泰罗尼亚语、巴斯克语）。我们在参与该评测任务的三十多支队伍中取得Subtask-1第二名和Subtask-2 第一名，相关工作已总结为一篇论文MT-Speech at SemEval-2022 Task 10: Incorporating Data Augmentation and Auxiliary Task with Cross-Lingual Pretrained Language Model for Structured Sentiment Analysis，并收录在NAACL 2022 Workshop SemEval。&hellip;
 						
 					</span>
 				</div>

@@ -1,6 +1,6 @@
 ---
 title: "咱们从头到尾讲一次 Flink 网络流控和反压剖析"
-date: 2024-01-10T02:43:17+0000
+date: 2024-01-11T02:44:38+0000
 tags: [面试]
 ---
 
@@ -14,6 +14,7 @@ tags: [面试]
 
 
 本文根据 Apache Flink 系列直播整理而成，由 Apache Flink Contributor、OPPO 大数据平台研发负责人张俊老师分享。主要内容如下：
+
 
 
 
@@ -38,6 +39,7 @@ tags: [面试]
 
 
 
+
 * 1.如果 Receive Buffer 是有界的，这时候新到达的数据就只能被丢弃掉了。
 * 2.如果 Receive Buffer 是无界的，Receive Buffer 会持续的扩张，最终会导致 Consumer 的内存耗尽。
 
@@ -53,6 +55,7 @@ tags: [面试]
 
 
 
+
 * 1、事先无法预估 Consumer 到底能承受多大的速率
 * 2、 Consumer 的承受能力通常会动态地波动
 
@@ -65,6 +68,7 @@ tags: [面试]
 
 
 针对静态限速的问题我们就演进到了动态反馈（自动反压）的机制，我们需要 Consumer 能够及时的给 Producer 做一个 feedback，即告知 Producer 能够承受的速率是多少。动态反馈分为两种：
+
 
 
 
@@ -243,6 +247,7 @@ JobGraph 提交到集群后会生成 ExecutionGraph ，这时候就已经具备�
 
 
 
+
 * 跨 TaskManager ，反压如何从 InputGate 传播到 ResultPartition
 * TaskManager 内，反压如何从 ResultPartition 传播到 InputGate
 
@@ -368,6 +373,7 @@ Local BufferPool 和 Network BufferPool 都用尽后整个 Operator 就会停止
 
 
 
+
 * 在一个 TaskManager 中可能要执行多个 Task，如果多个 Task 的数据最终都要传输到下游的同一个 TaskManager 就会复用同一个 Socket 进行传输，这个时候如果单个 Task 产生反压，就会导致复用的 Socket 阻塞，其余的 Task 也无法使用传输，checkpoint barrier 也无法发出导致下游执行 checkpoint 的延迟增大。
 * 依赖最底层的 TCP 去做流控，会导致反压传播路径太长，导致生效的延迟比较大。
 
@@ -410,6 +416,7 @@ Local BufferPool 和 Network BufferPool 都用尽后整个 Operator 就会停止
 
 
 ### 总结
+
 
 
 * 网络流控是为了在上下游速度不匹配的情况下，防止下游出现过载

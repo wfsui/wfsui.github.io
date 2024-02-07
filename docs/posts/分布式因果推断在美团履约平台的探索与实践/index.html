@@ -16,8 +16,8 @@
 2.1 技术选型与框架设计 单机树模型的工程实现可以概括为：遍历所有潜在的切分点并计算分裂指标（损失函数），取指标指标最佳的分裂点分裂，不断分裂树节点直到满足退出条件。而分布式环境下每台机器只包含部分样本，分布式环境下任何全局指标计算都会带来极大的通讯成本，因此需要选择合适的分布式架构帮助我们计算分裂指标。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/%E5%88%86%E5%B8%83%E5%BC%8F%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%B1%A5%E7%BA%A6%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2024-02-06T02:39:55+00:00" />
-<meta property="article:modified_time" content="2024-02-06T02:39:55+00:00" />
+<meta property="article:published_time" content="2024-02-07T02:39:51+00:00" />
+<meta property="article:modified_time" content="2024-02-07T02:39:51+00:00" />
 
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="分布式因果推断在美团履约平台的探索与实践"/>
 <meta name="twitter:description" content="1. 业务背景 近年来，因果推断在商品定价、补贴、营销等领域得到广泛应用并取得了显著的业务效果提升，例如用户增长、活动营销等业务场景。这些领域的共性是需要“反事实推断能力”，传统机器学习算法更关注预测问题，而因果推断提供了更佳的反事实推断能力。以营销活动为例，我们不仅需要知道当前优惠券金额下，订单数是多少（预测问题），还要知道在改变金额的情况下，订单数会发生怎样的变化（反事实问题）。
@@ -75,7 +75,7 @@
 
 		<div class="post-header">
 			<h1 class="title">分布式因果推断在美团履约平台的探索与实践</h1>
-			<div class="meta">Posted at &mdash; Feb 6, 2024</div>
+			<div class="meta">Posted at &mdash; Feb 7, 2024</div>
 		</div>
 
 		<div class="markdown">

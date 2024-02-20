@@ -69,7 +69,7 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
 <p>对话系统技术挑战赛DSTC（The Dialog System Technology Challenge）由微软、卡内基梅隆大学的科学家于2013年发起，旨在带动学术与工业界在对话技术上的提升，在对话领域具有极高的权威性和知名度。对话系统挑战赛今年已举办至第十届（DSTC10），吸引了微软、亚马逊、卡内基梅隆大学、Facebook、三菱电子研究实验室、美团、百度等全球知名企业、顶尖大学和机构同台竞技。</p>
 <p>DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务。其中Track5 Task1 Automatic Open-domain Dialogue Evaluation较为系统全面地将开放领域对话的自动评估任务引入DSTC10比赛中。开放领域对话自动评估是对话系统的重要组成部分，致力于自动化地给出符合人类直觉的对话质量评估结果。相比于速度慢、成本高的人工标注，自动化评估方法可以高效率、低成本地对不同对话系统进行打分，有力促进了对话系统的发展。</p>
 <p>不同于任务型对话有一个固定的优化目标，开放领域对话更接近人类真实的对话，评估难度更大，因而吸引了广泛的关注。DSTC10 Track5 Task1比赛共包含14个验证数据集（共包含37种不同的对话评估维度）和5个测试数据集（共包含11个评估维度）。美团语音团队最终以平均0.3104的相关性取得了该比赛的第一名，该部分工作已完成一篇论文MME-CRS: Multi-Metric Evaluation based on Correlation Re-Scaling for Evaluating Open-Domain Dialogue，并收录在AAAI2022 Workshop。</p>
-<p><img src="https://p0.meituan.net/travelcube/6240d7aaa46babc2de8e71c43c413ac71360359.png" alt="图1 DSTC10对话系统挑战赛"></p>
+<p><img alt="图1 DSTC10对话系统挑战赛" src="https://p0.meituan.net/travelcube/6240d7aaa46babc2de8e71c43c413ac71360359.png"></p>
 <h2 id="2-赛题简介">2. 赛题简介</h2>
 <p>开放领域对话评估比赛收集了对话领域论文中的经典数据集，包括14个验证数据集（12个Turn-Level级别数据集和2个Dialog-Level级别数据集）和5个测试数据集。</p>
 <p>数据集中的每个对话主要包含以下信息：</p>
@@ -80,8 +80,8 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
 </ul>
 <p>每个对话包含多个评估维度，如Context和Response的相关性，Response本身的流畅度等。每个数据集的评估维度不同，14个验证集总共包含37种不同的评估维度，具体包含Overall、Grammar、Relevance、Appropriateness、Interesting等。每个评估维度都有人工标注的打分，打分从1到5，分数越高表示当前评估维度的质量越高。</p>
 <p>验证集和测试集的统计信息如图2和图3所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/32770ed488238717c55fffc35baa3edb155688.png" alt="图2 DSTC10 Track5 Task1验证集数据统计信息"></p>
-<p><img src="https://p1.meituan.net/travelcube/5d03f5f192695cc0c3ce77c2b5aa934852252.png" alt="图3 DSTC10 Track5 Task1测试集数据统计信息"></p>
+<p><img alt="图2 DSTC10 Track5 Task1验证集数据统计信息" src="https://p0.meituan.net/travelcube/32770ed488238717c55fffc35baa3edb155688.png"></p>
+<p><img alt="图3 DSTC10 Track5 Task1测试集数据统计信息" src="https://p1.meituan.net/travelcube/5d03f5f192695cc0c3ce77c2b5aa934852252.png"></p>
 <p>其中Turns表示对应数据集中的对话轮数；Qualities表示数据集中每个对话的评估维度，每个评估维度都有对应的人工标注打分；Annos表示每个数据集的标注量。</p>
 <p>在该比赛中，每个数据集每个对话每个评估维度都有人工标注的打分，打分范围一般为1到5，一般求均值用于相关性计算。参赛队伍需要设计评估指标用于预测每个对话不同评估维度的打分。每个数据集的每个评估维度的预测打分会和人工标注的打分计算Spearman相关性，最后的比赛结果基于全部测试数据集的评估维度求均值。</p>
 <h2 id="3-现有方法和问题">3. 现有方法和问题</h2>
@@ -99,7 +99,7 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
 <li>Context和Respose的相关程度。</li>
 <li>Response本身是否详细，更像人类等。</li>
 </ol>
-<p><img src="https://p0.meituan.net/travelcube/29a973758f58638c270f421aa788865990435.png" alt="图4 USL-H评估算法的分层次模型"></p>
+<p><img alt="图4 USL-H评估算法的分层次模型" src="https://p0.meituan.net/travelcube/29a973758f58638c270f421aa788865990435.png"></p>
 <h3 id="32-问题">3.2 问题</h3>
 <p>现有的评估方法主要有以下问题：</p>
 <p><strong>设计的对话指标不够全面，难以综合衡量对话的质量</strong></p>
@@ -113,7 +113,7 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
 <p>现有方法大多倾向于为每种评估维度设计一种评估指标，这种思路面对越来越多的评估维度显得力不从心（考虑下比赛测试集共包含37种不同的评估维度）。每种对话维度的评估可能依赖数种评估指标，如Logical评估维度需要对话：1）Response流畅；2）Response和Context是相关的。设计基本的评估子指标，再通过合适的集成方法集成多个子指标打分，可以更全面有效表示不同的对话评估维度。</p>
 <h2 id="4-我们的方法">4. 我们的方法</h2>
 <p>针对评估指标不够全面，本文设计了5类共7种评估指标（Multi-Metric Evaluation，MME）用于全面衡量对话的质量。基于设计的5类7种基础指标，我们进一步提出了相关性重归一化方法（Correlation Re-Scaling Method，CRS）来集成不同评估指标的打分。我们将提出的模型称为MME-CRS，模型整体架构图5所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/2bf9e5323306f3a1816efbc6fd8987bb460157.png" alt="图5 模型总体架构设计图"></p>
+<p><img alt="图5 模型总体架构设计图" src="https://p0.meituan.net/travelcube/2bf9e5323306f3a1816efbc6fd8987bb460157.png"></p>
 <h3 id="41-基础指标">4.1 基础指标</h3>
 <p>为了解决现有方法的第一个问题，即设计的对话指标不够全面，我们在比赛中设计了5类共7种评估子指标。</p>
 <h4 id="411-fluency-metric-fm">4.1.1 Fluency Metric (FM)</h4>
@@ -144,25 +144,25 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
 <p>对每一个待评估的对话，基于上述5类7种基础指标可以得到7种不同的打分。对于待评估数据集的某个评估维度，需要综合7种指标打分得到一个综合打分，用于和人类打分计算相关性。我们的集成方法分为以下两步。</p>
 <h4 id="421-不同评估维度权重分布的计算">4.2.1 不同评估维度权重分布的计算</h4>
 <p>首先，计算验证集上每个数据集每个评估维度7种评估指标的相关性打分，相关性打分越大，认为该指标对该评估维度越重要。对越重要的评估指标赋予一个更大的权重，并将得到的权重在指标维度重新归一化，这样则得到了每个数据集每个评估维度上不同评估指标的权重分布：</p>
-<p><img src="https://p0.meituan.net/travelcube/d648226fcebf1ad15d0ea48e47563fa614599.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/d648226fcebf1ad15d0ea48e47563fa614599.png"></p>
 <p>其中$S_{ijk}$是第$i$个数据集第$j$个评估维度上第$k$个评估指标的相关性打分，$d_{ij}$是相关性打分的幂数，$d_{ij}$越大则相关性打分越高的指标的权重就越大。一般当max（$S_{ijk}^{d_{ij}}$）在1/3到1/2之间时集成效果最好，这是计算$d_{ij}$的一种简单有效手段。实验中，将$d_{ij}$设置为常数可以获得更好的泛化效果，我们将$d_{ij}$设置为2，并在验证集上计算权重分布，再迁移到测试集上，取得了比赛最优性能。</p>
 <p>在数据集维度，将不同数据集中相同评估维度的权重求均值，得到每个评估维度在不同评估指标上的权重分布：</p>
-<p><img src="https://p0.meituan.net/travelcube/bb43d558ed675a1507e384ab1ee3350d11356.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/bb43d558ed675a1507e384ab1ee3350d11356.png"></p>
 <p>注意这里得到的权重分布已经和具体数据集无关，可以将权重分布迁移到测试集上。</p>
 <h4 id="422-计算指标打分的加权和">4.2.2 计算指标打分的加权和</h4>
 <p>对每个测试集的每个评估维度，计算7种指标打分并基于第一步的权重求加权和，得到综合打分：</p>
-<p><img src="https://p0.meituan.net/travelcube/3901e3d54ac6207035ed878e1898dd1b9882.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/3901e3d54ac6207035ed878e1898dd1b9882.png"></p>
 <p>加权得到的综合打分和人工打分计算相关性，得到每种评估维度上的模型打分和人工打分的相关性打分。</p>
 <p>我们的集成方法基于指标的相关性打分赋予权重并重新归一化，所以将该集成方法称为相关性重归一化方法。在得到的MME指标上使用CRS集成方法，可得MME-CRS评估算法。</p>
 <h2 id="5-实验分析">5. 实验分析</h2>
 <h3 id="51-实验结果">5.1 实验结果</h3>
 <p>我们的方法主要基于Dailydialog数据集预训练（除了EM子指标是使用ConvAI2数据集），在比赛验证集上计算集成方法的权重分布，最终在测试集上取得了0.3104的Spearman相关性打分。</p>
 <p>图6展示了比赛基准模型Deep AM-FM[14]以及比赛Top5队伍在测试集上不同数据集评估维度的性能。本文的方法以0.3104的平均Spearman相关性系数取得了第一，且在5个数据集全部11个评估维度中的6个取得了第一，证明了本文方法的优越性能。</p>
-<p><img src="https://p0.meituan.net/travelcube/5624a8bea81332121037cc63fc41b26a112169.png" alt="图6 测试集上Top 5队伍的Spearman相关性打分对比（%）"></p>
+<p><img alt="图6 测试集上Top 5队伍的Spearman相关性打分对比（%）" src="https://p0.meituan.net/travelcube/5624a8bea81332121037cc63fc41b26a112169.png"></p>
 <p>为了方便展示，图中方法采用了数据集-评估维度的展示方式。其中J、E、N、DT、DP分别表示JSALT、ESL、NCM、DST10-Topical、DSTC10-Persona数据集，而A、C、G、R分别表示Appropriateness、Content、Grammar、Relevance评估维度。我们对每个评估维度上最好的性能进行了加粗。</p>
 <h3 id="52-消融实验">5.2 消融实验</h3>
 <p>在消融实验部分，我们以本文方法MME-CRS评估为基准，在集成阶段分别去除FM、RM、TCM、EM、SM、RM+TCM指标，对比不同指标在集成过程中的重要性。实验性能如图7所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/f06a219c3037664a7daa1743c706128563587.png" alt="图7 测试集上不同评估指标的消融实验（%）"></p>
+<p><img alt="图7 测试集上不同评估指标的消融实验（%）" src="https://p0.meituan.net/travelcube/f06a219c3037664a7daa1743c706128563587.png"></p>
 <p>相关性指标RM和主题一致性指标TCM都使用了对话中的Context和Response信息，因此在实验中同时去除这两个指标，观察对性能的影响。从图7中的实验结果可以看出：</p>
 <ul>
 <li>TCM、RM和EM对于模型性能的贡献最大，打分集成阶段删除这三个评估指标后，测试集上的平均Spearman相关性打分分别降低了3.26%、1.56%和1.01%。</li>
@@ -171,7 +171,7 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
 </ul>
 <h3 id="53-crs效果">5.3 CRS效果</h3>
 <p>为了分析集成算法CRS的作用，本文对比了MME-CRS和MME-Avg（将MME多个指标打分简单平均）两个评估方法的性能，如图8所示：</p>
-<p><img src="https://p1.meituan.net/travelcube/c394f87ec723178a90c82a9fed32c59251346.png" alt="图8 MME-CRS和MME-Avg在测试集上的性能对比（%）"></p>
+<p><img alt="图8 MME-CRS和MME-Avg在测试集上的性能对比（%）" src="https://p1.meituan.net/travelcube/c394f87ec723178a90c82a9fed32c59251346.png"></p>
 <p>从图中可以看出，MME-CRS方法相比于MME-Avg高了3.49%，证明了CRS算法在集成子指标打分方面的优越性能。</p>
 <h2 id="6-总结">6. 总结</h2>
 <p>在本次比赛中，我们总结了开放领域对话自动评估存在的两个主要问题，即评估指标不够全面和缺乏有效的指标集成方法。针对评估指标不够全面的问题，本文设计了5类7种评估指标用于全面衡量对话的质量；基于7种基础指标，提出了相关性重归一化方法来计算每种对话评估维度的集成打分。</p>

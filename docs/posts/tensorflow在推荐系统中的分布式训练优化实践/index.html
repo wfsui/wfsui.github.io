@@ -91,16 +91,16 @@
 <h3 id="22-系统负载分析">2.2 系统负载分析</h3>
 <h4 id="221-问题分析工具链">2.2.1 问题分析工具链</h4>
 <p>TensorFlow是一个非常庞大的开源项目，代码有几百万行之多，原生系统的监控指标太粗，且不支持全局的监控，如果要定位一些复杂的性能瓶颈点，就比较困难。我们基于美团已经开源的监控系统CAT[2]，构建了TensorFlow的细粒度监控链路（如下图1所示），可以精准定位到性能的瓶颈问题。</p>
-<p><img src="https://p0.meituan.net/travelcube/4f5aebcef68b1f558332f113098f63c0304817.png" alt="图1 TensorFlow PS架构全链路监控"></p>
+<p><img alt="图1 TensorFlow PS架构全链路监控" src="https://p0.meituan.net/travelcube/4f5aebcef68b1f558332f113098f63c0304817.png"></p>
 <p>同时，在性能优化的过程中，会涉及到大量的性能测试和结果分析，这也是一个非常耗费人力的工作。我们抽象了一套自动化的实验框架（如下图2所示），可以自动化、多轮次地进行实验，并自动采集各类监控指标，然后生成报告。</p>
-<p><img src="https://p0.meituan.net/travelcube/3cb568c2e7c4b525e1f5350a34b0f2e3234903.png" alt="图2 自动化实验框架"></p>
+<p><img alt="图2 自动化实验框架" src="https://p0.meituan.net/travelcube/3cb568c2e7c4b525e1f5350a34b0f2e3234903.png"></p>
 <h4 id="222-业务视角的负载分析">2.2.2 业务视角的负载分析</h4>
 <p>在推荐系统场景中，我们使用了TensorFlow Parameter Server[3]（简称PS）异步训练模式来支持业务分布式训练需求。对于这套架构，上述的业务变化会带来什么样的负载变化？如下图3所示：</p>
-<p><img src="https://p1.meituan.net/travelcube/aaa01535839e4bc62a2389d4ef96d273286796.png" alt="图3 TensorFlow PS架构大规模训练负载分析"></p>
+<p><img alt="图3 TensorFlow PS架构大规模训练负载分析" src="https://p1.meituan.net/travelcube/aaa01535839e4bc62a2389d4ef96d273286796.png"></p>
 <p>总结来看，主要包括通信压力、PS并发压力、Worker计算压力。对于分布式系统来说，通常是通过横向扩展来解决负载问题。虽然看来起可以解决问题，但从实验结果来看，当PS扩展到一定数量后，单步训练时间反而会增加，如下图4所示：</p>
-<p><img src="https://p1.meituan.net/travelcube/e74113b90380350ee41a92465c356d4361603.png" alt="图4 扩展PS提升训练性能实验"></p>
+<p><img alt="图4 扩展PS提升训练性能实验" src="https://p1.meituan.net/travelcube/e74113b90380350ee41a92465c356d4361603.png"></p>
 <p>导致这种结果的核心原因是：Worker单步训练需要和所有的PS通信同步完成，每增加1个PS要增加N条通信链路，这大大增加了链路延迟（如下图5所示）。而一次训练要执行上百万、上千万步训练。最终导致<strong>链路延迟超过了加PS算力并发的收益</strong>。</p>
-<p><img src="https://p1.meituan.net/travelcube/451395ea641761386489a08fba79c0be208193.png" alt="图5 增加PS带来的链路开销"></p>
+<p><img alt="图5 增加PS带来的链路开销" src="https://p1.meituan.net/travelcube/451395ea641761386489a08fba79c0be208193.png"></p>
 <p>而对于这个系统，优化的核心难点在于：<strong>如何在有限的PS实例下，进行分布式计算的优化</strong>。</p>
 <h2 id="3-优化实践">3 优化实践</h2>
 <h3 id="31-大规模稀疏参数介绍">3.1 大规模稀疏参数介绍</h3>
@@ -118,7 +118,7 @@
 <li>API设计上保持与社区版本兼容，在使用上几乎与原生Variable一致，对接成本极低。</li>
 </ol>
 <p>简化版的基于PS架构的实现示意如下图6所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/1974bfa4126c6a729ec41dfce99c7d63243674.png" alt="图6 支撑大规模稀疏参数的HashTable方案"></p>
+<p><img alt="图6 支撑大规模稀疏参数的HashTable方案" src="https://p0.meituan.net/travelcube/1974bfa4126c6a729ec41dfce99c7d63243674.png"></p>
 <p>核心流程大致可以分为以下几步：</p>
 <ol>
 <li>稀疏特征ID（通常我们会提前完成统一编码的工作）进入Embedding模块，借助TensorFlow搭建的Send-Recv机制，这些稀疏特征ID被拉取到PS端，PS端上的Lookup等算子会实际从底层HashTable中查询并组装Embedding向量。</li>
@@ -129,7 +129,7 @@
 <p>这部分优化，是分布式计算的经典优化方向。PS架构是一个典型的“水桶模型”，为了完成一步训练，Worker端需要和所有PS完成交互，因此PS之间的平衡就显得非常重要。但是在实践中，我们发现多个PS的耗时并不均衡，其中的原因，既包括TensorFlow PS架构简单的切图逻辑（Round-Robin）带来的负载不均衡，也有异构机器导致的不均衡。</p>
 <p>对于推荐模型来说，我们的主要优化策略是，把所有稀疏参数和大的稠密参数自动、均匀的切分到每个PS上，可以解决大多数这类问题。而在实践过程中，我们也发现一个比较难排查的问题：原生Adam优化器，实现导致PS负载不均衡。下面会详细介绍一下。</p>
 <p>在Adam优化器中，它的参数优化过程需要两个β参与计算，在原生TensorFlow的实现中，这两个β是所有需要此优化器进行优化的Variabl（或HashTable）所共享的，并且会与第一个Variable（名字字典序）落在同一个PS上面，这会带来一个问题：每个优化器只拥有一个β_1和一个β_2，且仅位于某个PS上。因此，在参数优化的过程中，该PS会承受远高于其他PS的请求，从而导致该PS成为性能瓶颈。</p>
-<p><img src="https://p0.meituan.net/travelcube/ab0e99c33d993da8013d62f295219c7a93542.png" alt="图7 Adam优化算法"></p>
+<p><img alt="图7 Adam优化算法" src="https://p0.meituan.net/travelcube/ab0e99c33d993da8013d62f295219c7a93542.png"></p>
 <p>但是通过观察Adam的优化算法，我们可以看到β_1和β_2都是常量，且蓝色高亮的部分都是相对独立的计算过程，各个PS之间可以独立完成。基于这样的发现，优化的方法也就非常直观了，我们为每一个PS上的Adam优化器冗余创建了β参数，并在本地计算t和alpha值，去除了因此负载不均导致的PS热点问题。</p>
 <p>该优化所带来的提升具备普适性且效果明显，在美团内部某业务模型上，通过β热点去除可以带来9%左右的性能提升。此外，由于摆脱了对β的全局依赖，该优化还能提高PS架构的可扩展性，在扩增Worker数量的时候相比之前会带来更好的加速比。</p>
 <h3 id="33-通信优化">3.3 通信优化</h3>
@@ -138,9 +138,9 @@
 <p>经过优化后的版本，在1TB Click Logs[5]公开数据集、DLRM[6]模型、100个Worker以上的训练，性能提升了20%~40%。在美团的多个业务模型上，对比TensorFlow Seastar[7]改造的通信层实现也有10%~60%的速度提升。同时也把我们的工作回馈给了<a href="https://github.com/tensorflow/networking/pull/38">社区</a>。</p>
 <h4 id="331-memory-registration优化">3.3.1 Memory Registration优化</h4>
 <p>RDMA有三种数据传输的方式SEND/RECV、WRITE、READ，其中WRITE、READ类似于数据发送方直接在远程Memory进行读写，Receiver无法感知，WRITE和READ适用于批量数据传输。在TensorFlow内部，基于RDMA的数据传输方式使用的是WRITE单边通信模式。</p>
-<p><img src="https://p0.meituan.net/travelcube/099d57ab975c23dfa5d4508cc6823cdc59670.png" alt="图8 RDMA传输方式"></p>
+<p><img alt="图8 RDMA传输方式" src="https://p0.meituan.net/travelcube/099d57ab975c23dfa5d4508cc6823cdc59670.png"></p>
 <p>在RDMA传输数据时，需要提前开辟内存空间并将其注册到网卡设备上（Memory Registration过程，下称MR），使得这片空间可以被网卡直接操作。开辟新的内存并注册到设备上，整个过程是比较耗时的。下图9展示了不同大小的内存绑定到网卡设备上的耗时，可以看到随着注册内存的增大，绑定MR的耗时迅速增加。</p>
-<p><img src="https://p0.meituan.net/travelcube/0b761f47d1d23dccaa9271407940e4e040535.png" alt="图9 MR过程开销"></p>
+<p><img alt="图9 MR过程开销" src="https://p0.meituan.net/travelcube/0b761f47d1d23dccaa9271407940e4e040535.png"></p>
 <p>社区版Tensorflow RDMA实现，Tensor创建依旧沿用了统一的BFC Allocator，并将所有创建的Tensor都注册到MR上。正如上面所提到的，MR的注册绑定具有性能开销，高频、大空间的MR注册会带来显著的性能下降。而训练过程中的Tensor，只有那些涉及到跨节点通信的Tensor有必要进行MR，其余Tensor并不需要注册到MR。因此，优化的方法也就比较直接了，我们识别并管理那些通信Tensor，仅对这些跨节点通信的Tensor进行MR注册就好了。</p>
 <h4 id="332-rdma静态分配器">3.3.2 RDMA静态分配器</h4>
 <p>RDMA静态分配器是上一个MR注册优化的延伸。通过Memory Registration优化，去除非传输Tensor的MR注册，我们降低了MR注册数量。但是在稀疏场景大规模的训练下，并行训练的Worker常有几百上千个，这会带来新的问题：</p>
@@ -149,14 +149,14 @@
 <li>由于稀疏场景不同Step之间同一个算子输出Tensor的形状可能发生变化，导致了创建的MR可复用性较差，带来了较高的内存碎片和重复注册MR开销。</li>
 </ul>
 <p>针对上面的问题，我们引入了MR静态分配器的策略。</p>
-<p><img src="https://p1.meituan.net/travelcube/bc3415b2740a70d030c6464715676f4562230.png" alt="图10 MR静态分配器"></p>
+<p><img alt="图10 MR静态分配器" src="https://p1.meituan.net/travelcube/bc3415b2740a70d030c6464715676f4562230.png"></p>
 <p>这里核心的设计思路为：</p>
 <ol>
 <li>虽然稀疏场景同一个算子输出Tensor的Shape存在变化的可能，但是整体变化幅度可控，通过监控与分析，是可以找到一个较为稳定的内存大小，满足多Step间Tensor的存储需求。</li>
 <li>基于上面的信息，我们修改了原有逐Tensor(Request)的MR申请策略，通过一次性预申请一块较大的空间并注册到网卡端，后续通过自己维护的分配策略进行空间的分配，大大降低了MR申请的频率，绝大多数情况下，训练全过程中只需要一次MR注册申请即可。</li>
 <li>我们引入了一种简单的交换协议，将传输Tensor的Shape，Data打包到一起，写到Client端。Client端根据协议，解析出Tensor大小，并最终读取Data，避免了原生实现中因Tensor的Shape变化而产生的多次协商过程。</li>
 </ol>
-<p><img src="https://p0.meituan.net/travelcube/b46adcbf7e2e0febb36dda5061e6a72439216.png" alt="图11 MR静态分配器构造流程"></p>
+<p><img alt="图11 MR静态分配器构造流程" src="https://p0.meituan.net/travelcube/b46adcbf7e2e0febb36dda5061e6a72439216.png"></p>
 <p>具体到实现中，我们引入了Allocation Analysis模块，在训练开始的一段时间，我们会对分配的历史数据进行分析，以得到一个实际预开辟MR大小以及各个Tensor的预留空间大小。然后我们会暂停训练的进程，启动Allocator的构造过程，包括MR的创建以及通信双端的信息同步。利用相关信息构造MR Info Map，这个Map的Key是传输Tensor的唯一标记（ParsedKey，计算图切图时确定），Info结构体中包含了本地地址指针、offset大小、ibv_send_wr相关信息等。然后恢复训练，后续Tensor的传输就可以使用静态开辟好的MR进行收发，也免去了因Shape变化而产生的多次协商过程。</p>
 <h4 id="333-multi-requestbuffer与cq负载均衡">3.3.3 Multi RequestBuffer与CQ负载均衡</h4>
 <p>TensorFlow社区版的RDMA通信过程，不仅仅包含上面Tensor数据的发送和接收过程，还包括传输相关的控制消息的发送和接收过程，控制消息的发送和接收过程同样是使用了ibv_post_send和ibv_post_recv原语。原生的控制流实现存在一些瓶颈，在大规模训练时会限制控制流的吞吐，进而影响数据收发的效率。具体体现在：</p>
@@ -167,7 +167,7 @@
 <p>针对上面的问题，我们采用了Multi RequestBuffer与CQ负载均衡优化，破除了在请求发送和请求应答环节可能存在的吞吐瓶颈。</p>
 <h4 id="334-send-driven--rendezvous-bypass">3.3.4 Send-Driven &amp; Rendezvous-Bypass</h4>
 <p>对于Tensorflow PS架构熟悉的同学会了解，一整张计算图被切割为Worker端和PS端后，为了使两张计算图能够彼此交换数据，建立了基于Rendezvous（汇合点）机制的异步数据交换模式。如下图12所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/453851d6632ddac360806ead4ed976b5716896.png" alt="图12 TensoFlow切图之Send-Recv对添加"></p>
+<p><img alt="图12 TensoFlow切图之Send-Recv对添加" src="https://p0.meituan.net/travelcube/453851d6632ddac360806ead4ed976b5716896.png"></p>
 <p>基于上图的切图逻辑，Recv算子代表着这一侧计算图有Tensor的需求，而Tensor的生产者则位于与之配对的另一设备上的Send算子背后。</p>
 <p>在具体实现上，Tensorflow实现了Recv-Driven的数据交换模式，如上图所示，位于DeviceA和DeviceB的两张计算图会异步并发的执行，位于DeviceB的Recv执行时会发起一条RPC请求发往DeviceA，DeviceA收到请求后，会将请求路由到Rendezvous中，如果在当中发现所需要的数据已经生产好，并被Send算子注册了进来，那么就地获取数据，返回给DeviceB；如果此时数据还没有生产好，则将来自于DeviceB的Recv请求注册在Rendezvous中，等待后续DeviceA生产好后，由Send算子发送过来，找到注册的Recv，触发回调，返回数据给DeviceB。</p>
 <p>我们看到，汇合点机制优雅地解决了生产者消费者节奏不同情况下数据交换的问题。不过Recv-Driven的模式也引入了两个潜在的问题：</p>
@@ -176,7 +176,7 @@
 <li>Rendezvous作为一个数据交换的热点，它内部的逻辑开销并不低。</li>
 </ul>
 <p>针对上面提到的问题，我们在RDMA上实现了另外一种数据交换的模式，叫做Send-Driven模式。与Recv-Driven模式相对，顾名思义就是有Send算子直接将数据写到Recv端，Recv端接收数据并注册到本地Rendezvous中，Recv算子直接从本地的Rendezvous中获取数据。具体流程如下图13所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/8db7d0b4250150f48b7640aae8a2b035208067.png" alt="图13 原生的Recv-Driven与补充的Send-Driven机制"></p>
+<p><img alt="图13 原生的Recv-Driven与补充的Send-Driven机制" src="https://p0.meituan.net/travelcube/8db7d0b4250150f48b7640aae8a2b035208067.png"></p>
 <p>从图中可以看到，相较于Recv-Driven模式，Send-Driven模式的通信流程得到了比较大的简化，另外在数据ready后立即发送的特性，跳过了一侧的Rendezvous，并且对于生产者先于消费者的情况，可以加快消费端数据获取的速度。</p>
 <h3 id="34-延迟优化">3.4 延迟优化</h3>
 <p>这部分优化，也是分布式计算的经典优化方向。整个流程链路上那些可以精简、合并、重叠需要不断去挖掘。对于机器学习系统来说，相比其它的系统，还可以用一些近似的算法来做这部分工作，从而获得较大的性能提升。下面介绍我们在两个这方面做的一些优化实践。</p>
@@ -184,7 +184,7 @@
 <p>在启用HashTable存储稀疏参数后，对应的，一些配套参数也需要替换为HashTable实现，这样整个计算图中会出现多张HashTable以及大量的相关算子。在实践中，我们发现需要尽量降低Lookup/Insert等算子的个数，一方面降低PS的负载，一方面降低RPC QPS。因此，针对稀疏模型的常见用法，我们进行了相关的聚合工作。</p>
 <p>以Adam优化器为例，需要创建m、v两个slot，以保存优化中的动量信息，它的Shape与Embedding相同。在原生优化器中，这两个Variable是单独创建的，并在反向梯度更新的时候会去读写。同理，使用HashTable方案时，我们需要同时创建两张单独的HashTable用来训练m、v参数。那么在前向，反向中需要分别对Embedding、m、v进行一次Lookup和一次Insert，总共需要三次Lookup和三次Insert。</p>
 <p>这里一个优化点就是将Embedding、 m、v，以及低频过滤的计数器（见下图14的Counting HashTable）聚合到一起，作为HashTable的Value，这样对稀疏参数的相关操作就可以聚合执行，大大减少了稀疏参数操作频次，降低了PS的压力。</p>
-<p><img src="https://p0.meituan.net/travelcube/24b120e107d3cc420f76af109a2700b080626.png" alt="图14 基于HashTable的参数融合策略"></p>
+<p><img alt="图14 基于HashTable的参数融合策略" src="https://p0.meituan.net/travelcube/24b120e107d3cc420f76af109a2700b080626.png"></p>
 <p>该特性属于一个普适型优化，开启聚合功能后，训练速度有了显著的提高，性能提升幅度随着模型和Worker规模的变化，效果总是正向的。在美团内部真实业务模型上，聚合之后性能相比非聚合方式能提升了45%左右。</p>
 <h4 id="342-embedding流水线优化">3.4.2 Embedding流水线优化</h4>
 <p>流水线，在工业生产中，指每一个生产单位只专注处理某个片段的工作，以提高工作效率及产量的一种生产方式。在计算机领域内，更为大家熟知的是，流水线代表一种多任务之间Overlap执行的并行化技术。例如在典型的RISC处理器中，用户的程序由大量指令构成，而一条指令的执行又可以大致分为：取指、译码、执行、访存、写回等环节。这些环节会利用到指令Cache、数据Cache、寄存器、ALU等多种不同的硬件单元，在每一个指令周期内，这5个环节的硬件单元会并行执行，得以更加充分的利用硬件能力，以此提高整个处理器的指令吞吐性能。处理器的指令流水线是一套复杂而系统的底层技术，但其中的思想在分布式深度学习框架中也被大量的使用，例如：</p>
@@ -197,9 +197,9 @@
 <p>对于大规模稀疏模型训练时，核心模型流程是：先执行稀疏参数的Embedding，然后执行稠密部分子网络。其中稀疏参数Embedding在远端PS上执行，主要耗费网络资源，而稠密部分子网络在本地Worker执行，主要耗费计算资源。这两部分占了整个流程的大部分时间，在美团某实际业务模型上分别耗时占比：40+%、50+%。</p>
 <p>那我们是否可以提前执行稀疏参数的Embedding，来做到通信和计算的Overlap，隐藏掉这部分时间呢？从系统实现上肯定是可行的，但从算法上讲，这样做会引入参数Staleness的问题，可能会导致模型精度受到影响。但在实际的生产场景中，大规模异步训练时本身就会带来几十到几百个步的滞后性问题。经过我们测试，提前获取一两步的稀疏参数，模型精度并未受到影响。</p>
 <p>在具体实现上，我们把整个计算图拆分为Embedding Graph（EG）和Main Graph（MG）两张子图，两者异步独立执行，做到拆分流程的Overlap（整个拆分过程，可以做到对用户透明）。EG主要覆盖从样本中抽取Embedding Key，查询组装Embedding向量，Embedding向量更新等环节。MG主要包含稠密部分子网络计算、梯度计算、稠密参数部分更新等环节。</p>
-<p><img src="https://p0.meituan.net/travelcube/ae939d84e40aec8292cfad8b1b9e2f8d16675.png" alt="图15 Embedding流水线模块交互关系"></p>
+<p><img alt="图15 Embedding流水线模块交互关系" src="https://p0.meituan.net/travelcube/ae939d84e40aec8292cfad8b1b9e2f8d16675.png"></p>
 <p>两张子图的交互关系为：EG向MG传递Embeding向量（从MG的视角看，是从一个稠密Variable读取数值）；MG向EG传递Embedding参数对应的梯度。上述两个过程的表达都是TensorFlow的计算图，我们利用两个线程，两个Session并发的执行两张计算图，使得两个阶段Overlap起来，以此到达了更大的训练吞吐。</p>
-<p><img src="https://p0.meituan.net/travelcube/e4b982ebcaa8b98f1bf370fb43af4cda237614.png" alt="图16 Embedding流水线架构流程图"></p>
+<p><img alt="图16 Embedding流水线架构流程图" src="https://p0.meituan.net/travelcube/e4b982ebcaa8b98f1bf370fb43af4cda237614.png"></p>
 <p>上图是Embedding流水线的架构流程图。直观来看分为左侧的样本分发模块，顶部的跨Session数据交换模块，以及自动图切分得到的Embedding Graph和Main Graph，蓝色的圆圈代表新增算子，橙色箭头代表EG重点流程，蓝色箭头代表MG重点流程，红色箭头代表样本数据重点流程。</p>
 <ol>
 <li>以对用户透明的形式引入了一层名为Pipeline Dataset的抽象层，这一层的产生是为了满足EG/MG两张计算图以不同节奏运行的需求，支持自定义配置。另外，为了使得整个流水线中的数据做到彼此的配套，这里还会负责进行一个全局Batch ID的生成及注册工作。Pipeline Dataset对外暴露两种Iterator，一个供EG使用，一个供MG使用。Pipeline Dataset底部共享TensorFlow原生的各层Dataset。</li>
@@ -221,7 +221,7 @@
 <h4 id="352-hashtable-bucketpool">3.5.2 HashTable BucketPool</h4>
 <p>对于大规模稀疏模型训练来说，Embedding HashTable会面对大量的并发操作，通过Profiling我们发现，频繁动态的内存申请会带来了较大性能开销（即使TensorFlow的Tensor有专门的内存分配器）。我们基于内存池化的思路优化了HashTable的内存管理。</p>
 <p>我们在HashTable初始化时，会先为Key和Value分别创造两个BucketPool，每个池子都会先Malloc较大一块内存备用，考虑到可能会有对HashTable进行中的Key和Value进行Remove的场景（如Online Learning训练时），需要对从HashTable中删除的Key和Value所使用的内存进行回收，因此每个BucketPool还有一个ReuseQueue来负责维护回收的内存。每次向内部的哈希表数据结构中Insert Key和Value的时候，Key和Value内存和释放分配都进行池化管理。用这种方式降低了大规模稀疏训练中遇到稀疏内存分配开销，整体端到端训练性能提升了5%左右。</p>
-<p><img src="https://p0.meituan.net/travelcube/c614b64e05a67ef25103788e80075c7f47974.png" alt="图17 HashTable内存优化"></p>
+<p><img alt="图17 HashTable内存优化" src="https://p0.meituan.net/travelcube/c614b64e05a67ef25103788e80075c7f47974.png"></p>
 <h3 id="36-单位算力吞吐优化">3.6 单位算力吞吐优化</h3>
 <p>经过2.2章节的分析，Worker的计算压力也非常大，如果不优化Worker，同时要保持吞吐，需要横向扩展更多的Worker，给PS带来更大的压力。而对于用户来说，如果能在有限的计算资源下带来性能提升，对业务价值更高。我们通过CAT统计出了一些高频算子，并进行了专项优化。这里选取Unique&amp;DynamicPartition算子融合案例进行分享。</p>
 <p>在TensorFlow PS架构中，包括Embedding向量在内的共享参数都存储在PS上，并通过网络与Worker交互，在进行Embedding查询过程中，往往会涉及如下两个环节：</p>
@@ -234,7 +234,7 @@
 <li>Unique算子原生实现，它内部使用的内存分配策略较为低效。使用了两倍输入参数（Embedding ID）的大小进行内存分配，但由于输入参数较大，而且重复率高，导致HashTable创建过大且非常稀疏。几乎每次插入都会产生一次minor_page_fault，导致HashTable性能下降。我们使用Intel Vtune验证了这一点（参见图18）。</li>
 <li>Unique和Dynamic Partition算子存在冗余数据遍历，这些操作其实可以在一次数据遍历中全部做完，节省掉算子切换、冗余数据遍历的耗时。</li>
 </ul>
-<p><img src="https://p0.meituan.net/travelcube/b2136bd54ab12545864322b30b148473295101.png" alt="图18 Unique算子内部出现DRAM Bound问题"></p>
+<p><img alt="图18 Unique算子内部出现DRAM Bound问题" src="https://p0.meituan.net/travelcube/b2136bd54ab12545864322b30b148473295101.png"></p>
 <p>总结来说，HashTable开辟过大会导致大量的minor_page_fault，导致访存的时间增加，HashTable过小又可能会导致扩容。我们采用了基于启发式算法的内存自适应Unique算子实现，通过对训练历史重复率的统计，我们可以得到一个相对合理的HashTable大小，来提高访存的性能；另外Unique算子内HashTable的具体选择上，经过我们的多种测试，选择了Robin HashTable替换了原生TF中的实现。</p>
 <p>进一步，我们对围绕Embedding ID的Unique和Partition环节进行了算子合并，简化了逻辑实现。经过上述的优化，Unique单算子可以取得51%的加速，在真实模型端到端上可以获得10%左右的性能提升，算子总数量降低了4%。</p>
 <p><strong>在整个关键算子优化的过程中，Intel公司的林立凡、张向泽、高明进行大量的技术支持，我们也复用了他们的部分优化工作，在此深表感谢！</strong></p>

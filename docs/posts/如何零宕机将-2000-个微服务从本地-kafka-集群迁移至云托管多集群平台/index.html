@@ -70,7 +70,7 @@
 <p>最近几年，由于事件驱动架构中的服务数量不断增多，Wix 业务 中大量的 OLTP 服务对 Kafka 的运转造成了负担。</p>
 <p>我们的自托管集群规模从 2019 年的 5K Topics，大于 45K 分区增加到 2021 年的 20K Topics， 大于 200K 分区。</p>
 <p>流量也从每天约 4.5 亿条记录增长到每个集群每天产生 25 亿多条记录。</p>
-<p><img src="https://static001.geekbang.org/infoq/f4/f448ae5313c031ea7f5553d9ad8f875a.jpeg" alt=""><!-- raw HTML omitted --></p>
+<p><img src="https://static001.geekbang.org/infoq/f4/f448ae5313c031ea7f5553d9ad8f875a.jpeg"><!-- raw HTML omitted --></p>
 <p>迁移前 Wix 的 Kafka 使用情况</p>
 <p>由于需要将所有元数据都加载到分区中，从而给集群控制器的启动时间带来了很大压力，这使得 leader 的选举时间大大增加。如果单个 broker 发生故障，也会极大影响其启动时间，从而造成更多的分区复制不足事件。</p>
 <p>为防止 Kafka 集群在生产中出现不稳定的情况，我们决定将自托管的 Kafka 集群迁移到 Confluent Cloud，并将每个数据中心的单集群分割成多个集群。</p>
@@ -95,13 +95,13 @@
 <p>Confluent 平台提供了分层存储，使得 Kafka 的记录保留期大大延长，而且不需要支付高昂的磁盘空间费用，通过将旧的记录转移到更便宜的 S3 存储，而不增加新的费用。</p>
 <h2 id="将-2000-个微服务切换到多集群-kafka-架构">将 2000 个微服务切换到多集群 Kafka 架构</h2>
 <p>在 Wix，我们拥有一个标准的 JVM 库和代理服务，用于与 Kafka 进行交互，称为 Greyhound。这是一个开源的先进 SDK，可以为 Apache Kafka 提供诸如并发消息处理、批量处理、重试等其他特性。</p>
-<p><img src="https://static001.geekbang.org/infoq/5c/5cb553dab70ef9273bf9de9c3f50fbe5.jpeg" alt=""><!-- raw HTML omitted --></p>
+<p><img src="https://static001.geekbang.org/infoq/5c/5cb553dab70ef9273bf9de9c3f50fbe5.jpeg"><!-- raw HTML omitted --></p>
 <p>Greyhound 是 Wix 约 2200 个微服务的事件驱动主干，因此，引入多集群的概念仅需在一些地方（包括库和代理服务）就可以进行。由于旧的集群会自动映射，所以新主题的生产者（producer）和消费者（consumer）必须清楚地指明集群。当构建 Greyhound 消费者或生产者时，开发人员只要定义集群的逻辑名称即可，如下图所示：</p>
-<p><img src="https://static001.geekbang.org/infoq/f0/f071ff728a00c4b5ae7ab149c64c5264.jpeg" alt=""><!-- raw HTML omitted --></p>
+<p><img src="https://static001.geekbang.org/infoq/f0/f071ff728a00c4b5ae7ab149c64c5264.jpeg"><!-- raw HTML omitted --></p>
 <h2 id="如何分割">如何分割？</h2>
 <p>我们决定根据不同的服务级别协议（Service-level agreement，SLA）对 Kafka 集群进行分割。例如，在 CI/CD 管道和数据迁移案例中，服务级别协议是有别于生产服务的。请注意，由于每个数据中心的作用不同，并非所有数据中心都拥有同样数目的 Kafka 集群。</p>
 <p>Greyhound（Wix 自己的 Kafka SDK）懂得当服务实例在目前运行的数据中心集群不可用时，该如何处理这个问题并防止发生故障。</p>
-<p><img src="https://static001.geekbang.org/infoq/b1/b14ee5978c6b8f3d397a3d92afc05717.jpeg" alt=""><!-- raw HTML omitted --></p>
+<p><img src="https://static001.geekbang.org/infoq/b1/b14ee5978c6b8f3d397a3d92afc05717.jpeg"><!-- raw HTML omitted --></p>
 <h2 id="流量耗尽的数据中心">流量耗尽的数据中心？</h2>
 <p>为了使 2000 个微服务的生产者和消费者更容易迁移到多个管理式 Kafka 集群，最初的设计依赖于首先将每个数据中心（data center，DC）的流量全部耗尽。</p>
 <p>这样的设计意味着只需要将生产者和消费者的连接细节切换到新的 Kafka 集群。因为 Wix 微服务通过 Greyhound 层与 Kafka 集群相连，所以只要在 Greyhound 的生产配置就可以更改连接（同时保证仅有一个数据中心受到影响）。</p>
@@ -116,11 +116,11 @@
 <p>活跃的 Kafka 消费者在保证没有消息丢失和最小程度的重新处理记录的情况下，必须首先进行切换。唯一的方法是将所有消耗的主题记录从自己的主机集群复制到目标管理式集群。</p>
 <h3 id="复制">复制</h3>
 <p>为了保证在迁移过程中不会出现消息处理的丢失，我们创建了一个专门的复制服务。一旦所有的消费者主题被确定，复制器（replicator）服务就会被要求在适当的云集群中创建主题，并开始消费来自自托管集群的记录，并将它们生成到目标集群中。</p>
-<p><img src="https://static001.geekbang.org/infoq/3b/3bd2000cba4a48efefc432b2b1fb0682.jpeg" alt=""><!-- raw HTML omitted --></p>
+<p><img src="https://static001.geekbang.org/infoq/3b/3bd2000cba4a48efefc432b2b1fb0682.jpeg"><!-- raw HTML omitted --></p>
 <h3 id="消费者迁移">消费者迁移</h3>
 <p>为了促进消费者迁移，复制器还坚持为每个分区提供偏移量映射，这样 Greyhound 消费者就可以从正确的偏移量开始处理云集群中的记录——该偏移量是从自托管集群中第一个未提交的偏移量映射而来的。</p>
 <p>除了复制器外，还有一个迁移编排器（Migration Orchestrator），它可以确保一个主题被复制，所有的偏移量被映射，并继续请求 Greyhound 消费者从自托管集群中取消订阅。在验证成功后，编排器就会要求消费者在寻求正确的映射偏移时订阅云集群。</p>
-<p><img src="https://static001.geekbang.org/infoq/35/351febab231b65901143cf1da76013db.jpeg" alt=""><!-- raw HTML omitted --></p>
+<p><img src="https://static001.geekbang.org/infoq/35/351febab231b65901143cf1da76013db.jpeg"><!-- raw HTML omitted --></p>
 <p>如果出现失败的情况，编排器能够要求消费者恢复到自托管集群。</p>
 <p>所有这些编排器与消费者之间的通信都是通过专门的 Kafka 迁移主题实现的。Greyhound 消费者在启动时就开始监听它们。</p>
 <h3 id="生产者迁移">生产者迁移</h3>
@@ -132,12 +132,12 @@
 <p>只有在迁移了生产者之后，才能终止对主题的复制。但是要想迁移生产者，就得把其所有的主题消费者都迁移出去。</p>
 <p>事实证明，许多主题有来自不同服务的多个消费者，这就意味着，复制器消费者需要处理和复制的流量越来越多。</p>
 <p>这就产生了一个问题，由于我们相对较老的自托管 Kafka brokers 版本的技术局限性，使得消费者能够处理的主题数量有限。在几次尝试增加 message.max.bytes 的结果都适得其反（参阅 KAFKA-9254 bug），并造成了严重的问题后，我们决定简单地增加复制器消费者，并在它们之间分片处理要复制的主题。</p>
-<p><img src="https://static001.geekbang.org/infoq/f8/f8cab64f9ac674f6a26d008d77a97970.jpeg" alt=""><!-- raw HTML omitted --></p>
+<p><img src="https://static001.geekbang.org/infoq/f8/f8cab64f9ac674f6a26d008d77a97970.jpeg"><!-- raw HTML omitted --></p>
 <h3 id="迁移之外外部消费者控制">迁移之外——外部消费者控制</h3>
 <p>这种“有流量”的迁移设计为动态改变 Greyhound 消费者的配置或状态，提供了很多新的可能性，而无需在生产中采用新的版本。</p>
 <p>现在，我们已经有了基础设施，使 Greyhound 消费者能够监听传入的命令来改变状态或配置。这样的命令可以包括：</p>
 <p>切换集群：取消订阅当前集群并订阅另一个集群。跳过记录：跳过不能处理的记录。改变处理率：动态地增加或减少并行处理量，或为节流和背压添加延迟。重新分配记录：如果一个分区的延迟越来越大，则能够在所有分区之间重新分配记录（并跳过旧的记录）。</p>
-<p><img src="https://static001.geekbang.org/infoq/f0/f07eb1c3870f37e5fa9c43529d637c48.jpeg" alt=""><!-- raw HTML omitted --></p>
+<p><img src="https://static001.geekbang.org/infoq/f0/f07eb1c3870f37e5fa9c43529d637c48.jpeg"><!-- raw HTML omitted --></p>
 <p>目前，这些都是理论上的，但利用已经存在的迁移基础设施就可以更容易地实现。</p>
 <h3 id="最佳实践和提示">最佳实践和提示</h3>
 <p>以下是成功进行 Kafka 集群迁移的最佳实践和技巧清单：</p>
@@ -162,13 +162,13 @@
 <li>确保自托管 Kafka 代理是最新的补丁版本</li>
 </ul>
 <p>因为我们的自托管 Kafka brokers 没有使用最新的补丁版本，所以在我们多次试图提高 message.max.bytes 的值时，我们最后还是发生了一个生产事故（详见本文的“复制的瓶颈”部分）。我的忠告是，先更新自托管集群 Kafka brokers 版本。如果不是最新版本，那至少也要安装最新的补丁。</p>
-<p><img src="https://static001.geekbang.org/infoq/66/668fce869eacfe918980b04adbdb433a.jpeg" alt=""><!-- raw HTML omitted --></p>
+<p><img src="https://static001.geekbang.org/infoq/66/668fce869eacfe918980b04adbdb433a.jpeg"><!-- raw HTML omitted --></p>
 <h2 id="总结">总结</h2>
 <p>我们利用 Greyhound 和专用编排服务和脚本，以便在实时流量期间以无缝方式实现自动、安全和逐步的迁移。</p>
 <p>这可不是一件简单的事情。如果你可以充分利用数据中心完全耗尽流量的时间，或者可以承受得住处理的停机时间，那么我强烈建议将生产者和消费者切换到新集群，而不是首先复制数据。这样的设计更加容易，你也可以节省更多的时间。</p>
 <p>否则，当你在流量下进行迁移时，你必须小心地按照执行的顺序（消费者在生产者之前 / 之后）进行迁移，并且要保证你明白这个决策的后果（回滚的能力，丢失数据的可能）。</p>
 <p>下面你会看到一张流程图，使你容易理解各种选择。</p>
-<p><img src="https://static001.geekbang.org/infoq/81/81c86def4c634c32d880b33c00253f8d.jpeg" alt=""><!-- raw HTML omitted --></p>
+<p><img src="https://static001.geekbang.org/infoq/81/81c86def4c634c32d880b33c00253f8d.jpeg"><!-- raw HTML omitted --></p>
 <p><strong>作者介绍：</strong></p>
 <p>Natan Silnitsky，供职于 Wix，后端基础设施开发者。</p>
 <p><strong>原文链接：</strong></p>

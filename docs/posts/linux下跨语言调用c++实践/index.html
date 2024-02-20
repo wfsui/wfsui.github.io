@@ -79,10 +79,10 @@
 <p>本文对我们在实际生产中尝试这一技术方案时，遇到的问题与一些实践经验做了完整的梳理，希望能为大家提供一些参考或帮助。</p>
 <h2 id="2-方案概述">2 方案概述</h2>
 <p>为了达到业务方开箱即用的目的，综合考虑C++、Python、Java用户的使用习惯，我们设计了如下的协作结构：</p>
-<p><img src="https://p1.meituan.net/travelcube/8df34a75f68ea21d4158a310f02b2cf644648.png" alt="图 1"></p>
+<p><img alt="图 1" src="https://p1.meituan.net/travelcube/8df34a75f68ea21d4158a310f02b2cf644648.png"></p>
 <h2 id="3-实现详情">3 实现详情</h2>
 <p>Python、Java支持调用C接口，但不支持调用C++接口，因此对于C++语言实现的接口，必须转换为C语言实现。为了不修改原始C++代码，在C++接口上层用C语言进行一次封装，这部分代码通常被称为“胶水代码”(Glue Code)。具体方案如下图所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/bd4e415d94a8968cc031ad3c0d565fd622171.png" alt="图 2"></p>
+<p><img alt="图 2" src="https://p0.meituan.net/travelcube/bd4e415d94a8968cc031ad3c0d565fd622171.png"></p>
 <p>本章节各部分内容如下：</p>
 <ul>
 <li>【功能代码】部分，通过打印字符串的例子来讲述各语言部分的编码工作。</li>
@@ -388,7 +388,7 @@
 <p>由于Python/Java的调用过程基本一致，我们以Java的调用过程为例来进行解释，对于Python的调用过程不再赘述。</p>
 <h4 id="421-内存管理">4.2.1 内存管理</h4>
 <p>在Java的世界里，内存由JVM统一进行管理，JVM的内存由栈区、堆区、方法区构成，在较为详细的资料中，还会提到native heap与native stack，其实这个问题，我们不从JVM的角度去看，而是从操作系统层面出发来理解会更为简单直观。以Linux系统下为例，首先JVM名义上是一个虚拟机，但是其本质就是跑在操作系统上的一个进程，因此这个进程的内存会存在如下左图所示划分。而JVM的内存管理实质上是在进程的堆上进行重新划分，自己又“虚拟”出Java世界里的堆栈。如右图所示，native的栈区就是JVM进程的栈区，进程的堆区一部分用于JVM进行管理，剩余的则可以给native方法进行分配使用。</p>
-<p><img src="https://p0.meituan.net/travelcube/c27fc0bb818b757660aeb68663d347ed36506.png" alt="图 3"></p>
+<p><img alt="图 3" src="https://p0.meituan.net/travelcube/c27fc0bb818b757660aeb68663d347ed36506.png"></p>
 <h4 id="422-调用过程">4.2.2 调用过程</h4>
 <p>前文提到，native方法调用前，需要将其所在的动态库加载到内存中，这个过程是利用Linux的dlopen实现的，JVM会把动态库中的代码片段放到Native Code区域，同时会在JVM Bytecode区域保存一份native方法名与其所在Native Code里的内存地址映射。</p>
 <p>一次native方法的调用步骤，大致分为四步：</p>
@@ -398,7 +398,7 @@
 <li>切换到native栈中，执行native方法。</li>
 <li>native方法出栈后，切换回JVM方法，JVM将结果拷贝至JVM的栈或堆中。</li>
 </ol>
-<p><img src="https://p0.meituan.net/travelcube/4f1ef76cb0b3933b0a34e5fa15314c2655388.png" alt="图 4"></p>
+<p><img alt="图 4" src="https://p0.meituan.net/travelcube/4f1ef76cb0b3933b0a34e5fa15314c2655388.png"></p>
 <p>由上述步骤可以看出，native方法的调用同样涉及参数的拷贝，并且其拷贝是建立在JVM堆栈和原生堆栈之间。</p>
 <p>对于原生数据类型，参数是通过值拷贝方式与native方法地址一起入栈。而对于复杂数据类型，则需要一套协议，将Java中的object映射到C/C++中能识别的数据字节。原因是JVM与C语言中的内存排布差异较大，不能直接内存拷贝，这些差异主要包括：</p>
 <ul>
@@ -406,7 +406,7 @@
 <li>JVM与操作系统的字节顺序（Big Endian还是Little Endian）可能不一致。</li>
 <li>JVM的对象中，会包含一些meta信息，而C里的struct则只是基础类型的并列排布，同样Java中没有指针，也需要进行封装和映射。</li>
 </ul>
-<p><img src="https://p0.meituan.net/travelcube/39092df4b2e7cfee7254794388d364a947004.png" alt="图 5"></p>
+<p><img alt="图 5" src="https://p0.meituan.net/travelcube/39092df4b2e7cfee7254794388d364a947004.png"></p>
 <p>上图展示了native方法调用过程中参数传递的过程，其中映射拷贝在JNI中是由C/C++链接部分的胶水代码实现，类型的映射定义在jni.h中。</p>
 <p>Java基本类型与C基本类型的映射（通过值传递。将Java对象在JVM内存里的值拷贝至栈帧的形参位置）：</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#719e07">typedef</span> <span style="color:#dc322f">unsigned</span> <span style="color:#dc322f">char</span>   jboolean;
@@ -499,9 +499,9 @@
 <li>内存映射，尤其存在大量数据从JVM Heap向Native Heap 进行拷贝时，这部分的开销是跨语言调用的主要耗时所在。</li>
 </ul>
 <p>我们通过如下实验简单做了一下性能对比，我们分别用C语言、Java、JNI、JNA以及JNA直接映射五种方式，分别进行100万次到1000万次的余弦计算，得到耗时对比。在6核16G机器，我们得到如下结果：</p>
-<p><img src="https://p0.meituan.net/travelcube/11706a3d46a70ddac53f1ba1ba81b61e81198.png" alt=""></p>
-<p><img src="https://p0.meituan.net/travelcube/90eae51ea258ca3bd6c1724c09bccfb968966.png" alt="图 6"></p>
-<p><img src="https://p0.meituan.net/travelcube/65e1d74135334c3ab8e72bc426a72a5e70993.png" alt="图 7"></p>
+<p><img src="https://p0.meituan.net/travelcube/11706a3d46a70ddac53f1ba1ba81b61e81198.png"></p>
+<p><img alt="图 6" src="https://p0.meituan.net/travelcube/90eae51ea258ca3bd6c1724c09bccfb968966.png"></p>
+<p><img alt="图 7" src="https://p0.meituan.net/travelcube/65e1d74135334c3ab8e72bc426a72a5e70993.png"></p>
 <p>由实验数据可知，运行效率依次是 <code>C &gt; Java &gt; JNI &gt; JNA DirectMapping &gt; JNA</code>。 C语言高于Java的效率，但两者非常接近。JNI与JNA DirectMapping的方式性能基本一致，但是会比原生语言的实现要慢很多。普通模式下的JNA的速度最慢，会比JNI慢5到6倍。</p>
 <p>综上所述，跨语言本地化调用，并不总是能够提升计算性能，需要综合计算任务的复杂度和跨语言调用的耗时进行综合权衡。我们目前总结到的适合跨语言调用的场景有：</p>
 <ul>
@@ -519,7 +519,7 @@
 <li>RPC服务因为网络抖动等因为，调用成功率不能达到100%，影响任务执行效果。</li>
 <li>离线任务需引入RPC调用相关代码，在Python脚本等轻量级计算任务里，这部分的代码往往因为一些基础组件的不完善，导致接入成本较高。</li>
 </ul>
-<p><img src="https://p0.meituan.net/travelcube/e8c54e56f622a7c61270b5ef0a44e59614837.png" alt="图 8"></p>
+<p><img alt="图 8" src="https://p0.meituan.net/travelcube/e8c54e56f622a7c61270b5ef0a44e59614837.png"></p>
 <p>将RPC调用改造为跨语言本地化调用后，上述问题得以解决，收益明显。</p>
 <ul>
 <li>不再调用线上服务，流量隔离，对线上安全不产生影响。</li>
@@ -527,10 +527,10 @@
 <li>消除网络抖动导致的请求失败问题。</li>
 <li>通过上述章节的工作，提供了开箱即用的本地化工具，极大的简化了使用成本。</li>
 </ul>
-<p><img src="https://p0.meituan.net/travelcube/8815db040a949d6ab2764d3918eace9730376.png" alt="图 9"></p>
+<p><img alt="图 9" src="https://p0.meituan.net/travelcube/8815db040a949d6ab2764d3918eace9730376.png"></p>
 <h3 id="52-在线服务中的应用">5.2 在线服务中的应用</h3>
 <p>查询理解作为美团内部的基础服务平台，提供分词词性、查询纠错、查询改写、地标识别、异地识别、意图识别、实体识别、实体链接等文本分析，是一个较大的CPU密集型服务，承接了公司内非常多的本文分析业务场景，其中有部分场景只是需要个别信号，甚至只需要查询理解服务中的基础函数组件，对于大部分是通过Java开发的业务服务，无法直接引用查询理解的C++动态库，此前一般是通过RPC调用获取结果。通过上述工作，在非C++语言的调用方服务中，可以将RPC调用转化为跨语言本地化调用，能够明显的提升调用端的性能以及成功率，同时也能有效减少服务端的资源开销。</p>
-<p><img src="https://p0.meituan.net/travelcube/ce44f33dcd9d81d6129dc5632383792717812.png" alt="图 10"></p>
+<p><img alt="图 10" src="https://p0.meituan.net/travelcube/ce44f33dcd9d81d6129dc5632383792717812.png"></p>
 <h2 id="6-总结">6 总结</h2>
 <p>微服务等技术的发展使得服务创建、发布和接入变得越来越简单，但是在实际工业生产中，并非所有场景都适合通过RPC服务完成计算。尤其在计算密集型和耗时敏感型的业务场景下，当性能成为瓶颈时，远程调用带来的网络开销就成了业务不可承受之痛。本文对语言本地化调用的技术进行了总结，并给出一些实践经验，希望能为大家解决类似的问题提供一些帮助。</p>
 <p>当然，本次工作中还有许多不足，例如因为实际生产环境的要求，我们的工作基本都集中在Linux系统下，如果是以开放库形式，让使用方可以自由使用的话，可能还需要考虑兼容Windows下的DLL，Mac OS下的dylib等等。本文可能还存在其他不足之处，欢迎大家指留言指正、探讨。</p>
@@ -544,7 +544,7 @@
 <li><a href="https://man7.org/linux/man-pages/man3/dlclose.3p.html">Linux dlclose</a></li>
 <li><a href="https://man7.org/linux/man-pages/man3/dlsym.3.html">Linux dlsym</a></li>
 <li><a href="https://github.com/python/cpython">CPython源码</a></li>
-<li><a href="https://docs.python.org/zh-cn/3/library/ctypes.html#">CPython中ctypes的介绍</a></li>
+<li><a href="https://docs.python.org/zh-cn/3/library/ctypes.html">CPython中ctypes的介绍</a></li>
 <li><a href="https://blog.csdn.net/mergerly/article/details/76858589">CTypes Struct实现</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/276461821">Python项目分发打�</a>�</li>
 <li><a href="https://blog.csdn.net/lwj1396/article/details/5204484">C与C++函数签名</a></li>

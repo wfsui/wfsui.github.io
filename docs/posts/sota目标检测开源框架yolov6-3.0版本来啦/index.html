@@ -65,8 +65,8 @@
 <p>1 月 6 日，美团视觉智能部发布了 YOLOv6 3.0 版本，再一次将目标检测的综合性能推向新高。本次更新除了对 YOLOv6-N/S/M/L 模型进行全系列升级之外，还推出了大分辨率 P6 模型。其中，YOLOv6-L6 检测精度达到 57.2% AP，在 T4 卡上推理速度可达 29 FPS，超越 YOLOv7-E6E，取得当前实时目标检测榜单 SOTA。</p>
 <p><strong>技术报告</strong>：<a href="https://arxiv.org/pdf/2301.05586.pdf">YOLOv6 v3.0: A Full-Scale Reloading</a></p>
 <p>YOLOv6 Github 传送门：<a href="https://github.com/meituan/YOLOv6">https://github.com/meituan/YOLOv6</a>，欢迎 Star 收藏，随时取用。</p>
-<p><img src="https://p0.meituan.net/travelcube/ba78bfb36b9b8ec4550c9094f85e96fb320411.png" alt="图1 YOLOv6 各尺寸模型与其他 YOLO 系列框架的性能对比图"></p>
-<p><img src="https://p0.meituan.net/travelcube/f76e8683aaa8d8075c96d28a37f329cd389470.png" alt="表1 YOLOv6 各尺寸模型与其他 YOLO 系列框架的性能对比结果"></p>
+<p><img alt="图1 YOLOv6 各尺寸模型与其他 YOLO 系列框架的性能对比图" src="https://p0.meituan.net/travelcube/ba78bfb36b9b8ec4550c9094f85e96fb320411.png"></p>
+<p><img alt="表1 YOLOv6 各尺寸模型与其他 YOLO 系列框架的性能对比结果" src="https://p0.meituan.net/travelcube/f76e8683aaa8d8075c96d28a37f329cd389470.png"></p>
 <p>注：YOLOv6 系列模型均在训练 300epoch 且不使用预训练模型或额外检测数据集下获得，“‡” 表示采用了自蒸馏算法，“＊” 表示从官方代码库对发布模型进行重新测评的指标。以上速度指标均在 T4 TRT7.2 环境下测试。</p>
 <h2 id="2-关键技术介绍">2. 关键技术介绍</h2>
 <p>本次更新主要在 Neck 网络设计、训练和蒸馏策略等方面进行了创新和优化：</p>
@@ -80,15 +80,15 @@
 <p>受到上述工作的启发，我们提出了一个表征能力更强的可重参化双向融合 PAN（RepBi-PAN）Neck 网络。一般而言，骨干网络浅层特征分辨率高，具有丰富的空间信息，有利于目标检测中的定位任务。为了聚合浅层特征，常见的做法是在 FPN 中增加 P2 融合层以及一个额外的检测头，但这往往会带来较大的计算成本。</p>
 <p>为了实现更好的精度和时延权衡，我们设计了一个双向联结（Birectional Concatenate, BiC）模块，在自上而下的传输路径中引入自底向上的信息流，使得浅层特征能以更高效的方式参与多尺度特征融合，进一步增强融合特征的表达能力。此模块能够帮助保留更准确的定位信号，这对于小物体的定位具有重要意义。</p>
 <p>此外，我们对上一版本的 SimSPPF 模块进行了特征增强优化，以丰富特征图的表示能力。我们发现 YOLOv7 使用的 SPPCSPC 模块能够提升检测精度，但对网络推理速度的影响较大。于是我们对其进行了简化设计，在检测精度影响不大的情况下，大大提升了推理效率。同时，我们引入了可重参数化思想并对 Neck 网络的通道宽度和深度进行了相应的调整。最终 RepBi-PAN 网络结构如下图 2 所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/4b150118e7d3eab52e7968034851b6db164760.jpg" alt="图2 RepBi-PAN 网络结构图"></p>
-<p><img src="https://p0.meituan.net/travelcube/df998edd1295472396321994c4c0f12d53597.png" alt="表2 BiC 模块消融实验结果"></p>
+<p><img alt="图2 RepBi-PAN 网络结构图" src="https://p0.meituan.net/travelcube/4b150118e7d3eab52e7968034851b6db164760.jpg"></p>
+<p><img alt="表2 BiC 模块消融实验结果" src="https://p0.meituan.net/travelcube/df998edd1295472396321994c4c0f12d53597.png"></p>
 <p>从表2可以看到，在 YOLOv6-S/L 模型上，仅在 PAN 网络自上而下的传输路径引入 BiC 模块后，对推理速度影响保持在 4% 的情况下，检测精度分别提升 0.6% 和 0.4% AP。当我们尝试额外地在自底向上的信息流中将常规联结替换成 BiC 模块时，反而没有获得进一步正向的增益，因此我们仅在自上而下的路径中应用 BiC 模块。与此同时，我们还注意到，BiC 模块能够为小目标的检测精度带来 1.8% AP 的提升。</p>
-<p><img src="https://p1.meituan.net/travelcube/3a79df9fd71ba97fcda4f781b22b1023110518.png" alt="表3 不同的 SPP 模块对模型精度和速度的对比结果"></p>
+<p><img alt="表3 不同的 SPP 模块对模型精度和速度的对比结果" src="https://p1.meituan.net/travelcube/3a79df9fd71ba97fcda4f781b22b1023110518.png"></p>
 <p>在表 3 中，我们对不同的 SPP 模块对模型精度和速度影响做了实验对比，其中包括经过我们简化设计的 SPPF、SPPCSPC 和 CSPSPPF 模块。除此之外，我们还尝试了在骨干网络 C3、C4 和 C5 的输出特征后分别采用了 SimSPPF 模块以加强特征的聚合表达，在表中用 SimSPPF * 3表示。从实验结果来看，重复使用 SimSPPF 模块虽然增加了计算量，但并没有带来检测精度的进一步提升。</p>
 <p>经简化设计的 SPPCSPC 模块对比 SimSPPF 模块 在 YOLOv6-N/S 模型上分别提升了 1.6% 和 0.3% AP，但对推理速度 FPS 降低约10%。而当我们将 SimSPPF 模块替换为优化后的 SimCSPSPPF 模块后，在 YOLOv6-N/S/M 模型上分别取得了1.1%/0.4%/0.1% 的精度增益，同时推理速度对比 SimSPPCSPC 模块有较大的提升。因此，为了更好的精度-效率权衡，在 YOLOv6-N/S 上采用 SimCSPSPPF 模块，而在 YOLOv6-M/L 上采用 SimSPPF 模块。</p>
 <h3 id="22-全新的锚点辅助训练anchor-aided-training策略">2.2 全新的锚点辅助训练（Anchor-Aided Training）策略</h3>
 <p>基于深度学习的目标检测技术从学习范式上主要可分为 Anchor-based 和 Anchor-free 两大类，这两类方法针对不同尺度的目标检测上分别存在不同的优势。我们使用 YOLOv6-N 作为基线，对 Anchor-based 和 Anchor-free 范式的异同点进行了相关的实验和分析。</p>
-<p><img src="https://p0.meituan.net/travelcube/736dfc00407902f5c73b118c35b4b11719496.png" alt="表4 YOLOv6-N 上 Anchor-free 和 Anchor-based 比较"></p>
+<p><img alt="表4 YOLOv6-N 上 Anchor-free 和 Anchor-based 比较" src="https://p0.meituan.net/travelcube/736dfc00407902f5c73b118c35b4b11719496.png"></p>
 <p>从表 4 中可以看出，当 YOLOv6-N 分别采用 Anchor-based 和 Anchor-free 训练范式时，模型的整体 mAP 几乎接近，但采用 Anchor-based 的模型在小、中、大目标上的 AP 指标会更高。从以上的实验可以得出结论：相比于 Anchor-free 范式，基于 Anchor-based 的模型存在额外的性能增益。</p>
 <p>同时我们发现，YOLOv6 使用 TAL 进行标签分配时，其模型精度的稳定性与是否采用 ATSS 预热有较大关系。当不使用 ATSS 预热时，对同样参数配置的 YOLOv6-N 进行多次训练，模型精度最高可达35.9% mAP，最低至 35.3% mAP，相同模型会有 0.6% mAP 的差异。但当使用 ATSS 预热时，模型精度最高却只能到达 35.7% mAP。从实验结果可以分析得出，ATSS 的预热过程利用了 Anchor-based 的预设信息，进而达到稳定模型训练的目的，但也会在一定程度上限制网络的峰值能力，因此并不是一种最优的选择。</p>
 <p>受到上述工作的启发，我们提出了基于锚点辅助训练（Anchor-Aided Training，AAT）策略。在网络训练过程中，同时融合 Anchor-based 和 Anchor-free 的两种训练范式，并对全阶段网络进行映射及优化，最终实现了Anchor 的统一，充分发挥了结合不同 Anchor 网络的各自优势，从而进一步提升了模型检测精度。具体来说：</p>
@@ -97,9 +97,9 @@
 <li>另一方面，在网络标签匹配的过程中引入了同特征点密集采样的机制。通过扩大每次样本匹配过程中所选取候选框的范围，增加候选框中正样本的数量，并且对同一特征点重复投放采样点，进一步提升在训练过程中候选框的质量。与此同时，在网络的每一层中还会搭配原始的 Anchor-free 分支，进一步提升候选框的多样性。</li>
 </ul>
 <p>除此之外，我们还提出灵活配置的训练策略，仅在训练过程中引入额外的辅助分支，在测试过程中不予使用。最终在不增加推理时间的情况下，提升网络精度，无痛涨点。最终 AAT 策略的示意图如下图 3 所示：</p>
-<p><img src="https://p1.meituan.net/travelcube/3cc9299853f0ef19a0a4f3b520d381905231661.jpg" alt="图3 AAT 训练策略示意图"></p>
+<p><img alt="图3 AAT 训练策略示意图" src="https://p1.meituan.net/travelcube/3cc9299853f0ef19a0a4f3b520d381905231661.jpg"></p>
 <p>采用 AAT 训练策略的消融实验结果如下表 5 所示。我们在 YOLOv6 的各尺寸模型上进行了实验，其中 YOLOv6-S 模型采用 AAT 策略后有 0.3% 的精度增益，而在 YOLOv6-M/L 模型上分别带来了0.5% 的精度增益。值得注意的是，YOLOv6-N/S/M 在小目标检测的精度指标得到了显着增强。</p>
-<p><img src="https://p0.meituan.net/travelcube/0242abeba2c77cf945b3fbfcf11ddd4775788.png" alt="表5 AAT 消融实验结果"></p>
+<p><img alt="表5 AAT 消融实验结果" src="https://p0.meituan.net/travelcube/0242abeba2c77cf945b3fbfcf11ddd4775788.png"></p>
 <h3 id="23-无痛涨点的-dld-解耦定位蒸馏策略">2.3 无痛涨点的 DLD 解耦定位蒸馏策略</h3>
 <p>在目标检测的蒸馏任务中，LD 通过引入 DFL 分支，从而达到了在网络中对定位信息蒸馏的目的，使分类和定位信息得以同步回传，弥补了 Logit Mimicking 方法无法使用定位蒸馏信息的不足。但是，DFL 分支的添加，对于小模型速度的影响是很明显的。添加了 DFL 分支后，YOLOv6-N 的速度下降了 16.7%，YOLOv6-S 的速度下降了 5.2%。而在实际的工业应用当中，对于小模型速度的要求往往很高。因此，目前的蒸馏策略并不适合于工业落地。</p>
 <p>针对这个问题，我们提出了基于解耦检测任务和蒸馏任务的 DLD（Decoupled Location Distillation）算法。DLD 算法会在网络每一层的回归头上分别添加了额外的强化回归分支，在训练阶段，该分支同样会参与 IoU 损失的计算，并将其累加到最终的 Loss 中。</p>
@@ -109,7 +109,7 @@
 <li>另一方面，通过分支蒸馏进行的引导学习，可以进一步将 DFL 分支的效果传递给强化回归分支，为之后的灵活配置起到铺垫作用。</li>
 </ul>
 <p>除此之外，DLD 算法同样搭配了灵活配置的训练策略，在训练过程中采用双回归分支结构，对网络进行更全面细致的优化，进一步对齐双分支的回归能力。在测试过程中，移除掉冗余的 DFL 分支，仅保留强化回归分支，在简化网络的同时保持网络精度，最终实现了对目标检测算法可无痛涨点的 DLD 蒸馏算法。DLD 的消融实验结果如下表6所示：</p>
-<p><img src="https://p1.meituan.net/travelcube/be7e2935f79b9fa0d3c4591b21550c9f25497.png" alt="表6 DLD 在 YOLOv6-S 上的消融实验结果"></p>
+<p><img alt="表6 DLD 在 YOLOv6-S 上的消融实验结果" src="https://p1.meituan.net/travelcube/be7e2935f79b9fa0d3c4591b21550c9f25497.png"></p>
 <p>在表 6 中，我们在 YOLOv6-S 模型上分别对比了训练双倍轮数和采用 DLD 策略对模型性能的影响，从实验数据可以看出，当训练 600epoch时，YOLOv6-S 仅能达到 44.6% mAP。而采用 DLD 蒸馏策略后，YOLOv6-S 检测精度比使用双倍轮数训练的高 0.5%，最终达到45.1%。由此可得，DLD 蒸馏策略可在不影响推理效率的前提下，提升小模型的检测精度，实现无痛涨点。</p>
 <h2 id="3-总结">3. 总结</h2>
 <p>本文对 YOLOv6 3.0 版本的技术创新和优化进行了详细解析，希望能帮助用户理解相关算法设计的思路以及具体实现。</p>

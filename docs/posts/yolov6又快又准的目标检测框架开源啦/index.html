@@ -66,8 +66,8 @@
 <p>目前，项目已开源至Github，传送门：<a href="https://github.com/meituan/YOLOv6">YOLOv6</a>。欢迎有需要的小伙伴们Star收藏，随时取用。</p>
 <h3 id="精度与速度远超-yolov5-和-yolox-的新框架">精度与速度远超 YOLOv5 和 YOLOX 的新框架</h3>
 <p>目标检测作为计算机视觉领域的一项基础性技术，在工业界得到了广泛的应用，其中 YOLO 系列算法因其较好的综合性能，逐渐成为大多数工业应用时的首选框架。至今，业界已衍生出许多 YOLO 检测框架，其中以 YOLOv5[1]、YOLOX[2] 和 PP-YOLOE[3] 最具代表性，但在实际使用中，我们发现上述框架在速度和精度方面仍有很大的提升的空间。基于此，我们通过研究并借鉴了业界已有的先进技术，开发了一套新的目标检测框架——YOLOv6。该框架支持模型训练、推理及多平台部署等全链条的工业应用需求，并在网络结构、训练策略等算法层面进行了多项改进和优化，在 COCO 数据集上，YOLOv6 在精度和速度方面均超越其他同体量算法，相关结果如下图 1 所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/6e04535a78a8e341615ceab2dd474b18144058.png" alt="图1-1 YOLOv6 各尺寸模型与其他模型性能对比"></p>
-<p><img src="https://p0.meituan.net/travelcube/ae8d801a76f96eee5ddfd40d13901b0d141917.png" alt="图1-2 YOLOv6 与其他模型在不同分辨率下性能对比"></p>
+<p><img alt="图1-1 YOLOv6 各尺寸模型与其他模型性能对比" src="https://p0.meituan.net/travelcube/6e04535a78a8e341615ceab2dd474b18144058.png"></p>
+<p><img alt="图1-2 YOLOv6 与其他模型在不同分辨率下性能对比" src="https://p0.meituan.net/travelcube/ae8d801a76f96eee5ddfd40d13901b0d141917.png"></p>
 <p>图 1-1 展示了不同尺寸网络下各检测算法的性能对比，曲线上的点分别表示该检测算法在不同尺寸网络下（s/tiny/nano）的模型性能，从图中可以看到，YOLOv6 在精度和速度方面均超越其他 YOLO 系列同体量算法。</p>
 <p>图 1-2 展示了输入分辨率变化时各检测网络模型的性能对比，曲线上的点从左往右分别表示图像分辨率依次增大时（384/448/512/576/640）该模型的性能，从图中可以看到，YOLOv6 在不同分辨率下，仍然保持较大的性能优势。</p>
 <h2 id="2-yolov6关键技术介绍">2. YOLOv6关键技术介绍</h2>
@@ -79,7 +79,7 @@
 </ul>
 <h3 id="21-hardware-friendly-的骨干网络设计">2.1 Hardware-friendly 的骨干网络设计</h3>
 <p>YOLOv5/YOLOX 使用的 Backbone 和 Neck 都基于 CSPNet[5] 搭建，采用了多分支的方式和残差结构。对于 GPU 等硬件来说，这种结构会一定程度上增加延时，同时减小内存带宽利用率。下图 2 为计算机体系结构领域中的 Roofline Model[8] 介绍图，显示了硬件中计算能力和内存带宽之间的关联关系。</p>
-<p><img src="https://p0.meituan.net/travelcube/340c70143e36a3c6dfb1ee333cabe3f083168.png" alt="图2 Roofline Model 介绍图"></p>
+<p><img alt="图2 Roofline Model 介绍图" src="https://p0.meituan.net/travelcube/340c70143e36a3c6dfb1ee333cabe3f083168.png"></p>
 <p>于是，我们基于硬件感知神经网络设计的思想，对 Backbone 和 Neck 进行了重新设计和优化。该思想基于硬件的特性、推理框架/编译框架的特点，以硬件和编译友好的结构作为设计原则，在网络构建时，综合考虑硬件计算能力、内存带宽、编译优化特性、网络表征能力等，进而获得又快又好的网络结构。对上述重新设计的两个检测部件，我们在 YOLOv6 中分别称为 EfficientRep Backbone 和 Rep-PAN Neck，其主要贡献点在于：</p>
 <ol>
 <li>引入了 RepVGG[4] style 结构。</li>
@@ -87,17 +87,17 @@
 </ol>
 <p>RepVGG[4] Style 结构是一种在训练时具有多分支拓扑，而在实际部署时可以等效融合为单个 3x3 卷积的一种可重参数化的结构（融合过程如下图 3 所示）。通过融合成的 3x3 卷积结构，可以有效利用计算密集型硬件计算能力（比如 GPU），同时也可获得 GPU/CPU 上已经高度优化的 NVIDIA cuDNN 和 Intel MKL 编译框架的帮助。</p>
 <p>实验表明，通过上述策略，YOLOv6 减少了在硬件上的延时，并显著提升了算法的精度，让检测网络更快更强。以 nano 尺寸模型为例，对比 YOLOv5-nano 采用的网络结构，本方法在速度上提升了21%，同时精度提升 3.6% AP。</p>
-<p><img src="https://p0.meituan.net/travelcube/9f7878c7872787f9b8706b28e5e7c611237315.png" alt="图3 Rep算子的融合过程[4]"></p>
+<p><img alt="图3 Rep算子的融合过程[4]" src="https://p0.meituan.net/travelcube/9f7878c7872787f9b8706b28e5e7c611237315.png"></p>
 <p><strong>EfficientRep Backbone</strong>：在 Backbone 设计方面，我们基于以上 Rep 算子设计了一个高效的Backbone。相比于 YOLOv5 采用的 CSP-Backbone，该 Backbone 能够高效利用硬件（如 GPU）算力的同时，还具有较强的表征能力。</p>
 <p>下图 4 为 EfficientRep Backbone 具体设计结构图，我们将 Backbone 中 stride=2 的普通 Conv 层替换成了 stride=2 的 RepConv层。同时，将原始的 CSP-Block 都重新设计为 RepBlock，其中 RepBlock 的第一个 RepConv 会做 channel 维度的变换和对齐。另外，我们还将原始的 SPPF 优化设计为更加高效的 SimSPPF。</p>
-<p><img src="https://p0.meituan.net/travelcube/8ec8337d37c2545b8fcf355625854802145939.png" alt="图4 EfficientRep Backbone 结构图"></p>
+<p><img alt="图4 EfficientRep Backbone 结构图" src="https://p0.meituan.net/travelcube/8ec8337d37c2545b8fcf355625854802145939.png"></p>
 <p><strong>Rep-PAN</strong>：在 Neck 设计方面，为了让其在硬件上推理更加高效，以达到更好的精度与速度的平衡，我们基于硬件感知神经网络设计思想，为 YOLOv6 设计了一个更有效的特征融合网络结构。</p>
 <p>Rep-PAN 基于 PAN[6] 拓扑方式，用 RepBlock 替换了 YOLOv5 中使用的 CSP-Block，同时对整体 Neck 中的算子进行了调整，目的是在硬件上达到高效推理的同时，保持较好的多尺度特征融合能力（Rep-PAN 结构图如下图 5 所示）。</p>
-<p><img src="https://p0.meituan.net/travelcube/c37c23c37fd094e05e8cab924659a9d9199592.png" alt="图5 Rep-PAN 结构图"></p>
+<p><img alt="图5 Rep-PAN 结构图" src="https://p0.meituan.net/travelcube/c37c23c37fd094e05e8cab924659a9d9199592.png"></p>
 <h3 id="22-更简洁高效的-decoupled-head">2.2 更简洁高效的 Decoupled Head</h3>
 <p>在 YOLOv6 中，我们采用了解耦检测头（Decoupled Head）结构，并对其进行了精简设计。原始 YOLOv5 的检测头是通过分类和回归分支融合共享的方式来实现的，而 YOLOX 的检测头则是将分类和回归分支进行解耦，同时新增了两个额外的 3x3 的卷积层，虽然提升了检测精度，但一定程度上增加了网络延时。</p>
 <p>因此，我们对解耦头进行了精简设计，同时综合考虑到相关算子表征能力和硬件上计算开销这两者的平衡，采用 Hybrid Channels 策略重新设计了一个更高效的解耦头结构，在维持精度的同时降低了延时，缓解了解耦头中 3x3 卷积带来的额外延时开销。通过在 nano 尺寸模型上进行消融实验，对比相同通道数的解耦头结构，精度提升 0.2% AP 的同时，速度提升6.8%。</p>
-<p><img src="https://p0.meituan.net/travelcube/9a0fd7ba30522ce3ed24822e51b0e1a8109432.png" alt="图6 Efficient Decoupled Head 结构图"></p>
+<p><img alt="图6 Efficient Decoupled Head 结构图" src="https://p0.meituan.net/travelcube/9a0fd7ba30522ce3ed24822e51b0e1a8109432.png"></p>
 <h3 id="23-更有效的训练策略">2.3 更有效的训练策略</h3>
 <p>为了进一步提升检测精度，我们吸收借鉴了学术界和业界其他检测框架的先进研究进展：Anchor-free 无锚范式 、SimOTA 标签分配策略以及 SIoU 边界框回归损失。</p>
 <p><strong>Anchor-free 无锚范式</strong></p>
@@ -110,9 +110,9 @@
 <p>近年来，常用的边界框回归损失包括IoU、GIoU、CIoU、DIoU loss等等，这些损失函数通过考虑预测框与目标框之前的重叠程度、中心点距离、纵横比等因素来衡量两者之间的差距，从而指导网络最小化损失以提升回归精度，但是这些方法都没有考虑到预测框与目标框之间方向的匹配性。SIoU 损失函数通过引入了所需回归之间的向量角度，重新定义了距离损失，有效降低了回归的自由度，加快网络收敛，进一步提升了回归精度。通过在 YOLOv6s 上采用 SIoU loss 进行实验，对比 CIoU loss，平均检测精度提升 0.3% AP。</p>
 <h2 id="3-实验结果">3. 实验结果</h2>
 <p>经过以上优化策略和改进，YOLOv6 在多个不同尺寸下的模型均取得了卓越的表现。下表 1 展示了 YOLOv6-nano 的消融实验结果，从实验结果可以看出，我们自主设计的检测网络在精度和速度上都带来了很大的增益。</p>
-<p><img src="https://p0.meituan.net/travelcube/fff97f675528a63e610ff858460713cc244523.png" alt="表1 YOLOv6-nano 消融实验结果"></p>
+<p><img alt="表1 YOLOv6-nano 消融实验结果" src="https://p0.meituan.net/travelcube/fff97f675528a63e610ff858460713cc244523.png"></p>
 <p>下表 2 展示了 YOLOv6 与当前主流的其他 YOLO 系列算法相比较的实验结果。从表格中可以看到：</p>
-<p><img src="https://p0.meituan.net/travelcube/bc0e60516ae0bcad1c111d7c0c5c3b9e335568.png" alt="表2 YOLOv6各尺寸模型性能与其他模型的比较"></p>
+<p><img alt="表2 YOLOv6各尺寸模型性能与其他模型的比较" src="https://p0.meituan.net/travelcube/bc0e60516ae0bcad1c111d7c0c5c3b9e335568.png"></p>
 <ul>
 <li>YOLOv6-nano 在 COCO val 上 取得了 35.0% AP 的精度，同时在 T4 上使用 TRT FP16 batchsize=32 进行推理，可达到 1242FPS 的性能，相较于 YOLOv5-nano 精度提升 7% AP，速度提升 85%。</li>
 <li>YOLOv6-tiny 在 COCO val 上 取得了 41.3% AP 的精度， 同时在 T4 上使用 TRT FP16 batchsize=32 进行推理，可达到 602FPS 的性能，相较于 YOLOv5-s 精度提升 3.9% AP，速度提升 29.4%。</li>

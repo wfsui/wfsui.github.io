@@ -91,16 +91,16 @@
 <li><strong>数据形态多变、应用复杂</strong>：数据将在几乎所有IT系统中传递、存储和处理，其复杂程度超乎想象。加之AI、机器学习以及各类创新型数据应用，让数据使用逻辑更难以琢磨，要想了解数据的全貌几乎是不可能的任务。</li>
 <li><strong>数据威胁复杂多变</strong>：数据的巨大商业价值让包括黑、灰产业链，内、外部人员乃至商业、国际间谍都趋之若鹜。攻击技术、动机层出不穷，防不胜防。</li>
 </ol>
-<p><img src="https://p0.meituan.net/travelcube/d4ee73d7d783c55849a9dbb48959dfc459163.png" alt="图1 常规系统为中心防护模式下数据暴露性"></p>
+<p><img alt="图1 常规系统为中心防护模式下数据暴露性" src="https://p0.meituan.net/travelcube/d4ee73d7d783c55849a9dbb48959dfc459163.png"></p>
 <p>传统模式下，数据以明文形式在系统中流通，数据暴露性巨大。攻击者通过应用程序、存储、主机系统入口，以及攻击系统的授权账户等多种渠道获取大量数据。</p>
-<p><img src="https://p0.meituan.net/travelcube/40d092110397f32b8fd232285b51ac6f76434.png" alt="图2 常规模式横向数据暴露性"></p>
+<p><img alt="图2 常规模式横向数据暴露性" src="https://p0.meituan.net/travelcube/40d092110397f32b8fd232285b51ac6f76434.png"></p>
 <p>在数字化场景中，数据将在数以万计的应用、任务中传递。每个应用都有自身逻辑，让所有应用合规成本巨大。在如此广泛、复杂的环境下要保护数据安全，如果采用传统以系统为中心的防御模式，必将造成防御战线过长，攻强守弱的格局，让数据安全治理长期处于不利地位。必须转变思路，创造出一种数据内生的安全机制，在数据业务高速扩张环境下，安全防护能力也随之增长，这就是以数据为中心的安全防御创新机制。</p>
 <h2 id="2-token化-数字世界银行体系">2. Token化-数字世界银行体系</h2>
 <p>Token化方案参考现实世界的银行系统。银行体系出现前，市面上经济活动主要以现金交易为主。现金的过度暴露，产生了大量的盗窃、抢劫案件，虽然镖局生意盛行，但只有少数富豪才雇佣得起，因此社会资产大量流失。银行体系应运而生：用户获得现金后，第一时间去银行将现金兑换成存款（等价代替物），随后在整个社会中流通的都是这个代替物-电子现金，只有在极个别场景兑换成现金。随着银行系统的渗透，加上各类线上支付应用的普及，这种现金使用场景越来越少。要想抢钱，只能到银行去，而银行是经过重点防护。</p>
 <p>同样，数据作为核心资产，可以通过方案在个人敏感数据数据（PII）刚进入组织业务系统时，就将明文数据（P）替换成与其一一对应的假名-Token。在随后的整个组织应用环境中以Token高效流通。因为Token与明文是一一对应的，可以在生命周期绝大多数场景代替明文传输、交换、存储和使用，而Token只有通过安全可靠的Token化服务，才能兑换成明文。黑客和内外部恶意攻击者即便拿到了也毫无用处（不可见）。由于Token的自带安全属性，只要在组织内控制住主要数据源和数据枢纽只使用Token流通。新的明文数据需主动换成Token，实现数据默认安全，也就从根本上解决了个人敏感数据的治理难题。</p>
-<p><img src="https://p1.meituan.net/travelcube/2201239d7971b1682075c01edd33b20d151184.png" alt="图3 Token化的数据暴露性"></p>
+<p><img alt="图3 Token化的数据暴露性" src="https://p1.meituan.net/travelcube/2201239d7971b1682075c01edd33b20d151184.png"></p>
 <p>如上图3所示，我们通过推广Token化，可将实际可访问明文的服务压缩到2位数，数据服务暴露性降低到1%以内。</p>
-<p><img src="https://p0.meituan.net/travelcube/28ae5605798a8b9b51b3e93ebe6457db47451.png" alt="图4 Token化后数据纵向暴露性"></p>
+<p><img alt="图4 Token化后数据纵向暴露性" src="https://p0.meituan.net/travelcube/28ae5605798a8b9b51b3e93ebe6457db47451.png"></p>
 <p>如上图4所示，Token化改造后，敏感数据做到0存储、0缓存，0接口，0数仓；只有在少量具有解密权限主机内存，以及UI才可能获取明文数据访问权。UI通过后续细粒度访问控制和审计风控等措施，实现风险可控。对于少量的内存数据，因其数量有限，可通过特定的加固和风控措施，进行强化。如果实现全面Token化，敏感数据整体风险控制能力也可大大增强。</p>
 <h2 id="3-token化方案介绍">3. Token化方案介绍</h2>
 <h3 id="31-什么是token化">3.1 什么是Token化</h3>
@@ -129,15 +129,15 @@
 </ol>
 <h3 id="33-token生成逻辑">3.3 Token生成逻辑</h3>
 <p>Token化的逻辑是，在企业范围内，为敏感数据生成全局唯一的ID-Token。通常有3种方案实现ID生成。</p>
-<p><img src="https://p0.meituan.net/travelcube/77fc0069646c377f0babda11dda9aacd33580.png" alt="图5 Token化逻辑示意图"></p>
+<p><img alt="图5 Token化逻辑示意图" src="https://p0.meituan.net/travelcube/77fc0069646c377f0babda11dda9aacd33580.png"></p>
 <p><strong>1. 随机化</strong> ：Token完全随机生成，并通过保存一一映射关系表（这种是狭义的Token化生成方式）。因为Token与明文没有算法关系，只能通过Token化服务才能进行正、反向关联，因此是最安全的方案。但这个方案的缺点是，为保证Token的高度一致性，新Token生成逻辑不能并发，否则会出现一对多的一致性问题。为保证数据一致性，将牺牲一定的分布式能力、性能。无形增加了可用性风险，尤其是远程异地场景。</p>
-<p><img src="https://p0.meituan.net/travelcube/813ff84ff54d57555dcf433709eccf49139109.png" alt="图6 Token化生成方法1"></p>
+<p><img alt="图6 Token化生成方法1" src="https://p0.meituan.net/travelcube/813ff84ff54d57555dcf433709eccf49139109.png"></p>
 <p><strong>2. MAC方式</strong>：通过统一的加盐哈希HMAC算法，任何进程、任何位置都能生成相同的Token，保证一致性。生成后的Token与明文的映射关系落表，实现反Token化能力。该方式优点是可以跨地域实现分布式，缺点是牺牲了一定的安全性。攻击者一旦获得了盐，就可以用算法批量计算Token。我们可以通过对盐采取适当的保护机制（采用与加密密钥相同保护策略），可以获得安全与可用性的平衡。</p>
-<p><img src="https://p0.meituan.net/travelcube/d25090b5fb55b67e83345914c9d19a0e155842.png" alt="图7 Token化生成方法2"></p>
+<p><img alt="图7 Token化生成方法2" src="https://p0.meituan.net/travelcube/d25090b5fb55b67e83345914c9d19a0e155842.png"></p>
 <p><strong>3. 确定性加解密</strong>：通过确定性加密算法，如（AES-SIV），或者格式保留加密（FPE），将明文加密，生成可逆Token。该算法破坏了加密的安全技术-随机性，但目前的算法普遍存在漏洞，不建议使用。此外，该算法还存在一个天然的漏洞，就是密钥无法轮换。</p>
-<p><img src="https://p1.meituan.net/travelcube/6de71b2a78ff8f93f4e457964fb95dfa155498.png" alt="图8 Token化生成方法3"></p>
+<p><img alt="图8 Token化生成方法3" src="https://p1.meituan.net/travelcube/6de71b2a78ff8f93f4e457964fb95dfa155498.png"></p>
 <h3 id="34-token化方案逻辑架构">3.4 Token化方案逻辑架构</h3>
-<p><img src="https://p1.meituan.net/travelcube/e1ed2f92014b608098ab4c84b397b2f259439.png" alt="图9 Token化逻辑架构图"></p>
+<p><img alt="图9 Token化逻辑架构图" src="https://p1.meituan.net/travelcube/e1ed2f92014b608098ab4c84b397b2f259439.png"></p>
 <p>Token化服务需要满足全业务场景兼容性、安全性和可用性，主要通过多种接入集成方案。并集成必要的安全措施。Token化服务按逻辑分为接入层、服务层和存储层。</p>
 <ol>
 <li><strong>接入层</strong>：主要用来对接业务应用和人员访问，完成Token与明文之间的转换即Token化和反Token化请求需求。分别提供人机接口（Portal）、服务接口（API）调用和大数据任务请求。由于Token化安全要求，接入层需要保证可靠的安全措施，如细粒度访问控制、IAM、服务鉴权和大数据作业鉴权能力。</li>
@@ -145,7 +145,7 @@
 <li><strong>存储层</strong>：存储层主要包含线上存储和数仓。由于安全性考虑，Token化映射表并不存储明文而是保存加密后的密文。同时，通过HMAC算法建立HASH &gt;Token &gt;密文的关联关系实现明文换Token（正查）和Token换明文（反查）的业务逻辑。注意，应用并不能通过Token化直接获得明文，而是获得密文，通过KMS获得解密权限后本地解密获得明文。</li>
 </ol>
 <h3 id="35-token化应用全景">3.5 Token化应用全景</h3>
-<p><img src="https://p0.meituan.net/travelcube/507021b52c5b31213edaf8348d6b3681100031.png" alt="图10 Token化数据流通全景"></p>
+<p><img alt="图10 Token化数据流通全景" src="https://p0.meituan.net/travelcube/507021b52c5b31213edaf8348d6b3681100031.png"></p>
 <p>组件说明：</p>
 <p><strong>1. 线上数据源</strong></p>
 <p>敏感数据的主要数据来源，一进入公司需要对接Token化服务API兑换成Token，并落库存储。一定场景，数据也会接入数仓。数据源另外角色是向下游提供分享敏感数据，可通过API、MQ或共享存储如S3等媒介。</p>

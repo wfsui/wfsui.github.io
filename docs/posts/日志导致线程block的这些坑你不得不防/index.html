@@ -76,7 +76,7 @@ JDK版本 java version &#34;1.8.0_45&#34; Java(TM) SE Runtime Environment (build
 <p>日志导致线程Block的问题，相信你或许已经遇到过，对此应该深有体会；或许你还没遇到过，但不代表没有问题，只是可能还没有触发而已。本文主要介绍美团统一API网关服务Shepherd（参见<a href="https://mp.weixin.qq.com/s/iITqdIiHi3XGKq6u6FRVdg">《百亿规模API网关服务Shepherd的设计与实现》</a>一文）在实践中所踩过的关于日志导致线程Block的那些“坑”，然后再分享一些避“坑”经验。</p>
 <h2 id="2-背景">2. 背景</h2>
 <p>API网关服务Shepherd基于Java语言开发，使用业界大名鼎鼎的<a href="https://logging.apache.org/log4j/2.x/">Apache Log4j2</a>作为主要日志框架，同时使用美团内部的XMD-Log SDK和Scribe-Log SDK对日志内容进行处理，日志处理整体流程如下图1所示。业务打印日志时，日志框架基于Logger配置来决定把日志交给XMDFile处理还是Scribe处理。其中，XMDFile是XMD-Log内部提供的日志Appender名称，负责输出日志到本地磁盘，Scribe是Scribe-Log内部提供的日志Appender名称，负责上报日志到远程日志中心。</p>
-<p><img src="https://p0.meituan.net/travelcube/2e435a6e5275b41caaea13adc19f34ef45934.png" alt="图1 日志处理流程示意图"></p>
+<p><img alt="图1 日志处理流程示意图" src="https://p0.meituan.net/travelcube/2e435a6e5275b41caaea13adc19f34ef45934.png"></p>
 <p>随着业务的快速增长，日志导致的线程Block问题愈发频繁。比如调用后端RPC服务超时，导致调用方大量线程Block；再比如，业务内部输出异常日志导致服务大量线程Block等，这些问题严重影响着服务的稳定性。因此，我们结合项目在过去一段时间暴露出来的各种由于日志导致的线程Block问题，对日志框架存在的稳定性风险因素进行了彻底的排查和修复，并在线下、线上环境进行全方位验证。在此过程中，我们总结了一些日志使用相关的实践经验，希望分享给大家。</p>
 <p>在进入正文前，首先介绍项目当时的运行环境和日志相关配置信息。</p>
 <ul>
@@ -149,15 +149,15 @@ JDK版本 java version &#34;1.8.0_45&#34; Java(TM) SE Runtime Environment (build
 <h3 id="31-日志队列满导致线程block">3.1 日志队列满导致线程Block</h3>
 <h4 id="311-问题现场">3.1.1 问题现场</h4>
 <p>收到“jvm.thread.blocked.count”告警后立刻通过监控平台查看线程监控指标，当时的线程堆栈如图2和图3所示。</p>
-<p><img src="https://p0.meituan.net/travelcube/320a639179808a5ca7746ad3251336ff509524.png" alt=""></p>
-<p><img src="https://p0.meituan.net/travelcube/1a422c3e76caddc87c927bf3d53c938e611650.png" alt="图2 等待锁的Blocked线程堆栈"></p>
-<p><img src="https://p0.meituan.net/travelcube/e9f141792d12fe30cf9c2efb6d054264454549.png" alt="图3 持有锁的Runnable线程堆栈"></p>
+<p><img src="https://p0.meituan.net/travelcube/320a639179808a5ca7746ad3251336ff509524.png"></p>
+<p><img alt="图2 等待锁的Blocked线程堆栈" src="https://p0.meituan.net/travelcube/1a422c3e76caddc87c927bf3d53c938e611650.png"></p>
+<p><img alt="图3 持有锁的Runnable线程堆栈" src="https://p0.meituan.net/travelcube/e9f141792d12fe30cf9c2efb6d054264454549.png"></p>
 <p>从Blocked线程堆栈不难看出这跟日志打印相关，而且是INFO级别的日志，遂即登陆机器查看日志是否有异样，发现当时日志量非常大，差不多每两分钟就写满一个500MB的日志文件。</p>
 <p>那大量输出日志和线程Block之间会有怎样的关联呢？接下来本章节将结合如下图4所示的调用链路深入分析线程Block的根因。</p>
-<p><img src="https://p0.meituan.net/travelcube/606e8387ee50e3035c35df87c23a94eb113029.png" alt="图4 日志调用链路"></p>
+<p><img alt="图4 日志调用链路" src="https://p0.meituan.net/travelcube/606e8387ee50e3035c35df87c23a94eb113029.png"></p>
 <h4 id="312-为什么会block线程">3.1.2 为什么会Block线程？</h4>
 <p>从Blocked线程堆栈着手分析，查看PrintStream相关代码片段如下图5所示，可以看到被阻塞地方有synchronized同步调用，再结合上文发现每两分钟写满一个500MB日志文件的现象，初步怀疑是日志量过大导致了线程阻塞。</p>
-<p><img src="https://p0.meituan.net/travelcube/7fd03330c8f39d30cdadf02bf57a976f92577.png" alt="图5 PringStream代码片段"></p>
+<p><img alt="图5 PringStream代码片段" src="https://p0.meituan.net/travelcube/7fd03330c8f39d30cdadf02bf57a976f92577.png"></p>
 <p>但上述猜测仍有一些值得推敲的地方：</p>
 <ol>
 <li>如果仅仅因为日志量过大就导致线程Block，那日志框架也太不堪重用了，根本没法在高并发、高吞吐业务场景下使用。</li>
@@ -571,16 +571,16 @@ JDK版本 java version &#34;1.8.0_45&#34; Java(TM) SE Runtime Environment (build
 <h3 id="32-asyncappender导致线程block">3.2 AsyncAppender导致线程Block</h3>
 <h4 id="321-问题现场">3.2.1 问题现场</h4>
 <p>收到“jvm.thread.blocked.count”告警后立刻通过监控平台查看线程监控指标，当时的线程堆栈如下图6和图7所示。</p>
-<p><img src="https://p1.meituan.net/travelcube/8e78a5cadf68a29fc1bb4ccddf6266ee709820.png" alt="图6 等待锁的Blocked线程堆栈"></p>
-<p><img src="https://p0.meituan.net/travelcube/0fd6af77194b20c73cc083639665bc25548374.png" alt="图7 持有锁的Runnable线程堆栈"></p>
+<p><img alt="图6 等待锁的Blocked线程堆栈" src="https://p1.meituan.net/travelcube/8e78a5cadf68a29fc1bb4ccddf6266ee709820.png"></p>
+<p><img alt="图7 持有锁的Runnable线程堆栈" src="https://p0.meituan.net/travelcube/0fd6af77194b20c73cc083639665bc25548374.png"></p>
 <p>从Blocked线程堆栈不难看出是跟日志打印相关，由于是ERROR级别日志，查看具体报错日志，发现有两种业务异常，分别如下图8和图9所示：</p>
-<p><img src="https://p1.meituan.net/travelcube/ef3f3120108556796f687feaf53934e51119018.png" alt="图8 业务异常堆栈一"></p>
-<p><img src="https://p0.meituan.net/travelcube/393ec805f1e5fe4f6cf0b51150c798f01224638.png" alt="图9 业务异常堆栈二"></p>
+<p><img alt="图8 业务异常堆栈一" src="https://p1.meituan.net/travelcube/ef3f3120108556796f687feaf53934e51119018.png"></p>
+<p><img alt="图9 业务异常堆栈二" src="https://p0.meituan.net/travelcube/393ec805f1e5fe4f6cf0b51150c798f01224638.png"></p>
 <p>这些业务异常会是导致线程Block的幕后元凶吗？接下来本章节将结合如下图10所示的调用链路深入分析线程Block的根因。</p>
-<p><img src="https://p0.meituan.net/travelcube/e982a7c27d1c1e04b23ffed5f7589344116902.png" alt="图10 日志调用链路"></p>
+<p><img alt="图10 日志调用链路" src="https://p0.meituan.net/travelcube/e982a7c27d1c1e04b23ffed5f7589344116902.png"></p>
 <h4 id="322-为什么会block线程">3.2.2 为什么会Block线程？</h4>
 <p>从Blocked线程堆栈中可以看出，线程阻塞在类加载流程上，查看WebAppClassLoader相关代码片段如下图11所示，发现加载类时确实会根据类名来加synchronized同步块，因此初步猜测是类加载导致线程Block。</p>
-<p><img src="https://p1.meituan.net/travelcube/86d456589c866d103feb835d4cf19045163097.png" alt="图11 WebAppClassLoader"></p>
+<p><img alt="图11 WebAppClassLoader" src="https://p1.meituan.net/travelcube/86d456589c866d103feb835d4cf19045163097.png"></p>
 <p>但上述猜测还有一些值得推敲的地方：</p>
 <ol>
 <li>项目代码里只是普通地输出一条ERROR日志而已，为何会触发类加载？</li>
@@ -735,8 +735,8 @@ JDK版本 java version &#34;1.8.0_45&#34; Java(TM) SE Runtime Environment (build
 <p>言归正传，通常情况下一个类加载器对于一个类只会加载一次，类加载器内部保存有类缓存，无需重复加载，但目前的现象却是由于类加载而导致线程大量Block，因此必然是有些类加载不了，且不断重复尝试加载，那到底是什么类无法加载呢？</p>
 <h4 id="324-到底什么类加载不了">3.2.4 到底什么类加载不了？</h4>
 <p>要找到具体是什么类无法加载，归根结底还是要分析业务异常的具体堆栈。</p>
-<p><img src="https://p1.meituan.net/travelcube/ef3f3120108556796f687feaf53934e51119018.png" alt="图12 业务异常堆栈一"></p>
-<p><img src="https://p0.meituan.net/travelcube/393ec805f1e5fe4f6cf0b51150c798f01224638.png" alt="图13 业务异常堆栈二"></p>
+<p><img alt="图12 业务异常堆栈一" src="https://p1.meituan.net/travelcube/ef3f3120108556796f687feaf53934e51119018.png"></p>
+<p><img alt="图13 业务异常堆栈二" src="https://p0.meituan.net/travelcube/393ec805f1e5fe4f6cf0b51150c798f01224638.png"></p>
 <p>对比如图12和图13所示的两份业务异常堆栈，我们可以看到两份堆栈基本相似，且大多数类都是很普通的类，但是唯一不同的地方在于：</p>
 <ol>
 <li>sun.reflect.NativeMethodAccessorImpl（参见图12）。</li>
@@ -853,7 +853,7 @@ JDK版本 java version &#34;1.8.0_45&#34; Java(TM) SE Runtime Environment (build
 </span></span><span style="display:flex;"><span>        });
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>默认情况下DelegatingMethodAccessorImpl代理了NativeMethodAccessorImpl，但是随着反射调用次数的增加，当一个方法被反射调用的次数超过一定的阀值时（inflationThreshold，默认值是15），NativeMethodAccessorImpl会通过字节码生成技术，自动生成MethodAccessorImpl实现类，并修改DelegatingMethodAccessorImpl的内部代理对象指向字节码生成类实例，从而改变后续反射调用逻辑。</p>
-<p><img src="https://p0.meituan.net/travelcube/f28797d5570b64848517572244bd6f0987974.png" alt="图14 MethodAccessor关系图"></p>
+<p><img alt="图14 MethodAccessor关系图" src="https://p0.meituan.net/travelcube/f28797d5570b64848517572244bd6f0987974.png"></p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// sun.reflect.DelegatingMethodAccessorImpl</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#268bd2">class</span> <span style="color:#268bd2">DelegatingMethodAccessorImpl</span> <span style="color:#268bd2">extends</span> MethodAccessorImpl {
@@ -1008,7 +1008,7 @@ JDK版本 java version &#34;1.8.0_45&#34; Java(TM) SE Runtime Environment (build
 </blockquote>
 <p>至此，总算理清了类加载导致线程Block的直接原因，但这并非根因，业务代码中普普通通地打印一条ERROR日志，为何会导致解析、加载异常堆栈类？</p>
 <h4 id="325-为什么要解析异常堆栈">3.2.5 为什么要解析异常堆栈？</h4>
-<p><img src="https://p0.meituan.net/travelcube/4f4770a5ed066759870da258d2ef7f9393118.png" alt="图15 AsyncAppender处理日志流程"></p>
+<p><img alt="图15 AsyncAppender处理日志流程" src="https://p0.meituan.net/travelcube/4f4770a5ed066759870da258d2ef7f9393118.png"></p>
 <p>AsyncAppender处理日志简要流程如上图15所示，在其内部维护一个BlockingQueue队列和一个AsyncThread线程，处理日志时先把日志转换成Log4jLogEvent快照然后入队，同时AsyncThread线程负责从队列里获取元素来异步处理日志事件。</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// org.apache.logging.log4j.core.appender.AsyncAppender</span>
 </span></span><span style="display:flex;"><span>
@@ -1106,13 +1106,13 @@ JDK版本 java version &#34;1.8.0_45&#34; Java(TM) SE Runtime Environment (build
 <h3 id="33-lambda表达式导致线程block">3.3 Lambda表达式导致线程Block</h3>
 <h4 id="331-问题现场">3.3.1 问题现场</h4>
 <p>收到“jvm.thread.blocked.count”告警后，立刻通过监控平台查看线程监控指标，当时的线程堆栈如下图16和图17所示：</p>
-<p><img src="https://p1.meituan.net/travelcube/2bff1fa248a8fc9dcd89f0a441108e4d500067.png" alt=""></p>
-<p><img src="https://p0.meituan.net/travelcube/9f352aa0ba4c7b2ae38096885d4a458f553933.png" alt="图16 等待锁的Blocked线程堆栈"></p>
-<p><img src="https://p0.meituan.net/travelcube/990819413a03aceb4b34164d5ee87774450882.png" alt="图17 持有锁的Runnable线程堆栈"></p>
+<p><img src="https://p1.meituan.net/travelcube/2bff1fa248a8fc9dcd89f0a441108e4d500067.png"></p>
+<p><img alt="图16 等待锁的Blocked线程堆栈" src="https://p0.meituan.net/travelcube/9f352aa0ba4c7b2ae38096885d4a458f553933.png"></p>
+<p><img alt="图17 持有锁的Runnable线程堆栈" src="https://p0.meituan.net/travelcube/990819413a03aceb4b34164d5ee87774450882.png"></p>
 <p>从Blocked线程堆栈不难看出是和日志打印相关，由于是ERROR级别日志，查看具体报错日志，发现如下图18所示的业务异常。</p>
-<p><img src="https://p0.meituan.net/travelcube/9d5b8363081d217dcdabc7ae37e0e5361540873.png" alt="图18 业务异常堆栈"></p>
+<p><img alt="图18 业务异常堆栈" src="https://p0.meituan.net/travelcube/9d5b8363081d217dcdabc7ae37e0e5361540873.png"></p>
 <p>本案例的Blocked线程堆栈和上述“AsyncAppender导致线程Block”案例一样，那么导致线程Block的罪魁祸首会是业务异常吗？接下来本章节将结合下图19所示的调用链路深入分析线程Block的根因。</p>
-<p><img src="https://p0.meituan.net/travelcube/e982a7c27d1c1e04b23ffed5f7589344116902.png" alt="图19 日志调用链路"></p>
+<p><img alt="图19 日志调用链路" src="https://p0.meituan.net/travelcube/e982a7c27d1c1e04b23ffed5f7589344116902.png"></p>
 <h4 id="332-为什么会block线程">3.3.2 为什么会Block线程？</h4>
 <p>从Blocked线程堆栈中可以看出，线程阻塞在类加载上，该线程堆栈和上述“AsyncAppender导致线程Block”案例相似，这里不再重复分析。</p>
 <h4 id="333-为什么会触发类加载">3.3.3 为什么会触发类加载？</h4>
@@ -1123,14 +1123,14 @@ JDK版本 java version &#34;1.8.0_45&#34; Java(TM) SE Runtime Environment (build
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>com.sankuai.shepherd.core.process.ProcessHandlerFactory$$Lambda$35<span style="color:#719e07">/</span>1331430278
 </span></span></code></pre></div><p>从堆栈的关键字$$Lambda$大致能猜测出这是代码里使用了Lambda表达式的缘故，查看代码确实相关部分使用了Lambda表达式，经过断点调试，证实的确无法加载该类。那么，这样的类是怎么来的？</p>
 <p>查阅相关资料得知，Lambda表达式区别于匿名内部类实现，在构建时不会生成class文件，而是在运行时通过invokeDynamic指令动态调用，Lambda表达式的内容会被封装在一个静态方法内，JVM通过ASM字节码技术来动态生成调用类，也就是$$Lambda$这种形式的类，生成类示例如下图20所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/576090a21609ebab1e7b0fc4fca0891b108829.png" alt="图20 Lambda生成类示例"></p>
+<p><img alt="图20 Lambda生成类示例" src="https://p0.meituan.net/travelcube/576090a21609ebab1e7b0fc4fca0891b108829.png"></p>
 <p>Lambda表达式的实现原理不是本文重点内容，在此不做过多介绍。项目代码中使用Lambda表达式是再普通不过的事情，但是关于此类的案例却并不多见，实在令人难以置信。继续查阅Lambda表达式相关文档，发现异常堆栈类名包含$$Lambda$这样的关键字，其实是JDK的一个Bug，相关Issue可参考:</p>
 <ul>
 <li><a href="https://bugs.openjdk.java.net/browse/JDK-8145964">NoClassDefFound error in transforming lambdas</a></li>
 <li><a href="https://bugs.openjdk.java.net/browse/JDK-8158475">JVMTI RedefineClasses doesn’t handle anonymous classes properly</a></li>
 </ul>
 <p>值得一提的是，该Bug在JDK9版本已经修复，实际测试中发现，在JDK8的高版本如8U171等已修复该Bug，异常堆栈中不会有类似$$Lambda$的堆栈信息，示例如下图21所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/0759cebe265c2b882eff7f94155c214c1089864.png" alt="图21 JDK8U171版本下Lambda异常堆栈示例"></p>
+<p><img alt="图21 JDK8U171版本下Lambda异常堆栈示例" src="https://p0.meituan.net/travelcube/0759cebe265c2b882eff7f94155c214c1089864.png"></p>
 <h4 id="335-为什么要解析异常堆栈">3.3.5 为什么要解析异常堆栈？</h4>
 <p>原因和上述“AsyncAppender导致线程Block”案例相似，不再重复分析。</p>
 <h4 id="336-问题小结">3.3.6 问题小结</h4>
@@ -1138,12 +1138,12 @@ JDK版本 java version &#34;1.8.0_45&#34; Java(TM) SE Runtime Environment (build
 <h3 id="34-asyncloggerconfig导致线程block">3.4 AsyncLoggerConfig导致线程Block</h3>
 <h4 id="341-问题现场">3.4.1 问题现场</h4>
 <p>收到“jvm.thread.blocked.count”告警后立刻通过监控平台查看线程监控指标，当时的线程堆栈如下图22和图23所示。</p>
-<p><img src="https://p0.meituan.net/travelcube/6429a273b7a8272a5a2a28885e5fda27678656.png" alt=""></p>
-<p><img src="https://p1.meituan.net/travelcube/fc4bd2d703f55de167f22dc789e9560d352831.png" alt="图22 等待锁的Blocked线程堆栈"></p>
-<p><img src="https://p0.meituan.net/travelcube/ac1a68e0fb8f95b05023ff70e1cde18f597675.png" alt="图23 持有锁的Runnable线程堆栈"></p>
+<p><img src="https://p0.meituan.net/travelcube/6429a273b7a8272a5a2a28885e5fda27678656.png"></p>
+<p><img alt="图22 等待锁的Blocked线程堆栈" src="https://p1.meituan.net/travelcube/fc4bd2d703f55de167f22dc789e9560d352831.png"></p>
+<p><img alt="图23 持有锁的Runnable线程堆栈" src="https://p0.meituan.net/travelcube/ac1a68e0fb8f95b05023ff70e1cde18f597675.png"></p>
 <p>从Blocked线程堆栈不难看出是和日志打印相关，本案例的业务异常和上述“AsyncAppender导致线程Block”的业务异常一样，这里不再重复介绍。</p>
 <p>那么，到底是什么原因导致线程Block呢？接下来本章节将结合下图24所示的调用链路深入分析线程Block的根因。</p>
-<p><img src="https://p0.meituan.net/travelcube/b18fe64d9d9a7794d9292df4c0565aff147139.png" alt="图24 日志调用链路"></p>
+<p><img alt="图24 日志调用链路" src="https://p0.meituan.net/travelcube/b18fe64d9d9a7794d9292df4c0565aff147139.png"></p>
 <h4 id="342-为什么会block线程">3.4.2 为什么会Block线程？</h4>
 <p>原因和上述“AsyncAppender导致线程Block”案例相似，这里不再重复分析。</p>
 <h4 id="343-为什么会触发类加载">3.4.3 为什么会触发类加载？</h4>
@@ -1161,7 +1161,7 @@ JDK版本 java version &#34;1.8.0_45&#34; Java(TM) SE Runtime Environment (build
 <p>总的来说，&lt;Logger&gt;标签和Logger类是完全不同的两个概念，&lt;AsyncLogger&gt;标签和AsyncLogger类也是完全不同的两个概念，不可混淆。</p>
 <p>由于项目并未配置Log4jContextSelector参数，所以使用的是同步Logger，即通过LoggerFactory.getLogger方法获取的是Logger类实例而不是AsyncLogger类实例，同时由于项目的log4j2.xml配置文件里配置了&lt;AsyncLogger&gt;标签，所以其底层是Logger和AsyncLoggerConfig组合。</p>
 <p>AsyncLoggerConfig处理日志事件简要流程如下图25所示，内部使用Disruptor队列，在生成队列元素时，由translator来负责填充元素字段，并把填充后的元素放入RingBuffer中，于此同时，独立的异步线程从RingBuffer中消费事件，并调用配置在该AsyncLoggerConfig上的Appender处理日志请求。</p>
-<p><img src="https://p0.meituan.net/travelcube/efc83d8d180546afa62af11d59d8afa959384.png" alt="图25 AsyncLoggerConfig处理流程"></p>
+<p><img alt="图25 AsyncLoggerConfig处理流程" src="https://p0.meituan.net/travelcube/efc83d8d180546afa62af11d59d8afa959384.png"></p>
 <p>AsyncLoggerConfig提供了带有Disruptor队列实现的代理类即AsyncLoggerConfigDisruptor，在日志事件进入RingBuffer时，由于项目使用的是ReusableLogEventFactory，所以由MUTABLE_TRANSLATOR负责初始化日志事件，在此过程中会调用getThrownProxy方法创建ThrowableProxy实例，进而在ThrowableProxy构造函数内部触发解析、加载异常堆栈类。</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">// org.apache.logging.log4j.core.async.AsyncLoggerConfigDisruptor$EventTranslatorTwoArg</span>
 </span></span><span style="display:flex;"><span>
@@ -1220,7 +1220,7 @@ JDK版本 java version &#34;1.8.0_45&#34; Java(TM) SE Runtime Environment (build
 <h2 id="4-避坑指南">4. 避坑指南</h2>
 <p>本章节主要对上述案例中导致线程Block的原因进行汇总分析，并给出相应的解决方案。</p>
 <h3 id="41-问题总结">4.1 问题总结</h3>
-<p><img src="https://p0.meituan.net/travelcube/2653a8476fc90a164feaabc95db250fc52379.png" alt="图26 日志异步处理流程"></p>
+<p><img alt="图26 日志异步处理流程" src="https://p0.meituan.net/travelcube/2653a8476fc90a164feaabc95db250fc52379.png"></p>
 <p>日志异步处理流程示意如图26所示，整体步骤如下：</p>
 <ol>
 <li><strong>业务线程组装日志事件对象</strong>，如创建日志快照或者初始化日志字段等。</li>

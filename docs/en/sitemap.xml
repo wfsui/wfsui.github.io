@@ -15,6 +15,19 @@
                 href="https://wfsui.github.io/en/about/"
                 />
   </url><url>
+    <loc>https://wfsui.github.io/en/</loc>
+    <lastmod>2019-04-19T21:37:58+05:30</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://wfsui.github.io/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://wfsui.github.io/en/"
+                />
+  </url><url>
     <loc>https://wfsui.github.io/en/tags/</loc>
     <xhtml:link
                 rel="alternate"
@@ -25,18 +38,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://wfsui.github.io/en/tags/"
-                />
-  </url><url>
-    <loc>https://wfsui.github.io/en/</loc>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://wfsui.github.io/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://wfsui.github.io/en/"
                 />
   </url>
 </urlset>

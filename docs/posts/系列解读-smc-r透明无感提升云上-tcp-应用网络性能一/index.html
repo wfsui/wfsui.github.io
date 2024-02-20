@@ -62,7 +62,7 @@
 
 		<div class="markdown">
 			<h2 id="引言">引言</h2>
-<p>Shared Memory Communication over RDMA (SMC-R) 是一种基于 RDMA 技术、兼容 socket 接口的内核网络协议，由 IBM 提出并在 2017 年贡献至 Linux 内核。SMC-R 能够帮助 TCP 网络应用程序透明使用 RDMA，获得高带宽、低时延的网络通信服务。<strong>阿里云云上操作系统 Alibaba Cloud Linux 3 以及龙蜥社区开源操作系统 Anolis 8 配合神龙弹性 RDMA (eRDMA) 首次将 SMC-R 带上云上场景，助力云上应用获得更好的网络性能：<a href="http://mp.weixin.qq.com/s?__biz=MzUxNjE3MTcwMg==&amp;mid=2247486197&amp;idx=1&amp;sn=e1b86ef6627dd13847b88e2ca367f890&amp;chksm=f9aa382cceddb13a24c553451351aee1e0c026b0044403e0f6442e010df5e7303b07c4ce9912&amp;scene=21#wechat_redirect">《技术揭秘：阿里云发布第四代神龙 ，SMC-R 让网络性能提升 20%》</a>。</strong></p>
+<p>Shared Memory Communication over RDMA (SMC-R) 是一种基于 RDMA 技术、兼容 socket 接口的内核网络协议，由 IBM 提出并在 2017 年贡献至 Linux 内核。SMC-R 能够帮助 TCP 网络应用程序透明使用 RDMA，获得高带宽、低时延的网络通信服务。<strong>阿里云云上操作系统 Alibaba Cloud Linux 3 以及龙蜥社区开源操作系统 Anolis 8 配合神龙弹性 RDMA (eRDMA) 首次将 SMC-R 带上云上场景，助力云上应用获得更好的网络性能：<a href="http://mp.weixin.qq.com/s?__biz=MzUxNjE3MTcwMg==&mid=2247486197&idx=1&sn=e1b86ef6627dd13847b88e2ca367f890&chksm=f9aa382cceddb13a24c553451351aee1e0c026b0044403e0f6442e010df5e7303b07c4ce9912&scene=21#wechat_redirect">《技术揭秘：阿里云发布第四代神龙 ，SMC-R 让网络性能提升 20%》</a>。</strong></p>
 <p>由于 RDMA 技术在数据中心领域的广泛使用，龙蜥社区高性能网络 SIG 认为 SMC-R 将成为下一代数据中心内核协议栈的重要方向之一。</p>
 <p>为此，我们对其进行了大量的优化，并积极将这些优化回馈到上游 Linux 社区。**目前，龙蜥社区高性能网络 SIG 是除 IBM 以外最大的 SMC-R 代码贡献团体。**由于 SMC-R 相关中文资料极少，我们希望通过一系列文章，让更多的国内读者了解并接触 SMC-R，也欢迎有兴趣的读者加入龙蜥社区高性能网络 SIG 一起沟通交流。</p>
 <p>本篇作为系列文章的第一篇，将从宏观的角度带领读者初探 SMC-R。</p>
@@ -72,7 +72,7 @@
 <p>随着数据中心、分布式系统、高性能计算领域的快速发展，网络设备性能进步显著，主流物理网络带宽已达到了 25-100 Gb/s，网络时延也进入了十微秒的时代。</p>
 <p>然而，**网络设备性能提升的同时一个问题也逐渐显露：网络性能与 CPU 算力逐渐失配。**传统网络中，负责网络报文封装、解析和用户态/内核态间数据搬运的 CPU 在高速增长的网络带宽面前逐渐显得力不从心，面临越来越大的压力。</p>
 <p>以 TCP/IP 网络的一次数据发送与接收过程为例。发送节点 CPU 首先将数据从用户态内存拷贝至内核态内存，在内核态协议栈中完成数据包封装；再由 DMA 控制器将封装好的数据包搬运到 NIC 上发送到对端。接收端 NIC 获得数据包后通过 DMA 控制器搬运到内核态内存中，由内核协议栈解析，层层剥离帧首或包头后再由 CPU 将有效负载 (payload) 拷贝到用户态内存中，完成一次数据传输。</p>
-<p><img src="https://static001.infoq.cn/resource/image/d2/89/d21739d60f917yya80175df674081a89.png" alt="">
+<p><img src="https://static001.infoq.cn/resource/image/d2/89/d21739d60f917yya80175df674081a89.png">
 （图/传统 TCP/IP 网络传输模型）</p>
 <p>在这一过程中，CPU 需要负责：</p>
 <p>1）用户态与内核态间的数据拷贝。</p>
@@ -81,11 +81,11 @@
 <p>所以，解决网络性能与 CPU 算力失配问题成为了高性能网络发展的关键。考虑到摩尔定律逐渐失效，CPU 性能短时间内发展缓慢，将网络数据处理工作从 CPU 卸载到硬件设备的思路就成为了主流解决方案。这使得以往专用于特定高性能领域的 RDMA 在通用场景下得到愈来愈多的应用。</p>
 <h4 id="12-rdma-的优势">1.2 RDMA 的优势</h4>
 <p>RDMA (Remote Direct Memory Access) 是一种远程内存直接访问技术，自提出以来经过 20 余年的发展已经成为了高性能网络的重要组成。那么 RDMA 是如何完成一次数据传输的呢？</p>
-<p><img src="https://static001.infoq.cn/resource/image/e0/4a/e0bee92f316ae18b868b1a010c3af94a.png" alt="">
+<p><img src="https://static001.infoq.cn/resource/image/e0/4a/e0bee92f316ae18b868b1a010c3af94a.png">
 （图/用户态 RDMA 网络传输模型）</p>
 <p>RDMA 网络 (用户态模式) 中，具备 RDMA 能力的网卡 RNIC 直接从发送端用户态内存中取得数据，在网卡中完成数据封装后传输到接收端，再由接收端 RNIC 将数据解析剥离，将有效负载 (payload) 直接放入用户态内存中完成数据传输。</p>
 <p>这一过程中 CPU 除了必要的控制面功能外，几乎不用参与数据传输。数据就像是通过 RNIC 直接写入到远程节点的内存中一样。因此，与传统网络相比，RDMA 将 CPU 从网络传输中解放了出来，使得网络传输就像是远程内存直接访问一样方便快捷。</p>
-<p><img src="https://static001.infoq.cn/resource/image/56/ea/56cbc67092047f9a68fa036f580b02ea.png" alt="">
+<p><img src="https://static001.infoq.cn/resource/image/56/ea/56cbc67092047f9a68fa036f580b02ea.png">
 （图/传统网络与 RDMA 网络协议栈对比）</p>
 <p>对比传统网络协议，RDMA 网络协议具有以下三个特点：</p>
 <p><strong>1.旁路软件协议栈</strong></p>
@@ -96,7 +96,7 @@
 <p>RDMA 网络中，RNIC 一旦获得远程内存的访问权限，即可直接向远程内存中写入或从远程内存中读出数据，不需要远程节点参与，非常适合大块数据传输。</p>
 <h2 id="二回到-smc-r">二、回到 SMC-R</h2>
 <p>通过上述介绍，相信读者对 RDMA 主要特点以及性能优势有了初步的了解。不过，虽然 RDMA 技术能够带来可喜的网络性能提升，但是想使用 RDMA 透明提升现有 TCP 应用的网络性能仍有困难，这是因为 RDMA 网络的使用依赖一系列新的语义接口，包括 ibverbs 接口与 rdmacm 接口 （后统称 verbs 接口）。</p>
-<p><img src="https://static001.infoq.cn/resource/image/f6/b4/f6c6f9ba2a8cd335b2229d52a0a6e1b4.png" alt="">
+<p><img src="https://static001.infoq.cn/resource/image/f6/b4/f6c6f9ba2a8cd335b2229d52a0a6e1b4.png">
 部分 ibverbs与rdmacm接口[1]</p>
 <p>相较于传统 POSIX socket 接口，verbs 接口数量多，且更接近硬件语义。对于已有的基于 POSIX socket 接口实现的 TCP 网络应用，想要享受 RDMA 带来的性能红利就不得不对应用程序进行大量改造，成本巨大。</p>
 <p>因此，我们希望能够在使用 RDMA 网络的同时沿用 socket 接口，使现有 socket 应用程序透明的享受 RDMA 服务。针对这一需求，业界提出了以下两个方案：</p>
@@ -114,7 +114,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#719e07">/*</span> must look like tcp <span style="color:#719e07">*/</span><span style="color:#719e07">static</span> <span style="color:#719e07">const</span> struct proto_ops smc_sock_ops <span style="color:#719e07">=</span> {  <span style="color:#719e07">.</span>family    <span style="color:#719e07">=</span> PF_SMC,  <span style="color:#719e07">.</span>owner    <span style="color:#719e07">=</span> THIS_MODULE,  <span style="color:#719e07">.</span>release  <span style="color:#719e07">=</span> smc_release,  <span style="color:#719e07">.</span>bind    <span style="color:#719e07">=</span> smc_bind,  <span style="color:#719e07">.</span>connect  <span style="color:#719e07">=</span> smc_connect,  <span style="color:#719e07">.</span>socketpair  <span style="color:#719e07">=</span> sock_no_socketpair,  <span style="color:#719e07">.</span>accept    <span style="color:#719e07">=</span> smc_accept,  <span style="color:#719e07">.</span>getname  <span style="color:#719e07">=</span> smc_getname,  <span style="color:#719e07">.</span>poll    <span style="color:#719e07">=</span> smc_poll,  <span style="color:#719e07">.</span>ioctl    <span style="color:#719e07">=</span> smc_ioctl,  <span style="color:#719e07">.</span>listen    <span style="color:#719e07">=</span> smc_listen,  <span style="color:#719e07">.</span>shutdown  <span style="color:#719e07">=</span> smc_shutdown,  <span style="color:#719e07">.</span>setsockopt  <span style="color:#719e07">=</span> smc_setsockopt,  <span style="color:#719e07">.</span>getsockopt  <span style="color:#719e07">=</span> smc_getsockopt,  <span style="color:#719e07">.</span>sendmsg  <span style="color:#719e07">=</span> smc_sendmsg,  <span style="color:#719e07">.</span>recvmsg  <span style="color:#719e07">=</span> smc_recvmsg,  <span style="color:#719e07">.</span>mmap    <span style="color:#719e07">=</span> sock_no_mmap,  <span style="color:#719e07">.</span>sendpage  <span style="color:#719e07">=</span> smc_sendpage,  <span style="color:#719e07">.</span>splice_read  <span style="color:#719e07">=</span> smc_splice_read,};
 </span></span></code></pre></div><p>复制代码</p>
 <p>由于 SMC-R 协议支持与 TCP 行为一致的 socket 接口，使用 SMC-R 协议非常简单。总体来说有两个方法：</p>
-<p><img src="https://static001.infoq.cn/resource/image/b8/93/b8b394e047d199fc32a29409a6ea1d93.png" alt="">
+<p><img src="https://static001.infoq.cn/resource/image/b8/93/b8b394e047d199fc32a29409a6ea1d93.png">
 （图/SMC-R 的使用方法）</p>
 <p>**其一，使用 SMC-R 协议族 AF_SMC 开发。**通过创建 AF_SMC 类型的 socket，应用程序的流量将进入到 SMC-R 协议栈；</p>
 <p>**其二，透明替换协议栈。**将应用程序创建的 TCP 类型 socket 透明替换为 SMC 类型 socket。<strong>透明替换可以通过以下两种方式实现：</strong></p>
@@ -132,18 +132,18 @@
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>SEC(&#34;cgroup/connect4&#34;)int replace_to_smc(struct bpf_sock_addr *addr){    int pid = bpf_get_current_pid_tgid() &gt;&gt; 32;    long ret;        /* use-defined rules/filters, such as pid, tcp src/dst address, etc...*/    if (pid != DESIRED_PID)        return 0;        &lt;...&gt;            ret = bpf_setsockopt(addr, SOL_TCP, TCP_ULP, &#34;smc&#34;, sizeof(&#34;smc&#34;));    if (ret) {        bpf_printk(&#34;replace TCP with SMC error: %ld\n&#34;, ret);        return 0;    }    return 0;}
 </span></span></code></pre></div><p>复制代码</p>
 <p>综合上述介绍，TCP 应用程序<strong>透明</strong>使用 RDMA 服务可以体现在以下两个方面：</p>
-<p><img src="https://static001.infoq.cn/resource/image/fy/61/fyy967913b4b85343facdda51e8d4161.png" alt=""><!-- raw HTML omitted --></p>
+<p><img src="https://static001.infoq.cn/resource/image/fy/61/fyy967913b4b85343facdda51e8d4161.png"><!-- raw HTML omitted --></p>
 <h4 id="22smc-r-架构">2.2 SMC-R 架构</h4>
-<p><img src="https://static001.infoq.cn/resource/image/03/59/03fcf02280f86515f96ac5076b07a659.png" alt="">
+<p><img src="https://static001.infoq.cn/resource/image/03/59/03fcf02280f86515f96ac5076b07a659.png">
 （图/SMC-R 架构）</p>
-<p>SMC-R 协议栈在系统内部处于 socket 层以下，RDMA 内核 verbs 层以上。是一个具备 <em><strong>&ldquo;hybrid&rdquo;</strong></em> 特点的内核网络协议栈。这里的 <em><strong>&ldquo;hybrid&quot;�</strong></em>�主要体现在 SMC-R 协议栈中混合了 RDMA 流与 TCP 流：</p>
+<p>SMC-R 协议栈在系统内部处于 socket 层以下，RDMA 内核 verbs 层以上。是一个具备 <em><strong>&ldquo;hybrid&rdquo;</strong></em> 特点的内核网络协议栈。这里的 <em><strong>&ldquo;hybrid&rdquo;�</strong></em>�主要体现在 SMC-R 协议栈中混合了 RDMA 流与 TCP 流：</p>
 <p><strong>数据流量基于 RDMA 网络传输</strong></p>
 <p>SMC-R 使用 RDMA 网络来传递用户态应用程序的数据，使应用程序透明的享受到 RDMA 带来的性能红利，即上图中黄色部分所示。</p>
 <p>发送端应用程序的数据流量通过 socket 接口从应用缓冲区来到内核内存空间；接着通过 RDMA 网络直接写入远程节点的一个内核态 ringbuf (remote memory buffer, RMB) 中；最后由远程节点 SMC-R 协议栈将数据从 RMB 拷贝到接收端应用缓冲区中。</p>
-<p><img src="https://static001.infoq.cn/resource/image/32/d6/329675e66947dfe0704f3a6971a799d6.png" alt="">
+<p><img src="https://static001.infoq.cn/resource/image/32/d6/329675e66947dfe0704f3a6971a799d6.png">
 （图/SMC-R 共享内存通信）</p>
 <p>显然，SMC-R 名称中的共享内存通信指的就是基于远程节点 RMB 进行通信。与传统的本地共享内存通信相比，SMC-R 将通信两端拓展为了两个分离的节点，利用 RDMA 实现了基于“远程”共享内存的通信。</p>
-<p><img src="https://static001.infoq.cn/resource/image/f6/6a/f6e43973574664c6391a291d6a306f6a.png" alt="">
+<p><img src="https://static001.infoq.cn/resource/image/f6/6a/f6e43973574664c6391a291d6a306f6a.png">
 （图/主流 RDMA 实现）</p>
 <p>目前，RDMA 网络的主流实现有三种：InfiniBand、RoCE 和 iWARP。其中，RoCE 作为在高性能与高成本中权衡的方案，在使用 RDMA 的同时兼容以太网协议，既保证了不错的网络性能，同时也降低了网络组建成本，因此倍受企业青睐，Linux 上游社区版本的 SMC-R 也因此使用 RoCE v1 和 v2 作为其 RDMA 实现。</p>
 <p>而 iWARP 则是基于 TCP 实现了 RDMA，突破了其余两者对无损网络的刚性需求。iWARP 具备更好的可拓展性，非常适用于云上场景。阿里云弹性 RDMA (eRDMA) 基于 iWARP 将 RDMA 技术带到云上。<strong>阿里云操作系统 Alibaba Cloud Linux 3 与龙蜥社区开源操作系统 Anolis 8 中的 SMC-R 也进一步支持了 eRDMA (iWARP)，使云上用户透明无感的使用 RDMA 网络。</strong></p>
@@ -151,7 +151,7 @@
 <p>除 RDMA 流外，SMC-R 还会为每个 SMC-R 连接配备一条 TCP 连接，两者具有相同的生命周期。TCP 流在 SMC-R 协议栈中主要担负以下职责：</p>
 <p>1）动态发现对端 SMC-R 能力</p>
 <p>在 SMC-R 连接建立前，通信两端并不知道对端是否同样支持 SMC-R。因此，两端会首先建立一条 TCP 连接。在 TCP 连接三次握手的过程中通过发送携带特殊的 TCP 选项的 SYN 包表示支持 SMC-R，同时检验对端发送的 SYN 包中的 TCP 选项。</p>
-<p><img src="https://static001.infoq.cn/resource/image/ec/2e/ec3e4e856fe87414672109259988fa2e.png" alt="">
+<p><img src="https://static001.infoq.cn/resource/image/ec/2e/ec3e4e856fe87414672109259988fa2e.png">
 （图/表示 SMC-R 能力的 TCP 选项）</p>
 <p>2）回退</p>
 <p>若在上述过程中，通信两端其一无法支持 SMC-R 协议，或是在 SMC-R 连接建立过程中无法继续，则 SMC-R 协议栈将回退至 TCP 协议栈。回退过程中，SMC-R 协议栈将应用程序持有的文件描述符对应的 socket 替换为 TCP 连接的 socket。应用程序的流量将通过这条 TCP 连接承载，以保证数据传输不会中断。</p>

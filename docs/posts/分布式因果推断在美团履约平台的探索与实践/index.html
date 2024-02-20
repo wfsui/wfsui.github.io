@@ -16,8 +16,8 @@
 2.1 技术选型与框架设计 单机树模型的工程实现可以概括为：遍历所有潜在的切分点并计算分裂指标（损失函数），取指标指标最佳的分裂点分裂，不断分裂树节点直到满足退出条件。而分布式环境下每台机器只包含部分样本，分布式环境下任何全局指标计算都会带来极大的通讯成本，因此需要选择合适的分布式架构帮助我们计算分裂指标。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/%E5%88%86%E5%B8%83%E5%BC%8F%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%B1%A5%E7%BA%A6%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2024-02-19T02:40:07+00:00" />
-<meta property="article:modified_time" content="2024-02-19T02:40:07+00:00" />
+<meta property="article:published_time" content="2024-02-20T02:39:51+00:00" />
+<meta property="article:modified_time" content="2024-02-20T02:39:51+00:00" />
 
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="分布式因果推断在美团履约平台的探索与实践"/>
 <meta name="twitter:description" content="1. 业务背景 近年来，因果推断在商品定价、补贴、营销等领域得到广泛应用并取得了显著的业务效果提升，例如用户增长、活动营销等业务场景。这些领域的共性是需要“反事实推断能力”，传统机器学习算法更关注预测问题，而因果推断提供了更佳的反事实推断能力。以营销活动为例，我们不仅需要知道当前优惠券金额下，订单数是多少（预测问题），还要知道在改变金额的情况下，订单数会发生怎样的变化（反事实问题）。
@@ -75,7 +75,7 @@
 
 		<div class="post-header">
 			<h1 class="title">分布式因果推断在美团履约平台的探索与实践</h1>
-			<div class="meta">Posted at &mdash; Feb 19, 2024</div>
+			<div class="meta">Posted at &mdash; Feb 20, 2024</div>
 		</div>
 
 		<div class="markdown">
@@ -86,7 +86,7 @@
 <p>具体来说，XGBoost、LGBM、Spark Random Forest等树模型是为解决预测问题而提出的经典算法实现，而因果树算法引入了新的训练理论以及因果理论独有的干预变量、工具变量等概念。这意味着我们并不能通过对现有分布式树模型的简单改造，来实现因果理论下树模型的分布式训练，而是需要充分理解各类单机因果树算法的原理之后，选择合适的分布式编程范式高效地实现出来。</p>
 <p>为了解决上述问题，美团履约平台技术部对开源项目进行了精细梳理，集各家之所长实现了一套高性能的分布式因果森林框架，在半小时内即可完成亿级样本100棵树的训练，突破了单机开源项目仅支持百万级样本的瓶颈。并经过复杂的抽象设计，最终实现通过自定义损失函数即可支持各类因果森林算法的能力，极大提升了框架的扩展性。</p>
 <p>除此之外，美团履约平台技术部还在因果效应评估、观测数据去偏等方面建设了大量高效实用的分布式工具。本文将重点为大家分享如何设计实现一个分布式的因果森林算法，以及因果效应评估方面的经验技巧，将我们在分布式因果推断领域的一些探索和内部的实践经验分享给大家。</p>
-<p><img src="https://p0.meituan.net/travelcube/d7f63a42a10c2ddd373a56ac2d1204b6212498.png" alt="图1 美团履约因果推断工具包"></p>
+<p><img alt="图1 美团履约因果推断工具包" src="https://p0.meituan.net/travelcube/d7f63a42a10c2ddd373a56ac2d1204b6212498.png"></p>
 <h2 id="2-分布式因果森林框架">2. 分布式因果森林框架</h2>
 <p>因果森林算法的提出引发了Tree-Base算法应用于因果建模的研究热潮，众多学者相继在因果森林的基础上提出了多种多样的改进算法。监督学习领域的树模型有众多优秀的开源分布式实现，例如Xgboost、LightGBM、Spark Random Forest等等。</p>
 <p>但是开源的因果树模型分布式实现基本处于空白状态。因果树算法引入了新的训练理论（比如Honesty Tree）并且因果树的分裂还依赖于干预变量、工具变量，这导致我们无法通过对现有分布式树实现做简单来更改来实现。因此，我们立足于论文，充分调研并借鉴业内优秀的开源实现，最终设计实现了一套高性能的分布式框架，并能提供统一的Serving方案。</p>
@@ -110,8 +110,8 @@
 <li><strong>预排序算法</strong>：对每一个特征的所有取值排序，依次遍历这些值计算分裂指标，取指标最佳的分裂点将节点分裂为左右子节点。</li>
 <li><strong>直方图算法</strong>：直方图的主要思想是将连续特征离散化到最大k个桶中，同时构造一个宽度为k的直方图。在遍历样本时，以离散化值为索引在直方图中累积统计量。遍历每个特征的每个分桶计算分裂指标，取指标最佳的分裂点将节点分裂为左右子节点。</li>
 </ol>
-<p><img src="https://p1.meituan.net/travelcube/4851e0866552b7b91ee722833eda8fe935298.png" alt="图2 离散化分桶"></p>
-<p><img src="https://p0.meituan.net/travelcube/23437a2df5083d8b50106009269973e629162.png" alt="图3 直方图作差"></p>
+<p><img alt="图2 离散化分桶" src="https://p1.meituan.net/travelcube/4851e0866552b7b91ee722833eda8fe935298.png"></p>
+<p><img alt="图3 直方图作差" src="https://p0.meituan.net/travelcube/23437a2df5083d8b50106009269973e629162.png"></p>
 <p>相较于预排序的实现，直方图算法的时间复杂度由$O(data*features)$降低为$O(bin*features)$，同时离散化后的特征内存占用更低，并且可以通过直方图作差的方式（父节点直方图减去左节点直方图）进一步降低计算量。受限于篇幅，预排序算法与直方图算法的差异这里不再赘述。最终我们选择了直方图算法方案，这也意味着需要在框架中采样计算直方图和特征离散化的环节。</p>
 <p><strong>AllReduce Or MapReduce ？</strong></p>
 <p>工业界主流的分布式机器学习架构有AllReduce、ParameterServer、MapReduce三种，其中AllReduce性能最高（ParameterServer架构也可以和AllReduce结合，为了方便讨论，这里不再细究）。</p>
@@ -185,7 +185,7 @@
 <p>由于履约使用的样本量在几千万级别，综合考虑开发测试成本和训练性能后，我们最终选择了MapReduce方案。</p>
 <p><strong>框架设计</strong></p>
 <p>综合上文的分析，我们为分布式因果森林框架设计了4个模块：</p>
-<p><img src="https://p0.meituan.net/travelcube/01a4da85b6b815345a2fc4eb1559f69646266.png" alt="图4 分布式因果森林框架"></p>
+<p><img alt="图4 分布式因果森林框架" src="https://p0.meituan.net/travelcube/01a4da85b6b815345a2fc4eb1559f69646266.png"></p>
 <ol>
 <li><strong>训练入口与参数模块</strong>：抽象出Abstract CFEstimator用来整合树模型的通用参数，新增算法继承此类后添加专属参数即可作为对应算法的训练入口。</li>
 <li><strong>样本转换模块</strong>：负责采样构建直方图与特征离散化，上文中单维treatment多维treatment、工具变量、观测值y的转换也封装在此模块中。</li>
@@ -301,13 +301,13 @@
 <p>无偏性校验分为数据无偏性和模型无偏性。</p>
 <p>数据无偏性校验可以通过X⊥T验证。首先可以训练一个X-&gt;T的倾向性得分模型，如果倾向性得分模型的auc在0.5附近则说明X无法正确地预测T，也就是说X⊥T，此时数据无偏。例如，使用了post-treatmen特征会导致特征穿越，最终导致数据是有偏的，这时候使用X⊥T的校验工具可以快速帮我们排查出这一类问题。</p>
 <p>模型无偏性校验使用ITE⊥T验证。首先用训练好的弹性模型在随机实验数据上预测ITE，接着对样本按照ITE升序排列后等频分桶，计算每个ITE分桶下实验组样本占比（下图的trtRatio曲线）。理想情况下，每个ITE分桶中实验组样本占比应该和随机试验中实验组样本占比一致，此时ITE正交于treatment。比如，随机实验中实验组比对照组为1比1，那么trtRatio就应该在1/2附近浮动。如果trtRatio比例不符合预期，我们就可以进一步去排查模型结构的问题。这项工具更是作为标准测试组件融入到分布式因果森林早期的开发过程中。</p>
-<p><img src="https://p0.meituan.net/travelcube/4143f18914cfa26f00ddace0aa6cbdf3354727.png" alt="图5 模型偏差大"></p>
-<p><img src="https://p0.meituan.net/travelcube/c9066565b8c3cdcad38b2572e2f9a881343353.png" alt="图6 模型偏差小"></p>
+<p><img alt="图5 模型偏差大" src="https://p0.meituan.net/travelcube/4143f18914cfa26f00ddace0aa6cbdf3354727.png"></p>
+<p><img alt="图6 模型偏差小" src="https://p0.meituan.net/travelcube/c9066565b8c3cdcad38b2572e2f9a881343353.png"></p>
 <h3 id="32-因果效应量级关系评估">3.2 因果效应量级关系评估</h3>
 <p>因果效应的序关系和量级关系同样重要，只是将弹性的序关系学习准确而没有将弹性的量级关系学习准确，决策者无法预估该treatment对用户的影响程度。例如，将量级错误的弹性应用到运筹优化决策中，可能会导致无法满足重要约束从而无法求得可行解。针对弹性量级无法评估的问题，我们在原有的qini_curve基础上增加了qini_pred_curve_counterfactual和qini_pred_curve。</p>
 <p><strong>qini_curve及其扩展</strong></p>
 <p>qini_pred_curve_counterfactual：将每个样本按照模型预测的ITE降序排列，按照如下公式依次计算前t个样本的反事实qini_pred即可得到曲线。</p>
-<p><img src="https://p0.meituan.net/travelcube/567782d9ddfe4ad5df4c6027861add1752719.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/567782d9ddfe4ad5df4c6027861add1752719.png"></p>
 <ul>
 <li>$pred_ite_t$ 代表前t个的样本ITE累加。</li>
 <li>$N_{t}^{T}$ 代表前t个样本中treatment组样本数量。</li>
@@ -315,14 +315,14 @@
 </ul>
 <p>通过比较qini_pred_curve_counterfactual和qini_curve这两条曲线的重合程度和右端点纵坐标，我们可以观察出ITE的预估量级和真实量级是否一致。</p>
 <p><strong>qini_pred_curve</strong>：每个样本按照模型预测的ITE降序排列，按照如下公式依次计算前t个样本的qini_pred即可得到曲线。</p>
-<p><img src="https://p1.meituan.net/travelcube/350850fa4c5aa340514579d484edf25543975.png" alt=""></p>
+<p><img src="https://p1.meituan.net/travelcube/350850fa4c5aa340514579d484edf25543975.png"></p>
 <ul>
 <li>$pred_{t}^{T}$ 代表前t个的样本中treatment组样本预估outcome的累加。</li>
 <li>$pred_{t}^{C}$ 代表前t个样本中control组样本预估outcome的累加。</li>
 </ul>
 <p>qini_pred_curve和qini_pred_curve_counterfactual差异越大，模型偏差越大，也就是ITE与T不正交。我们以下图的案例来说明这三条曲线。</p>
-<p><img src="https://p0.meituan.net/travelcube/be3f50392fd423182d5dafbd8b5a8472379525.png" alt="图7 模型偏差大"></p>
-<p><img src="https://p1.meituan.net/travelcube/1898fa0ff4b6d85e0d86641c38174c1e383597.png" alt="图8 模型偏差小"></p>
+<p><img alt="图7 模型偏差大" src="https://p0.meituan.net/travelcube/be3f50392fd423182d5dafbd8b5a8472379525.png"></p>
+<p><img alt="图8 模型偏差小" src="https://p1.meituan.net/travelcube/1898fa0ff4b6d85e0d86641c38174c1e383597.png"></p>
 <p>根据这些曲线的形状、覆盖面积、重合程度，我们可以得到如下的判断：</p>
 <ol>
 <li>如果数据无偏，那么qini_pred_curve_counterfactual会和qini_pred_curve重合，反之则表示数据有偏，即ITE不独立于T。</li>
@@ -335,11 +335,11 @@
 <p>同样将样本按照模型预测的ITE降序排列，然后等频分桶，统计每个分桶内预估ITE的均值（下图的avgITE曲线）和CATE值（下图的cate曲线）。对比avgITE和CATE，可以评估出真实因果效应和预估因果效应量级的差异。</p>
 <p>$$ avgITE = E(pred_y(X_i,T_i=1) - pred_y(X_i,T_i=0)) $$</p>
 <p>$$ CATE = E(Y_i|T=1) - E(Y_i|T=0) $$</p>
-<p><img src="https://p0.meituan.net/travelcube/734da9b3cb35ac978be28396ddf5bd0e288654.png" alt="图9 预测与真实ITE量级偏差大"></p>
+<p><img alt="图9 预测与真实ITE量级偏差大" src="https://p0.meituan.net/travelcube/734da9b3cb35ac978be28396ddf5bd0e288654.png"></p>
 <h3 id="33-分布式评估体系">3.3 分布式评估体系</h3>
 <p>早期我们也使用了pandas实现的单机评估算法，当样本量增加到400w条以上时遇到了严重的单机瓶颈。为此，我们对上述评估指标全部做了分布式改造。排序类指标的实现有分桶积分和逐条积分两种实现思路。考虑到逐条积分会有更高的精度，最终选择了分布式环境下逐条积分的方案。</p>
 <p>不仅如此，我们还使用Spark实现了带权重的分布式的因果效应评估，能够支持十亿样本的评估。此外我们还融入了评估预估y与观测值Y之间的差异的指标，包括mae/mse/rmse，并将这些指标封装到二元因果效应评估组件中。由于我们实现的部分因果森林算法能够输出多元treatment下预估的y，因此我们还进一步封装了多元因果效应（拆分成多个二元因果效应）评估功能。</p>
-<p><img src="https://p0.meituan.net/travelcube/b6c0a0f476c06dd3b40373370fb88186213057.png" alt="图10 Causal On Spark"></p>
+<p><img alt="图10 Causal On Spark" src="https://p0.meituan.net/travelcube/b6c0a0f476c06dd3b40373370fb88186213057.png"></p>
 <h2 id="4-总结">4. 总结</h2>
 <p>经过两年持续迭代，我们实现的分布式因果推断工具包已经发展成集模型训练、评估、去偏、Serving于一身的综合型因果工具包。我们内部为这个项目命名为Causal On Spark，简称COS。目前这个项目也已经全部集成到图灵机器学习平台中。将来有机会我们会再次为大家分享美团履约技术团队在分布式因果推断领域的探索和实践经验。</p>
 <h2 id="5-本文作者">5. 本文作者</h2>

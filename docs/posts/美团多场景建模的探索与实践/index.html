@@ -12,8 +12,8 @@
 2 自适应场景建模 在本节开始前，我们先介绍多场景模型的建模方式。多场景模型采用输入层 Embedding &#43; 混合专家（Mixture-of-Experts, MoE）的建模范式，其中输入信息包括了用户侧、商家侧以及场景上下文特征。多场景模型的损失由各场景的损失聚合而成，其损失函数形式如下：" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%BB%BA%E6%A8%A1%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2024-02-19T02:40:10+00:00" />
-<meta property="article:modified_time" content="2024-02-19T02:40:10+00:00" />
+<meta property="article:published_time" content="2024-02-20T02:39:55+00:00" />
+<meta property="article:modified_time" content="2024-02-20T02:39:55+00:00" />
 
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="美团多场景建模的探索与实践"/>
 <meta name="twitter:description" content="1 引言 美团到家Demand-Side Platform（下文简称DSP）平台，主要负责在美团外部媒体上进行商品或者物料的推荐和投放，并不断优化转化效果。随着业务的不断发展与扩大，DSP对接的外部渠道越来越丰富、展示形式越来越多样，物料展示场景的差异性愈发明显（如开屏、插屏、信息流、弹窗等）。
@@ -67,7 +67,7 @@
 
 		<div class="post-header">
 			<h1 class="title">美团多场景建模的探索与实践</h1>
-			<div class="meta">Posted at &mdash; Feb 19, 2024</div>
+			<div class="meta">Posted at &mdash; Feb 20, 2024</div>
 		</div>
 
 		<div class="markdown">
@@ -81,30 +81,30 @@
 </ol>
 <p>在面对此类建模任务时，业界现有的方法是在不同场景间进行知识迁移。例如，SAML[2]模型采用辅助网络来学习场景的共享知识并迁移至各场景的独有网络；ADIN[3]和SASS[4]模型使用门控单元以一种细粒度的方式来选择和融合全局信息到单场景信息中。然而，在DSP背景中复杂多变的流量背景下，场景差异性导致了场景数量的急剧增长，现有方法无法在巨量稀疏场景下有效。</p>
 <p>因此，在本文中我们提出了DSP背景下的自适应场景建模方案（AdaScene, Adaptive Scenario Model），同时从知识迁移和场景聚合两个角度进行建模。AdaScene通过控制知识迁移的程度来最大化不同场景共性信息的利用，并使用稀疏专家聚合的方式利用门控网络自动选择专家组成场景表征，缓解了负迁移现象；同时，我们利用损失函数梯度指导场景聚合，将巨大的推荐场景空间约束到有限范围内，缓解了数据稀疏问题，并实现了自适应场景建模方案。</p>
-<p><img src="https://p0.meituan.net/travelcube/eada80ecd6c3d21e531e7d77d1a4496c624962.jpg" alt="图1 不同渠道规模差异"></p>
+<p><img alt="图1 不同渠道规模差异" src="https://p0.meituan.net/travelcube/eada80ecd6c3d21e531e7d77d1a4496c624962.jpg"></p>
 <h2 id="2-自适应场景建模">2 自适应场景建模</h2>
 <p>在本节开始前，我们先介绍多场景模型的建模方式。多场景模型采用输入层 Embedding + 混合专家（Mixture-of-Experts, MoE）的建模范式，其中输入信息包括了用户侧、商家侧以及场景上下文特征。多场景模型的损失由各场景的损失聚合而成，其损失函数形式如下：</p>
-<p><img src="https://p0.meituan.net/travelcube/2c26d92cde134387c13e9774c6014ffc6199.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/2c26d92cde134387c13e9774c6014ffc6199.png"></p>
 <p>其中，$K$为场景数量，$α_i$为各场景的损失权重值。</p>
 <p>我们提出的AdaScene自适应场景模型主要包含以下2个部分：场景知识迁移（Knowledge Transfer）模块以及场景聚合（Scene Aggregation）模块，其模型结构如下图2所示。场景知识迁移模块自适应地控制不同场景间的知识共享程度，并通过稀疏专家网络自动选择 K 个专家构成自适应场景表征。场景聚合模块通过离线预先自动化衡量所有场景间损失函数梯度的相似度，继而通过最大化场景相似度来指导场景的聚合。</p>
-<p><img src="https://p0.meituan.net/travelcube/bc25b1d94516901dac7f4e850cb06fbd221302.jpg" alt="图2 自适应场景建模AdaScene示意图"></p>
+<p><img alt="图2 自适应场景建模AdaScene示意图" src="https://p0.meituan.net/travelcube/bc25b1d94516901dac7f4e850cb06fbd221302.jpg"></p>
 <p>该模型结构的整体损失函数如以下公式所示：</p>
-<p><img src="https://p1.meituan.net/travelcube/20227c9bbdfc40380a2227160141566014442.png" alt=""></p>
+<p><img src="https://p1.meituan.net/travelcube/20227c9bbdfc40380a2227160141566014442.png"></p>
 <p>其中，$\alpha_{k}$为每个场景组的损失函数所对应的系数，$G_k$为第$k$个场景组下的的场景数量，$G$为某种场景组的划分方式。</p>
 <p>下面，我们分别介绍自适应场景知识迁移和场景聚合的建模方案。</p>
 <h3 id="21-自适应场景知识迁移">2.1 自适应场景知识迁移</h3>
 <p>在多场景建模中，场景定义方式决定了场景专家的学习样本，很大程度上影响着模型对场景的拟合能力，但无论采用哪种场景定义方式，不同场景间用户分布都存在重叠，用户行为模式也会有相似性。</p>
 <p>为提升不同场景间共性的捕捉能力，我们从场景特征和场景专家两个维度探索场景知识迁移的方法，在以物料推荐渠道×App×展示形态作为多场景建模Base模型的基础上，构建了如下图3所示的自适应场景知识迁移模型（Adaptive Knowledge Transfer Network, AKTN）。该模型建立了场景共享参数与私有参数的知识迁移桥梁，能够自适应地控制知识迁移的程度、缓解负迁移现象。</p>
-<p><img src="https://p0.meituan.net/travelcube/1171a880e682fc93b9cd1f101fbbaa55590364.jpg" alt="图3 AKTN（Adaptive Knowledge Transfer Network）"></p>
+<p><img alt="图3 AKTN（Adaptive Knowledge Transfer Network）" src="https://p0.meituan.net/travelcube/1171a880e682fc93b9cd1f101fbbaa55590364.jpg"></p>
 <ul>
 <li><strong>场景特征适配</strong>：通过Squeeze-and-Excitation Network[5]构建场景适应层（Scene Adaption Layer），其结构可表示为$F_{SE}= FC( ReLU( FC(x)))$，其中$FC$表示全连接层，$ReLU$为激活函数。由于不同场景对原始特征的关注程度存在较大差异，该层能够根据不同场景的信息生成原始特征的权重，并利用这些权重对输入特征进行相应的变换，实现场景特定的个性化输入表征，提高模型的场景信息捕捉能力。</li>
 <li><strong>场景知识迁移</strong>：使用GRU门控单元构建场景知识迁移层（Scene Transfer Layer）。GRU门控单元通过场景上下文信息对来自全局场景专家和当前场景专家的信息流动进行控制，筛选出符合当前场景的有用信息；并且，该结构能以层级方式进行堆叠，不断对场景输出进行修正。</li>
 </ul>
 <p>场景特征适配在输入层根据场景信息对不同特征进行权重适配，筛选出当前场景下模型最关注的特征；场景知识迁移在隐层专家网络中进行知识迁移，控制共享专家中共性信息向场景独有信息的流动，使得场景共性信息得以传递。</p>
 <p>这两种知识迁移方式互为补充、相辅相成，共同提升多场景模型的预估能力。我们对比了不同模块的实验效果，具体结果如下表1所示。可以看出，引入场景知识迁移和特征权重优化在头部、尾部渠道都能带来一定提升，其中尾部小流量场景上（见下表1子场景2、3）有更为明显的提升，可见场景知识迁移缓解了场景之间的负迁移现象。</p>
-<p><img src="https://p1.meituan.net/travelcube/137b62bbca6a1f75de572cb73d8edd08116002.png" alt="表1 AKTN实验效果"></p>
+<p><img alt="表1 AKTN实验效果" src="https://p1.meituan.net/travelcube/137b62bbca6a1f75de572cb73d8edd08116002.png"></p>
 <p>相关研究和实践表明[6][7][8]，稀疏专家网络对于提高计算效率和增强模型效果非常有用。因此，我们在AKTN模型的基础上，在专家层进一步优化多场景模型。具体的，我们将场景知识迁移层替换为自动化稀疏专家选择方法，通过门控网络从大规模专家中选取与当前场景最相关的$K$个构成自适应场景表征，其选择过程如下图4所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/41aa1b14942ce0eee8ffded95a31348d256783.jpg" alt="图4 稀疏专家网络示意图"></p>
+<p><img alt="图4 稀疏专家网络示意图" src="https://p0.meituan.net/travelcube/41aa1b14942ce0eee8ffded95a31348d256783.jpg"></p>
 <p>在实践中，我们通过使用可微门控网络对专家进行有效组合，以避免不相关任务之间的负迁移现象。同时大规模专家网络的引入扩大了多场景模型的选择空间，更好地支持了门控网络的选择。考虑到多场景下的海量流量和复杂场景特征，在业界调研的基础上对稀疏专家门控网络进行了探索。</p>
 <p>具体而言，我们对以下稀疏门控方法进行了实践：</p>
 <ul>
@@ -112,19 +112,19 @@
 <li><strong>方法二</strong>：每个子场景配备一个专家选择门控网络，$m$个场景则有$m$个门控网络。对于每个场景的门控网络，配备$k$个单专家选择器[9]，每个单专家选择器负责从$n$个专家中选择一个作为当前场景的专家（$n$为Experts个数）。在实践中，为提高训练效率，我们对单专家选择器中权重较小的值进行截断，保证每个单专家选择器仅选择一个专家。</li>
 </ul>
 <p>在离线实验中，我们以物料推荐渠道 * 展示形态作为场景定义，对上述稀疏门控方法进行了尝试，离线效果如下表2所示：</p>
-<p><img src="https://p1.meituan.net/travelcube/0452b4031d9e31a0824723350ccf538f82171.png" alt="表2 稀疏门控方法效果"></p>
+<p><img alt="表2 稀疏门控方法效果" src="https://p1.meituan.net/travelcube/0452b4031d9e31a0824723350ccf538f82171.png"></p>
 <p>可以看出，基于软共享机制的专家聚合方法能够更好地通过所激活的相同专家网络对各场景之间的知识进行共享。相较于常见的以截断方式为主的门控网络，使用二进制编码的方式使得其在不损失其他专家网络信息的同时，能够更好地收敛到目标专家数量，同时其可微性使得其在以梯度为基础的优化算法中训练更加稳定。</p>
 <p>同时，为了验证稀疏门控网络能否有效区分不同场景并捕捉到场景间差异性，我们使用$n$=16个专家中选择$K$=7个的例子，对验证集中不同场景下各专家的利用率、选择专家的平均权重进行了可视化分析（如图5-图7所示），实验结果表明该方法能够有效地选择出不同的专家对场景进行表达。</p>
 <p>例如，图6中KP_1更多地选择第5个专家，而KP_2更倾向于选择第15个专家。并且，不同场景对各专家的使用率以及选择专家的平均权重也有着明显的差异性，表明该方法能够捕捉到细分场景下流量的差异性并进行差异化的表达。</p>
-<p><img src="https://p1.meituan.net/travelcube/78c523f84024910ff28c2994bd043efe433251.jpg" alt="图5 同渠道下不同展示形式专家分布"></p>
-<p><img src="https://p0.meituan.net/travelcube/e3af00fe5783232dd4dd9e4b57241595445274.jpg" alt="图6 开屏展示不同渠道的专家分布"></p>
-<p><img src="https://p0.meituan.net/travelcube/0f3ea4bbf94a4a6e338779811c0872d4457159.jpg" alt="图7 信息流展示不同渠道的专家分布"></p>
+<p><img alt="图5 同渠道下不同展示形式专家分布" src="https://p1.meituan.net/travelcube/78c523f84024910ff28c2994bd043efe433251.jpg"></p>
+<p><img alt="图6 开屏展示不同渠道的专家分布" src="https://p0.meituan.net/travelcube/e3af00fe5783232dd4dd9e4b57241595445274.jpg"></p>
+<p><img alt="图7 信息流展示不同渠道的专家分布" src="https://p0.meituan.net/travelcube/0f3ea4bbf94a4a6e338779811c0872d4457159.jpg"></p>
 <p>实验证明，在通过大规模专家网络对每个场景进行建模的同时，基于软共享机制的专家聚合方法能够更好地通过所激活的相同专家网络对各场景之间的知识进行共享。 同时，为了进一步探索Experts个数对模型性能的影响，我们在方法二的基础上通过调整专家个数和topK比例设计了多组对比实验，实验结果如下表3所示：</p>
-<p><img src="https://p1.meituan.net/travelcube/825b021463f001454dfd26140a288481188629.png" alt="表3 方法二调参实验"></p>
+<p><img alt="表3 方法二调参实验" src="https://p1.meituan.net/travelcube/825b021463f001454dfd26140a288481188629.png"></p>
 <p>从实验数据可以看出，大规模的Experts结构会带来正向的离线收益；并且随着选取专家个数比例的增加（表3横轴），模型整体的表现效果也有上升的趋势。</p>
 <h3 id="22-自适应场景聚合">2.2 自适应场景聚合</h3>
 <p>理想情况下，一条请求（流量）可以看作一个独立的场景。但如引言所述，随着DSP业务持续发展，不同的物料展示渠道、形式、位置等持续增加，每个场景的数据十分稀疏，我们无法对每个细分场景进行有效训练。因此，我们需要对各个推荐场景进行聚类、合并。我们使用场景聚合的方法对此问题进行求解，通过衡量所有场景间的相似度，并最大化该相似度来指导场景的聚合，解决了数据稀疏导致难以收敛的问题。具体的，我们将该问题表示为：</p>
-<p><img src="https://p1.meituan.net/travelcube/bcf20c5e14e6676b82b647757e9e73c815369.png" alt=""></p>
+<p><img src="https://p1.meituan.net/travelcube/bcf20c5e14e6676b82b647757e9e73c815369.png"></p>
 <p>其中$G$表示某种分组方式，$f_{s_i}$为场景$s_i$在分组$G_k$内与其他场景的总体相似度。在将$N$个场景聚合成$K$个场景组的过程中，我们需要找到使得场景间整体相似度最大的分组方式$G^{\ast}$。</p>
 <p>因此，我们在2.1节场景知识迁移模型的基础上，增加了场景聚合部分，提出了基于Two-Stage策略进行训练的场景聚合模型：</p>
 <ul>
@@ -134,25 +134,25 @@
 <p>其中，Stage 2与2.1节中所述一致，本节主要针对Stage 1进行阐述。我们认为，一个有效的场景聚合方法应该能自适应地应对流量变化的趋势，能够发现场景之间的内在联系并依据当前流量特点自动适配聚合方法。我们首先想到的是从规则出发，将人工先验知识作为场景聚合的依据，按照推荐渠道、展示形式以及两者叉乘的方式进行了相应迭代。然而这类场景聚合方式需要可靠的人工经验来支撑，且在应对海量流量时不能迅速捕捉到其中的变化。</p>
 <p>因此，我们对场景之间关系的建模方法进行了相关的探索。首先，我们通过离线训练时场景之间的表征迁移和组合训练来评估场景之间的影响，但这种方式存在组合空间巨大、训练耗时较长的问题，效率较低。</p>
 <p>在多任务的相关研究中[10][11][12][13]，使用梯度信息对任务之间的关系进行建模是一种有效的方法。类似的在多场景模型中，能够根据各场景损失函数的梯度信息对场景间的相似度进行建模，因此我们采用多专家网络并基于梯度信息自动化地对场景之间的相似度进行求解，模型示意如下图8所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/545ea048c8bda95340300374971142ae419444.jpg" alt="图8 场景聚合示意图"></p>
+<p><img alt="图8 场景聚合示意图" src="https://p0.meituan.net/travelcube/545ea048c8bda95340300374971142ae419444.jpg"></p>
 <p>基于上述思路，我们对场景之间的关系建模方法进行了以下尝试：</p>
 <p><strong>1. Gradient Regulation</strong></p>
 <p>基于梯度信息能够对场景信息进行潜在表示这一认知，我们在损失函数中加入各场景损失函数关于专家层梯度距离的正则项，整体的损失函数如下所示，该正则项的系数$\lambda_{s_i,s_j}$表示场景之间的相似度，$dist$为常见的评估梯度之间距离的方法，比如$l_1$，$l_2$距离。</p>
-<p><img src="https://p1.meituan.net/travelcube/05b099603288b4469e77bb5ed010adc919331.png" alt=""></p>
+<p><img src="https://p1.meituan.net/travelcube/05b099603288b4469e77bb5ed010adc919331.png"></p>
 <p><strong>2. Lookahead Strategy</strong></p>
-<p><img src="https://p1.meituan.net/travelcube/c6baedbd75832097e1837e55b7f66764183864.png" alt=""></p>
+<p><img src="https://p1.meituan.net/travelcube/c6baedbd75832097e1837e55b7f66764183864.png"></p>
 <p><strong>3. Meta Weights</strong></p>
 <p>Lookahead Strategy该方法对场景间的关系进行了显式建模，但是这种根据损失函数的变化计算场景相关系数的策略存在着训练不稳定、波动较大的现象，无法像Gradient Regulation这一方法对场景相似度进行求解。</p>
-<p><img src="https://p0.meituan.net/travelcube/d9b4956ebb5fe24f5c39df444777dc5477804.png" alt=""></p>
-<p><img src="https://p0.meituan.net/travelcube/dfce1e414cb45f4c8195f7ba01c33a7832010.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/d9b4956ebb5fe24f5c39df444777dc5477804.png"></p>
+<p><img src="https://p0.meituan.net/travelcube/dfce1e414cb45f4c8195f7ba01c33a7832010.png"></p>
 <p>我们以推荐渠道和展示形式（是否开屏）的多场景模型作为Base，对上述3种方法做了探索。为了提高训练效率，我们在设计 Stage 1 模型时做了以下优化：</p>
-<p><img src="https://p0.meituan.net/travelcube/b4e3590af6874f0773cdc45bd9c5da13155800.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/b4e3590af6874f0773cdc45bd9c5da13155800.png"></p>
 <p>我们对每个方法的GAUC进行了比较，实验效果如下表4所示。相较于人工规则，基于梯度的场景聚合方法都能带来效果的明显提升，表明损失函数梯度能在一定程度上表示场景之间的相似性，并指导多场景进行聚合。</p>
-<p><img src="https://p0.meituan.net/travelcube/094c6f4f2af75149132815be74d49e8b153295.png" alt="表4 场景聚合实验数据"></p>
+<p><img alt="表4 场景聚合实验数据" src="https://p0.meituan.net/travelcube/094c6f4f2af75149132815be74d49e8b153295.png"></p>
 <p>为了更全面的展现场景聚合对于模型预估效果的影响，我们选取Meta Weights进行分组数量的调优实验，具体的实验结果如下表5所示。可以发现：随着分组数的增大，GAUC提升也越大，此时各场景间的负迁移效应减弱；但分组超过一定数量时，场景间总体的相似度减小，GAUC呈下降趋势。</p>
-<p><img src="https://p0.meituan.net/travelcube/ff588890dd70f1053807e0c349deb79b89082.png" alt="表5 不同聚合场景数量实验数据"></p>
+<p><img alt="表5 不同聚合场景数量实验数据" src="https://p0.meituan.net/travelcube/ff588890dd70f1053807e0c349deb79b89082.png"></p>
 <p>此外，我们对Meta Weigts方法中部分场景间的关系进行了可视化分析，分析结果如下图9所示。以场景作为坐标轴，图中的每个方格表示各场景间的相似度，颜色的深浅表示渠道间的相似程度大小。</p>
-<p><img src="https://p0.meituan.net/travelcube/62f6faacecf3da0d3697c4fcc9201ad3591384.jpg" alt="图9 部分细分场景下的相似度示例"></p>
+<p><img alt="图9 部分细分场景下的相似度示例" src="https://p0.meituan.net/travelcube/62f6faacecf3da0d3697c4fcc9201ad3591384.jpg"></p>
 <p>从图中可以发现，以渠道和展示形式为粒度的细分场景下，该方法能够学习到不同场景间的相关性，例如A渠道下的信息流(s16)与其他场景的相关性较低，会将其作为独立的场景进行预估，而B渠道下的开屏展示（s9）与C渠道开屏展示（s8）相关性较高，会将其聚合为一个场景进行预估，同时该相似度矩阵不是对称的，这也说明各场景间相互的影响存在着差异。</p>
 <h2 id="3-总结与展望">3 总结与展望</h2>
 <p>通过多场景学习的探索和实践，我们深入挖掘了推荐模型在不同场景下的建模能力，并分别从场景知识迁移、场景聚合方向进行了尝试和优化，这些尝试提供了更好的理解和解释推荐模型对不同类型流量和场景的应对能力。然而，这只是多场景学习研究的开始，后续我们会探索并迭代以下方向：</p>

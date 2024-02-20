@@ -88,19 +88,19 @@
 <p>图灵平台主要包括机器学习平台、特征平台、图灵在线服务（Online Serving）、AB实验平台四大功能，具体可参考《<a href="https://tech.meituan.com/2020/01/23/meituan-delivery-machine-learning.html">一站式机器学习平台建设实践</a>》以及《<a href="https://tech.meituan.com/2021/05/13/turing-os-online-serving.html">算法平台在线服务体系的演进与实践</a>》这两篇博客。其中，图灵机器学习平台的离线训练引擎是基于Spark实现的。</p>
 <p>随着图灵的用户增长，越来越多算法模型在图灵平台上完成迭代，优化离线训练引擎的性能和吞吐对于节约离线计算资源显得愈发重要。经过半年持续的迭代，我们积累了一系列独特的优化方法，使图灵机器学习平台的离线资源消耗下降80%，生产任务平均耗时下降63%（如下图所示），图灵全平台的训练任务在性能层面都得到了较为明显的提升。</p>
 <p>资源消耗下降：</p>
-<p><img src="https://p0.meituan.net/travelcube/43ac03c449f706d7a16cd94bdc99c2ab760483.jpg" alt="图1 资源消耗"></p>
+<p><img alt="图1 资源消耗" src="https://p0.meituan.net/travelcube/43ac03c449f706d7a16cd94bdc99c2ab760483.jpg"></p>
 <p>当前平台性能：</p>
 <p>下图是某位图灵用户的实验。使用100万数据训练深度模型，总计约29亿的数据调用深度模型，计算评估指标并保存到Hive，整个实验只需要35分钟。其中Spark开启DynamicAllocation，maxExecutor=400 ，单个Executor为7Core16GB。</p>
-<p><img src="https://p0.meituan.net/travelcube/8a5739f0532a00979e9ff7b3981cdc4a703471.jpg" alt="图2 实验运行图"></p>
+<p><img alt="图2 实验运行图" src="https://p0.meituan.net/travelcube/8a5739f0532a00979e9ff7b3981cdc4a703471.jpg"></p>
 <h2 id="2-图灵训练引擎优化">2. 图灵训练引擎优化</h2>
 <p>那么，图灵训练引擎的性能优化是如何做到的呢？我们的优化分为内存优化、计算优化、磁盘IO优化三个层面。</p>
 <p>内存优化包括列裁切、自适应Cache、算子优化。我们借鉴Spark SQL原理设计了列裁切，可以自动剔除各组件中用户实际没有使用的字段，以降低内存占用。何时对Dataset Persist和Unpersist一直是Spark代码中的取舍问题，针对用户不熟悉Persist和Unpersist时机这个问题，我们将多年的开发经验沉淀在图灵中，结合列裁切技术实现自适应Cache。在计算优化方面，我们完成了图优化、Spark源码优化、XGB源码优化。在磁盘IO优化方面，我们创新性的实现了自动化小文件保存优化，能够使用一个Action实现多级分区表小文件的合并保存。</p>
 <p>此外，我们实现的TFRecord表示优化技术，成功将Spark生成的TFRecord体积减少50%。因图灵平台使用的优化技巧较多，我们将分成多篇文章为大家逐一介绍这些优化技术。</p>
-<p><img src="https://p1.meituan.net/travelcube/12941cec6dfc25c8df86421c65df981d598856.jpg" alt="图3 图灵训练引擎优化"></p>
+<p><img alt="图3 图灵训练引擎优化" src="https://p1.meituan.net/travelcube/12941cec6dfc25c8df86421c65df981d598856.jpg"></p>
 <p>而在众多优化中，收益最高、适用性最广的技术的就是算子优化，这项技术极大提升了图灵训练引擎的吞吐量。本篇文章首先将为大家介绍内存优化中的算子优化技术。</p>
 <h2 id="3-spark算子解读">3. Spark算子解读</h2>
 <p>同样的业务需求，不同的算子实现会有不一样的特性。我们将多年的Spark开发技巧总结在下表中：</p>
-<p><img src="https://p1.meituan.net/travelcube/0f8edde2e7ec1729e16ea62419220396597929.jpg" alt="表1 Spark算子开发技巧总结"></p>
+<p><img alt="表1 Spark算子开发技巧总结" src="https://p1.meituan.net/travelcube/0f8edde2e7ec1729e16ea62419220396597929.jpg"></p>
 <ol>
 <li><strong>多行输入多行输出</strong>：多行数据一起进入内存处理。输出多行数据。</li>
 <li><strong>多列输出</strong>：特定场景下，我们希望输出多个字段。
@@ -148,12 +148,12 @@
 </ol>
 <h2 id="5-spark-pipeline中的mappartitions">5. Spark Pipeline中的mapPartitions</h2>
 <p>在进行下一部分讲解之前，我们先简要介绍一下Spark的懒执行机制。Spark的算子分为Action和Transformation两大类。RDD的依赖关系构成了数据处理的有向无环图DAG。只有当Action算子出现时，才会执行Action算子与前面一系列Transformation算子构成的DAG。Spark还会根据Shuffle将DAG划分成多个Stage进行计算，Shuffle过程需要跨节点交换数据，会产生大量的磁盘IO和网络IO。而每个Stage内的计算则构成了Pipeline，在内存中进行。</p>
-<p><img src="https://p0.meituan.net/travelcube/64b324f7509db0bcfd2b372723fa366c527972.jpg" alt="图4 多列词典映射实验图"></p>
+<p><img alt="图4 多列词典映射实验图" src="https://p0.meituan.net/travelcube/64b324f7509db0bcfd2b372723fa366c527972.jpg"></p>
 <p>我们以上图为例，该同学实验中的多列词典映射组件，对大量的特征做了词典映射计算。多列词典映射组件包含两个部分，计算词典和应用词典。
 ::: block-1 &gt; <strong>计算词典</strong>：通过去重和collect生成了各个特征的词典，每个特征词典的计算都伴随着1次Shuffle和1次Action。 &gt; <strong>应用词典</strong>：将特征根据词典映射成唯一ID，不存在Shuffle。 :::</p>
 <p>与Spark StringIndexer的Pipeline优化相似，当进行多个特征的词典映射计算时，图灵机器学习平台会将计算词典的Action单独执行，而多个应用词典则一起执行。</p>
 <p>词典生成后，所有应用词典的计算逻辑（mapPartitions Transformation）不存在Shuffle，因此被划分到同一个Stage中，所有mapPartitions算子将串联成一条非常长的Pipeline。最终由后面的Action算子触发提交Job，执行该Pipeline。Stage的划分可参考下图：</p>
-<p><img src="https://p1.meituan.net/travelcube/1d169d500490d28eeda29194f9b682591453150.jpg" alt="图5 应用多个词典Stage"></p>
+<p><img alt="图5 应用多个词典Stage" src="https://p1.meituan.net/travelcube/1d169d500490d28eeda29194f9b682591453150.jpg"></p>
 <p>应用词典的实现中，每个mapPartitionsFunction中都新建了一个ArrayList充当Buffer来存储计算后的数据，最终返回ArrayList.iterator()。执行时，每次应用词典都会将整个Partition的数据拉入ArrayList当中。上述词典映射串联构成Pipeline的时候，内存中会有多少数据呢？</p>
 <p>带着这个疑问，让我们走进Spark的源代码，看看mapPartitionsFunction是如何构成Spark Pipeline的。</p>
 <p>Spark的一个Stage中会划分为多个Task，除了union和coalesce的场景，1个Partition对应1个Task。Task的执行通过抽象方法runTask()完成，以实现类ResultTask为例，最后runTask()方法调用了rdd.iterator()。</p>
@@ -234,16 +234,16 @@
 </span></span><span style="display:flex;"><span>iteratorD <span style="color:#719e07">=&gt;</span> count<span style="color:#719e07">()</span>
 </span></span></code></pre></div><p>回看mapPartitions模板，作为Buffer的ArrayList是每个mapPartitionsFunction的局部变量，ArrayList.iterator()引用了这个Buffer，结合上面的源码我们知道，子RDD会引用父RDD的Iterator。结合该同学的实验分析，每个RDD中的计算都形成了一个Array Buffer，在RDD的function调用链路中Array Buffer2依赖Array Buffer1.iterator()，Array Buffer3依赖Array Buffer2.iterator()。</p>
 <p>以此类推，在计算RDD-3时，RDD-1的func1已经出栈，且RDD-3不依赖Array Buffer1.iterator()，因此局部变量Array Buffer1可以被GC。由此可见在Stage-应用多个词典的计算过程中，内存占用的峰值达到了两个Array Buffer，也就是两倍partitionSize。</p>
-<p><img src="https://p0.meituan.net/travelcube/a65ed9ae47514ce53c5583616472fbe11351681.jpg" alt="图6 应用多个词典内存占用"></p>
+<p><img alt="图6 应用多个词典内存占用" src="https://p0.meituan.net/travelcube/a65ed9ae47514ce53c5583616472fbe11351681.jpg"></p>
 <p>为了完全证实这个想法，又进行了实际的测试验证：初始化1个单Partition的RDD，并且该Partition的数据量为300万，占用内存大约为180M。接着将这些数据利用多个mapPartitions + ArrayList.iterator()串联，每输入1个对象，生成1个新对象放入Buffer中，最后用rdd.count()触发Action，整个执行流程中只包含一个Stage。运行的JVM堆内存设置为512M，以此来观察堆内存中的实例对象及其GC活动是否符合只有两个Buffer的预期。</p>
 <p>观察结果如下，每一行数据以一个GenericRowWithSchema实例存在并加入ArrayList中，其计算过程中最大的峰值正好为600万即两倍的分区数据量。GC以周期性的活动去销毁上上个mapPartitions中的无用Buffer，并且堆内存保持在了最大约两倍的数据占用量（约360M），因此验证了推断。以下是测试中的GenericRowWithSchema对象实例计数图、内存实时占用以及GC活动统计图。</p>
-<p><img src="https://p0.meituan.net/travelcube/f6f2b680808fb7ebe5dd7d63cd8bf8d9546799.jpg" alt="图7 对象统计"></p>
-<p><img src="https://p0.meituan.net/travelcube/a6139c4aa6a22f6e8cee8972a5b49871574258.jpg" alt="图8 内存统计"></p>
+<p><img alt="图7 对象统计" src="https://p0.meituan.net/travelcube/f6f2b680808fb7ebe5dd7d63cd8bf8d9546799.jpg"></p>
+<p><img alt="图8 内存统计" src="https://p0.meituan.net/travelcube/a6139c4aa6a22f6e8cee8972a5b49871574258.jpg"></p>
 <p>经过测试验证，mapPartitions + ArrayList.iterator()导致了两倍partitionSize的内存占用。</p>
 <p>使用mapPartitions + ArrayList.iterator()仅仅只是造成OOM或GC压力大吗？偏偏不巧，在Spark的内存管理中另有一番天地，会牵扯到更多的性能问题。</p>
 <h3 id="spark内存管理机制">Spark内存管理机制</h3>
 <p>Spark从2.0开始使用的是统一内存管理机制，主要分为四大区域，System Reserved、User Memory、Storage Memory和Execution Memory。System Reserved是为系统预留使用的内存，User Memory是用户定义的数据结构和Spark的元数据。存储内存Storage Memory与执行内存Execution Memory在运行期间会共享一块内存区域，默认有由spark.storage.storageFraction参数控制。Spark使用动态占用机制来管理这两块内存。</p>
-<p><img src="https://p0.meituan.net/travelcube/288f8c9852788faf3328400ee97d758f1070430.jpg" alt="图9 Spark内存逻辑模型"></p>
+<p><img alt="图9 Spark内存逻辑模型" src="https://p0.meituan.net/travelcube/288f8c9852788faf3328400ee97d758f1070430.jpg"></p>
 <p><strong>Storage和Execution的动态占用机制</strong></p>
 <ol>
 <li>当Storage或Execution的内存不足、而对方的内存空余时，可以占用对方的内存空间。</li>
@@ -252,7 +252,7 @@
 <li>从Storage中淘汰掉的RDD Cache会在RDD重新使用时再次Cache。</li>
 </ol>
 <p>在涉及到mapPartitions + ArrayList.iterator()的执行过程中，由于大量的内存占用，导致Execution Memory不足，借用Storage Memory，并且借用后仍存在内存不足情况时，Storage Memory中的已缓存的Block会进行淘汰机制，根据其存储级别进行落盘或直接删除，这会导致缓存数据多次的IO操作与重复计算，极大的降低了数据处理的效率。</p>
-<p><img src="https://p1.meituan.net/travelcube/a07f2c3703bfb97a0f9a05c3497755291460707.jpg" alt="图10 淘汰机制"></p>
+<p><img alt="图10 淘汰机制" src="https://p1.meituan.net/travelcube/a07f2c3703bfb97a0f9a05c3497755291460707.jpg"></p>
 <p>让我们小结一下mapPartitions + ArrayList.iterator()的实现方式：</p>
 <ol>
 <li>Spark通过mapPartitionsFunction嵌套实现Pipeline，例如fCount(funcC(funcB(funcA)))，func中的Buffer是方法中的局部变量。</li>
@@ -322,9 +322,9 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#719e07">}</span>
 </span></span><span style="display:flex;"><span>iteratorD <span style="color:#719e07">=&gt;</span> count<span style="color:#719e07">()</span>
 </span></span></code></pre></div><p>我们可以看到，多输入多输出Demo以inputBatch=5、outputBatch=2作为消费单位，内存占用只有Batch=7（inputBatch + outputBatch），每次处理完一个批次，直到当前批次产生的2条数据全部被下一个RDD Iterator消费完之后，才会继续尝试从上一个RDD Iterator读取下一个批次进入内存计算，不需要为了返回分区Iterator而直接消费整个分区数据。将随机抽取数据的逻辑串联处理，其Stage将如下图所示，每个Buffer仅为一个Batch，内存消耗几乎可以忽略不计。</p>
-<p><img src="https://p0.meituan.net/travelcube/c72eb30c6244e65026a1356dc52e7d761392886.jpg" alt="图11 Demo Stage"></p>
+<p><img alt="图11 Demo Stage" src="https://p0.meituan.net/travelcube/c72eb30c6244e65026a1356dc52e7d761392886.jpg"></p>
 <p>最终的数据处理效果对比如下图：</p>
-<p><img src="https://p0.meituan.net/travelcube/cef2251fff0ff69d096da0fd7817aa171729775.jpg" alt="图12 数据处理效果对比"></p>
+<p><img alt="图12 数据处理效果对比" src="https://p0.meituan.net/travelcube/cef2251fff0ff69d096da0fd7817aa171729775.jpg"></p>
 <h2 id="7-总结">7. 总结</h2>
 <p>本文作为《图灵机器学习平台性能起飞的秘密》系列的第一篇，主要讲述了内存优化中的算子优化技巧，深入分析了mapPartitions算子的原理，并提供了mapPartitions算子的最佳实践。图灵机器学习平台基于此方案进一步开发了BufferIterator框架，能够灵活应对输入M条数据输出N条数据的场景，极大提升了图灵的吞吐量。后续我们将继续为大家介绍更多的优化技巧，敬请期待。</p>
 <h2 id="8-作者简介">8. 作者简介</h2>

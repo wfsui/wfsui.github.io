@@ -79,7 +79,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
 <p>在Black Hat 2021的峰会中，Datadog工程师Guillaume Fournier带来主题为<a href="https://www.blackhat.com/us-21/briefings/schedule/#with-friends-like-ebpf-who-needs-enemies-23619">《With Friends Like eBPF, Who Needs Enemies?》</a>的分享，他介绍了eBPF如何被恶意利用，包括如何构建一个rootkit、如何利用，并将检测防御代码放在了<a href="https://github.com/Gui774ume/ebpfkit">GitHub</a> 上。</p>
 <p><strong>DEFCON</strong></p>
 <p>在DEF CON29峰会上，安全研究员Pat Hogan也分享了一些eBPF被恶意利用的案例：<a href="https://defcon.org/html/defcon-29/dc-29-speakers.html#path">《Warping Reality - creating and countering the next generation of Linux rootkits using eBPF》</a> ，这里介绍了eBFP rootkit的应用场景，包括网络、运行时等场景，以及如何检测eBPF被恶意利用等。代码也放在了<a href="https://github.com/pathtofile/bad-bpf">GitHub</a> 上。</p>
-<p><img src="https://www.cnxct.com/wp-content/uploads/2022/03/warp-ebpf-detect.jpg" alt=""></p>
+<p><img src="https://www.cnxct.com/wp-content/uploads/2022/03/warp-ebpf-detect.jpg"></p>
 <h3 id="国内资料">国内资料</h3>
 <p>对比国外，国内eBPF被恶意利用的资料较少，相关技术分享也较少。<strong>可能这方面的危害还没有得到国内安全同行的关注，如果我们继续这样，势必影响到国内公司在网络安全防御体系层面的建设，进而导致安全防护落后于国外，给企业安全甚至国家安全带来较大的风险</strong>。美团信息安全团队作为防御体系的建设方，有责任也有义务带领大家更好地认识这种恶意利用，分享美团在检测防御方面的经验，加固网络安全产品，希望能为国内信息安全建设贡献一份绵薄之力。</p>
 <h3 id="ebpf技术恶意利用的攻击原理">eBPF技术恶意利用的攻击原理</h3>
@@ -93,7 +93,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
 </ul>
 <p>在<strong>网络</strong>领域，Cilium等云原生公司做了很多网络层的产品，在实现网格管理的同时，也做了相应的网络层面安全策略，尤其是在网络编排领域，表现尤为亮眼，逐步代替<strong>iptables</strong>等产品，大有一统江山的趋势。而在<strong>监控</strong>、<strong>观测</strong>等领域也有很多产品。尤其是运行时安全（Runtime Security）领域，Datadog、Falco、Google等公司也都推出了相应的产品。感兴趣的同学，可以参考相关产品源码分析（<a href="https://mp.weixin.qq.com/s/mnYuIU43T3S4dq-UCZNaqg">Cilium eBPF实现机制源码分析</a>、<a href="https://mp.weixin.qq.com/s/SAPz4Z1m2gVtQWzt68u6eg">Datadog的eBPF安全检测机制分析</a>）的分享。</p>
 <p>我们回顾一下eBPF技术的hook点：</p>
-<p><img src="https://p0.meituan.net/travelcube/5d1334dbd4bdc0a5c12aeaafcc0297e9478380.png" alt="eBPF hook位置"></p>
+<p><img alt="eBPF hook位置" src="https://p0.meituan.net/travelcube/5d1334dbd4bdc0a5c12aeaafcc0297e9478380.png"></p>
 <p>从图中可以看出，eBPF的hook点功能包括以下几部分：</p>
 <ol>
 <li>可以在Storage、Network等与内核交互之间；</li>
@@ -103,7 +103,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
 </ol>
 <p>eBPF的功能覆盖XDP、TC、Probe、Socket等，每个功能点都能实现内核态的篡改行为，从而使得用户态完全致盲，哪怕是基于内核模块的HIDS，一样无法感知到这些行为。</p>
 <p>基于eBPF的功能函数，从业务场景来看，网络、监控、观测类的功能促进了云原生领域的产品发展；跟踪/性能分析、安全类功能，加快了安全防御、审计类产品演进；而安全领域的恶意利用，也会成为黑客关注的方向。本文将与大家探讨一下新的威胁与防御思路。</p>
-<p><img src="https://p0.meituan.net/travelcube/84f5d8a759c2c45ac519c729d7640687125645.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/84f5d8a759c2c45ac519c729d7640687125645.png"></p>
 <p>从数据流所处阶段来看，本文划分为两部分，接下来一起来讨论恶意利用、风险危害与防御思路。</p>
 <ol>
 <li>Linux网络层恶意利用</li>
@@ -115,7 +115,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
 <h4 id="xdptc层修改tcp包">XDP/TC层修改TCP包</h4>
 <p>为了让后门隐藏的更好，最好是不开进程，不监听端口（当前部分我们只讨论网络层隐藏）。而eBPF技术在XDP、TC、Socket等内核层的功能，能够实现流量信息修改，这些功能常被应用在L3、L4的网络负载均衡上。比如Cilium的网络策略都是基于eBPF XDP实现。eBPF hook了XDP点后，更改了TCP包的目标IP，系统内核再将该数据包转发出去。</p>
 <p>按照XDP与TC在Linux内核中，处理ingress与egress的位置，可以更准确地确定hook点。</p>
-<p><img src="https://p0.meituan.net/travelcube/060ea32a625a62ce430d72cea0a78ab0346564.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/060ea32a625a62ce430d72cea0a78ab0346564.png"></p>
 <ul>
 <li>XDP的BPF_PROG_TYPE_XDP程序类型，可以丢弃、修改、重传来自ingress的流量，但无法对egress起作用。</li>
 <li>TC的BPF_PROG_TYPE_SCHED_CLS除了拥有XDP“BPF_PROG_TYPE_XDP”的功能外，还可以对egress起作用。</li>
@@ -178,7 +178,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
 </span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#719e07">return</span> XDP_PASS;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>比较简单的Demo，即可实现ingress侧TCP数据包的伪装。同样，TC层处理egress方向的数据包时，只需要对伪装包的原始信息作还原即可。整个流程如下图所示：</p>
-<p><img src="https://image.cnxct.com/2022/02/ebpf-evil-user-network-1.jpg" alt="eBPF在XDP/TC层实现网络穿透rootkit通信链路"></p>
+<p><img alt="eBPF在XDP/TC层实现网络穿透rootkit通信链路" src="https://image.cnxct.com/2022/02/ebpf-evil-user-network-1.jpg"></p>
 <p>这样，rootkit的通信链路并不影响正常用户访问，也没有对原系统做改动，隐蔽性特别好。</p>
 <h4 id="视频演示">视频演示</h4>
 <p>我们准备了三台主机测试：</p>
@@ -322,7 +322,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
 </span></span><span style="display:flex;"><span>    <span style="color:#719e07">return</span> <span style="color:#2aa198">0</span>;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>按照如上Demo rootkit的设计，即完成了随机用户名密码的root账号添加。在鉴权认证上，也可以配合“eBPF网络层恶意利用”的Demo，利用eBPF map交互，实现相应鉴权。但rootkit本身并没有更改硬盘上文件，不产生风险行为。并且，只针对特定进程的做覆盖，隐蔽性更好。整个流程如下图所示：</p>
-<p><img src="https://image.cnxct.com/2022/02/ebpf-evil-user-runtime-1-1.jpg" alt="eBPF在runtime安全场景恶意利用"></p>
+<p><img alt="eBPF在runtime安全场景恶意利用" src="https://image.cnxct.com/2022/02/ebpf-evil-user-runtime-1-1.jpg"></p>
 <p>不管是在物理机上，还是给了root+BPF权限的容器上，都一样生效。</p>
 <h4 id="视频演示-1">视频演示</h4>
 <h4 id="严重危害">严重危害</h4>
@@ -341,7 +341,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
 <li>运行时</li>
 <li>运行后</li>
 </ul>
-<p><img src="https://p0.meituan.net/travelcube/fbb0e4ee1009e156a873a2f9e1d276a0550164.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/fbb0e4ee1009e156a873a2f9e1d276a0550164.png"></p>
 <h3 id="运行前">运行前</h3>
 <p>在恶意程序运行前，减少攻击面，这个思路是不变的。</p>
 <h4 id="环境限制">环境限制</h4>
@@ -369,7 +369,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
 <p>有人提议，在内核加载BPF字节码时，进行签名验证，以便达到只加载安全签名的BPF字节码。在lwn.net中也列出这个话题：<a href="https://lwn.net/Articles/853489/">BPF字节码签名计划</a>。</p>
 <p>但很多人也提出<a href="https://lwn.net/Articles/854386/">反对意见</a>，他们认为BPF模块这几年的发展，过于抽象化，越来越复杂，所以不希望加入额外的功能，让BPF更加不稳定。而是改变思路，让字节码加载时签名，改为“执行BPF字节码加载的用户态程序进行签名”，这个是已有的内核功能，不会增加系统复杂性。</p>
 <p>本文认为，这确实可以缓解大部分BPF字节码加载的问题。但使用系统原生命令（<code>tc\ip\bpftool</code>等）加载的话，仍面临威胁。比如：<code>ip link set dev ens33 xdp obj xdp-example_pass.o</code>。</p>
-<p><img src="https://image.cnxct.com/2022/02/ip-xdp-ebpf-load.jpg" alt="ip命令加载eBPF字节码"></p>
+<p><img alt="ip命令加载eBPF字节码" src="https://image.cnxct.com/2022/02/ip-xdp-ebpf-load.jpg"></p>
 <h4 id="运行检查">运行检查</h4>
 <p>大部分eBPF程序在重启后不存在了，所以入侵者会尽可能让后门自启动。对于Linux系统的自启动、crontab等计划任务做好检查。</p>
 <p>用户态程序可以以各种形式存在，ELF可执行文件、ELF so动态链接库都可以。在执行时，必定会调用BPF syscall来加载BPF字节码。若只是对可执行ELF做检测，还不够准确。</p>
@@ -394,7 +394,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
 <p>数据过滤，是解决大量数据压力的一种方案。在一些BPF应用的业务服务器上，本身业务行为会产生大量调用，会给安全预警带来较大审计压力。对于已知的进程，我们可以根据进程特征过滤。</p>
 <p>获取当前进程pid、comm等属性，根据用户态写入eBPF map的配置，决定是否上报、是否拦截。 也可以在用户态做过滤，但内核态效率更高。如果是做拦截，那必须要在内核态实现。</p>
 <p>大家可以参考<a href="https://github.com/ehids/slide/blob/master/security/2021-Secure_Namespaced_Kernel_Audit_for_Containers.pdf">saBPF产品设计思路</a> ，用eBPF实现LSM hook点的钩子程序，完成相关审计调用。虽然<a href="https://github.com/saBPF-project/sabpf-kernel">GitHub/saBPF-project</a> 的项目代码还只是Demo，但思路可以借鉴。</p>
-<p><img src="https://p0.meituan.net/travelcube/3f4ff33f8e187f8056d394d59af24145438951.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/3f4ff33f8e187f8056d394d59af24145438951.png"></p>
 <p><strong>根据SYSCALL类型筛选</strong></p>
 <p>在BPF syscall里，子命令的功能包含map、prog等多种类型的操作，<a href="https://www.kernel.org/doc/html/latest/userspace-api/ebpf/syscall.html">bpf() subcommand reference</a> 里有详细的读写API。在实际的业务场景里，“写”的安全风险比“读”大。所以，我们可以过滤掉“读”操作，只上报、审计“写”操作。</p>
 <p>比如：</p>
@@ -431,11 +431,11 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
 <p><strong>bpftool工具</strong></p>
 <p><strong>eBPF程序列表</strong></p>
 <p>命令<code>bpftool prog show</code>，以及<code>bpftool prog help</code>查看更多参数。</p>
-<p><img src="https://image.cnxct.com/2022/02/bpftool-prog-show-1.jpg" alt=""></p>
+<p><img src="https://image.cnxct.com/2022/02/bpftool-prog-show-1.jpg"></p>
 <p>结果中，可以看到当前系统正在运行的BPF程序、关联的BPF map ID，以及对应的进程信息等。另外，细心的读者可能发现，结果中，XDP数据中并没有进程ID信息，稍后讨论。</p>
 <p><strong>eBPF map列表</strong></p>
 <p>命令<code>bpftool map show</code>，以及<code>bpftool map help</code>可以查看更多参数。</p>
-<p><img src="https://image.cnxct.com/2022/02/bpftool-map-show-1.jpg" alt=""></p>
+<p><img src="https://image.cnxct.com/2022/02/bpftool-map-show-1.jpg"></p>
 <p>通过查看map信息，可以与程序信息作辅助矫正。并且，可以导出map内数据用来识别恶意进程行为。这部分我们在“取证”章节讨论。</p>
 <p><strong>bpflist-bpfcc</strong></p>
 <p><code>bpflist-bpfcc -vv</code>命令可以看到当前服务器运行的“部分”BPF程序列表。以测试环境为例：</p>
@@ -449,7 +449,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
 </span></span><span style="display:flex;"><span><span style="color:#2aa198">10444</span>  ehids            map   <span style="color:#2aa198">4</span>
 </span></span><span style="display:flex;"><span><span style="color:#2aa198">10444</span>  ehids            prog  <span style="color:#2aa198">5</span>
 </span></span></code></pre></div><p>可以看到系统进程systemd启动了8个prog程序。ehids进程创建了4个eBPF map与5个prog。但实际上前面也执行了<code>ip link set dev ens33 xdp obj xdp-example_pass.o</code>命令，在这里却没有显示出来。意味着这个命令输出的结果并不是所有bpf程序、map的情况。</p>
-<p><img src="https://image.cnxct.com/2022/02/bpflist-bpfcc.jpg" alt=""></p>
+<p><img src="https://image.cnxct.com/2022/02/bpflist-bpfcc.jpg"></p>
 <p><strong>长生命周期</strong></p>
 <p><strong>BPF程序类型代表</strong></p>
 <ul>
@@ -505,17 +505,17 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
 <li><code>ip link show</code></li>
 <li><code>tc filter show dev [网卡名] [ingress|egress]</code></li>
 </ol>
-<p><img src="https://image.cnxct.com/2022/02/ip-tc-show-bpf.jpg" alt=""></p>
+<p><img src="https://image.cnxct.com/2022/02/ip-tc-show-bpf.jpg"></p>
 <p><strong>使用bpftool命令查看</strong></p>
 <p><code>bpftool net show dev ens33 -p</code>命令可以用于查看网络相关的eBPF hook点。</p>
 <p>CGROUP的的BPF_PROG_TYPE_CGROUP_SKB、BPF_PROG_TYPE_CGROUP_SOCK类型程序的加载情况都可以通过bpftool prog show查看。长短生命周期的BPF程序区别是缺少用户空间进程PID信息。如下图所示：</p>
-<p><img src="https://image.cnxct.com/2022/02/bpftool-prog-show-cgroup.jpg" alt=""></p>
+<p><img src="https://image.cnxct.com/2022/02/bpftool-prog-show-cgroup.jpg"></p>
 <p><strong>BPFFS</strong></p>
 <p>除了前面提到的方法外，<strong>BPF文件系统</strong>BPFFS也是让BPF程序后台运行的方式。用户空间进程可以使用任意名字将BPF程序PIN到BPFFS。让在BPFFS来自动增加BPF对象的refcnt引用计数器，来保持后台的活跃状态。在使用时，只需要使用bpf_obj_get(“BPFFS path”)就可以获得BPF对象的FD。</p>
 <p>BPFFS在Linux的类型是BPF_FS_MAGIC，默认目录/sys/fs/bpf/，可自定义修改，但确保文件系统类型是unix.BPF_FS_MAGIC。</p>
 <p>在检测思路上，我们需要关注虚拟文件系统是不是unix.BPF_FS_MAGIC类型。</p>
 <p>在Linux系统上，<code>mount -t bpf</code>来查看系统所有挂在的文件类型，是否包含BPFFS类型。</p>
-<p><img src="https://image.cnxct.com/2022/02/mount-bpf-bpffs.jpg" alt=""></p>
+<p><img src="https://image.cnxct.com/2022/02/mount-bpf-bpffs.jpg"></p>
 <p>确定BPFFS的目录后，我们再查看目录下的挂载点是否存在异常。</p>
 <h4 id="取证">取证</h4>
 <p><strong>内核已加载的BPF对象导出</strong></p>
@@ -537,23 +537,23 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
 </span></span><span style="display:flex;"><span>                <span style="color:#719e07">}</span>,<span style="color:#719e07">{</span>
 </span></span><span style="display:flex;"><span>                    <span style="color:#2aa198">&#34;payload_len&#34;</span>: <span style="color:#2aa198">38</span>
 </span></span><span style="display:flex;"><span>    ...
-</span></span></code></pre></div><p><img src="https://image.cnxct.com/2022/02/bpftool-map-dump-ehids.jpg" alt=""></p>
+</span></span></code></pre></div><p><img src="https://image.cnxct.com/2022/02/bpftool-map-dump-ehids.jpg"></p>
 <p><strong>BPFFS</strong></p>
 <p>BPFFS类型的BPF对象，虽然可以更便捷的放到后台执行，用户空间程序可以退出，也可以再次读取，但这也给取证带来很大便利。bpftool命令也支持从pinned到BPFFS文件系统的路径里导出prog、map。参数稍有区别，详情见bpftool help。</p>
-<p><img src="https://image.cnxct.com/2022/02/bpftool-prog-dump-pinned.jpg" alt=""></p>
+<p><img src="https://image.cnxct.com/2022/02/bpftool-prog-dump-pinned.jpg"></p>
 <p><strong>内核未加载的BPF对象</strong></p>
 <p>当定位到后门rootkit的用户空间程序后，那么BPF字节码肯定会被其调用。字节码内容一般会放在一个独立文件中，或者作为字节码编译到当前程序里。这也只需要使用IDA之类反编译工具，定位到相关字节流，导出即可。</p>
 <p>以本文演示视频中的ehids进程为例，使用<a href="https://github.com/ehids/ebpfmanager">GitHub/ehids/ebpfmanager</a> 纯Go的eBPF模块管理器package，对于eBPF字节码会使用github.com/shuLhan/go-bindata/cmd/go-bindata包对BPF字节码进行加载、Gzip压缩，作为Go代码的变量，在部署时比较边界。</p>
 <p>IDA Pro加载时，我们可以在.noptrdata段部分看到这块代码，开始地址是0000000000827AE0，导出后再解压，可以还原原来的BPF ELF文件内容。</p>
-<p><img src="https://image.cnxct.com/2022/02/ida-ehids-elf-bpf-bytecode-scaled.jpg" alt=""></p>
+<p><img src="https://image.cnxct.com/2022/02/ida-ehids-elf-bpf-bytecode-scaled.jpg"></p>
 <p>因为每个BPF用户态实现不同，类库也不一样，静态分析实践起来有难度。那可以模拟相同环境，动态运行，提前hook BPF syscall，找到FD设置的地方，也是可以导出BPF的ELF文件。</p>
 <p><strong>字节码分析</strong></p>
 <p>BPF字节码本身也是ELF格式，只是格式指令上有一定区别。反编译工具IDA pro也能支持，国外安全工程师开源了一个Python插件：<a href="https://github.com/cylance/eBPF_processor">eBPF IDA Proc</a> ，并整理了一篇分析的文章：<a href="https://blogs.blackberry.com/en/2021/12/reverse-engineering-ebpfkit-rootkit-with-blackberrys-free-ida-processor-tool">Reverse Engineering Ebpfkit Rootkit With BlackBerry’s Enhanced IDA Processor Tool</a> ，感兴趣的同学可以读读。</p>
-<p><img src="https://image.cnxct.com/2022/02/ida-pro-ebpf-elf-plugin.png" alt=""></p>
+<p><img src="https://image.cnxct.com/2022/02/ida-pro-ebpf-elf-plugin.png"></p>
 <h3 id="如何防御">如何防御</h3>
 <p>eBPF在网络安全场景的使用，除了做入侵检测外，还可以用于防御。LSM PROBE hook提供了相关功能。以容器逃逸场景为例，行为最明显的特征是“父子进程”的Namespace不一致，子进程创建完成后，判断这个特征是否匹配，返回EPERM覆盖进程创建函数的返回值，从而起到防御的目的。相比内核模块等防御实现，eBPF实现更加安全、稳定、可靠，从而在源头上解决容器逃逸的问题。</p>
 <p>同样，本文认为eBPF也是二进制层最优秀的虚拟补丁、热更新解决方案。</p>
-<p><img src="https://p0.meituan.net/travelcube/d16b623e598dac835cd71f33583638d9319731.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/d16b623e598dac835cd71f33583638d9319731.png"></p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#268bd2">LSM_PROBE</span>(bpf, <span style="color:#dc322f">int</span> cmd, <span style="color:#719e07">union</span> bpf_attr <span style="color:#719e07">*</span>attr, <span style="color:#dc322f">unsigned</span> <span style="color:#dc322f">int</span> size)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#719e07">return</span> <span style="color:#719e07">-</span>EPERM;
@@ -565,7 +565,7 @@ eBPF由BPF发展而来，BPF全称Berkeley Packet Filter，1992年由Steven McCa
 <h3 id="类库选择">类库选择</h3>
 <p>工程化时，对项目质量、稳定性、研发效率等都有要求，推荐Cilium的纯Go eBPF类库，由Cilium官方背书可放心使用。Datadog公司的Agent产品也是用这个类库。</p>
 <p>本文的产品也是参考Datadog，抽象包装了Cilium的eBPF库，实现配置化便捷管理eBPF程序。GitHub仓库：<a href="https://github.com/ehids/ebpfmanager">ehids/ebpfmanager</a> ，欢迎大家使用。</p>
-<p><img src="https://image.cnxct.com/2022/02/ehids-logo-1.png" alt=""></p>
+<p><img src="https://image.cnxct.com/2022/02/ehids-logo-1.png"></p>
 <p>当然，也可以使用libbpf包装的Go类库实现，比如Tracee等产品。</p>
 <h3 id="系统兼容性co-re">系统兼容性CO-RE</h3>
 <p>eBPF的出现极大地简化了编写内核态代码的门槛，极高的安全性，友好的加载方式，高效的数据交互，令eBPF深受追捧。然而和编写传统内核模块相同，内核态的功能开发伴随着繁冗的适配测试工作，Linux繁多的内核版本更是让适配这件事难度陡增，这也就是BTF出现之前的很长一段时间里，bcc + clang + llvm被人们诟病的地方。程序在运行的时候，才进行编译，目标机器还得安装clang llvm kernel-header等编译环境，同时编译也会消耗大量CPU资源，这在某些高负载机器上是不能被接受的。</p>

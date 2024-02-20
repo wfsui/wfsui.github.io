@@ -80,14 +80,14 @@
 <li>商家端和服务端<strong>交互频繁</strong>：商家对订单状态变化敏感，多种推拉机制保证每次变更能够触达商家，导致App和服务端的交互频繁，每次变更需要拉取订单最新的全部内容。</li>
 </ul>
 <p>在外卖交易链路如此大的流量下，为了保证商家的用户体验，保证接口的高性能，并行从下游获取数据就成为必然。</p>
-<p><img src="https://p0.meituan.net/travelcube/624090f482fe471e74f6e4e135803de3501878.png" alt="图1 订单卡片"></p>
+<p><img alt="图1 订单卡片" src="https://p0.meituan.net/travelcube/624090f482fe471e74f6e4e135803de3501878.png"></p>
 <h2 id="2-并行加载的实现方式">2 并行加载的实现方式</h2>
 <p>并行从下游获取数据，从IO模型上来讲分为<strong>同步模型</strong>和<strong>异步模型</strong>。</p>
 <h3 id="21-同步模型">2.1 同步模型</h3>
 <p>从各个服务获取数据最常见的是同步调用，如下图所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/ad46bb8baa4e79e727ee5bd7af0b175c38212.png" alt="图2 同步调用"></p>
+<p><img alt="图2 同步调用" src="https://p0.meituan.net/travelcube/ad46bb8baa4e79e727ee5bd7af0b175c38212.png"></p>
 <p>在同步调用的场景下，接口耗时长、性能差，接口响应时长T &gt; T1+T2+T3+……+Tn，这时为了缩短接口的响应时间，一般会使用线程池的方式并行获取数据，商家端订单卡片的组装正是使用了这种方式。</p>
-<p><img src="https://p0.meituan.net/travelcube/873b403c8542460c44bd6d631f7f813644155.png" alt="图3 并行之线程池"></p>
+<p><img alt="图3 并行之线程池" src="https://p0.meituan.net/travelcube/873b403c8542460c44bd6d631f7f813644155.png"></p>
 <p>这种方式由于以下两个原因，导致资源利用率比较低：</p>
 <ul>
 <li><strong>CPU资源大量浪费在阻塞等待上</strong>，导致CPU资源利用率低。在Java 8之前，一般会通过回调的方式来减少阻塞，但是大量使用回调，又引发臭名昭著的<strong>回调地狱</strong>问题，导致代码可读性和可维护性大大降低。</li>
@@ -219,16 +219,16 @@
 </span></span><span style="display:flex;"><span>}).thenAccept(result3 <span style="color:#719e07">-&gt;</span> System.out.println(result3));
 </span></span></code></pre></div><p>显然，CompletableFuture的实现更为简洁，可读性更好。</p>
 <h4 id="312-completablefuture的定义">3.1.2 CompletableFuture的定义</h4>
-<p><img src="https://p0.meituan.net/travelcube/75a9710d2053b2fa0654c67cd7f35a0c18774.png" alt="图4 CompletableFuture的定义"></p>
+<p><img alt="图4 CompletableFuture的定义" src="https://p0.meituan.net/travelcube/75a9710d2053b2fa0654c67cd7f35a0c18774.png"></p>
 <p>CompletableFuture实现了两个接口（如上图所示）：Future、CompletionStage。Future表示异步计算的结果，CompletionStage用于表示异步执行过程中的一个步骤（Stage），这个步骤可能是由另外一个CompletionStage触发的，随着当前步骤的完成，也可能会触发其他一系列CompletionStage的执行。从而我们可以根据实际业务对这些步骤进行多样化的编排组合，CompletionStage接口正是定义了这样的能力，我们可以通过其提供的thenAppy、thenCompose等函数式编程方法来组合编排这些步骤。</p>
 <h3 id="32-completablefuture的使用">3.2 CompletableFuture的使用</h3>
 <p>下面我们通过一个例子来讲解CompletableFuture如何使用，使用CompletableFuture也是构建依赖树的过程。一个CompletableFuture的完成会触发另外一系列依赖它的CompletableFuture的执行：</p>
-<p><img src="https://p0.meituan.net/travelcube/b14b861db9411b2373b80100fee0b92f15076.png" alt="图5 请求执行流程"></p>
+<p><img alt="图5 请求执行流程" src="https://p0.meituan.net/travelcube/b14b861db9411b2373b80100fee0b92f15076.png"></p>
 <p>如上图所示，这里描绘的是一个业务接口的流程，其中包括CF1\CF2\CF3\CF4\CF5共5个步骤，并描绘了这些步骤之间的依赖关系，每个步骤可以是一次RPC调用、一次数据库操作或者是一次本地方法调用等，在使用CompletableFuture进行异步化编程时，图中的每个步骤都会产生一个CompletableFuture对象，最终结果也会用一个CompletableFuture来进行表示。</p>
 <p>根据CompletableFuture依赖数量，可以分为以下几类：零依赖、一元依赖、二元依赖和多元依赖。</p>
 <h4 id="321-零依赖completablefuture的创建">3.2.1 零依赖：CompletableFuture的创建</h4>
 <p>我们先看下如何不依赖其他CompletableFuture来创建新的CompletableFuture：</p>
-<p><img src="https://p1.meituan.net/travelcube/ff663f95c86e22928c0bb94fc6bd8b8715722.png" alt="图6 零依赖"></p>
+<p><img alt="图6 零依赖" src="https://p1.meituan.net/travelcube/ff663f95c86e22928c0bb94fc6bd8b8715722.png"></p>
 <p>如上图红色链路所示，接口接收到请求后，首先发起两个异步调用CF1、CF2，主要有三种方式：</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>ExecutorService executor <span style="color:#719e07">=</span> Executors.newFixedThreadPool(5);
 </span></span><span style="display:flex;"><span><span style="color:#586e75">//1、使用runAsync或supplyAsync发起异步调用</span>
@@ -274,7 +274,7 @@
 </span></span><span style="display:flex;"><span>   <span style="color:#719e07">return</span> resultFuture;
 </span></span><span style="display:flex;"><span>  }
 </span></span></code></pre></div><h4 id="322-一元依赖依赖一个cf">3.2.2 一元依赖：依赖一个CF</h4>
-<p><img src="https://p0.meituan.net/travelcube/373a334e7e7e7d359e8f042c7c9075e215479.png" alt="图7 一元依赖"></p>
+<p><img alt="图7 一元依赖" src="https://p0.meituan.net/travelcube/373a334e7e7e7d359e8f042c7c9075e215479.png"></p>
 <p>如上图红色链路所示，CF3，CF5分别依赖于CF1和CF2，这种对于单个CompletableFuture的依赖可以通过thenApply、thenAccept、thenCompose等方法来实现，代码如下所示：</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>CompletableFuture<span style="color:#719e07">&lt;</span>String<span style="color:#719e07">&gt;</span> cf3 <span style="color:#719e07">=</span> cf1.thenApply(result1 <span style="color:#719e07">-&gt;</span> {
 </span></span><span style="display:flex;"><span>  <span style="color:#586e75">//result1为CF1的结果</span>
@@ -287,14 +287,14 @@
 </span></span><span style="display:flex;"><span>  <span style="color:#719e07">return</span> <span style="color:#2aa198">&#34;result5&#34;</span>;
 </span></span><span style="display:flex;"><span>});
 </span></span></code></pre></div><h4 id="323-二元依赖依赖两个cf">3.2.3 二元依赖：依赖两个CF</h4>
-<p><img src="https://p1.meituan.net/travelcube/fa4c8669b4cf63b7a89cfab0bcb693b216006.png" alt="图8 二元依赖"></p>
+<p><img alt="图8 二元依赖" src="https://p1.meituan.net/travelcube/fa4c8669b4cf63b7a89cfab0bcb693b216006.png"></p>
 <p>如上图红色链路所示，CF4同时依赖于两个CF1和CF2，这种二元依赖可以通过thenCombine等回调来实现，如下代码所示：</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>CompletableFuture<span style="color:#719e07">&lt;</span>String<span style="color:#719e07">&gt;</span> cf4 <span style="color:#719e07">=</span> cf1.thenCombine(cf2, (result1, result2) <span style="color:#719e07">-&gt;</span> {
 </span></span><span style="display:flex;"><span>  <span style="color:#586e75">//result1和result2分别为cf1和cf2的结果</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#719e07">return</span> <span style="color:#2aa198">&#34;result4&#34;</span>;
 </span></span><span style="display:flex;"><span>});
 </span></span></code></pre></div><h4 id="324-多元依赖依赖多个cf">3.2.4 多元依赖：依赖多个CF</h4>
-<p><img src="https://p0.meituan.net/travelcube/92248abd0a5b11dd36f9ccb1f1233d4e16045.png" alt="图9 多元依赖"></p>
+<p><img alt="图9 多元依赖" src="https://p0.meituan.net/travelcube/92248abd0a5b11dd36f9ccb1f1233d4e16045.png"></p>
 <p>如上图红色链路所示，整个流程的结束依赖于三个步骤CF3、CF4、CF5，这种多元依赖可以通过<code>allOf</code>或<code>anyOf</code>方法来实现，区别是当需要多个依赖全部完成时使用<code>allOf</code>，当多个依赖中的任意一个完成即可时使用<code>anyOf</code>，如下代码所示：</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>CompletableFuture<span style="color:#719e07">&lt;</span>Void<span style="color:#719e07">&gt;</span> cf6 <span style="color:#719e07">=</span> CompletableFuture.allOf(cf3, cf4, cf5);
 </span></span><span style="display:flex;"><span>CompletableFuture<span style="color:#719e07">&lt;</span>String<span style="color:#719e07">&gt;</span> result <span style="color:#719e07">=</span> cf6.thenApply(v <span style="color:#719e07">-&gt;</span> {
@@ -307,16 +307,16 @@
 </span></span><span style="display:flex;"><span>});
 </span></span></code></pre></div><h3 id="33-completablefuture原理">3.3 CompletableFuture原理</h3>
 <p>CompletableFuture中包含两个字段：<strong>result</strong>和<strong>stack</strong>。result用于存储当前CF的结果，stack（Completion）表示当前CF完成后需要触发的依赖动作（Dependency Actions），去触发依赖它的CF的计算，依赖动作可以有多个（表示有多个依赖它的CF），以栈（<a href="https://en.wikipedia.org/wiki/Treiber_stack">Treiber stack</a>）的形式存储，stack表示栈顶元素。</p>
-<p><img src="https://p0.meituan.net/travelcube/82aa288ea62d74c03afcd2308d302b6910425.png" alt="图10 CF基本结构"></p>
+<p><img alt="图10 CF基本结构" src="https://p0.meituan.net/travelcube/82aa288ea62d74c03afcd2308d302b6910425.png"></p>
 <p>这种方式类似“观察者模式”，依赖动作（Dependency Action）都封装在一个单独Completion子类中。下面是Completion类关系结构图。CompletableFuture中的每个方法都对应了图中的一个Completion的子类，Completion本身是<strong>观察�</strong>�的基类。</p>
 <ul>
 <li>UniCompletion继承了Completion，是一元依赖的基类，例如thenApply的实现类UniApply就继承自UniCompletion。</li>
 <li>BiCompletion继承了UniCompletion，是二元依赖的基类，同时也是多元依赖的基类。例如thenCombine的实现类BiRelay就继承自BiCompletion。</li>
 </ul>
-<p><img src="https://p0.meituan.net/travelcube/5a889b90d0f2c2a0f6a4f294b9094194112106.png" alt="图11 CF类图"></p>
+<p><img alt="图11 CF类图" src="https://p0.meituan.net/travelcube/5a889b90d0f2c2a0f6a4f294b9094194112106.png"></p>
 <h4 id="331-completablefuture的设计思想">3.3.1 CompletableFuture的设计思想</h4>
 <p>按照类似“观察者模式”的设计思想，原理分析可以从“观察者”和“被观察者”两个方面着手。由于回调种类多，但结构差异不大，所以这里单以一元依赖中的thenApply为例，不再枚举全部回调类型。如下图所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/f45b271b656f3ae243875fcb2af36a1141224.png" alt="图12 thenApply简图"></p>
+<p><img alt="图12 thenApply简图" src="https://p0.meituan.net/travelcube/f45b271b656f3ae243875fcb2af36a1141224.png"></p>
 <p><strong>3.3.1.1 被观察�</strong>�</p>
 <ol>
 <li>每个CompletableFuture都可以被看作一个被观察者，其内部有一个Completion类型的链表成员变量stack，用来存储注册到其中的所有观察者。当被观察者执行完成后会弹栈stack属性，依次通知注册到其中的观察者。上面例子中步骤fn2就是作为观察者被封装在UniApply中。</li>
@@ -337,25 +337,25 @@
 <li>当CF1的操作运行完成时，会将结果赋值给CF1中的result属性。</li>
 <li>依次弹栈，通知观察者尝试运行。</li>
 </ol>
-<p><img src="https://p0.meituan.net/travelcube/f449bbc62d4a1f8e9e4998929196513d165269.gif" alt="图13 执行流程简要说明"></p>
+<p><img alt="图13 执行流程简要说明" src="https://p0.meituan.net/travelcube/f449bbc62d4a1f8e9e4998929196513d165269.gif"></p>
 <p>初步流程设计如上图所示，这里有几个关于注册与通知的并发问题，大家可以思考下：</p>
 <p><strong>Q1</strong>：在观察者注册之前，如果CF已经执行完成，并且已经发出通知，那么这时观察者由于错过了通知是不是将永远不会被触发呢 ？<strong>A1</strong>：不会。在注册时检查依赖的CF是否已经完成。如果未完成（即result == null）则将观察者入栈，如果已完成（result != null）则直接触发观察者操作。</p>
 <p><strong>Q2</strong>：在”入栈“前会有”result == null“的判断，这两个操作为非原子操作，CompletableFufure的实现也没有对两个操作进行加锁，完成时间在这两个操作之间，观察者仍然得不到通知，是不是仍然无法触发？</p>
-<p><img src="https://p0.meituan.net/travelcube/6b4aeae7085f7d77d9f33799734f3b926723.png" alt="图14 入栈校验"></p>
+<p><img alt="图14 入栈校验" src="https://p0.meituan.net/travelcube/6b4aeae7085f7d77d9f33799734f3b926723.png"></p>
 <p><strong>A2</strong>：不会。入栈之后再次检查CF是否完成，如果完成则触发。</p>
 <p><strong>Q3</strong>：当依赖多个CF时，观察者会被压入所有依赖的CF的栈中，每个CF完成的时候都会进行，那么会不会导致一个操作被多次执行呢 ？如下图所示，即当CF1、CF2同时完成时，如何避免CF3被多次触发。</p>
-<p><img src="https://p0.meituan.net/travelcube/316ff338f8dab2826a5d32dfb75ffede4158.png" alt="图15 多次触发"></p>
+<p><img alt="图15 多次触发" src="https://p0.meituan.net/travelcube/316ff338f8dab2826a5d32dfb75ffede4158.png"></p>
 <p><strong>A3</strong>：CompletableFuture的实现是这样解决该问题的：观察者在执行之前会先通过CAS操作设置一个状态位，将status由0改为1。如果观察者已经执行过了，那么CAS操作将会失败，取消执行。</p>
 <p>通过对以上3个问题的分析可以看出，CompletableFuture在处理并行问题时，全程无加锁操作，极大地提高了程序的执行效率。我们将并行问题考虑纳入之后，可以得到完善的整体流程图如下所示：</p>
-<p><img src="https://p1.meituan.net/travelcube/606323a07fb7e31cb91f46c879d99b8d735272.gif" alt="图16 完整流程"></p>
+<p><img alt="图16 完整流程" src="https://p1.meituan.net/travelcube/606323a07fb7e31cb91f46c879d99b8d735272.gif"></p>
 <p>CompletableFuture支持的回调方法十分丰富，但是正如上一章节的整体流程图所述，他们的整体流程是一致的。所有回调复用同一套流程架构，不同的回调监听通过<strong>策略模式</strong>实现差异化。</p>
 <p><strong>3.3.2.2 二元依赖</strong></p>
 <p>我们以thenCombine为例来说明二元依赖：</p>
-<p><img src="https://p0.meituan.net/travelcube/b969e49a7eedbd52b014f86e86dcd3fc49634.png" alt="图17 二元依赖数据结构"></p>
+<p><img alt="图17 二元依赖数据结构" src="https://p0.meituan.net/travelcube/b969e49a7eedbd52b014f86e86dcd3fc49634.png"></p>
 <p>thenCombine操作表示依赖两个CompletableFuture。其观察者实现类为BiApply，如上图所示，BiApply通过src和snd两个属性关联被依赖的两个CF，fn属性的类型为BiFunction。与单个依赖不同的是，在依赖的CF未完成的情况下，thenCombine会尝试将BiApply压入这两个被依赖的CF的栈中，每个被依赖的CF完成时都会尝试触发观察者BiApply，BiApply会检查两个依赖是否都完成，如果完成则开始执行。这里为了解决重复触发的问题，同样用的是上一章节提到的CAS操作，执行时会先通过CAS设置状态位，避免重复触发。</p>
 <p><strong>3.3.2.3 多元依赖</strong></p>
 <p>依赖多个CompletableFuture的回调方法包括<code>allOf</code>、<code>anyOf</code>，区别在于<code>allOf</code>观察者实现类为BiRelay，需要所有被依赖的CF完成后才会执行回调；而<code>anyOf</code>观察者实现类为OrRelay，任意一个被依赖的CF完成后就会触发。二者的实现方式都是将多个被依赖的CF构建成一棵平衡二叉树，执行结果层层通知，直到根节点，触发回调监听。</p>
-<p><img src="https://p0.meituan.net/travelcube/cef5469b5ec2e67ecca1b99a07260e4e22003.png" alt="图18 多元依赖结构树"></p>
+<p><img alt="图18 多元依赖结构树" src="https://p0.meituan.net/travelcube/cef5469b5ec2e67ecca1b99a07260e4e22003.png"></p>
 <h4 id="333-小结">3.3.3 小结</h4>
 <p>本章节为CompletableFuture实现原理的科普，旨在尝试不粘贴源码，而通过结构图、流程图以及搭配文字描述把CompletableFuture的实现原理讲述清楚。把晦涩的源码翻译为“整体流程”章节的流程图，并且将并发处理的逻辑融入，便于大家理解。</p>
 <h2 id="4-实践总结">4 实践总结</h2>

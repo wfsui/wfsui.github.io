@@ -103,7 +103,7 @@
 <p>基于这个算法基础假设，我们将<strong>第一阶段的设计目标定义到支持100G以下的参数规模</strong>。这可以比较好的适配A100的显存，存放在单机多卡上，GPU卡间双向带宽600GB/s，可以充分发挥GPU的处理能力，同时也可以满足美团大多数模型的需求。</p>
 <h3 id="32-系统架构">3.2 系统架构</h3>
 <p>基于GPU系统的架构设计，要充分考虑硬件的特性才能充分发挥性能的优势。我们NVIDIA A100服务器的硬件拓扑和NVIDIA DGX A100[6]比较类似，每台服务器包含：2颗CPU，8张GPU，8张网卡。Booster架构的架构图如下所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/8efcb9ba1bb1a0f72f6b35366130192c907575.png" alt="图1 系统架构"></p>
+<p><img alt="图1 系统架构" src="https://p0.meituan.net/travelcube/8efcb9ba1bb1a0f72f6b35366130192c907575.png"></p>
 <p>整个系统主要包括三个核心模块：数据模块，计算模块，通信模块：</p>
 <ul>
 <li><strong>数据模块</strong>：美团自研了一套支持多数据源、多框架的数据分发系统，在GPU系统上，我们改造数据模块支持了多网卡数据下载，以及考虑到NUMA Awareness的特性，在每颗CPU上都部署了一个数据分发服务。</li>
@@ -112,7 +112,7 @@
 </ul>
 <p>上述的设计，符合TensorFlow和Horovod原生的设计范式。几个核心模块可以相互解耦，独立迭代，而且如果合并开源社区的最新特性，也不会对系统造成架构性的冲击。</p>
 <p>我们再来看一下整个系统的简要执行流程，每张GPU卡上启动的TensorFlow进程内部的执行逻辑如下图：</p>
-<p><img src="https://p1.meituan.net/travelcube/d5213c915f8d3e192e8e9987736c8bd2933367.png" alt="图2 进程内部执行逻辑"></p>
+<p><img alt="图2 进程内部执行逻辑" src="https://p1.meituan.net/travelcube/d5213c915f8d3e192e8e9987736c8bd2933367.png"></p>
 <p>整个训练流程涉及参数存储、优化器、卡间通信等几个关键模块。对于样本的输入特征，我们分为稀疏特征（ID类特征）和稠密特征。在实际业务场景中，稀疏特征通常IDs总量较多，对应的稀疏参数使用HashTable数据结构存储更合适，而且由于参数量较大，GPU单卡显存放不下，我们会通过ID Modulo的方式Partition到多张GPU卡的显存中存放。对于IDs总量较少的稀疏特征，业务通常使用多维矩阵数据结构表达（在TensorFlow里面的数据结构是Variable），由于参数量不大，GPU单卡显存可以放下，我们使用Replica的方式，每张GPU卡的显存都放置一份参数。对于稠密参数，通常使用Variable数据结构，以Replica的方式放置到GPU显存中。下边将详细介绍Booster架构的内部实现。</p>
 <h3 id="33-关键实现">3.3 关键实现</h3>
 <h4 id="331-参数存储">3.3.1 参数存储</h4>
@@ -124,7 +124,7 @@
 <ul>
 <li><strong>稀疏特征</strong>（ID类特征，规模较大，使用HashTable存储）：由于每张卡的输入样本数据不同，因此输入的稀疏特征对应的特征向量，可能存放在其他GPU卡上。具体流程上，训练的前向我们通过卡间AllToAll通信，将每张卡的ID特征以Modulo的方式Partition到其他卡中，每张卡再去卡内的GPUHashTable查询稀疏特征向量，然后再通过卡间AllToAll通信，将第一次AllToAll从其他卡上拿到的ID特征以及对应的特征向量原路返回，通过两次卡间AllToAll通信，每张卡样本输入的ID特征都拿到对应的特征向量。训练的反向则会再次通过卡间AllToAll通信，将稀疏参数的梯度以Modulo的方式Partition到其他卡中，每张卡拿到自己的稀疏梯度后再执行稀疏优化器，完成大规模稀疏特征的优化。详细流程如下图所示：</li>
 </ul>
-<p><img src="https://p0.meituan.net/travelcube/9bdc0d9d711b0980579cdc0eac52f8ed564322.png" alt="图3 稀疏特征处理流程"></p>
+<p><img alt="图3 稀疏特征处理流程" src="https://p0.meituan.net/travelcube/9bdc0d9d711b0980579cdc0eac52f8ed564322.png"></p>
 <ul>
 <li><strong>稀疏特征</strong>（规模较小，使用Variable存储）：相比使用HashTable的区别，由于每张GPU卡都有全量的参数，直接在卡内查找模型参数即可。在反向聚合梯度的时候，会通过卡间AllGather获取所有卡上的梯度求平均，然后交给优化器执行参数优化。</li>
 <li><strong>稠密特征</strong>：稠密参数也是每张卡都有全量的参数，卡内可以直接获取参数执行训练，最后通过卡间AllReduce聚合多卡的稠密梯度，执行稠密优化器。</li>
@@ -142,25 +142,25 @@
 <p>基于上述的设计实现完第一版系统后，我们发现端到端性能并不是很符合预期，GPU的SM利用率（SM Activity指标）只有10%~20%，相比CPU并没有太大的优势。为了分析架构的性能瓶颈，我们使用NVIDIA Nsight Systems（以下简称nsys）、Perf、uPerf等工具，通过模块化压测、模拟分析等多种分析手段，最终定位到数据层、计算层、通信层等几方面的性能瓶颈，并分别做了相应的性能优化。以下我们将以美团外卖某推荐模型为例，分别从GPU架构的数据层、计算层、通信层，逐个介绍我们所做的性能优化工作。</p>
 <h3 id="41-数据层">4.1 数据层</h3>
 <p>如前文所述，推荐系统的深度学习模型，样本量大，模型相对不复杂，数据I/O本身就是瓶颈点。如果几十台CPU服务器上的数据I/O操作，都要在单台GPU服务器上完成，那么数据I/O的压力会变得更大。我们先看一下在当前系统下的样本数据流程，如下图所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/9c562e709b9a16650143282693af7fe2433914.png" alt="图4 样本数据流程及核心优化点"></p>
+<p><img alt="图4 样本数据流程及核心优化点" src="https://p0.meituan.net/travelcube/9c562e709b9a16650143282693af7fe2433914.png"></p>
 <p><strong>核心流程</strong>：数据分发进程通过网络读取HDFS样本数据（TFRecord格式）到内存中，然后通过共享内存（Shared Memory）的方式把样本数据传输给TensorFlow训练进程。TensrFlow训练进程收到样本数据后，走原生的TensrFlow特征解析逻辑，拿到特征数据后通过GPU MemcpyH2D到GPU显存中。我们通过模块化压测分析发现，数据分发层的样本拉取、TensrFlow层的特征解析以及特征数据MemcpyH2D到GPU等几个流程，都存在较大的性能问题（图中黄色流程所示），以下详细介绍我们在这几块所做的性能优化工作。</p>
 <h4 id="411-样本拉取优化">4.1.1 样本拉取优化</h4>
 <p>样本拉取、组装Batch是由数据分发进程完成的，我们在这里所做的主要优化工作是，首先将数据分发进程通过numactl独立到NUMA内部执行，避免了NUMA间的数据传输；其次，数据下载从单网卡扩充到了多网卡，增大数据下载带宽；最后，数据分发进程与TensrFlow进程之间的传输通道，从单个Shared Memory扩展到每张GPU卡有独立的Shared Memory，避免了单Shared Memory所带来的内存带宽问题，并在TensrFlow内部实现了特征解析时对输入数据零拷贝的能力。</p>
 <h4 id="412-特征解析优化">4.1.2 特征解析优化</h4>
 <p>目前，美团内部绝大多数业务的样本数据都还是TFRecord格式，TFRecord实际上是ProtoBuf（简称PB）格式。PB反序列化非常耗费CPU，其中ReadVarint64Fallback方法CPU占用较为突出，实际profiling结果如下图：</p>
-<p><img src="https://p0.meituan.net/travelcube/6167efbac231d92412920e1f9469a4fb122294.png" alt="图5 样本解析profiling结果"></p>
+<p><img alt="图5 样本解析profiling结果" src="https://p0.meituan.net/travelcube/6167efbac231d92412920e1f9469a4fb122294.png"></p>
 <p>究其原因，CTR场景的训练样本通常包含了大量的int64类型的特征，int64在PB中是以Varint64类型数据存储的，ReadVarint64Fallback方法就是用来解析int64类型的特征。普通的int64数据类型需要占用8个字节，而Varint64针对不同的数据范围，使用了变长的存储长度。PB在解析Varint类型数据时，首先要确定当前数据的长度，Varint用7bit存储数据，高位1bit存储标记位，该标记位表示下一个字节是否有效，如果当前字节最高位为0，则说明当前Varint数据在该字节处结束。我们实际业务场景的ID特征大多是经过Hash后的值，用Varint64类型表达会比较长，这也就导致在特征解析过程中要多次判断数据是否结束，以及多次位移和拼接来生成最终数据，这使得CPU在解析过程中存在大量的<strong>分支预测和临时变量</strong>，非常影响性能。以下是4字节Varint的解析流程图：</p>
-<p><img src="https://p0.meituan.net/travelcube/2cb32b444e8f28fd75b1b7f2d55db144143987.png" alt="图6 ProtoBuf Varint解析流程图"></p>
+<p><img alt="图6 ProtoBuf Varint解析流程图" src="https://p0.meituan.net/travelcube/2cb32b444e8f28fd75b1b7f2d55db144143987.png"></p>
 <p>这个处理流程，非常适合用SIMD指令集批处理优化。以4字节的Varint类型为例，我们的优化流程主要包括两步：</p>
 <ol>
 <li><strong>SIMD寻找最高位</strong>：通过SIMD指令将Varint类型数据的每个字节与0xF0做与运算，找到第一个结果等于0的字节，这个字节就是当前Varint数据的结束位置。</li>
 <li><strong>SIMD处理Varint</strong>：按理来说，通过SIMD指令将Varint数据高位清零后的每个字节依次右移3/2/1/0字节，就可得到最终的int类型数据，但SIMD没有这样的指令。因此，我们通过SIMD指令分别处理每个字节的高4bit、低4bit，完成了这个功能。我们将Varint数据的高低4bit分别处理成int_h4与int_l4，再做或运算，就得到了最终的int类型数据。具体优化流程如下图所示（4字节数据）：</li>
 </ol>
-<p><img src="https://p0.meituan.net/travelcube/4647897f12d8a24bb9f92c72402d2fd5257822.png" alt="图7 ProtoBuf Varint解析优化后流程图"></p>
+<p><img alt="图7 ProtoBuf Varint解析优化后流程图" src="https://p0.meituan.net/travelcube/4647897f12d8a24bb9f92c72402d2fd5257822.png"></p>
 <p>对于Varint64类型数据的处理，我们直接分成了两个Varint类型数据来处理。通过这两步的SIMD指令集优化，样本解析速度得到大大提升，在GPU端到端训练速度提升的同时，CPU使用率下降了15%。这里我们主要使用了SSE指令集优化，期间也尝试了AVX等更大长度的指令集，但效果不是很明显，最终并没有使用。此外，SIMD指令集在老的机器上会导致CPU严重降频，因此官方社区并没有引入这个优化，而我们GPU机器的CPU都比较新，完全可以使用SIMD指令集进行优化。</p>
 <h4 id="413-memcpyh2d流水线">4.1.3 MemcpyH2D流水线</h4>
 <p>解析完样本得到特征数据后，需要将特征数据拉到GPU中才能执行模型计算，这里需要通过CUDA的MemcpyH2D操作。我们通过nsys分析这块的性能，发现GPU在执行期间有较多的停顿时间，GPU需要等待特征数据Memcpy到GPU上之后才能执行模型训练，如下图所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/da36727537c0e8c1af88c9914e6bae60107239.png" alt="图8 nsys profiling结果"></p>
+<p><img alt="图8 nsys profiling结果" src="https://p0.meituan.net/travelcube/da36727537c0e8c1af88c9914e6bae60107239.png"></p>
 <p>对于GPU系统的数据流，需要提前传输到离GPU处理器最近的显存中，才能发挥GPU的计算能力。我们基于TensorFlow的prefetch功能，实现了GPU版本的PipelineDataset，在计算之前先把数据拷贝到了GPU显存中。需要注意的是CPU内存拷贝到GPU显存这个过程，CPU内存需要使用Pinned Memory，而非原生的Paged Memory，可以加速MemcpyH2D流程。</p>
 <h4 id="414-硬件调优">4.1.4 硬件调优</h4>
 <p>在数据层的性能优化期间，美团内部基础研发平台的服务器组、网络组、操作系统组也帮助我们做了相关的调优：</p>
@@ -173,7 +173,7 @@
 <h3 id="42-计算层">4.2 计算层</h3>
 <h4 id="421-embedding流水线">4.2.1 Embedding流水线</h4>
 <p>早在CPU场景做TensorFlow训练性能优化时，我们就已经实现了Embedding Pipeline[1]的功能：我们把整个计算图拆分为Embedding Graph（EG）和Main Graph（MG）两张子图，两者异步独立执行，做到执行上的Overlap（整个拆分过程，可以做到对用户透明）。EG主要覆盖从样本中抽取Embedding Key，查询组装Embedding向量，Embedding向量更新等环节；MG主要包含稠密部分子网络计算、梯度计算、稠密参数部分更新等环节。</p>
-<p><img src="https://p0.meituan.net/travelcube/e52f7c05ca6469e79d56ece19ed8a5e968848.png" alt="图9 Embedding流水线模块交互关系"></p>
+<p><img alt="图9 Embedding流水线模块交互关系" src="https://p0.meituan.net/travelcube/e52f7c05ca6469e79d56ece19ed8a5e968848.png"></p>
 <p>两张子图的交互关系为：EG向MG传递Embedding向量（从MG的视角看，是从一个稠密Variable读取数值），MG向EG传递Embedding参数对应的梯度。上述两个过程的表达都是TensorFlow的计算图，我们利用两个Python线程，两个TensorFlow Session并发的执行两张计算图，使得两个阶段Overlap起来，以此达到了更大的训练吞吐。</p>
 <p>我们把这个流程在GPU架构下也实现了一遍，并在其中加入了卡间同步流程，大规模稀疏特征的AllToAll通信及其反向梯度的AllToAll通信都在EG中执行，普通稀疏特征的反向梯度的卡间AllGather同步、稠密参数的反向梯度的卡间AllReduce同步都在MG中执行。需要注意的是，在GPU场景中，EG、MG是在同一个GPU Stream上执行CUDA Kernel的，我们尝试过EG、MG分别在独立的GPU Stream上执行，性能会变差，深层原因与CUDA底层实现有关，这个问题本身还在等待解决。</p>
 <h4 id="422-算子优化及xla">4.2.2 算子优化及XLA</h4>
@@ -189,9 +189,9 @@
 <p>经过计算层的Embedding流水线、XLA相关优化，Booster架构端到端训练速度提升了60%，GPU单机八卡训练性价比达到同等资源下CPU的2.2倍。</p>
 <h3 id="43-通信层">4.3 通信层</h3>
 <p>在单机多卡训练过程中，我们通过Nsight Systems分析发现，卡间通信耗时占比非常高，而且在此期间GPU使用率也非常低，如下图所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/f180e6847a8ba052e26a945569e495d0194648.png" alt="图10 nsys profiling结果"></p>
+<p><img alt="图10 nsys profiling结果" src="https://p0.meituan.net/travelcube/f180e6847a8ba052e26a945569e495d0194648.png"></p>
 <p>从图中可以看出，训练期间卡间通信耗时比较长，同时在通信期间GPU使用率也非常低，卡间通信是影响训练性能提升的关键瓶颈点。我们对通信过程进行拆解打点后发现，卡间通信（AllToAll、AllReduce、AllGather等）协商的时间远远高于数据传输的时间：</p>
-<p><img src="https://p0.meituan.net/travelcube/8660a22687ab0653124548d14831b16b48964.png" alt="图11 Horovod timeline结果"></p>
+<p><img alt="图11 Horovod timeline结果" src="https://p0.meituan.net/travelcube/8660a22687ab0653124548d14831b16b48964.png"></p>
 <p>分析具体原因，以负责大规模稀疏参数通信的AllToAll为例，我们通过Nsight Systems工具，观察到通信协商时间长主要是由于某张卡上的算子执行时间比较晚导致的。由于TensorFlow算子调度并不是严格有序，同一个特征的embedding_lookup算子，在不同卡上真正执行的时间点也不尽相同，某张卡上第一个执行embedding_lookup算子在另一张卡上可能是最后一个执行，因此我们怀疑不同卡上算子调度的不一致性，导致了各张卡发起通信的时刻不同，并最终导致了通信协商时间过长。我们通过几组模拟实验也论证了确实是由算子调度导致的。对于这个问题，最直接的想法是改造TensorFlow计算图的核心调度算法，但这个问题在学术界也一直是一个复杂的问题。我们换了一种思路，通过融合关键的算子，来缓解这个问题，通过统计，我们选择了HashTable和Variable相关的算子。</p>
 <h4 id="431-hashtable相关算子融合">4.3.1 HashTable相关算子融合</h4>
 <p>我们设计和实现了一个图优化过程，这个过程会自动地将图中可以合并的HashTable及对应的embedding_lookup过程进行合并，合并策略上主要将embedding_size相同的HashTable合并到一块。同时为了避免HashTable合并之后原始特征之间发生ID冲突，我们引入了自动统一特征编码的功能，对不同的原始特征分别加上不同的偏移量，归入不同的特征域，实现了训练时的统一特征编码。</p>
@@ -202,7 +202,7 @@
 <p>这两种算子融合的优化，不仅优化了卡间通信性能，对卡内计算性能也有一定的提升。经过这两种算子融合的优化，GPU架构端到端训练速度提升了85%，同时不影响业务算法的效果。</p>
 <h3 id="44-性能指标">4.4 性能指标</h3>
 <p>完成了数据层、计算层、通信层的性能优化后，对比我们的TensorFlow[3] CPU场景，GPU架构取得了2～4倍的性价比收益（不同业务模型收益不同）。我们基于美团外卖某推荐模型，使用单台GPU节点（A100单机八卡）和同成本的CPU Cluster，分别对比了原生TensorFlow 1.15和我们优化后的TensorFlow 1.15的训练性能，具体数据如下：</p>
-<p><img src="https://p0.meituan.net/travelcube/c01c486eb2e1060d4aa28590e505f63541179.png" alt="图12 CPU/GPU训练吞吐对比"></p>
+<p><img alt="图12 CPU/GPU训练吞吐对比" src="https://p0.meituan.net/travelcube/c01c486eb2e1060d4aa28590e505f63541179.png"></p>
 <p>可以看到，我们优化后的TensorFlow GPU架构训练吞吐，是原生TensorFlow GPU的3倍以上，是优化后TensorFlow CPU场景的4倍以上。</p>
 <p>注：原生TensorFlow使用了tf.Variable作为Embedding的参数存储。</p>
 <h2 id="5-业务落地">5 业务落地</h2>

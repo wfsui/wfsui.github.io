@@ -94,19 +94,19 @@
 <h4 id="序列标注方式">序列标注方式</h4>
 <p>这种方法可以建模为序列标注任务进行处理，其核心想法是：为原文中的每一个句子打一个二分类标签（0或1），0代表该句不属于摘要，1代表该句属于摘要。最终摘要由所有标签为1的句子构成。</p>
 <p>这种方法的关键在于获得句子的表示，即将句子编码为一个向量，根据该向量进行二分类任务，例如SummaRuNNer模型[48]，使用双向GRU分别建模词语级别和句子级别的表示（模型如下图1所示）。蓝色部分为词语级别表示，红色部分为句子级别表示，对于每一个句子表示，有一个0、1标签输出，指示其是否是摘要。</p>
-<p><img src="https://p0.meituan.net/travelcube/933c4d3007231506497ab9abeefbe4b2217164.png" alt="图1 SummaRuNNer模型结构"></p>
+<p><img alt="图1 SummaRuNNer模型结构" src="https://p0.meituan.net/travelcube/933c4d3007231506497ab9abeefbe4b2217164.png"></p>
 <p>该模型的训练需要监督数据，现有数据集往往没有对应的句子级别的标签，可以通过启发式规则进行获取。具体方法为：首先选取原文中与标准摘要计算ROUGE得分最高的一句话加入候选集合，接着继续从原文中进行选择，保证选出的摘要集合ROUGE得分增加，直至无法满足该条件。得到的候选摘要集合对应的句子设为1标签，其余为0标签。</p>
 <h4 id="句子排序方式">句子排序方式</h4>
 <p>抽取式摘要还可以建模为句子排序任务，与序列标注任务的不同点在于，序列标注对于每一个句子表示打一个0、1标签，而句子排序任务则是针对每个句子输出其是否是摘要句的概率，最终依据概率，选取Top K个句子作为最终摘要。虽然任务建模方式（最终选取摘要方式）不同，但是其核心关注点都是对于句子表示的建模。</p>
 <p>序列标注方式的模型在得到句子的表示以后对于句子进行打分，这就造成了打分与选择是分离的，先打分，后根据得分进行选择，没有利用到句子之间的关系。NeuSUM[49]提出了一种新的打分方式，使用句子收益作为打分方式，考虑到了句子之间的相互关系。其模型NeuSUM如下图2所示：</p>
-<p><img src="https://p1.meituan.net/travelcube/79c997d960c08158719d930afd279e25169776.png" alt="图2 NeuSUM模型结构"></p>
+<p><img alt="图2 NeuSUM模型结构" src="https://p1.meituan.net/travelcube/79c997d960c08158719d930afd279e25169776.png"></p>
 <p>句子编码部分与之前基本相同。打分和抽取部分使用单向GRU和双层MLP完成。单向GRU用于记录过去抽取句子的情况，双层MLP用于打分，如下公式所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/6e38a2cc3fe7c2dd1f83ea87ccedb96211319.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/6e38a2cc3fe7c2dd1f83ea87ccedb96211319.png"></p>
 <h3 id="22-生成式摘要模型">2.2 生成式摘要模型</h3>
 <p>抽取式摘要在语法、句法上有一定的保证，但是也面临了一定的问题，例如：内容选择错误、连贯性差、灵活性差等问题。生成式摘要允许摘要中包含新的词语或短语，灵活性较高。随着近几年神经网络模型的发展，序列到序列（Seq2Seq）模型被广泛地用于生成式摘要任务，并取得一定的成果。下面介绍生成式摘要模型中经典的Pointer-Generator[50]模型和基于要点的生成式摘要模型Leader+Writer[4]。</p>
 <h4 id="pointer-generator模型">Pointer-Generator模型</h4>
 <p>仅使用Seq2Seq来完成生成式摘要存在如下问题：①未登录词问题（OOV）；②重复生成问题。Pointer-Generator[50]在基于注意力机制的Seq2Seq基础上增加了Copy和Coverage机制，有效地缓解了上述问题。其模型结构如下图3所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/6cd00540f6ce16b22e4c362560f77fdc194239.png" alt="图3 Pointer-Generator 模型结构"></p>
+<p><img alt="图3 Pointer-Generator 模型结构" src="https://p0.meituan.net/travelcube/6cd00540f6ce16b22e4c362560f77fdc194239.png"></p>
 <p>该模型基于注意力机制的Seq2Seq模型，使用每一步解码的隐层状态与编码器的隐层状态计算权重，最终得到Context向量，利用Context向量和解码器隐层状态计算输出概率。</p>
 <p><strong>两个创新</strong></p>
 <ul>
@@ -119,7 +119,7 @@
 <li>引入要点序列预测辅助任务，并利用对话的要点序列信息引导模型生成具有逻辑性、完整性、关键信息正确的摘要。如下图4所示，Leader-Writer模型用一个层次的Transformer 编码器编码每个话语，用Leader解码器对每个话语的要点进行分类，并使用Writer解码器进行摘要生成。Leader解码器解码的输出作为Writer解码器初始状态的输入，以利用不同对话片段的要点信息。</li>
 <li>引入Pointer-Generator模型，以生成更长、信息更丰富的摘要。</li>
 </ol>
-<p><img src="https://p0.meituan.net/travelcube/f47b452513d9a4d0fb2ae8fa5525837b235340.jpg" alt="图4 Leader-Writer 模型"></p>
+<p><img alt="图4 Leader-Writer 模型" src="https://p0.meituan.net/travelcube/f47b452513d9a4d0fb2ae8fa5525837b235340.jpg"></p>
 <h3 id="23-对话摘要模型">2.3 对话摘要模型</h3>
 <p>对话具有关键信息散落、低信息密度、多领域、话题转换、说话者角色经常转换等特点，因此可以直接将文本摘要应用于对话摘要，一些研究工作也致力于解决这些问题。下面介绍2个有代表性的对话摘要模型：SPNet[53]和TDS-SATM[54]。</p>
 <h4 id="scaffold-pointer-network-spnet">Scaffold Pointer Network (SPNet)</h4>
@@ -136,7 +136,7 @@
 <li>为了捕获角色信息并从对话中提取语义主题，作者使用SATM分别对客户话语，客服话语和整体对话执行多角色主题建模。作者使用两阶段的摘要生成器，包括句子抽取和从抽取的句子中生成摘要。将SATM得到的主题信息融入摘要生成器中，以通过对话中的重要信息生成摘要。</li>
 </ol>
 <p>模型的整体架构图如下图5所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/0aa87a2b3ef8aeac7f7b62c08434079d229116.jpg" alt="图5 TDS-SATM的整体架构"></p>
+<p><img alt="图5 TDS-SATM的整体架构" src="https://p0.meituan.net/travelcube/0aa87a2b3ef8aeac7f7b62c08434079d229116.jpg"></p>
 <h2 id="3-基于阅读理解的span-level抽取式摘要方案dsmrc-s发表于sigir-2021">3. 基于阅读理解的Span-level抽取式摘要方案DSMRC-S（发表于SIGIR 2021）</h2>
 <h3 id="31-背景介绍">3.1 背景介绍</h3>
 <p>未来保证良好的用户体验，美团有大量的人工客服来处理用户来电问题，客服同学接到电话后需手动记录电话的内容，耗时费力。一个有效的对话摘要模型可以大大增加客服同学的工作效率，降低人工客服处理每通来电的平均处理时间。</p>
@@ -144,7 +144,7 @@
 <p>为了适用实际的场景，我们介绍基于阅读理解的Span-Level抽取式对话摘要方案，该方法基于现有人工客服记录的摘要，不需要额外标注，也取得了不错的结果。其中相关的成果发表也在SIGIR 2021国际会议上，下文将详细介绍该方法。</p>
 <h3 id="32-方法介绍">3.2 方法介绍</h3>
 <p>为了解决现有对话摘要难以得到指定信息要素以及缺少标注数据的问题，我们提出了一个更灵活的、基于远程监督和阅读理解的抽取式摘要模型（Distant Supervision based Machine Reading Comprehension Model for Extractive Summarization），简称为DSMRC-S，总体结构如下图6所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/303608abc82082d35c05ac9fcc725cc9192410.png" alt="图6 DSMRC-S模型的总体结构"></p>
+<p><img alt="图6 DSMRC-S模型的总体结构" src="https://p0.meituan.net/travelcube/303608abc82082d35c05ac9fcc725cc9192410.png"></p>
 <p>DSMRC-S由一个基于BERT的MRC（Machine Reading Comprehension）模块、远程监督模块和一个基于密度的提取策略组成。在预处理阶段，对话中的Token会被自动标注，模型会被训练去预测对话中每个Token出现在答案中的概率。然后，基于上一步预测的概率，一个基于密度的提取策略会被用来提取最合适的Span作为答案。</p>
 <p>我们的方法可以主要分成两部分：①将对话摘要任务转换成阅读理解；②无需额外标注的阅读理解方案。</p>
 <h4 id="对话摘要转换成阅读理解任务">对话摘要转换成阅读理解任务</h4>
@@ -158,11 +158,11 @@
 <p>阅读理解任务需要通常需要大量的标注数据。幸运的是，人工客服记录了大量的关键信息（例如“用户来电背景”、“用户来电诉求”、“解决方案”等），这些记录可以作为阅读理解问句对应的答案。然而人工客服的记录不是对话的原始文本片段，不能直接用于抽取式阅读理解，为了解决这个问题，我们设计了如下两个阶段（不依赖额外标注的阅读理解方案）：</p>
 <p><strong>第一阶段：预测对话中每一个Token出现在答案的概率</strong></p>
 <p>如上图6所示，我们首先通过判断对话中的Token是否出现在答案（客服记录的关键信息）中，以自动给每个Token一个标签（出现则标为1，不出现则标为0）。然后，将对话和问题（预定好的，每个问题对应一个关键要素）一起输入到BERT中，使用BERT最后一层对每个Token进行分类，拟合上一步自动标注的标签，分类损失如下公式：</p>
-<p><img src="https://p0.meituan.net/travelcube/d6d29e820042c396372bae52956e61a415334.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/d6d29e820042c396372bae52956e61a415334.png"></p>
 <p>其中h为BERT最后一层的Token向量，W和b是可训练的权重矩阵。</p>
 <p><strong>第二阶段：根据上一阶段的概率挑选密度最高的Span作为答案</strong></p>
 <p>我们提出了密度的计算方式，对于一个[x_i,x_{i+1},…,x_{i+l}]的Span，其密度计算如下式：</p>
-<p><img src="https://p1.meituan.net/travelcube/5f70b4a05c35c0576e68002ab99c21ce7750.png" alt=""></p>
+<p><img src="https://p1.meituan.net/travelcube/5f70b4a05c35c0576e68002ab99c21ce7750.png"></p>
 <p>$l$为Span的长度，$p_k$是$x_k$在第一阶段的概率。</p>
 <p>DSMRC-S中，会遍历所有的Span（但不会跨越多个说话者），密度最高的Span会被挑选为该问题的答案，这样答案是词语或更长的Span片段都可以覆盖。</p>
 <h3 id="33-实验">3.3 实验</h3>
@@ -186,7 +186,7 @@
 </ol>
 <h4 id="实验结果">实验结果</h4>
 <p><strong>主实验</strong></p>
-<p><img src="https://p1.meituan.net/travelcube/a2a014524900efb34a6eca6c46fa7e9159847.jpg" alt="表1 DSMRC-S和其他Baseline方法效果对比（%）"></p>
+<p><img alt="表1 DSMRC-S和其他Baseline方法效果对比（%）" src="https://p1.meituan.net/travelcube/a2a014524900efb34a6eca6c46fa7e9159847.jpg"></p>
 <p>DSMRC-S和其他Baseline方法的性能如表1所示。我们可以得到以下结论：</p>
 <ul>
 <li>我们的模型获得了最好的性能，比最好的Baseline方法在BLEU上和ROUGE-L上都提升了约3%。</li>
@@ -194,10 +194,10 @@
 <li>从摘要的差异性来看，我们的模型也获得了最好的性能，比最好的Baseline方法在Distinct1指标上提升了3.9%。</li>
 </ul>
 <p><strong>不同关键要素上的性能</strong></p>
-<p><img src="https://p0.meituan.net/travelcube/b0f9be3ad49ca8e7766ffe64aaf1269d680630.png" alt="图7 DSMRC-S和Baseline方法在预测不同关键要素上的性能（%）"></p>
+<p><img alt="图7 DSMRC-S和Baseline方法在预测不同关键要素上的性能（%）" src="https://p0.meituan.net/travelcube/b0f9be3ad49ca8e7766ffe64aaf1269d680630.png"></p>
 <p>如上图所示，我们展示了模型在预测不同的关键要素上的性能。我们的方法DSMRC-S在每个关键要素的预测上都优于其他的Baseline方法，这说明我们的方法有利于抽取不同关键要素的内容。具体地，在第二个关键要素（用户的诉求）上，我们的方法明显更好（可能是由于用户诉求一般会原封不动地在对话中提到）。</p>
 <p><strong>不同长度的对话上的性能</strong></p>
-<p><img src="https://p0.meituan.net/travelcube/1a5b20b860439423f31d14429e4ec586376128.png" alt="图8 DSMRC-S和Baseline方法在不同的对话轮次和摘要长度的样本上的性能"></p>
+<p><img alt="图8 DSMRC-S和Baseline方法在不同的对话轮次和摘要长度的样本上的性能" src="https://p0.meituan.net/travelcube/1a5b20b860439423f31d14429e4ec586376128.png"></p>
 <p>如上图所示，我们也展示了模型在不同的对话轮次和摘要长度的样本上的性能。随着对话轮次和摘要长度的增加，所有方法的ROUGE-L都几乎在下降，这是因为预测难度的提升。但是我们的方法DSMRC-S在不同的对话轮次和摘要长度的样本上，都表现比Baseline方法更好的准确率。</p>
 <h2 id="4-总结与展望">4. 总结与展望</h2>
 <p>本文先介绍了文本摘要的经典方法，包括抽取式摘要方法和生成式摘要方法，随后介绍了更为灵活的基于距离监督阅读理解的Span-Level方案，该方法比强基准方法在ROUGE-L指标和BLEU指标上高出了3%左右。未来，我们将从如下方向继续在对话摘要上探索和实践：</p>

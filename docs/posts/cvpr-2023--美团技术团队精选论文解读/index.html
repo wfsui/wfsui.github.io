@@ -7,7 +7,7 @@
 <meta property="og:description" content="写在前面 CVPR 全称为 IEEE Conference on Computer Vision and Pattern Recognition，国际计算机视觉与模式识别会议。该会议始于1983年，与ICCV和ECCV并称计算机视觉方向的三大顶级会议。根据谷歌学术公布的2022年最新学术期刊和会议影响力排名，CVPR在所有学术刊物中位居第4，仅次于Nature、NEJM和Science。2023年，CVPR共收到全球9155篇论文投稿，最终2360篇被接收，接收率约为25.78%。
 | 01 Divide and Adapt: Active Domain Adaptation via Customized Learning 论文作者：黄铎峻（中山大学，美团实习生），李继昌（香港大学），陈伟凯（腾讯-美国），黄君实（美团），柴振华（美团），李冠彬（中山大学）" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://wfsui.github.io/posts/cvpr-2023-%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://wfsui.github.io/posts/cvpr-2023--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2024-01-26T02:40:04+00:00" />
 <meta property="article:modified_time" content="2024-01-26T02:40:04+00:00" />
 
@@ -65,54 +65,54 @@
 		<div class="markdown">
 			<h2 id="写在前面">写在前面</h2>
 <p>CVPR 全称为 IEEE Conference on Computer Vision and Pattern Recognition，国际计算机视觉与模式识别会议。该会议始于1983年，与ICCV和ECCV并称计算机视觉方向的三大顶级会议。根据谷歌学术公布的2022年最新学术期刊和会议影响力排名，CVPR在所有学术刊物中位居第4，仅次于Nature、NEJM和Science。2023年，CVPR共收到全球9155篇论文投稿，最终2360篇被接收，接收率约为25.78%。</p>
-<p><img src="https://p1.meituan.net/travelcube/f00c3f802658bbc6c4466340cab6538e1249340.png" alt=""></p>
+<p><img src="https://p1.meituan.net/travelcube/f00c3f802658bbc6c4466340cab6538e1249340.png"></p>
 <h2 id="-01-divide-and-adapt-active-domain-adaptation-via-customized-learning">| 01 Divide and Adapt: Active Domain Adaptation via Customized Learning</h2>
 <p><strong>论文作�</strong>�：黄铎峻（中山大学，美团实习生），李继昌（香港大学），陈伟凯（腾讯-美国），黄君实（美团），柴振华（美团），李冠彬（中山大学）</p>
 <p><strong>论文下载</strong>：<a href="https://openaccess.thecvf.com/content/CVPR2023/papers/Huang_Divide_and_Adapt_Active_Domain_Adaptation_via_Customized_Learning_CVPR_2023_paper.pdf">PDF</a></p>
-<p><img src="https://p0.meituan.net/travelcube/bdc0c6a4386e743b206788b8293eb166418303.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/bdc0c6a4386e743b206788b8293eb166418303.png"></p>
 <p><strong>论文简介</strong>：该论文入选焦点论文（Highlight Paper）。近年来，主动领域自适应被提出用于在领域自适应问题中，设计主动学习算法在未标注的目标域数据中选择最有信息量的一小批样本进行标注，来最大化的提升深度学习模型在目标域数据上的性能，达到高效的标注效率。在实际的开放场景中，目标域样本相对于源域数据的可区分度各异，即对于源域上初始化的而言具有不同层次的可迁移性。目前，鲜有工作对可迁移性各异的目标域样本分类讨论，设计高价值样本的采样策略和定制化的领域自适应训练策略。</p>
 <p>我们提出了一种分而治之的策略，综合考虑目标域样本与源域数据的差异性，和模型预测的不确定性，来设计主动学习的采样策略，并提出定制化的目标函数来约束具有不同可迁移性的样本子集，进一步实现采样的鲁棒性。实验表明，我们实现了在多种领域自适应场景下的最优性能，包括无监督领域自适应（UDA）、半监督领域自适应（SSDA）和无源域领域自适应（SFDA）等等。</p>
 <h2 id="-02-efficient-second-order-plane-adjustment">| 02 Efficient Second-Order Plane Adjustment</h2>
 <p><strong>论文作�</strong>�：周力普（美团）</p>
 <p><strong>论文下载</strong>：<a href="https://openaccess.thecvf.com/content/CVPR2023/papers/Zhou_Efficient_Second-Order_Plane_Adjustment_CVPR_2023_paper.pdf">PDF</a></p>
-<p><img src="https://p0.meituan.net/travelcube/13ecdb7ca0daf9a869948bee79af0fdf1492500.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/13ecdb7ca0daf9a869948bee79af0fdf1492500.png"></p>
 <p><strong>论文简介</strong>：该论文入选焦点论文（Hightlight Paper），推导出了平面优化问题Hessian矩阵的闭式解，由此提出了高效的平面优化问题的二阶优化算法。该算法可以广泛应用于深度传感器的三维高精度重建。</p>
 <p>平面通常用于深度传感器的3D重建，例如RGB-D相机和LiDAR。本文研究估计最佳平面和传感器位姿的问题。这由此产生的最小二乘问题在文献中被称为平面调整（PA）。迭代方法常被用来解决这些最小二乘问题。通常，牛顿法很少用于大规模最小二乘问题，因为Hessian矩阵的计算时间复杂度很高。相反，迭代算法通常采用使用Hessian矩阵的近似值，例如Levenberg Marquardt（LM）方法。本文采用牛顿法有效地解决了PA问题。</p>
 <p>具体来说，给定姿势，最佳平面有一个闭式解。因此，我们可以从中消除平面参数，它显著减少了变量的数量。此外，由于最佳平面是姿势的函数，这种方法实际上确保了每次迭代都能产生最佳平面，这有利于收敛。其难点在于如何高效计算Hessian矩阵以及由此产生的梯度向量。本文提供一个高效的解决方案。实证结果表明，我们的算法优于目前的SOTA算法。</p>
 <h2 id="-03-aedet-azimuth-invariant-multi-view-3d-object-detection">| 03 AeDet: Azimuth-invariant Multi-view 3D Object Detection</h2>
 <p><strong>论文作�</strong>�：冯承健（美团），揭泽群（美团），钟毓杰（美团），初祥祥（美团），马林 （美团）</p>
 <p><strong>论文下载</strong>：<a href="https://arxiv.org/pdf/2211.12501.pdf">PDF</a></p>
-<p><img src="https://p0.meituan.net/travelcube/88d21aca0de8241072ee69f6b5ee66a3711127.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/88d21aca0de8241072ee69f6b5ee66a3711127.png"></p>
 <p><strong>论文简介</strong>：近年来，基于鸟瞰图的多视图3D目标检测技术在Brid-Eye-View（BEV）空间通过卷积网络检测物体，取得了巨大的进展。然而，传统的卷积忽略了BEV特征的径向对称性，增加了检测器优化的难度。为了保持BEV特征的固有性质并便于模型优化，我们提出了方位角等变卷积（AeConv）和方位角等变锚。方位角等变卷积的采样网格始终是径向的，因此可以学习到方位不变的BEV特征。而方位角等变锚使得检测头能够学习预测与方位无关的目标。</p>
 <p>此外，我们还引入了一种相机解耦的虚拟深度，以统一具有不同相机内参的图像的深度预测。由此产生的目标检测器被称为方位等变检测器（AeDet）。我们在nuScenes数据集上进行了多视图3D目标检测实验：方位等变检测器取得62.0% NDS，显著超越了现有的多视图3D目标检测方法。</p>
 <h2 id="-04-masked-auto-encoders-meet-generative-adversarial-networks-and-beyond">| 04 Masked Auto-Encoders Meet Generative Adversarial Networks and Beyond</h2>
 <p><strong>论文作�</strong>�：费政聪（美团），范铭源（美团），朱理（美团），黄君实（美团），魏晓明（美团），魏晓林（美团）</p>
 <p><strong>论文下载</strong>：<a href="https://feizc.github.io/resume/ganmae.pdf">PDF</a></p>
-<p><img src="https://p0.meituan.net/travelcube/a3dd037aaf5b3586eeadc5dc2c2f9837214946.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/a3dd037aaf5b3586eeadc5dc2c2f9837214946.png"></p>
 <p><strong>论文简介</strong>：掩码自动编码器（Mask autoencoder，MAE）预训练方法通过随机掩码图像块（patch），然后训练视觉模型基于未掩码的图像块来重建原始图像的像素。尽管它们在下游视觉任务中表现出很好的性能，但它们通常需要大量的计算才能生效。在本文中，我们介绍了一种基于生成对抗网络（Generative Adversarial Networks，GAN）的预训练框架。</p>
 <p>具体来说，将生成器预测的图像和原始掩盖的图像进行拼接，并使用判别器来预测每一个拼接的图像块是否被替换。实验表明，由于对完整图像进行输入建模和反馈，我们提出的MAE-GAN框架比原始的MAE像素重建效果更好。同时，通过共享主网络参数，在相同的模型大小、数据和计算量下，我们的方法学习的视觉表征能力显著优于MAE方法。特别地，我们在ImageNet-1k上预训练了200 epoch的ViT-B模型在下游图像分类结果上优于训练了1600 epoch的ViT-B MAE基准。</p>
 <h2 id="-05-elastic-aggregation-for-federated-optimization">| 05 Elastic Aggregation for Federated Optimization</h2>
 <p><strong>论文作�</strong>�：陈登盛（美团），胡杰（美团），Vince Junkai Tan，魏晓明（美团），吴恩华（中科院软件所）</p>
 <p><strong>论文下载</strong>：<a href="https://openreview.net/pdf?id=EWjYk3R2jhr">PDF</a></p>
-<p><img src="https://p0.meituan.net/travelcube/e6f665096a58bce7b11a27d2f3383f6c338427.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/e6f665096a58bce7b11a27d2f3383f6c338427.png"></p>
 <p><strong>论文简介</strong>：在人工智能安全性上，联邦学习旨在保证数据隐私不遭到泄漏的前提下完成模型的协同训练。由于在不同终端设备的数据分布存在较大差异，导致全局共享模型在使用本地数据进行优化以后会偏向本地的数据分布状态。我们称这种现象为「客户端漂移（Client Drift）」。客户端漂移现象的存在，会导致全局共享模型在优化前期收敛缓慢，在优化后期无法达到更优解。</p>
 <p>我们提出了弹性聚合（ Elastic Aggregation），一种新的参数更新方法用于缓解上述现象。弹性聚合首先利用每个终端设备上的无标签数据计算出对应模型参数对结果产生影响的敏感程度（Parameter Sensitivity），然后这个参数敏感程度来对全局共享模型进行加权聚合更新。弹性聚合是首个在联邦学习中充分利用无标签数据来提升模型性能的方法，并且能够非常容易地嵌入到现有的其它联邦学习优化算法中。实验表明，在联邦学习场景下弹性聚合方法可以显著提升视觉和文本理解任务的性能。</p>
 <h2 id="-06-bridging-search-region-interaction-with-template-for-rgb-t-tracking">| 06 Bridging Search Region Interaction with Template for RGB-T Tracking</h2>
 <p><strong>论文作�</strong>�：惠天瑞（中国科学院信息工程研究所，美团实习生），荀子政（北京航空航天大学），彭风光（北京航空航天大学），黄君实（美团），魏晓明（美团），魏晓林（美团），戴娇（中科院信工所），韩冀中（中科院信工所），刘偲（北京航空航天大学）</p>
 <p><strong>论文下载</strong>：<a href="https://openaccess.thecvf.com/content/CVPR2023/papers/Hui_Bridging_Search_Region_Interaction_With_Template_for_RGB-T_Tracking_CVPR_2023_paper.pdf">PDF</a></p>
-<p><img src="https://p0.meituan.net/travelcube/daabcc88db3cacc4b456a98c2483aa421140176.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/daabcc88db3cacc4b456a98c2483aa421140176.png"></p>
 <p><strong>论文简介</strong>：RGB-T跟踪旨在利用可见光（RGB）和热红外（TIR）模态的互补增强能力来改进不同场景下的单目标跟踪效果，其中有效的跨模态交互是方法设计的关键一环。先前的工作直接拼接RGB和TIR的搜索区域特征，或对孤立的RGB和TIR候选框对进行模态融合，导致冗余背景噪声的引入或局部区域内的上下文建模不足。</p>
 <p>为了缓解上述局限性，我们提出了模板桥接搜索区域交互（TBSI）模块，该模块利用模板作为媒介，通过收集和分发目标相关的对象和环境上下文来桥接RGB和TIR搜索区域之间的跨模态交互。原始模板也会使用来自模板中介的丰富多模态上下文进行更新。我们将TBSI模块插入到ViT主干网络中，实现统一的特征提取、搜索区域-模板匹配和跨模态交互，在三个主流RGB-T跟踪数据集上取得了超越现有方法的优异性能。</p>
 <h2 id="-07-adaptive-zone-aware-hierarchical-planner-for-vision-language-navigation">| 07 Adaptive Zone-aware Hierarchical Planner for Vision-Language Navigation</h2>
 <p><strong>论文作�</strong>�：高晨（北京航空航天大学，美团实习生），彭兴宇（北京航空航天大学），严汨（北京大学），王鹤（北京大学），杨立荣（美团），任海兵（美团），李鸿升（香港中文大学），刘偲（北京航空航天大学）</p>
 <p><strong>论文下载</strong>：<a href="https://openaccess.thecvf.com/content/CVPR2023/papers/Gao_Adaptive_Zone-Aware_Hierarchical_Planner_for_Vision-Language_Navigation_CVPR_2023_paper.pdf">PDF</a></p>
-<p><img src="https://p1.meituan.net/travelcube/e68b3a65efa9041ef43b49b5f4adcd40222250.png" alt=""></p>
+<p><img src="https://p1.meituan.net/travelcube/e68b3a65efa9041ef43b49b5f4adcd40222250.png"></p>
 <p><strong>论文简介</strong>：本工作聚焦Vision-Language Navigation（VLN） 任务。在agent导航过程中，需要自适应地设置并实现一系列子目标。然而，先前的方法采用单步规划方案，即在每一步直接执行导航动作。在本工作中，我们提出了一种Adaptive Zone-aware Hierarchical Planner（AZHP），明确地将导航过程分为两个异构的阶段，即通过分区/选区（High-Level Action）和子目标执行（Low-Level Action）以进行分层规划。</p>
 <p>具体而言，AZHP通过状态切换模块（SSM）异步地执行两级操作。对于High-Level Action，我们提出了一种Scene-Aware Adaptive Zone Partition（SZP）方法，以自适应地将整个导航区域划分为不同的子区域。通过目标区域选择（GZS）方法，为当前子目标选择合适的区域。对于Low-Level Action，Agent在所选区域执行多步骤导航决策。此外，我们提出HRL策略和辅助监督，以训练AZHP框架。实验证明了我们提出方法的优越性，在多个VLN数据集（REVERIE、SOON、R2R）上均达到了最优的性能。</p>
 <h2 id="-08-posterlayout-a-new-benchmark-and-approach-for-content-aware-visual-textual-presentation-layout">| 08 PosterLayout: A New Benchmark and Approach for Content-Aware Visual-Textual Presentation Layout</h2>
 <p><strong>论文作�</strong>�：徐筱媛（北京大学，美团实习生），何相腾（北京大学），彭宇新（北京大学），孔浩（美团），张庆（美团）</p>
 <p><strong>论文下载</strong>：<a href="https://arxiv.org/pdf/2303.15937.pdf">PDF</a></p>
-<p><img src="https://p0.meituan.net/travelcube/a51bea3ac10ebae490350f864c31712d1141079.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/a51bea3ac10ebae490350f864c31712d1141079.png"></p>
 <p><strong>论文简介</strong>：图文展示的布局生成旨在给定的图像画布上自动安排元素（例如：广告文本、图标、衬底）的空间位置，用于广告设计中能够取代呆板的预定义模板。现有的布局生成工作忽略了图像画布与布局的交叉关系，导致两者难兼容。</p>
 <p>为此，该论文首先从源域多样性、主题多样性以及布局复杂度三个方面切入，建立图文展示布局数据集和评测基准PosterLayout，并提出设计序列生成网络（Design Sequence GAN），通过引入人类经验的设计序列形成（Design Sequence Formation）算法，将布局自动重组为隐含时间信息的设计序列，并以画布图像的视觉特征作为初始状态，模拟人的设计行为，自动生成与画布内容兼容的布局。实验结果验证了新基准和新方法的有效性，达到超越现有方法的性能。该算法在论文接收前已应用上线，目前已在美团App的外投首页广告制图等场景落地。</p>
 <h2 id="美团科研合作">美团科研合作</h2>

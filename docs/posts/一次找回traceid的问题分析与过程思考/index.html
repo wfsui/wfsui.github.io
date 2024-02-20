@@ -70,7 +70,7 @@
 			<h2 id="1-问题背景和思考">1. 问题背景和思考</h2>
 <h3 id="11-问题背景">1.1 问题背景</h3>
 <p>在一次排查线上告警的过程中，突然发现一个链路信息有点不同寻常（这里仅展示测试复现的内容）：</p>
-<p><img src="https://p0.meituan.net/travelcube/8396f1ed5b77dc0318e06f5a76f64ba3454025.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/8396f1ed5b77dc0318e06f5a76f64ba3454025.png"></p>
 <p>在机器中可以清楚的发现“2022-08-02 19:26:34.952 DXMsgRemoteService ”这一行日志信息并没有携带TraceId，导致调用链路信息戛然而止，无法追踪当时的调用情况。</p>
 <h3 id="12-问题复现和思考">1.2 问题复现和思考</h3>
 <p>在处理完线上告警后，我们开始分析“丢失”的TraceId到底去了哪里？首先在代码中定位TraceId没有追踪到的部分，发现问题出现在一个@Async注解下的方法，删除无关的业务信息代码，并增加MTrace埋点方法后的复现代码如下：</p>
@@ -115,12 +115,12 @@
 <h2 id="2-深度分析">2. 深度分析</h2>
 <h3 id="21-mtrace与google-dapper">2.1 MTrace与Google Dapper</h3>
 <p>MTrace是美团参考Google Dapper对服务间调用链信息收集和整理的分布式链路追踪系统，目的是帮助开发人员分析系统各项性能和快速排查告警问题。要想了解MTrace是如何设计分布式链路追踪系统的，首先看看Google Dapper是如何在大型分布式环境下实现分布式链路追踪。我们先来看看下图一个完整的分布式请求：</p>
-<p><img src="https://p0.meituan.net/travelcube/7e335c65e37611e0b11270314cf683e061738.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/7e335c65e37611e0b11270314cf683e061738.png"></p>
 <p>用户发送一个请求到前端A，然后请求分发到两个不同的中间层服务B和C，服务B在处理完请求后将结果返回，同时服务C需要继续调用后端服务D和E再将处理后的请求结果进行返回，最后由前端A汇总来响应用户的这次请求。</p>
 <p>回顾这次完整的请求我们不难发现，要想直观可靠的追踪多项服务的分布式请求，我们最关注的是每组客户端和服务端之间的请求响应以及响应耗时，因此，Google Dapper采取对每一个请求和响应设置标识符和时间戳的方式实现链路追踪，基于这一设计思想的基本追踪树模型如下图所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/eae7e2ae1a26f362af01b6dc1a177f9b52221.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/eae7e2ae1a26f362af01b6dc1a177f9b52221.png"></p>
 <p>追踪树模型由span组成，其中每个span包含span name、span id、parent id和trace id，进一步分析跟踪树模型中各个span之间的调用关系可以发现，其中没有parent id且span id为1代表根服务调用，span id越小代表服务在调用链的过程中离根服务就越近，将模型中各个相对独立的span联系在一起就构成了一次完整的链路调用记录，我们再继续深入看看span内部的细节信息：</p>
-<p><img src="https://p0.meituan.net/travelcube/827657875aa479f170b93887556c3c2d49984.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/827657875aa479f170b93887556c3c2d49984.png"></p>
 <p>除了最基本的span name、span id和parent id之外，Annotations扮演着重要的角色，Annotations包括&lt;Strat&gt;、Client Send、Server Recv、Server Send、Client Recv和&lt;End&gt;这些注解，记录了RPC请求中Client发送请求到Server的处理响应时间戳信息，其中foo注解代表可以自定义的业务数据，这些也会一并记录到span中，提供给开发人员记录业务信息；在这当中有64位整数构成的trace id作为全局的唯一标识存储在span中。</p>
 <p>至此我们已经了解到，Google Dapper主要是在每个请求中配置span信息来实现对分布式系统的追踪，那么又是用什么方式在分布式请求中植入这些追踪信息呢？</p>
 <p>为满足低损耗、应用透明和大范围部署的设计目标，Google Dapper支持应用开发者依赖于少量通用组件库，实现几乎零投入的成本对分布式链路进行追踪，当一个服务线程在链路中调用其他服务之前，会在ThreadLocal中保存本次跟踪的上下文信息，主要包括一些轻量级且易复制的信息（类似spand id和trace id），当服务线程收到响应之后，应用开发者可以通过回调函数进行服务信息日志打印。</p>
@@ -169,7 +169,7 @@
 </span></span><span style="display:flex;"><span>	}
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>ProxyAsyncConfiguration继承了父类AbstractAsyncConfiguration的方法，重点定义了一个AsyncAnnotationBeanPostProcessor的异步注解bean后置处理器。看到这里我们可以知道，@Async主要是通过后置处理器生成一个代理对象来实现异步的执行逻辑，接下来我们重点关注AsyncAnnotationBeanPostProcessor是如何实现异步的：</p>
-<p><img src="https://p0.meituan.net/travelcube/2c9457ef6a819ca1cf25a93981fd4d5f489006.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/2c9457ef6a819ca1cf25a93981fd4d5f489006.png"></p>
 <p>从类图中我们可以直观地看到AsyncAnnotationBeanPostProcessor同时实现了BeanFactoryAware的接口，因此我们进入setBeanFactory()方法，可以看到对AsyncAnnotationAdvisor异步注解切面进行了构造，再接着进入AsyncAnnotationAdvisor的buildAdvice()方法中可以看AsyncExecutionInterceptor类，再看类图发现AsyncExecutionInterceptor实现了MethodInterceptor接口，而MethodInterceptor是AOP中切入点的处理器，对于interceptor类型的对象，处理器中最终被调用的是invoke方法，所以我们重点看看invoke的代码逻辑：</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>public Object invoke(final MethodInvocation invocation) throws Throwable {
 </span></span><span style="display:flex;"><span>	Class&lt;?&gt; targetClass = (invocation.getThis() != null ? AopUtils.getTargetClass(invocation.getThis()) : null);
@@ -209,7 +209,7 @@
 </span></span></code></pre></div><p>至此，我们了解到在未指定线程池的情况下调用被标记为@Async的方法时，Spring会自动创建SimpleAsyncTaskExecutor线程池来执行该方法，从而完成异步执行过程。</p>
 <h3 id="23-丢失traceid的原因">2.3. “丢失”TraceId的原因</h3>
 <p>回顾我们之前对MTrace的学习和了解，TraceId等信息是在ThreadLocal中进行传递和保存，那么当异步方法切换线程的时候，就会出现下图中上下文信息传递丢失的问题：</p>
-<p><img src="https://p0.meituan.net/travelcube/8d2c0e2f854b325fa6ca27097f59abf0230857.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/8d2c0e2f854b325fa6ca27097f59abf0230857.png"></p>
 <p>下面我们探究一下ThreadLocal有哪些跨线程传递方案？MTrace又提供哪些跨线程传递方案？SimpleAsyncTaskExecutor又有什么不一样？逐步找到“丢失”TraceId的原因。</p>
 <h3 id="231-inheritablethreadlocaltransmittablethreadlocal和transmissiblethreadlocal">2.3.1 InheritableThreadLocal、TransmittableThreadLocal和TransmissibleThreadLocal</h3>
 <p>在前面的分析中，我们发现跨线程场景下上下文信息是保存在ThreadLocal中发生丢失，那么我们接下来看看ThreadLocal的特点及其延伸出来的类，是否可以解决这一问题：</p>
@@ -228,7 +228,7 @@
 <ul>
 <li>TransmittableThreadLocal是阿里巴巴提供的解决跨线程传递上下文的InheritableThreadLocal子类，引入了holder来保存需要在线程间进行传递的变量，大致流程我们可以参考下面给出的时序图分析：</li>
 </ul>
-<p><img src="https://p0.meituan.net/travelcube/64a0442bc49e62b2ae561fd3b00004dd685008.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/64a0442bc49e62b2ae561fd3b00004dd685008.png"></p>
 <p>步骤可以总结为：① 装饰Runnable，将主线程的TTL传入到TtlRunnable的构造方法中；② 将子线程的TTL的值进行备份，将主线程的TTL设置到子线程中（value是对象引用，可能存在线程安全问题）；③ 执行子线程逻辑；④ 删除子线程新增的TTL，将备份还原重新设置到子线程的TTL中，从而保证了ThreadLocal的值在多线程环境下的传递性。</p>
 <p>TransmittableThreadLocal虽然解决了InheritableThreadLocal的继承问题，但是由于需要在序列化和反序列化时对ThreadLocalMap进行处理，会增加对象创建和序列化的成本，并且需要支持的序列化框架较少，不够灵活。</p>
 <ul>
@@ -297,16 +297,16 @@
 </span></span><span style="display:flex;"><span>	}
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>TransmissibleThreadLocal不但可以解决跨线程的传递问题，还能保证子线程和主线程之间的隔离，但是目前跨线程拷贝span数据时，采用浅拷贝有丢失数据的风险。最后，我们可以根据下表综合对比：</p>
-<p><img src="https://p0.meituan.net/travelcube/dbd4abaeb1da66b8f0c3e015c076bf71424981.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/dbd4abaeb1da66b8f0c3e015c076bf71424981.png"></p>
 <p>考虑到TransmittableThreadLocal并非标准的Java API，而是第三方库提供的，存在与其它库的兼容性问题，无形中增加了代码的复杂性和使用难度。因此，MTrace选择自定义实现的TransmissibleThreadLocal类可以方便地在跨线程和跨服务的情况下传递追踪信息，透明自动完成所有异步执行上下文的可定制、规范化的捕捉传递，使得整个跟踪信息更加完整和准确。</p>
 <h3 id="232-mtrace的跨线程传递方案">2.3.2 Mtrace的跨线程传递方案</h3>
 <p>这一问题MTrace其实已经提供解决方案，主要的设计思路是在子线程初始化Runnable对象的时候首先会去父线程的ThreadLocal中拿到保存的trace信息，然后作为参数传递给子线程，子线程在初始化的时候设置trace信息来避免丢失。下面我们看看具体实现。</p>
 <p>父线程新建任务时捕捉所有TransmissibleThreadLocal中的变量信息，如下图所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/a5754d7b37da83d62aec3a5318b63278530861.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/a5754d7b37da83d62aec3a5318b63278530861.png"></p>
 <p>子线程执行任务时复制父线程捕捉的TransmissibleThreadLocal变量信息，并返回备份的TransmissibleThreadLocal变量信息，如下图所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/adac346a5fa11a8c1f6377414bda98c8463999.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/adac346a5fa11a8c1f6377414bda98c8463999.png"></p>
 <p>在子线程执行完业务流程后会恢复之前备份的TransmissibleThreadLocal变量信息，如下图所示：</p>
-<p><img src="https://p1.meituan.net/travelcube/dbc24686994cc3ef5125dccd4e77d1df384497.png" alt=""></p>
+<p><img src="https://p1.meituan.net/travelcube/dbc24686994cc3ef5125dccd4e77d1df384497.png"></p>
 <p>这种方案可以解决跨线程传递上下文丢失的问题，但是需要代码层面的开发会增加开发人员的工作量，对于一个分布式追踪系统而言并不是最优解：</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>TraceRunnable command = new TraceRunnable(runnable);
 </span></span><span style="display:flex;"><span>newThread(command).start();
@@ -351,7 +351,7 @@
 <li>阿里技术编码规约要求用ThreadPoolExecutor的方式来创建线程池，规避资源耗尽的风险。</li>
 </ul>
 <p>结合之前说过的MTrace线程池代理模型，我们继续再来看看SimpleAsyncTaskExecutor的类图：</p>
-<p><img src="https://p0.meituan.net/travelcube/ba620ab2c3dd6b0f115dee79b1d75a8c228152.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/ba620ab2c3dd6b0f115dee79b1d75a8c228152.png"></p>
 <p>可以发现，其继承了spring的TaskExecutor接口，其实质是java.util.concurrent.Executor，结合我们这次“丢失”的TraceId问题来看，我们已经找到了Mtrace的跨线程传递方案“失效”的原因：虽然MTrace已经通过javaagent&amp;instrument技术可以完成Trace信息跨线程传递，但是目前只覆盖到ThreadPoolExecutor类、ScheduledThreadPoolExecutor类和ForkJoinTask类的字节码，而@Async在未指定线程池的情况下默认会启用SimpleAsyncTaskExecutor，其本质是java.util.concurrent.Executor没有被覆盖到，就会造成ThreadLocal中的get方法获取信息为空，导致最终TraceId传递丢失。</p>
 <h2 id="3-解决方案">3. 解决方案</h2>
 <p>实际上@Async支持我们使用自定义的线程池，可以手动自定义Configuration来配置ThreadPoolExecutor线程池，然后在注解里面指定bean的名称，就可以切换到对应的线程池去，可以看看下面的代码：</p>
@@ -408,7 +408,7 @@
 <p>分布式追踪系统从诞生之际到有实质性的突破，很大程度受到Google Dapper的影响，目前常见的分布式追踪系统有Twitter的Zipkin、SkyWalking、阿里的EagleEye、PinPoint和美团的MTrace等，这些大多都是基于Google Dapper的设计思想，考虑到设计思路和架构特点，我们重点介绍Zipkin、SkyWalking和EagleEye的基本框架和跨线程解决方案（以下内容主要来源官网及作者总结，仅供参考，不构成技术建议）。</p>
 <h3 id="41-zipkin">4.1 Zipkin</h3>
 <p>Zipkin是由Twitter公司贡献开发的一款开源的分布式追踪系统，官方提供有基于Finagle框架（Scala语言）的接口，而其他框架的接口由社区贡献，目前可以支持Java、Python、Ruby和C#等主流开发语言和框架，其主要功能是聚集来自各个异构系统的实时监控数据。主要由4个核心组件构成，如下图所示：</p>
-<p><img src="https://p1.meituan.net/travelcube/24fd806502a6153bd1fa954b0dabac1038500.png" alt=""></p>
+<p><img src="https://p1.meituan.net/travelcube/24fd806502a6153bd1fa954b0dabac1038500.png"></p>
 <ul>
 <li><strong>Collector</strong>：收集器组件，它主要用于处理从外部系统发送过来的跟踪信息，将这些信息转换为Zipkin内部处理的Span格式，以支持后续的存储、分析、展示等功能。</li>
 <li><strong>Storage</strong>：存储组件，它主要对处理收集器接收到的跟踪信息，默认会将这些信息存储起来，同时支持修改存储策略。</li>
@@ -416,12 +416,12 @@
 <li><strong>UI</strong>：UI组件，基于API组件实现的上层应用，通过UI组件用户可以方便而有直观地查询和分析跟踪信息。</li>
 </ul>
 <p>当用户发起一次调用的时候，Zipkin的客户端会在入口处先记录这次请求相关的trace信息，然后在调用链路上传递trace信息并执行实际的业务流程，为防止追踪系统发送延迟与发送失败导致用户系统的延迟与中断，采用异步的方式发送trace信息给Zipkin Collector，Zipkin Server在收到trace信息后，将其存储起来。随后Zipkin的Web UI会通过 API访问的方式从存储中将trace信息提取出来分析并展示。</p>
-<p><img src="https://p0.meituan.net/travelcube/0a57b4de67fa93d463818aac5df6d2bf138641.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/0a57b4de67fa93d463818aac5df6d2bf138641.png"></p>
 <p>最后，我们看看Zipkin的跨线程传递方案的优缺点：在单个线程的调用中Zipkin通过定义一个ThreadLocal&lt;TraceContext&gt; local来完成在整个线程执行过程中获取相同的Trace值，但是当新起一个线程的时候ThreadLocal就会失效，对于这种场景，Zipkin对于不提交线程池的场景提供InheritableThreadLocal&lt;TraceContext&gt;来解决父子线程trace信息传递丢失的问题。</p>
 <p>而对于@Async的使用场景，Zipkin提供CurrentTraceContext类首先获取父线程的trace信息，然后将trace信息复制到子线程来，其基本思路和上文MTrace的一致，但是需要代码开发，具有较强的侵入性。</p>
 <h3 id="42-skywalking">4.2 SkyWalking</h3>
 <p>SkyWalking是Apache基金会下面的一个开源的应用程序性能监控系统，提供了一种简便的方式来清晰地观测云原生和基于容器的分布式系统。具有支持多种语言探针；微内核+插件的架构；存储、集群管理和使用插件集合都可以自由选择；支持告警；优秀的可视化效果的特点。其主要由4个核心组件构成，如下图所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/8ba055082296a3c5c6c29b6400540d7196837.jpg" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/8ba055082296a3c5c6c29b6400540d7196837.jpg"></p>
 <ul>
 <li><strong>探针</strong>：基于不同的来源可能是不一样的，但作用都是收集数据，将数据格式化为 SkyWalking适用的格式。</li>
 <li><strong>平台后端</strong>：支持数据聚合，数据分析以及驱动数据流从探针到用户界面的流程。分析包括Skywalking原生追踪和性能指标以及第三方来源，包括Istio、Envoy telemetry、Zipkin追踪格式化等。</li>
@@ -429,12 +429,12 @@
 <li><strong>UI</strong> ：一个基于接口高度定制化的Web系统，用户可以可视化查看和管理SkyWalking数据。</li>
 </ul>
 <p>SkyWalking的工作原理和Zipkin类似，但是相比较于Zipkin接入系统的方式，SkyWalking使用了插件化+javaagent 的形式来实现：通过虚拟机提供的用于修改代码的接口来动态加入打点的代码，如通过javaagent premain来修改Java 类，在系统运行时操作代码，让用户可以在不需要修改代码的情况下进行链路追踪，对业务的代码无侵入性，同时使用字节码操作技术（Byte-Buddy）和AOP概念来实现拦截追踪上下文的trace信息，这样一来每个用户只需要根据自己的需用定义拦截点，就可以实现对一些模块实施分布式追踪。</p>
-<p><img src="https://p1.meituan.net/travelcube/ea89c135bf1718311438480b9edabd37272820.png" alt=""></p>
+<p><img src="https://p1.meituan.net/travelcube/ea89c135bf1718311438480b9edabd37272820.png"></p>
 <p>最后，我们总结一下SkyWalking的跨线程传递方案的优缺点：和主流的分布式追踪系统类似，SkyWalking也是借助ThreadLocal来存储上下文信息，当遇到跨线程传输时也面临传递丢失的场景，针对这一问题SkyWalking会在父线程调用ContextManager.capture()将trace信息保存到一个ContextSnapshot的实例中并返回，ContextSnapshott则被附加到任务对象的特定属性中，那么当子线程处理任务对象的时会先取出ContextSnapshott对象，将其作为入参调用ContextManager.continued(contextSnapshot)来保存到子线程中。</p>
 <p>整体思路其实和主流的分布式追踪系统的相似，SkyWalking目前只针对带有@TraceCrossThread注解的Callable、Runnable和Supplier这三种接口的实现类进行增强拦截，通过使用xxxWrapper.of的包装方式，避免开发者需要大的代码改动。</p>
 <h3 id="43-eagleeye">4.3 EagleEye</h3>
 <p>EagleEye阿里巴巴开源的应用性能监控工具，提供了多维度、实时、自动化的应用性能监控和分析能力。它可以帮助开发人员实时监控应用程序的性能指标、日志、异常信息等，并提供相应的性能分析和报告，帮助开发人员快速定位和解决问题。主要由以下5部分组成：</p>
-<p><img src="https://p0.meituan.net/travelcube/96cc46502fc18907baa2ad4028e767ec475984.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/96cc46502fc18907baa2ad4028e767ec475984.png"></p>
 <ul>
 <li><strong>代理</strong>：代理是鹰眼的数据采集组件，通过代理可以采集应用程序的性能指标、日志、异常信息等数据，并将其传输到鹰眼的存储和分析组件中。代理支持多种协议，如HTTP、Dubbo、RocketMQ、Kafka等，能够满足不同场景下的数据采集需求。</li>
 <li><strong>存储</strong>：存储是鹰眼的数据存储组件，负责存储代理采集的数据，并提供高可用、高性能、高可靠的数据存储服务。存储支持多种存储引擎，如HBase、Elasticsearch、TiDB等，可以根据实际情况进行选择和配置。</li>
@@ -444,7 +444,7 @@
 </ul>
 <p>不同于SkyWalking的开源社区，EagleEye重点面向阿里内部环境开发，针对海量实时监控的痛点，对底层的流计算、多维时序指标与交互体系等进行了大量优化，同时引入了时序检测、根因分析、业务链路特征等技术，将问题发现与定位由被动转为主动。</p>
 <p>EagleEye采用了StreamLib实时流式处理技术提升流计算性能，对采集的数据进行实时分析和处理，当监控一个电商网站时，可以实时地分析用户访问的日志数据，并根据分析结果来优化网站的性能和用户体验；参考Apache Flink的Snapshot优化齐全度算法来保证监控系统确定性；为了满足不同的个性化需求，把一些可复用的逻辑变成了“积木块”，让用户按照自己的需求，拼装流计算的pipeline。</p>
-<p><img src="https://p0.meituan.net/travelcube/58bb6cfced05840056ef98c52e9510cf307668.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/58bb6cfced05840056ef98c52e9510cf307668.png"></p>
 <p>最后总结一下EagleEye的跨线程传递方案优缺点：EagleEye的解决思路和大多数分布式追踪系统一致，都是通过javaagent的方式修改线程池的实现，进而子线程可以获取到父线程到trace信息，不同于SkyWalking这种开源系统采用的字节码增强，EagleEye大多数场景是内部使用，所以采用直接编码的方式，维护和性能消耗方面也是非常有优势的，但扩展性和开放性并不是非常友好。</p>
 <h2 id="5-总结">5. 总结</h2>
 <p>本文意在从日常工作中一个很细微的问题出发，探究分析背后的设计思想和底层原因，主要涉及以下方面：</p>

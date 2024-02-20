@@ -77,7 +77,7 @@
 <li>对于本次修复的代码，如何在经过编译、优化、混淆之后准确识别出来并生成补丁代码。</li>
 </ul>
 <p>要解决这两个问题，需要对 Android 编译和构建过程有一定了解，弄清楚问题产生的原因。下图 1 是一个 Android 项目从源码到 APK（Android 应用安装包）的构建过程（椭圆形对应构建工具链）：</p>
-<p><img src="https://p0.meituan.net/travelcube/917a04eb9894180bc0f8bc64ee930384564569.png" alt="图1 从源码到 APK 的构建过程"></p>
+<p><img alt="图1 从源码到 APK 的构建过程" src="https://p0.meituan.net/travelcube/917a04eb9894180bc0f8bc64ee930384564569.png"></p>
 <p>上图有些工具已被新出现的工具所取代，但是整体的流程并没有太大变化。对照这个图，我们分析一下其中对补丁制作/二次打包有影响的几个环节：</p>
 <ol>
 <li><strong>资源编译器（aapt/aapt2）</strong>：资源编译环节会生成一个 R.java 文件（记录着资源 id，便于代码中引用），一般为了解决 R field 过多以及减少包大小，大型 Android 项目会在构建过程中会将资源 id 直接内联到调用处（发生在 javac 和 proguard 之间）。如果前后两次打包出现资源 id 不一致，会影响 diff 识别的结果。</li>
@@ -93,9 +93,9 @@
 </ol>
 <p>至此，我们对本章开头提到的2个问题的产生原因有了一定认识，经过 Android 构建过程生成的字节码相比源码在 class/field/method/code 维度上有了“结构性”的变化，比如修复代码中调用的 class/field/method 在线上包中不存在（被 shrink、被 merge、被 inline），或者源码中可以访问、但在补丁中无法访问的 field/method（修饰符被标记为 private）、method parameter 列表匹配不上（之前没有被用到的 parameter 被裁剪了）等等。</p>
 <p>Proguard 提供的这些优化项是可选的，一般情况下大型 Android 项目中会结合实际收益、稳定性以及构建耗时等多方因素综合考量后，会禁用一部分优化项，但并不是完全禁用。因此，二次打包时和线上包会产生一些差异，补丁制作准确性会受此影响。过去 Robust 补丁制作过程经常遇到此类问题，通过特殊字符检测、白名单等方式能够提升识别的准确性，但实现方案不够自动化。Robust 补丁制作流程如下：</p>
-<p><img src="https://p0.meituan.net/travelcube/aba2c88f481bf836394ba7259e733d62267622.png" alt="图2 Robust 补丁制作流程"></p>
+<p><img alt="图2 Robust 补丁制作流程" src="https://p0.meituan.net/travelcube/aba2c88f481bf836394ba7259e733d62267622.png"></p>
 <p>如果将 Android 项目的构建工具链（Android Gradle Plugin）升级到官方较新版本，上图中的 Proguard（Java字节码优化和） + Dex（Android 字节码生成） 两个环节将被合并成一个，并被替换成 R8：</p>
-<p><img src="https://p1.meituan.net/travelcube/4f391378f3bfe7d6f44a69f07e889730115304.png" alt="图3 两种构建流"></p>
+<p><img alt="图3 两种构建流" src="https://p1.meituan.net/travelcube/4f391378f3bfe7d6f44a69f07e889730115304.png"></p>
 <p>上述构建工具链的升级变化，给 Robust 补丁制作带来 2 个新的问题：</p>
 <ol>
 <li>没有合适时机制作补丁。如果将基于 JAR 的改动识别方案，改成基于 DEX 或者 Smali，等同于更换补丁制作方案，前者需要基于 DEX 文件格式和指令，后者需要处理大量寄存器，更容易出错，兼容性和稳定性不够好。</li>
@@ -104,11 +104,11 @@
 <h2 id="三解决思路">三、解决思路</h2>
 <h3 id="31-整体方案介绍">3.1 整体方案介绍</h3>
 <p>基于 R8 构建的补丁制作思路是将改动识别提到优化混淆之前，对比 Java 字节码，同时结合对线上 APK 结构化解析（class/field/method），校正补丁代码对线上代码的调用，得到 patch.jar，最后借助 R8 对 patch.jar 进行混淆（applymapping）、脱糖、生成 Dex，打包得到 patch.apk，完整流程如下图所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/5cdccf1d11fbb25df345ae9774129ce6257267.png" alt="图4 完整流程"></p>
+<p><img alt="图4 完整流程" src="https://p0.meituan.net/travelcube/5cdccf1d11fbb25df345ae9774129ce6257267.png"></p>
 <h3 id="32-问题和解决方法">3.2 问题和解决方法</h3>
 <h4 id="321-r8-与-proguard-优化对比">3.2.1 R8 与 Proguard 优化对比</h4>
 <p>部分 ProGuard 的配置项在切换到 R8 后失效，R8 官方文档对此做出的解释是：随着 R8 的不断改进，维护标准的优化行为有助于 Android Studio 团队轻松排查并解决您可能遇到的任何问题。</p>
-<p><img src="https://p1.meituan.net/travelcube/e2c79ae14f8a0ed92882dcc9b9a54afa1395360.png" alt="图5 R8 官方解释"></p>
+<p><img alt="图5 R8 官方解释" src="https://p1.meituan.net/travelcube/e2c79ae14f8a0ed92882dcc9b9a54afa1395360.png"></p>
 <p>截至目前，仍能在网上搜到不少因 R8 优化带来的问题，没有公开文档介绍优化规则的使用和禁用说明。只能通过阅读 ProGuard 官方文档和 R8 源码，对比分析两者优化规则的相似和差异。通过 R8 源码发现可以通过隐藏的构建参数、反射或者直接修改 R8 源码实现一部分规则禁用，虽然 R8 的优化规则并不是和 Proguard 一一对应，但也基本可以实现和之前使用 Proguard 时相同的优化效果。</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>com<span style="color:#719e07">.</span>android<span style="color:#719e07">.</span>tools<span style="color:#719e07">.</span>r8<span style="color:#719e07">.</span>utils<span style="color:#719e07">.</span>InternalOptions<span style="color:#719e07">.</span>enableEnumUnboxing
 </span></span><span style="display:flex;"><span>com<span style="color:#719e07">.</span>android<span style="color:#719e07">.</span>tools<span style="color:#719e07">.</span>r8<span style="color:#719e07">.</span>utils<span style="color:#719e07">.</span>InternalOptions<span style="color:#719e07">.</span>enableVerticalClassMerging
@@ -118,11 +118,11 @@
 </span></span><span style="display:flex;"><span>com<span style="color:#719e07">.</span>android<span style="color:#719e07">.</span>tools<span style="color:#719e07">.</span>r8<span style="color:#719e07">.</span>utils<span style="color:#719e07">.</span>InternalOptions<span style="color:#719e07">.</span>testing<span style="color:#719e07">.</span>disableMarkingMethodsFinal
 </span></span><span style="display:flex;"><span>com<span style="color:#719e07">.</span>android<span style="color:#719e07">.</span>tools<span style="color:#719e07">.</span>r8<span style="color:#719e07">.</span>utils<span style="color:#719e07">.</span>InternalOptions<span style="color:#719e07">.</span>testing<span style="color:#719e07">.</span>disableMarkingClassesFinal
 </span></span></code></pre></div><p>一些规则可以通过构建参数-Dcom.android.tools.r8.disableMarkingMethodsFinal 来控制关闭/开启，其他不支持的参数也可以参考如下方式简单改造一下：</p>
-<p><img src="https://p0.meituan.net/travelcube/a9e187cfda7f5da2d6c463225bdfcc3d57187.png" alt="图6 改造方式"></p>
+<p><img alt="图6 改造方式" src="https://p0.meituan.net/travelcube/a9e187cfda7f5da2d6c463225bdfcc3d57187.png"></p>
 <p>如果某个项目中不希望禁用这些规则呢？在之前的补丁制作流程中，可能会影响改动识别的准确性。而在新的补丁制作流程中，改动识别不受影响，但在识别之后，还需要结合线上 APK 检查补丁中的外部调用是否合法。进一步仔细分析这些优化规则，可以分为 class、field、method、code 四类，其中对 Robust 补丁制作影响较大的是方法内联、参数移除、被标记为 private，后面的小节里将会介绍相应的处理方法。</p>
 <h4 id="322-真假改动识别">3.2.2 “真”“假”改动识别</h4>
 <p>如果源码中有匿名内部类，javac 会编译生成一个命名为 {外部类名}${数字编号} 的类，后面的数字编号是根据该匿名内部类在外部类中出现的先后顺序，依次累加计算出来的。</p>
-<p><img src="https://p0.meituan.net/travelcube/d4b4e670cc90bc9b71277e10d2cac1a4380537.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/d4b4e670cc90bc9b71277e10d2cac1a4380537.png"></p>
 <p>当修复代码中有新增/删除匿名内部类时，仅通过类名无法比较（所以在一些以类为最小粒度的热修复框架使用文档里，会看到类似“不支持新增匿名内部类”、“只支持在外部类的末尾增加匿名内部类”之类的描述），这时候 Robust 会模糊处理后面的数字编号，通过字节码对比进一步查找到真实变化的匿名内部类，识别出哪些是真改，哪些是假改。</p>
 <p>此外，如果嵌套类之间涉及私有 field/method 访问，javac 编译器会生成命名规则为 <code>access$100</code>、<code>access$200</code> 的桥接方法，<code>access$</code> 后面的数字编号（和出现的先后顺序有关）也会影响改动识别（最终 R8 会将修饰符改成 public 并删除桥接方法），这里的解决办法和上面识别真实内部类改动的方式类似。</p>
 <p>还有一种情况值得注意，大一点的 Android 项目通常会采用组件化的方式，每个组件以 AAR 形式参与 App 构建打包，在组件二进制发版（源码-&gt; AAR）过程中，可以使用 R8 进行脱糖（For Android）得到 Java 7 字节码，典型的例子是 Lambda 表达式，经过脱糖处理生成 {外部类}$$ExternalSyntheticLambda{数字} （甚至有多重数字的情况如$2$1） 之类的 class，以及在外部类中生成命名规则为 lambda${方法名}${数字} 的静态方法（不同的脱糖器，命名规则不一样），补丁生成工具处理方法和上面类似。</p>

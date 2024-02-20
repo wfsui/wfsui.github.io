@@ -85,7 +85,7 @@
 <p>美团外卖搜索推荐团队，也面临着类似的挑战和问题。本文我们会分享美团外卖搜索/推荐业务中，模型预估的GPU架构设计与落地过程，并将一些技术细节和测试数据做了详尽的披露，希望能为广大的技术同行提供一些有价值的参考。</p>
 <h2 id="2-背景">2 背景</h2>
 <p>当前，美团外卖主要通过搜索和推荐两种流量分发方式，满足用户对“万物到家”的需求。除了首页的搜索、推荐功能外，重点品类会在首页增加独立入口（下文称之为“金刚”），每个金刚入口中都有类似于首页搜索、推荐的区域，而不同场景入口共同服务于外卖的最终成单。首页、金刚、店内的联动关系如下图所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/27ca560f111865c3b81fb18c3b4d97e7163776.jpg" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/27ca560f111865c3b81fb18c3b4d97e7163776.jpg"></p>
 <p>面向点击率（CTR）/转化率（CVR）预估的深度学习，是每一个电商类搜索/推荐产品中的核心技术，直接决定了产品的用户体验和转化效果，同时也是机器资源消耗的“大户”。而CTR/CVR精排模型的设计和实践，也是美团外卖搜索推荐（下称搜推）技术团队必须要攻克且不断追求卓越的必争之地。</p>
 <p>从搜推系统设计的角度上看，不同的搜索、推荐入口会自然形成独立的调用链路。在传统的模型设计思路下，会对不同入口链路、不同漏斗环节的CTR/CVR/PRICE多个目标独立设计模型，这也是美团外卖搜推过往模型设计的经典方式。而从2021年起，基于多场景全局优化的考量，搜推场景的CTR/CVR预估模型开始逐步走向多模型统一，综合利用多个入口的数据、结合不同入口自身的业务特点实现多个入口的联动优化，逐步实现“One Model to Serve All”的目标。</p>
 <p>从模型计算实践的角度上看，外卖精排模型的发展，让模型Dense网络的计算量显著膨胀，以CPU为计算主力的软硬件架构已经难以应对算法的发展需求，即便成本消耗大幅加剧，算力天花板仍然“近在咫尺”。而GPU硬件面向稠密计算的算力优势，恰恰吻合新的模型特点，可以从根本上打破精排模型预估/训练中的算力困局。因此，从2021年开始，美团外卖搜推场景的深度学习体系开始逐步从纯CPU架构走向CPU+GPU的异构硬件计算平台，以满足美团外卖模型算法演进对算力的新要求。</p>
@@ -106,8 +106,8 @@
 <li>场景专家网络与Attention网络的融合，实现不同流量入口之间的模型泛化和统一。</li>
 <li>领域专属网络和共享网络的融合，实现推荐场景向搜索场景的迁移学习。</li>
 </ol>
-<p><img src="https://p0.meituan.net/travelcube/679b1311b59d719d908be60359c40e09481006.png" alt="融合场景专家网络与Attention的模型网络结构示意图"></p>
-<p><img src="https://p1.meituan.net/travelcube/305f9f6bea6ee3ec84155353ac028f56492108.png" alt="融合领域专属网络和共享网络的模型结构示意"></p>
+<p><img alt="融合场景专家网络与Attention的模型网络结构示意图" src="https://p0.meituan.net/travelcube/679b1311b59d719d908be60359c40e09481006.png"></p>
+<p><img alt="融合领域专属网络和共享网络的模型结构示意" src="https://p1.meituan.net/travelcube/305f9f6bea6ee3ec84155353ac028f56492108.png"></p>
 <p>随着外卖精排模型的发展和演进，模型Dense网络的参数量显著增加，单次推理的FLOPs达到26M，对CPU计算架构造成了巨大压力。另一方面，我们采用Float 16压缩、特征自动选择、网络交叉替代手动交叉特征等技术手段，将模型由100G缩小到10G以内，并且过程中通过模型的优化，做到了模型效果无损。</p>
 <p>综上，外卖搜推精排模型稠密部分计算复杂、稀疏部分体积可控，这些良好的特性，为我们在GPU硬件架构上落地推理计算提供了相对适宜的模型算法基础。接下来，我们将探讨如何在高吞吐、低耗时的外卖搜索推荐系统中，利用GPU硬件有效解决外卖精排模型在线预估中的成本和性能问题，并给出我们的实践过程和结果。</p>
 <h3 id="32-模型应用的特点与挑战">3.2 模型应用的特点与挑战</h3>
@@ -127,7 +127,7 @@
 <li><strong>机型特性</strong>：美团基于提升算力密度的考量，在预估服务采用了GPU BOX机型。相对于传统的GPU插卡机型，这一类机型每张GPU卡配套的CPU和内存相对有限，这需要我们在设计在线服务时，精细化的考量CPU、GPU上的计算和数据分布，达到更好的利用率均衡。</li>
 <li><strong>GPU固有属性</strong>：GPU kernel大体上可以划分为传输数据、kernel启动、kernel计算等几个阶段[3]，其中每个kernel的启动需要约10us左右。因此，GPU预估会面临一个普适问题，大量的小算子导致每个kernel的执行时间很短，kernel启动的耗时占了大部分。相邻的kernel之间需要通过读写显存进行数据的传输，产生大量的访存开销。而GPU的访存吞吐远远低于计算吞吐，导致性能低下，GPU的利用率并不高。</li>
 </ul>
-<p><img src="https://p1.meituan.net/travelcube/0a3d332514b7da894945831fc0d7ca2917521.jpg" alt=""></p>
+<p><img src="https://p1.meituan.net/travelcube/0a3d332514b7da894945831fc0d7ca2917521.jpg"></p>
 <p>总结而言，与业内其他主流搜推场景相对比，我们的CTR模型预估场景有两个明显特点：</p>
 <ul>
 <li>稠密网络部分计算复杂度高，相对的，稀疏网络在模型设计环节经过了大量的优化，体积相对较小。</li>
@@ -136,7 +136,7 @@
 <p>基于这两个特点，我们在面向GPU的优化实践中就可以更具针对性了。</p>
 <h2 id="4-模型服务架构概览">4 模型服务架构概览</h2>
 <p>本章节简要介绍美团外卖搜推在线预估服务的整体架构和角色分工，也是外卖搜推精排模型在GPU落地实践的工程系统基础。</p>
-<p><img src="https://p0.meituan.net/travelcube/74712ab19933e65708796fb30384277845263.jpg" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/74712ab19933e65708796fb30384277845263.jpg"></p>
 <p><strong>系统关键角色</strong></p>
 <ul>
 <li><strong>Dispatch</strong>：承担着特征获取和特征计算的职能，如前文所述，美团使用GPU BOX机型搭建预估服务，推理计算的CPU资源本身就十分吃紧，因此自然会考虑将在线特征工程部分独立部署，避免CPU资源的抢占。本部分和GPU实践关系不大，不是本文的重点。</li>
@@ -164,11 +164,11 @@
 <p>TensorFlow会为计算图中每个Node自动设置Runtime Device，计算较重者放置在GPU，计算较轻者放置在CPU。在复杂计算图中完成一次完整的inference，数据会在CPU和GPU之间反复传输。由于H2D/D2H传输很重，这会造成数据传输耗时远大于op（operator）内部计算耗时，在GPU下模型一次预估耗时为秒级别，远高于只使用CPU时的耗时。此外，如前所述，我们所使用的GPU机型上CPU资源受限（一张T4卡仅对应8核CPU），这也是我们在异构架构设计中需要解决的核心技术挑战。</p>
 <p>为解决TensorFlow自动设定Runtime Device不合理的问题，我们为计算图中每个Node手动Set Runtime Device。考虑到CPU资源受限，我们尽量的将计算较重的子图（包括Attention子图、MLP子图）放置在GPU计算，计算较轻的子图（主要为Embedding查询子图）放置在CPU计算。</p>
 <p>为进一步减少设备间数据传输，我们在CPU和GPU之间增加Concat op和Split op，CPU数据先Concat到一起再传输到GPU，之后再按需Split成多份并传给对应op，将H2D/D2H从上千次降低到数次。如下图所示，设备摆放优化之前，有大量的H2D数据传输；优化之后，H2D减少为3次，优化效果十分明显。</p>
-<p><img src="https://p0.meituan.net/travelcube/a7453171318bce0de9276c1a54befb57650481.jpg" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/a7453171318bce0de9276c1a54befb57650481.jpg"></p>
 <h4 id="512-all-on-gpu">5.1.2 All On GPU</h4>
 <p>完成基本的设备摆放优化后，计算较轻的Sparse查询部分在CPU完成，计算较重的Dense计算部分在GPU完成。虽然CPU上计算较轻，但压测发现其仍旧是整体吞吐瓶颈。考虑到整体计算图较小（约2G），我们自然的想到是否可以将整图放在GPU执行，绕开CPU配额的限制，此即All On GPU。为了将原在CPU进行的Saprse查询改为在GPU执行，我们新增了LookupTable op的GPU实现。如下图所示，HashTable放置在GPU Global Memory，它的Key与Value统一存储在Bucket中。针对输入的多组Key，利用多个Block的Threads并行查询。</p>
 <p>同时，为提高GPU利用效率，降低kernel launch开销，我们利用TVM对计算图进行编译优化（下文会进行详细介绍）。优化后的All On GPU模型图解决了CPU资源受限带来的瓶颈，整体吞吐提升明显（qps 55-&gt;220，约4倍）。</p>
-<p><img src="https://p0.meituan.net/travelcube/cf5cabb7759d6f03e64ac20d9a70780d51746.jpg" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/cf5cabb7759d6f03e64ac20d9a70780d51746.jpg"></p>
 <h4 id="513-算子融合">5.1.3 算子融合</h4>
 <p>外卖搜推精排模型十分复杂，计算图中包含上万个计算Node。GPU上执行计算图时，每个Node都有kernel launch开销，多个Node之间还有访问显存开销。此外，TensorFlow框架本身在Node执行时会带来一定开销，每个Node执行时都会创建、销毁Input/Output Tensor，内存控制引入额外成本。因此，计算图中Node过多会严重影响执行效率。为解决这一问题，常用的方法是进行算子融合，即在计算结果等价的前提下，将多个Node融合成一个Node，尽量降低计算图Node数量，这样既可以将Node之间的访问显存开销转为访问寄存器开销，同时也可以减少计算图中每个Node带来的固定开销。</p>
 <p>算子融合主要通过三种方式进行：</p>
@@ -184,7 +184,7 @@
 <h4 id="522-broadcast优化">5.2.2 broadcast优化</h4>
 <p>模型图中的数据可以分为user和item两类。通常情况下，请求中包含一个user以及多个item。在模型Sparse部分，user和item分别获取Embedding；在模型Dense部分，两类Embedding组合成矩阵后进行计算。经过深入分析，我们发现模型图中存在冗余查询和计算。如下图橙色部分所示，在模型Sparse部分，user信息先被broadcast成batchsize大小再去查询Embedding，导致同一个Embedding查询了batchsize次；在模型Dense部分，user信息同样被broadcast成batchsize大小，再进行之后所有计算，实际上在和item交叉之前不必broadcast user，同样存在冗余计算。</p>
 <p>针对以上问题，我们对模型图进行了手工优化，如下图紫色部分所示，在模型Sparse部分，user信息只查询一次Embedding；在模型Dense部分，user信息与item交叉时再broadcast成batchsize大小，即整体上将user信息的broadcast后置。</p>
-<p><img src="https://p0.meituan.net/travelcube/81151ece3173c672a4ca6b20bfc1596177780.jpg" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/81151ece3173c672a4ca6b20bfc1596177780.jpg"></p>
 <h4 id="523-高性能库应用">5.2.3 高性能库应用</h4>
 <p>使用CPU时，可以利用Intel MKL[7]库对计算进行加速。受限于CPU硬件特点，加速效果有限。使用GPU时，我们可以利用Tensor Core[8]进行加速计算。每个Tensor Core都是一个矩阵乘累加计算单元，当前使用的NVIDIA T4卡具有320个Tensor Core，在混合精度计算时算力为65 TFLOPS，在单精度计算时算力为8.1 TFLOPS，具有极强的推理性能。在TensorFlow中，可利用cuBLAS[9]调用Tensor Core进行GEMM加速计算，利用cuDNN[10]调用Tensor Core进行CNN、RNN网络加速计算。</p>
 <h3 id="53-基于dl编译器的自动优化">5.3 基于DL编译器的自动优化</h3>
@@ -196,16 +196,16 @@
 <p>利用TensorRT进行图优化时，会先利用Union Find算法在全图中寻找可识别op并将其聚类，每个聚类进行具体的编译优化，并产生一个对应的TRTEngineOp。由于计算图中存在大量不识别op，对聚类过程造成了干扰，即使可识别OP也不一定能完成聚类，则无法进行对应编译优化，造成优化效率较低。为解决这一问题，图优化前我们先进行手动切图，将全计算图切分为若干个子图，每个可识别op都放入对应子图中，并将子图送入TensorRT进行优化。通过这一方法，有效解决了可识别op未优化的问题，有效降低了全图OP数量。</p>
 <p><strong>② 算子替换</strong></p>
 <p>如前所述，TensorRT支持OP类型有限，全图中存在大量TensorRT无法识别的op，导致优化效率偏低。为了缓解这一问题，我们将TensorRT不识别的OP尽量替换成其支持的等价op。例如下图中，TensorRT无法识别Select op，我们将其替换成TensorRT支持的Multiply op，并将Select关联的ExpandDims op从图中消掉。经过类似的等价转换操作，有效降低了未识别op数量，提高了编译优化覆盖率。</p>
-<p><img src="https://p0.meituan.net/travelcube/d45e574538bd58174a70ded97a234ffa52221.jpg" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/d45e574538bd58174a70ded97a234ffa52221.jpg"></p>
 <h4 id="532-基于tvm的尝试">5.3.2 基于TVM的尝试</h4>
 <p>在尝试TensorRT优化时我们发现，TensorRT对TensorFlow的算子覆盖率较低（只能覆盖约50+算子），在当前的模型计算图中，有十多个算子无法支持。即使经过复杂的算子替换优化工作，仍然存在多个算子难以替换。由此我们思考采用其他的深度学习编译器进行图优化。</p>
 <p>TVM是陈天奇团队推出的端到端机器学习自动编译框架，在业界广泛使用。和TensorRT相比，TVM代码开源，具有更强的拓展性和定制能力。此外，TVM支持的TensorFlow算子超过130个，算子覆盖率远超TensorRT。在当前计算图中，TVM不支持的OP只有自定义的LookupTable，这一OP负责查询Embedding，无需进行编译优化。</p>
 <p>因此，我们尝试利用TVM取代TensorRT对当前计算图进行自动编译优化。考虑到TensorFlow对TensorRT、XLA均做了官方支持，实现了对应的wrapper op，但目前尚未支持TVM，我们对TensorFlow做了适配改造，采用和TensorRT类似的方式，实现了TVMEngineOp以支持TVM。考虑模型特点，我们将计算较重的Attention子图和MLP子图放入了TVMEngineOp中，利用TVM进行编译优化，如下图所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/859325646f7bfc9bb030bc85251a1bac31092.jpg" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/859325646f7bfc9bb030bc85251a1bac31092.jpg"></p>
 <h2 id="6-性能表现与分析">6 性能表现与分析</h2>
 <p>本章节展示实际生产环境下的测试数据，并分析上文一系列业内典型优化思路，在我们的特定场景下的表现及其背后原因。</p>
-<p><img src="https://p1.meituan.net/travelcube/392052756c63d8ca1eb63566cb8d54c922471.jpg" alt=""></p>
-<p><img src="https://p0.meituan.net/travelcube/8287c6308d9650ac3695f876ff02b42619586.jpg" alt=""></p>
+<p><img src="https://p1.meituan.net/travelcube/392052756c63d8ca1eb63566cb8d54c922471.jpg"></p>
+<p><img src="https://p0.meituan.net/travelcube/8287c6308d9650ac3695f876ff02b42619586.jpg"></p>
 <p>压测环境中，CPU环境为32核Intel® Xeon® Gold 5218 CPU @ 2.30GHz+32G内存，GPU环境为8核Intel® Xeon® Gold 5218 CPU @ 2.30GHz+Tesla T4 GPU+16G内存。上图中，左图对比了不同QPS下（x轴），精排模型在不同优化手段下的推理耗时（y轴），其中base-gpu表示只经过简单的图优化并在GPU计算，trt表示经过TensorRT优化并在GPU计算，tvm表示经过TVM优化且叠加All On GPU优化并在GPU计算；右图表示极限QPS下，不同优化手段对应的CPU和GPU利用率。从图中可以看出：</p>
 <ul>
 <li>只利用CPU进行预估计算时，极限qps为55，此时CPU利用率已经高达76%，成为瓶颈。</li>

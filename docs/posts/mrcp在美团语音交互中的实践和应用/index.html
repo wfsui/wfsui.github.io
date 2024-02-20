@@ -75,7 +75,7 @@
 <p>MRCP（Media Resource Control Protocol, MRCP）是一种通讯协议，中文定义是：媒体资源控制协议，用于语音服务器向客户端提供各种语音服务（如语音识别和语音合成）。该协议定义了控制媒体处理资源所必需的请求（Request）、应答（Response）和事件（Event）等消息，它需要借助 RTP（Real-Time Transport Protocol, 实时传输协议）创建一个媒体会话、借助 SIP（Session Initiation Protocol, 会话初始化协议） 和 SDP（Session Description Protocol, 会话描述协议） 创建一个控制会话来实现媒体资源服务器端和客户端之间的控制[1]。</p>
 <p>在传统的语音应用中，各集成商必须针对不同的 ASR/TTS 厂商提供的 API 接口进行专门的集成开发，不同 ASR/TTS 引擎的接口各不相同，从而导致了集成过程的复杂性和局限性。因此，在实现语音和网络技术集成方面必须需要比较规范的协议来进行处理。MRCP 协议是目前针对媒体资源和 IP 网络起草的标准协议。有了 MRCP 协议后，ASR/TTS 厂商提供 MRCP 协议的标准统一接口，语音集成开发商们不必再针对特定的 ASR/TTS 进行开发，为各种语音应用开发提供了更加灵活的选择，并有效地降低业务开发周期和成本[2]。</p>
 <p>以语音合成（TTS）为例，图 1 展示了一个 MRCP 客户端连接媒体资源服务器的流程，在连接中会创建一个媒体会话和一个控制会话。假设连接成功，此时 MRCP 客户端对服务器端发起了一个 SPEAK 语音合成的请求，处理此请求的过程中包括了3个消息指令：<code>SPEAK</code>指令表示发送语音合成请求，<code>IN-POGRESS</code>指令表示正在处理中，<code>SPEAK—COMPLETE</code>指令表示处理完成[3]。</p>
-<p><img src="https://p1.meituan.net/travelcube/bf1028ae1a5bf2bf89a94c570240208335804.jpg" alt="图1 MRCP 协议交互"></p>
+<p><img alt="图1 MRCP 协议交互" src="https://p1.meituan.net/travelcube/bf1028ae1a5bf2bf89a94c570240208335804.jpg"></p>
 <p>MRCP 协议的消息格式和 HTTP 消息格式类似，如下以一次语音合成的 MRCP 消息为例，展示了 MRCP 消息的主要构成。</p>
 <p>发起语音合成请求：</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>MRCP/2.0 380 SPEAK 14321
@@ -97,7 +97,7 @@
 </span></span><span style="display:flex;"><span><span style="color:#268bd2">Completion-Cause</span>: <span style="color:#2aa198">000</span> normal 
 </span></span></code></pre></div><h3 id="12-mrcp-使用场景">1.2 MRCP 使用场景</h3>
 <p>目前，语音行业几乎所有的重要厂商都承诺支持 MRCP。MRCP 使用场景丰富，它支持目前最热门的开源语音通信平台 <a href="https://www.asterisk.org">Asterisk</a> 和 <a href="https://signalwire.com/freeswitch">FreeSWITCH</a> ，并且提供了丰富的接口文档，其中呼叫中心就是一个典型的案例。一个简单的呼叫中心如下图 2 所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/d374970a892fb3de18b1fc64a0aafc4f62821.jpg" alt="图2 简单呼叫中心系统示意"></p>
+<p><img alt="图2 简单呼叫中心系统示意" src="https://p0.meituan.net/travelcube/d374970a892fb3de18b1fc64a0aafc4f62821.jpg"></p>
 <ol>
 <li>当分机拨打外呼用户时，需要从运营商那里获得一条电话通讯线路，FreeSWITCH 指定路由通过网关到达运营商线路，通过运营商基础网络、连接用户通讯设备终端。</li>
 <li>智能语音服务通过 MRCP 协议与 FreeSWITCH 进行对接，用户接通电话后，智能语音服务从呼叫中心设备中实时获取声音讯号，将语音讯号转化为文本流实时输出，并将要回复的文本话术经过语音合成转化为语音讯号，交由呼叫中心进行语音播报。</li>
@@ -118,7 +118,7 @@
 <h3 id="21-设计目标">2.1 设计目标</h3>
 <p>如下图 3 所示，美团的小美机器人平台、木星通讯平台分别提供不同类型的语音对话机器人能力。以语音合成（TTS）为例，这些机器人平台直接调用 TTS 引擎的服务接口，将合成好的语音文件交由电话软交换平台（如FreeSWITCH）去播报，如链路 ① 所示。</p>
 <p>我们的目标是将这种调用关系简化，以标准 MRCP 下的语音合成服务对接电话软交换平台，那么上述机器人平台则只用核心关注机器人的对话逻辑，将具体的语音合成逻辑解耦出来，那么链路 ② 所传递的内容即为机器人待播报的话术文本，由电话软交换平台去调用和处理语音合成。</p>
-<p><img src="https://p0.meituan.net/travelcube/81cbbd114b3940a7c009af31dff3561499347.jpg" alt="图3 语音能力与业务系统对接方式比较"></p>
+<p><img alt="图3 语音能力与业务系统对接方式比较" src="https://p0.meituan.net/travelcube/81cbbd114b3940a7c009af31dff3561499347.jpg"></p>
 <p>总而言之，目标结合自研流式 TTS 和 ASR 能力，建设 MRCP 协议下标准的语音合成和识别服务，达到：</p>
 <ul>
 <li>支持标准协议下的 TTS 和 ASR 能力对接方式，追齐业界主流厂商能力。</li>
@@ -128,10 +128,10 @@
 <h4 id="221-系统层次架构">2.2.1 系统层次架构</h4>
 <p>在系统层次上，围绕联络场景，美团语音交互部正在建设全联络场景智能化的平台化解决方案。具体来说，美团智能对话平台 AICC（AI for Contact Center），基于美团语音交互部领先的语音识别、自然语言理解、多轮对话、知识图谱等人工智能技术，为美团业务提供智能文字客服（在线客服）、智能语音客服（热线客服）、智能外呼、智能营销、智能质检等完整解决方案；帮助业务从传统服务模式向智能服务模式转型，助力美团业务的服务成本优化、客户服务体验提升，实现客户服务及营销智能化升级。</p>
 <p>AICC 的层次架构如下图 4 所示，从整个 AICC 架构来看，TTS 和 ASR 处于语音技术平台，提供语音合成和识别的 PaaS 级能力；相应地，MRCP-TTS、MRCP-ASR扩充已有的 HTTP/RPC 接口的能力范围。</p>
-<p><img src="https://p0.meituan.net/travelcube/e09384614fc6832d6f0567a4d9f4c2e2422593.jpg" alt="图4 MRCP在AICC层次架构中的位置关系"></p>
+<p><img alt="图4 MRCP在AICC层次架构中的位置关系" src="https://p0.meituan.net/travelcube/e09384614fc6832d6f0567a4d9f4c2e2422593.jpg"></p>
 <h4 id="222-系统间调用关系">2.2.2 系统间调用关系</h4>
 <p>以热线电话机器人的系统调用过程为例，MRCP 在系统中所处的位置以及同其他各环节的配合关系如下图 5 所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/bdb76a55236f1ffff9bfda16237080f2171530.jpg" alt="图5 MRCP服务调用关系"></p>
+<p><img alt="图5 MRCP服务调用关系" src="https://p0.meituan.net/travelcube/bdb76a55236f1ffff9bfda16237080f2171530.jpg"></p>
 <ol>
 <li>FreeSWITCH 电话软交换平台，负责和运营商打通通讯线路，以具备基础的电话通讯能力。</li>
 <li>FreeSWITCH 除了以内置模块（如 mod_java）的方式开发控制接口外，也以 ESL（Event Socket Library）的 Inbound/Outbound 方式开放接口，提供事件监听、通话控制等能力。</li>
@@ -152,7 +152,7 @@
 <p>对于实现 MRCP-Server 的负载均衡，我们选用开源的 <a href="https://www.kamailio.org/w/">Kamailio</a> 来完成。Kamailio 的前身叫 Openser，作为出色的 SIP proxy，在大并发量使用时常常用于负载均衡媒体服务器，对 Asterisk、FreeSWITCH、MRCP 等实现集群能力[5]。Kamailio 经常与 FreeSWITCH 配合使用，最常用的场景是 Kamailio 作呼叫负载均衡服务器（一般主备配置），FreeSWITCH做媒体相关的处理如转码、放音、录音、呼叫排队等。</p>
 <h3 id="24-mrcp-server-模块结构">2.4 MRCP-Server 模块结构</h3>
 <p>由于 UniMRCP 提供的基础框架已经实现了服务接口、连接管理、协议管理，如何加载自定义插件，以及系统层的日志框架；并且 TTS 引擎与 ASR 引擎作为基础的依赖，已以 HTTP/RPC 协议的方式提供稳定的基础语音服务。因此，开发工作是在 UniMRCP 的基础上进行 TTS/ASR 插件的开发，模块结构如下图 6 所示，主要新增的模块已在图中标灰，其中：</p>
-<p><img src="https://p0.meituan.net/travelcube/6a8132a5439501158a911084377a7004264994.jpg" alt="图6 MRCP服务模块结构"></p>
+<p><img alt="图6 MRCP服务模块结构" src="https://p0.meituan.net/travelcube/6a8132a5439501158a911084377a7004264994.jpg"></p>
 <ul>
 <li>MRCP-TTS Plugin 和 MRCP-ASR Plugin 两个为核心的模块，以插件的形式加载到 MRCP-Server。</li>
 <li>MRCP-TTS Plugin 和 MRCP-ASR Plugin 抽象出公共的模块：
@@ -179,7 +179,7 @@
 <li><strong>负载均衡</strong>：显而易见地，需要对 MRCP-TTS 和 MRCP-ASR 进行负载均衡。如何进行负载均衡？起初我们打算直接使用 MGW 对 MRCP-TTS 进行负载均衡，MGW 是支持到传输层的四层负载均衡，可以路由分发到具体的服务。在我们场景中所使用的 SIP、MRCP 均属于应用层的协议，数据传输基于 TCP/UDP，理论上四层负载均衡能够满足需要。但实际协议交互过程中，支持七层负载均衡的 Kamailio 能够在 SIP 协议经过的路由点时，在协议头中加入 <code>&lt;Via address&gt;</code> 和 <code>&lt;Contact address&gt;</code> 等字段，层层路由能够始终保持与同一台机器进行交互。比如，客户端通过 SIP-INVITE 经由 Kamalio 与 MRCP服务完成握手后，结束服务、客户端发送 SIP-BYE 消息时，Kamailio 可以准确路由到当时接受 INVITE 消息的同一个 MRCP 服务。因此，最终使用 Kamailio 完成对 MRCP-TTS 和 MRCP-ASR 的负载均衡。</li>
 </ul>
 <p>对应地，整体部署如图7所示，在美团通过这种部署方式为业务提供稳定可用的服务。</p>
-<p><img src="https://p0.meituan.net/travelcube/a99d28c21735fc7fbbba3e031f2a7eba174618.jpg" alt="图7 MRCP整体系统部署方案"></p>
+<p><img alt="图7 MRCP整体系统部署方案" src="https://p0.meituan.net/travelcube/a99d28c21735fc7fbbba3e031f2a7eba174618.jpg"></p>
 <h2 id="三实践与应用效果">三、实践与应用效果</h2>
 <h3 id="31-应用范围">3.1 应用范围</h3>
 <h4 id="311-美团内部业务赋能">3.1.1 美团内部业务赋能</h4>

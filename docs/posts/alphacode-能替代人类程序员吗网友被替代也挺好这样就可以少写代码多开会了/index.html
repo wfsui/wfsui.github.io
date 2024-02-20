@@ -78,24 +78,24 @@ AlphaCode 不是业内在这一领域唯一的成果，但它完成了一项非�
 <p>而在这方面，AlphaCode 肯定给人留下了深刻印象。它已经成功解决了很多复杂的编程挑战，这些难题往往需要数小时的计划、编程和测试。有一天它可能会成为一个很好的工具，可以用来把问题描述变成实用的代码。</p>
 <p>但它肯定没法和任何级别的人类程序员相提并论。这是一种完全不同的软件创建方法，其中没有人类的思维和直觉参与，所以是不完整的。</p>
 <h2 id="编程竞赛">编程竞赛</h2>
-<p><img src="https://static001.infoq.cn/resource/image/9a/14/9a9dd4e19b88yy288a9da52990a85814.jpeg" alt="">
+<p><img src="https://static001.infoq.cn/resource/image/9a/14/9a9dd4e19b88yy288a9da52990a85814.jpeg">
 编程挑战描述的例子（来源：DeepMind)</p>
 <p>AlphaCode 不是业内在这一领域唯一的成果，但它完成了一项非常复杂的任务。其他类似的系统专注于生成简短的代码片段，如一个函数或一个代码块，旨在执行一个小任务（例如建立一个 web 服务器或从 API 系统中提取信息）。虽然这些任务令人印象深刻，但当语言模型被暴露在足够大的源代码语料库中时，这些任务就变得微不足道了。</p>
 <p>相比之下，AlphaCode 的目的是解决竞争性的编程问题。编程挑战的参与者必须阅读挑战描述，理解问题，将其转化为算法解决方案，用通用语言实现它，并针对一组有限的测试案例进行评估。最后，他们的结果是根据不在实现过程中的隐藏测试的性能来评估的。编程挑战还可以有其他条件，如时间和内存限制。</p>
 <p>总体而言，参加编程挑战的机器学习模型必须生成整个程序，解决一个与它之前所见所有事物都不一样的问题。这比根据以前看到的例子合成一个源代码摘录要困难得多。</p>
-<p><img src="https://static001.infoq.cn/resource/image/a3/b5/a3yye6f21f65e8b155d7851949751bb5.jpeg" alt="">
+<p><img src="https://static001.infoq.cn/resource/image/a3/b5/a3yye6f21f65e8b155d7851949751bb5.jpeg">
 编程挑战解决方案的例子（来源：DeepMind)</p>
 <h2 id="transformer-和大型语言模型的力量">Transformer 和大型语言模型的力量</h2>
 <p>AlphaCode 是大型语言模型在解决复杂问题方面取得进展的又一个例子。这种深度学习系统一般被称为序列到序列模型（seq2seq）。Seq2seq 算法将一串数值（字母、像素、数字等）作为输入，并生成另一串数值。这是许多自然语言任务（如机器翻译、文本生成和语音识别）中使用的方法。</p>
 <p>根据 DeepMind 的论文，AlphaCode 使用了一个编码器 - 解码器 Transformer 架构。近年来，Transformer 变得特别流行，因为它们可以处理很大的数据序列，而对内存和计算的要求比它们的前辈，循环神经网络（RNN）和长短时记忆网络（LSTM）要少得多。</p>
-<p><img src="https://static001.infoq.cn/resource/image/86/a0/865dea6d1dcd2ecf07b9e33f3da42ca0.jpeg" alt="">
+<p><img src="https://static001.infoq.cn/resource/image/86/a0/865dea6d1dcd2ecf07b9e33f3da42ca0.jpeg">
 Transformer 网络结构</p>
 <p>AlphaCode 的编码器部分为目标问题的自然语言描述创建一个数字表示。解码器部分接收由编码器生成的嵌入向量，并试图生成解决方案的源代码。</p>
 <p>事实证明，Transformer 模型很擅长此类任务，特别是当它们被提供足够的训练数据和计算能力时更是如此。但比起把原始数据扔给超大型神经网络这样的暴力手段，在我看来，AlphaCode 的真正亮点更多归功于 DeepMind 的科学家在设计训练过程和生成及过滤其结果的算法方面展现出来的聪明才智。</p>
 <h2 id="无监督和有监督学习">无监督和有监督学习</h2>
 <p>为了创建 AlphaCode，DeepMind 的科学家使用了无监督预训练和有监督微调的组合。这通常被称为自监督学习，这种方法在没有足够的标记数据或数据注释昂贵且耗时的应用中变得很受欢迎。</p>
 <p>在预训练阶段，AlphaCode 在从 GitHub 提取的 715 千兆字节的数据上进行无监督学习。该模型的训练过程是尝试预测语言或代码片段的缺失部分。这种方法的优点是，它不需要任何形式的注释；通过接触越来越多的样本，ML 模型逐渐变得更善于为文本和源代码的结构创建数字表示。</p>
-<p><img src="https://static001.infoq.cn/resource/image/4c/ba/4cyy251ebf73d7533ac86211c41dabba.jpeg" alt="">
+<p><img src="https://static001.infoq.cn/resource/image/4c/ba/4cyy251ebf73d7533ac86211c41dabba.jpeg">
 训练和应用 AlphaCode 的算法（来源：DeepMind）</p>
 <p>之后预训练的模型在 CodeContests 上做微调，CodeContests 是由 DeepMind 团队创建的一个有注释的数据集。该数据集包含问题陈述、正确和错误的提交，以及从各种来源收集的测试案例——包括 Codeforces、Description2Code 和 IBM 的 CodeNet。该模型经过训练，可以将挑战的文本描述转化为源代码结果。它的结果用测试案例进行评估，并与正确提交的案例进行对比。</p>
 <p>在创建数据集时，研究人员特别注意避免训练、验证和测试集之间的历史性重叠。这确保了 ML 模型在面临编程挑战时不会生成记忆性的结果。</p>
@@ -104,7 +104,7 @@ Transformer 网络结构</p>
 <p>根据 DeepMind 的 论文，AlphaCode 可以为每个问题生成数百万个样本，且它通常会生成成千上万的解决方案。然后 AlphaCode 对这些样本进行过滤，只留下那些通过了问题陈述中包含的测试的样本。根据论文，这一过程将删除大约 99% 的生成样本。但这样仍然会留下成千上万的有效样本。</p>
 <p>为了优化样本选择过程，研究团队使用了一种聚类算法来将解决方案分为多个组。根据研究人员的说法，聚类过程倾向于将有效的解决方案组合在一起。这样就更容易找到一小部分有可能通过竞赛隐藏测试的候选者。</p>
 <p>据 DeepMind 称，当在流行的 Codeforces 平台上的实际编程比赛中进行测试时，AlphaCode 在参赛者中平均排名是前 54%，考虑到编程挑战的难度，这样的结果非常令人印象深刻。</p>
-<p><img src="https://static001.infoq.cn/resource/image/db/0d/dba11d00acc7a0274ed0b7809746810d.jpeg" alt="">
+<p><img src="https://static001.infoq.cn/resource/image/db/0d/dba11d00acc7a0274ed0b7809746810d.jpeg">
 AlphaCode 的问题解析和代码生成过程的可视化（来源：DeepMind)</p>
 <h2 id="人工智能-vs-人类">人工智能 vs 人类</h2>
 <p>DeepMind 的博客正确地指出，AlphaCode 是人工智能代码生成系统第一次“在编程比赛中达到了具有竞争力的水平”。</p>

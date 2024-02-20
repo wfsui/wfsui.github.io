@@ -9,8 +9,8 @@ RASP建设挑战 在业界，RASP的部署形式一般有agentmain、premain两�
 agentmain：业务无需改动，无需重启，热插拔，动态升级。有性能抖动，业务有感知。 premain：需要改动，需要重启，前置注入，升级需要重启。无性能抖动，业务无感知。 美团的RASP建设时，大部分业务都已经在线上运营，而且有多个发布平台，没有提供一个统一的方式来更改启动参数，也就是说无法通过premain方式是实现快速部署。为了抓住主要矛盾，快速解决大部分风险问题，我们选择了agentmain方式。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2rasp%E5%A4%A7%E8%A7%84%E6%A8%A1%E7%A0%94%E5%8F%91%E9%83%A8%E7%BD%B2%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2024-02-19T02:40:07+00:00" />
-<meta property="article:modified_time" content="2024-02-19T02:40:07+00:00" />
+<meta property="article:published_time" content="2024-02-20T02:39:51+00:00" />
+<meta property="article:modified_time" content="2024-02-20T02:39:51+00:00" />
 
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="美团RASP大规模研发部署实践总结"/>
 <meta name="twitter:description" content="背景 RASP是Runtime Application Self-Protection（运行时应用自我保护）的缩写，是一种应用程序安全技术。RASP 技术能够在应用程序运行时检测并阻止应用级别的攻击。随着云计算和大数据的发展，应用程序安全越来越受到重视。RASP 技术作为一种新型的安全防护手段，正在逐渐被业界接受并广泛应用。其中Java RASP 是一种针对 Java 应用程序的 RASP 技术。通过在 Java 虚拟机（JVM）级别进行监控和防护，能够有效防止对 Java 应用程序的攻击。
@@ -61,7 +61,7 @@ agentmain：业务无需改动，无需重启，热插拔，动态升级。有�
 
 		<div class="post-header">
 			<h1 class="title">美团RASP大规模研发部署实践总结</h1>
-			<div class="meta">Posted at &mdash; Feb 19, 2024</div>
+			<div class="meta">Posted at &mdash; Feb 20, 2024</div>
 		</div>
 
 		<div class="markdown">
@@ -84,7 +84,7 @@ agentmain：业务无需改动，无需重启，热插拔，动态升级。有�
 <li>进程数量：单个主机上进程数量和生命周期差异大，有的几千个进程，生命周期有分钟级、年级等；</li>
 </ol>
 <p>问题的拆解思路依旧是抓住主要矛盾，以JDK版本为例，各个版本JDK的主机占比如下图1所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/146ad756e7f439ee154c6c37b436c200145359.png" alt="图1 公司JDK版本分布占比"></p>
+<p><img alt="图1 公司JDK版本分布占比" src="https://p0.meituan.net/travelcube/146ad756e7f439ee154c6c37b436c200145359.png"></p>
 <p>业务目标确定后，解决方案同样具体到某一类的JDK上。同样，在发布环境、Web中间件的差异上，对RASP也有了更多的兼容要求。</p>
 <h4 id="对业务性能影响大">对业务性能影响大</h4>
 <p><code>agentmain</code>的动态注入机制，对JVM的影响是不可规避的。影响大小可以从与其他安全防护产品的部署位置看出，下图2是常见的基础安全防护产品：WAF、HIDS和RASP，他们与业务的隔离方式有以下几类：</p>
@@ -93,31 +93,31 @@ agentmain：业务无需改动，无需重启，热插拔，动态升级。有�
 <li>进程（容器）隔离</li>
 <li>无隔离（或者类加载器隔离）</li>
 </ol>
-<p><img src="https://p0.meituan.net/travelcube/75a7c71de09f552374a2f4ce4328b910189182.png" alt="图2 主机安全防护产品与业务的隔离等级"></p>
+<p><img alt="图2 主机安全防护产品与业务的隔离等级" src="https://p0.meituan.net/travelcube/75a7c71de09f552374a2f4ce4328b910189182.png"></p>
 <p>与其他的安全产品相比，如网络应用防火墙（WAF）和主机入侵检测系统（HIDS），RASP与业务部署在同一Java虚拟机（JVM），其隔离级别是最低的。这就意味着，当RASP自身出现BUG或者与业务不兼容时，对业务造成直接影响。RASP 一旦出现故障那至少是S4级别（核心功能受影如资损、客诉，且预判5分钟无法恢复）。从业务指标上分为cpu和执行耗时，执行耗时方面主要是对服务的TP9999影响较大，而CPU方面出现<code>cpu.busy</code>指标抖动情况。对于业务的指标影响，有以下几种。</p>
 <h5 id="运行时注入cpubusy指标突增">运行时注入cpu.busy指标突增</h5>
 <p>下图3为特殊情况下运行时注入<code>cpu.busy</code>指标抖动情况，在RASP注入时间内（CPU分钟级别采样），Java 进程的CPU从0%飙升到50%，然后又恢复。如果RASP注入之前Java进程的CPU已经很高了，注入时CPU会直接打满（注入前后10分钟）。</p>
-<p><img src="https://p0.meituan.net/travelcube/9db83dae43d7a8c6e0a15d50f13610bb154102.png" alt="图3 运行时注入cpu.busy指标抖动情况"></p>
+<p><img alt="图3 运行时注入cpu.busy指标抖动情况" src="https://p0.meituan.net/travelcube/9db83dae43d7a8c6e0a15d50f13610bb154102.png"></p>
 <h5 id="运行时注入tp9999指标">运行时注入TP9999指标</h5>
 <p>下图4为运行时注入<code>TP9999</code>指标抖动情况。单机维度，注入时<code>TP9999</code>从<strong>5ms飙升到1000ms</strong>，大幅度增加，<code>TP9999</code>出现明显的尖刺，对响应时间敏感的服务影响特别大。</p>
-<p><img src="https://p0.meituan.net/travelcube/b258c67260ef8c1bf242a9389baf6bb2121540.png" alt="图4 运行时注入TP9999指标抖动情况"></p>
+<p><img alt="图4 运行时注入TP9999指标抖动情况" src="https://p0.meituan.net/travelcube/b258c67260ef8c1bf242a9389baf6bb2121540.png"></p>
 <h5 id="启动时性能差与检测逻辑执行耗时长">启动时性能差与检测逻辑执行耗时长</h5>
 <p>在RASP启动时，大量请求进入到检测流程中，此时RASP检测代码没有完成预热，检测方法处于字节码解释运行模式，执行效率低，从而导致启动时TP线高。如果正常的请求检测耗时过长，将严重影响业务的TP线，甚至导致请求超时。 在RASP运行过程中，因为检测引擎执行耗时长也会导致业务超时。</p>
 <h4 id="升级变更难">升级变更难</h4>
 <p>由于原生Java Agent的限制问题，JVM一旦加载了Agent，就无法进行更新，只能等待JVM重启。</p>
-<p><img src="https://p0.meituan.net/travelcube/ef0070bd8a5d1a0698e2213632128e31348656.png" alt="图5 运行时Java Agent的实现原理与升级过程"></p>
+<p><img alt="图5 运行时Java Agent的实现原理与升级过程" src="https://p0.meituan.net/travelcube/ef0070bd8a5d1a0698e2213632128e31348656.png"></p>
 <p>图5左边的图展示了一个典型的<strong>运行时Java Agent</strong>的实现原理。在这个过程中，守护进程（这里指主动发起Attach的进程RASP Daemon）会attach到目标JVM上，然后RASP Agent的jar包会被JVM的<code>AppClassLoader</code>加载，接着Agent就会初始化并开始运行。然而，由于JVM类加载机制的限制，同一个类（Agent入口类）无法被<code>AppClassLoader</code>加载器加载两次。使用新的Agent jar包重新attach，即使attach成功，也不会加载新的类。因此想要增加新的功能或者进行bug修复，就必须等待业务进程重启后才能实现。</p>
 <p>这也就是说，RASP功能的升级完全依赖于业务进程的重启时机。然而，我们发现线上有些业务，如大数据服务的核心节点，其重启时间可能长达半年甚至更长时间，这就使得RASP的功能升级过程变得异常漫长。由于服务长期未重启，RASP版本无法进行更新。影响主要有2个方面，一方面长期未重启服务的RASP版本低于最新版本，RASP Daemon需要兼容多种RASP Agent版本，这无疑提升了代码工程向下兼容的工作量和稳定性；另一方面，未重启的服务最新的hook点无法生效，也带来一定的安全风险。</p>
 <h4 id="热更新是强诉求">热更新是强诉求</h4>
 <p>在美团内部，安全部门需要不对业务有过多打扰的前提下保障业务安全运行。大规模重启服务风险高，不具备可实施性。如果遇到紧急漏洞或者重大bug时，这种升级难的问题尤为突出。升级难的问题是RASP在部署中遇到的第一个重大问题。</p>
 <h4 id="监控难">监控难</h4>
 <p>当JVM加载Java Agent后，由于其运行在业务的同一层面，必然会对业务产生一定的影响。这些影响可能包括CPU使用率飙高、<code>TP9999</code>线的波动，甚至可能出现故障如内存泄漏、磁盘打满、核心转储（Core Dump）、触发JDK Bug、线程死锁、GC时间变长等等各种问题。业务反馈的线上各类问题的占比如下图6所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/7ff497a180def6baef5b61f7d1fb0992171713.png" alt="图6 RASP各类故障占比"></p>
+<p><img alt="图6 RASP各类故障占比" src="https://p0.meituan.net/travelcube/7ff497a180def6baef5b61f7d1fb0992171713.png"></p>
 <p>由于RASP接入对用户无感知，一旦出现这些问题，业务方定位问题的源头往往耗费大量时间。业务需要对业务状态日志、GC日志、系统变更日志等进行详细的排查，以确定问题的根因。在实际的运行过程中，往往是业务最先反馈RASP影响，而RASP不能做到对故障及时感知与处理。</p>
 <h3 id="rasp架构介绍">RASP架构介绍</h3>
 <p>美团 RASP 利用 Java agent 和<code>instrumentation</code>技术，通过 ASM 修改类字节码，实时分析检测命令执行、文件访问、反序列化、JNDI、SQL注入等入侵行为。它最初是从开源项目<a href="https://github.com/btraceio/btrace">btrace</a> 演化而来，后使用Golang重写了btrace的进程注入的功能，即架构中的 RASP Daemon 部分，在 Java Agent 端也参考了一些开源项目和公司内部的性能诊断工具。经过多年的迭代，RASP 逐渐形成目前的架构。</p>
 <p>通过RASP管理端进行主机维度的配置下发，将最新配置更新应用到 RASP Daemon。日志收集和jar包下载使用公司基础组件，通过这些组件的协同工作，实现对 RASP 部署过程的管理，包括支持灰度发布、配置回滚、降级和一键关闭操作。下图7为 RASP 的配置分发流程。</p>
-<p><img src="https://p0.meituan.net/travelcube/7a0d0a32b27c2ff4fcae33c87bf5e791153367.png" alt="图7 RASP的配置分发流程"></p>
+<p><img alt="图7 RASP的配置分发流程" src="https://p0.meituan.net/travelcube/7a0d0a32b27c2ff4fcae33c87bf5e791153367.png"></p>
 <h2 id="解决方案">解决方案</h2>
 <h3 id="灰度部署方式和复杂场景的兼容">灰度部署方式和复杂场景的兼容</h3>
 <h4 id="rasp-启动方式">RASP 启动方式</h4>
@@ -160,9 +160,9 @@ agentmain：业务无需改动，无需重启，热插拔，动态升级。有�
 <p>插件热更新是一项具有挑战性的技术，也是RASP建设初期要求具备的核心特征之一。由于美团拥有上百万个Java服务节点，一般的Java Agent安装和升级都需要重启Java进程，对于如此庞大规模的服务来说，这并非易事。在超大规模下，如果依赖业务重新发布的方式来使RASP生效，需要等待所有的服务重启一遍。<strong>RASP项目没有权限重启业务</strong>。因此，对于RASP来说，插件热更新是至关重要的。</p>
 <p>在最初的版本中，当RASP注入到业务中后，如果需要更新功能（如修改策略或hook点），仍然需要重新启动Java进程。如果业务不重启，之前版本的RASP会残留在进程中无法卸载，而新版本需要兼容这些无法卸载的部分。这导致线上存在多个不同版本的RASP，不同版本之间的兼容性几乎无法实现，这种方式是行不通的。</p>
 <p>因此，RASP借鉴了Tomcat的类加载器架构，将功能分为两类：第一类是需要频繁迭代的功能，如hook点、资源监控、检测引擎、通信等；第二类是几乎不需要改动的部分，如插件加载和初始化部分。将第一类功能抽取出来，形成一个单独的插件包（RASP Plugin），插件包由自定义类加载器加载，使得这部分具备运行时更新的能力。而RASP Agent引导包仅保留几个类，负责初始化插件jar包。下图8展示了拆分前后的对比：</p>
-<p><img src="https://p0.meituan.net/travelcube/7c3d16c5933494f10bf785aba30fe24b1369113.png" alt="图8 mt-rasp jar包拆分前后对比"></p>
+<p><img alt="图8 mt-rasp jar包拆分前后对比" src="https://p0.meituan.net/travelcube/7c3d16c5933494f10bf785aba30fe24b1369113.png"></p>
 <p>对于拆分后的架构，首次注入 RASP Agent 加载V1.0的插件，在需要对插件进行更新时，清除RASP PluginV1.0对象的引用和<code>PluginClassLoader</code>对象，然后创建新的<code>PluginClassLoader</code>实例重新加载并初始化V1.1版本插件，从而实现插件的卸载与热更新。上面拆分方案实现依靠自定义RASP类加载器，RASP的类加载器层次结构（agentmain）如下图9所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/a482a765b23d7aa6bfb3ff66d75f2f76394001.png" alt="图9 RASP的类加载器层次结构"></p>
+<p><img alt="图9 RASP的类加载器层次结构" src="https://p0.meituan.net/travelcube/a482a765b23d7aa6bfb3ff66d75f2f76394001.png"></p>
 <p>从顶层类加载器开始依次说明RASP包的功能和所属的类加载器。</p>
 <ul>
 <li>rasp-boot.jar：定义全局变量，能够被所有类访问到，使用<code>BootstrapClasLoader</code>加载；</li>
@@ -181,17 +181,17 @@ agentmain：业务无需改动，无需重启，热插拔，动态升级。有�
 </span></span><span style="display:flex;"><span>Can-Retransform-Classes: true
 </span></span><span style="display:flex;"><span>Can-Set-Native-Method-Prefix: true
 </span></span></code></pre></div><p>为了解决运行时CPU飙高问题，我们引入空的<code>premain</code>包（premain v1.0）（仅开启上面的字节码转换的开关<code>Can-Redefine-Classes</code>，无任何逻辑，也不修改字节码），在应用启动前加载，该方案取得较大优化效果。因为无任何代码，代码兼容性风险极小（并不是没有），因此能快速上线解决CPU飙高问题。以某个业务的主机为例子，在优化前后的<code>cpu.busy</code>指标如下图10所示（注入前后10分钟）。</p>
-<p><img src="https://p0.meituan.net/travelcube/ad32739bff391ef3bb82eb8f0ec55a97154252.png" alt="图10 cpu.busy指标优化前后对比"></p>
+<p><img alt="图10 cpu.busy指标优化前后对比" src="https://p0.meituan.net/travelcube/ad32739bff391ef3bb82eb8f0ec55a97154252.png"></p>
 <p>图10中红色为优化前的<code>cpu.busy</code>指标，优化前即使注入前系统负载很低（4核8G，cpu.busy &lt;2%），注入瞬间CPU依然飙升很高（50%）；蓝色为优化后的<code>cpu.busy</code>指标，优化后cpu.busy曲线较平滑，无明显尖刺。</p>
 <h4 id="premain-二期方案">premain 二期方案</h4>
 <p>采用<code>premain</code>一期方案的原因是代码足够简单，几乎没有兼容性问题，因此能够快速大规模部署解决棘手的cpu抖动问题，上线效果较好。但是大部分服务虽然CPU不飙高了，但是还有少部分的服务TP9999指标依然影响较大。</p>
 <h5 id="修改字节码tp9999线升高分析">修改字节码TP9999线升高分析</h5>
 <p><code>premain</code>一期方案主要用来快速解决<code>cpu.busy</code>抖动问题，但是对于性能比较敏感（如tp9999 &lt; 50ms）的业务，运行时字节码修改不可避免的造成STW，从而导致TP9999 线升高。因为字节码修改时需要进入JVM的safepoint，执行字节码转换的方法<a href="https://github.com/openjdk/jdk/blob/jdk-11%2B28/src/hotspot/share/prims/jvmtiRedefineClasses.cpp">VM_RedefineClasses::doit</a> 会导致应用短暂地暂停响应，这部分代码执行慢就会影响应用<code>TP9999</code> 。大批量修改字节码测得火焰图如下图11所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/d110ad8110c0d717b01463c5b402d0be971408.png" alt="图11 批量字节码转换时的Java进程火焰图"></p>
+<p><img alt="图11 批量字节码转换时的Java进程火焰图" src="https://p0.meituan.net/travelcube/d110ad8110c0d717b01463c5b402d0be971408.png"></p>
 <p>从火焰图11看出，<code>RedefineClasses</code> 耗时主要在<code>VM_RedefineClasses::AdjustCpoolCacheAndVtable::do_klass</code> ，hotspot JDK官方也有类似的<a href="https://bugs.openjdk.org/browse/JDK-8046246">issue</a> 。转换一个类的主要耗时在<code>redefine_single_class</code>方法，初步测试耗时占比在40%～80% 之间，并且一次转换类越多，占STW总耗时越大。</p>
 <h5 id="类转换stw时间与服务负载qps关系">类转换STW时间与服务负载（QPS）关系</h5>
 <p>在同一服务（硬件配置8核8G）测试了修改类的个数、服务负载和STW时间的关系如下图12所示：</p>
-<p><img src="https://p0.meituan.net/travelcube/1877431b1dab5e5989dde5ee05772c09122066.png" alt="图12 类转换STW时间与服务QPS、转换类数量的关系"></p>
+<p><img alt="图12 类转换STW时间与服务QPS、转换类数量的关系" src="https://p0.meituan.net/travelcube/1877431b1dab5e5989dde5ee05772c09122066.png"></p>
 <p>从上面数据可以对比看出：</p>
 <ol>
 <li>业务请求QPS为0时，STW时间并不为0；</li>
@@ -202,9 +202,9 @@ agentmain：业务无需改动，无需重启，热插拔，动态升级。有�
 <p>一种可行的方案是将字节码转换的逻辑前移到JVM启动前（即业务没有流量或者主动摘除流量），并且尽量避免有请求时大批量的回滚/修改字节码，能够在一定程度上避开或者缓解STW影响业务请求响应时间。</p>
 <h5 id="premain修改字节码">premain修改字节码</h5>
 <p>对于高频率调用的方法如http body参数读取、<code>sql.execute</code>等，使用<code>premain</code>修改字节码插入RASP检测逻辑，<code>premain</code> agent做到轻量级。对RASP的架构做出相应修改，新增<code>rasp-premain.jar</code>，让服务启动前进行加载并初始化，将字节码的转换逻辑前置到启动时，如下图13所示，蓝色jar包为新增的<code>rasp-premain.jar</code>。</p>
-<p><img src="https://p0.meituan.net/travelcube/75c9bd46575463d450f748d012f05838434041.png" alt="图13 RASP类加载器增加premain agent"></p>
+<p><img alt="图13 RASP类加载器增加premain agent" src="https://p0.meituan.net/travelcube/75c9bd46575463d450f748d012f05838434041.png"></p>
 <p>为了最大程度复用之前的系统架构，<code>premain</code>加载后虽然字节码已经被转换，但 RASP的功能在逻辑上是关闭的，需要等到 <code>agentmain</code> 注入之后打开检测开关。<code>premain</code> 只做字节码转换，没有日志和通信等功能，不能单独工作。如图14所示，优化前后TP9999指标有较明显改善。</p>
-<p><img src="https://p1.meituan.net/travelcube/e631983f125316a63e2f5d9c7affa380125339.png" alt="图14 优化前后注入时TP9999指标"></p>
+<p><img alt="图14 优化前后注入时TP9999指标" src="https://p1.meituan.net/travelcube/e631983f125316a63e2f5d9c7affa380125339.png"></p>
 <h3 id="运行时性能优化与整体指标">运行时性能优化与整体指标</h3>
 <ul>
 <li>rasp加载之后的流量预热</li>
@@ -233,7 +233,7 @@ agentmain：业务无需改动，无需重启，热插拔，动态升级。有�
 <li>进程层面：Java进程CPU、内存、coredump、守护进程状态等</li>
 <li>系统维度：系统CPU、系统内存、系统磁盘空间、网络等</li>
 </ul>
-<p><img src="https://p1.meituan.net/travelcube/bbb1a9860d397fd6389c2595a7219054722757.png" alt="图15 RASP监控的指标分布"></p>
+<p><img alt="图15 RASP监控的指标分布" src="https://p1.meituan.net/travelcube/bbb1a9860d397fd6389c2595a7219054722757.png"></p>
 <p>系统指标和进程指标对于Golang来说很容易获取，相关api较多。这里仅以JVM指标元空间使用率（MetaSpace）的检测为例子说明。RASP Daemon 执行attach获取目前JVM的最大元空间（<code>MaxMetaSpaceSize</code>）指标，然后读取 <code>/tmp/hsperfdata_${user}/pid</code> 文件解析元空间的占用（<code>usedMetaspaceSize</code>参数在jvm里面是<code>sun.gc.metaspace.used</code>），计算出元空间的占用比例和剩余空间，当剩余空间不足时，禁止RASP Agent注入，防止RASP成为压垮业务的最后一根稻草。</p>
 <h3 id="性能影响">性能影响</h3>
 <p>测试配置: 8核/8G/150G</p>
@@ -380,7 +380,7 @@ agentmain：业务无需改动，无需重启，热插拔，动态升级。有�
 <p>在RASP Plugin中定义了检测脚本需要实现的接口，脚本的实现类由RASP Daemon下载到磁盘上；RASP Agent定时检测脚本文件是否更新，如果脚本更新，使用新的类加载器加载磁盘上的class文件，并创建实例。</p>
 <h4 id="阻断与热修复">阻断与热修复</h4>
 <p>在RASP中，通常会在hook方法的执行之前（before）、返回（return）和抛出异常处（throw）增加检测逻辑。RASP通过使用ASM字节码框架，在方法的before、return和throw处织入检测逻辑的字节码（下图16黄色框）。</p>
-<p><img src="https://p0.meituan.net/travelcube/b3a68dbc9564a3a205a3db5eb88ab3f7403012.png" alt="图16 RASP阻断热修复控制流程"></p>
+<p><img alt="图16 RASP阻断热修复控制流程" src="https://p0.meituan.net/travelcube/b3a68dbc9564a3a205a3db5eb88ab3f7403012.png"></p>
 <p>这里以在方法返回之前增加hook逻辑为例子说明阻断/热修复的流程：</p>
 <ol>
 <li>字节码插桩：使用ASM工具识别方法中的返回指令如（return、areturn等），在返回指令之前插入RASP的检测方法的字节码，使用<code>instrument</code>的<code>restransform</code> api将修改后的字节码替换原来的字节码。</li>

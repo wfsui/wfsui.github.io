@@ -22,8 +22,8 @@
 “嗯，好了，表格显示没问题了，但是，登录人的姓名没取到啊，是不是Sesstion获取有问题？”" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2024-02-19T02:40:13+00:00" />
-<meta property="article:modified_time" content="2024-02-19T02:40:13+00:00" />
+<meta property="article:published_time" content="2024-02-20T02:39:59+00:00" />
+<meta property="article:modified_time" content="2024-02-20T02:39:59+00:00" />
 
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Java动态追踪技术探究"/>
 <meta name="twitter:description" content="引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：
@@ -87,7 +87,7 @@
 
 		<div class="post-header">
 			<h1 class="title">Java动态追踪技术探究</h1>
-			<div class="meta">Posted at &mdash; Feb 19, 2024</div>
+			<div class="meta">Posted at &mdash; Feb 20, 2024</div>
 		</div>
 
 		<div class="markdown">
@@ -113,7 +113,7 @@
 <p>……</p>
 <p>在一遍一遍修改代码刷新浏览器页面重试的时候，我们自己也许并没有注意到一件很酷的事情：我们修改完代码，居然只是简单地刷新一遍浏览器页面，修改就生效了，整个过程并没有重启JVM。按照我们的常识，Java程序一般都是在启动时加载类文件，如果都像JSP这样修改完代码，不用重启就生效的话，那文章开头的问题就可以解决了啊：Java文件中加一段日志打印的代码，不重启就生效，既不破坏现场，又可以定位问题。忍不住试一试：修改、编译、替换class文件。额，不行，新改的代码并没有生效。那为什么偏偏JSP可以呢？让我们先来看看JSP的运行原理。</p>
 <p>当我们打开浏览器，请求访问一个JSP文件的时候，整个过程是这样的:</p>
-<p><img src="https://p1.meituan.net/travelcube/7fceed5036a40f4bd22ccf86629069c0118151.jpg" alt="JSP文件处理过程"></p>
+<p><img alt="JSP文件处理过程" src="https://p1.meituan.net/travelcube/7fceed5036a40f4bd22ccf86629069c0118151.jpg"></p>
 <p>JSP文件修改过后，之所以能及时生效，是因为Web容器（Tomcat）会检查请求的JSP文件是否被更改过。如果发生过更改，那么就将JSP文件重新解析翻译成一个新的Sevlet类，并加载到JVM中。之后的请求，都会由这个新的Servet来处理。这里有个问题，根据Java的类加载机制，在同一个ClassLoader中，类是不允许重复的。为了绕开这个限制，Web容器每次都会创建一个新的ClassLoader实例，来加载新编译的Servlet类。之后的请求都会由这个新的Servlet来处理，这样就实现了新旧JSP的切换。</p>
 <p>HTTP服务是无状态的，所以JSP的场景基本上都是一次性消费，这种通过创建新的ClassLoader来“替换”class的做法行得通，但是对于其他应用，比如Spring框架，即便这样做了，对象多数是单例，对于内存中已经创建好的对象，我们无法通过这种创建新的ClassLoader实例的方法来修改对象行为。</p>
 <p>我就是想不重启应用加个日志打印，就这么难吗？</p>
@@ -275,7 +275,7 @@
 <li>Agent：基于Java的Attach Api，Agent可以动态附着到一个运行的JVM上，然后开启一个BTrace Server，接收client发过来的BTrace脚本；解析脚本，然后根据脚本中的规则找到要修改的类；修改字节码后，调用Java Instrument的reTransform接口，完成对对象行为的修改并使之生效。</li>
 </ol>
 <p>整个BTrace的架构大致如下：</p>
-<p><img src="https://p1.meituan.net/travelcube/25f19ea854450ce3964d20ae778f621a178594.jpg" alt="BTrace工作流程"></p>
+<p><img alt="BTrace工作流程" src="https://p1.meituan.net/travelcube/25f19ea854450ce3964d20ae778f621a178594.jpg"></p>
 <p>BTrace最终借Instruments实现class的替换。如上文所说，出于安全考虑，Instruments在使用上存在诸多的限制，BTrace也不例外。BTrace对JVM来说是“只读的”，因此BTrace脚本的限制如下：</p>
 <ol>
 <li>不允许创建对象</li>

@@ -101,7 +101,7 @@
 <li><strong>集群调度系统的可靠性和单集群规模</strong>。单集群规模越大，则可调度范围则越大，但对集群的可靠性挑战也越大，因为爆炸半径会增加，出现故障的影响也越大。单集群规模较小的情况下，虽然可以提升调度并发度，但可调度范围变小，调度失败概率变高，且集群管理复杂度变大。</li>
 </ol>
 <p>目前，业内的集群调度系统按照架构区分，可以分为单体式调度器、两级调度器、共享状态调度器、分布式调度器和混合调度器这五种不同架构（见下图1），都是根据各自的场景需求做了不同的选择，没有绝对的好与坏。</p>
-<p><img src="https://p0.meituan.net/travelcube/1975342073d7cbd76860ce71ab6d05cd107691.png" alt="图1 集群调度系统架构分类（摘自Malte Schwarzkopf - The evolution of cluster scheduler architectures）"></p>
+<p><img alt="图1 集群调度系统架构分类（摘自Malte Schwarzkopf - The evolution of cluster scheduler architectures）" src="https://p0.meituan.net/travelcube/1975342073d7cbd76860ce71ab6d05cd107691.png"></p>
 <ul>
 <li><strong>单体式调度器</strong>使用复杂的调度算法结合集群的全局信息，计算出高质量的放置点，不过延迟较高。如Google的Borg系统、开源的Kubernetes系统。</li>
 <li><strong>两级调度器</strong>通过将资源调度和作业调度分离，解决单体式调度器的局限性。两级调度器允许根据特定的应用做不同的作业调度逻辑，且同时保持了不同作业之间共享集群资源的特性，可是无法实现高优先级应用的抢占。具有代表性的系统是Apache Mesos和Hadoop YARN。</li>
@@ -123,7 +123,7 @@
 <li><strong>降成本</strong>：深度优化调度模型，打通集群调度和单机调度链路。从资源静态调度转向资源动态调度，引入离线业务容器，形成自由竞争与强控结合，在保障高优业务应用服务质量的前提下，提升资源使用率，降低IT成本。</li>
 <li><strong>提效率</strong>：支持用户自助调整调度策略，满足业务个性化需求，积极拥抱云原生领域，为PaaS组件提供包括编排、调度、跨集群、高可用等核心能力，提升运维效率。</li>
 </ul>
-<p><img src="https://p0.meituan.net/travelcube/6e002ce8a81bd813118c8920beface6f866073.png" alt="图2 美团集群调度系统架构图"></p>
+<p><img alt="图2 美团集群调度系统架构图" src="https://p0.meituan.net/travelcube/6e002ce8a81bd813118c8920beface6f866073.png"></p>
 <p>最终，美团集群调度系统架构按照领域划分为三层（见上图2），调度平台层、调度策略层、调度引擎层：</p>
 <ul>
 <li>平台层负责业务接入，打通美团基础设施，封装原生接口和逻辑，提供容器管理接口（扩容、更新、重启、缩容）等功能。</li>
@@ -140,7 +140,7 @@
 <li>通过自研的动态负载调节系统和跨集群重调度系统，实现了集群调度和单机调度链路的联动，根据业务分级实现了不同资源池的服务质量保障策略。</li>
 <li>经过三版迭代，实现了自有集群联邦服务，较好地解决了资源预占和状态数据同步问题，提升了集群间的调度并发度，实现了计算分离、集群映射、负载均衡和跨集群编排控制（见下图3）。</li>
 </ul>
-<p><img src="https://p0.meituan.net/travelcube/1c29afb5502e947408629b2b852b29d11982490.png" alt="图3 集群联邦V3版本架构"></p>
+<p><img alt="图3 集群联邦V3版本架构" src="https://p0.meituan.net/travelcube/1c29afb5502e947408629b2b852b29d11982490.png"></p>
 <p>集群联邦服务第三版本（图3）按照模块拆分为Proxy层和Worker层，独立部署：</p>
 <ul>
 <li>Proxy层会综合集群状态的因子及权重选择合适的集群进行调度，并选择合适的Worker分发请求。Proxy模块使用etcd做服务注册、选主和发现，Leader节点负责调度时预占任务，所有节点都能负责查询任务。</li>
@@ -156,7 +156,7 @@
 <li><strong>竖立重点业务标杆</strong>，与几个重要的PaaS组件深入合作，针对用户的痛点如Sidecar升级管理、Operator灰度迭代、报警分离做快速优化，满足用户的诉求。</li>
 <li><strong>持续改进产品体验</strong>，持续优化Kubernetes引擎，除了支持用户使用自定义Operator之外，也提供了通用的调度和编排框架（见图4），帮助用户以更低的成本接入MKE，获得技术红利。</li>
 </ul>
-<p><img src="https://p0.meituan.net/travelcube/4d3cb1c9568b9e4aba1c65672515dad2126470.png" alt="图4 美团Kubernetes引擎服务调度和编排框架"></p>
+<p><img alt="图4 美团Kubernetes引擎服务调度和编排框架" src="https://p0.meituan.net/travelcube/4d3cb1c9568b9e4aba1c65672515dad2126470.png"></p>
 <p>在我们推进云原生落地过程中，一个广泛被关注的问题是：基于Kubernetes云原生方式来管理有状态应用，相比于之前自己打造管理平台有什么区别？</p>
 <p>对于这个问题，需要从问题根源——可运维性考虑：</p>
 <ul>

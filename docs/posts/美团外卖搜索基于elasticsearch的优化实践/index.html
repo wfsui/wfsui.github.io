@@ -68,7 +68,7 @@
 <p>美团在外卖搜索业务场景中大规模地使用了 Elasticsearch 作为底层检索引擎。其在过去几年很好地支持了外卖每天十亿以上的检索流量。然而随着供给与数据量的急剧增长，业务检索耗时与 CPU 负载也随之上涨。通过分析我们发现，当前检索的性能热点主要集中在倒排链的检索与合并流程中。针对这个问题，我们基于 Run-length Encoding（RLE）[1] 技术设计实现了一套高效的倒排索引，使倒排链合并时间（TP99）降低了 96%。我们将这一索引能力开发成了一款通用插件集成到 Elasticsearch 中，使得 Elasticsearch 的检索链路时延（TP99）降低了 84%。</p>
 <h2 id="2-背景">2. 背景</h2>
 <p>当前，外卖搜索业务检索引擎主要为 Elasticsearch，其业务特点是具有较强的 Location Based Service（LBS） 依赖，即用户所能点餐的商家，是由商家配送范围决定的。对于每一个商家的配送范围，大多采用多组电子围栏进行配送距离的圈定，一个商家存在多组电子围栏，并且随着业务的变化会动态选择不同的配送范围，电子围栏示意图如下：</p>
-<p><img src="https://p0.meituan.net/travelcube/bf14c48c74be9fb80fbe8094460ca5a1246919.jpg" alt="图1 电子围栏示意图"></p>
+<p><img alt="图1 电子围栏示意图" src="https://p0.meituan.net/travelcube/bf14c48c74be9fb80fbe8094460ca5a1246919.jpg"></p>
 <p>考虑到商家配送区域动态变更带来的问题，我们没有使用 Geo Polygon[2] 的方式进行检索，而是通过上游一组 R-tree 服务判定可配送的商家列表来进行外卖搜索。因此，LBS 场景下的一次商品检索，可以转化为如下的一次 Elasticsearch 搜索请求：</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>POST food/_search
 </span></span><span style="display:flex;"><span>{
@@ -113,7 +113,7 @@
 </span></span><span style="display:flex;"><span>docIdSet.build()<span style="color:#586e75">//合并，排序，最终生成DocIdSetBuilder，对应火焰图最后一段。</span>
 </span></span></code></pre></div><p>假设我们有 M 个 Term，每个 Term 对应倒排链的平均长度为 K，那么合并这 M 个倒排链的时间复杂度为：O(K * M + log(K * M))。 可以看出倒排链合并的时间复杂度与 Terms 的数量 M 呈线性相关。在我们的场景下，假设一个商家平均有一千个商品，一次搜索请求需要对一万个商家进行检索，那么最终需要合并一千万个商品，即循环执行一千万次，导致这一问题被放大至无法被忽略的程度。</p>
 <p>我们也针对当前的系统做了大量的调研及分析，通过美团内部的 JVM Profile 系统得到 CPU 的火焰图，可以看到这一流程在 CPU 热点图中的反映也是如此：无论是查询倒排链、还是读取、合并倒排链都相当消耗资源，并且可以预见的是，在供给越来越多的情况下，这三个阶段的耗时还会持续增长。</p>
-<p><img src="https://p1.meituan.net/travelcube/819c06a71cf718c9284461b05acaff7b136420.jpg" alt="图2 profile 火焰图"></p>
+<p><img alt="图2 profile 火焰图" src="https://p1.meituan.net/travelcube/819c06a71cf718c9284461b05acaff7b136420.jpg"></p>
 <p>可以明确，我们需要针对倒排链查询、倒排链合并这两个问题予以优化。</p>
 <h2 id="4-技术探索与实践">4. 技术探索与实践</h2>
 <h3 id="41-倒排链查询优化">4.1 倒排链查询优化</h3>
@@ -198,12 +198,12 @@ Lucene 倒排链压缩存储在索引文件中，倒排链读取需要实时解�
 <p>当前 Elasticsearch 选择 RoaringBitMap 做为 Query Cache 的底层数据结构缓存倒排链，加快查询速率。</p>
 <p>RoaringBitmap 是一种压缩的位图，相较于常规的压缩位图能提供更好的压缩，在稀疏数据的场景下空间更有优势。以存放 Integer 为例，Roaring Bitmap 会对存入的数据进行分桶，每个桶都有自己对应的 Container。在存入一个32位的整数时，它会把整数划分为高 16 位和低 16 位，其中高 16 位决定该数据需要被分至哪个桶，我们只需要存储这个数据剩余的低 16 位，将低 16 位存储到 Container 中，若当前桶不存在数据，直接存储 null 节省空间。 RoaringBitmap有不同的实现方式，下面以 Lucene 实现（RoaringDocIdSet）进行详细讲解：</p>
 <p>如原理图中所示，RoaringBitmap 中存在两种不同的 Container：Bitmap Container 和 Array Container。</p>
-<p><img src="https://p0.meituan.net/travelcube/7ff24d4d9d3c01be0dc96a73306d45d2446557.jpg" alt="图3 Elasticsearch中Roaringbitmap的示意图"></p>
+<p><img alt="图3 Elasticsearch中Roaringbitmap的示意图" src="https://p0.meituan.net/travelcube/7ff24d4d9d3c01be0dc96a73306d45d2446557.jpg"></p>
 <p>这两种 Container 分别对应不同的数据场景——若一个 Container 中的数据量小于 4096 个时，使用 Array Container 来存储。当 Array Container 中存放的数据量大于 4096 时，Roaring Bitmap 会将 Array Container 转为 Bitmap Container。即 Array Container 用于存放稀疏数据，而 Bitmap Container 用于存放稠密数据，这样做是为了充分利用空间。下图给出了随着容量增长 Array Container 和 Bitmap Container 的空间占用对比图，当元素个数达到 4096 后（每个元素占用 16 bit ），Array Container 的空间要大于 Bitmap Container。</p>
 <p>备注：Roaring Bitmap 可参考官方博客[4]。</p>
 <h4 id="423-index-sorting">4.2.3 Index Sorting</h4>
 <p>Elasticsearch 从 6.0 版本开始支持 Index Sorting[5] 功能，在索引阶段可以配置多个字段进行排序，调整索引数据组织方式，可以调整文档所对应的 Doc ID。以 city_id，poi_id 为例：</p>
-<p><img src="https://p0.meituan.net/travelcube/4330d8644a6bca683bc0bb161636aa8890987.jpg" alt="图4 Index Sorting 示意图"></p>
+<p><img alt="图4 Index Sorting 示意图" src="https://p0.meituan.net/travelcube/4330d8644a6bca683bc0bb161636aa8890987.jpg"></p>
 <p>如上示例所示：Index Sorting 会将给定的排序字段（如上图的 city_id 字段）的文档排序在一起，相同排序值的文档的 Doc ID 严格自增，对该字段建立倒排，那么其倒排链为自增数列。</p>
 <h3 id="43-基于-rle-的倒排格式设计">4.3 基于 RLE 的倒排格式设计</h3>
 <p>基于以上的背景知识以及当前 Elasticsearch/Lucene 的解决方案，可以明确目前有 2 个改造点需要考虑。</p>
@@ -236,7 +236,7 @@ Lucene 倒排链压缩存储在索引文件中，倒排链读取需要实时解�
 <p>在数组完全连续场景下中，对 32768 个 id (short) 进行存储，数组存储需要 64 kB，Bitmap 存储需要使用 4 kB，而 RLE 编码后直接存储仅需要 4 byte。在这一特性下，如果商家倒排链完全有序，那么商家的倒排链，可被压缩到最低仅需要两个整数即可表示。</p>
 <p>当然 RLE 并不适用所有情况，在目标序列完全不连续的场景下，如 [1, 3, 5, 7, … , M]，RLE 编码存储需要使用 2 * M byte的空间，比数组直接存储的空间效率差一倍。</p>
 <p>为了和 Elasticsearch 的实现保持一致，我们决定使用 RoaringBitMap 作为倒排存储的结构，以及中间结果合并的数据结构。针对 RoaringDocIdSet 我们进行了如下改造。</p>
-<p><img src="https://p0.meituan.net/travelcube/e9f850451ac6a400d3079b1efb114f9577606.jpg" alt="图5 倒排链Merge方式的演进"></p>
+<p><img alt="图5 倒排链Merge方式的演进" src="https://p0.meituan.net/travelcube/e9f850451ac6a400d3079b1efb114f9577606.jpg"></p>
 <h4 id="432-rle-container-的实现">4.3.2 RLE Container 的实现</h4>
 <p>在对商家 ID 字段开启 Index Sorting 之后，同商家的商品 ID 已经连续分布。那么对于商家字段的倒排链就是严格自增且无空洞的整数序列。我们采用RLE编码对倒排链进行编码存储。由于将倒排链编码为 [start1, length1, start2, length2, …]，更特殊的，在我们场景下，一个倒排链的表示为 [start, length]，RLE编码做到了对倒排链的极致压缩，假设倒排链为 [1, 2, …., 1000]， 用 ArrayContainer 存储，内存空间占用为 16 bit * 100 = 200 Byte, RLE 编码存储只需要 16 bit * 2 = 4 Byte。考虑到具体的场景分布，以及其他场景可能存在多段有序倒排的情况，我们最终选择了 [start1, length1, start2, length2, …] 这样的存储格式，且 [start, start + length] 之间两两互不重叠。</p>
 <p>对于多个商家的倒排合并流程，对于该格式的合并，我们并不需要对 M 个倒排链长度为 K 进行循环处理，这个问题转变为：如何对多组分段 [start, length] 进行排序，并将排序后的结果合并为一个数组。那么我们将原时间复杂度为 $O(K * M + log(K * M))$ 的合并流程，改造为复杂度为 O(M * logM) 的合并流程，大大降低了合并的计算耗时，减少了 CPU 的消耗。</p>
@@ -250,10 +250,10 @@ Lucene 倒排链压缩存储在索引文件中，倒排链读取需要实时解�
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>保存倒排链的过程与 RoaringDocIDSet 保持一致，在确认具体的 Container 的分桶时，我们额外使用一组索引记录所有有值的 bucket 的 location。</p>
 <p>下图是一组分别使用 RLE based RoaringDocIdSet 和 SparseRoaringDocIdSet 对 [846710, 100, 936858, 110] 倒排链（RLE 编码）进行存储的示意图：</p>
-<p><img src="https://p1.meituan.net/travelcube/d2e7040f31d4d8659b2aa90823e003ff64234.jpg" alt="图6 SparseRoaringDocIdSet 编排"></p>
+<p><img alt="图6 SparseRoaringDocIdSet 编排" src="https://p1.meituan.net/travelcube/d2e7040f31d4d8659b2aa90823e003ff64234.jpg"></p>
 <p>可以看到：在 SparseRoaringDocIdSet 实现下，所有不为空的 bucket 被紧密的排列在了一起，并在 index [] 中记录了其原始 bucket 的索引，这就避免了大量 bucket 被空置的情况。另外，在进行倒排链的合并时，就可以直接对紧密排列的 denseSet 进行遍历，并从 index [] 获得其对应的原始 bucket location，这就避免了大量的空置 bucket 在合并时带来的性能浪费。</p>
 <p>我们分别对以下4个场景进行了压测：原生的 TermInSetQuery 对倒排链的合并逻辑、基于 FixedBitSet 的批量合并、RLE based RoaringBitmap、RLE based Dense RoaringBitmap。对 10000 个平均长度为 100 的倒排链进行合并压测，压测结果如下：</p>
-<p><img src="https://p0.meituan.net/travelcube/3304506c9ca49351cb5d729b56e4aca5357226.png" alt="图7 倒排链Merge性能比对"></p>
+<p><img alt="图7 倒排链Merge性能比对" src="https://p0.meituan.net/travelcube/3304506c9ca49351cb5d729b56e4aca5357226.png"></p>
 <p>我们实现的 RLE based Dense RoaringBitmap，相比官方的基准实现耗时降低了 96%（TP99 13 ms 下降至 0.5 ms）。</p>
 <h3 id="44-功能集成">4.4 功能集成</h3>
 <p>至此，核心的倒排索引问题已经解决，后续主要为工程问题：如何在 Elasticsearch 系统中集成基于 RLE 的倒排格式。对于高吞吐高并发的C端在线场景，我们希望尽可能保障线上的稳定，对开源数据格式的兼容，保障前向的兼容，做到随时可降级。</p>
@@ -272,15 +272,15 @@ Lucene 倒排链压缩存储在索引文件中，倒排链读取需要实时解�
 <p>我们基于 Elasticsearch 的插件机制，生成一组新的 Query，实现了其 AbstractQueryBuilder，实现对 Query 的解析与改写，并将 Query 与 RLE 倒排进行关联，我们通过改写具体的检索实现，将整个链路集成到 Elasticsearch 中。</p>
 <h2 id="5-性能收益">5. 性能收益</h2>
 <p>对于 Elasticsearch 而言，一次检索分为这么几个阶段，可参考下图[8]。</p>
-<p><img src="https://p0.meituan.net/travelcube/a51ac82d3a5ebfb16c72a0638700df7819341.jpg" alt="图8 Elasticsearch的检索过程"></p>
+<p><img alt="图8 Elasticsearch的检索过程" src="https://p0.meituan.net/travelcube/a51ac82d3a5ebfb16c72a0638700df7819341.jpg"></p>
 <ol>
 <li>由协调节点进行请求的分发，发送到各个检索节点上。</li>
 <li>每个数据节点的各自进行检索，并返回检索结果给协调节点，这一段各个数据节点的耗时即“数据节点查询耗时”。</li>
 <li>协调节点等待所有数据节点的返回，协调节点选取 Top K 后进行 fetch 操作。1～3 步的完整耗时为“完整链路查询耗时”。</li>
 </ol>
 <p>我们将上述改动（Index Sorting + Dense Roaring Bitmap + RLE）上线到生产环境的商品索引后，性能如下：</p>
-<p><img src="https://p0.meituan.net/travelcube/72713288ebdc7628a82180fbf90b46b7256802.png" alt="图9 数据节点查询耗时"></p>
-<p><img src="https://p1.meituan.net/travelcube/0593081b48bd7be828571860b612c46a280950.png" alt="图10 完整链路查询耗时"></p>
+<p><img alt="图9 数据节点查询耗时" src="https://p0.meituan.net/travelcube/72713288ebdc7628a82180fbf90b46b7256802.png"></p>
+<p><img alt="图10 完整链路查询耗时" src="https://p1.meituan.net/travelcube/0593081b48bd7be828571860b612c46a280950.png"></p>
 <p>至此，我们成功将全链路的检索时延（TP99）降低了 84%（100 ms 下降至 16 ms），解决了外卖搜索的检索耗时问题，并且线上服务的 CPU 也大大降低。</p>
 <h2 id="6-总结与展望">6. 总结与展望</h2>
 <p>本文主要针对搜索业务场景中遇到的问题，进行问题分析、技术选型、压测、选择合适的解决方案、集成、灰度验证。我们最终实现了一套基于 RLE 倒排格式，作为一种新型的倒排格式，彻底解决了这个场景上的性能瓶颈，从分析至上线的流程长达数月。本文希望能提供一个思路，让其他同学在遇到 Elasticsearch 相关的性能问题时，也能遵循相同的路径，解决业务上的问题。</p>
@@ -293,7 +293,7 @@ Lucene 倒排链压缩存储在索引文件中，倒排链读取需要实时解�
 <li>明确问题后从索引、检索链路两侧进行分析，评估问题，进行多种解决方案的设计与尝试，通过 Java Microbenchmark Harness（JMH）代码基准测试工具，验证解决方案的有效性。</li>
 <li>集成验证最终效果。</li>
 </ol>
-<p><img src="https://p1.meituan.net/travelcube/938b6ff8b8c4a842dc5de70476726637110002.png" alt="图11 Kibana中的Search Profiler示例"></p>
+<p><img alt="图11 Kibana中的Search Profiler示例" src="https://p1.meituan.net/travelcube/938b6ff8b8c4a842dc5de70476726637110002.png"></p>
 <p>我们最终实现的关键点：</p>
 <ul>
 <li>使用哈希表来实现索引 Term 的精确查找，以此减少倒排链的查询与读取的时间。</li>

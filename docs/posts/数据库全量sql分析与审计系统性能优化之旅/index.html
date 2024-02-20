@@ -71,7 +71,7 @@ QPS 丢失率 CPU利用率 10368.72 1.03% 307.35% 17172.61 7.23% 599.90% 29005.5
 <p>数据库安全一直是美团信息安全团队和数据库团队非常注重的领域，但由于历史原因，对数据库的访问只具备采样审计能力，导致对于一些攻击事件无法快速地发现、定损和优化。安全团队根据历史经验，发现攻击访问数据库基本上都存在着某些特征，经常会使用一些特定SQL，我们希望通过对MySQL访问流量进行全量分析，识别出惯用SQL，在数据库安全性上做到有的放矢。</p>
 <h2 id="2-现状及挑战">2 现状及挑战</h2>
 <p>下图是采样MySQL审计系统的架构图，数据采集端基于pcap抓包方式实现，数据处理端选用美团大数据中心的日志接入方案。所有MySQL实例都部署了用于采集MySQL相关数据的rds-agent、日志收集的log-agent。rds-agent抓取到MySQL访问数据，通过log-agent上报到日志接收端，为了减少延时，上报端与接收端间做了同机房调度优化。日志接收端把数据写入到约定的Kafka中，安全团队通过Storm实时消费Kafka分析出攻击事件，并定期拉数据持久化到Hive中。</p>
-<p><img src="https://p1.meituan.net/travelcube/caa7ce5569917b36a61c00a9b5281e7536657.jpg" alt=""></p>
+<p><img src="https://p1.meituan.net/travelcube/caa7ce5569917b36a61c00a9b5281e7536657.jpg"></p>
 <p>我们发现，通常被攻击的都是一些核心MySQL集群。经统计发现，这些集群单机最大QPS的9995线约5万次左右。rds-agent作为MySQL机器上的一个寄生进程，为了宿主稳定性，资源控制也极为重要。为了评估rds-agent在高QPS下的表现，我们用Sysbench对MySQL进行压测，观察在不同QPS下rds-agent抓取的数据丢失率和CPU消耗情况，从下面的压测数据来看结果比较糟糕：</p>
 <table>
 <thead>
@@ -114,7 +114,7 @@ QPS 丢失率 CPU利用率 10368.72 1.03% 307.35% 17172.61 7.23% 599.90% 29005.5
 <p>下面主要介绍围绕丢失率与CPU消耗这一问题，我们对数据采集端在流程、调度、垃圾回收和协议方面做的分析与改进。</p>
 <h3 id="31-数据采集端介绍">3.1 数据采集端介绍</h3>
 <p>首先，简要介绍一下数据采集端rds-agent，它是一个MySQL实例上的进程，采用Go语言编写，基于开源的MysqlProbe的Agent改造。通过监听网卡上MySQL端口的流量，分析出客户端的访问时间、来源IP、用户名、SQL、目标数据库和目标IP等审计信息。下面是其架构图，主要分为5大功能模块：</p>
-<p><img src="https://p0.meituan.net/travelcube/2ce6cfc5c17933227451bbd6c127025725850.jpg" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/2ce6cfc5c17933227451bbd6c127025725850.jpg"></p>
 <p><strong>1. probe</strong></p>
 <p>probe意为探针，采用了gopacket作为抓包方案，它是谷歌开源的一个Go抓包库，封装了pcap。probe把抓取到原始的数据链路层帧封装成TCP层的数据包。通过变种的Fowler-Noll-Vo算法哈希源和目的IP port字段，快速实现把数据库连接打散到不同的worker中，该算法保证了同一连接的来包与回包的哈希值一样。</p>
 <p><strong>2. watcher</strong></p>
@@ -128,7 +128,7 @@ QPS 丢失率 CPU利用率 10368.72 1.03% 307.35% 17172.61 7.23% 599.90% 29005.5
 <p>负责数据上报逻辑，通过thrift协议将connStream解析出的审计数据上报给log-agent。</p>
 <h3 id="32-基础性能测试">3.2 基础性能测试</h3>
 <p>抓包库gopacket的性能直接决定了系统性能上限，为了探究问题是否出在gopacket上，我们编写了简易的tcp-client和tcp-server，单独对gopacket在数据流向图中涉及到的前三个步骤（如下图所示）进行了性能测试，从下面的测试结果数据上看，性能瓶颈点不在gopacket。</p>
-<p><img src="https://p0.meituan.net/travelcube/ff758c609d805e049167eba3147928cb24296.jpg" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/ff758c609d805e049167eba3147928cb24296.jpg"></p>
 <table>
 <thead>
 <tr>
@@ -149,11 +149,11 @@ QPS 丢失率 CPU利用率 10368.72 1.03% 307.35% 17172.61 7.23% 599.90% 29005.5
 </table>
 <h3 id="33-cpu画像分析">3.3 CPU画像分析</h3>
 <p>丢失率与CPU消耗二者密不可分，为了探究如此高CPU消耗的原因，我们用Go自带的pprof工具对进程的CPU消耗进行了画像分析，从下面火焰图的调用函数可以归纳出几个大头：SQL脱敏、解包、GC和Goroutine调度。下面主要介绍一下围绕它们做的优化工作。</p>
-<p><img src="https://p1.meituan.net/travelcube/7b19a1cb4c2a080e692444753518eb3a209388.png" alt=""></p>
+<p><img src="https://p1.meituan.net/travelcube/7b19a1cb4c2a080e692444753518eb3a209388.png"></p>
 <h3 id="34-脱敏分析及改进">3.4 脱敏分析及改进</h3>
 <p>因为SQL中可能包含敏感信息，出于安全考虑，rds-agent会对每一条SQL进行脱敏处理。</p>
 <p>脱敏操作使用了pingcap的SQL解析器对SQL进行模板化：即把SQL中的值全部替换成“?”来达到目的，该操作需要解析出SQL的抽象语法树，代价较高。当前只有采样和抓取特定SQL的需求，没有必要在解析阶段对每条SQL进行脱敏。这里在流程上进行了优化，把脱敏下沉到上报模块，只对最终发送出去的样本脱敏。</p>
-<p><img src="https://p0.meituan.net/travelcube/1268c6b231be832fbb5c852009b0e34817599.jpg" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/1268c6b231be832fbb5c852009b0e34817599.jpg"></p>
 <p>这个优化取得的效果如下：</p>
 <table>
 <thead>
@@ -181,7 +181,7 @@ QPS 丢失率 CPU利用率 10368.72 1.03% 307.35% 17172.61 7.23% 599.90% 29005.5
 </table>
 <h3 id="35-调度分析及改进">3.5 调度分析及改进</h3>
 <p>从下面的数据流向图可以看出整个链路比较长，容易出现性能瓶颈点。同时存在众多高频运行的Goroutine（红色部分），由于数量多，Go需要经常在这些Goroutine间进行调度切换，切换对于我们这种CPU密集型的程序来说无疑是一种负担。</p>
-<p><img src="https://p0.meituan.net/travelcube/8730656a9a6cf32487f7b7d89687351f31994.jpg" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/8730656a9a6cf32487f7b7d89687351f31994.jpg"></p>
 <p>针对该问题，我们做了如下优化：</p>
 <ol>
 <li><strong>缩短链路</strong>：分流、worker、解析SQL等模块合并成一个Goroutine解析器。</li>
@@ -218,7 +218,7 @@ QPS 丢失率 CPU利用率 10368.72 1.03% 307.35% 17172.61 7.23% 599.90% 29005.5
 <li><strong>池化</strong>：Go的标准库中提供了一个sync.Pool对象池，可通过复用对象来减少对象分配，从而降低GC压力。</li>
 <li><strong>手动管理内存</strong>：通过系统调用mmap直接向OS申请内存，绕过GC，实现内存的手动管理。</li>
 </ol>
-<p><img src="https://p0.meituan.net/travelcube/60d667eb0a25a43e6c86a6d1b590ff70133572.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/60d667eb0a25a43e6c86a6d1b590ff70133572.png"></p>
 <p>但是，方案2容易出现内存泄漏。从稳定性的角度考虑，我们最终选择了方案1来管理高频调用函数里创建的指针对象，这个优化取得的效果如下：</p>
 <table>
 <thead>
@@ -246,9 +246,9 @@ QPS 丢失率 CPU利用率 10368.72 1.03% 307.35% 17172.61 7.23% 599.90% 29005.5
 </table>
 <h3 id="37-解包分析及改进">3.7 解包分析及改进</h3>
 <p>MySQL是基于TCP协议之上的，在功能调试过程中，我们发现了很多空包。从下面的MySQL客户端-服务端数据的交互图可以看出：当客户端发送一条SQL命令，服务端响应结果，由于TCP的消息确认机制，客户端会发送一个空的ack包来确认消息，而且空包在整个流程中的比例较大，它们会穿透到解析环节，在高QPS下对于Goroutine调度和GC来说无疑是一个负担。</p>
-<p><img src="https://p0.meituan.net/travelcube/41aa060069e947d9c64a9da0fe11d9ab203394.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/41aa060069e947d9c64a9da0fe11d9ab203394.png"></p>
 <p>下图是MySQL数据包的唯一格式，通过分析，我们观察到以下特点：</p>
-<p><img src="https://p1.meituan.net/travelcube/e0e11c81e659e026b86d91199f8915d5281492.png" alt=""></p>
+<p><img src="https://p1.meituan.net/travelcube/e0e11c81e659e026b86d91199f8915d5281492.png"></p>
 <ol>
 <li>一个完整的MySQL数据包长度&gt;=4Byte</li>
 <li>客户端新发送命令的sequence id都是为0或者1</li>
@@ -284,9 +284,9 @@ QPS 丢失率 CPU利用率 10368.72 1.03% 307.35% 17172.61 7.23% 599.90% 29005.5
 <p>基于上述经验，我们对数据采集端进行功能代码重构，同时还进行一些其它优化。</p>
 <h2 id="4-最终成果">4 最终成果</h2>
 <p>下面是优化前后的数据对比，丢失率从最高60%下降到了0%, CPU消耗从最高占用6个核下降到了1个核。</p>
-<p><img src="https://p0.meituan.net/travelcube/057df79b4a6691fe1f85003c67e2f4d7172659.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/057df79b4a6691fe1f85003c67e2f4d7172659.png"></p>
 <p>为了探究抓包功能对MySQL性能损耗，我们用Sysbench做了一个性能对比测试。从下面的结果数据可以看出功能对MySQL的TPS、QPS和响应时间99线指标最高大约有6%的损耗。</p>
-<p><img src="https://p0.meituan.net/travelcube/f4544944af5e1dd25e867a2724af0ddf483168.png" alt=""></p>
+<p><img src="https://p0.meituan.net/travelcube/f4544944af5e1dd25e867a2724af0ddf483168.png"></p>
 <h2 id="5-未来规划">5 未来规划</h2>
 <p>虽然我们对抓包方案进行了各种优化，但对于一些延迟敏感的业务来说性能损耗还是偏大，而且该方案对一些特殊场景支持较差：如TCP协议层发生丢包、重传、乱序时，MySQL协议层使用压缩、传输大SQL时。而业界普遍采用了直接改造MySQL内核的方式来输出全量SQL，同时也支持输出更多的指标数据。目前，数据库内核团队也完成了该方案开发，正在线上灰度替换抓包方案中。另外，对于线上全量SQL端到端丢失率指标的缺失，我们也将陆续进行补齐。</p>
 <h2 id="本文作者">本文作者</h2>

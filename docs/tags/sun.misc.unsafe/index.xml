@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sun, 25 Feb 2024 02:40:54 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 26 Feb 2024 02:40:10 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/sun.misc.unsafe/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Java魔法类：Unsafe应用解析</title>
       <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Sun, 25 Feb 2024 02:40:54 +0000</pubDate>
+      <pubDate>Mon, 26 Feb 2024 02:40:10 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
       <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。&#xA;注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。&#xA;基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。&#xA;public final class Unsafe { // 单例对象 private static final Unsafe theUnsafe; private Unsafe() { } @CallerSensitive public static Unsafe getUnsafe() { Class var0 = Reflection.</description>
     </item>

@@ -16,7 +16,6 @@
 <meta property="og:url" content="https://wfsui.github.io/posts/replication%E4%B8%8B%E4%BA%8B%E5%8A%A1%E4%B8%80%E8%87%B4%E6%80%A7%E4%B8%8E%E5%85%B1%E8%AF%86/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-01-02T02:52:06+00:00" />
 <meta property="article:modified_time" content="2023-01-02T02:52:06+00:00" />
-
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Replication（下）：事务，一致性与共识"/>
 <meta name="twitter:description" content="1. 前文回顾 在上一篇中，我们主要介绍了分布式系统中常见的复制模型，并描述了每一种模型的优缺点以及使用场景，同时阐述了分布式系统中特有的一些技术挑战。首先，常见的分布式系统复制模型有3种，分别是主从复制模型、多主复制模型以及无主复制模型。此外，复制从客户端的时效性来说分为同步复制&amp;&amp;异步复制，异步复制具有滞后性，可能会造成数据不一致，因为这个不一致，会带来各种各样的问题。
 此外，第一篇文章用了“老板安排人干活”的例子比喻了分布式系统中特有的挑战，即部分失效以及不可靠的时钟问题。这给分布式系统设计带来了很大的困扰。似乎在没有机制做保证的情况下，一个朴素的分布式系统什么事情都做不了。

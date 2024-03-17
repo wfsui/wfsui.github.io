@@ -13,7 +13,6 @@ First Class 纯函数 引用透明 表达式 高阶函数 柯里化 函数组合
 <meta property="og:url" content="https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8B/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-03-21T02:45:49+00:00" />
 <meta property="article:modified_time" content="2023-03-21T02:45:49+00:00" />
-
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="深入理解函数式编程（下）"/>
 <meta name="twitter:description" content="1. 前文回顾 在上篇中，我们分析了函数式编程的起源和基本特性，并通过每一个特性的示例来演示这种特性的实际效果。首先，函数式编程起源于数理逻辑，起源于λ演算，这是一种演算法，它定义一些基础的数据结构，然后通过归约和代换来实现更复杂的数据结构，而函数本身也是它的一种数据。其次，我们探讨了很多函数式编程的特性，比如：
 First Class 纯函数 引用透明 表达式 高阶函数 柯里化 函数组合 point-free … 但我们也指出了一个实际问题：不能处理副作用的程序是毫无意义的。我们的计算机程序随时都在产生副作用。我们程序里面有大量的网络请求、多媒体输入输出、内部状态、全局状态等，甚至在提倡“碳中和”的今天，电脑的发热量也是一个不容小觑的副作用。那么我们应该如何处理这些问题呢？

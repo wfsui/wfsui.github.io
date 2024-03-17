@@ -15,7 +15,6 @@
 <meta property="og:url" content="https://wfsui.github.io/posts/linux%E4%B8%8B%E8%B7%A8%E8%AF%AD%E8%A8%80%E8%B0%83%E7%94%A8c&#43;&#43;%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-07-25T03:58:24+00:00" />
 <meta property="article:modified_time" content="2022-07-25T03:58:24+00:00" />
-
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Linux下跨语言调用C&#43;&#43;实践"/>
 <meta name="twitter:description" content="1 背景 查询理解（QU, Query Understanding）是美团搜索的核心模块，主要职责是理解用户查询，生成查询意图、成分、改写等基础信号，应用于搜索的召回、排序、展示等多个环节，对搜索基础体验至关重要。该服务的线上主体程序基于C&#43;&#43;语言开发，服务中会加载大量的词表数据、预估模型等，这些数据与模型的离线生产过程有很多文本解析能力需要与线上服务保持一致，从而保证效果层面的一致性，如文本归一化、分词等。
 而这些离线生产过程通常用Python与Java实现。如果在线、离线用不同语言各自开发一份，则很难维持策略与效果上的统一。同时这些能力会有不断的迭代，在这种动态场景下，不断维护多语言版本的效果打平，给我们的日常迭代带来了极大的成本。因此，我们尝试通过跨语言调用动态链接库的技术解决这个问题，即开发一次基于C&#43;&#43;的so，通过不同语言的链接层封装成不同语言的组件库，并投入到对应的生成过程。这种方案的优势非常明显，主体的业务逻辑只需要开发一次，封装层只需要极少量的代码，主体业务迭代升级，其它语言几乎不需要改动，只需要包含最新的动态链接库，发布最新版本即可。同时C&#43;&#43;作为更底层的语言，在很多场景下，它的计算效率更高，硬件资源利用率更高，也为我们带来了一些性能上的优势。

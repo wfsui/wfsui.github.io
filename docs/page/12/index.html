@@ -65,6 +65,18 @@
 				
 				
 				<div class="post">
+					<div class="meta">Apr 13, 2023</div>
+					<a class="title" href="/posts/%E7%BE%8E%E5%9B%A2%E9%AB%98%E6%80%A7%E8%83%BD%E7%BB%88%E7%AB%AF%E5%AE%9E%E6%97%B6%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%E5%BB%BA%E8%AE%BE%E5%AE%9E%E8%B7%B5/">美团高性能终端实时日志系统建设实践</a> &mdash;
+					<span class="description">
+						
+						1 背景 1.1 Logan 简介 Logan 是美团面向终端的统一日志服务，已支持移动端App、Web、小程序、IoT等多端环境，具备日志采集、存储、上传、查询与分析等能力，帮助用户定位研发问题，提升故障排查效率。同时，Logan 也是业内开源较早的大前端日志系统，具有写入性能高、安全性高、日志防丢失等优点。
+1.2 Logan 工作流程 为了方便读者更好地理解 Logan 系统是如何工作的，下图是简化后的 Logan 系统工作流程图。主要分为以下几个部分：
+主动上报日志：终端设备在需要上报日志时，可以通过 HTTPS 接口主动上传日志到 Logan 接收服务，接收服务再把原始日志文件转存到对象存储平台。 日志解密与解析：当研发人员想要查看主动上报的日志时会触发日志下载与解析流程，原始加密日志从对象存储平台下载成功后进行解密、解析等操作，然后再投递到日志存储系统。 日志查询与检索：日志平台支持对单设备所有日志进行日志类型、标签、进程、关键字、时间等维度的筛选，同时也支持对一些特定类型的日志进行可视化展示。 1.&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
 					<div class="meta">Apr 6, 2023</div>
 					<a class="title" href="/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8A/">深入理解函数式编程（上）</a> &mdash;
 					<span class="description">
@@ -120,18 +132,6 @@ First Class 纯函数 引用透明 表达式 高阶函数 柯里化 函数组合
 					<span class="description">
 						
 						1. 背景和难点## 1. 背景和难点 YOLOv6 是美团发布的一款开源的面向工业应用的 2D 目标检测模型 [1]，主要特点是速度快、精度高、部署友好，在美团众多视觉业务场景中都有着广泛的应用。通过量化（Quantization）提升推理速度是实际工业应用中的基本操作，但由于 YOLOv6 系列模型采用了大量的重参数化模块，如何针对 YOLOv6 进行高效和高精度的量化成为一个亟待解决的问题。本文旨在解决 YOLOv6 量化方面的难题，并以 YOLOv6s 模型为例，从训练后量化（Post-Training Quantization, PTQ）和量化感知训练（Quantization-Aware Training, QAT）两个方面进行分析，探索出了一条切实可行的量化方案。&hellip;
-						
-					</span>
-				</div>
-				
-				<div class="post">
-					<div class="meta">Feb 23, 2023</div>
-					<a class="title" href="/posts/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%85%A8%E9%9D%A2%E5%8D%87%E7%BA%A7%E6%9B%B4%E5%BF%AB%E6%9B%B4%E5%87%86%E7%9A%842.0%E7%89%88%E6%9C%AC%E6%9D%A5%E5%95%A6/">目标检测开源框架YOLOv6全面升级，更快更准的2.0版本来啦</a> &mdash;
-					<span class="description">
-						
-						9月5日，美团视觉智能部发布了YOLOv6 2.0版本，本次更新对轻量级网络进行了全面升级，量化版模型 YOLOv6-S 达到了 869 FPS，同时，还推出了综合性能优异的中大型网络（YOLOv6-M/L），丰富了YOLOv6网络系列。其中，YOLOv6-M/L 在 COCO 上检测精度（AP）分别达到 49.5%/52.5%，在 T4 卡上推理速度分别可达 233⁄121 FPS（batch size =32）。
-GitHub下载地址：https://github.com/meituan/YOLOv6。欢迎Star收藏，随时取用。
-官方出品详细的Tech Report带你解构YOLOv6：YOLOv6: A Single-Stage Object Detection Framework for Industrial Applications。&hellip;
 						
 					</span>
 				</div>

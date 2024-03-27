@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Tue, 26 Mar 2024 02:40:07 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 Mar 2024 02:40:13 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/squirrel/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>美团大规模KV存储挑战与架构实践</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%A7%E8%A7%84%E6%A8%A1kv%E5%AD%98%E5%82%A8%E6%8C%91%E6%88%98%E4%B8%8E%E6%9E%B6%E6%9E%84%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Tue, 26 Mar 2024 02:40:07 +0000</pubDate>
+      <pubDate>Wed, 27 Mar 2024 02:40:13 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%A7%E8%A7%84%E6%A8%A1kv%E5%AD%98%E5%82%A8%E6%8C%91%E6%88%98%E4%B8%8E%E6%9E%B6%E6%9E%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>KV 存储作为美团一项重要的在线存储服务，承载了在线服务每天万亿级的请求量，并且保持着 99.995% 的服务可用性。在 DataFunSummit 2023 数据基础架构峰会上，我们分享了《美团大规模 KV 存储挑战与架构实践》，本文为演讲内容的整理。文章主要分为四个部分：第一部分介绍了美团 KV 存储发展历程；第二部分分享了内存 KV Squirrel 挑战和架构实践；第三部分阐述了持久化 KV Cellar 挑战和架构实践；最后一部分介绍了未来的发展规划。希望这些内容对大家有所帮助或启发。&#xA;1 美团 KV 存储发展历程 上图就是美团第一代的分布式 KV 存储的架构，可能很多公司都经历过这个阶段。在客户端内做一致性哈希，然后在后端部署上很多 Memcached 实例，这样就实现了最基本的 KV 存储分布式设计。但这样的设计存在很明显的问题：比如在宕机摘除节点会时丢失数据；此外，在缓存空间不够需要扩容时，一致性哈希也会丢失一些数据，这样会给业务的开发带来很大的困扰。</description>
     </item>

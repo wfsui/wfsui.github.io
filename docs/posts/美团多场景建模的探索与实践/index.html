@@ -12,8 +12,8 @@
 2 自适应场景建模 在本节开始前，我们先介绍多场景模型的建模方式。多场景模型采用输入层 Embedding &#43; 混合专家（Mixture-of-Experts, MoE）的建模范式，其中输入信息包括了用户侧、商家侧以及场景上下文特征。多场景模型的损失由各场景的损失聚合而成，其损失函数形式如下：" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%A4%9A%E5%9C%BA%E6%99%AF%E5%BB%BA%E6%A8%A1%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2024-04-02T02:40:35+00:00" />
-<meta property="article:modified_time" content="2024-04-02T02:40:35+00:00" />
+<meta property="article:published_time" content="2024-04-03T02:40:00+00:00" />
+<meta property="article:modified_time" content="2024-04-03T02:40:00+00:00" />
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="美团多场景建模的探索与实践"/>
 <meta name="twitter:description" content="1 引言 美团到家Demand-Side Platform（下文简称DSP）平台，主要负责在美团外部媒体上进行商品或者物料的推荐和投放，并不断优化转化效果。随着业务的不断发展与扩大，DSP对接的外部渠道越来越丰富、展示形式越来越多样，物料展示场景的差异性愈发明显（如开屏、插屏、信息流、弹窗等）。
 例如，用户在午餐时间更容易点击【某推荐渠道下】【某App】【开屏展示位】的快餐类商家的物料而不是【信息流展示位】的啤酒烧烤类商家物料。场景间差异的背后本质上是用户意图和需求的差异，因此模型需要对越来越多的场景进行定制化建设，以适配不同场景下用户的个性化需求。
@@ -66,7 +66,7 @@
 
 		<div class="post-header">
 			<h1 class="title">美团多场景建模的探索与实践</h1>
-			<div class="meta">Posted at &mdash; Apr 2, 2024</div>
+			<div class="meta">Posted at &mdash; Apr 3, 2024</div>
 		</div>
 
 		<div class="markdown">

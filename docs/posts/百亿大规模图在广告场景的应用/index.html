@@ -17,8 +17,8 @@
 在当前开源的框架中，单机的训练引擎可以发挥GPU的计算优势，但是存储有限，无法支撑业务TB级别内存和模型参数的大规模图学习训练任务。分布式的训练引擎可以通过横向扩展来支持大规模的图学习任务，但是优化多机图采样之间需要进行密集的通信造成瓶颈，使得各台机器都无法发挥GPU的计算能力，导致训练速度难以满足工业界需求。因此我们联合美团机器学习平台建设了一套图学习训练引擎，能够同时满足速度和规模两方面的需求。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wfsui.github.io/posts/%E7%99%BE%E4%BA%BF%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%9B%BE%E5%9C%A8%E5%B9%BF%E5%91%8A%E5%9C%BA%E6%99%AF%E7%9A%84%E5%BA%94%E7%94%A8/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2024-04-04T02:39:58+00:00" />
-<meta property="article:modified_time" content="2024-04-04T02:39:58+00:00" />
+<meta property="article:published_time" content="2024-04-05T02:39:48+00:00" />
+<meta property="article:modified_time" content="2024-04-05T02:39:48+00:00" />
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="百亿大规模图在广告场景的应用"/>
 <meta name="twitter:description" content="1 引言 美团外卖在线服务正成为日常生活中必不可少的服务，其中召回作为外卖广告系统的第一个环节，主要承担着从海量商品中寻找优质候选的角色。相比于业界召回系统，外卖场景召回阶段存在LBS限制，因此外卖搜索广告[1]提出供给分层的自循环召回体系：无供给区域，实现流量运营联动提升流量召回上限；高供给区域，通过关键词、向量召回提升召回效率；弱供给区域，通过搜索推荐进行弱供给填充，提高候选效率。搜索推荐目标是解决用户搜索意图不明确、供给受限制的流量下，从满足用户需求的角度出发进行的用户-&gt;供给匹配，提高弱供给流量变现效率、用户搜索效率。
 1.1 外卖广告搜索推荐业务及挑战介绍 用户进入外卖场景，整体浏览路径为推荐页、搜索页，进入搜索页之后整体浏览路径为搜索前导购渠道、搜索SUG渠道、主动搜索渠道、结果页、详情页，搜索推荐主要目标是解决搜索意图不明确、供给受限制的候选匹配问题，主要覆盖搜索前导购渠道（搜索发现）、搜索SUG渠道、结果页【POI&#43;SPU】组合推荐、结果页相关填充等场景。
@@ -76,7 +76,7 @@
 
 		<div class="post-header">
 			<h1 class="title">百亿大规模图在广告场景的应用</h1>
-			<div class="meta">Posted at &mdash; Apr 4, 2024</div>
+			<div class="meta">Posted at &mdash; Apr 5, 2024</div>
 		</div>
 
 		<div class="markdown">

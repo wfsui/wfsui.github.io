@@ -3,16 +3,27 @@
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>基于代价的慢查询优化建议 - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:title" content="基于代价的慢查询优化建议" />
-<meta property="og:description" content="1 背景 慢查询是指数据库中查询时间超过指定阈值（美团设置为100ms）的SQL，它是数据库的性能杀手，也是业务优化数据库访问的重要抓手。随着美团业务的高速增长，日均慢查询量已经过亿条，此前因慢查询导致的故障约占数据库故障总数的10%以上，而且高级别的故障呈日益增长趋势。因此，对慢查询的优化已经变得刻不容缓。
-那么如何优化慢查询呢？最直接有效的方法就是选用一个查询效率高的索引。关于高效率的索引推荐，主要在日常工作中，基于经验规则的推荐随处可见，对于简单的SQL，如select * from sync_test1 where name like &#39;Bobby%&#39;，直接添加索引IX(name) 就可以取得不错的效果；但对于稍微复杂点的SQL，如select * from sync_test1 where name like &#39;Bobby%&#39; and dt &gt; &#39;2021-07-06&#39;，到底选择IX(name)、IX(dt)、IX(dt,name) 还是IX(name,dt)，该方法也无法给出准确的回答。更别说像多表Join、子查询这样复杂的场景了。所以采用基于代价的推荐来解决该问题会更加普适，因为基于代价的方法使用了和数据库优化器相同的方式，去量化评估所有的可能性，选出的是执行SQL耗费代价最小的索引。" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E4%BB%A3%E4%BB%B7%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-07-25T03:58:24+00:00" />
-<meta property="article:modified_time" content="2022-07-25T03:58:24+00:00" />
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="基于代价的慢查询优化建议"/>
-<meta name="twitter:description" content="1 背景 慢查询是指数据库中查询时间超过指定阈值（美团设置为100ms）的SQL，它是数据库的性能杀手，也是业务优化数据库访问的重要抓手。随着美团业务的高速增长，日均慢查询量已经过亿条，此前因慢查询导致的故障约占数据库故障总数的10%以上，而且高级别的故障呈日益增长趋势。因此，对慢查询的优化已经变得刻不容缓。
-那么如何优化慢查询呢？最直接有效的方法就是选用一个查询效率高的索引。关于高效率的索引推荐，主要在日常工作中，基于经验规则的推荐随处可见，对于简单的SQL，如select * from sync_test1 where name like &#39;Bobby%&#39;，直接添加索引IX(name) 就可以取得不错的效果；但对于稍微复杂点的SQL，如select * from sync_test1 where name like &#39;Bobby%&#39; and dt &gt; &#39;2021-07-06&#39;，到底选择IX(name)、IX(dt)、IX(dt,name) 还是IX(name,dt)，该方法也无法给出准确的回答。更别说像多表Join、子查询这样复杂的场景了。所以采用基于代价的推荐来解决该问题会更加普适，因为基于代价的方法使用了和数据库优化器相同的方式，去量化评估所有的可能性，选出的是执行SQL耗费代价最小的索引。"/>
+	<meta property="og:url" content="https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E4%BB%A3%E4%BB%B7%E7%9A%84%E6%85%A2%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE/">
+  <meta property="og:site_name" content="大峰哥">
+  <meta property="og:title" content="基于代价的慢查询优化建议">
+  <meta property="og:description" content="1 背景 慢查询是指数据库中查询时间超过指定阈值（美团设置为100ms）的SQL，它是数据库的性能杀手，也是业务优化数据库访问的重要抓手。随着美团业务的高速增长，日均慢查询量已经过亿条，此前因慢查询导致的故障约占数据库故障总数的10%以上，而且高级别的故障呈日益增长趋势。因此，对慢查询的优化已经变得刻不容缓。
+那么如何优化慢查询呢？最直接有效的方法就是选用一个查询效率高的索引。关于高效率的索引推荐，主要在日常工作中，基于经验规则的推荐随处可见，对于简单的SQL，如select * from sync_test1 where name like &#39;Bobby%&#39;，直接添加索引IX(name) 就可以取得不错的效果；但对于稍微复杂点的SQL，如select * from sync_test1 where name like &#39;Bobby%&#39; and dt &gt; &#39;2021-07-06&#39;，到底选择IX(name)、IX(dt)、IX(dt,name) 还是IX(name,dt)，该方法也无法给出准确的回答。更别说像多表Join、子查询这样复杂的场景了。所以采用基于代价的推荐来解决该问题会更加普适，因为基于代价的方法使用了和数据库优化器相同的方式，去量化评估所有的可能性，选出的是执行SQL耗费代价最小的索引。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-07-25T03:58:24+00:00">
+    <meta property="article:modified_time" content="2022-07-25T03:58:24+00:00">
+    <meta property="article:tag" content="美团技术团队">
+    <meta property="article:tag" content="基础研发平台">
+    <meta property="article:tag" content="系统">
+    <meta property="article:tag" content="慢查询">
+    <meta property="article:tag" content="数据库">
+    <meta property="article:tag" content="优化器">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="基于代价的慢查询优化建议">
+  <meta name="twitter:description" content="1 背景 慢查询是指数据库中查询时间超过指定阈值（美团设置为100ms）的SQL，它是数据库的性能杀手，也是业务优化数据库访问的重要抓手。随着美团业务的高速增长，日均慢查询量已经过亿条，此前因慢查询导致的故障约占数据库故障总数的10%以上，而且高级别的故障呈日益增长趋势。因此，对慢查询的优化已经变得刻不容缓。
+那么如何优化慢查询呢？最直接有效的方法就是选用一个查询效率高的索引。关于高效率的索引推荐，主要在日常工作中，基于经验规则的推荐随处可见，对于简单的SQL，如select * from sync_test1 where name like &#39;Bobby%&#39;，直接添加索引IX(name) 就可以取得不错的效果；但对于稍微复杂点的SQL，如select * from sync_test1 where name like &#39;Bobby%&#39; and dt &gt; &#39;2021-07-06&#39;，到底选择IX(name)、IX(dt)、IX(dt,name) 还是IX(name,dt)，该方法也无法给出准确的回答。更别说像多表Join、子查询这样复杂的场景了。所以采用基于代价的推荐来解决该问题会更加普适，因为基于代价的方法使用了和数据库优化器相同的方式，去量化评估所有的可能性，选出的是执行SQL耗费代价最小的索引。">
 <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
 
 	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />

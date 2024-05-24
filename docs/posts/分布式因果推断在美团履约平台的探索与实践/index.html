@@ -3,8 +3,10 @@
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>分布式因果推断在美团履约平台的探索与实践 - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:title" content="分布式因果推断在美团履约平台的探索与实践" />
-<meta property="og:description" content="1. 业务背景 近年来，因果推断在商品定价、补贴、营销等领域得到广泛应用并取得了显著的业务效果提升，例如用户增长、活动营销等业务场景。这些领域的共性是需要“反事实推断能力”，传统机器学习算法更关注预测问题，而因果推断提供了更佳的反事实推断能力。以营销活动为例，我们不仅需要知道当前优惠券金额下，订单数是多少（预测问题），还要知道在改变金额的情况下，订单数会发生怎样的变化（反事实问题）。
+	<meta property="og:url" content="https://wfsui.github.io/posts/%E5%88%86%E5%B8%83%E5%BC%8F%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%B1%A5%E7%BA%A6%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/">
+  <meta property="og:site_name" content="大峰哥">
+  <meta property="og:title" content="分布式因果推断在美团履约平台的探索与实践">
+  <meta property="og:description" content="1. 业务背景 近年来，因果推断在商品定价、补贴、营销等领域得到广泛应用并取得了显著的业务效果提升，例如用户增长、活动营销等业务场景。这些领域的共性是需要“反事实推断能力”，传统机器学习算法更关注预测问题，而因果推断提供了更佳的反事实推断能力。以营销活动为例，我们不仅需要知道当前优惠券金额下，订单数是多少（预测问题），还要知道在改变金额的情况下，订单数会发生怎样的变化（反事实问题）。
 常见的因果建模方法主要包含Meta-Learner、深度表征学习和Tree-Base算法三大类。其中以因果树为代表的Tree-Base算法泛化性强，适用于多种业务场景。相较于Meta-Learner，树模型建模流程简单；相较于深度表征学习，树模型特征处理和调参过程简单并且具备极强的可解释性。
 开源社区涌现出了微软的EconML和DoWhy，Uber的CausalML，以及因果森林作者的grf-lab等等众多优秀开源项目，但这些项目均为单机实现，不能满足工业场景下亿级样本的模型训练、评估、解释分析。Meta-Learner和深度表征学习可以轻松借助XGBoost、LGBM、Spark MLlib、Tensorflow等开源工具支持海量数据，但是这些项目都不支持因果树相关的Tree-Base算法的分布式训练。
 具体来说，XGBoost、LGBM、Spark Random Forest等树模型是为解决预测问题而提出的经典算法实现，而因果树算法引入了新的训练理论以及因果理论独有的干预变量、工具变量等概念。这意味着我们并不能通过对现有分布式树模型的简单改造，来实现因果理论下树模型的分布式训练，而是需要充分理解各类单机因果树算法的原理之后，选择合适的分布式编程范式高效地实现出来。
@@ -13,13 +15,22 @@
 2. 分布式因果森林框架 因果森林算法的提出引发了Tree-Base算法应用于因果建模的研究热潮，众多学者相继在因果森林的基础上提出了多种多样的改进算法。监督学习领域的树模型有众多优秀的开源分布式实现，例如Xgboost、LightGBM、Spark Random Forest等等。
 但是开源的因果树模型分布式实现基本处于空白状态。因果树算法引入了新的训练理论（比如Honesty Tree）并且因果树的分裂还依赖于干预变量、工具变量，这导致我们无法通过对现有分布式树实现做简单来更改来实现。因此，我们立足于论文，充分调研并借鉴业内优秀的开源实现，最终设计实现了一套高性能的分布式框架，并能提供统一的Serving方案。
 借助这套框架，新增因果森林类算法只需要专注于损失函数设计即可，完全不必考虑分布式的工程实现。截止到目前，我们已经实现了四种因果森林算法，能够灵活支持多维连续treatment和及工具变量，半小时内即可完成亿级样本100棵树的训练。下面我们将从技术选型与框架设计、性能优化、Serving实现这几个方面为大家介绍这套框架。
-2.1 技术选型与框架设计 单机树模型的工程实现可以概括为：遍历所有潜在的切分点并计算分裂指标（损失函数），取指标指标最佳的分裂点分裂，不断分裂树节点直到满足退出条件。而分布式环境下每台机器只包含部分样本，分布式环境下任何全局指标计算都会带来极大的通讯成本，因此需要选择合适的分布式架构帮助我们计算分裂指标。" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://wfsui.github.io/posts/%E5%88%86%E5%B8%83%E5%BC%8F%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%B1%A5%E7%BA%A6%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2024-04-11T02:40:18+00:00" />
-<meta property="article:modified_time" content="2024-04-11T02:40:18+00:00" />
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="分布式因果推断在美团履约平台的探索与实践"/>
-<meta name="twitter:description" content="1. 业务背景 近年来，因果推断在商品定价、补贴、营销等领域得到广泛应用并取得了显著的业务效果提升，例如用户增长、活动营销等业务场景。这些领域的共性是需要“反事实推断能力”，传统机器学习算法更关注预测问题，而因果推断提供了更佳的反事实推断能力。以营销活动为例，我们不仅需要知道当前优惠券金额下，订单数是多少（预测问题），还要知道在改变金额的情况下，订单数会发生怎样的变化（反事实问题）。
+2.1 技术选型与框架设计 单机树模型的工程实现可以概括为：遍历所有潜在的切分点并计算分裂指标（损失函数），取指标指标最佳的分裂点分裂，不断分裂树节点直到满足退出条件。而分布式环境下每台机器只包含部分样本，分布式环境下任何全局指标计算都会带来极大的通讯成本，因此需要选择合适的分布式架构帮助我们计算分裂指标。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-05-24T02:44:12+00:00">
+    <meta property="article:modified_time" content="2024-05-24T02:44:12+00:00">
+    <meta property="article:tag" content="美团技术团队">
+    <meta property="article:tag" content="到家">
+    <meta property="article:tag" content="算法">
+    <meta property="article:tag" content="因果推断">
+    <meta property="article:tag" content="分布式机器学习">
+    <meta property="article:tag" content="图灵平台">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="分布式因果推断在美团履约平台的探索与实践">
+  <meta name="twitter:description" content="1. 业务背景 近年来，因果推断在商品定价、补贴、营销等领域得到广泛应用并取得了显著的业务效果提升，例如用户增长、活动营销等业务场景。这些领域的共性是需要“反事实推断能力”，传统机器学习算法更关注预测问题，而因果推断提供了更佳的反事实推断能力。以营销活动为例，我们不仅需要知道当前优惠券金额下，订单数是多少（预测问题），还要知道在改变金额的情况下，订单数会发生怎样的变化（反事实问题）。
 常见的因果建模方法主要包含Meta-Learner、深度表征学习和Tree-Base算法三大类。其中以因果树为代表的Tree-Base算法泛化性强，适用于多种业务场景。相较于Meta-Learner，树模型建模流程简单；相较于深度表征学习，树模型特征处理和调参过程简单并且具备极强的可解释性。
 开源社区涌现出了微软的EconML和DoWhy，Uber的CausalML，以及因果森林作者的grf-lab等等众多优秀开源项目，但这些项目均为单机实现，不能满足工业场景下亿级样本的模型训练、评估、解释分析。Meta-Learner和深度表征学习可以轻松借助XGBoost、LGBM、Spark MLlib、Tensorflow等开源工具支持海量数据，但是这些项目都不支持因果树相关的Tree-Base算法的分布式训练。
 具体来说，XGBoost、LGBM、Spark Random Forest等树模型是为解决预测问题而提出的经典算法实现，而因果树算法引入了新的训练理论以及因果理论独有的干预变量、工具变量等概念。这意味着我们并不能通过对现有分布式树模型的简单改造，来实现因果理论下树模型的分布式训练，而是需要充分理解各类单机因果树算法的原理之后，选择合适的分布式编程范式高效地实现出来。
@@ -28,7 +39,7 @@
 2. 分布式因果森林框架 因果森林算法的提出引发了Tree-Base算法应用于因果建模的研究热潮，众多学者相继在因果森林的基础上提出了多种多样的改进算法。监督学习领域的树模型有众多优秀的开源分布式实现，例如Xgboost、LightGBM、Spark Random Forest等等。
 但是开源的因果树模型分布式实现基本处于空白状态。因果树算法引入了新的训练理论（比如Honesty Tree）并且因果树的分裂还依赖于干预变量、工具变量，这导致我们无法通过对现有分布式树实现做简单来更改来实现。因此，我们立足于论文，充分调研并借鉴业内优秀的开源实现，最终设计实现了一套高性能的分布式框架，并能提供统一的Serving方案。
 借助这套框架，新增因果森林类算法只需要专注于损失函数设计即可，完全不必考虑分布式的工程实现。截止到目前，我们已经实现了四种因果森林算法，能够灵活支持多维连续treatment和及工具变量，半小时内即可完成亿级样本100棵树的训练。下面我们将从技术选型与框架设计、性能优化、Serving实现这几个方面为大家介绍这套框架。
-2.1 技术选型与框架设计 单机树模型的工程实现可以概括为：遍历所有潜在的切分点并计算分裂指标（损失函数），取指标指标最佳的分裂点分裂，不断分裂树节点直到满足退出条件。而分布式环境下每台机器只包含部分样本，分布式环境下任何全局指标计算都会带来极大的通讯成本，因此需要选择合适的分布式架构帮助我们计算分裂指标。"/>
+2.1 技术选型与框架设计 单机树模型的工程实现可以概括为：遍历所有潜在的切分点并计算分裂指标（损失函数），取指标指标最佳的分裂点分裂，不断分裂树节点直到满足退出条件。而分布式环境下每台机器只包含部分样本，分布式环境下任何全局指标计算都会带来极大的通讯成本，因此需要选择合适的分布式架构帮助我们计算分裂指标。">
 <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
 
 	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
@@ -74,7 +85,7 @@
 
 		<div class="post-header">
 			<h1 class="title">分布式因果推断在美团履约平台的探索与实践</h1>
-			<div class="meta">Posted at &mdash; Apr 11, 2024</div>
+			<div class="meta">Posted at &mdash; May 24, 2024</div>
 		</div>
 
 		<div class="markdown">

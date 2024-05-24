@@ -3,8 +3,10 @@
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Java动态追踪技术探究 - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:title" content="Java动态追踪技术探究" />
-<meta property="og:description" content="引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：
+	<meta property="og:url" content="https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/">
+  <meta property="og:site_name" content="大峰哥">
+  <meta property="og:title" content="Java动态追踪技术探究">
+  <meta property="og:description" content="引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：
 “Debug一下吧。”
 “线上机器，没开Debug端口。”
 “看日志，看看请求值和返回值分别是什么？”
@@ -19,13 +21,22 @@
 当时刚刚处于Java入门时期的我们，大多数精力似乎都放在了JSP的页面展示效果上了：
 “这个表格显示的行数不对”
 “原来是for循环写的有问题，改一下，刷新页面再试一遍”
-“嗯，好了，表格显示没问题了，但是，登录人的姓名没取到啊，是不是Sesstion获取有问题？”" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2024-04-11T02:40:11+00:00" />
-<meta property="article:modified_time" content="2024-04-11T02:40:11+00:00" />
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Java动态追踪技术探究"/>
-<meta name="twitter:description" content="引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：
+“嗯，好了，表格显示没问题了，但是，登录人的姓名没取到啊，是不是Sesstion获取有问题？”">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-05-24T02:44:16+00:00">
+    <meta property="article:modified_time" content="2024-05-24T02:44:16+00:00">
+    <meta property="article:tag" content="收藏">
+    <meta property="article:tag" content="系统">
+    <meta property="article:tag" content="LBS平台">
+    <meta property="article:tag" content="美团出行">
+    <meta property="article:tag" content="动态追踪">
+    <meta property="article:tag" content="Java">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Java动态追踪技术探究">
+  <meta name="twitter:description" content="引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：
 “Debug一下吧。”
 “线上机器，没开Debug端口。”
 “看日志，看看请求值和返回值分别是什么？”
@@ -40,7 +51,7 @@
 当时刚刚处于Java入门时期的我们，大多数精力似乎都放在了JSP的页面展示效果上了：
 “这个表格显示的行数不对”
 “原来是for循环写的有问题，改一下，刷新页面再试一遍”
-“嗯，好了，表格显示没问题了，但是，登录人的姓名没取到啊，是不是Sesstion获取有问题？”"/>
+“嗯，好了，表格显示没问题了，但是，登录人的姓名没取到啊，是不是Sesstion获取有问题？”">
 <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
 
 	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
@@ -86,7 +97,7 @@
 
 		<div class="post-header">
 			<h1 class="title">Java动态追踪技术探究</h1>
-			<div class="meta">Posted at &mdash; Apr 11, 2024</div>
+			<div class="meta">Posted at &mdash; May 24, 2024</div>
 		</div>
 
 		<div class="markdown">

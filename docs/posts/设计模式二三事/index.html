@@ -3,8 +3,10 @@
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>设计模式二三事 - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:title" content="设计模式二三事" />
-<meta property="og:description" content="设计模式是众多软件开发人员经过长时间的试错和应用总结出来的，解决特定问题的一系列方案。现行的部分教材在介绍设计模式时，有些会因为案例脱离实际应用场景而令人费解，有些又会因为场景简单而显得有些小题大做。本文会结合在美团金融服务平台设计开发时的经验，结合实际的案例，并采用“师生对话”这种相对诙谐的形式去讲解三类常用设计模式的应用。希望能对想提升系统设计能力的同学有所帮助或启发。
+	<meta property="og:url" content="https://wfsui.github.io/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BA%8C%E4%B8%89%E4%BA%8B/">
+  <meta property="og:site_name" content="大峰哥">
+  <meta property="og:title" content="设计模式二三事">
+  <meta property="og:description" content="设计模式是众多软件开发人员经过长时间的试错和应用总结出来的，解决特定问题的一系列方案。现行的部分教材在介绍设计模式时，有些会因为案例脱离实际应用场景而令人费解，有些又会因为场景简单而显得有些小题大做。本文会结合在美团金融服务平台设计开发时的经验，结合实际的案例，并采用“师生对话”这种相对诙谐的形式去讲解三类常用设计模式的应用。希望能对想提升系统设计能力的同学有所帮助或启发。
 引言 话说这是在程序员世界里一对师徒的对话：
 “老师，我最近在写代码时总感觉自己的代码很不优雅，有什么办法能优化吗？”
 “嗯，可以考虑通过教材系统学习，从注释、命名、方法和异常等多方面实现整洁代码。”
@@ -20,13 +22,21 @@
 “这我知道，活动营销是指企业通过参与社会关注度高的已有活动，或整合有效的资源自主策划大型活动，从而迅速提高企业及其品牌的知名度、美誉度和影响力，常见的比如有抽奖、红包等。”
 老师点点头：“是的。我们假设现在就要做一个营销，需要用户参与一个活动，然后完成一系列的任务，最后可以得到一些奖励作为回报。活动的奖励包含美团外卖、酒旅和美食等多种品类券，现在需要你帮忙设计一套奖励发放方案。”
 因为之前有过类似的开发经验，拿到需求的小明二话不说开始了编写起了代码：
-// 奖励服务 class RewardService { // 外部服务 private WaimaiService waimaiService; private HotelService hotelService; private FoodService foodService; // 使用对入参的条件判断进行发奖 public void issueReward(String rewardType, Object ." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://wfsui.github.io/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BA%8C%E4%B8%89%E4%BA%8B/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-05-27T03:42:14+00:00" />
-<meta property="article:modified_time" content="2022-05-27T03:42:14+00:00" />
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="设计模式二三事"/>
-<meta name="twitter:description" content="设计模式是众多软件开发人员经过长时间的试错和应用总结出来的，解决特定问题的一系列方案。现行的部分教材在介绍设计模式时，有些会因为案例脱离实际应用场景而令人费解，有些又会因为场景简单而显得有些小题大做。本文会结合在美团金融服务平台设计开发时的经验，结合实际的案例，并采用“师生对话”这种相对诙谐的形式去讲解三类常用设计模式的应用。希望能对想提升系统设计能力的同学有所帮助或启发。
+// 奖励服务 class RewardService { // 外部服务 private WaimaiService waimaiService; private HotelService hotelService; private FoodService foodService; // 使用对入参的条件判断进行发奖 public void issueReward(String rewardType, Object .">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-05-27T03:42:14+00:00">
+    <meta property="article:modified_time" content="2022-05-27T03:42:14+00:00">
+    <meta property="article:tag" content="美团技术团队">
+    <meta property="article:tag" content="金融服务平台/技术平台部">
+    <meta property="article:tag" content="系统">
+    <meta property="article:tag" content="设计模式">
+    <meta property="article:tag" content="系统开发">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="设计模式二三事">
+  <meta name="twitter:description" content="设计模式是众多软件开发人员经过长时间的试错和应用总结出来的，解决特定问题的一系列方案。现行的部分教材在介绍设计模式时，有些会因为案例脱离实际应用场景而令人费解，有些又会因为场景简单而显得有些小题大做。本文会结合在美团金融服务平台设计开发时的经验，结合实际的案例，并采用“师生对话”这种相对诙谐的形式去讲解三类常用设计模式的应用。希望能对想提升系统设计能力的同学有所帮助或启发。
 引言 话说这是在程序员世界里一对师徒的对话：
 “老师，我最近在写代码时总感觉自己的代码很不优雅，有什么办法能优化吗？”
 “嗯，可以考虑通过教材系统学习，从注释、命名、方法和异常等多方面实现整洁代码。”
@@ -42,7 +52,7 @@
 “这我知道，活动营销是指企业通过参与社会关注度高的已有活动，或整合有效的资源自主策划大型活动，从而迅速提高企业及其品牌的知名度、美誉度和影响力，常见的比如有抽奖、红包等。”
 老师点点头：“是的。我们假设现在就要做一个营销，需要用户参与一个活动，然后完成一系列的任务，最后可以得到一些奖励作为回报。活动的奖励包含美团外卖、酒旅和美食等多种品类券，现在需要你帮忙设计一套奖励发放方案。”
 因为之前有过类似的开发经验，拿到需求的小明二话不说开始了编写起了代码：
-// 奖励服务 class RewardService { // 外部服务 private WaimaiService waimaiService; private HotelService hotelService; private FoodService foodService; // 使用对入参的条件判断进行发奖 public void issueReward(String rewardType, Object ."/>
+// 奖励服务 class RewardService { // 外部服务 private WaimaiService waimaiService; private HotelService hotelService; private FoodService foodService; // 使用对入参的条件判断进行发奖 public void issueReward(String rewardType, Object .">
 <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
 
 	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />

@@ -3,26 +3,36 @@
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Kafka在美团数据平台的实践 - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:title" content="Kafka在美团数据平台的实践" />
-<meta property="og:description" content="1. 现状和挑战 1.1 现状 Kafka是一个开源的流处理平台，业界有很多互联网企业也都在使用这款产品。我们首先了解一下Kafka在美团数据平台的现状。
+	<meta property="og:url" content="https://wfsui.github.io/posts/kafka%E5%9C%A8%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%AE%9E%E8%B7%B5/">
+  <meta property="og:site_name" content="大峰哥">
+  <meta property="og:title" content="Kafka在美团数据平台的实践">
+  <meta property="og:description" content="1. 现状和挑战 1.1 现状 Kafka是一个开源的流处理平台，业界有很多互联网企业也都在使用这款产品。我们首先了解一下Kafka在美团数据平台的现状。
 如图1-1所示，蓝色部分描述了Kafka在数据平台定位为流存储层。主要的职责是做数据的缓存和分发，它会将收集到的日志分发到不同的数据系统里，这些日志来源于系统日志、客户端日志以及业务数据库。下游的数据消费系统包括通过ODS入仓提供离线计算使用、直接供实时计算使用、通过DataLink同步到日志中心，以及做OLAP分析使用。
 Kafka在美团的集群规模总体机器数已经超过了15000&#43;台，单集群的最大机器数也已经到了2000&#43;台。在数据规模上，天级消息量已经超过了30&#43;P，天级消息量峰值也达到了4&#43;亿/秒。不过随着集群规模的增大，数据量的增长，Kafka面临的挑战也愈发严峻，下面讲一下具体的挑战都有哪些。
 1.2 挑战 如图1-2所示，具体的挑战可以概括为两部分：
 第一部分是慢节点影响读写，这里慢节点参考了HDFS的一个概念，具体定义指的是读写延迟TP99大于300ms的Broker。造成慢节点的原因有三个：
 集群负载不均衡会导致局部热点，就是整个集群的磁盘空间很充裕或者ioutil很低，但部分磁盘即将写满或者ioutil打满。 PageCache容量，比如说，80GB的PageCache在170MB/s的写入量下仅能缓存8分钟的数据量。那么如果消费的数据是8分钟前的数据，就有可能触发慢速的磁盘访问。 Consumer客户端的线程模型缺陷会导致端到端延时指标失真。例如当Consumer消费的多个分区处于同一Broker时，TP90可能小于100ms，但是当多个分区处于不同Broker时，TP90可能会大于1000ms。 第二部分是大规模集群管理的复杂性，具体表现有4类问题：
-不同Topic之间会相互影响，个别Topic的流量突增，或者个别消费者的回溯读会影响整体集群的稳定性。 Kafka原生的Broker粒度指标不够健全，导致问题定位和根因分析困难。 故障感知不及时，处理成本较高。 Rack级别的故障会造成部分分区不可用。 2. 读写延迟优化 接下来我们先介绍一下针对读写延迟问题，美团数据平台做了哪些优化。首先从宏观层面，我们将受影响因素分为应用层和系统层，然后详细介绍应用层和系统层存在的问题，并给出对应的解决方案，包括流水线加速、Fetcher隔离、迁移取消和Cgroup资源隔离等，下面具体介绍各种优化方案的实现。" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://wfsui.github.io/posts/kafka%E5%9C%A8%E7%BE%8E%E5%9B%A2%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B0%E7%9A%84%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-11-25T03:24:09+00:00" />
-<meta property="article:modified_time" content="2022-11-25T03:24:09+00:00" />
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Kafka在美团数据平台的实践"/>
-<meta name="twitter:description" content="1. 现状和挑战 1.1 现状 Kafka是一个开源的流处理平台，业界有很多互联网企业也都在使用这款产品。我们首先了解一下Kafka在美团数据平台的现状。
+不同Topic之间会相互影响，个别Topic的流量突增，或者个别消费者的回溯读会影响整体集群的稳定性。 Kafka原生的Broker粒度指标不够健全，导致问题定位和根因分析困难。 故障感知不及时，处理成本较高。 Rack级别的故障会造成部分分区不可用。 2. 读写延迟优化 接下来我们先介绍一下针对读写延迟问题，美团数据平台做了哪些优化。首先从宏观层面，我们将受影响因素分为应用层和系统层，然后详细介绍应用层和系统层存在的问题，并给出对应的解决方案，包括流水线加速、Fetcher隔离、迁移取消和Cgroup资源隔离等，下面具体介绍各种优化方案的实现。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-11-25T03:24:09+00:00">
+    <meta property="article:modified_time" content="2022-11-25T03:24:09+00:00">
+    <meta property="article:tag" content="美团技术团队">
+    <meta property="article:tag" content="基础研发平台">
+    <meta property="article:tag" content="数据">
+    <meta property="article:tag" content="Kafka">
+    <meta property="article:tag" content="慢节点">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Kafka在美团数据平台的实践">
+  <meta name="twitter:description" content="1. 现状和挑战 1.1 现状 Kafka是一个开源的流处理平台，业界有很多互联网企业也都在使用这款产品。我们首先了解一下Kafka在美团数据平台的现状。
 如图1-1所示，蓝色部分描述了Kafka在数据平台定位为流存储层。主要的职责是做数据的缓存和分发，它会将收集到的日志分发到不同的数据系统里，这些日志来源于系统日志、客户端日志以及业务数据库。下游的数据消费系统包括通过ODS入仓提供离线计算使用、直接供实时计算使用、通过DataLink同步到日志中心，以及做OLAP分析使用。
 Kafka在美团的集群规模总体机器数已经超过了15000&#43;台，单集群的最大机器数也已经到了2000&#43;台。在数据规模上，天级消息量已经超过了30&#43;P，天级消息量峰值也达到了4&#43;亿/秒。不过随着集群规模的增大，数据量的增长，Kafka面临的挑战也愈发严峻，下面讲一下具体的挑战都有哪些。
 1.2 挑战 如图1-2所示，具体的挑战可以概括为两部分：
 第一部分是慢节点影响读写，这里慢节点参考了HDFS的一个概念，具体定义指的是读写延迟TP99大于300ms的Broker。造成慢节点的原因有三个：
 集群负载不均衡会导致局部热点，就是整个集群的磁盘空间很充裕或者ioutil很低，但部分磁盘即将写满或者ioutil打满。 PageCache容量，比如说，80GB的PageCache在170MB/s的写入量下仅能缓存8分钟的数据量。那么如果消费的数据是8分钟前的数据，就有可能触发慢速的磁盘访问。 Consumer客户端的线程模型缺陷会导致端到端延时指标失真。例如当Consumer消费的多个分区处于同一Broker时，TP90可能小于100ms，但是当多个分区处于不同Broker时，TP90可能会大于1000ms。 第二部分是大规模集群管理的复杂性，具体表现有4类问题：
-不同Topic之间会相互影响，个别Topic的流量突增，或者个别消费者的回溯读会影响整体集群的稳定性。 Kafka原生的Broker粒度指标不够健全，导致问题定位和根因分析困难。 故障感知不及时，处理成本较高。 Rack级别的故障会造成部分分区不可用。 2. 读写延迟优化 接下来我们先介绍一下针对读写延迟问题，美团数据平台做了哪些优化。首先从宏观层面，我们将受影响因素分为应用层和系统层，然后详细介绍应用层和系统层存在的问题，并给出对应的解决方案，包括流水线加速、Fetcher隔离、迁移取消和Cgroup资源隔离等，下面具体介绍各种优化方案的实现。"/>
+不同Topic之间会相互影响，个别Topic的流量突增，或者个别消费者的回溯读会影响整体集群的稳定性。 Kafka原生的Broker粒度指标不够健全，导致问题定位和根因分析困难。 故障感知不及时，处理成本较高。 Rack级别的故障会造成部分分区不可用。 2. 读写延迟优化 接下来我们先介绍一下针对读写延迟问题，美团数据平台做了哪些优化。首先从宏观层面，我们将受影响因素分为应用层和系统层，然后详细介绍应用层和系统层存在的问题，并给出对应的解决方案，包括流水线加速、Fetcher隔离、迁移取消和Cgroup资源隔离等，下面具体介绍各种优化方案的实现。">
 <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
 
 	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />

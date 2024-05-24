@@ -4,15 +4,15 @@
     <title>AIOps on 大峰哥</title>
     <link>https://wfsui.github.io/tags/aiops/</link>
     <description>Recent content in AIOps on 大峰哥</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Thu, 11 Apr 2024 02:40:20 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 May 2024 02:44:13 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/aiops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AIOps在美团的探索与实践——事件管理篇</title>
       <link>https://wfsui.github.io/posts/aiops%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5%E4%BA%8B%E4%BB%B6%E7%AE%A1%E7%90%86%E7%AF%87/</link>
-      <pubDate>Thu, 11 Apr 2024 02:40:20 +0000</pubDate>
+      <pubDate>Fri, 24 May 2024 02:44:13 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/aiops%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5%E4%BA%8B%E4%BB%B6%E7%AE%A1%E7%90%86%E7%AF%87/</guid>
       <description>0 写在最前 文中所提及的事件并不仅限于故障，还包括运维工作中的告警、异常等。&#xA;“An incident is an unplanned interruption to an IT Service or a reduction in the Quality of an IT Service.</description>
     </item>

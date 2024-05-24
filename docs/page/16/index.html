@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="generator" content="Hugo 0.124.1">
+	<meta name="generator" content="Hugo 0.126.1">
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>大峰哥 - 记录日常生活哦 </title><meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="alternate" type="application/rss+xml" href="https://wfsui.github.io/index.xml" title="大峰哥" />
-	<meta property="og:title" content="大峰哥" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://wfsui.github.io/" />
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="大峰哥"/>
-<meta name="twitter:description" content=""/>
+	<meta property="og:url" content="https://wfsui.github.io/">
+  <meta property="og:site_name" content="大峰哥">
+  <meta property="og:title" content="大峰哥">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="大峰哥">
 <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
 
 	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
@@ -65,6 +67,48 @@
 				
 				
 				<div class="post">
+					<div class="meta">Nov 25, 2022</div>
+					<a class="title" href="/posts/%E6%8F%90%E5%8D%87%E8%B5%84%E6%BA%90%E5%88%A9%E7%94%A8%E7%8E%87%E4%B8%8E%E4%BF%9D%E9%9A%9C%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E9%B1%BC%E4%B8%8E%E7%86%8A%E6%8E%8C%E4%B8%8D%E5%8F%AF%E5%85%BC%E5%BE%97/">提升资源利用率与保障服务质量，鱼与熊掌不可兼得？</a> &mdash;
+					<span class="description">
+						
+						随着云计算时代的到来，大规模资源运营面临着如何在保障服务质量的同时提升资源利用率（降本增效）。但这两个目标的达成在当前的软硬件技术水平上，是相互矛盾的。本文介绍的LAR（Load Auto-Regulator）系统，即是探索这两个矛盾方向间的平衡点，在保证质量的前提下，提升资源的利用率。
+LAR通过资源分级池化，完备的QoS保障机制，做到精细化的单机资源调度与隔离，在提升整体资源利用率的同时，能够根据服务的优先级和特征保证服务的质量。LAR的整体设计可以适用于多个场景，包括在线场景和混部场景。目前LAR已经在美团在线场景中投入生产使用，并取得了较好的效果。
+1 背景 1.1 云计算时代数据中心资源规模爆炸 云计算时代的到来，资源规模化运营成为必然的选择，大规模数据中心成为当今企业级互联网应用和云计算系统的关键支撑。为保障日益增长的互联网应用和云计算系统的计算需求，数据中心需要不断扩容，规模和服务器总量呈现快速增长趋势。据权威报告指出，2020年全球数据中心的服务器总量将达到1800万台，并且正以每年100万台的速度增长。然而，伴随着数据中心的急速扩容，资源利用率却始终处于较低状态。统计数据表明，目前全球数据中心资源利用率仅为10%~20%，如此低的资源利用率意味着数据中心大量的资源浪费，进而导致目前数据中心的成本效率极低。
+1.2 资源利用率提升影响巨大 在国家战略层面，数据中心资源利用率低，造成大量的资源浪费，包括物力资源和电能浪费，这与可持续发展的理念是冲突的。2021年7月，工业和信息化部印发《新型数据中心发展三年行动计划（2021-2023年）》，提出用3年时间，基本形成布局合理、技术先进、绿色低碳、算力规模与数字经济增长相适应的新型数据中心发展格局。计划中重点提出建设绿色高效的数据中心目标，将资源利用率提升作为核心目标。
+在公司经营上，提升资源利用率可以提升运营效率降低运营成本。谷歌在2019年发表的论文“Borg-the Next Generation”披露其2011年数据中心核心集群（统计1.2万台服务器）的月平均CPU利用率在30%左右，而到2019年，其数据中心核心集群（统计9.6万台服务器）的月平均CPU利用率达到了50%左右，8年时间内提升了约20%，资源使用效能的大幅提升，帮助谷歌节省成本累计数十亿美元。国内各大云服务提供商和互联网公司，目前投入大量人力物力去做提升数据中心资源利用率的工作，包括阿里巴巴、腾讯、百度、华为等公司均陆续提出了比较完善的资源利用率提升方案，在内部落地实践并取得了一定的成绩。
+提升资源利用率，降本增效，能给数据中心节省大量的成本。以数百万核CPU的规模的数据中心为例，整体资源利用率每提升1个百分点，节省成本（包括采购成本和运营成本，运营成本主要是机房租金、电费以及运维费用等）每年将达到数千万元。如果考虑到集群运营人工成本等，随着资源规模持续扩大，这个收益将持续增长。
+持续提升机器的资源利用率，降低单核成本，提升集群服务质量，是美团Hulk团队的核心目标之一。针对用户对降本增效的需求，Hulk调度团队在集群资源利用率提升和服务质量保障方向率先做出相关探索，提出了一系列的建设方案，并推进落地。本文重点介绍在Hulk整体资源利用率运营体系中的核心系统集群负载自动均衡管理系统。
+2 什么是LAR？ LAR全称是集群负载自动均衡管理系统（LAR，Load Auto-Regulator），是美团Hulk团队基于Kubernetes研发的容器编排系统。LAR在Kubernetes之上，通过提供分级的QoS管理机制和负载管控能力，实现从时空维度对资源的精确调度分配管理。&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
+					<div class="meta">Nov 18, 2022</div>
+					<a class="title" href="/posts/acm-sigir-2022--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">ACM SIGIR 2022 | 美团技术团队精选论文解读</a> &mdash;
+					<span class="description">
+						
+						SIGIR是信息检索方向的国际顶级会议（CCF-A类）。第 45 届国际信息检索大会（The 45th International ACM SIGIR Conference on Research and Development in Information Retrieval，SIGIR 2022）已于上周（2022年7月11-15日）在西班牙马德里举行，同时也支持线上参会。本次会议共收到 794 篇长文投稿，其中 161 篇长文被录用，录用率约 20%；共收到 667 篇短文投稿，其中 165 篇短文被录用，录用率约 24.&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
+					<div class="meta">Nov 18, 2022</div>
+					<a class="title" href="/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/">日志导致线程Block的这些坑，你不得不防</a> &mdash;
+					<span class="description">
+						
+						1. 前言 日志对程序的重要性不言而喻。它很“大”，我们在项目中经常通过日志来记录信息和排查问题，相关代码随处可见。它也很“小”，作为辅助工具，日志使用简单、上手快，我们通常不会花费过多精力耗在日志上。但看似不起眼的日志也隐藏着各种各样的“坑”，如果使用不当，它不仅不能帮助我们，反而还可能降低服务性能，甚至拖垮我们的服务。
+日志导致线程Block的问题，相信你或许已经遇到过，对此应该深有体会；或许你还没遇到过，但不代表没有问题，只是可能还没有触发而已。本文主要介绍美团统一API网关服务Shepherd（参见《百亿规模API网关服务Shepherd的设计与实现》一文）在实践中所踩过的关于日志导致线程Block的那些“坑”，然后再分享一些避“坑”经验。
+2. 背景 API网关服务Shepherd基于Java语言开发，使用业界大名鼎鼎的Apache Log4j2作为主要日志框架，同时使用美团内部的XMD-Log SDK和Scribe-Log SDK对日志内容进行处理，日志处理整体流程如下图1所示。业务打印日志时，日志框架基于Logger配置来决定把日志交给XMDFile处理还是Scribe处理。其中，XMDFile是XMD-Log内部提供的日志Appender名称，负责输出日志到本地磁盘，Scribe是Scribe-Log内部提供的日志Appender名称，负责上报日志到远程日志中心。
+随着业务的快速增长，日志导致的线程Block问题愈发频繁。比如调用后端RPC服务超时，导致调用方大量线程Block；再比如，业务内部输出异常日志导致服务大量线程Block等，这些问题严重影响着服务的稳定性。因此，我们结合项目在过去一段时间暴露出来的各种由于日志导致的线程Block问题，对日志框架存在的稳定性风险因素进行了彻底的排查和修复，并在线下、线上环境进行全方位验证。在此过程中，我们总结了一些日志使用相关的实践经验，希望分享给大家。
+在进入正文前，首先介绍项目当时的运行环境和日志相关配置信息。
+JDK版本 java version &#34;1.8.0_45&#34; Java(TM) SE Runtime Environment (build 1.&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
 					<div class="meta">Nov 11, 2022</div>
 					<a class="title" href="/posts/%E5%8F%AF%E8%A7%86%E5%8C%96%E5%85%A8%E9%93%BE%E8%B7%AF%E6%97%A5%E5%BF%97%E8%BF%BD%E8%B8%AA/">可视化全链路日志追踪</a> &mdash;
 					<span class="description">
@@ -93,45 +137,6 @@
 外卖广告业务线主要经历了“LR浅层模型（树模型）” -&gt; “深度学习模型” -&gt; “大规模深度学习模型”的演化过程。整个演化趋势从以人工特征为主的简单模型，逐步向以数据为核心的复杂深度学习模型进行过渡。而大模型的使用，大幅提高了模型的表达能力，更精准地实现了供需侧的匹配，为后续业务发展提供了更多的可能性。但随着模型、数据规模的不断变大，我们发现效率跟它们存在如下的关系：
 根据上图所示，在数据规模、模型规模增长的情况下，所对应的“时长”变得会越来越长。这个“时长”对应到离线层面，体现在效率上；对应到在线层面，就体现在Latency上。而我们的工作就是围绕这个“时长”的优化来开展。
 2 分析 相比普通小模型，大模型的核心问题在于：随着数据量、模型规模增加数十倍甚至百倍，整体链路上的存储、通信、计算等都将面临新的挑战，进而影响算法离线的迭代效率。如何突破在线时延约束等一系列问题？我们先从全链路进行分析，如下所示：&hellip;
-						
-					</span>
-				</div>
-				
-				<div class="post">
-					<div class="meta">Oct 27, 2022</div>
-					<a class="title" href="/posts/cvpr-2022--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">CVPR 2022 | 美团技术团队精选论文解读</a> &mdash;
-					<span class="description">
-						
-						CVPR的全称是IEEE国际计算机视觉与模式识别会议（IEEE Conference on Computer Vision and Pattern Recognition），该会议始于1983年，与ICCV和ECCV并称计算机视觉方向的三大顶级会议。根据谷歌学术公布的2021年最新学术期刊和会议影响力排名，CVPR在所有学术刊物中位居第4，仅次于Nature、NEJM和Science。CVPR今年共收到全球8100多篇论文投稿，最终2067篇被接收，接收率约为25%。
-Paper 01 | Compressing Models with Few Samples: Mimicking then Replacing | 论文下载| 论文作者：王环宇（美团实习生&amp;南京大学），刘俊杰（美团），马鑫（美团），雍洋（美团实习生&amp;西安交通大学），柴振华（美团），吴建鑫（南京大学） | 备注：括号内的为论文发表时，论文作者所在的单位。 | 论文类型：CVPR Main Conference（Long Paper）&hellip;
-						
-					</span>
-				</div>
-				
-				<div class="post">
-					<div class="meta">Oct 27, 2022</div>
-					<a class="title" href="/posts/%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%90%9C%E7%B4%A2%E7%9B%B8%E5%85%B3%E6%80%A7%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/">大众点评搜索相关性技术探索与实践</a> &mdash;
-					<span class="description">
-						
-						1. 背景 点评搜索是大众点评App的核心入口之一，用户通过搜索来满足不同场景下对生活服务类商户的找店需求。搜索的长期目标是持续优化搜索体验，提升用户的搜索满意度，这需要我们理解用户搜索意图，准确衡量搜索词与商户之间的相关程度，尽可能展示相关商户并将更相关的商户排序靠前。因此，搜索词与商户的相关性计算是点评搜索的重要环节。
-大众点评搜索场景面临的相关性问题复杂多样，用户的搜索词比较多样，例如搜索商户名、菜品、地址、类目以及它们之间的各种复杂组合，同时商户也有多种类型的信息，包括商户名、地址信息、团单信息、菜品信息以及其他各种设施和标签信息等，导致Query与商户的匹配模式异常复杂，容易滋生出各种各样的相关性问题。具体来说，可以分为如下几种类型：
-文本误匹配：在搜索时，为保证更多商户被检索和曝光，Query可能会被拆分成更细粒度的词进行检索，因此会带来Query错误匹配到商户不同字段的问题，如图1(a)所示的用户搜“生蚝火锅”应该想找汤底中包含生蚝的火锅，而“生蚝”和“火锅”分别匹配到商户的两个不同菜品。 语义偏移：Query与商户字面匹配，但商户与Query的主要意图在语义上不相关，如“奶茶”-“黑糖珍珠奶茶包”，如图1(b)所示。 类目偏移：Query与商户字面匹配且语义相关，但主营类目与用户需求不符，例如用户搜索“水果”时一家提供“果盘”的KTV商户明显与用户的需求不相关。 图1 点评搜索相关性问题示例
-基于字面匹配的相关性方法无法有效应对上述问题，为了解决搜索列表中的各类不符合用户意图的不相关问题，需要更准确地刻画搜索词与商户的深度语义相关性。本文在基于美团海量业务语料训练的MT-BERT预训练模型的基础上，在大众点评搜索场景下优化Query与商户（POI，对应通用搜索引擎中的Doc）的深度语义相关性模型，并将Query与POI的相关性信息应用在搜索链路各环节。
-本文将从搜索相关性现有技术综述、点评搜索相关性计算方案、应用实战、总结与展望四个方面对点评搜索相关性技术进行介绍。其中点评搜索相关性计算章节将介绍我们如何解决商户输入信息构造、使模型适配点评搜索相关性计算及模型上线的性能优化等三项主要挑战，应用实战章节将介绍点评搜索相关性模型的离线及线上效果。
-2. 搜索相关性现有技术 搜索相关性旨在计算Query和返回Doc之间的相关程度，也就是判断Doc中的内容是否满足用户Query的需求，对应NLP中的语义匹配任务（Semantic Matching）。在大众点评的搜索场景下，搜索相关性就是计算用户Query和商户POI之间的相关程度。
-文本匹配方法：早期的文本匹配任务仅考虑了Query与Doc的字面匹配程度，通过TF-IDF、BM25等基于Term的匹配特征来计算相关性。字面匹配相关性线上计算效率较高，但基于Term的关键词匹配泛化性能较差，缺少语义和词序信息，且无法处理一词多义或者多词一义的问题，因此漏匹配和误匹配现象严重。
-传统语义匹配模型：为弥补字面匹配的缺陷，语义匹配模型被提出以更好地理解Query与Doc的语义相关性。传统的语义匹配模型主要包括基于隐式空间的匹配：将Query和Doc都映射到同一个空间的向量，再用向量距离或相似度作为匹配分，如Partial Least Square（PLS）[1]；以及基于翻译模型的匹配：将Doc映射到Query空间后进行匹配或计算Doc翻译成Query的概率[2]。
-随着深度学习和预训练模型的发展，深度语义匹配模型也被业界广泛应用。深度语义匹配模型从实现方法上分为基于表示（Representation-based）的方法及基于交互（Interaction-based）的方法。预训练模型作为自然语言处理领域的有效方法，也被广泛使用在语义匹配任务中。&hellip;
-						
-					</span>
-				</div>
-				
-				<div class="post">
-					<div class="meta">Sep 26, 2022</div>
-					<a class="title" href="/posts/yolov6%E5%8F%88%E5%BF%AB%E5%8F%88%E5%87%86%E7%9A%84%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%BC%80%E6%BA%90%E5%95%A6/">YOLOv6：又快又准的目标检测框架开源啦</a> &mdash;
-					<span class="description">
-						
-						1. 概述 YOLOv6 是美团视觉智能部研发的一款目标检测框架，致力于工业应用。本框架同时专注于检测的精度和推理效率，在工业界常用的尺寸模型中：YOLOv6-nano 在 COCO 上精度可达 35.0% AP，在 T4 上推理速度可达 1242 FPS；YOLOv6-s 在 COCO 上精度可达 43.1% AP，在 T4 上推理速度可达 520 FPS。在部署方面，YOLOv6 支持 GPU（TensorRT）、CPU（OPENVINO）、ARM（MNN、TNN、NCNN）等不同平台的部署，极大地简化工程部署时的适配工作。&hellip;
 						
 					</span>
 				</div>

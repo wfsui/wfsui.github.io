@@ -7,12 +7,12 @@
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 27 May 2024 02:45:15 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 May 2024 02:45:04 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>美团RASP大规模研发部署实践总结</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2rasp%E5%A4%A7%E8%A7%84%E6%A8%A1%E7%A0%94%E5%8F%91%E9%83%A8%E7%BD%B2%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Mon, 27 May 2024 02:45:15 +0000</pubDate>
+      <pubDate>Tue, 28 May 2024 02:45:04 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2rasp%E5%A4%A7%E8%A7%84%E6%A8%A1%E7%A0%94%E5%8F%91%E9%83%A8%E7%BD%B2%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93/</guid>
       <description>背景 RASP是Runtime Application Self-Protection（运行时应用自我保护）的缩写，是一种应用程序安全技术。RASP 技术能够在应用程序运行时检测并阻止应用级别的攻击。随着云计算和大数据的发展，应用程序安全越来越受到重视。RASP 技术作为一种新型的安全防护手段，正在逐渐被业界接受并广泛应用。其中Java RASP 是一种针对 Java 应用程序的 RASP 技术。通过在 Java 虚拟机（JVM）级别进行监控和防护，能够有效防止对 Java 应用程序的攻击。&#xA;RASP建设挑战 在业界，RASP的部署形式一般有agentmain、premain两种方式，二者各有优劣。适合不同的业务场景，以及安全需求。&#xA;agentmain：业务无需改动，无需重启，热插拔，动态升级。有性能抖动，业务有感知。 premain：需要改动，需要重启，前置注入，升级需要重启。无性能抖动，业务无感知。 美团的RASP建设时，大部分业务都已经在线上运营，而且有多个发布平台，没有提供一个统一的方式来更改启动参数，也就是说无法通过premain方式是实现快速部署。为了抓住主要矛盾，快速解决大部分风险问题，我们选择了agentmain方式。</description>
     </item>

@@ -7,7 +7,7 @@
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 14 Jun 2024 02:47:45 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 15 Jun 2024 02:46:33 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>面试</title>
@@ -59,6 +59,41 @@
       <description></description>
     </item>
     <item>
+      <title>Java</title>
+      <link>https://wfsui.github.io/tags/java/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/java/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sun.misc.Unsafe</title>
+      <link>https://wfsui.github.io/tags/sun.misc.unsafe/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/sun.misc.unsafe/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>到店</title>
+      <link>https://wfsui.github.io/tags/%E5%88%B0%E5%BA%97/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/%E5%88%B0%E5%BA%97/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>后台</title>
+      <link>https://wfsui.github.io/tags/%E5%90%8E%E5%8F%B0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/%E5%90%8E%E5%8F%B0/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>收藏</title>
+      <link>https://wfsui.github.io/tags/%E6%94%B6%E8%97%8F/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/%E6%94%B6%E8%97%8F/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>Arthas</title>
       <link>https://wfsui.github.io/tags/arthas/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -80,13 +115,6 @@
       <description></description>
     </item>
     <item>
-      <title>DSP</title>
-      <link>https://wfsui.github.io/tags/dsp/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/dsp/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>Dynamic</title>
       <link>https://wfsui.github.io/tags/dynamic/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -94,24 +122,10 @@
       <description></description>
     </item>
     <item>
-      <title>Java</title>
-      <link>https://wfsui.github.io/tags/java/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/java/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>LBS平台</title>
       <link>https://wfsui.github.io/tags/lbs%E5%B9%B3%E5%8F%B0/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://wfsui.github.io/tags/lbs%E5%B9%B3%E5%8F%B0/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Sun.misc.Unsafe</title>
-      <link>https://wfsui.github.io/tags/sun.misc.unsafe/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/sun.misc.unsafe/</guid>
       <description></description>
     </item>
     <item>
@@ -129,13 +143,6 @@
       <description></description>
     </item>
     <item>
-      <title>到店</title>
-      <link>https://wfsui.github.io/tags/%E5%88%B0%E5%BA%97/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/%E5%88%B0%E5%BA%97/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>到家</title>
       <link>https://wfsui.github.io/tags/%E5%88%B0%E5%AE%B6/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -150,38 +157,10 @@
       <description></description>
     </item>
     <item>
-      <title>广告投放</title>
-      <link>https://wfsui.github.io/tags/%E5%B9%BF%E5%91%8A%E6%8A%95%E6%94%BE/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/%E5%B9%BF%E5%91%8A%E6%8A%95%E6%94%BE/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>后台</title>
-      <link>https://wfsui.github.io/tags/%E5%90%8E%E5%8F%B0/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/%E5%90%8E%E5%8F%B0/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>机器学习</title>
-      <link>https://wfsui.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>开发</title>
       <link>https://wfsui.github.io/tags/%E5%BC%80%E5%8F%91/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://wfsui.github.io/tags/%E5%BC%80%E5%8F%91/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>美团AI</title>
-      <link>https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2ai/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2ai/</guid>
       <description></description>
     </item>
     <item>
@@ -199,24 +178,10 @@
       <description></description>
     </item>
     <item>
-      <title>收藏</title>
-      <link>https://wfsui.github.io/tags/%E6%94%B6%E8%97%8F/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/%E6%94%B6%E8%97%8F/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>系统</title>
       <link>https://wfsui.github.io/tags/%E7%B3%BB%E7%BB%9F/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://wfsui.github.io/tags/%E7%B3%BB%E7%BB%9F/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>App交互</title>
-      <link>https://wfsui.github.io/tags/app%E4%BA%A4%E4%BA%92/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/app%E4%BA%A4%E4%BA%92/</guid>
       <description></description>
     </item>
     <item>
@@ -231,13 +196,6 @@
       <link>https://wfsui.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://wfsui.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>多模态</title>
-      <link>https://wfsui.github.io/tags/%E5%A4%9A%E6%A8%A1%E6%80%81/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/%E5%A4%9A%E6%A8%A1%E6%80%81/</guid>
       <description></description>
     </item>
     <item>
@@ -269,6 +227,34 @@
       <description></description>
     </item>
     <item>
+      <title>行为序列建模</title>
+      <link>https://wfsui.github.io/tags/%E8%A1%8C%E4%B8%BA%E5%BA%8F%E5%88%97%E5%BB%BA%E6%A8%A1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/%E8%A1%8C%E4%B8%BA%E5%BA%8F%E5%88%97%E5%BB%BA%E6%A8%A1/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>App交互</title>
+      <link>https://wfsui.github.io/tags/app%E4%BA%A4%E4%BA%92/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/app%E4%BA%A4%E4%BA%92/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>多模态</title>
+      <link>https://wfsui.github.io/tags/%E5%A4%9A%E6%A8%A1%E6%80%81/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/%E5%A4%9A%E6%A8%A1%E6%80%81/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>美团技术博客</title>
+      <link>https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>深度学习</title>
       <link>https://wfsui.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -276,10 +262,10 @@
       <description></description>
     </item>
     <item>
-      <title>行为序列建模</title>
-      <link>https://wfsui.github.io/tags/%E8%A1%8C%E4%B8%BA%E5%BA%8F%E5%88%97%E5%BB%BA%E6%A8%A1/</link>
+      <title>十年</title>
+      <link>https://wfsui.github.io/tags/%E5%8D%81%E5%B9%B4/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/%E8%A1%8C%E4%B8%BA%E5%BA%8F%E5%88%97%E5%BB%BA%E6%A8%A1/</guid>
+      <guid>https://wfsui.github.io/tags/%E5%8D%81%E5%B9%B4/</guid>
       <description></description>
     </item>
     <item>
@@ -311,31 +297,10 @@
       <description></description>
     </item>
     <item>
-      <title>美团技术博客</title>
-      <link>https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>年度总结</title>
-      <link>https://wfsui.github.io/tags/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>前端</title>
       <link>https://wfsui.github.io/tags/%E5%89%8D%E7%AB%AF/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://wfsui.github.io/tags/%E5%89%8D%E7%AB%AF/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>十年</title>
-      <link>https://wfsui.github.io/tags/%E5%8D%81%E5%B9%B4/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/%E5%8D%81%E5%B9%B4/</guid>
       <description></description>
     </item>
     <item>
@@ -381,6 +346,34 @@
       <description></description>
     </item>
     <item>
+      <title>美团安全</title>
+      <link>https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E5%AE%89%E5%85%A8/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E5%AE%89%E5%85%A8/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>年度总结</title>
+      <link>https://wfsui.github.io/tags/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>信息安全</title>
+      <link>https://wfsui.github.io/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>App</title>
+      <link>https://wfsui.github.io/tags/app/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/app/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>分布式机器学习</title>
       <link>https://wfsui.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -395,6 +388,20 @@
       <description></description>
     </item>
     <item>
+      <title>健壮性</title>
+      <link>https://wfsui.github.io/tags/%E5%81%A5%E5%A3%AE%E6%80%A7/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/%E5%81%A5%E5%A3%AE%E6%80%A7/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>客户端</title>
+      <link>https://wfsui.github.io/tags/%E5%AE%A2%E6%88%B7%E7%AB%AF/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/%E5%AE%A2%E6%88%B7%E7%AB%AF/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>履约平台技术部</title>
       <link>https://wfsui.github.io/tags/%E5%B1%A5%E7%BA%A6%E5%B9%B3%E5%8F%B0%E6%8A%80%E6%9C%AF%E9%83%A8/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -402,10 +409,10 @@
       <description></description>
     </item>
     <item>
-      <title>美团安全</title>
-      <link>https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E5%AE%89%E5%85%A8/</link>
+      <title>美团平台</title>
+      <link>https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E5%B9%B3%E5%8F%B0/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E5%AE%89%E5%85%A8/</guid>
+      <guid>https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E5%B9%B3%E5%8F%B0/</guid>
       <description></description>
     </item>
     <item>
@@ -416,24 +423,10 @@
       <description></description>
     </item>
     <item>
-      <title>信息安全</title>
-      <link>https://wfsui.github.io/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>因果推断</title>
       <link>https://wfsui.github.io/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://wfsui.github.io/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>App</title>
-      <link>https://wfsui.github.io/tags/app/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/app/</guid>
       <description></description>
     </item>
     <item>
@@ -479,24 +472,17 @@
       <description></description>
     </item>
     <item>
-      <title>健壮性</title>
-      <link>https://wfsui.github.io/tags/%E5%81%A5%E5%A3%AE%E6%80%A7/</link>
+      <title>机器学习</title>
+      <link>https://wfsui.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/%E5%81%A5%E5%A3%AE%E6%80%A7/</guid>
+      <guid>https://wfsui.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</guid>
       <description></description>
     </item>
     <item>
-      <title>客户端</title>
-      <link>https://wfsui.github.io/tags/%E5%AE%A2%E6%88%B7%E7%AB%AF/</link>
+      <title>美团AI</title>
+      <link>https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2ai/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/%E5%AE%A2%E6%88%B7%E7%AB%AF/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>美团平台</title>
-      <link>https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E5%B9%B3%E5%8F%B0/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2%E5%B9%B3%E5%8F%B0/</guid>
+      <guid>https://wfsui.github.io/tags/%E7%BE%8E%E5%9B%A2ai/</guid>
       <description></description>
     </item>
     <item>
@@ -521,31 +507,10 @@
       <description></description>
     </item>
     <item>
-      <title>CMIngre</title>
-      <link>https://wfsui.github.io/tags/cmingre/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/cmingre/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>GPU</title>
       <link>https://wfsui.github.io/tags/gpu/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://wfsui.github.io/tags/gpu/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Transformer</title>
-      <link>https://wfsui.github.io/tags/transformer/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/transformer/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>到店研发平台</title>
-      <link>https://wfsui.github.io/tags/%E5%88%B0%E5%BA%97%E7%A0%94%E5%8F%91%E5%B9%B3%E5%8F%B0/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/%E5%88%B0%E5%BA%97%E7%A0%94%E5%8F%91%E5%B9%B3%E5%8F%B0/</guid>
       <description></description>
     </item>
     <item>
@@ -563,10 +528,24 @@
       <description></description>
     </item>
     <item>
-      <title>知识图谱</title>
-      <link>https://wfsui.github.io/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/</link>
+      <title>CMIngre</title>
+      <link>https://wfsui.github.io/tags/cmingre/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/</guid>
+      <guid>https://wfsui.github.io/tags/cmingre/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Transformer</title>
+      <link>https://wfsui.github.io/tags/transformer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/transformer/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>到店研发平台</title>
+      <link>https://wfsui.github.io/tags/%E5%88%B0%E5%BA%97%E7%A0%94%E5%8F%91%E5%B9%B3%E5%8F%B0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/%E5%88%B0%E5%BA%97%E7%A0%94%E5%8F%91%E5%B9%B3%E5%8F%B0/</guid>
       <description></description>
     </item>
     <item>
@@ -574,6 +553,48 @@
       <link>https://wfsui.github.io/tags/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://wfsui.github.io/tags/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>知识图谱</title>
+      <link>https://wfsui.github.io/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>CVPR 2024</title>
+      <link>https://wfsui.github.io/tags/cvpr-2024/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/cvpr-2024/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>计算机视觉</title>
+      <link>https://wfsui.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>视觉智能部</title>
+      <link>https://wfsui.github.io/tags/%E8%A7%86%E8%A7%89%E6%99%BA%E8%83%BD%E9%83%A8/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/%E8%A7%86%E8%A7%89%E6%99%BA%E8%83%BD%E9%83%A8/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>DSP</title>
+      <link>https://wfsui.github.io/tags/dsp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/dsp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>广告投放</title>
+      <link>https://wfsui.github.io/tags/%E5%B9%BF%E5%91%8A%E6%8A%95%E6%94%BE/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/%E5%B9%BF%E5%91%8A%E6%8A%95%E6%94%BE/</guid>
       <description></description>
     </item>
     <item>
@@ -672,13 +693,6 @@
       <link>https://wfsui.github.io/tags/%E8%A7%86%E8%A7%89%E5%88%86%E5%89%B2%E6%8A%80%E6%9C%AF/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://wfsui.github.io/tags/%E8%A7%86%E8%A7%89%E5%88%86%E5%89%B2%E6%8A%80%E6%9C%AF/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>视觉智能部</title>
-      <link>https://wfsui.github.io/tags/%E8%A7%86%E8%A7%89%E6%99%BA%E8%83%BD%E9%83%A8/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/%E8%A7%86%E8%A7%89%E6%99%BA%E8%83%BD%E9%83%A8/</guid>
       <description></description>
     </item>
     <item>

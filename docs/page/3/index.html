@@ -67,35 +67,7 @@
 				
 				
 				<div class="post">
-					<div class="meta">Jun 16, 2024</div>
-					<a class="title" href="/posts/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2%E5%8D%81%E5%91%A8%E5%B9%B4%E6%84%9F%E8%B0%A2%E4%B8%80%E8%B7%AF%E7%9B%B8%E4%BC%B4/">美团技术博客十周年，感谢一路相伴</a> &mdash;
-					<span class="description">
-						
-						2013年12月4日，美团技术博客发布了第一篇技术文章。
-2014年9月30日，「美团技术团队」微信公众号同步更新技术博客的内容。
-10年的时间，3600多个日夜，我们共发布了570多篇技术文章。
-感谢大家的一路相伴。
-美团技术博客/公众号能够走到今天，
-很重要的一个原因是美团技术团队一直有着爱学习、爱分享的工程师文化。
-我们也愿意把美团经过验证的、比较好的技术实践经验，分享给更多爱学习的小伙伴，跟大家一起学习、共同成长。
-我们没有涨粉的「套路」，
-也没有运营的「绝学」，
-美团技术博客/公众号像树一样缓缓地成长，
-枝繁叶茂靠的是美团技术同学用心撰写的一篇篇文章。
-我们没有浮夸绚丽的「辞藻」，
-也没有空洞乏味的「鸡汤」，
-美团技术博客/公众号有着树一般的平凡模样，
-求真务实、用心分享技术实践经验才是我们最坚定的信仰。
-期待未来，跟大家一起学习，共同成长。
-上周，我们征集了大家跟技术博客的一些故事，看到大家的留言后，我们非常感动。
-正是因为有大家鼓励和认可，才让我们一直坚持走到了今天。
-美团技术博客/公众号，感谢大家的一路相伴。 相信坚持的力量，期待下一个十年！&hellip;
-						
-					</span>
-				</div>
-				
-				<div class="post">
-					<div class="meta">Jun 16, 2024</div>
+					<div class="meta">Jun 17, 2024</div>
 					<a class="title" href="/posts/2023--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%83%AD%E9%97%A8%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0%E6%B1%87%E6%80%BB/">2023 | 美团技术团队热门技术文章汇总</a> &mdash;
 					<span class="description">
 						
@@ -115,7 +87,30 @@
 				</div>
 				
 				<div class="post">
-					<div class="meta">Jun 16, 2024</div>
+					<div class="meta">Jun 17, 2024</div>
+					<a class="title" href="/posts/aiops%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5%E4%BA%8B%E4%BB%B6%E7%AE%A1%E7%90%86%E7%AF%87/">AIOps在美团的探索与实践——事件管理篇</a> &mdash;
+					<span class="description">
+						
+						0 写在最前 文中所提及的事件并不仅限于故障，还包括运维工作中的告警、异常等。
+“An incident is an unplanned interruption to an IT Service or a reduction in the Quality of an IT Service.&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
+					<div class="meta">Jun 17, 2024</div>
+					<a class="title" href="/posts/%E7%BE%8E%E5%9B%A2rasp%E5%A4%A7%E8%A7%84%E6%A8%A1%E7%A0%94%E5%8F%91%E9%83%A8%E7%BD%B2%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93/">美团RASP大规模研发部署实践总结</a> &mdash;
+					<span class="description">
+						
+						背景 RASP是Runtime Application Self-Protection（运行时应用自我保护）的缩写，是一种应用程序安全技术。RASP 技术能够在应用程序运行时检测并阻止应用级别的攻击。随着云计算和大数据的发展，应用程序安全越来越受到重视。RASP 技术作为一种新型的安全防护手段，正在逐渐被业界接受并广泛应用。其中Java RASP 是一种针对 Java 应用程序的 RASP 技术。通过在 Java 虚拟机（JVM）级别进行监控和防护，能够有效防止对 Java 应用程序的攻击。
+RASP建设挑战 在业界，RASP的部署形式一般有agentmain、premain两种方式，二者各有优劣。适合不同的业务场景，以及安全需求。
+agentmain：业务无需改动，无需重启，热插拔，动态升级。有性能抖动，业务有感知。 premain：需要改动，需要重启，前置注入，升级需要重启。无性能抖动，业务无感知。 美团的RASP建设时，大部分业务都已经在线上运营，而且有多个发布平台，没有提供一个统一的方式来更改启动参数，也就是说无法通过premain方式是实现快速部署。为了抓住主要矛盾，快速解决大部分风险问题，我们选择了agentmain方式。&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
+					<div class="meta">Jun 17, 2024</div>
 					<a class="title" href="/posts/%E7%BE%8E%E5%9B%A2%E5%88%B0%E5%BA%97%E7%BB%88%E7%AB%AF%E4%BB%8E%E6%A0%87%E5%87%86%E5%8C%96%E5%88%B0%E6%95%B0%E5%AD%97%E5%8C%96%E7%9A%84%E6%BC%94%E8%BF%9B%E4%B9%8B%E8%B7%AF/">美团到店终端从标准化到数字化的演进之路</a> &mdash;
 					<span class="description">
 						
@@ -136,7 +131,7 @@
 				</div>
 				
 				<div class="post">
-					<div class="meta">Jun 16, 2024</div>
+					<div class="meta">Jun 17, 2024</div>
 					<a class="title" href="/posts/%E5%88%86%E5%B8%83%E5%BC%8F%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD%E5%9C%A8%E7%BE%8E%E5%9B%A2%E5%B1%A5%E7%BA%A6%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/">分布式因果推断在美团履约平台的探索与实践</a> &mdash;
 					<span class="description">
 						
@@ -150,18 +145,6 @@
 但是开源的因果树模型分布式实现基本处于空白状态。因果树算法引入了新的训练理论（比如Honesty Tree）并且因果树的分裂还依赖于干预变量、工具变量，这导致我们无法通过对现有分布式树实现做简单来更改来实现。因此，我们立足于论文，充分调研并借鉴业内优秀的开源实现，最终设计实现了一套高性能的分布式框架，并能提供统一的Serving方案。
 借助这套框架，新增因果森林类算法只需要专注于损失函数设计即可，完全不必考虑分布式的工程实现。截止到目前，我们已经实现了四种因果森林算法，能够灵活支持多维连续treatment和及工具变量，半小时内即可完成亿级样本100棵树的训练。下面我们将从技术选型与框架设计、性能优化、Serving实现这几个方面为大家介绍这套框架。
 2.1 技术选型与框架设计 单机树模型的工程实现可以概括为：遍历所有潜在的切分点并计算分裂指标（损失函数），取指标指标最佳的分裂点分裂，不断分裂树节点直到满足退出条件。而分布式环境下每台机器只包含部分样本，分布式环境下任何全局指标计算都会带来极大的通讯成本，因此需要选择合适的分布式架构帮助我们计算分裂指标。&hellip;
-						
-					</span>
-				</div>
-				
-				<div class="post">
-					<div class="meta">Jun 16, 2024</div>
-					<a class="title" href="/posts/%E7%BE%8E%E5%9B%A2rasp%E5%A4%A7%E8%A7%84%E6%A8%A1%E7%A0%94%E5%8F%91%E9%83%A8%E7%BD%B2%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93/">美团RASP大规模研发部署实践总结</a> &mdash;
-					<span class="description">
-						
-						背景 RASP是Runtime Application Self-Protection（运行时应用自我保护）的缩写，是一种应用程序安全技术。RASP 技术能够在应用程序运行时检测并阻止应用级别的攻击。随着云计算和大数据的发展，应用程序安全越来越受到重视。RASP 技术作为一种新型的安全防护手段，正在逐渐被业界接受并广泛应用。其中Java RASP 是一种针对 Java 应用程序的 RASP 技术。通过在 Java 虚拟机（JVM）级别进行监控和防护，能够有效防止对 Java 应用程序的攻击。
-RASP建设挑战 在业界，RASP的部署形式一般有agentmain、premain两种方式，二者各有优劣。适合不同的业务场景，以及安全需求。
-agentmain：业务无需改动，无需重启，热插拔，动态升级。有性能抖动，业务有感知。 premain：需要改动，需要重启，前置注入，升级需要重启。无性能抖动，业务无感知。 美团的RASP建设时，大部分业务都已经在线上运营，而且有多个发布平台，没有提供一个统一的方式来更改启动参数，也就是说无法通过premain方式是实现快速部署。为了抓住主要矛盾，快速解决大部分风险问题，我们选择了agentmain方式。&hellip;
 						
 					</span>
 				</div>

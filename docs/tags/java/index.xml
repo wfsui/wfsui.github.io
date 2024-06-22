@@ -7,26 +7,26 @@
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Fri, 21 Jun 2024 02:47:01 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 22 Jun 2024 02:44:33 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/java/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Java动态追踪技术探究</title>
       <link>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</link>
-      <pubDate>Fri, 21 Jun 2024 02:47:01 +0000</pubDate>
+      <pubDate>Sat, 22 Jun 2024 02:44:33 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/java%E5%8A%A8%E6%80%81%E8%BF%BD%E8%B8%AA%E6%8A%80%E6%9C%AF%E6%8E%A2%E7%A9%B6/</guid>
       <description>引子 在遥远的希艾斯星球爪哇国塞沃城中，两名年轻的程序员正在为一件事情苦恼，程序出问题了，一时看不出问题出在哪里，于是有了以下对话：&#xA;“Debug一下吧。”&#xA;“线上机器，没开Debug端口。”&#xA;“看日志，看看请求值和返回值分别是什么？”&#xA;“那段代码没打印日志。”&#xA;“改代码，加日志，重新发布一次。”&#xA;“怀疑是线程池的问题，重启会破坏现场。”&#xA;长达几十秒的沉默之后：“据说，排查问题的最高境界，就是只通过Review代码来发现问题。”&#xA;比几十秒长几十倍的沉默之后：“我轮询了那段代码一十七遍之后，终于得出一个结论。”&#xA;“结论是？”&#xA;“我还没到达只通过Review代码就能发现问题的至高境界。”&#xA;从JSP说起 对于大多数Java程序员来说，早期的时候，都会接触到一个叫做JSP（Java Server Pages）的技术。虽然这种技术，在前后端代码分离、前后端逻辑分离、前后端组织架构分离的今天来看，已经过时了，但是其中还是有一些有意思的东西，值得拿出来说一说。&#xA;当时刚刚处于Java入门时期的我们，大多数精力似乎都放在了JSP的页面展示效果上了：&#xA;“这个表格显示的行数不对”&#xA;“原来是for循环写的有问题，改一下，刷新页面再试一遍”&#xA;“嗯，好了，表格显示没问题了，但是，登录人的姓名没取到啊，是不是Sesstion获取有问题？”</description>
     </item>
     <item>
       <title>Java魔法类：Unsafe应用解析</title>
       <link>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Fri, 21 Jun 2024 02:47:01 +0000</pubDate>
+      <pubDate>Sat, 22 Jun 2024 02:44:33 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/</guid>
       <description>前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。&#xA;注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。&#xA;基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。&#xA;public final class Unsafe { // 单例对象 private static final Unsafe theUnsafe; private Unsafe() { } @CallerSensitive public static Unsafe getUnsafe() { Class var0 = Reflection.</description>
     </item>
     <item>
       <title>美团RASP大规模研发部署实践总结</title>
       <link>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2rasp%E5%A4%A7%E8%A7%84%E6%A8%A1%E7%A0%94%E5%8F%91%E9%83%A8%E7%BD%B2%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Fri, 21 Jun 2024 02:46:56 +0000</pubDate>
+      <pubDate>Sat, 22 Jun 2024 02:44:30 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2rasp%E5%A4%A7%E8%A7%84%E6%A8%A1%E7%A0%94%E5%8F%91%E9%83%A8%E7%BD%B2%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93/</guid>
       <description>背景 RASP是Runtime Application Self-Protection（运行时应用自我保护）的缩写，是一种应用程序安全技术。RASP 技术能够在应用程序运行时检测并阻止应用级别的攻击。随着云计算和大数据的发展，应用程序安全越来越受到重视。RASP 技术作为一种新型的安全防护手段，正在逐渐被业界接受并广泛应用。其中Java RASP 是一种针对 Java 应用程序的 RASP 技术。通过在 Java 虚拟机（JVM）级别进行监控和防护，能够有效防止对 Java 应用程序的攻击。&#xA;RASP建设挑战 在业界，RASP的部署形式一般有agentmain、premain两种方式，二者各有优劣。适合不同的业务场景，以及安全需求。&#xA;agentmain：业务无需改动，无需重启，热插拔，动态升级。有性能抖动，业务有感知。 premain：需要改动，需要重启，前置注入，升级需要重启。无性能抖动，业务无感知。 美团的RASP建设时，大部分业务都已经在线上运营，而且有多个发布平台，没有提供一个统一的方式来更改启动参数，也就是说无法通过premain方式是实现快速部署。为了抓住主要矛盾，快速解决大部分风险问题，我们选择了agentmain方式。</description>
     </item>

@@ -97,7 +97,7 @@
 </span></span><span style="display:flex;"><span>   }
 </span></span><span style="display:flex;"><span>  <span style="color:#586e75">//...
 </span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>}
-</span></span></code></pre></div><p>对于一个通用的检索引擎而言，Terms 检索非常高效，平均到每个 Term 查询耗时不到0.001 ms。因此在早期时，这一套架构和检索 DSL 可以很好地支持美团的搜索业务——耗时和资源开销尚在接受范围内。然而随着数据和供给的增长，一些供给丰富区域的附近可配送门店可以达到 20000~30000 家，这导致性能与资源问题逐渐凸显。这种万级别的 Terms 检索的性能与耗时已然无法忽略，仅仅这一句检索就需要 5~10 ms。</p>
+</span></span></code></pre></div><p>对于一个通用的检索引擎而言，Terms 检索非常高效，平均到每个 Term 查询耗时不到0.001 ms。因此在早期时，这一套架构和检索 DSL 可以很好地支持美团的搜索业务——耗时和资源开销尚在接受范围内。然而随着数据和供给的增长，一些供给丰富区域的附近可配送门店可以达到 20000<del>30000 家，这导致性能与资源问题逐渐凸显。这种万级别的 Terms 检索的性能与耗时已然无法忽略，仅仅这一句检索就需要 5</del>10 ms。</p>
 <h2 id="3-挑战及问题">3. 挑战及问题</h2>
 <p>由于 Elasticsearch 在设计上针对海量的索引数据进行优化，在过去的 10 年间，逐步去除了内存支持索引的功能（例如 RAMDirectory 的删除）。为了能够实现超大规模候选集的检索，Elasticsearch/Lucene 对 Term 倒排链的查询流程设计了一套内存与磁盘共同处理的方案。</p>
 <p>一次 Terms 检索的流程分为两步：分别检索单个 Term 的倒排链，多个 Term 的倒排链进行合并。</p>

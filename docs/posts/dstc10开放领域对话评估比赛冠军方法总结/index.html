@@ -144,7 +144,7 @@ DSTC10共包含5个Track，每个Track包含某一对话领域的数个子任务
 <p><strong>具体流程如下</strong>：首先提取Context和Response中的关键词构建图，其中每个关键词都是一个节点，只有Context和Response的关键词之间存在边。基于ConceptNet获取每个节点的表示，再使用图注意力网络（GATs）聚集关键词邻居节点的信息并迭代每个节点的表示，最后综合全部节点的表示得到对话的图表示。在主题词级别的图表示上连接全连接层用于分类，微调后的模型即可用于计算对话的TCM打分。</p>
 <h4 id="414-engagement-metric-em">4.1.4 Engagement Metric (EM)</h4>
 <p><strong>目的</strong>：分析生成Response的人或对话模型有多大的意愿参与当前对话。</p>
-<p><strong>内容</strong>：前面提到的指标都是从Context和Response视角评估对话质量，而用户参与度则是基于用户的视角来评估。用户参与度打分一般是0~5，分数越大，表示用户参与当前对话的兴趣越大。我们将ConvAI数据集[10]的参与度打分从1~5缩放到0~1，作为参与度打分数据集。预训练模型仍然使用SimCSE，用于预测对话的参与度打分。预训练后的模型可用于预测对话的用户参与度打分，记为EM。</p>
+<p><strong>内容</strong>：前面提到的指标都是从Context和Response视角评估对话质量，而用户参与度则是基于用户的视角来评估。用户参与度打分一般是0<del>5，分数越大，表示用户参与当前对话的兴趣越大。我们将ConvAI数据集[10]的参与度打分从1</del>5缩放到0~1，作为参与度打分数据集。预训练模型仍然使用SimCSE，用于预测对话的参与度打分。预训练后的模型可用于预测对话的用户参与度打分，记为EM。</p>
 <h4 id="415-specificity-metric-sm">4.1.5 Specificity Metric (SM)</h4>
 <p><strong>目的</strong>：分析Response本身是否足够细节。</p>
 <p><strong>内容</strong>：SM指标用于避免Response模棱两可，缺乏信息量。</p>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>小程序可测性能力建设与实践 - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:url" content="https://wfsui.github.io/posts/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%8F%AF%E6%B5%8B%E6%80%A7%E8%83%BD%E5%8A%9B%E5%BB%BA%E8%AE%BE%E4%B8%8E%E5%AE%9E%E8%B7%B5/">
+  <meta property="og:site_name" content="大峰哥">
+  <meta property="og:title" content="小程序可测性能力建设与实践">
+  <meta property="og:description" content="1. 引言 测试活动从本质上可以视为被测系统因为某个激励产生相应的响应，并对这些响应进行全面检测的过程。这个过程（激励-&gt;响应-&gt;检查）涉及到两个角色：测试者以及测试对象，测试者执行激励与检查响应，由机器（程序）或者人来完成；被测对象接受激励，产生响应。从这个过程来看：激励可控，响应可观，称之为可测。以实际业务测试为例，修改缓存、网络请求MCOK、页面跳转、用户登录态设置等都属于可测性能力。
+在未经过任何可测性改进的终端产品中，测试人员只能通过UI交互，从UI界面观察来完成最基本的质量保障。然而应用内部存在各种各样复杂的逻辑、状态，要进行更加深入的测试则需要对这些信息进行介入与观测。例如，在进行打点测试时，操作页面后，需确认打点信息是否被正常上报，这一过程通常依赖网络代理调试工具来完成校验。同样，在用户登录测试环节中，登录完成后，需要检查缓存是否已正确记录登录信息，这要求具备缓存查看的能力，这些体现了实际业务测试场景对可测性能力的需求。
+整体而言，完备地构造出目标场景进行测试涉及到多个复杂的方面，同时观测它是否符合预期也比较困难，如下图所示。终端测试长期面临着挑战。为应对这些挑战，我们以增强可测性为基础，将其贯穿测试活动的始终，使得测试能更细粒度地检查系统，提高测试深度和效率。
+作为终端产品的一种形态，小程序是运行在宿主应用（如微信、快手、百度等）之上的“轻应用”，在2017年由微信推出后发展迅速。由于小程序非常依赖于宿主应用环境，因此在测试过程中，除了面临终端测试固有的难点外，它还存在一些特殊的影响因素。
+从运行机制的角度来看，小程序的代码逻辑运行在宿主应用提供的容器环境内，它无法直接控制宿主应用本身和手机系统，这在一定程度上增大了测试与可测性改进的难度。
+在目前的实践中，针对小程序的测试主要存在以下几种工具和策略：
+采用如Charles、Fiddler等网络代理工具进行HTTP/HTTPS请求和响应的代理分析与校验。虽然这类工具适合进行数据包的抓取和分析，但它们通常无法深入小程序的内部架构，因此无法全方位控制或感知应用的内部状态。 运用图像处理技术的自动化测试工具如Airtest进行测试，它们主要关注于界面层面的操作，未能触及应用程序背后的逻辑处理，因此仍属于“黑盒测试”的范畴。 利用微信官方提供的Minium小程序测试工具来执行更为精细的测试操作，能够进行诸如API Mocking等内部控制。然而，该方法操作复杂，并依赖于微信开发者工具，而后者与真机环境之间存在一定差异，可能影响测试结果的准确性。 开发专用的自研调试面板用以验证程序逻辑和测试特定场景，但这些工具设计时常常专注于特定小程序，不易迁移至其他应用，而且它们通常不支持自动化测试流程。 综上所述，尽管存在多种测试工具和方法，但目前尚缺乏一套综合性的、易于使用的测试工具集，能够全面提升小程序的可测性。
+2. 小程序可测性介绍 小程序可测性的目标在于构建一套全方位的通用小程序可测性能力集合。该体系无缝支持真机和模拟器环境，兼容多端、多平台，并允许不同应用以低成本轻松接入。它能深入核心，为小程序提供全面而多元的可观测性与可控性，覆盖应用界面、内部状态、存储等关键领域。这一体系旨在赋能测试者更便捷地应对复杂测试场景，显著提高测试的效率与深入度。
+经过了长期的建设积累，目前我们已经构建了一套比较全面的终端可测性能力集，包含Android、iOS、小程序、Web等技术栈。其中小程序由于系统的结构特殊性，可测性能力相对其它端会有一些不同。小程序可测性主要包括业务逻辑可测性、应用可测性、系统&amp;设备可测性三个层级，在每个层级中包含多个垂直的细分方向，除了支持多技术栈的公共可测性能力，还提供了如AppData、宿主应用信息可观可控等特有能力。下面以几个典型能力说明小程序可测性使用方式与效果。
+2.1 使用方式与效果 在实际的手工以及自动化测试工作中，小程序可测性能力能够很方便的使用，并在多个场景下发挥了重要的作用。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-06-29T02:46:54+00:00">
+    <meta property="article:modified_time" content="2024-06-29T02:46:54+00:00">
+    <meta property="article:tag" content="美团技术团队">
+    <meta property="article:tag" content="到店">
+    <meta property="article:tag" content="测试">
+    <meta property="article:tag" content="小程序">
+    <meta property="article:tag" content="可测性">
+    <meta property="article:tag" content="美团门票">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="小程序可测性能力建设与实践">
+  <meta name="twitter:description" content="1. 引言 测试活动从本质上可以视为被测系统因为某个激励产生相应的响应，并对这些响应进行全面检测的过程。这个过程（激励-&gt;响应-&gt;检查）涉及到两个角色：测试者以及测试对象，测试者执行激励与检查响应，由机器（程序）或者人来完成；被测对象接受激励，产生响应。从这个过程来看：激励可控，响应可观，称之为可测。以实际业务测试为例，修改缓存、网络请求MCOK、页面跳转、用户登录态设置等都属于可测性能力。
+在未经过任何可测性改进的终端产品中，测试人员只能通过UI交互，从UI界面观察来完成最基本的质量保障。然而应用内部存在各种各样复杂的逻辑、状态，要进行更加深入的测试则需要对这些信息进行介入与观测。例如，在进行打点测试时，操作页面后，需确认打点信息是否被正常上报，这一过程通常依赖网络代理调试工具来完成校验。同样，在用户登录测试环节中，登录完成后，需要检查缓存是否已正确记录登录信息，这要求具备缓存查看的能力，这些体现了实际业务测试场景对可测性能力的需求。
+整体而言，完备地构造出目标场景进行测试涉及到多个复杂的方面，同时观测它是否符合预期也比较困难，如下图所示。终端测试长期面临着挑战。为应对这些挑战，我们以增强可测性为基础，将其贯穿测试活动的始终，使得测试能更细粒度地检查系统，提高测试深度和效率。
+作为终端产品的一种形态，小程序是运行在宿主应用（如微信、快手、百度等）之上的“轻应用”，在2017年由微信推出后发展迅速。由于小程序非常依赖于宿主应用环境，因此在测试过程中，除了面临终端测试固有的难点外，它还存在一些特殊的影响因素。
+从运行机制的角度来看，小程序的代码逻辑运行在宿主应用提供的容器环境内，它无法直接控制宿主应用本身和手机系统，这在一定程度上增大了测试与可测性改进的难度。
+在目前的实践中，针对小程序的测试主要存在以下几种工具和策略：
+采用如Charles、Fiddler等网络代理工具进行HTTP/HTTPS请求和响应的代理分析与校验。虽然这类工具适合进行数据包的抓取和分析，但它们通常无法深入小程序的内部架构，因此无法全方位控制或感知应用的内部状态。 运用图像处理技术的自动化测试工具如Airtest进行测试，它们主要关注于界面层面的操作，未能触及应用程序背后的逻辑处理，因此仍属于“黑盒测试”的范畴。 利用微信官方提供的Minium小程序测试工具来执行更为精细的测试操作，能够进行诸如API Mocking等内部控制。然而，该方法操作复杂，并依赖于微信开发者工具，而后者与真机环境之间存在一定差异，可能影响测试结果的准确性。 开发专用的自研调试面板用以验证程序逻辑和测试特定场景，但这些工具设计时常常专注于特定小程序，不易迁移至其他应用，而且它们通常不支持自动化测试流程。 综上所述，尽管存在多种测试工具和方法，但目前尚缺乏一套综合性的、易于使用的测试工具集，能够全面提升小程序的可测性。
+2. 小程序可测性介绍 小程序可测性的目标在于构建一套全方位的通用小程序可测性能力集合。该体系无缝支持真机和模拟器环境，兼容多端、多平台，并允许不同应用以低成本轻松接入。它能深入核心，为小程序提供全面而多元的可观测性与可控性，覆盖应用界面、内部状态、存储等关键领域。这一体系旨在赋能测试者更便捷地应对复杂测试场景，显著提高测试的效率与深入度。
+经过了长期的建设积累，目前我们已经构建了一套比较全面的终端可测性能力集，包含Android、iOS、小程序、Web等技术栈。其中小程序由于系统的结构特殊性，可测性能力相对其它端会有一些不同。小程序可测性主要包括业务逻辑可测性、应用可测性、系统&amp;设备可测性三个层级，在每个层级中包含多个垂直的细分方向，除了支持多技术栈的公共可测性能力，还提供了如AppData、宿主应用信息可观可控等特有能力。下面以几个典型能力说明小程序可测性使用方式与效果。
+2.1 使用方式与效果 在实际的手工以及自动化测试工作中，小程序可测性能力能够很方便的使用，并在多个场景下发挥了重要的作用。">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://wfsui.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://wfsui.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<base href="https://wfsui.github.io/">
+	<h1 class="site-title"><a href="https://wfsui.github.io/">大峰哥</a></h1>
+	<div class="site-description"><h2>记录日常生活哦</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/wfsui" title="Github"><i data-feather="github"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">文章</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">小程序可测性能力建设与实践</h1>
+			<div class="meta">Posted at &mdash; Jun 29, 2024</div>
+		</div>
+
+		<div class="markdown">
+			<h2 id="1-引言">1. 引言</h2>
+<p>测试活动从本质上可以视为被测系统因为某个激励产生相应的响应，并对这些响应进行全面检测的过程。这个过程（激励-&gt;响应-&gt;检查）涉及到两个角色：测试者以及测试对象，测试者执行激励与检查响应，由机器（程序）或者人来完成；被测对象接受激励，产生响应。从这个过程来看：<strong>激励可控，响应可观，称之为可测</strong>。以实际业务测试为例，修改缓存、网络请求MCOK、页面跳转、用户登录态设置等都属于可测性能力。</p>
+<p><img src="https://p0.meituan.net/travelcube/5d270d2c0797e389c938ae1a949f4e86329681.png"></p>
+<p>在未经过任何可测性改进的终端产品中，测试人员只能通过UI交互，从UI界面观察来完成最基本的质量保障。然而应用内部存在各种各样复杂的逻辑、状态，要进行更加深入的测试则需要对这些信息进行介入与观测。例如，在进行打点测试时，操作页面后，需确认打点信息是否被正常上报，这一过程通常依赖网络代理调试工具来完成校验。同样，在用户登录测试环节中，登录完成后，需要检查缓存是否已正确记录登录信息，这要求具备缓存查看的能力，这些体现了实际业务测试场景对可测性能力的需求。</p>
+<p>整体而言，完备地构造出目标场景进行测试涉及到多个复杂的方面，同时观测它是否符合预期也比较困难，如下图所示。终端测试长期面临着挑战。为应对这些挑战，我们以增强可测性为基础，将其贯穿测试活动的始终，使得测试能更细粒度地检查系统，提高测试深度和效率。</p>
+<p><img src="https://p0.meituan.net/travelcube/f1922d9ee5f311db5178310572f70880369995.png"></p>
+<p>作为终端产品的一种形态，小程序是运行在宿主应用（如微信、快手、百度等）之上的“轻应用”，在2017年由微信推出后发展迅速。由于小程序非常依赖于宿主应用环境，因此在测试过程中，除了面临终端测试固有的难点外，它还存在一些特殊的影响因素。</p>
+<p>从运行机制的角度来看，小程序的代码逻辑运行在宿主应用提供的容器环境内，它无法直接控制宿主应用本身和手机系统，这在一定程度上增大了测试与可测性改进的难度。</p>
+<p><img src="https://p0.meituan.net/travelcube/4606fb6610c87c76dc86ec1d6f783648282532.png"></p>
+<p>在目前的实践中，针对小程序的测试主要存在以下几种工具和策略：</p>
+<ol>
+<li>采用如Charles、Fiddler等网络代理工具进行HTTP/HTTPS请求和响应的代理分析与校验。虽然这类工具适合进行数据包的抓取和分析，但它们通常无法深入小程序的内部架构，因此无法全方位控制或感知应用的内部状态。</li>
+<li>运用图像处理技术的自动化测试工具如Airtest进行测试，它们主要关注于界面层面的操作，未能触及应用程序背后的逻辑处理，因此仍属于“黑盒测试”的范畴。</li>
+<li>利用微信官方提供的Minium小程序测试工具来执行更为精细的测试操作，能够进行诸如API Mocking等内部控制。然而，该方法操作复杂，并依赖于微信开发者工具，而后者与真机环境之间存在一定差异，可能影响测试结果的准确性。</li>
+<li>开发专用的自研调试面板用以验证程序逻辑和测试特定场景，但这些工具设计时常常专注于特定小程序，不易迁移至其他应用，而且它们通常不支持自动化测试流程。</li>
+</ol>
+<p>综上所述，尽管存在多种测试工具和方法，但目前尚缺乏一套综合性的、易于使用的测试工具集，能够全面提升小程序的可测性。</p>
+<h2 id="2-小程序可测性介绍">2. 小程序可测性介绍</h2>
+<p><img alt="终端可测性能力全景图" src="https://p0.meituan.net/travelcube/d47e451ce201d77e489ffc6ce4b52fa5391901.png"></p>
+<p>小程序可测性的目标在于构建一套全方位的通用小程序可测性能力集合。该体系无缝支持真机和模拟器环境，兼容多端、多平台，并允许不同应用以低成本轻松接入。它能深入核心，为小程序提供全面而多元的可观测性与可控性，覆盖应用界面、内部状态、存储等关键领域。这一体系旨在赋能测试者更便捷地应对复杂测试场景，显著提高测试的效率与深入度。</p>
+<p>经过了长期的建设积累，目前我们已经构建了一套比较全面的终端可测性能力集，包含Android、iOS、小程序、Web等技术栈。其中小程序由于系统的结构特殊性，可测性能力相对其它端会有一些不同。小程序可测性主要包括<strong>业务逻辑可测性、应用可测性、系统&amp;设备可测性</strong>三个层级，在每个层级中包含多个垂直的细分方向，除了支持多技术栈的公共可测性能力，还提供了如AppData、宿主应用信息可观可控等特有能力。下面以几个典型能力说明小程序可测性使用方式与效果。</p>
+<h3 id="21-使用方式与效果">2.1 使用方式与效果</h3>
+<p>在实际的手工以及自动化测试工作中，小程序可测性能力能够很方便的使用，并在多个场景下发挥了重要的作用。</p>
+<h4 id="211-手工测试">2.1.1 手工测试</h4>
+<p>下面将以缓存管理、页面跳转功能为例介绍小程序在手工测试中的使用方式以及效果。</p>
+<p>在实际的测试工作中，会结合Lyrebird使用小程序可测性，<a href="https://github.com/Meituan-Dianping/lyrebird">Lyrebird</a>是美团到店研发平台自研的终端测试工作台，包含终端状态数据管理、网络请求代理与Mock、缺陷记录、自定义插件扩展等能力。同时它还提供了图形化操作界面，是手工与自动化测试中使用可测性能力的入口。</p>
+<p>在小程序接入可测性能力SDK之后，可以通过可测性SDK提供的扫码功能与Lyrebird建立连接，后续就可以通过Lyrebird在PC端利用可测性对小程序进行控制以及观测。</p>
+<p><img src="https://p1.meituan.net/travelcube/eff3afe2882c976ff9b977637355f18e321841.png"></p>
+<p><strong>缓存管理</strong></p>
+<p>我们可以通过缓存管理功能验证依赖缓存的业务逻辑正确性，如表单信息\用户信息暂存到缓存功能等。</p>
+<ul>
+<li>如下图所示，1处为缓存编辑框，展示当前选择设备上的小程序所有的缓存信息，并对这些缓存进行管理，支持批量的增删改。</li>
+<li>2处展示目标小程序的缓存变更事件信息，包括在该页面对缓存的编辑以及小程序自身内部对缓存的增删改操作事件，会随着事件的触发实时更新。</li>
+</ul>
+<p><img src="https://p0.meituan.net/travelcube/5ecfcd93d57984a57d355376a929857d746868.png"></p>
+<p><strong>页面跳转</strong></p>
+<p>页面跳转是小程序业务测试中重度使用的能力，可以利用该功能跳转到如表单页，商品详情页等中间页面，不再需要从首页一步一步操作进入目标被测页面，减少测试前置准备工作，具体可以在该Lyrebird页面中输入页面路径进行跳转。</p>
+<p><img src="https://p0.meituan.net/travelcube/3d443c4c25c751a34ef6cc64b8cf6289213999.png"></p>
+<h4 id="212-自动化测试">2.1.2 自动化测试</h4>
+<p>将可测性能力结合Lyrebird应用于自动化测试。如通过页面跳转能力直达测试场景，然后利用通过可测性录制的页面状态数据进行场景状态还原后进行页面渲染，获取页面上的数据/布局展示，最后将实际运行图和预先设置好的页面基准图进行对比，提供渲染的差异结果，进行视觉DIFF测试。</p>
+<blockquote>
+<p>这类“视觉测试”以页面为单位，通过深度链接跳转技术配合一系列终端应用本身的可测性改进，直达测试场景，并通过图像处理技术如长图融合、图像增量对比和文本识别能力进行视觉DIFF测试。</p>
+</blockquote>
+<p><img src="https://p0.meituan.net/travelcube/e14531af55caab0bc5e30bbbac10c6d1423437.png"></p>
+<p>可测性建设的是对应用内部状态的可观可控能力，对于任何测试方法，只要涉及应用内部，可测性都能发挥重要作用。比如在健壮性测试中通过可测性构造破坏性异常场景，或者在功能测试中模拟小程序不同的进入方式（如二维码、视频号、搜索等）来测试所有可能的使用场景下小程序的运行情况。</p>
+<p><img src="https://p0.meituan.net/travelcube/af78e6c77894933fa9a48750a8bc621b258068.png"></p>
+<h3 id="22-接入方式">2.2 接入方式</h3>
+<p>小程序可测性能力SDK被封装为一个NPM包，在小程序源代码或者编译产物项目中引入此NPM包，便可实现可测性能力的接入，无需进行额外适配工作。</p>
+<p><strong>跨平台运行</strong></p>
+<p>除了对微信小程序的支持之外，小程序可测性能力SDK通过集成一个适配器（Adapter）将能力扩展到多个宿主应用，包括美团、支付宝、快手、百度等平台的支持。这些平台的基础库API与微信类似，适配器会根据不同平台的特点，对代码进行相应的调整，包括基础库API、前端语法或文件类型等，以保证在各个平台上的兼容性和一致性，实现跨平台运行。</p>
+<h3 id="23-实现原理">2.3 实现原理</h3>
+<p>小程序可测性实现的核心思路是通过JavaScript Hook的方式，在小程序JavaScript Runtime中对如微信小程序JS基础库、业务公共基础组件等目标模块进行透明化介入，实现对其内部的可观可控。在此之后，通过可测性SDK内的中控与外部建立网络链接，从而实现在远端对小程序内部状态与功能的可观可控。</p>
+<p><strong>JavaScript Hook介绍</strong></p>
+<p>JavaScript Hook基于JavaScript的动态特性，有以下方法：</p>
+<p><strong>函数Hook</strong>：直接覆盖或修改原函数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>let _originAlert = alert;  // 保存原函数
+</span></span><span style="display:flex;"><span>alert = function () {
+</span></span><span style="display:flex;"><span>  console.log(&#39;alert执行开始&#39;);
+</span></span><span style="display:flex;"><span>  _originAlert.apply(this, arguments); //执行原函数
+</span></span><span style="display:flex;"><span>  console.log(&#39;alert执行结束&#39;);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>对象属性Hook</strong>：通过Object defineProperty定义新的或直接修改某个对象的<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperties">属性</a>，如修改Getter/Setter方法，控制对某个对象的获取/设置流程。</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Object.defineProperty(document, &#39;cookie&#39;, {
+</span></span><span style="display:flex;"><span>  set: function(val) {  // 控制cookie的设置流程
+</span></span><span style="display:flex;"><span>    console.log(&#39;获得cookie: &#39;, val);
+</span></span><span style="display:flex;"><span>    currentCookie = val;
+</span></span><span style="display:flex;"><span>    return val;
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  get: function() {  // 控制cookie的获取流程
+</span></span><span style="display:flex;"><span>    return null;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p><strong>原型链Hook</strong>：修改原型链上的数据，如<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>、<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>let _originalGetTime = Date.prototype.getTime;  // 保存原型链原方法
+</span></span><span style="display:flex;"><span>Date.prototype.getTime = function() {
+</span></span><span style="display:flex;"><span>  console.log(&#39;getTime has been called&#39;); 
+</span></span><span style="display:flex;"><span>  return originalGetTime.apply(this, arguments); //执行原方法
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy">Proxy对象</a>：创建代理模式替代原始对象，可以重新定义获取、设置和定义属性等基本对象操作。</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>// 创建Proxy有两个参数：
+</span></span><span style="display:flex;"><span>// target：要代理的原始对象
+</span></span><span style="display:flex;"><span>// handler：定义哪些操作将被拦截以及如何重新定义被拦截操作的对象
+</span></span><span style="display:flex;"><span>let handler = {
+</span></span><span style="display:flex;"><span>  get: function(target, prop) {
+</span></span><span style="display:flex;"><span>    console.log(`获取 ${prop}`);
+</span></span><span style="display:flex;"><span>    return target[prop];
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  set: function(target, prop, val) {
+</span></span><span style="display:flex;"><span>    console.log(`设置 ${prop} 值为 ${val}`);
+</span></span><span style="display:flex;"><span>    target[prop] = val;
+</span></span><span style="display:flex;"><span>    return true;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>let proxy = new Proxy(window, handler);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>proxy.test = &#39;test&#39;;     // 输出: Setting test to test
+</span></span><span style="display:flex;"><span>console.log(proxy.test); // 输出: Getting test
+</span></span><span style="display:flex;"><span>                         //      test   
+</span></span><span style="display:flex;"><span>                         
+</span></span></code></pre></div><p><strong>静态Hook</strong>：小程序构建时在特定文件中直接修改其JavaScript源代码。</p>
+<p>其他方式这里就不详细展开了。</p>
+<p>可测性SDK的大体可分为四层：</p>
+<ul>
+<li><strong>通信层</strong>：与外部进行通信，负责指令和数据与远端（如Lyrebird）的双向流动。</li>
+<li><strong>指令分发层</strong>：对通信层接收到的参数指令进行解析，依次调用控制小程序相关状态的功能层模块。</li>
+<li><strong>功能层</strong>：实现小程序特定功能可观可控的业务逻辑，包括UI、网络请求、存储、应用状态等模块，实现如请求代理与修改、切换登录态或者控制缓存可测性功能。</li>
+<li><strong>Hook层</strong>：实现对实际逻辑模块状态和方法的透明化介入。由于小程序应用内部的状态/数据与开发者代码相关联，Hook层通过JavaScript Hook对宿主应用基础库、公共组件、业务特定逻辑三种类型的功能模块进行拦截介入，使得其状态/数据可观和可控，为功能层提供实现基础。Hook层一般需要先于业务代码加载，保证拦截的有效性。
+<ol>
+<li>宿主应用基础库。通用性改造，对小程序容器提供的系统级接口进行介入，如网络请求、地理信息等。</li>
+<li>公共组件。组件级通用，如美团的公共登录组件，对其进行改造后，接入登录组件的小程序都能够使用相应的可测性能力，比如切换登录态/模拟登出等能力。</li>
+<li>业务特定逻辑。某个小程序特有的业务逻辑，通过可测性SDK提供的API对这些逻辑进行改造后以插件形式集成定制化能力。</li>
+</ol>
+</li>
+</ul>
+<p>下面将以网络请求可观可控为例介绍小程序可测性的实现原理。</p>
+<p><strong>网络请求代理</strong></p>
+<p>当外部希望控制小程序设置网络代理时，整体流程如下：</p>
+<p><img src="https://p1.meituan.net/travelcube/5460b50bf5c0d9585b2e98f2f7aedaa6277846.png"></p>
+<ol>
+<li>外部（人/机器）首先通过HTTP/WebSocket方式传递包含设置小程序请求代理的指令，如图即拦截小程序发送的请求转发到127.0.0.1:1234代理服务器；</li>
+<li>可测性SDK在通信层接收相应的指令后。将其传递给指令分发层。在指令分发层中，收到指令后进行解析，并按预定规则对指令执行进行编排，确定执行顺序；</li>
+<li>指令分发层按编排顺序调用功能层设置网络代理并传入开启状态和代理服务器地址参数，功能层通过修改这两个变量，控制Hook层对请求API的拦截，从而改变请求代理的状态；</li>
+<li>Hook层拦截微信基础库里wx对象的request方法，如下图代码所示，分为以下流程：
+a.保存wx.request原始方法的引用（3行），并通过Object.defineProperty将wx对象设置为可写状态（4-8行）；
+b.将wx.request修改为Hook的新方法。新方法的入参与原始wx.request一致，包括请求头、请求地址、响应体等，因此可以对这些参数进行修改（12行），比如替换请求域名、增加请求头、修改响应体数据等；
+c.最后用修改后的参数使用原始方法进行执行（13行）。</li>
+</ol>
+<p>Hook层通过mockStatus和mockUrl两个变量控制到小程序是否被代理以及代理服务器地址（19-22行），当开发者代码中使用wx.request发起请求时，会先经过Hook指向的新方法。如果被设置代理，请求地址将会根据代理服务器协议进行修改，从而使得请求被代理。</p>
+<p><img src="https://p0.meituan.net/travelcube/779240afc8407bdf3c2577e38949ed64529686.png"></p>
+<h2 id="3-美团门票业务小程序测试实践">3. 美团门票业务小程序测试实践</h2>
+<p>在到店众多应用了小程序可测性能力的业务中，美团门票业务从2021年开始即参与了小程序可测性建设，目前在门票质量保障工作中，可测性相关能力均深度应用在新需求测试、回归测试、线上巡检等各种类型的测试活动中。</p>
+<h3 id="31-可测性落地">3.1 可测性落地</h3>
+<p>下面通过门票业务一个具体的新需求测试例子来介绍可测性如何在测试活动中进行落地。</p>
+<p><strong>需求背景</strong></p>
+<p>用户从商品详情页进入到填单页，在选择日期、数量或填写游玩人等信息后，为了减少用户的操作路径，再次进入该填单页需要保持之前填写的这些信息不变。</p>
+<p><img src="https://p1.meituan.net/travelcube/507d6d628af0ff896f1030efc3b99579443654.png"></p>
+<p><strong>操作路径划分</strong></p>
+<p>该过程需要经过以下步骤：进入填单页 —&gt; 打开价格日历弹层，选择相应的日期 —&gt; 添加数量 —&gt; 填写或者选择游玩人 —&gt; 点击返回退出填单页 —&gt; 再次进入填单页，查看它当前的状态。我们选择对缓存进行可测性改进，依靠指令数据驱动+内部方法调用来达到同等UI操作的效果，保障此类场景测试的稳定性并提高执行效率。</p>
+<p><strong>技术实现</strong></p>
+<p>整体通过缓存实现。在进入填单页时，首先会读取小程序上的缓存并渲染；在选择日期、数量和游玩人时，分别对相关信息进行暂存；在退出填单页时，将这些暂存的数据写入缓存。</p>
+<p><img src="https://p1.meituan.net/travelcube/ce4b77873c92ade8123d7c78d7ca96c6337462.png"></p>
+<p><strong>测试分析</strong></p>
+<p>由于进入填单页需要读取缓存进行渲染，因此测试过程中首先应从UI上进行验证，判断第二次进入的日期、数量和游玩人是否与上一次进入时选择的状态一致；其次还应从数据上进行验证，即进入填单页有“读”缓存的动作；在退出填单页时，需要将暂存的数据写入缓存，因此测试过程中应验证数据能正确地写入缓存，而且缓存里有正确的值。</p>
+<p><img src="https://p0.meituan.net/travelcube/8ecc188f55bc613d2d9b7769d5374933349101.png"></p>
+<p><strong>可测性能力实践落地</strong></p>
+<ul>
+<li><strong>通过可观校验“写”的正确性</strong>。对于“写”，验证缓存的写入动作，并且写入缓存的数据是正确的。缓存的可观性改造能够将“写”的动作、“写”的当前值以及当前缓存具体信息，进行上报，这样就可以自动化校验当前操作后是否缓存值是否发生了正确的变化，以此完成对缓存“写”的校验。</li>
+</ul>
+<p><img src="https://p0.meituan.net/travelcube/ba4a9cd7f93518cdd747bd22e024f0ed397438.png"></p>
+<ul>
+<li>通过可控校验“读”的正确性。对于“读”，首先验证UI能够正确展示，其次从数据上验证有缓存的“读”动作。由于测试缓存必须经历选择日期、选择数量、选择游玩人，返回退出填单页等多个步骤。测试路径较为繁琐，因此，对缓存的可控性改造后，传入相应的配置指令（如2.2部分介绍），控制缓存中的数据，直达被测页面和状态，并通过自动化测试比对当前运行的页面和页面基准图，判断它是否正确被渲染，以此分别从数据和UI上完成对缓存“读”的校验。</li>
+</ul>
+<p><img src="https://p0.meituan.net/travelcube/fe7e3af0483ecbe906ac2c5450fc0dd1514748.png"></p>
+<p>门票业务在小程序测试上目前已经落地多种可测性能力，如下图所示，包括控制页面跳转、请求代理、控制登录、日志上报、隐私治理、前后端环境、录制回放、自动化交互控制等都在门票测试活动中有相应的落地，发挥着非常重要的作用。</p>
+<p><img src="https://p0.meituan.net/travelcube/ff0866b1959a495a41b33fc97a58d137422166.png"></p>
+<h3 id="32-业务实践总结">3.2 业务实践总结</h3>
+<p>门票业务借助可测性改进使得测试的覆盖更加全面，目前30%+的测试场景依赖于可测性能力进行构建。在美团小程序和点评小程序的门票频道以及门票独立小程序上均有上百个自动化测试用例，页面覆盖率已经达到100%，场景覆盖程度达到80%+。这些测试用例在门票新需求测试、回归测试等各个阶段都会触发自动执行，累计已辅助发现上百个有效问题。</p>
+<h2 id="4-总结与展望">4. 总结与展望</h2>
+<p>美团核心本地商业/到店研发平台从2021年开始系统化建设小程序可测性，到目前融入到店终端测试工具链以及质量保证体系之中，通过具备扩展性的通用能力框架，融合手工和自动化测试，贯穿测试活动始终。未来我们还将持续关注于基础可测性能力的稳定性，聚焦具备更多业务特性的可测性能力建设。</p>
+<h2 id="qa">Q&amp;A</h2>
+<p><strong>Q</strong>：代理逻辑如果有Bug会不会影响比较大</p>
+<p><strong>A</strong>：代理逻辑本身很简单，出错概率不大。进行Hook时，会有异常监控能力以及相应的兜底策略，即使出问题，也尽量降低对业务实际使用的影响。</p>
+<p><strong>Q</strong>：可测性SDK需要对业务代码进行改造吗？</p>
+<p><strong>A</strong>：不需要，可测性SDK对于业务应用是透明的。</p>
+<p><strong>Q</strong>：Lyrebird项目和小程序可测性SDK的关系是什么？</p>
+<p><strong>A</strong>：Lyrebird与小程序可测性是两个独立的项目。小程序可测性SDK是以一个NPM包的形式实现的，在小程序里安装NPM包，即可使小程序具有可测性。Lyrebird可以与小程序可测性SDK的通信接口进行连接，然后用户可通过Lyrebird中小程序可测性页面使用小程序可测性能力。</p>
+<p><strong>Q</strong>：针对小程序可测试性能力建设与实践，我想问下，如果我们要用你们的测试工具，需要做什么适配吗？</p>
+<p><strong>A</strong>：不需要进行额外适配，最终的呈现会是NPM包形式，在产物里安装就可以接入我们的可测性能力，可以对它进行控制。</p>
+<p><strong>Q</strong>：生产环境会接入可观测SDK吗？如果接入对性能有多大影响？</p>
+<p><strong>A</strong>：首先是对它的性能的影响，我们实际上是对小程序里的基础库的API或者一些状态数据进行了拦截，会对性能产生一定的影响，但目前这个影响范围对业务来说比较小，是可接受的。生产环境的不会引入可测性SDK，因此不会对线上质量造成影响。</p>
+<p><strong>Q</strong>：小程序可测性有不适合使用的场景？</p>
+<p>小程序可测性主要针对小程序前端手工与自动化场景进行能力提升，它是具备一套通用可扩展框架，可以按照业务需求低成本进行可测性能力扩展，然而，存在特定情况下其适用性受限：首先，由于运行环境的约束，针对宿主应用如微信或支付宝自身的可测性需求，小程序的可测性无法支持。此外，小程序可测性专注于终端测试，因此对于那些需求后端服务链路验证的场景，并不适用，需配合针对性工具使用。</p>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F">美团技术团队</a></li>
+								
+								<li><a href="/tags/%E5%88%B0%E5%BA%97">到店</a></li>
+								
+								<li><a href="/tags/%E6%B5%8B%E8%AF%95">测试</a></li>
+								
+								<li><a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F">小程序</a></li>
+								
+								<li><a href="/tags/%E5%8F%AF%E6%B5%8B%E6%80%A7">可测性</a></li>
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2%E9%97%A8%E7%A5%A8">美团门票</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'wfsui';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="">Wfsui theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div><script>feather.replace()</script>
+</body>
+</html>

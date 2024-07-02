@@ -7,7 +7,7 @@
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Mon, 01 Jul 2024 02:52:13 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jul 2024 02:48:15 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>面试</title>
@@ -409,6 +409,13 @@
       <description></description>
     </item>
     <item>
+      <title>GPU</title>
+      <link>https://wfsui.github.io/tags/gpu/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/gpu/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>大众点评</title>
       <link>https://wfsui.github.io/tags/%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -465,13 +472,6 @@
       <description></description>
     </item>
     <item>
-      <title>GPU</title>
-      <link>https://wfsui.github.io/tags/gpu/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/gpu/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>Transformer</title>
       <link>https://wfsui.github.io/tags/transformer/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -507,13 +507,6 @@
       <description></description>
     </item>
     <item>
-      <title>软件设计</title>
-      <link>https://wfsui.github.io/tags/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wfsui.github.io/tags/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>CVPR 2024</title>
       <link>https://wfsui.github.io/tags/cvpr-2024/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -546,6 +539,13 @@
       <link>https://wfsui.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://wfsui.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>软件设计</title>
+      <link>https://wfsui.github.io/tags/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wfsui.github.io/tags/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/</guid>
       <description></description>
     </item>
     <item>

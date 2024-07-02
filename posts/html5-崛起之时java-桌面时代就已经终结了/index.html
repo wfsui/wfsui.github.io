@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>HTML5 崛起之时，Java 桌面时代就已经终结了 - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:url" content="https://wfsui.github.io/posts/html5-%E5%B4%9B%E8%B5%B7%E4%B9%8B%E6%97%B6java-%E6%A1%8C%E9%9D%A2%E6%97%B6%E4%BB%A3%E5%B0%B1%E5%B7%B2%E7%BB%8F%E7%BB%88%E7%BB%93%E4%BA%86/">
+  <meta property="og:site_name" content="大峰哥">
+  <meta property="og:title" content="HTML5 崛起之时，Java 桌面时代就已经终结了">
+  <meta property="og:description" content="2004 年 Google Maps 的面世标志着 Java 桌面时代的终结，也改变了桌面环境下“跨平台”的基本定义。
+本文作者以个人视角对 Java 桌面发展历程做了回顾，内容来自他在上世纪九十年代后期担任 Java 开发者时的所见所感，主要讲述曾经的“杀手级”桌面语言 Java 是为何从 21 世纪开始颓势尽显、步入衰落的。值得一提的是，作者如今在做一款开发者友好型 Java 桌面部署工具（jDeploy），其实他还是希望 Java 可以重拾风采，再度变得对桌面开发具有吸引力。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-04-10T22:41:25+08:00">
+    <meta property="article:modified_time" content="2022-04-10T22:41:25+08:00">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="HTML5 崛起之时，Java 桌面时代就已经终结了">
+  <meta name="twitter:description" content="2004 年 Google Maps 的面世标志着 Java 桌面时代的终结，也改变了桌面环境下“跨平台”的基本定义。
+本文作者以个人视角对 Java 桌面发展历程做了回顾，内容来自他在上世纪九十年代后期担任 Java 开发者时的所见所感，主要讲述曾经的“杀手级”桌面语言 Java 是为何从 21 世纪开始颓势尽显、步入衰落的。值得一提的是，作者如今在做一款开发者友好型 Java 桌面部署工具（jDeploy），其实他还是希望 Java 可以重拾风采，再度变得对桌面开发具有吸引力。">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://wfsui.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://wfsui.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<base href="https://wfsui.github.io/">
+	<h1 class="site-title"><a href="https://wfsui.github.io/">大峰哥</a></h1>
+	<div class="site-description"><h2>记录日常生活哦</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/wfsui" title="Github"><i data-feather="github"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">文章</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">HTML5 崛起之时，Java 桌面时代就已经终结了</h1>
+			<div class="meta">Posted at &mdash; Apr 10, 2022</div>
+		</div>
+
+		<div class="markdown">
+			<blockquote>
+<p><strong>2004 年 Google Maps 的面世标志着 Java 桌面时代的终结，也改变了桌面环境下“跨平台”的基本定义。</strong></p>
+</blockquote>
+<p>本文作者以个人视角对 Java 桌面发展历程做了回顾，内容来自他在上世纪九十年代后期担任 Java 开发者时的所见所感，主要讲述曾经的“杀手级”桌面语言 Java 是为何从 21 世纪开始颓势尽显、步入衰落的。值得一提的是，作者如今在做一款开发者友好型 Java 桌面部署工具（jDeploy），其实他还是希望 Java 可以重拾风采，再度变得对桌面开发具有吸引力。</p>
+<p>本文是该回顾系列文章中的第二篇，在<a href="https://www.infoq.cn/article/RsNKgAF7HSdfsreZ4Tym" title="xxx">上期文�</a>�中，作者回顾了 Java 制霸桌面的鸿图如何在 1999 至 2005 的短短几年间烟消云散。当初的 Java 可谓志得意满、凭 Applet 小程序技惊四座，下决心要在互联网时代下重新定义“桌面”。互联网的未来在于“跨平台”，而 Java 的血管中涌动的正是“跨平台”的血液，优势在握！可遗憾的是，事后来看，此跨平台似乎并非彼跨平台。接下来，让我们继续跟着作者的脚步去看看，具体在 2004 至 2007 年间，Java 桌面又经历了什么。</p>
+<h2 id="桌面王朝的最后时光"><strong>桌面王朝的最后时光</strong></h2>
+<p>2002 年左右，我在客服中心为客户提供计算机与打印机技术支持。我和小伙伴们挤在小小的隔间里，面对着一款桌面程序。通过这款软件，我们可以快速查询客户和产品信息，并把通话中的重要信息记录进去。</p>
+<p>在典型的客服来电中，我们会询问客户的产品序列号，再把结果输入系统。如果他们之前就打过电话，系统就会输出窗口，里面包含产品的完整历史记录和之前的求助细节。在参考其他同事留下的事由记录后，我还能操作界面中的选项卡和功能按钮，例如帮客户更换新机。</p>
+<p>我不记得这款软件叫什么名字了，可能是为公司或者客服中心专门定制的吧。印象里这应该是 PeopleSoft（仁科公司，2005 年已被甲骨文收购）的产品，但我也不太确定。总之，这款桌面软件运行在 Windows 2000 系统上，肯定不是 Web 应用程序。它其实挺复杂，里面包含不少菜单和表单；不过一旦上手，整个使用体验相当棒——速度快、反应灵敏，几乎没有任何延迟。以输入电话号码查询客户记录为例，我们只需要在“电话”字段里输入号码，其余空白表格就会立刻被客户信息填充完整。</p>
+<p>据我所知，这款程序肯定不是用 Swing 编写的。但如今全球各地无数公司都在使用由 Swing 编写的企业级桌面软件，它们在使用体验上跟我当初接触的这款程序非常相似。换句话说，Swing 已经满足了我们在 2001、2002 年那会对于桌面业务软件的全部期望和想象。</p>
+<p>在工作半年之后，上边来了新指示，要求我们用 Web 应用程序替换掉之前的桌面软件。据说新系统会让我们的工作更轻松，但在第一节培训课刚刚过去十分钟后，我们就意识到这根本就是胡说八道：新系统简直烂透了！</p>
+<p>我不太记得当时使用的是 IE 5.5 还是 IE 6 了，总之就是前 AJAX 时代的 Web 环境。现在在产品字段中输入序号后，系统会弹出一个窗口，上面写着“正在加载……请勿关闭此窗口”。几秒后，窗口自行消失，客户详细信息出现在表单当中。反正每当需要从服务器获取内容时，这个倒霉窗口就会跳出来。领导还提醒我们别随便在浏览器里点“刷新”，说是这样会破坏系统状态。于是每每出现问题，我就只能先登出、再重新登录。</p>
+<p>我不太理解公司为什么要用这款“傻了吧唧”的 Web 应用程序替代之前的桌面软件。可能是出于成本考虑吧，毕竟跟桌面软件相比，Web 应用程序的开发和维护成本都更低。或者是软件供应商强行施压，比如“Web 才是未来，每个人都必须接受！”但，真有这么强势的乙方吗？</p>
+<p>无论如何，这里透露出一个重要的信息：<strong>Web 应用程序还没等发展完善，就已经开始蚕食桌面软件的生存空间。唯一的问题就是 Web 应用需要多久才能追平桌面软件的使用体验。而事实证明，用不了多久。</strong></p>
+<h2 id="恐怖谷效应"><strong>恐怖谷效应</strong></h2>
+<p>再回到 Java 这边。热情的支持者们正不断扩大 Java 帝国的桌面版图，对 WORA（一次编写、随处运行）的热情也引导他们最终迈向跨平台小程序与“本机”应用程序之间的秘密山谷。那时候的 Java IDE 主要面向三大构建目标：</p>
+<ol>
+<li>小程序</li>
+<li>Java Web 开发</li>
+<li>可执行 Jar 文件是的，没有直接开发本机应用程序的选项。虽然有第三方工具可以把 Jar 文件转换为本机应用程序，但这类工具相当复杂而且操作流程极为繁琐。只有对自己最“狠”的人才能坚持用得下去。而 Java 之所以有勇气忽视这一点，靠的就是对未来的判断——本机桌面应用程序终于被淘汰。其实这个预言是正确的，只是在时间上有所偏差。</li>
+</ol>
+<p>从 2022 年的角度回顾，Java 身上其实有很多显而易见的问题。应用程序可以作为 Web 部署、也可以按本机部署，但这两种形式都没有一丁点“原生”感。Web 部署的小程序运行在自己的“沙箱”内并被集成到网页当中，整个运行过程又慢又迟钝。</p>
+<h2 id="html5-的崛起"><strong>HTML5 的崛起</strong></h2>
+<p>虽然 Java 总想在 Web 和桌面之间建起一道桥梁，但它自身却被 Web 所裹挟。到 2002 年，很多企业开始把原本的桌面软件功能迁移到 Web 端。这些 Web 应用程序的构建、维护和部署成本确实比桌面软件低得多，代价就是在用户体验上做出妥协。</p>
+<p>大约也是在这个时候，Java 开始推崇“富互联网应用”的概念，希望把好 Web 应用跟差 Web 应用区分开来。但到 2004 年 Google Maps 正式亮相时，Java 的小把戏彻底宣告破产。Google Maps 以令人震惊的效果为富 Web 应用程序树立了标杆，而人家用的是 HTML5。</p>
+<p>我最近又看了一次 Bill Atkinson 第一次向苹果爱好者们展示 MacPaint 的旧视频。在他第一次通过鼠标用画笔工具绘出图案时，现场一片“哇哦”和掌声。这就叫开创性。我第一次看到 Google Maps 也是类似的感觉，地图可以无缝缩放、万向平移，压根看不出来任何拼接的痕迹。这里使用的全新技术被称为 AJAX（异步 JavaScript 与 XML），这也是人们第一次能够在 Web 应用程序中向服务器后台无缝发出请求。现在这一切当然被视为理所当然，可 2004 年那会，开发者需要绞尽脑汁才能把那些让人想吐的框架或者弹窗隐藏起来，确保不用刷新整个页面就能从服务器处加载新数据。</p>
+<p>身为 Web 开发者，我当然对其中的无穷可能性心生向往。但从桌面开发的角度看，这场历史性的变革似乎没有给桌面、特别是 Java 带来任何影响。</p>
+<p>在 HTML5 之前，“跨平台”的意思是“跨 Windows、Mac 和 Linux”，所以跨的范围还是在桌面范畴之内。当时我并没意识到，但现在来看 HTML5 的亮相代表着新平台时代的降临——它将成为客户端应用程序的客观标准；更重要的是，Java 支持不了这个平台。突然之间，WORA 理念就出现空白了——Swing 应用程序适用于一切平台，除了最重要的那个：网络浏览器。</p>
+<h2 id="java-开发者纷纷外逃"><strong>Java 开发者纷纷“外逃”</strong></h2>
+<p>那 Java 桌面开发者们都跑哪去了？方向主要有三：</p>
+<ol>
+<li>服务器</li>
+<li>浏览器（HTML5）</li>
+<li>桌面应用如果大家对自己的基本定位首先是“Java 开发者”、其次是“客户端开发者”，那最终应该会选择 Java 在当下仍然占据主动的平台——服务器。如果你对面向用户开发（客户端）更感兴趣，而且主要看中 Java 的跨平台价值主张，那接下来的目标很可能是 HTML5 （Javascript/HTML/CSS）开发。如果你是铁杆“保皇党”（比如说我），那就继续坚守 Java 桌面开发，同时满腹狐疑地看着自己这个圈子越来越小。</li>
+</ol>
+<h4 id="gwt让-java-走进浏览器">GWT：让 Java 走进浏览器</h4>
+<p>2000 年初，JavaScript 开发工具尚处于起步阶段。大多数 Web 开发者只能使用文本编辑器来编写.js 文件。简单的验证脚本和交互设计倒是没问题，但这种粗糙的方法肯定不能扩展并支持大型企业应用程序项目。另外，当时的 JavaScript 语言还不具备开发者在重构等重要操作时所需要的功能，例如静态类型。</p>
+<p>相比之下，Java 已经拥有一套全面的开发工具，能够轻松扩展至任何规模的项目。到 2004 年，领先且成熟的 Java IDE 已经成为开发环境中的标杆，其中的静态类型更是大大简化了大型项目的维护难度。到这时，唯一的遗憾就是 Java 应用程序无法在网络浏览器中运行（只有小程序可以）。</p>
+<p>为了解决这个难题，Google 打造出 GWT（Google Web Toolkit）。这是一套 Java 到 JavaScript 的编译器加运行时库，允许开发者借助 Java 那一整套领先的开发工具编写应用程序，再把成果部署成 JavaScript 应用的形式在浏览器内原生运行。这套运行时库包含诸多核心 Java API（例如 java.lang、java.util 等）的实现，确保业务逻辑能够在 GWT 应用程序与服务器应用程序间顺畅共享。</p>
+<p>在用户界面方面，GWT 也提供自己的功能部件，其实质就是以 Java 的形式将各部件与浏览器中的本机 HTML 部件相绑定。虽然我们还是没法直接使用 Swing 代码、大部分第三方库也不在支持之列，但我们至少可以用到自己最熟悉的 Java 开发环境和核心 API。</p>
+<p>所以这不能算是让 Java 真正走进了浏览器——标准 JavaSE 库仍然大部分不受支持，线程等核心功能也无法起效。但至少对多数用例来说，这已经够了。</p>
+<p>Google 用 GWT 开发出很多流行一时的 HTML5 应用程序，其中最著名的就是 Gmail，这个项目还催生出一个规模不大、但却相当活跃的开源社区。虽然影响力已经今非昔比，但这个社区直到现在也仍然存在。与此同时，JavaScript 工具的逐步改进也在挤占 GWT 的生存空间，过去十年来诞生的一系列更为现代的解决方案也允许我们在浏览器中更“无脑”地使用 Java。</p>
+<h4 id="服务器上的淘金热"><strong>服务器上的淘金热</strong></h4>
+<p>HTML5 的出现颠覆了 Java 制霸桌面的野心，但这里也有好消息。由于不必分神于桌面端，Java 在服务器端迎来了全面发展。Java 做好了战斗准备、努力满足开发者对后端服务的种种新需求——毕竟没有后端，再好的 Web 应用也出不来。</p>
+<p>Java 在服务器端的受欢迎程度在接下来几年中持续增长，也吸引到整个生态系统的高度关注。第三方库不断涌现，而 2005 年 Maven 的诞生也让第三方库的使用不再复杂繁琐。无需额外下载、不必寻找依赖项，直接把片段粘贴到 pom 文件中，它就能自动下载一切相应依赖项。</p>
+<p>Java 的开发工具也在不断改进，这在很大程度上要归功于 Java 在服务器端的优势地位。这些改进也对桌面开发者产生了积极影响，让我们用上了跟服务器端相同的 IDE、编译器、虚拟机和库。然而，代表 Java 世界“最后的坚持”的这帮桌面开发者眼界还是没能打开，仍在围着 UI 库的改进和部署打转。</p>
+<p>遇到问题时，我的习惯是上 Google 搜一搜，看看有没有其他人遇到或者已经解决过相同的问题。但在 Swing 开发上，我发现最新的搜索结果也基本是 2005 年左右的内容了，之后基本再无新增。在找不到答案时，我偶尔会写一篇问题分析博文。而在两年后再次遇到类似问题时，我在 Google 上找到的就是自己两年前那篇博文……说真的，现在还有喘气的 Swing 开发者吗？感觉真的说不好。</p>
+<h4 id="重新定义桌面应用"><strong>重新定义“桌面应用”</strong></h4>
+<p>从各个方面来看，Web 的兴起让“桌面应用”的概念清晰了起来。Java 最初的跨平台客户端开发愿景并没有把瘦客户端（主要与远程服务器交互）跟本机完整桌面应用程序区分开来。这不仅提高了理解难度，更让安全模型的设计有些无所适从。Java 理解中的“平台”就是计算机本身，所以会使用笨拙的沙箱来限制可能引发安全威胁的 API 访问，例如访问文件系统。这是 Java 一切安全漏洞的根源，也是导致 Java 被逐出浏览器世界的原因。</p>
+<p>这种基于“沙箱”的开发体验相当糟糕，因为我们很容易意外“越界”并触发安全异常。最终结果是，几乎所有客户端都会请求对系统进行“可信”访问，这样也就完全绕过了沙箱的限制。</p>
+<p>相比之下，HTML5 在 Web 和桌面之间设立了明确的边界。Web 应用程序默认无权访问客户端计算机，而浏览器才是那个“平台”，这就让客户端应用程序的安全保障变得更轻松、更易行。</p>
+<p>经过此番变革，“桌面”的范畴变得更小，以往很多被视为“桌面应用程序”的软件现在被划入“客户端应用程序”类别。具体来讲，如果应用程序只负责在用户与服务器交互时提供 UI，那它就属于客户端应用程序。“桌面”这个概念现在指的就是那些以某种方式与本机设备相集成的应用程序，包括访问文件系统（开发工具、文件转换工具等）、调用浏览器中不存在的某些平台本机 API、以及执行算力密集型任务的软件。</p>
+<p>这倒不是说“客户端”应用程序跟“桌面”应用程序间就毫无交集——当然有，这两者都涉及 GUI，而且不少现代桌面应用程序也都需要接入服务器。所以无论是桌面还是客户端应用程序，都能享受到 GUI 工具包改进、媒体（音频/视频）及网络等技术层面的改进成果。</p>
+<h2 id="java-桌面的新征程"><strong>Java 桌面的新征程</strong></h2>
+<p>2004 年，我曾在 Mac 和 Windows 上都开发出一些商用级别的 Java 桌面应用程序。HTML5 对这类应用程序基本没有任何直接影响。结合自身需求，Swing 还是完全够用，我用来构建本机捆绑包的各种桌面部署工具也都能正常起效。</p>
+<p>但很遗憾，科技行业就是个不进则退的世界。在接下来的几年中，Web 平台一路突飞猛进、而 Swing 却始终停滞不前。到 2007 年，Swing 已经到了不变革、就消亡的危难关头。它需要响应 HTML5 这波历史性潮流，而最终答案就是 JavaFX。这是一种新奇的 Java UI 工具包，能够把 Java 带入 GPU 加速、场景图、3D 图形、Web 视图的现代新世界，同时支持 MP3 和 MP4 等现代音视频编解码器。</p>
+<p>在下一篇文章中，我们将回顾 JavaFX 的火爆人气、深远影响，以及 2011 年 Mac 应用商店出现前 Java 领域的其他发展趋势。别小瞧 Mac 应用商店，它的出现堪称对 Java for Mac 桌面开发生态的“斩首行动”。</p>
+<p>原文链接：</p>
+<p><a href="https://jdeploy.substack.com/p/the-decline-and-fall-of-java-on-the-970">https://jdeploy.substack.com/p/the-decline-and-fall-of-java-on-the-970</a></p>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'wfsui';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="">Wfsui theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div><script>feather.replace()</script>
+</body>
+</html>

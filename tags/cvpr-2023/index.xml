@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CVPR 2023 on 大峰哥</title>
+    <link>https://wfsui.github.io/tags/cvpr-2023/</link>
+    <description>Recent content in CVPR 2023 on 大峰哥</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Fri, 26 Jan 2024 02:40:04 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/cvpr-2023/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CVPR 2023 | 美团技术团队精选论文解读</title>
+      <link>https://wfsui.github.io/posts/cvpr-2023--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
+      <pubDate>Fri, 26 Jan 2024 02:40:04 +0000</pubDate>
+      <guid>https://wfsui.github.io/posts/cvpr-2023--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
+      <description>写在前面 CVPR 全称为 IEEE Conference on Computer Vision and Pattern Recognition，国际计算机视觉与模式识别会议。该会议始于1983年，与ICCV和ECCV并称计算机视觉方向的三大顶级会议。根据谷歌学术公布的2022年最新学术期刊和会议影响力排名，CVPR在所有学术刊物中位居第4，仅次于Nature、NEJM和Science。2023年，CVPR共收到全球9155篇论文投稿，最终2360篇被接收，接收率约为25.78%。&#xA;| 01 Divide and Adapt: Active Domain Adaptation via Customized Learning 论文作者：黄铎峻（中山大学，美团实习生），李继昌（香港大学），陈伟凯（腾讯-美国），黄君实（美团），柴振华（美团），李冠彬（中山大学）</description>
+    </item>
+  </channel>
+</rss>

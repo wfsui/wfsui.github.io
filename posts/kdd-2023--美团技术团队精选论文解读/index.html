@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>KDD 2023 | 美团技术团队精选论文解读 - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:url" content="https://wfsui.github.io/posts/kdd-2023--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">
+  <meta property="og:site_name" content="大峰哥">
+  <meta property="og:title" content="KDD 2023 | 美团技术团队精选论文解读">
+  <meta property="og:description" content="ACM SIGKDD（国际数据挖掘与知识发现大会，简称KDD）于1995年首次举办，自此成为数据挖掘领域的重要国际会议之一，也是研究数据挖掘和知识发现这一领域的学者和企业人士分享研究成果、讨论前沿话题、推动技术进步和发展的重要平台。ACM SIGKDD的宗旨是促进数据挖掘的应用和理论研究，支持和推动先进技术和方法的开发和创新，并推广数据挖掘和知识发现领域的教育、培训和普及。该组织致力于提高数据挖掘和知识发现的社会价值，推动其在各个领域的应用和发展。
+01《PIER: Permutation-Level Interest-Based End-to-End Re-ranking Framework in E-commerce》 论文作者：晓文、杨凡（共同一作）、王泽、晓旭、国钢、永康、兴星、王栋等，均来自美团技术团队。
+论文类型：长文
+论文下载：PDF
+论文简介：Feed流推荐作为目前最主流的推荐载体，其推荐质量直接影响用户体验/商家效益/平台收入等多个核心指标。Feed推荐特点是为每个用户的请求生成并展示多个items，用户的点击行为会同时受到上文和下文影响。由于传统point-CTR预测是在展现items产生之前进行的，导致无法利用上下文信息，推荐质量受损。目前工业届更多考虑重排方案，然而由于排列的多样性，穷举会导致排列个数过多，实际很难落地。目前业界通常存在两种近似方案：
+只考虑位置偏置和上文信息，但忽略下文影响效果； 同时考虑上下文，Listwise预估后重新排序，该方案存在Evaluation Before Reranking的问题。 以上两个方案在效果上均有损，因此如何在重排阶段同时考虑上下文，并且降低复杂度兼顾可落地性，是一个非常重要的问题。针对以上问题，论文提出了一个名为PIER的端到端重新排序框架，该框架遵循两阶段范式并包含两个主要模块，分别称为FPSM 和OCPM。基于用户页面兴趣偏好，在FPSM中应用SimHash从全排列中快速的生成候选列表集合，降低了落地复杂度；然后在OCPM中设计了一种新颖的全向注意力建模机制，以更好地捕获列表中的上下文信息；最后，通过引入对比学习损失以端到端的方式联合训练这两个模块，使用OCPM的预测值来指导FPSM生成更好的列表。离线实验结果表明，PIER在公开和工业数据集上均优于基线模型，目前已经部署到美团外卖广告场景，取得了较为显著的成果。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-04-11T02:40:25+00:00">
+    <meta property="article:modified_time" content="2024-04-11T02:40:25+00:00">
+    <meta property="article:tag" content="美团技术团队">
+    <meta property="article:tag" content="算法">
+    <meta property="article:tag" content="KDD 2023">
+    <meta property="article:tag" content="人工智能">
+    <meta property="article:tag" content="顶会论文">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="KDD 2023 | 美团技术团队精选论文解读">
+  <meta name="twitter:description" content="ACM SIGKDD（国际数据挖掘与知识发现大会，简称KDD）于1995年首次举办，自此成为数据挖掘领域的重要国际会议之一，也是研究数据挖掘和知识发现这一领域的学者和企业人士分享研究成果、讨论前沿话题、推动技术进步和发展的重要平台。ACM SIGKDD的宗旨是促进数据挖掘的应用和理论研究，支持和推动先进技术和方法的开发和创新，并推广数据挖掘和知识发现领域的教育、培训和普及。该组织致力于提高数据挖掘和知识发现的社会价值，推动其在各个领域的应用和发展。
+01《PIER: Permutation-Level Interest-Based End-to-End Re-ranking Framework in E-commerce》 论文作者：晓文、杨凡（共同一作）、王泽、晓旭、国钢、永康、兴星、王栋等，均来自美团技术团队。
+论文类型：长文
+论文下载：PDF
+论文简介：Feed流推荐作为目前最主流的推荐载体，其推荐质量直接影响用户体验/商家效益/平台收入等多个核心指标。Feed推荐特点是为每个用户的请求生成并展示多个items，用户的点击行为会同时受到上文和下文影响。由于传统point-CTR预测是在展现items产生之前进行的，导致无法利用上下文信息，推荐质量受损。目前工业届更多考虑重排方案，然而由于排列的多样性，穷举会导致排列个数过多，实际很难落地。目前业界通常存在两种近似方案：
+只考虑位置偏置和上文信息，但忽略下文影响效果； 同时考虑上下文，Listwise预估后重新排序，该方案存在Evaluation Before Reranking的问题。 以上两个方案在效果上均有损，因此如何在重排阶段同时考虑上下文，并且降低复杂度兼顾可落地性，是一个非常重要的问题。针对以上问题，论文提出了一个名为PIER的端到端重新排序框架，该框架遵循两阶段范式并包含两个主要模块，分别称为FPSM 和OCPM。基于用户页面兴趣偏好，在FPSM中应用SimHash从全排列中快速的生成候选列表集合，降低了落地复杂度；然后在OCPM中设计了一种新颖的全向注意力建模机制，以更好地捕获列表中的上下文信息；最后，通过引入对比学习损失以端到端的方式联合训练这两个模块，使用OCPM的预测值来指导FPSM生成更好的列表。离线实验结果表明，PIER在公开和工业数据集上均优于基线模型，目前已经部署到美团外卖广告场景，取得了较为显著的成果。">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://wfsui.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://wfsui.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<base href="https://wfsui.github.io/">
+	<h1 class="site-title"><a href="https://wfsui.github.io/">大峰哥</a></h1>
+	<div class="site-description"><h2>记录日常生活哦</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/wfsui" title="Github"><i data-feather="github"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">文章</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">KDD 2023 | 美团技术团队精选论文解读</h1>
+			<div class="meta">Posted at &mdash; Apr 11, 2024</div>
+		</div>
+
+		<div class="markdown">
+			<p>ACM SIGKDD（国际数据挖掘与知识发现大会，简称KDD）于1995年首次举办，自此成为数据挖掘领域的重要国际会议之一，也是研究数据挖掘和知识发现这一领域的学者和企业人士分享研究成果、讨论前沿话题、推动技术进步和发展的重要平台。ACM SIGKDD的宗旨是促进数据挖掘的应用和理论研究，支持和推动先进技术和方法的开发和创新，并推广数据挖掘和知识发现领域的教育、培训和普及。该组织致力于提高数据挖掘和知识发现的社会价值，推动其在各个领域的应用和发展。</p>
+<p><img src="https://p0.meituan.net/travelcube/b0a816433bb4e40b47a256bf116eca5c257951.jpg"></p>
+<h2 id="01pier-permutation-level-interest-based-end-to-end-re-ranking-framework-in-e-commerce">01《PIER: Permutation-Level Interest-Based End-to-End Re-ranking Framework in E-commerce》</h2>
+<p><strong>论文作�</strong>�：晓文、杨凡（共同一作）、王泽、晓旭、国钢、永康、兴星、王栋等，均来自美团技术团队。</p>
+<p><strong>论文类型</strong>：长文</p>
+<p><strong>论文下载</strong>：<a href="https://arxiv.org/pdf/2302.03487.pdf">PDF</a></p>
+<p><img src="https://p0.meituan.net/travelcube/c0ff654415cc2c8de6a9a0f2523f9ea91017651.png"></p>
+<p><strong>论文简介</strong>：Feed流推荐作为目前最主流的推荐载体，其推荐质量直接影响用户体验/商家效益/平台收入等多个核心指标。Feed推荐特点是为每个用户的请求生成并展示多个items，用户的点击行为会同时受到上文和下文影响。由于传统point-CTR预测是在展现items产生之前进行的，导致无法利用上下文信息，推荐质量受损。目前工业届更多考虑重排方案，然而由于排列的多样性，穷举会导致排列个数过多，实际很难落地。目前业界通常存在两种近似方案：</p>
+<ol>
+<li>只考虑位置偏置和上文信息，但忽略下文影响效果；</li>
+<li>同时考虑上下文，Listwise预估后重新排序，该方案存在Evaluation Before Reranking的问题。</li>
+</ol>
+<p>以上两个方案在效果上均有损，因此如何在重排阶段同时考虑上下文，并且降低复杂度兼顾可落地性，是一个非常重要的问题。针对以上问题，论文提出了一个名为PIER的端到端重新排序框架，该框架遵循两阶段范式并包含两个主要模块，分别称为FPSM 和OCPM。基于用户页面兴趣偏好，在FPSM中应用SimHash从全排列中快速的生成候选列表集合，降低了落地复杂度；然后在OCPM中设计了一种新颖的全向注意力建模机制，以更好地捕获列表中的上下文信息；最后，通过引入对比学习损失以端到端的方式联合训练这两个模块，使用OCPM的预测值来指导FPSM生成更好的列表。离线实验结果表明，PIER在公开和工业数据集上均优于基线模型，目前已经部署到美团外卖广告场景，取得了较为显著的成果。</p>
+<h2 id="02a-collaborative-transfer-learning-framework-for-cross-domain-recommendation">02《A Collaborative Transfer Learning Framework for Cross-domain Recommendation》</h2>
+<p><strong>论文作�</strong>�：张伟、鹏业、张波、兴星、王栋等，均来自美团技术团队。</p>
+<p><strong>论文类型</strong>：长文</p>
+<p><strong>论文下载</strong>：<a href="https://dl.acm.org/doi/pdf/10.1145/3580305.3599758">PDF</a></p>
+<p><img src="https://p0.meituan.net/travelcube/a36131c25a9702b6d01c6191f6d5ee85342406.png"></p>
+<p><strong>论文简介</strong>：在推荐系统中，为了满足用户多样化的兴趣和需求，催生出多种业务领域（Domain）。每个领域的点击率（CTR）可能会有较大差别，这导致了对不同业务领域的CTR预测建模需求。为了提升目标域效果，越来越多的学者尝试综合利用多域数据改善模型表现，也被称为知识迁移。这其中主要有2种迁移学习的范式：1)预训练+微调：源域的最优解对于目标域可能是局部最优，导致负迁移（Negative Transfer）；2)混合样本+多任务训练：不同域之间数量和特征存在差异，梯度容易被数据量大的域主导（Seesaw Effect）。</p>
+<p>针对以上问题，该论文提出了一种协同跨域迁移学习框架（简称CCTL）来解决这些问题，通过协同训练的方式，评估源域样本对目标域的信息增益，以此作为反馈计算源域样本权重，从而使目标域获得更多有益的迁移知识。框架整体上分为两个模块：IFN模块用于输出源域样本表征及权重，SCN模块用于主模型训练及源域增益计算及反馈。同时，通过REN模块使用对比学习强化不同域的差异性信息，使用SAN模块对齐源域目标域在多个Token的表征。CCTL被部署在美团外卖展示广告场景，并取得较为明显的收益。</p>
+<h2 id="03modeling-dual-period-varying-preferences-for-takeaway-recommendation">03《Modeling Dual Period-Varying Preferences for Takeaway Recommendation》</h2>
+<p><strong>论文作�</strong>�：玉婷（美团）、吴贻清（中国科学院计算技术研究所）、朱勇椿（中国科学院计算技术研究所）、庄福振（北京航空航天大学）、瑞东（美团）、北海（美团）、展博（美团）、安竹林（中国科学院计算技术研究所）、徐勇军（中国科学院计算技术研究所）</p>
+<p><strong>论文类型</strong>：长文</p>
+<p><strong>论文地址</strong>：<a href="https://arxiv.org/abs/2306.04370">PDF</a></p>
+<p><img src="https://p1.meituan.net/travelcube/a6333c693323e1b6d4ffeb793659cb1e207867.png"></p>
+<p><strong>论文简介</strong>：外卖推荐系统旨在为用户提供含有符合用户兴趣偏好的菜品的商家，已经服务于数十亿用户。与传统推荐不同，外卖推荐面临两大挑战：</p>
+<ol>
+<li>双重交互感知偏好。传统推荐往往关注单一层次的用户对商品的偏好，而外卖推荐则需要综合考虑用户对商家和菜品的双重偏好。</li>
+<li>一天内的用户偏好变化。传统的推荐通常从会话级别或天级别的角度对用户偏好的连续变化进行建模。然而，在实际的外卖系统中，一天中的早、中、晚、深夜时段，用户的偏好差异显著。</li>
+</ol>
+<p>为了应对这些挑战，该论文提出了一种针对于外卖推荐场景的双重时段变化偏好建模模型 (DPVP)。 具体而言，论文设计了双重交互感知（Dual Interaction-Aware) 模块，旨在根据用户与商店和食品的交互来捕捉用户的双重偏好。此外，为了模拟用户一天中不同时段变化的偏好，论文提出了基于时间的分解（Time-based Decomposition) 模块以及时间感知门控机制（Time-Aware Gate）。离线和在线实验均表明，论文模型在现实世界的数据集上优于最先进的方法，并且能够捕捉用户的双重时段变化的偏好。此外，该模型已经在美团外卖平台上线，取得了较为明显的成绩。</p>
+<h2 id="04a-multi-stage-framework-for-online-bonus-allocation-based-on-constrained-user-intent-detection">04《A Multi-stage Framework for Online Bonus Allocation Based on Constrained User Intent Detection》</h2>
+<p><strong>论文作�</strong>�：王超、晓巍、徐帅、王哲、志强、冯岩、游安、陈彧等，均来自美团技术团队。</p>
+<p><strong>论文类型</strong>：长文</p>
+<p><strong>论文地址</strong>：<a href="https://dl.acm.org/doi/pdf/10.1145/3580305.3599764">PDF</a></p>
+<p><img src="https://p0.meituan.net/travelcube/9f7d5819e081a290784ab9f50b991020631558.png"></p>
+<p><strong>论文简介</strong>：奖励分配是营销领域的一个重要问题，通常可以建模为一个背包优化问题，主流的解决方案通常是两阶段的方法。 第一阶段是用户意图检测，预测用户在每个奖励下的转化概率。在第二阶段求解运筹优化问题，得到最优分配策略。 然而，该解决方案通常面临以下挑战：</p>
+<ol>
+<li>在用户意图检测阶段，由于交互和噪声的稀疏性，传统的uplift估计方法缺乏可解释性，常出现违背边际效用为正的领域知识；</li>
+<li>两个阶段之间存在最优性差距，限制了第二阶段所获得最优值的上界；</li>
+<li>由于线上环境的变化，实际奖励成本消耗经常违反给定的预算限额。</li>
+</ol>
+<p>为了解决上述挑战，论文提出了一个由三个模块组成的框架，即用户意图检测模块、在线分配模块和反馈控制模块。对于第一个挑战，在用户意图检测模块中，我们基于深度表示学习对效用增量进行隐式建模，提出单调约束结构增强模型解释性。为了减小两阶段最优性差距，进一步提出了凸约束模型来提高最优值的上限，以解决第二个挑战。针对第三个挑战，为了应对在线成本消耗地波动，论文利用框架中的反馈控制策略，使实际成本更准确地接近给定的预算限制。基于真实的美团支付数据评估以及线上A/B实验均证明了该方案的优势和有效性。</p>
+<h2 id="05c-aoi-contour-based-instance-segmentation-for-high-quality-areas-of-interest-in-online-food-delivery-platform">05《C-AOI: Contour-based Instance Segmentation for High-Quality Areas-of-Interest in Online Food Delivery Platform》</h2>
+<p><strong>论文作�</strong>�：奕达、丽影、大平、水平、方潇、井华、仁清、致钊等，均来自美团技术团队。</p>
+<p><strong>论文类型</strong>：长文</p>
+<p><strong>论文下载</strong>：<a href="https://dl.acm.org/doi/pdf/10.1145/3580305.3599786">PDF</a></p>
+<p><img src="https://p0.meituan.net/travelcube/2dbf3c3d95134d5c6baaea80416167d81838970.png"></p>
+<p>论文简介：AOI是配送业务数字化运营的基础设施，也是关键决策算法的基础单元。现有的AOI自动生成相关研究主要依赖于三种方式：1）预定义的形状；2）基于密度的聚类；3）需要多个模型进行后处理的语义分割方法。上述研究方法降低了AOI轮廓的生成质量上限从而限制了自动生成AOI轮廓的落地。为了解决上述问题，该论文将其构建为基于实例分割的轮廓回归问题并提出了一种端到端的AOI轮廓自动生成框架C-AOI。在C-AOI中，提出了Contour Transformer、循环位置编码以及自适应匹配损失优化顶点回归路径。该模型在美团配送业务数据集上进行了实验，大幅提升AOI边界生成质量的同时具备较快的推理速度。此外，该模型已投产并应用于美团履约场景。</p>
+<h2 id="06neon-living-needs-prediction-system-in-meituan">06《NEON: Living Needs Prediction System in Meituan》</h2>
+<p><strong>论文作�</strong>�：兰孝翀（清华大学）、高宸（清华大学）、诗琪（美团）、秀琦（美团）、影格（美团）、张晗（美团）、华周（美团）、恒亮（美团）、李勇（清华大学）</p>
+<p><strong>论文类型</strong>：长文</p>
+<p><strong>论文地址</strong>：<a href="https://arxiv.org/pdf/2307.16644.pdf">PDF</a></p>
+<p><img src="https://p1.meituan.net/travelcube/8de883d4cfbc784b8f257652d3725601149023.png"></p>
+<p><strong>论文简介</strong>：用户意图包含人们日常生活中的各类需求，如吃、住、娱乐等。美团作为连接用户和服务提供者的生活服务平台，用户意图预测问题往往被定义为预测用户当前的业务需求。准确理解用户意图对于生活服务平台而言至关重要，理解结果能够广泛应用于平台推荐系统、精准化营销等多种业务场景。然而，当前平台在用户意图预测问题上的探索并不是很多，且面临如下两个严峻挑战：</p>
+<ol>
+<li>用户需求，经常受人物、地点、时间、自然环境等多种复杂因素的影响；</li>
+<li>用户意图存在多样化特点，并非用户的所有需求都会在美团App上体现。</li>
+</ol>
+<p>为了应对上述两个挑战，本论文设计了一个名为NEON的用户意图预测系统，其主要包括三个阶段：特征挖掘、特征融合和多任务预测。</p>
+<ol>
+<li>在特征挖掘阶段，基于时、空、人、环境等维度进行用户消费场景定义，并重点提取了不同场景下的群体行为特征用于建模，通过人群共性行为辅助进行系统冷启优化，有效缓解了数据稀疏问题。</li>
+<li>在特征融合阶段，构造了融合用户个体及所属群体行为特征的网络结构，该网络可以有效学习不同场景下的用户意图变化。</li>
+<li>在多任务预测阶段，除了预测用户业务意图之外，引入辅助任务，用来预测用户履约方式偏好（送货到家、到店消费），以此来增强模型对时、空上下文的学习。</li>
+</ol>
+<p>论文中的NEON系统，已部署至美团的推荐、营销、运营算法引擎中，大规模在线A/B测试评估实验表明，NEON在上述多个应用场景下均可带来业务效果的显著提升，实验结果证明了NEON系统在细粒度用户需求刻画、履约方式偏好识别、潜在需求预测等方面的有效性。</p>
+<h2 id="07a-hybrid-approach-of-statistics-and-embeddings-for-multilingual-and-multi-locale-recommendation">07《A Hybrid Approach of Statistics and Embeddings for Multilingual and Multi-Locale Recommendation》</h2>
+<p><strong>论文作�</strong>�：伟佳（美团）、詹金（DataRobot） 、黄钟山（Freelance）、王露（微软）、王强（美团）</p>
+<p><strong>论文类型</strong>：Workshop</p>
+<p><strong>论文下载</strong>：<a href="https://openreview.net/pdf?id=ccNBG7UOlr">PDF</a></p>
+<p><img src="https://p0.meituan.net/travelcube/1577510b0cbb1b03060587463f7a0674284001.png"></p>
+<p><strong>论文简介</strong>：为了鼓励多语言推荐系统的发展，亚马逊发布了一个多语言和多地区购物会话数据集，并基于该数据集举办了KDD Cup 2023多语言多地区会话推荐挑战赛。本论文介绍了美团在此次比赛中的解决方案。按照推荐系统中广泛使用的设定，美团的解决方案包括两个阶段：召回和排序。在第一阶段，利用各种召回策略检索一组候选Item，包括基于共同访问矩阵的I2I召回、基于GraphEmbedding的I2I召回、基于TextTransformer的I2I搜索和基于BPR的U2I召回。在第二阶段，训练了一个模型来预测每个用户与候选产品互动的概率。该模型是两个GBDT模型的集成，包括丰富的统计特征和Embedding相似度特征。该团队在在Track2中获得了第3名，在Track1中获得了第4名。</p>
+<h2 id="美团科研合作">美团科研合作</h2>
+<p>美团科研合作致力于搭建美团技术团队与高校、科研机构、智库的合作桥梁和平台，依托美团丰富的业务场景、数据资源和真实的产业问题，开放创新，汇聚向上的力量，围绕机器人、人工智能、大数据、物联网、无人驾驶、运筹优化等领域，共同探索前沿科技和产业焦点宏观问题，促进产学研合作交流和成果转化，推动优秀人才培养。面向未来，我们期待能与更多高校和科研院所的老师和同学们进行合作。欢迎老师和同学们发送邮件至：meituan.oi@meituan.com。</p>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F">美团技术团队</a></li>
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F">美团技术团队</a></li>
+								
+								<li><a href="/tags/%E7%AE%97%E6%B3%95">算法</a></li>
+								
+								<li><a href="/tags/kdd-2023">KDD 2023</a></li>
+								
+								<li><a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD">人工智能</a></li>
+								
+								<li><a href="/tags/%E9%A1%B6%E4%BC%9A%E8%AE%BA%E6%96%87">顶会论文</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'wfsui';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="">Wfsui theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div><script>feather.replace()</script>
+</body>
+</html>

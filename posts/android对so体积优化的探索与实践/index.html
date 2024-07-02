@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Android对so体积优化的探索与实践 - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:url" content="https://wfsui.github.io/posts/android%E5%AF%B9so%E4%BD%93%E7%A7%AF%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/">
+  <meta property="og:site_name" content="大峰哥">
+  <meta property="og:title" content="Android对so体积优化的探索与实践">
+  <meta property="og:description" content="1. 背景 应用安装包的体积影响着用户的下载时长、安装时长、磁盘占用空间等诸多方面，因此减小安装包的体积对于提升用户体验和下载转化率都大有益处。Android 应用安装包其实是一个 zip 文件，主要由 dex、assets、resource、so 等各类型文件压缩而成。目前业内常见的包体积优化方案大体分为以下几类：
+针对 dex 的优化，例如 Proguard、dex 的 DebugItem 删除、字节码优化等； 针对 resource 的优化，例如 AndResGuard、webp 优化等； 针对 assets 的优化，例如压缩、动态下发等； 针对 so 的优化，同 assets，另外还有移除调试符号等。 随着动态化、端智能等技术的广泛应用，在采用上述优化手段后， so 在安装包体积中的比重依然很高，我们开始思索这部分体积是否能进一步优化。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-09-12T04:37:40+00:00">
+    <meta property="article:modified_time" content="2022-09-12T04:37:40+00:00">
+    <meta property="article:tag" content="美团技术团队">
+    <meta property="article:tag" content="美团平台">
+    <meta property="article:tag" content="前端">
+    <meta property="article:tag" content="Android">
+    <meta property="article:tag" content="So">
+    <meta property="article:tag" content="Optimization">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Android对so体积优化的探索与实践">
+  <meta name="twitter:description" content="1. 背景 应用安装包的体积影响着用户的下载时长、安装时长、磁盘占用空间等诸多方面，因此减小安装包的体积对于提升用户体验和下载转化率都大有益处。Android 应用安装包其实是一个 zip 文件，主要由 dex、assets、resource、so 等各类型文件压缩而成。目前业内常见的包体积优化方案大体分为以下几类：
+针对 dex 的优化，例如 Proguard、dex 的 DebugItem 删除、字节码优化等； 针对 resource 的优化，例如 AndResGuard、webp 优化等； 针对 assets 的优化，例如压缩、动态下发等； 针对 so 的优化，同 assets，另外还有移除调试符号等。 随着动态化、端智能等技术的广泛应用，在采用上述优化手段后， so 在安装包体积中的比重依然很高，我们开始思索这部分体积是否能进一步优化。">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://wfsui.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://wfsui.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<base href="https://wfsui.github.io/">
+	<h1 class="site-title"><a href="https://wfsui.github.io/">大峰哥</a></h1>
+	<div class="site-description"><h2>记录日常生活哦</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/wfsui" title="Github"><i data-feather="github"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">文章</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">Android对so体积优化的探索与实践</h1>
+			<div class="meta">Posted at &mdash; Sep 12, 2022</div>
+		</div>
+
+		<div class="markdown">
+			<h2 id="1-背景">1. 背景</h2>
+<p>应用安装包的体积影响着用户的下载时长、安装时长、磁盘占用空间等诸多方面，因此减小安装包的体积对于提升用户体验和下载转化率都大有益处。Android 应用安装包其实是一个 zip 文件，主要由 dex、assets、resource、so 等各类型文件压缩而成。目前业内常见的包体积优化方案大体分为以下几类：</p>
+<ul>
+<li>针对 dex 的优化，例如 Proguard、dex 的 DebugItem 删除、字节码优化等；</li>
+<li>针对 resource 的优化，例如 AndResGuard、webp 优化等；</li>
+<li>针对 assets 的优化，例如压缩、动态下发等；</li>
+<li>针对 so 的优化，同 assets，另外还有移除调试符号等。</li>
+</ul>
+<p>随着动态化、端智能等技术的广泛应用，在采用上述优化手段后， so 在安装包体积中的比重依然很高，我们开始思索这部分体积是否能进一步优化。</p>
+<p>经过一段时间的调研、分析和验证，我们逐渐摸索出一套可以将应用安装包中 so 体积进一步减小 30%～60% 的方案。该方案包含一系列纯技术优化手段，对业务侵入性低，通过简单的配置，可以快速部署生效，目前美团 App 已在线上部署使用。为让大家能知其然，也能知其所以然，本文将先从 so 文件格式讲起，结合文件格式分析哪些内容可以优化。</p>
+<h2 id="2-so-文件格式分析">2. so 文件格式分析</h2>
+<p>so 即动态库，本质上是 ELF（Executable and Linkable Format）文件。可以从两个维度查看 so 文件的内部结构：链接视图（Linking View）和执行视图（Execution View）。链接视图将 so 主体看作多个 section 的组合，该视图体现的是 so 是如何组装的，是编译链接的视角。而执行视图将 so 主体看作多个 segment 的组合，该视图告诉动态链接器如何加载和执行该 so，是运行时的视角。鉴于对 so 优化更侧重于编译链接角度，并且通常一个 segment 包含多个 section（即链接视图对 so 的分解粒度更小），因此我们这里只讨论 so 的链接视图。</p>
+<p>通过 <code>readelf -S</code> 命令可以查看一个 so 文件的所有 section 列表，参考 ELF 文件格式说明，这里简要介绍一下本文涉及的 section：</p>
+<ul>
+<li><code>.text</code>：存放的是编译后的机器指令，C/C++代码的大部分函数编译后就存放在这里。这里只有机器指令，没有字符串等信息。</li>
+<li><code>.data</code>：存放的是初始值不为零的一些可读写变量。</li>
+<li><code>.bss</code>：存放的是初始值为零或未初始化的一些可读写变量。该 section 仅指示运行时需要的内存大小，不会占用 so 文件的体积。</li>
+<li><code>.rodata</code>：存放的是一些只读常量。</li>
+<li><code>.dynsym</code>：动态符号表，给出了该 so 对外提供的符号（导出符号）和依赖外部的符号（导入符号）的信息。</li>
+<li><code>.dynstr</code>：字符串池，不同字符串以 ‘\0’ 分割，供 <code>.dynsym</code> 和其他部分使用。</li>
+<li><code>.gnu.hash</code> 和<code>.hash</code>：两种类型的哈希表，用于快速查找 <code>.dynsym</code> 中的导出符号或全部符号。</li>
+<li><code>.gnu.version</code>、<code>.gnu.version_d</code>、<code>.gnu.version_r</code>：这三个 section 用于指定动态符号表中每个符号的版本，其中<code>.gnu.version</code> 是一个数组，其元素个数与动态符号表中符号的个数相同，即数组每个元素与动态符号表的每个符号是一一对应的关系。数组每个元素的类型为 <code>Elfxx_Half</code>，其意义是索引，指示每个符号的版本。<code>.gnu.version_d</code> 描述了该 so 定义的所有符号的版本，供<code>.gnu.version</code> 索引。<code>.gnu.version_r</code> 描述了该 so 依赖的所有符号的版本，也供 <code>.gnu.version</code> 索引。因为不同的符号可能具有相同的版本，所以采用这种索引结构，可以减小 so 文件的大小。</li>
+</ul>
+<p>在进行优化之前，我们需要对这些 section 以及它们之间的关系有一个清晰的认识，下图较直观地展示了 so 中各个 section 之间的关系（这里只绘制了本文涉及的 section）：</p>
+<p><img alt="图1 so文件结构示意图" src="https://p1.meituan.net/travelcube/ef5625f83d3efbde4d4d6433c3be3e9c317797.png"></p>
+<p>结合上图，我们从另一个角度来理解 so 文件的结构：想象一下，我们把所有的函数实现体都放到<code>.text</code> 中，<code>.text</code> 中的指令会去读取 <code>.rodata</code> 中的数据，读取或修改 <code>.data</code> 和 <code>.bss</code> 中的数据。看上去 so 中有这些内容也足够了。但是这些函数怎样执行呢？也就是说，只把这些函数和数据加载进内存是不够的，这些函数只有真正去执行，才能发挥作用。</p>
+<p>我们知道想要执行一个函数，只要跳转到它的地址就行了。那外界调用者（该 so 之外的模块）怎样知道它想要调用函数的地址呢？这里就涉及一个函数 ID 的问题：外部调用者给出需要调用的函数的 ID，而动态链接器（Linker）根据该 ID 查找目标函数的地址并告知外部调用者。所以 so 文件还需要一个结构去存储“ID-地址”的映射关系，这个结构就是动态符号表的所有导出符号。</p>
+<p>具体到动态符号表的实现，ID 的类型是“字符串”，可以说动态符号表的所有导出符号构成了一个“字符串-地址“的映射表。调用者获取目标函数的地址后，准备好参数跳转到该地址就可以执行这个函数了。另一方面，当前 so 可能也需要调用其他 so 中的函数（例如 libc.so 中的 read、write 等），动态符号表的导入符号记录了这些函数的信息，在 so 内函数执行之前动态链接器会将目标函数的地址填入到相应位置，供该 so 使用。所以动态符号表是连接当前 so 与外部环境的“桥梁”：导出符号供外部使用，导入符号声明了该 so 需要使用的外部符号（注：实际上 <code>.dynsym</code> 中的符号还可以代表变量等其他类型，与函数类型类似，这里就不再赘述）。</p>
+<p>结合 so 文件结构，接下来我们开始分析 so 中有哪些内容可以优化。</p>
+<h2 id="3-so-可优化内容分析">3. so 可优化内容分析</h2>
+<p>在讨论 so 可优化内容之前，我们先了解一下 Android 构建工具（Android Gradle Plugin，下文简称 AGP）对 so 体积做的 strip 优化（移除调试信息和符号表）。AGP 编译 so 时，首先产生的是带调试信息和符号表的 so（任务名为 externalNativeBuildRelease），之后对刚产生的带调试信息和符号表的 so 进行 strip，就得到了最终打包到 apk 或 aar 中的 so（任务名为 stripReleaseDebugSymbols）。</p>
+<p>strip 优化的作用就是删除输入 so 中的调试信息和符号表。这里说的符号表与上文中的“动态符号表”不同，符号表所在 section 名通常为 .symtab，它通常包含了动态符号表中的全部符号，并且额外还有很多符号。调试信息顾名思义就是用于调试该 so 的信息，主要是各种名字以 <code>.debug_</code> 开头的 section，通过这些 section 可以建立 so 每条指令与源码文件的映射关系（也就是能够对 so 中每条指令找到其对应的源码文件名、文件行号等信息）。 之所以叫 strip 优化，是因为其实际调用的是 NDK 提供的的 strip 命令（所用参数为–strip-unneeded）。</p>
+<blockquote>
+<p>注：为什么 AGP 要先编译出带调试信息和符号表的 so，而不直接编译出最终的 so 呢（通过添加 <code>-s</code> 参数是可以做到直接编译出没有调试信息和符号表的 so 的）？原因就在于需要使用带调试信息和符号表的 so 对崩溃调用栈进行还原。删除了调试信息和符号表的 so 完全可以正常运行，但是当它发生崩溃时，只能保证获取到崩溃调用栈的每个栈帧的相应指令在 so 中的位置，不一定能获取到符号。但是排查崩溃问题时，我们希望得知 so 崩溃在源码的哪个位置。带调试信息和符号表的 so 可以将崩溃调用栈的每个栈帧还原成其对应的源码文件名、文件行号、函数名等，大大方便了崩溃问题的排查。所以说，虽然带调试信息和符号表的 so 不会打包到最终的 apk 中，但它对排查问题来说非常重要。</p>
+</blockquote>
+<p>AGP 通过开启 strip 优化，可以大幅缩减 so 的体积，甚至可以达到十倍以上。以一个测试 so 为例，其最终 so 大小为14 KB，但是对应的带调试信息和符号表的 so 大小为 136 KB。不过在使用中，我们需要注意的是，如果 AGP 找不到对应的 strip 命令，就会把带调试信息和符号表的 so 直接打包到 apk 或 aar 中，并不会打包失败。例如缺少 armeabi 架构对应的 strip 命令时提示信息如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>Unable to strip library <span style="color:#2aa198">&#39;XXX.so&#39;</span> due to missing strip <span style="color:#719e07">tool</span> <span style="color:#719e07">for</span> ABI <span style="color:#2aa198">&#39;ARMEABI&#39;</span><span style="color:#719e07">.</span> Packaging it as is<span style="color:#719e07">.</span>
+</span></span></code></pre></div><p>除了上述 Android 构建工具默认为 so 体积做的优化，我们还能做哪些优化呢？首先明确我们优化的原则：</p>
+<ul>
+<li>对于必须保留的内容考虑进行缩减，减小体积占用；</li>
+<li>对于无需保留的内容直接删除。</li>
+</ul>
+<p>基于以上原则，可以从以下三个方面对 so 继续进行深入优化：</p>
+<ul>
+<li><strong>精简动态符号表</strong>：上文已经提到，动态符号表是 so 与外部进行连接的“桥梁”，其中的导出表相当于是 so 对外暴露的接口。哪些接口是必须对外暴露的呢？在 Android 中，大部分 so 是用来实现 Java 的 native 方法的，对于这种 so，只要让应用运行时能够获取到 Java native 方法对应的函数地址即可。要实现这个目标，有两种方法：一种是使用 RegisterNatives 动态注册 Java native 方法，一种是按照 JNI 规范定义 <code>java_***</code> 样式的函数并导出其符号。RegisterNatives 方式可以提前检测到方法签名不匹配的问题，并且可以减少导出符号的数量，这也是 Google 推荐的做法。所以在最优情况下只需导出 <code>JNI_OnLoad</code>（在其中使用 RegisterNatives 对 Java native 方法进行动态注册）和 <code>JNI_OnUnload</code>（可以做一些清理工作）这两个符号即可。如果不希望改写项目代码，也可以再导出 <code>java_***</code> 样式的符号。除了上述类型的 so，剩余的 so 通常是被应用的其他 so 动态依赖的，对于这类 so，需要确定所有动态依赖它的 so 依赖了它的哪些符号，仅保留这些被依赖的符号即可。另外，这里应区分符号表项与实现体，符号表项是动态符号表中相应的 <code>Elfxx_Sym</code> 项（见上图），实现体是其在 <code>.text</code>、<code>.data</code>、 <code>.bss</code>、<code>.rodata</code> 等或其他部分的实体。删除了符号表项，实现体不一定要被删除。结合上文 so 文件结构示意图，可以预估出删除一个符号表项后 so 减小的体积为：符号名字符串长度+ 1 + <code>Elfxx_Sym</code> + <code>Elfxx_Half</code> + <code>Elfxx_Word</code> 。</li>
+<li><strong>移除无用代码</strong>：在实际的项目中，有一些代码在 Release 版中永远不会被使用到（例如历史遗留代码、用于测试的代码等），这些代码被称为 DeadCode。而根据上文分析，只有动态符号表的导出符号直接或间接引用到的所有代码才需要保留，其他剩余的所有代码都是 DeadCode，都是可以删除的（注：事实上 <code>.init_array</code> 等特殊 section 涉及的代码也要保留）。删除无用代码的潜在收益较大。</li>
+<li><strong>优化指令长度</strong>：实现某个功能的指令并不是固定的，编译器有可能能用更少的指令完成相同的功能，从而实现优化。由于指令是 so 的主要组成部分，因此优化这一部分的潜在收益也比较大。</li>
+</ul>
+<p>so 可优化内容如下图所示（可删除部分用红色背景标出，可优化部分是 <code>.text</code>），其中 funC、value2、value3、value6 由于分别被需保留部分使用，所以需要保留其实现体，只能删除其符号表项。funD、value1、value4、value5 可删除符号表项及其实现体（注：因为 value4 的实现体在 <code>.bss</code> 中，而 <code>.bss</code> 实际不占用 so 的体积，所以删除 value4 的实现体不会减小 so 的体积）。</p>
+<p><img alt="图2 so可优化部分" src="https://p0.meituan.net/travelcube/8d6f6d906141265110dbbc6325b66a64317410.png"></p>
+<p>在确定了 so 中可以优化的内容后，我们还需要考虑优化时机的问题：是直接修改 so 文件，还是控制其生成过程？考虑到直接修改 so 文件的风险与难度较大，控制 so 的生成过程显然更稳妥。为了控制 so 的生成过程，我们先简要介绍一下 so 的生成过程：</p>
+<p><img alt="图3 so文件的生成过程" src="https://p0.meituan.net/travelcube/4a0a8066d47b408e830d3039c917766a17947.png"></p>
+<p>如上图所示，so 的生成过程可以分为四个阶段：</p>
+<ul>
+<li><strong>预处理</strong>：将 include 头文件处扩展为实际文件内容并进行宏定义替换。</li>
+<li><strong>编译</strong>：将预处理后的文件编译成汇编代码。</li>
+<li><strong>汇编</strong>：将汇编代码汇编成目标文件，目标文件中包含机器指令（大部分情况下是机器指令，见下文 LTO 一节）和数据以及其他必要信息。</li>
+<li><strong>链接</strong>：将输入的所有目标文件以及静态库（.a 文件）链接成 so 文件。</li>
+</ul>
+<p>可以看出，预处理和汇编阶段对特定输入产生的输出基本是固定的，优化空间较小。所以我们的优化方案主要是针对编译和链接阶段进行优化。</p>
+<h2 id="4-优化方案介绍">4. 优化方案介绍</h2>
+<p>我们对所有能控制最终 so 体积的方案都进行调研，并验证了其效果，最后总结出较为通用的可行方案。</p>
+<h3 id="41-精简动态符号表">4.1 精简动态符号表</h3>
+<h4 id="使用-visibility-和-attribute-控制符号可见性">使用 visibility 和 attribute 控制符号可见性</h4>
+<p>可以通过给编译器传递 <code>-fvisibility=VALUE</code> 控制全局的符号可见性，VALUE 常取值为 default 和 hidden：</p>
+<ul>
+<li><strong>default</strong>：除非对变量或函数特别指定符号可见性，所有符号都在动态符号表中，这也是不使用 -fvisibility 时的默认值。</li>
+<li><strong>hidden</strong>：除非对变量或函数特别指定符号可见性，所有符号在动态符号表中都不可见。</li>
+</ul>
+<p>CMake 项目的配置方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>set(CMAKE_C_FLAGS &#34;${CMAKE_C_FLAGS} -fvisibility=hidden&#34;)
+</span></span><span style="display:flex;"><span>set(CMAKE_CXX_FLAGS &#34;${CMAKE_CXX_FLAGS} -fvisibility=hidden&#34;)
+</span></span></code></pre></div><p>ndk-build 项目的配置方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>LOCAL_CFLAGS += -fvisibility=hidden
+</span></span></code></pre></div><p>另一方面，针对单个变量或函数，可以通过 attribute 方式指定其符号可见性，示例如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#268bd2">__attribute__</span>((<span style="color:#268bd2">visibility</span>(<span style="color:#2aa198">&#34;hidden&#34;</span>)))
+</span></span><span style="display:flex;"><span><span style="color:#dc322f">int</span> hiddenInt<span style="color:#719e07">=</span><span style="color:#2aa198">3</span>;
+</span></span></code></pre></div><p>其常用值也是 default 和 hidden，与 visibility 方式意义类似，这里不再赘述。</p>
+<p>attribute 方式指定的符号可见性的优先级，高于 visibility 方式指定的可见性，相当于 visibility 是全局符号可见性开关，attribute 方式是针对单个符号的可见性开关。这两种方式结合就能控制源码中每个符号的可见性。</p>
+<p>需要注意的是上面这两种方式，只能控制变量或函数是否存在于动态符号表中（即是否删除其动态符号表项），而不会删除其实现体。</p>
+<h4 id="使用-static-关键字控制符号可见性">使用 static 关键字控制符号可见性</h4>
+<p>在C/C++语言中，static 关键字在不同场景下有不同意义，当使用 static 表示“该函数或变量仅在本文件可见”时，那么这个函数或变量就不会出现在动态符号表中，但只会删除其动态符号表项，而不会删除其实现体。static 关键字相当于是增强的 hidden（因为 static 声明的函数或变量编译时只对当前文件可见，而 hidden 声明的函数或变量只是在动态符号表中不存在，在编译期间对其他文件还是可见的）。在项目开发中，使用 static 关键字声明一个函数或变量“仅在本文件可见”是很好的习惯，但是不建议使用 static 关键字控制符号可见性：无法使用 static 关键字控制一个多文件可见的函数或变量的符号可见性。</p>
+<h4 id="使用-exclude-libs-移除静态库中的符号">使用 exclude libs 移除静态库中的符号</h4>
+<p>上述 visibility 方式、attribute 方式和 static 关键字，都是控制项目源码中符号的可见性，而无法控制依赖的静态库中的符号在最终 so 中是否存在。exclude libs 就是用来控制依赖的静态库中的符号是否可见，它是传递给链接器的参数，可以使依赖的静态库的符号在动态符号表中不存在。同样，也是只能删除符号表项，实现体仍然会存在于产生的 so 文件中。</p>
+<p>CMake 项目的配置方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>set(CMAKE_SHARED_LINKER_FLAGS &#34;${CMAKE_SHARED_LINKER_FLAGS} -Wl,--exclude-libs,ALL&#34;)#使所有静态库中的符号都不被导出
+</span></span><span style="display:flex;"><span>set(CMAKE_SHARED_LINKER_FLAGS &#34;${CMAKE_SHARED_LINKER_FLAGS} -Wl,--exclude-libs,libabc.a&#34;)#使 libabc.a 的符号都不被导出
+</span></span></code></pre></div><p>ndk-build 项目的配置方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>LOCAL_LDFLAGS += -Wl,--exclude-libs,ALL #使所有静态库中的符号都不被导出
+</span></span><span style="display:flex;"><span>LOCAL_LDFLAGS += -Wl,--exclude-libs,libabc.a #使 libabc.a 的符号都不被导出
+</span></span></code></pre></div><h4 id="使用-version-script-控制符号可见性">使用 version script 控制符号可见性</h4>
+<p>version script 是传递给链接器的参数，用来指定动态库导出哪些符号以及符号的版本。该参数会影响到上面“so 文件格式”一节中 <code>.gnu.version</code> 和 <code>.gnu.version_d</code> 的内容。我们现在只使用它的指定所有导出符号的功能（即符号版本名使用空字符串）。开启 version script 需要先编写一个文本文件，用来指定动态库导出哪些符号。示例如下（只导出 usedFun 这一个函数）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    global:usedFun;
+</span></span><span style="display:flex;"><span>    local:*;
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>然后将上述文件的路径传递给链接器即可（假定上述文件名为 <code>version_script.txt</code>）。</p>
+<p>CMake 项目的配置方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>set(CMAKE_SHARED_LINKER_FLAGS &#34;${CMAKE_SHARED_LINKER_FLAGS} -Wl,--version-script=${CMAKE_CURRENT_SOURCE_DIR}/version_script.txt&#34;) #version_script.txt 与当前 CMakeLists.txt 同目录
+</span></span></code></pre></div><p>ndk-build 项目的配置方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>LOCAL_LDFLAGS += -Wl,--version-script=${LOCAL_PATH}/version_script.txt #version_script.txt 与当前 Android.mk 同目录
+</span></span></code></pre></div><p>看上去，version script 是明确地指定需要保留的符号，如果通过 visibility 结合 attribute 的方式控制每个符号是否导出，也能达到 version script 的效果，但是 version script 方式有一些额外的好处：</p>
+<ol>
+<li>version script 方式可以控制编译进 so 的静态库的符号是否导出，visibility 和 attribute 方式都无法做到这一点。</li>
+<li>visibility 结合 attribute 方式需要在源码中标明每个需要导出的符号，对于导出符号较多的项目来说是很繁杂的。version script 把需要导出的符号统一地放到了一起，能够直观方便地查看和修改，对导出符号较多的项目也非常友好。</li>
+<li>version script 支持通配符，<code>*</code> 代表0个或者多个字符，<code>?</code> 代表单个字符。比如 <code>my*;</code> 就代表所有以 my 开头的符号。有了通配符的支持，配置 version script 会更加方便。</li>
+<li>还有非常特殊的一点，version script 方式可以删除 <code>__bss_start</code> 这样的一些符号（这是链接器默认加上的符号）。</li>
+</ol>
+<p>综上所述，version script 方式优于 visibility 结合 attribute 的方式。同时，使用了 version script 方式，就不需要使用 exclude libs 方式控制依赖的静态库中的符号是否导出了。</p>
+<h3 id="42-移除无用代码">4.2 移除无用代码</h3>
+<h4 id="开启-lto">开启 LTO</h4>
+<p>LTO 是 Link Time Optimization 的缩写，即链接期优化。LTO 能够在链接目标文件时检测出 DeadCode 并删除它们，从而减小编译产物的体积。DeadCode 举例：某个 if 条件永远为假，那么 if 为真下的代码块就可以移除。进一步地，被移除代码块所调用的函数也可能因此而变为 DeadCode，它们又可以被移除。能够在链接期做优化的原因是，在编译期很多信息还不能确定，只有局部信息，无法执行一些优化。但是链接时大部分信息都确定了，相当于获取了全局信息，所以可以进行一些优化。GCC 和 Clang 均支持 LTO。LTO 方式编译的目标文件中存储的不再是具体机器的指令，而是机器无关的中间表示（GCC 采用的是 GIMPLE 字节码，Clang 采用的是 LLVM IR 比特码）。</p>
+<p>CMake 项目的配置方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>set(CMAKE_C_FLAGS &#34;${CMAKE_C_FLAGS} -flto&#34;)
+</span></span><span style="display:flex;"><span>set(CMAKE_CXX_FLAGS &#34;${CMAKE_CXX_FLAGS} -flto&#34;)
+</span></span><span style="display:flex;"><span>set(CMAKE_SHARED_LINKER_FLAGS &#34;${CMAKE_SHARED_LINKER_FLAGS} -O3 -flto&#34;)
+</span></span></code></pre></div><p>ndk-build 项目的配置方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>LOCAL_CFLAGS += -flto
+</span></span><span style="display:flex;"><span>LOCAL_LDFLAGS += -O3 -flto
+</span></span></code></pre></div><p>使用 LTO 时需要注意几点：</p>
+<ol>
+<li>如果使用 Clang，编译参数和链接参数中都要开启 LTO，否则会出现无法识别文件格式的问题（NDK22 之前存在此问题）。使用 GCC 的话，只需要编译参数中开启 LTO 即可。</li>
+<li>如果项目工程依赖了静态库，可以使用 LTO 方式重新编译该静态库，那么编译动态库时，就能移除静态库中的 DeadCode，从而减小最终 so 的体积。</li>
+<li>经过测试，如果使用 Clang，链接器需要开启非 0 级别的优化，LTO 才能真正生效。经过实际测试（NDK 为 r16b），O1 优化效果较差，O2、O3 优化效果比较接近。</li>
+<li>由于需要进行更多的分析计算，开启 LTO 后，链接耗时会明显增加。</li>
+</ol>
+<h4 id="开启-gc-sections">开启 GC sections</h4>
+<p>这是传递给链接器的参数，GC 即 Garbage Collection（垃圾回收），也就是对无用的 section 进行回收。注意，这里的 section 不是指最终 so 中的 section，而是作为链接器的输入的目标文件中的 section。</p>
+<p>简要介绍一下目标文件，目标文件（扩展名 .o ）也是 ELF 文件，所以也是由 section 组成的，只不过它只包含了相应源文件的内容：函数会放到 <code>.text</code> 样式的 section 中，一些可读写变量会放到 <code>.data</code> 样式的 section 中，等等。链接器会把所有输入的目标文件的同类型的 section 进行合并，组装出最终的 so 文件。</p>
+<p>GC sections 参数通知链接器：仅保留动态符号（及 <code>.init_array</code> 等）直接或者间接引用到的 section，移除其他无用 section。这样就能减小最终 so 的体积。但开启 GC sections 还需要考虑一个问题：编译器默认会把所有函数放到同一个 section 中，把所有相同特点的数据放到同一个 section 中，如果同一个 section 中既有需要删除的部分又有需要保留的部分，会使得整个 section 都要保留。所以我们需要减小目标文件 section 的粒度，这需要借助另外两个编译参数 <code>-fdata-sections</code> 和 <code>-ffunction-sections</code> ，这两个参数通知编译器，将每个变量和函数分别放到各自独立的 section 中，这样就不会出现上述问题了。实际上 Android 编译目标文件时会自动带上 <code>-fdata-sections</code> 和 <code>-ffunction-sections</code> 参数，这里一并列出来，是为了突出它们的作用。</p>
+<p>CMake 项目的配置方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>set(CMAKE_C_FLAGS &#34;${CMAKE_C_FLAGS} -fdata-sections -ffunction-sections&#34;)
+</span></span><span style="display:flex;"><span>set(CMAKE_CXX_FLAGS &#34;${CMAKE_CXX_FLAGS} -fdata-sections -ffunction-sections&#34;)
+</span></span><span style="display:flex;"><span>set(CMAKE_SHARED_LINKER_FLAGS &#34;${CMAKE_SHARED_LINKER_FLAGS} -Wl,--gc-sections&#34;)
+</span></span></code></pre></div><p>ndk-build 项目的配置方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>LOCAL_CFLAGS += -fdata-sections -ffunction-sections
+</span></span><span style="display:flex;"><span>LOCAL_LDFLAGS += -Wl,--gc-sections
+</span></span></code></pre></div><h3 id="43-优化指令长度">4.3 优化指令长度</h3>
+<h4 id="使用-ozos-优化级别">使用 Oz/Os 优化级别</h4>
+<p>编译器根据输入的 -Ox 参数决定编译的优化级别，其中 O0 表示不开启优化（这种情况主要是为了便于调试以及更快的编译速度），从 O1 到 O3，优化程度越来越强。Clang 和 GCC 均提供了 Os 的优化级别，其与 O2 比较接近，但是优化了生成产物的体积。而 Clang 还提供了 Oz 优化级别，在 Os 的基础上能进一步优化产物体积。</p>
+<p>综上，编译器是 Clang，可以开启 Oz 优化。如果编译器是 GCC，则只能开启 Os 优化（注：NDK 从 r13 开始默认编译器从 GCC 变为 Clang，r18 中正式移除了 GCC。GCC 不支持 Oz 是指 Android 最后使用的 GCC4.9 版本不支持 Oz 参数）。Oz/Os 优化相比于 O3 优化，优化了产物体积，性能上可能有一定损失，因此如果项目原本使用了 O3 优化，可根据实际测试结果以及对性能的要求，决定是否使用 Os/Oz 优化级别，如果项目原本未使用 O3 优化级别，可直接使用 Os/Oz 优化。</p>
+<p>CMake 项目的配置方式（如果使用 GCC，应将 Oz 改为 Os）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>set(CMAKE_C_FLAGS &#34;${CMAKE_C_FLAGS} -Oz&#34;)
+</span></span><span style="display:flex;"><span>set(CMAKE_CXX_FLAGS &#34;${CMAKE_CXX_FLAGS} -Oz&#34;)
+</span></span></code></pre></div><p>ndk-build 项目的配置方式（如果使用 GCC，应将 Oz 改为 Os）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>LOCAL_CFLAGS += -Oz
+</span></span></code></pre></div><h3 id="44-其他措施">4.4 其他措施</h3>
+<h4 id="禁用-c-的异常机制">禁用 C++ 的异常机制</h4>
+<p>如果项目中没有使用 C++ 的异常机制（例如 <code>try...catch</code> 等），可以通过禁用 C++ 的异常机制，来减小 so 的体积。</p>
+<p>CMake 项目的配置方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>set(CMAKE_CXX_FLAGS &#34;${CMAKE_CXX_FLAGS} -fno-exceptions&#34;)
+</span></span></code></pre></div><p>ndk-build 默认会禁用 C++ 的异常机制，因此无需特意禁用（如果现有项目开启了 C++ 的异常机制，说明确有需要，需仔细确认后才能禁用）。</p>
+<h4 id="禁用-c-的-rtti-机制">禁用 C++ 的 RTTI 机制</h4>
+<p>如果项目中没有使用 C++ 的 RTTI 机制（例如 typeid 和 dynamic_cast 等），可以通过禁用 C++ 的 RTTI ，来减小 so 的体积。</p>
+<p>CMake 项目的配置方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>set(CMAKE_CXX_FLAGS &#34;${CMAKE_CXX_FLAGS} -fno-rtti&#34;)
+</span></span></code></pre></div><p>ndk-build 默认会禁用 C++ 的 RTTI 机制，因此无需特意禁用（如果现有项目开启了 C++ 的 RTTI 机制，说明确有需要，需仔细确认后才能禁用）。</p>
+<h4 id="合并-so">合并 so</h4>
+<p>以上都是针对单个 so 的优化方案，对单个 so 进行优化后，还可以考虑对 so 进行合并，能够进一步减小 so 的体积。具体来讲，当安装包内某些 so 仅被另外一个 so 动态依赖时，可以将这些 so 合并为一个 so。例如 liba.so 和 libb.so 仅被 libx.so 动态依赖，可以将这三个 so 合并为一个新的 libx.so。合并 so 有以下好处：</p>
+<ol>
+<li>可以删除部分动态符号表项，减小 so 总体积。具体来讲，就是可以删除 liba.so 和 libb.so 的动态符号表中的所有导出符号，以及 libx.so 的动态符号表中从 liba.so 和 libb.so 中导入的符号。</li>
+<li>可以删除部分 PLT 表项和 GOT 表项，减小 so 总体积。具体来讲，就是可以删除 libx.so 中与 liba.so、libb.so 相关的 PLT 表项和 GOT 表项。</li>
+<li>可以减轻优化的工作量。如果没有合并 so，对 liba.so 和 libb.so 做体积优化时需要确定 libx.so 依赖了它们的哪些符号，才能对它们进行优化，做了 so 合并后就不需要了。链接器会自动分析引用关系，保留使用到的所有符号的对应内容。</li>
+<li>由于链接器对原 liba.so 和 libb.so 的导出符号拥有了更全的上下文信息，LTO 优化也能取得更好的效果。</li>
+</ol>
+<p>可以在不修改项目源码的情况下，在编译层面实现 so 的合并。</p>
+<h4 id="提取多-so-共同依赖库">提取多 so 共同依赖库</h4>
+<p>上面“合并 so”是减小 so 总个数，而这里是增加 so 总个数。当多个 so 以静态方式依赖了某个相同的库时，可以考虑将此库提取成一个单独的 so，原来的几个 so 改为动态依赖该 so。例如 liba.so 和 libb.so 都静态依赖了 libx.a，可以优化为 liba.so 和 libb.so 均动态依赖 libx.so。提取多 so 共同依赖库，可以对不同 so 内的相同代码进行合并，从而减小总的 so 体积。</p>
+<p>这里典型的例子是 libc++ 库：如果存在多个 so 都静态依赖 libc++ 库的情况，可以优化为这些 so 都动态依赖于 <code>libc++_shared.so</code>。</p>
+<h3 id="45-整合后的通用方案">4.5 整合后的通用方案</h3>
+<p>通过上述分析，我们可以整合出普通项目均可使用的通用的优化方案，CMake 项目的配置方式（如果使用 GCC，应将 Oz 改为 Os）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>set(CMAKE_C_FLAGS &#34;${CMAKE_C_FLAGS} -Oz -flto -fdata-sections -ffunction-sections&#34;)
+</span></span><span style="display:flex;"><span>set(CMAKE_CXX_FLAGS &#34;${CMAKE_CXX_FLAGS} -Oz -flto -fdata-sections -ffunction-sections&#34;)
+</span></span><span style="display:flex;"><span>set(CMAKE_SHARED_LINKER_FLAGS &#34;${CMAKE_SHARED_LINKER_FLAGS} -O3 -flto  -Wl,--gc-sections -Wl,--version-script=${CMAKE_CURRENT_SOURCE_DIR}/version_script.txt&#34;) #version_script.txt 与当前 CMakeLists.txt 同目录
+</span></span></code></pre></div><p>ndk-build 项目的配置方式（如果使用 GCC，应将 Oz 改为 Os）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>LOCAL_CFLAGS += -Oz -flto -fdata-sections -ffunction-sections
+</span></span><span style="display:flex;"><span>LOCAL_LDFLAGS += -O3 -flto -Wl,--gc-sections -Wl,--version-script=${LOCAL_PATH}/version_script.txt #version_script.txt 与当前 Android.mk 同目录
+</span></span></code></pre></div><p>其中 <code>version_script.txt</code> 较为通用的配置如下，可根据实际情况添加需要保留的导出符号：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    global:JNI_OnLoad;JNI_OnUnload;Java_<span style="color:#719e07">*</span>;
+</span></span><span style="display:flex;"><span>    local:<span style="color:#719e07">*</span>;
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p><strong>说明</strong>：version script 方式指定所有需要导出的符号，不再需要 visibility 方式、attribute 方式、static 关键字和 exclude libs 方式控制导出符号。是否禁用 C++ 的异常机制和 RTTI 机制、合并 so 以及提取多 so 共同依赖库取决于具体项目，不具有通用性。</p>
+<p>至此，我们总结出一套可行的 so 体积优化方案。但在工程实践中，还有一些问题要解决。</p>
+<h2 id="5-工程实践">5. 工程实践</h2>
+<h3 id="支持多种构建工具">支持多种构建工具</h3>
+<p>美团有众多业务使用了 so，所使用的构建工具也不尽相同，除了上述常见的 CMake 和 ndk-build，也有项目在使用 Make、Automake、Ninja、GYP 和 GN 等各种构建工具。不同构建工具应用 so 优化方案的方式也不相同，尤其对大型工程而言，配置复杂性较高。</p>
+<p>基于以上原因，每个业务自行配置 so 优化方案会消耗较多的人力成本，并且有配置无效的可能。为了降低配置成本、加快优化方案的推进速度、保证配置的有效性和正确性，我们在构建平台上统一支持了 so 的优化（支持使用任意构建工具的项目）。业务只需进行简单的配置即可开启 so 的体积优化。</p>
+<h3 id="配置导出符号的注意事项">配置导出符号的注意事项</h3>
+<p>注意事项有以下两点：</p>
+<ol>
+<li>如果一个 so 的某些符号，被其他 so 通过 dlsym 方式使用，那么这些符号也应该保留在该 so 的导出符号中（否则会导致运行时异常）。</li>
+<li>编写 <code>version_script.txt</code> 时需要注意 C++ 等语言对符号的修饰，不能直接把函数名填写进去。符号修饰就是把一个函数的命名空间（如果有）、类名（如果有）、参数类型等都添加到最终的符号中，这也是 C++ 语言实现重载的基础。有两种方式可以把 C++ 的函数添加到导出符号中：第一种是查看未优化 so 的导出符号表，找到目标函数被修饰后的符号，然后填写到 <code>version_script.txt</code> 中。例如有一个 MyClass 类：</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C++" data-lang="C++"><span style="display:flex;"><span><span style="color:#719e07">class</span> <span style="color:#268bd2">MyClass</span>{
+</span></span><span style="display:flex;"><span>   <span style="color:#dc322f">void</span> <span style="color:#268bd2">start</span>(<span style="color:#dc322f">int</span> arg);
+</span></span><span style="display:flex;"><span>   <span style="color:#dc322f">void</span> <span style="color:#268bd2">stop</span>();
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>要确定 start 函数真正的符号可以对未优化的 libexample.so 执行以下命令。因为 C++ 对符号修饰后，函数名是符号的一部分，所以可以通过 grep 加快查找：</p>
+<p><img alt="图4 查找 start 函数真正符号" src="https://p1.meituan.net/travelcube/3ee26ad2baa7796c41ae657fbe927bce17894.png"></p>
+<p>可以看到 start 函数真正的符号是 <code>_ZN7MyClass5startEi</code>。如果想导出该函数，<code>version_script.txt</code> 相应位置填入 <code>_ZN7MyClass5startEi</code> 即可。</p>
+<p>第二种方式是在 <code>version_script.txt</code> 中使用 extern 语法，如下所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    global:
+</span></span><span style="display:flex;"><span>      extern &#34;C++&#34; {
+</span></span><span style="display:flex;"><span>      	MyClass::start*;
+</span></span><span style="display:flex;"><span>        &#34;MyClass::stop()&#34;;
+</span></span><span style="display:flex;"><span>      };
+</span></span><span style="display:flex;"><span>    local:*;
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>上述配置可以导出 MyClass 的 start 和 stop 函数。其原理是，链接时链接器对每个符号进行 demangle（解构，即把修饰后的符号还原为可读的表示），然后与 extern “C++” 中的条目进行匹配，如果能与任一条目匹配成功就保留该符号。匹配的规则是：有双引号的条目不能使用通配符，需要全字符串完全匹配才可以（例如 stop 条目，如果括号之间多一个空格就会匹配失败）。对于没有双引号的条目能够使用通配符（例如 start 条目）。</p>
+<h3 id="查看优化后-so-的导出符号">查看优化后 so 的导出符号</h3>
+<p>业务对 so 进行优化之后，需要查看最终的 so 文件中保留了哪些导出符号，验证优化效果是否符合预期。在 Mac 和 Linux 下均可使用下述命令查看 so 保留了哪些导出符号：</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>nm -D --defined-only xxx.so
+</span></span></code></pre></div><p>例如：</p>
+<p><img alt="图5 nm命令查看so文件的导出符号" src="https://p0.meituan.net/travelcube/1762176f232f1b4fcbc86fff624ce3e623091.png"></p>
+<p>可以看出，libexample.so 的导出符号有两个：<code>JNI_OnLoad</code> 和 <code>Java_com_example_MainActivity_stringFromJNI</code>。</p>
+<h3 id="解析崩溃堆栈">解析崩溃堆栈</h3>
+<p>本文的优化方案会移除非必要导出的动态符号，那 so 如果发生崩溃的话是不是就无法解析崩溃堆栈了呢？答案是完全不会影响崩溃堆栈的解析结果。</p>
+<p>“so 可优化内容分析”一节已经提过，使用带调试信息和符号表的 so 解析线上崩溃，是分析 so 崩溃的标准方式（这也是 Google 解析 so 崩溃的方式）。本文的优化方案并未修改调试信息和符号表，所以可以使用带调试信息和符号表的 so 对崩溃堆栈进行完整的还原，解析出崩溃堆栈每个栈帧对应的源码文件、行号和函数名等信息。业务编译出 release 版的 so 后将相应的带调试信息和符号表的 so 上传到 crash 平台即可。</p>
+<h2 id="6-方案收益">6. 方案收益</h2>
+<p>优化 so 对安装包体积和安装后占用的本地存储空间有直接收益，收益大小取决于原 so 冗余代码数量和导出符号数量等具体情况，下面是部分 so 优化前后占用安装包体积的对比：</p>
+<table>
+<thead>
+<tr>
+<th>so</th>
+<th>优化前大小</th>
+<th>优化后大小</th>
+<th>优化百分比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A 库</td>
+<td>4.49 MB</td>
+<td>3.28 MB</td>
+<td>27.02%</td>
+</tr>
+<tr>
+<td>B 库</td>
+<td>995.82 KB</td>
+<td>728.38 KB</td>
+<td>26.86%</td>
+</tr>
+<tr>
+<td>C 库</td>
+<td>312.05 KB</td>
+<td>153.81 KB</td>
+<td>50.71%</td>
+</tr>
+<tr>
+<td>D 库</td>
+<td>505.57 KB</td>
+<td>321.75 KB</td>
+<td>36.36%</td>
+</tr>
+<tr>
+<td>E 库</td>
+<td>309.89 KB</td>
+<td>157.08 KB</td>
+<td>49.31%</td>
+</tr>
+<tr>
+<td>F 库</td>
+<td>88.59 KB</td>
+<td>62.93 KB</td>
+<td>28.97%</td>
+</tr>
+</tbody>
+</table>
+<p>下面是上述 so 优化前后占用本地存储空间的对比：</p>
+<table>
+<thead>
+<tr>
+<th>so</th>
+<th>优化前大小</th>
+<th>优化后大小</th>
+<th>优化百分比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A 库</td>
+<td>10.67 MB</td>
+<td>7.04 MB</td>
+<td>34.05%</td>
+</tr>
+<tr>
+<td>B 库</td>
+<td>2.35 MB</td>
+<td>1.61 MB</td>
+<td>31.46%</td>
+</tr>
+<tr>
+<td>C 库</td>
+<td>898.14 KB</td>
+<td>386.31 KB</td>
+<td>56.99%</td>
+</tr>
+<tr>
+<td>D 库</td>
+<td>1.30 MB</td>
+<td>771.47 KB</td>
+<td>41.88%</td>
+</tr>
+<tr>
+<td>E 库</td>
+<td>890.13 KB</td>
+<td>398.30 KB</td>
+<td>55.25%</td>
+</tr>
+<tr>
+<td>F 库</td>
+<td>230.30 KB</td>
+<td>146.06 KB</td>
+<td>36.58%</td>
+</tr>
+</tbody>
+</table>
+<h2 id="7-总结与后续计划">7. 总结与后续计划</h2>
+<p>对 so 体积进行优化不仅能够减小安装包体积，而且能获得以下收益：</p>
+<ul>
+<li>删除了大量的非必要导出符号从而提升了 so 的安全性。</li>
+<li>因为 <code>.data``.bss``.text</code> 等运行时占用内存的 section 减小了，所以也能减小应用运行时的内存占用。</li>
+<li>如果优化过程中减少了 so 对外依赖的符号，还可以加快 so 的加载速度。</li>
+</ul>
+<p>我们对后续工作做了如下的规划：</p>
+<ul>
+<li>提升编译速度。因为使用 LTO、gc sections 等会增加编译耗时，计划调研 ThinLTO 等方案对编译速度进行优化。</li>
+<li>详细展示保留各个函数/数据的原因。</li>
+<li>进一步完善平台优化 so 的能力。</li>
+</ul>
+<h2 id="8-参考资料">8. 参考资料</h2>
+<ol>
+<li><a href="https://www.cs.cmu.edu/afs/cs/academic/class/15213-f00/docs/elf.pdf">https://www.cs.cmu.edu/afs/cs/academic/class/15213-f00/docs/elf.pdf</a></li>
+<li><a href="https://llvm.org/docs/LinkTimeOptimization.html">https://llvm.org/docs/LinkTimeOptimization.html</a></li>
+<li><a href="https://gcc.gnu.org/onlinedocs/gccint/LTO-Overview.html">https://gcc.gnu.org/onlinedocs/gccint/LTO-Overview.html</a></li>
+<li><a href="https://sourceware.org/binutils/docs/ld/VERSION.html">https://sourceware.org/binutils/docs/ld/VERSION.html</a></li>
+<li><a href="https://clang.llvm.org/docs">https://clang.llvm.org/docs</a></li>
+<li><a href="https://gcc.gnu.org/onlinedocs/gcc">https://gcc.gnu.org/onlinedocs/gcc</a></li>
+</ol>
+<h2 id="9-本文作者">9. 本文作者</h2>
+<p>洪凯、常强，来自美团平台/App技术部。</p>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F">美团技术团队</a></li>
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2%E5%B9%B3%E5%8F%B0">美团平台</a></li>
+								
+								<li><a href="/tags/%E5%89%8D%E7%AB%AF">前端</a></li>
+								
+								<li><a href="/tags/android">Android</a></li>
+								
+								<li><a href="/tags/so">so</a></li>
+								
+								<li><a href="/tags/optimization">Optimization</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'wfsui';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="">Wfsui theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div><script>feather.replace()</script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 ---
 title: "咱们从头到尾讲一次 Flink 网络流控和反压剖析"
-date: 2024-07-02T02:48:15+0000
+date: 2024-07-03T02:47:04+0000
 tags: [面试]
 ---
 
@@ -31,7 +31,7 @@ tags: [面试]
 ### 为什么需要网络流控
 
 
-![1_04](https://yqfile.alicdn.com/f55df72c2c254caf9a92fbe3890df48583dfae4d.png "1_04")
+![1_04](https://yqfile.alicdn.com/f55df72c2c254caf9a92fbe3890df48583dfae4d.png?x-oss-process=image/resize,w_1400/format,webp "1_04")
 
 
 
@@ -47,7 +47,7 @@ tags: [面试]
 ### 网络流控的实现：静态限速
 
 
-![2_05](https://yqfile.alicdn.com/52aca194fd13dc63d0ec1811e3535ab470a91e49.png "2_05")
+![2_05](https://yqfile.alicdn.com/52aca194fd13dc63d0ec1811e3535ab470a91e49.png?x-oss-process=image/resize,w_1400/format,webp "2_05")
 
 
 
@@ -63,7 +63,7 @@ tags: [面试]
 ### 网络流控的实现：动态反馈/自动反压
 
 
-![3_06](https://yqfile.alicdn.com/5d3f0b587792ae53f5842bcf0e0253a7e52f0e4f.png "3_06")
+![3_06](https://yqfile.alicdn.com/5d3f0b587792ae53f5842bcf0e0253a7e52f0e4f.png?x-oss-process=image/resize,w_1400/format,webp "3_06")
 
 
 
@@ -83,7 +83,7 @@ tags: [面试]
 ### 案例一：Storm 反压实现
 
 
-![4_07](https://yqfile.alicdn.com/7dad1c84b9210e1d3c99591c633b586438de9227.png "4_07")
+![4_07](https://yqfile.alicdn.com/7dad1c84b9210e1d3c99591c633b586438de9227.png?x-oss-process=image/resize,w_1400/format,webp "4_07")
 
 
 
@@ -94,7 +94,7 @@ tags: [面试]
 ### 案例二：Spark Streaming 反压实现
 
 
-![5_08](https://yqfile.alicdn.com/e7b4e415ccb4311ab95f455ce7f1c1b432206da1.png "5_08")
+![5_08](https://yqfile.alicdn.com/e7b4e415ccb4311ab95f455ce7f1c1b432206da1.png?x-oss-process=image/resize,w_1400/format,webp "5_08")
 
 
 
@@ -109,7 +109,7 @@ Spark Streaming 里也有做类似这样的 feedback 机制，上图 Fecher 会�
 
 
 
-![6_10](https://yqfile.alicdn.com/58006efbd154eebbf8110f7787b4d94bec451326.png "6_10")
+![6_10](https://yqfile.alicdn.com/58006efbd154eebbf8110f7787b4d94bec451326.png?x-oss-process=image/resize,w_1400/format,webp "6_10")
 
 
 
@@ -124,7 +124,7 @@ Spark Streaming 里也有做类似这样的 feedback 机制，上图 Fecher 会�
 
 
 
-![7_13](https://yqfile.alicdn.com/0b4bc72d3d02bb6f1c1b24ec08e0259602651fb3.png "7_13")
+![7_13](https://yqfile.alicdn.com/0b4bc72d3d02bb6f1c1b24ec08e0259602651fb3.png?x-oss-process=image/resize,w_1400/format,webp "7_13")
 
 
 
@@ -135,7 +135,7 @@ Spark Streaming 里也有做类似这样的 feedback 机制，上图 Fecher 会�
 ### TCP 流控：滑动窗口
 
 
-![8_14](https://yqfile.alicdn.com/7efa6c17cab155ed971fe0712d55ea5efb2465f5.png "8_14")
+![8_14](https://yqfile.alicdn.com/7efa6c17cab155ed971fe0712d55ea5efb2465f5.png?x-oss-process=image/resize,w_1400/format,webp "8_14")
 
 
 
@@ -143,7 +143,7 @@ TCP 的流控就是基于滑动窗口的机制，现在我们有一个 Socket �
 
 
 
-![9_15](https://yqfile.alicdn.com/f7e349d298e1e2c98a7f37f60023bd56922c6b08.png "9_15")
+![9_15](https://yqfile.alicdn.com/f7e349d298e1e2c98a7f37f60023bd56922c6b08.png?x-oss-process=image/resize,w_1400/format,webp "9_15")
 
 
 
@@ -151,7 +151,7 @@ TCP 的流控就是基于滑动窗口的机制，现在我们有一个 Socket �
 
 
 
-![10_16](https://yqfile.alicdn.com/df81be90f206d36610ac86784e3d069ba8443f59.png "10_16")
+![10_16](https://yqfile.alicdn.com/df81be90f206d36610ac86784e3d069ba8443f59.png?x-oss-process=image/resize,w_1400/format,webp "10_16")
 
 
 
@@ -159,7 +159,7 @@ TCP 的流控就是基于滑动窗口的机制，现在我们有一个 Socket �
 
 
 
-![11_17](https://yqfile.alicdn.com/47bdef8db4a32262325a45ad0c46a20fec126887.png "11_17")
+![11_17](https://yqfile.alicdn.com/47bdef8db4a32262325a45ad0c46a20fec126887.png?x-oss-process=image/resize,w_1400/format,webp "11_17")
 
 
 
@@ -167,7 +167,7 @@ TCP 的流控就是基于滑动窗口的机制，现在我们有一个 Socket �
 
 
 
-![12_18](https://yqfile.alicdn.com/58bf284147fecc3415ab75b935b927c093cb2b2b.png "12_18")
+![12_18](https://yqfile.alicdn.com/58bf284147fecc3415ab75b935b927c093cb2b2b.png?x-oss-process=image/resize,w_1400/format,webp "12_18")
 
 
 
@@ -175,10 +175,10 @@ TCP 的流控就是基于滑动窗口的机制，现在我们有一个 Socket �
 
 
 
-![13_19](https://yqfile.alicdn.com/c69da59e1f5ba7f1c3371018de0c42ad4456912d.png "13_19")
+![13_19](https://yqfile.alicdn.com/c69da59e1f5ba7f1c3371018de0c42ad4456912d.png?x-oss-process=image/resize,w_1400/format,webp "13_19")
 
 
-![14_20](https://yqfile.alicdn.com/a9a28aba06629691eaa7f577e3b2b5f9bc3b2eb0.png "14_20")
+![14_20](https://yqfile.alicdn.com/a9a28aba06629691eaa7f577e3b2b5f9bc3b2eb0.png?x-oss-process=image/resize,w_1400/format,webp "14_20")
 
 
 
@@ -186,13 +186,13 @@ TCP 的流控就是基于滑动窗口的机制，现在我们有一个 Socket �
 
 
 
-![15_21](https://yqfile.alicdn.com/101ebbd06f370649cc395438a96a98a8e54e137d.png "15_21")
+![15_21](https://yqfile.alicdn.com/101ebbd06f370649cc395438a96a98a8e54e137d.png?x-oss-process=image/resize,w_1400/format,webp "15_21")
 
 
-![16_22](https://yqfile.alicdn.com/e636403b67a99c0b153fe0c2fe527904f271408b.png "16_22")
+![16_22](https://yqfile.alicdn.com/e636403b67a99c0b153fe0c2fe527904f271408b.png?x-oss-process=image/resize,w_1400/format,webp "16_22")
 
 
-![17_23](https://yqfile.alicdn.com/50a7f6d0b4a9ff37262116ea716d666d8be96315.png "17_23")
+![17_23](https://yqfile.alicdn.com/50a7f6d0b4a9ff37262116ea716d666d8be96315.png?x-oss-process=image/resize,w_1400/format,webp "17_23")
 
 
 
@@ -206,7 +206,7 @@ TCP 当中有一个 ZeroWindowProbe 的机制，发送端会定期的发送 1 �
 ### 示例：WindowWordCount
 
 
-![18_25](https://yqfile.alicdn.com/140ac4a6865e579875d4cca8aa9c5002d3eae2df.png "18_25")
+![18_25](https://yqfile.alicdn.com/140ac4a6865e579875d4cca8aa9c5002d3eae2df.png?x-oss-process=image/resize,w_1400/format,webp "18_25")
 
 
 
@@ -217,7 +217,7 @@ TCP 当中有一个 ZeroWindowProbe 的机制，发送端会定期的发送 1 �
 ### 编译阶段：生成 JobGraph
 
 
-![19_26](https://yqfile.alicdn.com/4d05a32a46d7db50325b8ce00e0be672ec1ba9a7.png "19_26")
+![19_26](https://yqfile.alicdn.com/4d05a32a46d7db50325b8ce00e0be672ec1ba9a7.png?x-oss-process=image/resize,w_1400/format,webp "19_26")
 
 
 
@@ -228,7 +228,7 @@ TCP 当中有一个 ZeroWindowProbe 的机制，发送端会定期的发送 1 �
 ### 运行阶段：调度 ExecutionGraph
 
 
-![20_27](https://yqfile.alicdn.com/e916c83ad03e7e29ed5810974499adcce540524b.png "20_27")
+![20_27](https://yqfile.alicdn.com/e916c83ad03e7e29ed5810974499adcce540524b.png?x-oss-process=image/resize,w_1400/format,webp "20_27")
 
 
 
@@ -239,7 +239,7 @@ JobGraph 提交到集群后会生成 ExecutionGraph ，这时候就已经具备�
 ### 问题拆解：反压传播两个阶段
 
 
-![21_28](https://yqfile.alicdn.com/4a4a9e76dd9843819387b0e5ed25820029efde0e.png "21_28")
+![21_28](https://yqfile.alicdn.com/4a4a9e76dd9843819387b0e5ed25820029efde0e.png?x-oss-process=image/resize,w_1400/format,webp "21_28")
 
 
 
@@ -255,7 +255,7 @@ JobGraph 提交到集群后会生成 ExecutionGraph ，这时候就已经具备�
 ### 跨 TaskManager 数据传输
 
 
-![22_29](https://yqfile.alicdn.com/67ca07e2eaecd5190982c5ecc7e127960de0d83e.png "22_29")
+![22_29](https://yqfile.alicdn.com/67ca07e2eaecd5190982c5ecc7e127960de0d83e.png?x-oss-process=image/resize,w_1400/format,webp "22_29")
 
 
 
@@ -275,7 +275,7 @@ JobGraph 提交到集群后会生成 ExecutionGraph ，这时候就已经具备�
 ### 跨 TaskManager 反压过程
 
 
-![23_30](https://yqfile.alicdn.com/72a01465aa1d9a5bf269d3c0efb69daeeda14f16.png "23_30")
+![23_30](https://yqfile.alicdn.com/72a01465aa1d9a5bf269d3c0efb69daeeda14f16.png?x-oss-process=image/resize,w_1400/format,webp "23_30")
 
 
 
@@ -283,7 +283,7 @@ JobGraph 提交到集群后会生成 ExecutionGraph ，这时候就已经具备�
 
 
 
-![24_31](https://yqfile.alicdn.com/c579c55399d69082e7261a8ee6b8f36d570d8159.png "24_31")
+![24_31](https://yqfile.alicdn.com/c579c55399d69082e7261a8ee6b8f36d570d8159.png?x-oss-process=image/resize,w_1400/format,webp "24_31")
 
 
 
@@ -291,7 +291,7 @@ JobGraph 提交到集群后会生成 ExecutionGraph ，这时候就已经具备�
 
 
 
-![25_32](https://yqfile.alicdn.com/58fcb2180a4308d4d19c63726917501ea0dbe691.png "25_32")
+![25_32](https://yqfile.alicdn.com/58fcb2180a4308d4d19c63726917501ea0dbe691.png?x-oss-process=image/resize,w_1400/format,webp "25_32")
 
 
 
@@ -299,7 +299,7 @@ JobGraph 提交到集群后会生成 ExecutionGraph ，这时候就已经具备�
 
 
 
-![26_33](https://yqfile.alicdn.com/4a01bb1aabecd29f39d9199024590c42cb5ae3c1.png "26_33")
+![26_33](https://yqfile.alicdn.com/4a01bb1aabecd29f39d9199024590c42cb5ae3c1.png?x-oss-process=image/resize,w_1400/format,webp "26_33")
 
 
 
@@ -307,7 +307,7 @@ JobGraph 提交到集群后会生成 ExecutionGraph ，这时候就已经具备�
 
 
 
-![27_34](https://yqfile.alicdn.com/151369e71d92a1c82baa27b4396043c88fa90541.png "27_34")
+![27_34](https://yqfile.alicdn.com/151369e71d92a1c82baa27b4396043c88fa90541.png?x-oss-process=image/resize,w_1400/format,webp "27_34")
 
 
 
@@ -315,7 +315,7 @@ JobGraph 提交到集群后会生成 ExecutionGraph ，这时候就已经具备�
 
 
 
-![28_35](https://yqfile.alicdn.com/6c57a0adb9d3ab71f8f4b7c5a2324f0e370d2bfe.png "28_35")
+![28_35](https://yqfile.alicdn.com/6c57a0adb9d3ab71f8f4b7c5a2324f0e370d2bfe.png?x-oss-process=image/resize,w_1400/format,webp "28_35")
 
 
 
@@ -323,7 +323,7 @@ Netty 停止写了之后，所有的数据就会阻塞在 Netty 的 Buffer 当�
 
 
 
-![29_36](https://yqfile.alicdn.com/0de9eb334c31c720c472e5e24cc206c00d9c72e0.png "29_36")
+![29_36](https://yqfile.alicdn.com/0de9eb334c31c720c472e5e24cc206c00d9c72e0.png?x-oss-process=image/resize,w_1400/format,webp "29_36")
 
 
 
@@ -331,7 +331,7 @@ Netty 停止写了之后，所有的数据就会阻塞在 Netty 的 Buffer 当�
 
 
 
-![30_38](https://yqfile.alicdn.com/898b316178ec08b7c5b2736294337272046040f8.png "30_38")
+![30_38](https://yqfile.alicdn.com/898b316178ec08b7c5b2736294337272046040f8.png?x-oss-process=image/resize,w_1400/format,webp "30_38")
 
 
 
@@ -346,16 +346,16 @@ Local BufferPool 和 Network BufferPool 都用尽后整个 Operator 就会停止
 
 
 
-![31_39](https://yqfile.alicdn.com/f6669644615c925f089e2fb6d3d20fabb2439a89.png "31_39")
+![31_39](https://yqfile.alicdn.com/f6669644615c925f089e2fb6d3d20fabb2439a89.png?x-oss-process=image/resize,w_1400/format,webp "31_39")
 
 
-![32_40](https://yqfile.alicdn.com/4463f83549c16ffa47902f91c44b1e47200061c4.png "32_40")
+![32_40](https://yqfile.alicdn.com/4463f83549c16ffa47902f91c44b1e47200061c4.png?x-oss-process=image/resize,w_1400/format,webp "32_40")
 
 
-![33_41](https://yqfile.alicdn.com/a4816d7bdcfed08e89430ccd919943f1b8a341ea.png "33_41")
+![33_41](https://yqfile.alicdn.com/a4816d7bdcfed08e89430ccd919943f1b8a341ea.png?x-oss-process=image/resize,w_1400/format,webp "33_41")
 
 
-![34_42](https://yqfile.alicdn.com/0bc094c7fb61f41c3b2f66f02029c2d527ec89bd.png "34_42")
+![34_42](https://yqfile.alicdn.com/0bc094c7fb61f41c3b2f66f02029c2d527ec89bd.png?x-oss-process=image/resize,w_1400/format,webp "34_42")
 
 
 
@@ -365,7 +365,7 @@ Local BufferPool 和 Network BufferPool 都用尽后整个 Operator 就会停止
 ### TCP\-based 反压的弊端
 
 
-![35_44](https://yqfile.alicdn.com/570debeba11e71ffac5f5b78f04e2bc88179e852.png "35_44")
+![35_44](https://yqfile.alicdn.com/570debeba11e71ffac5f5b78f04e2bc88179e852.png?x-oss-process=image/resize,w_1400/format,webp "35_44")
 
 
 
@@ -388,7 +388,7 @@ Local BufferPool 和 Network BufferPool 都用尽后整个 Operator 就会停止
 ### Credit\-based 反压过程
 
 
-![36_46](https://yqfile.alicdn.com/c61481b75ec8d5ae62af8ce4ea45bd9d171e9dce.png "36_46")
+![36_46](https://yqfile.alicdn.com/c61481b75ec8d5ae62af8ce4ea45bd9d171e9dce.png?x-oss-process=image/resize,w_1400/format,webp "36_46")
 
 
 
@@ -396,7 +396,7 @@ Local BufferPool 和 Network BufferPool 都用尽后整个 Operator 就会停止
 
 
 
-![37_47](https://yqfile.alicdn.com/a9a211ea22afc8a07d55fc3feb168b69c37f3643.png "37_47")
+![37_47](https://yqfile.alicdn.com/a9a211ea22afc8a07d55fc3feb168b69c37f3643.png?x-oss-process=image/resize,w_1400/format,webp "37_47")
 
 
 
@@ -404,7 +404,7 @@ Local BufferPool 和 Network BufferPool 都用尽后整个 Operator 就会停止
 
 
 
-![38_48](https://yqfile.alicdn.com/be73146308876ade5e8b24e97413e0a7a71d3c8f.png "38_48")
+![38_48](https://yqfile.alicdn.com/be73146308876ade5e8b24e97413e0a7a71d3c8f.png?x-oss-process=image/resize,w_1400/format,webp "38_48")
 
 
 
@@ -432,7 +432,7 @@ Local BufferPool 和 Network BufferPool 都用尽后整个 Operator 就会停止
 
 
 
-![39_52](https://yqfile.alicdn.com/fe6df2957ec9255f8b2958d9a78feb4719b4915a.png "39_52")
+![39_52](https://yqfile.alicdn.com/fe6df2957ec9255f8b2958d9a78feb4719b4915a.png?x-oss-process=image/resize,w_1400/format,webp "39_52")
 
 
 

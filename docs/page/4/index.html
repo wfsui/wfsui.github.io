@@ -67,7 +67,7 @@
 				
 				
 				<div class="post">
-					<div class="meta">Jul 6, 2024</div>
+					<div class="meta">Jul 7, 2024</div>
 					<a class="title" href="/posts/ddd%E5%9C%A8%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E4%BA%A4%E6%98%93%E7%B3%BB%E7%BB%9F%E6%BC%94%E8%BF%9B%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">DDD在大众点评交易系统演进中的应用</a> &mdash;
 					<span class="description">
 						
@@ -85,22 +85,7 @@
 				</div>
 				
 				<div class="post">
-					<div class="meta">Jul 6, 2024</div>
-					<a class="title" href="/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%9F%BA%E4%BA%8Egpu%E7%9A%84%E5%90%91%E9%87%8F%E6%A3%80%E7%B4%A2%E7%B3%BB%E7%BB%9F%E5%AE%9E%E8%B7%B5/">美团外卖基于GPU的向量检索系统实践</a> &mdash;
-					<span class="description">
-						
-						1 背景 随着大数据和人工智能时代的到来，向量检索的应用场景越来越广泛。在信息检索领域，向量检索可以用于检索系统、推荐系统、问答系统等，通过计算文档和查询向量之间的相似度，快速地找到与用户需求相关的信息。此外，在大语言模型和生成式AI场景，向量索引做为向量数据的底层存储，也得到了广泛的应用。
-如下图所示，向量检索主要分为三个步骤：（1）将文本、图像、语音等原始数据经过特征抽取，模型预估，最终表征为向量集合；（2）对输入Query采用类似的方式表征为向量；（3）在向量索引中找到与查询向量最相似的K个结果。一种简单直接的检索方式是与向量集合进行逐一比较，找到与查询向量最相似的向量。这种方法也被称为暴力检索。在大数据量或者高维度场景中，暴力检索的耗时和计算资源消耗巨大，无法在现实场景中直接使用。
-为了解决上述问题，业界提出ANN（Approximate Nearest Neighbor）近邻检索方案：通过构建有效索引，减少向量计算量，牺牲一定的召回精度以换取更高的检索速率。另一方面，研究如何通过GPU的并行计算能力，加速向量相似计算，也是一个比较热门的发展方向之一。Facebook开源的向量检索库Faiss在GPU上实现了多种索引方式，与CPU版性能相比，检索速率提升5到10倍。开源的向量检索引擎Milvus基于GPU加速的方案使得检索提高10+倍。
-目前，向量检索已经广泛应用在美团外卖搜推业务各场景中。相较于其他业务场景，美团外卖业务特点具有较强的Location Based Service（LBS）依赖，即商家的配送范围，决定了用户所能点餐的商家列表。以商品向量检索场景为例：向量检索结果集需要经过“可配送商家列表”过滤。
-此外，在不同的业务场景使用过程中，还需要根据商家商品的品类、标签等标量属性进行过滤。当前，美团外卖向量检索基于Elasticsearch+FAISS进行搭建，实现了10亿级别+高维向量集的标量+向量混合检索的能力。为了在保证业务高召回率的同时进一步减少检索时间，我们探索基于GPU的向量检索，并实现了一套通用的检索系统。
-2 美团外卖向量索引的发展历程 在美团外卖向量检索系统的建设过程中，我们相继使用了HNSW（Hierarchical Navigable Small World），IVF（Inverted File），IVF-PQ（Inverted File with Product Quantization）以及IVF-PQ+Refine等算法，基于CPU实现了向量检索能力。在过去的几年间，我们对Elasticsearch进行定制，实现了相关的向量检索算法，在复用Elasticsearch检索能力的情况下支持了标量-向量混合检索。下面是这四种技术的简介及演进历程。&hellip;
-						
-					</span>
-				</div>
-				
-				<div class="post">
-					<div class="meta">Jul 6, 2024</div>
+					<div class="meta">Jul 7, 2024</div>
 					<a class="title" href="/posts/%E5%9F%BA%E4%BA%8E%E5%A4%9A%E6%A8%A1%E6%80%81%E4%BF%A1%E6%81%AF%E6%8A%BD%E5%8F%96%E7%9A%84%E8%8F%9C%E5%93%81%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%9E%84%E5%BB%BA/">基于多模态信息抽取的菜品知识图谱构建</a> &mdash;
 					<span class="description">
 						
@@ -118,7 +103,22 @@
 				</div>
 				
 				<div class="post">
-					<div class="meta">Jul 6, 2024</div>
+					<div class="meta">Jul 7, 2024</div>
+					<a class="title" href="/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%9F%BA%E4%BA%8Egpu%E7%9A%84%E5%90%91%E9%87%8F%E6%A3%80%E7%B4%A2%E7%B3%BB%E7%BB%9F%E5%AE%9E%E8%B7%B5/">美团外卖基于GPU的向量检索系统实践</a> &mdash;
+					<span class="description">
+						
+						1 背景 随着大数据和人工智能时代的到来，向量检索的应用场景越来越广泛。在信息检索领域，向量检索可以用于检索系统、推荐系统、问答系统等，通过计算文档和查询向量之间的相似度，快速地找到与用户需求相关的信息。此外，在大语言模型和生成式AI场景，向量索引做为向量数据的底层存储，也得到了广泛的应用。
+如下图所示，向量检索主要分为三个步骤：（1）将文本、图像、语音等原始数据经过特征抽取，模型预估，最终表征为向量集合；（2）对输入Query采用类似的方式表征为向量；（3）在向量索引中找到与查询向量最相似的K个结果。一种简单直接的检索方式是与向量集合进行逐一比较，找到与查询向量最相似的向量。这种方法也被称为暴力检索。在大数据量或者高维度场景中，暴力检索的耗时和计算资源消耗巨大，无法在现实场景中直接使用。
+为了解决上述问题，业界提出ANN（Approximate Nearest Neighbor）近邻检索方案：通过构建有效索引，减少向量计算量，牺牲一定的召回精度以换取更高的检索速率。另一方面，研究如何通过GPU的并行计算能力，加速向量相似计算，也是一个比较热门的发展方向之一。Facebook开源的向量检索库Faiss在GPU上实现了多种索引方式，与CPU版性能相比，检索速率提升5到10倍。开源的向量检索引擎Milvus基于GPU加速的方案使得检索提高10+倍。
+目前，向量检索已经广泛应用在美团外卖搜推业务各场景中。相较于其他业务场景，美团外卖业务特点具有较强的Location Based Service（LBS）依赖，即商家的配送范围，决定了用户所能点餐的商家列表。以商品向量检索场景为例：向量检索结果集需要经过“可配送商家列表”过滤。
+此外，在不同的业务场景使用过程中，还需要根据商家商品的品类、标签等标量属性进行过滤。当前，美团外卖向量检索基于Elasticsearch+FAISS进行搭建，实现了10亿级别+高维向量集的标量+向量混合检索的能力。为了在保证业务高召回率的同时进一步减少检索时间，我们探索基于GPU的向量检索，并实现了一套通用的检索系统。
+2 美团外卖向量索引的发展历程 在美团外卖向量检索系统的建设过程中，我们相继使用了HNSW（Hierarchical Navigable Small World），IVF（Inverted File），IVF-PQ（Inverted File with Product Quantization）以及IVF-PQ+Refine等算法，基于CPU实现了向量检索能力。在过去的几年间，我们对Elasticsearch进行定制，实现了相关的向量检索算法，在复用Elasticsearch检索能力的情况下支持了标量-向量混合检索。下面是这四种技术的简介及演进历程。&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
+					<div class="meta">Jul 7, 2024</div>
 					<a class="title" href="/posts/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1ddd%E5%9C%A8b%E7%AB%AF%E8%90%A5%E9%94%80%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%9E%E8%B7%B5/">领域驱动设计DDD在B端营销系统的实践</a> &mdash;
 					<span class="description">
 						
@@ -135,7 +135,7 @@
 				</div>
 				
 				<div class="post">
-					<div class="meta">Jul 6, 2024</div>
+					<div class="meta">Jul 7, 2024</div>
 					<a class="title" href="/posts/cvpr-2024--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">CVPR 2024 | 美团技术团队精选论文解读</a> &mdash;
 					<span class="description">
 						

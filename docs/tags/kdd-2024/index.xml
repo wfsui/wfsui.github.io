@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>KDD 2024 on 大峰哥</title>
+    <link>https://wfsui.github.io/tags/kdd-2024/</link>
+    <description>Recent content in KDD 2024 on 大峰哥</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Sat, 27 Jul 2024 02:48:04 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/kdd-2024/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>KDD 2024 | 美团技术团队精选论文解读</title>
+      <link>https://wfsui.github.io/posts/kdd-2024--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
+      <pubDate>Sat, 27 Jul 2024 02:48:04 +0000</pubDate>
+      <guid>https://wfsui.github.io/posts/kdd-2024--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
+      <description>ACM SIGKDD （Knowledge Discovery and Data Mining，简称 KDD）是数据挖掘领域的国际顶级会议。KDD Cup比赛是由SIGKDD主办的数据挖掘研究领域的国际顶级赛事，从1997年开始，每年举办一次，是目前数据挖掘领域最有影响力的赛事。&#xA;本文精选了美团技术团队被 KDD 2024 收录的 5 篇长文进行解读，覆盖了用户意图感知、机器学习&amp;amp;运筹优化、在线控制实验、联合广告模型、实时调度决策等多个技术领域。这些论文都是美团与高校、科研机构合作的成果。希望能给从事相关研究工作的同学带来一些帮助或启发。&#xA;此外，大众点评技术部/内容智能算法团队组建的 BlackPearl 团队参加了今年KDD Cup-OAG Bench（Open Academic Graph Benchmark）赛道的WhoIsWho-IND、PST、AQA三道赛题，基于大模型技术提出自反馈增强、嫁接学习等方案，三个赛题均以较大优势取得冠军！</description>
+    </item>
+  </channel>
+</rss>

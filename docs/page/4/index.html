@@ -67,45 +67,7 @@
 				
 				
 				<div class="post">
-					<div class="meta">Jul 26, 2024</div>
-					<a class="title" href="/posts/%E7%BE%8E%E5%9B%A2%E5%A4%A7%E8%A7%84%E6%A8%A1kv%E5%AD%98%E5%82%A8%E6%8C%91%E6%88%98%E4%B8%8E%E6%9E%B6%E6%9E%84%E5%AE%9E%E8%B7%B5/">美团大规模KV存储挑战与架构实践</a> &mdash;
-					<span class="description">
-						
-						KV 存储作为美团一项重要的在线存储服务，承载了在线服务每天万亿级的请求量，并且保持着 99.995% 的服务可用性。在 DataFunSummit 2023 数据基础架构峰会上，我们分享了《美团大规模 KV 存储挑战与架构实践》，本文为演讲内容的整理。文章主要分为四个部分：第一部分介绍了美团 KV 存储发展历程；第二部分分享了内存 KV Squirrel 挑战和架构实践；第三部分阐述了持久化 KV Cellar 挑战和架构实践；最后一部分介绍了未来的发展规划。希望这些内容对大家有所帮助或启发。
-1 美团 KV 存储发展历程 上图就是美团第一代的分布式 KV 存储的架构，可能很多公司都经历过这个阶段。在客户端内做一致性哈希，然后在后端部署上很多 Memcached 实例，这样就实现了最基本的 KV 存储分布式设计。但这样的设计存在很明显的问题：比如在宕机摘除节点会时丢失数据；此外，在缓存空间不够需要扩容时，一致性哈希也会丢失一些数据，这样会给业务的开发带来很大的困扰。&hellip;
-						
-					</span>
-				</div>
-				
-				<div class="post">
-					<div class="meta">Jul 26, 2024</div>
-					<a class="title" href="/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%9F%BA%E4%BA%8Egpu%E7%9A%84%E5%90%91%E9%87%8F%E6%A3%80%E7%B4%A2%E7%B3%BB%E7%BB%9F%E5%AE%9E%E8%B7%B5/">美团外卖基于GPU的向量检索系统实践</a> &mdash;
-					<span class="description">
-						
-						1 背景 随着大数据和人工智能时代的到来，向量检索的应用场景越来越广泛。在信息检索领域，向量检索可以用于检索系统、推荐系统、问答系统等，通过计算文档和查询向量之间的相似度，快速地找到与用户需求相关的信息。此外，在大语言模型和生成式AI场景，向量索引做为向量数据的底层存储，也得到了广泛的应用。
-如下图所示，向量检索主要分为三个步骤：（1）将文本、图像、语音等原始数据经过特征抽取，模型预估，最终表征为向量集合；（2）对输入Query采用类似的方式表征为向量；（3）在向量索引中找到与查询向量最相似的K个结果。一种简单直接的检索方式是与向量集合进行逐一比较，找到与查询向量最相似的向量。这种方法也被称为暴力检索。在大数据量或者高维度场景中，暴力检索的耗时和计算资源消耗巨大，无法在现实场景中直接使用。
-为了解决上述问题，业界提出ANN（Approximate Nearest Neighbor）近邻检索方案：通过构建有效索引，减少向量计算量，牺牲一定的召回精度以换取更高的检索速率。另一方面，研究如何通过GPU的并行计算能力，加速向量相似计算，也是一个比较热门的发展方向之一。Facebook开源的向量检索库Faiss在GPU上实现了多种索引方式，与CPU版性能相比，检索速率提升5到10倍。开源的向量检索引擎Milvus基于GPU加速的方案使得检索提高10+倍。
-目前，向量检索已经广泛应用在美团外卖搜推业务各场景中。相较于其他业务场景，美团外卖业务特点具有较强的Location Based Service（LBS）依赖，即商家的配送范围，决定了用户所能点餐的商家列表。以商品向量检索场景为例：向量检索结果集需要经过“可配送商家列表”过滤。
-此外，在不同的业务场景使用过程中，还需要根据商家商品的品类、标签等标量属性进行过滤。当前，美团外卖向量检索基于Elasticsearch+FAISS进行搭建，实现了10亿级别+高维向量集的标量+向量混合检索的能力。为了在保证业务高召回率的同时进一步减少检索时间，我们探索基于GPU的向量检索，并实现了一套通用的检索系统。
-2 美团外卖向量索引的发展历程 在美团外卖向量检索系统的建设过程中，我们相继使用了HNSW（Hierarchical Navigable Small World），IVF（Inverted File），IVF-PQ（Inverted File with Product Quantization）以及IVF-PQ+Refine等算法，基于CPU实现了向量检索能力。在过去的几年间，我们对Elasticsearch进行定制，实现了相关的向量检索算法，在复用Elasticsearch检索能力的情况下支持了标量-向量混合检索。下面是这四种技术的简介及演进历程。&hellip;
-						
-					</span>
-				</div>
-				
-				<div class="post">
-					<div class="meta">Jul 26, 2024</div>
-					<a class="title" href="/posts/cvpr-2024--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">CVPR 2024 | 美团技术团队精选论文解读</a> &mdash;
-					<span class="description">
-						
-						CVPR全称为IEEE Conference on Computer Vision and Pattern Recognition，国际计算机视觉与模式识别会议。该会议始于1983年，与ICCV和ECCV并称计算机视觉方向的三大顶级会议。根据谷歌学术公布的2022年最新学术期刊和会议影响力排名，CVPR在所有学术刊物中位居第4，仅次于Nature、NEJM和Science。
-本文精选了美团技术团队被CVPR 2024收录的7篇论文进行解读，这些论文既包括OCR预训练、长尾半监督学习等基础学习范式升级，也包括图生视频、数字人驱动、视听分割（AVS）等视觉AIGC技术创新。这些论文有美团视觉智能部的独立产出，也有跟高校、科研机构合作的成果。希望能给从事相关研究工作的同学带来一些帮助或启发。
-01 | ODM: A Text-Image Further Alignment Pre-training Approach for Scene Text Detection and Spotting 论文作者：Chen Duan（Meituan），Pei Fu（Meituan），Shan Guo（Meituan），Qianyi Jiang（Meituan），Xiaoming Wei（Meituan）&hellip;
-						
-					</span>
-				</div>
-				
-				<div class="post">
-					<div class="meta">Jul 26, 2024</div>
+					<div class="meta">Jul 27, 2024</div>
 					<a class="title" href="/posts/ddd%E5%9C%A8%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E4%BA%A4%E6%98%93%E7%B3%BB%E7%BB%9F%E6%BC%94%E8%BF%9B%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">DDD在大众点评交易系统演进中的应用</a> &mdash;
 					<span class="description">
 						
@@ -123,7 +85,7 @@
 				</div>
 				
 				<div class="post">
-					<div class="meta">Jul 26, 2024</div>
+					<div class="meta">Jul 27, 2024</div>
 					<a class="title" href="/posts/%E5%9F%BA%E4%BA%8E%E5%A4%9A%E6%A8%A1%E6%80%81%E4%BF%A1%E6%81%AF%E6%8A%BD%E5%8F%96%E7%9A%84%E8%8F%9C%E5%93%81%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%9E%84%E5%BB%BA/">基于多模态信息抽取的菜品知识图谱构建</a> &mdash;
 					<span class="description">
 						
@@ -136,6 +98,44 @@
 为了对广泛的食材进行全面的语义分类，我们根据中华人民共和国健康行业标准对食品食材数据表达的规定[23]，将其划分为更高级的层次。这些层次关系也可以作为先验信息，以促进在后续研究中探索不同食材之间的上下文关系。此外，我们评估了传统的基于CNN的检测算法和基于Transformer的预训练模型在CMIngre上食材检测任务的性能。我们还提出了食材检索任务的基线方法，该方法捕获单个食材的语义信息以及各种食材组合之间的关系，并进一步采用pooling策略来研究跨模态图像-食材之间的匹配关系。在CMIngre数据集上进行的深入实验评估证实了我们提出的方法在提高食材检测和检索性能方面的有效性。
 本文的贡献可以概括为以下几点：
 本文提出了一种新的基于“图像-文本”对的中餐理解任务，该任务扩展了细粒度对象检测和检索的范围，对中餐烹饪领域的理解提供进一步的帮助。 为了支持对中餐理解的研究，我们建立了一个名为CMIngre的跨模态食材级别的数据集，该数据集由来自三个不同来源的8,001组图像食材组成，涵盖了429种不同的中国食材和95,290个边界框。 我们评估了不同的目标检测算法在CMIngre数据集上的性能，并提出了跨模态食材检索任务的基线方法。 我们在CMIngre上对两个食材级的食品理解任务进行了广泛的实验，以评估我们提出的方法的有效性。 2.&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
+					<div class="meta">Jul 27, 2024</div>
+					<a class="title" href="/posts/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96%E5%9F%BA%E4%BA%8Egpu%E7%9A%84%E5%90%91%E9%87%8F%E6%A3%80%E7%B4%A2%E7%B3%BB%E7%BB%9F%E5%AE%9E%E8%B7%B5/">美团外卖基于GPU的向量检索系统实践</a> &mdash;
+					<span class="description">
+						
+						1 背景 随着大数据和人工智能时代的到来，向量检索的应用场景越来越广泛。在信息检索领域，向量检索可以用于检索系统、推荐系统、问答系统等，通过计算文档和查询向量之间的相似度，快速地找到与用户需求相关的信息。此外，在大语言模型和生成式AI场景，向量索引做为向量数据的底层存储，也得到了广泛的应用。
+如下图所示，向量检索主要分为三个步骤：（1）将文本、图像、语音等原始数据经过特征抽取，模型预估，最终表征为向量集合；（2）对输入Query采用类似的方式表征为向量；（3）在向量索引中找到与查询向量最相似的K个结果。一种简单直接的检索方式是与向量集合进行逐一比较，找到与查询向量最相似的向量。这种方法也被称为暴力检索。在大数据量或者高维度场景中，暴力检索的耗时和计算资源消耗巨大，无法在现实场景中直接使用。
+为了解决上述问题，业界提出ANN（Approximate Nearest Neighbor）近邻检索方案：通过构建有效索引，减少向量计算量，牺牲一定的召回精度以换取更高的检索速率。另一方面，研究如何通过GPU的并行计算能力，加速向量相似计算，也是一个比较热门的发展方向之一。Facebook开源的向量检索库Faiss在GPU上实现了多种索引方式，与CPU版性能相比，检索速率提升5到10倍。开源的向量检索引擎Milvus基于GPU加速的方案使得检索提高10+倍。
+目前，向量检索已经广泛应用在美团外卖搜推业务各场景中。相较于其他业务场景，美团外卖业务特点具有较强的Location Based Service（LBS）依赖，即商家的配送范围，决定了用户所能点餐的商家列表。以商品向量检索场景为例：向量检索结果集需要经过“可配送商家列表”过滤。
+此外，在不同的业务场景使用过程中，还需要根据商家商品的品类、标签等标量属性进行过滤。当前，美团外卖向量检索基于Elasticsearch+FAISS进行搭建，实现了10亿级别+高维向量集的标量+向量混合检索的能力。为了在保证业务高召回率的同时进一步减少检索时间，我们探索基于GPU的向量检索，并实现了一套通用的检索系统。
+2 美团外卖向量索引的发展历程 在美团外卖向量检索系统的建设过程中，我们相继使用了HNSW（Hierarchical Navigable Small World），IVF（Inverted File），IVF-PQ（Inverted File with Product Quantization）以及IVF-PQ+Refine等算法，基于CPU实现了向量检索能力。在过去的几年间，我们对Elasticsearch进行定制，实现了相关的向量检索算法，在复用Elasticsearch检索能力的情况下支持了标量-向量混合检索。下面是这四种技术的简介及演进历程。&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
+					<div class="meta">Jul 27, 2024</div>
+					<a class="title" href="/posts/cvpr-2024--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">CVPR 2024 | 美团技术团队精选论文解读</a> &mdash;
+					<span class="description">
+						
+						CVPR全称为IEEE Conference on Computer Vision and Pattern Recognition，国际计算机视觉与模式识别会议。该会议始于1983年，与ICCV和ECCV并称计算机视觉方向的三大顶级会议。根据谷歌学术公布的2022年最新学术期刊和会议影响力排名，CVPR在所有学术刊物中位居第4，仅次于Nature、NEJM和Science。
+本文精选了美团技术团队被CVPR 2024收录的7篇论文进行解读，这些论文既包括OCR预训练、长尾半监督学习等基础学习范式升级，也包括图生视频、数字人驱动、视听分割（AVS）等视觉AIGC技术创新。这些论文有美团视觉智能部的独立产出，也有跟高校、科研机构合作的成果。希望能给从事相关研究工作的同学带来一些帮助或启发。
+01 | ODM: A Text-Image Further Alignment Pre-training Approach for Scene Text Detection and Spotting 论文作者：Chen Duan（Meituan），Pei Fu（Meituan），Shan Guo（Meituan），Qianyi Jiang（Meituan），Xiaoming Wei（Meituan）&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
+					<div class="meta">Jul 27, 2024</div>
+					<a class="title" href="/posts/spark%E5%90%91%E9%87%8F%E5%8C%96%E8%AE%A1%E7%AE%97%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E7%9A%84%E5%AE%9E%E8%B7%B5/">Spark向量化计算在美团生产环境的实践</a> &mdash;
+					<span class="description">
+						
+						1 什么是向量化计算 1.1 并行数据处理：SIMD指令 让我们从一个简单问题开始：假设要实现“数组a+b存入c”，设三个整型数组的长度都是100，那么只需将“c[i] = a[i] + b[i]”置于一个100次的循环内，代码如下：
+void addArrays(const int* a, const int* b, int* c, int num) { for (int i = 0; i &lt; num; ++i) { c[i] = a[i] + b[i]; } } 我们知道：计算在CPU内完成，逻辑计算单元操作寄存器中的数据，算术运算的源操作数要先放置到CPU的寄存器中，哪怕简单的内存拷贝也需要过CPU寄存器。所以，完成“c[i] = a[i] + b[i]”需经三步：&hellip;
 						
 					</span>
 				</div>

@@ -7,12 +7,12 @@
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sat, 27 Jul 2024 02:48:07 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jul 2024 02:51:18 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/%E8%A7%86%E8%A7%89%E6%99%BA%E8%83%BD%E9%83%A8/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CVPR 2024 | 美团技术团队精选论文解读</title>
       <link>https://wfsui.github.io/posts/cvpr-2024--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Sat, 27 Jul 2024 02:48:07 +0000</pubDate>
+      <pubDate>Sun, 28 Jul 2024 02:51:18 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/cvpr-2024--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
       <description>CVPR全称为IEEE Conference on Computer Vision and Pattern Recognition，国际计算机视觉与模式识别会议。该会议始于1983年，与ICCV和ECCV并称计算机视觉方向的三大顶级会议。根据谷歌学术公布的2022年最新学术期刊和会议影响力排名，CVPR在所有学术刊物中位居第4，仅次于Nature、NEJM和Science。&#xA;本文精选了美团技术团队被CVPR 2024收录的7篇论文进行解读，这些论文既包括OCR预训练、长尾半监督学习等基础学习范式升级，也包括图生视频、数字人驱动、视听分割（AVS）等视觉AIGC技术创新。这些论文有美团视觉智能部的独立产出，也有跟高校、科研机构合作的成果。希望能给从事相关研究工作的同学带来一些帮助或启发。&#xA;01 | ODM: A Text-Image Further Alignment Pre-training Approach for Scene Text Detection and Spotting 论文作者：Chen Duan（Meituan），Pei Fu（Meituan），Shan Guo（Meituan），Qianyi Jiang（Meituan），Xiaoming Wei（Meituan）</description>
     </item>

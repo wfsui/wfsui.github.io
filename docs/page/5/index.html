@@ -67,7 +67,7 @@
 				
 				
 				<div class="post">
-					<div class="meta">Aug 4, 2024</div>
+					<div class="meta">Aug 5, 2024</div>
 					<a class="title" href="/posts/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1ddd%E5%9C%A8b%E7%AB%AF%E8%90%A5%E9%94%80%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%9E%E8%B7%B5/">领域驱动设计DDD在B端营销系统的实践</a> &mdash;
 					<span class="description">
 						
@@ -84,21 +84,7 @@
 				</div>
 				
 				<div class="post">
-					<div class="meta">Aug 4, 2024</div>
-					<a class="title" href="/posts/%E5%9F%BA%E6%9C%AC%E5%8A%9F--%E4%B8%80%E6%96%87%E8%AE%B2%E6%B8%85%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5/">基本功 | 一文讲清多线程和多线程同步</a> &mdash;
-					<span class="description">
-						
-						多线程编程是现代软件开发中的一项关键技术，在多线程编程中，开发者可以将复杂的任务分解为多个独立的线程，使其并行执行，从而充分利用多核处理器的优势。然而，多线程编程也带来了挑战，例如线程同步、死锁和竞态条件等问题。本篇文章将深入探讨多线程编程的基本概念（原子操作、CAS、Lock-free、内存屏障、伪共享、乱序执行等）、常见模式和最佳实践。通过具体的代码示例，希望能够帮助大家掌握多线程编程的核心技术，并在实际开发中应用这些知识，提升软件的性能和稳定性。
-1 多线程 1.1 线程的概念 十多年前，主流观点主张在可能的情况下优先选择多进程而非多线程。如今，多线程编程已经成为编程领域的事实标准。多线程技术在很大程度上改善了程序的性能和响应能力，使其能够更加高效地利用系统资源，这不仅归功于多核处理器的普及和软硬件技术的进步，还归功于开发者对多线程编程的深入理解和技术创新。
-那么什么是线程呢？线程是一个执行上下文，它包含诸多状态数据：每个线程有自己的执行流、调用栈、错误码、信号掩码、私有数据。Linux内核用任务（Task）表示一个执行流。
-1.1.1 执行流 一个任务里被依次执行的指令会形成一个指令序列（IP寄存器值的历史记录），这个指令序列就是一个指令流，每个线程会有自己的执行流。考虑下面的代码（本文代码块为C++）：
-int calc(int a, int b, char op) { int c = 0; if (op == &#39;+&#39;) c = a + b; else if (op == &#39;-&#39;) c = a - b; else if (op == &#39;*&#39;) c = a * b; else if (op == &#39;/&#39;) c = a / b; else printf(&#34;invalid operation\n&#34;); return c; } calc函数被编译成汇编指令，一行C代码对应一个或多个汇编指令，在一个线程里执行calc，那么这些机器指令会被依次执行。但是，被执行的指令序列跟代码顺序可能不完全一致，代码中的分支、跳转等语句，以及编译器对指令重排、处理器乱序执行会影响指令的真正执行顺序。&hellip;
-						
-					</span>
-				</div>
-				
-				<div class="post">
-					<div class="meta">Aug 4, 2024</div>
+					<div class="meta">Aug 5, 2024</div>
 					<a class="title" href="/posts/%E6%90%9C%E7%B4%A2%E5%B9%BF%E5%91%8A%E5%8F%AC%E5%9B%9E%E6%8A%80%E6%9C%AF%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E5%AE%9E%E8%B7%B5/">搜索广告召回技术在美团的实践</a> &mdash;
 					<span class="description">
 						
@@ -117,7 +103,7 @@ int calc(int a, int b, char op) { int c = 0; if (op == &#39;+&#39;) c = a + b; e
 				</div>
 				
 				<div class="post">
-					<div class="meta">Aug 4, 2024</div>
+					<div class="meta">Aug 5, 2024</div>
 					<a class="title" href="/posts/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%8F%AF%E6%B5%8B%E6%80%A7%E8%83%BD%E5%8A%9B%E5%BB%BA%E8%AE%BE%E4%B8%8E%E5%AE%9E%E8%B7%B5/">小程序可测性能力建设与实践</a> &mdash;
 					<span class="description">
 						
@@ -136,13 +122,27 @@ int calc(int a, int b, char op) { int c = 0; if (op == &#39;+&#39;) c = a + b; e
 				</div>
 				
 				<div class="post">
-					<div class="meta">Aug 4, 2024</div>
+					<div class="meta">Aug 5, 2024</div>
 					<a class="title" href="/posts/kdd-2024--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">KDD 2024 | 美团技术团队精选论文解读</a> &mdash;
 					<span class="description">
 						
 						ACM SIGKDD （Knowledge Discovery and Data Mining，简称 KDD）是数据挖掘领域的国际顶级会议。KDD Cup比赛是由SIGKDD主办的数据挖掘研究领域的国际顶级赛事，从1997年开始，每年举办一次，是目前数据挖掘领域最有影响力的赛事。
 本文精选了美团技术团队被 KDD 2024 收录的 5 篇长文进行解读，覆盖了用户意图感知、机器学习&amp;运筹优化、在线控制实验、联合广告模型、实时调度决策等多个技术领域。这些论文都是美团与高校、科研机构合作的成果。希望能给从事相关研究工作的同学带来一些帮助或启发。
 此外，大众点评技术部/内容智能算法团队组建的 BlackPearl 团队参加了今年KDD Cup-OAG Bench（Open Academic Graph Benchmark）赛道的WhoIsWho-IND、PST、AQA三道赛题，基于大模型技术提出自反馈增强、嫁接学习等方案，三个赛题均以较大优势取得冠军！&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
+					<div class="meta">Aug 5, 2024</div>
+					<a class="title" href="/posts/%E5%9F%BA%E6%9C%AC%E5%8A%9F--%E4%B8%80%E6%96%87%E8%AE%B2%E6%B8%85%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5/">基本功 | 一文讲清多线程和多线程同步</a> &mdash;
+					<span class="description">
+						
+						多线程编程是现代软件开发中的一项关键技术，在多线程编程中，开发者可以将复杂的任务分解为多个独立的线程，使其并行执行，从而充分利用多核处理器的优势。然而，多线程编程也带来了挑战，例如线程同步、死锁和竞态条件等问题。本篇文章将深入探讨多线程编程的基本概念（原子操作、CAS、Lock-free、内存屏障、伪共享、乱序执行等）、常见模式和最佳实践。通过具体的代码示例，希望能够帮助大家掌握多线程编程的核心技术，并在实际开发中应用这些知识，提升软件的性能和稳定性。
+1 多线程 1.1 线程的概念 十多年前，主流观点主张在可能的情况下优先选择多进程而非多线程。如今，多线程编程已经成为编程领域的事实标准。多线程技术在很大程度上改善了程序的性能和响应能力，使其能够更加高效地利用系统资源，这不仅归功于多核处理器的普及和软硬件技术的进步，还归功于开发者对多线程编程的深入理解和技术创新。
+那么什么是线程呢？线程是一个执行上下文，它包含诸多状态数据：每个线程有自己的执行流、调用栈、错误码、信号掩码、私有数据。Linux内核用任务（Task）表示一个执行流。
+1.1.1 执行流 一个任务里被依次执行的指令会形成一个指令序列（IP寄存器值的历史记录），这个指令序列就是一个指令流，每个线程会有自己的执行流。考虑下面的代码（本文代码块为C++）：
+int calc(int a, int b, char op) { int c = 0; if (op == &#39;+&#39;) c = a + b; else if (op == &#39;-&#39;) c = a - b; else if (op == &#39;*&#39;) c = a * b; else if (op == &#39;/&#39;) c = a / b; else printf(&#34;invalid operation\n&#34;); return c; } calc函数被编译成汇编指令，一行C代码对应一个或多个汇编指令，在一个线程里执行calc，那么这些机器指令会被依次执行。但是，被执行的指令序列跟代码顺序可能不完全一致，代码中的分支、跳转等语句，以及编译器对指令重排、处理器乱序执行会影响指令的真正执行顺序。&hellip;
 						
 					</span>
 				</div>

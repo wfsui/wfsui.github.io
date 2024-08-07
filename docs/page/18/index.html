@@ -67,6 +67,21 @@
 				
 				
 				<div class="post">
+					<div class="meta">Nov 18, 2022</div>
+					<a class="title" href="/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/">日志导致线程Block的这些坑，你不得不防</a> &mdash;
+					<span class="description">
+						
+						1. 前言 日志对程序的重要性不言而喻。它很“大”，我们在项目中经常通过日志来记录信息和排查问题，相关代码随处可见。它也很“小”，作为辅助工具，日志使用简单、上手快，我们通常不会花费过多精力耗在日志上。但看似不起眼的日志也隐藏着各种各样的“坑”，如果使用不当，它不仅不能帮助我们，反而还可能降低服务性能，甚至拖垮我们的服务。
+日志导致线程Block的问题，相信你或许已经遇到过，对此应该深有体会；或许你还没遇到过，但不代表没有问题，只是可能还没有触发而已。本文主要介绍美团统一API网关服务Shepherd（参见《百亿规模API网关服务Shepherd的设计与实现》一文）在实践中所踩过的关于日志导致线程Block的那些“坑”，然后再分享一些避“坑”经验。
+2. 背景 API网关服务Shepherd基于Java语言开发，使用业界大名鼎鼎的Apache Log4j2作为主要日志框架，同时使用美团内部的XMD-Log SDK和Scribe-Log SDK对日志内容进行处理，日志处理整体流程如下图1所示。业务打印日志时，日志框架基于Logger配置来决定把日志交给XMDFile处理还是Scribe处理。其中，XMDFile是XMD-Log内部提供的日志Appender名称，负责输出日志到本地磁盘，Scribe是Scribe-Log内部提供的日志Appender名称，负责上报日志到远程日志中心。
+随着业务的快速增长，日志导致的线程Block问题愈发频繁。比如调用后端RPC服务超时，导致调用方大量线程Block；再比如，业务内部输出异常日志导致服务大量线程Block等，这些问题严重影响着服务的稳定性。因此，我们结合项目在过去一段时间暴露出来的各种由于日志导致的线程Block问题，对日志框架存在的稳定性风险因素进行了彻底的排查和修复，并在线下、线上环境进行全方位验证。在此过程中，我们总结了一些日志使用相关的实践经验，希望分享给大家。
+在进入正文前，首先介绍项目当时的运行环境和日志相关配置信息。
+JDK版本 java version &#34;1.8.0_45&#34; Java(TM) SE Runtime Environment (build 1.&hellip;
+						
+					</span>
+				</div>
+				
+				<div class="post">
 					<div class="meta">Nov 11, 2022</div>
 					<a class="title" href="/posts/%E5%8F%AF%E8%A7%86%E5%8C%96%E5%85%A8%E9%93%BE%E8%B7%AF%E6%97%A5%E5%BF%97%E8%BF%BD%E8%B8%AA/">可视化全链路日志追踪</a> &mdash;
 					<span class="description">
@@ -124,16 +139,6 @@ Paper 01 | Compressing Models with Few Samples: Mimicking then Replacing | 论�
 文本匹配方法：早期的文本匹配任务仅考虑了Query与Doc的字面匹配程度，通过TF-IDF、BM25等基于Term的匹配特征来计算相关性。字面匹配相关性线上计算效率较高，但基于Term的关键词匹配泛化性能较差，缺少语义和词序信息，且无法处理一词多义或者多词一义的问题，因此漏匹配和误匹配现象严重。
 传统语义匹配模型：为弥补字面匹配的缺陷，语义匹配模型被提出以更好地理解Query与Doc的语义相关性。传统的语义匹配模型主要包括基于隐式空间的匹配：将Query和Doc都映射到同一个空间的向量，再用向量距离或相似度作为匹配分，如Partial Least Square（PLS）[1]；以及基于翻译模型的匹配：将Doc映射到Query空间后进行匹配或计算Doc翻译成Query的概率[2]。
 随着深度学习和预训练模型的发展，深度语义匹配模型也被业界广泛应用。深度语义匹配模型从实现方法上分为基于表示（Representation-based）的方法及基于交互（Interaction-based）的方法。预训练模型作为自然语言处理领域的有效方法，也被广泛使用在语义匹配任务中。&hellip;
-						
-					</span>
-				</div>
-				
-				<div class="post">
-					<div class="meta">Sep 26, 2022</div>
-					<a class="title" href="/posts/yolov6%E5%8F%88%E5%BF%AB%E5%8F%88%E5%87%86%E7%9A%84%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%BC%80%E6%BA%90%E5%95%A6/">YOLOv6：又快又准的目标检测框架开源啦</a> &mdash;
-					<span class="description">
-						
-						1. 概述 YOLOv6 是美团视觉智能部研发的一款目标检测框架，致力于工业应用。本框架同时专注于检测的精度和推理效率，在工业界常用的尺寸模型中：YOLOv6-nano 在 COCO 上精度可达 35.0% AP，在 T4 上推理速度可达 1242 FPS；YOLOv6-s 在 COCO 上精度可达 43.1% AP，在 T4 上推理速度可达 520 FPS。在部署方面，YOLOv6 支持 GPU（TensorRT）、CPU（OPENVINO）、ARM（MNN、TNN、NCNN）等不同平台的部署，极大地简化工程部署时的适配工作。&hellip;
 						
 					</span>
 				</div>

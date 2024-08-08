@@ -7,12 +7,12 @@
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Wed, 07 Aug 2024 02:50:54 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 08 Aug 2024 02:51:33 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/%E5%90%91%E9%87%8F%E5%8C%96%E8%AE%A1%E7%AE%97/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Spark向量化计算在美团生产环境的实践</title>
       <link>https://wfsui.github.io/posts/spark%E5%90%91%E9%87%8F%E5%8C%96%E8%AE%A1%E7%AE%97%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E7%9A%84%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Wed, 07 Aug 2024 02:50:54 +0000</pubDate>
+      <pubDate>Thu, 08 Aug 2024 02:51:33 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/spark%E5%90%91%E9%87%8F%E5%8C%96%E8%AE%A1%E7%AE%97%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E7%9A%84%E5%AE%9E%E8%B7%B5/</guid>
       <description>1 什么是向量化计算 1.1 并行数据处理：SIMD指令 让我们从一个简单问题开始：假设要实现“数组a+b存入c”，设三个整型数组的长度都是100，那么只需将“c[i] = a[i] + b[i]”置于一个100次的循环内，代码如下：&#xA;void addArrays(const int* a, const int* b, int* c, int num) { for (int i = 0; i &amp;lt; num; ++i) { c[i] = a[i] + b[i]; } } 我们知道：计算在CPU内完成，逻辑计算单元操作寄存器中的数据，算术运算的源操作数要先放置到CPU的寄存器中，哪怕简单的内存拷贝也需要过CPU寄存器。所以，完成“c[i] = a[i] + b[i]”需经三步：</description>
     </item>

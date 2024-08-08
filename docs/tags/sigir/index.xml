@@ -7,12 +7,12 @@
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Wed, 07 Aug 2024 02:50:53 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 08 Aug 2024 02:51:32 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/sigir/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SIGIR 2024 | 美团技术团队精选论文解读</title>
       <link>https://wfsui.github.io/posts/sigir-2024--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Wed, 07 Aug 2024 02:50:53 +0000</pubDate>
+      <pubDate>Thu, 08 Aug 2024 02:51:32 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/sigir-2024--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
       <description>本文精选了美团技术团队被SIGIR 2024收录的3篇论文进行解读，第一篇论文围绕如何利用深度学习，来整合广告拍卖和混排；第二篇论文扩展定义了全用户纵向联邦推荐范式，并首次提出基于检索增强的纵向联邦推荐框架ReFer，解决了跨域特征缺失问题；第三篇论文提出了一种新颖的框架——解耦对比超图学习，并应用于下一个兴趣点推荐任务中。这些论文有美团技术团队的独立产出，也有跟高校、科研机构合作的成果。希望能给从事相关研究工作的同学带来一些帮助或启发。&#xA;SIGIR的全称为ACM Special Interest Group on Information Retrieval（ACM国际信息检索大会），是中国计算机学会CCF推荐的A类国际学术会议，也是人工智能领域智能信息检索方向最权威的国际会议。根据会议官方统计，这次会议共收到1148篇长文投稿，其中有791篇有效长文投稿，仅有159篇长文被录用，录用率为20.1%。&#xA;01 Deep Automated Mechanism Design for Integrating Ad Auction and Allocation in Feed 融合信息流广告拍卖与混排的深度自动机制设计 论文作者：Xuejian Li*（Meituan），Ze Wang*（Meituan），Bingqi Zhu（Meituan），Fei He（Meituan），Yongkang Wang（Meituan），Xingxing Wang（Meituan）</description>
     </item>

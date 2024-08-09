@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Android on 大峰哥</title>
+    <link>https://wfsui.github.io/tags/android/</link>
+    <description>Recent content in Android on 大峰哥</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Sat, 30 Dec 2023 02:40:31 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/android/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Robust 2.0：支持Android R8的升级版热修复框架</title>
+      <link>https://wfsui.github.io/posts/robust-2.0%E6%94%AF%E6%8C%81android-r8%E7%9A%84%E5%8D%87%E7%BA%A7%E7%89%88%E7%83%AD%E4%BF%AE%E5%A4%8D%E6%A1%86%E6%9E%B6/</link>
+      <pubDate>Sat, 30 Dec 2023 02:40:31 +0000</pubDate>
+      <guid>https://wfsui.github.io/posts/robust-2.0%E6%94%AF%E6%8C%81android-r8%E7%9A%84%E5%8D%87%E7%BA%A7%E7%89%88%E7%83%AD%E4%BF%AE%E5%A4%8D%E6%A1%86%E6%9E%B6/</guid>
+      <description>1. 背景 美团 Robust 是基于方法插桩的实时热修复框架，主要优势是实时生效、零 Hook 兼容所有 Android 版本。2016 年，我们在《Android 热更新方案 Robust》一文中对技术原理做了详细介绍，主要通过给每个方法插入 IF 分支来动态控制代码逻辑，进而实现热修复。其核心主要有两部分：一个是代码插桩，一个是自动补丁。&#xA;代码插桩这部分随着 Javassist、ASM 工具的广泛使用，整体方案比较成熟了，迭代改进主要是针对插桩代码体积和性能的优化； 自动补丁这部分在实际使用过程中一直在迭代，跟业界主流热修复方案一样，自动化补丁工具作制作时机是在 Proguard 混淆之后，由于 Proguard 会对代码进行代码优化和混淆处理，在 Proguard 后制作补丁能够降低补丁生成的复杂性。 近年来， Google 推出了新的代码优化混淆工具 R8，用于取代第三方的代码优化混淆工具 Proguard，经过多年功能迭代和缺陷改进，R8 在功能上基本可以替代 Proguard，在结果上更为出色（优化生成的 Android 字节码体积更小）。Google 已经在新版本的构建工具中强制使用 R8 ，国内外已有多个知名 App 完成了 R8 适配并上线，比如微信 Android 在今年正式从 Proguard 切换到了 R8（通过升级 Android 构建工具链）。Android 热修复补丁制作依赖二次构建包和线上包对比，需要对 Proguard 切换到 R8 提前进行适配和改造，本文分享了美团平台技术部 Robust 在适配 R8 以及优化改进中的一些思路和经验。</description>
+    </item>
+    <item>
+      <title>Android对so体积优化的探索与实践</title>
+      <link>https://wfsui.github.io/posts/android%E5%AF%B9so%E4%BD%93%E7%A7%AF%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Mon, 12 Sep 2022 04:37:40 +0000</pubDate>
+      <guid>https://wfsui.github.io/posts/android%E5%AF%B9so%E4%BD%93%E7%A7%AF%E4%BC%98%E5%8C%96%E7%9A%84%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
+      <description>1. 背景 应用安装包的体积影响着用户的下载时长、安装时长、磁盘占用空间等诸多方面，因此减小安装包的体积对于提升用户体验和下载转化率都大有益处。Android 应用安装包其实是一个 zip 文件，主要由 dex、assets、resource、so 等各类型文件压缩而成。目前业内常见的包体积优化方案大体分为以下几类：&#xA;针对 dex 的优化，例如 Proguard、dex 的 DebugItem 删除、字节码优化等； 针对 resource 的优化，例如 AndResGuard、webp 优化等； 针对 assets 的优化，例如压缩、动态下发等； 针对 so 的优化，同 assets，另外还有移除调试符号等。 随着动态化、端智能等技术的广泛应用，在采用上述优化手段后， so 在安装包体积中的比重依然很高，我们开始思索这部分体积是否能进一步优化。</description>
+    </item>
+  </channel>
+</rss>

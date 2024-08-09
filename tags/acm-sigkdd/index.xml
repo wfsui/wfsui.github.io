@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ACM SIGKDD on 大峰哥</title>
+    <link>https://wfsui.github.io/tags/acm-sigkdd/</link>
+    <description>Recent content in ACM SIGKDD on 大峰哥</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Sat, 10 Dec 2022 02:54:45 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/acm-sigkdd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>KDD 2022 | 美团技术团队精选论文解读</title>
+      <link>https://wfsui.github.io/posts/kdd-2022--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
+      <pubDate>Sat, 10 Dec 2022 02:54:45 +0000</pubDate>
+      <guid>https://wfsui.github.io/posts/kdd-2022--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
+      <description>ACM SIGKDD国际会议（简称 KDD）是由ACM的数据挖掘及知识发现专委会主办的数据挖掘研究领域的顶级年会，属于CCF A类会议。由于KDD的交叉学科性和广泛应用性，其影响力也越来越大，吸引了来自统计、机器学习、数据库、万维网、生物信息学、多媒体、自然语言处理、人机交互、社会网络计算、高性能计算及大数据挖掘等众多领域的从业者和研究学者。第28届KDD会议于2022于8月14日至18日在美国华盛顿举行。&#xA;论文01：Mask and Reason: Pre-Training Knowledge Graph Transformers for Complex Logical Queries（支持知识推理的图谱预训练） **|**下载地址：KG-Transformer&#xA;|****论文作者：刘潇（清华大学）、赵时予（清华大学）、苏凯（清华大学）、岑宇阔（美团）、裘捷中（清华大学）、东昱晓（清华大学）、张梦迪（美团）、武威（美团）、唐杰（清华大学）&#xA;**|**论文简介：面向复杂逻辑查询的知识图谱预训练。论文研究了知识图谱中复杂逻辑查询问题，讨论了主流的基于知识图谱嵌入的推理器的固有缺陷，并提出了基于KGTransformer的新型图神经网络推理器，及其对应的预训练与微调方法。KGTransformer在两个主要的知识图谱推理数据集上取得了最优的结果，尤其是在域外任务上取得了良好的泛化性能，证明了这一思路应用于知识图谱推理的广泛前景。&#xA;论文02：AutoFAS: Automatic Feature and Architecture Selection for Pre-Ranking System（粗排场景自动特征与结构选择算法） |**下载地址：AutoFAS|****论文作��**�：李想（美团）、周晓江（美团）、肖垚（美团）、黄培浩（美团）、陈达遥（美团）、陈胜（美团）、仙云森（美团）</description>
+    </item>
+  </channel>
+</rss>

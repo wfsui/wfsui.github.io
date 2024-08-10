@@ -12,8 +12,8 @@
   <meta property="og:locale" content="zh_cn">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2024-08-09T02:51:27+00:00">
-    <meta property="article:modified_time" content="2024-08-09T02:51:27+00:00">
+    <meta property="article:published_time" content="2024-08-10T02:51:31+00:00">
+    <meta property="article:modified_time" content="2024-08-10T02:51:31+00:00">
     <meta property="article:tag" content="算法">
     <meta property="article:tag" content="时间复杂度">
     <meta property="article:tag" content="程序">
@@ -69,7 +69,7 @@
 
 		<div class="post-header">
 			<h1 class="title">算法中七种常见的时间复杂度</h1>
-			<div class="meta">Posted at &mdash; Aug 9, 2024</div>
+			<div class="meta">Posted at &mdash; Aug 10, 2024</div>
 		</div>
 
 		<div class="markdown">
@@ -89,10 +89,10 @@
 </ul>
 </blockquote>
 <h2 id="算法中七种常见的时间复杂度">算法中七种常见的时间复杂度</h2>
-<p><img alt="在这里插入图片描述" src="https://i-blog.csdnimg.cn/blog_migrate/18be983d32c1b818c18720ee25018c73.png"></p>
+<p><img alt="在这里插入图片描述" src="https://i-blog.csdnimg.cn/blog_migrate/18be983d32c1b818c18720ee25018c73.png#pic_center"></p>
 <p>作为程序员，我们经常努力编写尽可能高效的代码。但是我们怎么知道我们编写的代码是否高效？答案：大 O 分析。本文的目的是用尽可能简单的术语来解释这个概念。我将首先介绍 Big O，然后举例说明您可能会遇到的七个最常见的情况。如果您已经熟悉这个概念，但是想要使用真实的 Python 代码进行具体的复习，请随时跳到第二部分！</p>
 <h3 id="像我只有-5-岁一样给我解释大-o-版">像我只有 5 岁一样给我解释：大 O 版</h3>
-<p><img alt="在这里插入图片描述" src="https://i-blog.csdnimg.cn/blog_migrate/6c465b42475779f81110bf45fae87e99.png"></p>
+<p><img alt="在这里插入图片描述" src="https://i-blog.csdnimg.cn/blog_migrate/6c465b42475779f81110bf45fae87e99.png#pic_center"></p>
 <p>简而言之，我们用「大 O 表示法」来描述算法的效率。具体来说，它描述了算法输入任意增加时，算法的运行时间是如何变化的。虽然这是一个简洁的定义，但我不认识哪个 5 岁小孩能理解这种表述，所以让我们进一步详细讲解。以下是一些定义：</p>
 <blockquote>
 <p><strong>1. 算法</strong>**—** 一组逻辑步骤，作用于输入以产生输出。</p>
@@ -119,7 +119,7 @@
 <li><strong>O(n!) —</strong> 阶乘复杂度</li>
 </ol>
 <p>下图描绘了各种复杂度的算法中，当输入规模增长时，操作数量（运行时间）的变化趋势。</p>
-<p><img alt="在这里插入图片描述" src="https://i-blog.csdnimg.cn/blog_migrate/0a70087b04342a00857a32831d93fb72.png"></p>
+<p><img alt="在这里插入图片描述" src="https://i-blog.csdnimg.cn/blog_migrate/0a70087b04342a00857a32831d93fb72.png#pic_center"></p>
 <p>你可以看到，随着输入规模的增长，红色阴影区域中算法的运行时间急剧增长。另一方面，在黄色和绿色阴影区域中的算法，当输入规模增长时，运行时间在变化不是很大，因此它们更高效，处理大量数据时更游刃有余。</p>
 <p>最后需要指明的一点，大 O 表示法通常用于描述当输入规模变得非常大时，算法呈现的「显著趋势」。因此，大的显著趋势会盖过一些小的细枝末节的趋势。例如，我们实际测算得到时间复杂度为 <strong>O(n²+ n)</strong> 的算法会简化为 <strong>O(n²)</strong>，原因是随着 <strong>n</strong> 变得非常大时， <strong>n²</strong> 这一项的显著性远远盖过了 <strong>n</strong> 这一项的显著性。</p>
 <h3 id="例子">例子</h3>
@@ -195,7 +195,7 @@
 </span></span></code></pre></div><p>显然，随着输入列表大小的增加，由于需要检查列表中的每个项目，最坏情况下找到目标所需的循环迭代次数的增长与输入列表的大小增长成正比。</p>
 <h5 id="4-on-log-n--对数线性复杂度">4. O(n log n) — 对数线性复杂度</h5>
 <p>列举对数线性复杂度算法的示例会比之前难一些。顾名思义，它们同时包含对数和线性部分。其中最常见的示例是排序算法。有一个算法叫「归并排序」，它用迭代手法将数组分成一小块一小块，对每小块进行拆分、排序，然后再按顺序重新将各个小块合并在一起。通过图像可以更容易看明白，因此我将省略代码的实现。</p>
-<p><img alt="在这里插入图片描述" src="https://i-blog.csdnimg.cn/blog_migrate/ba60788b89f80ccd2a9212876afd4abd.png"></p>
+<p><img alt="在这里插入图片描述" src="https://i-blog.csdnimg.cn/blog_migrate/ba60788b89f80ccd2a9212876afd4abd.png#pic_center"></p>
 <h5 id="5-onᵏ--多项式复杂度">5. O(nᵏ) — 多项式复杂度</h5>
 <p>在这里，我们开始着手研究时间复杂度较差的算法，通常应尽可能避免使用它（请参考上文的图表，我们正处于红色区域！）。但是，许多「暴力」算法都属于多项式复杂度，可以作为帮助我们解决问题的切入点。例如，下面是查找数组中重复项的二次（k = 2）多项式算法：</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#719e07">from</span> typing <span style="color:#719e07">import</span> Any, List, Set
@@ -229,7 +229,7 @@
 </span></span></code></pre></div><p>在上面的示例中，每当输入 <strong>n</strong> 增加 1 时，执行的操作数量就会翻倍。这是因为我们没有缓存每个函数调用的结果，所以必须从最开始重新计算所有先前的值。因此，该算法的时间复杂度为 <strong>O(2ⁿ)</strong>。</p>
 <h5 id="7-on--阶乘复杂度">7. O(n!) — 阶乘复杂度</h5>
 <p>最后但同样重要（但肯定是效率最低）的类型是阶乘时间复杂度的算法。通常应避免这中复杂度，因为随着输入规模的增加，它们会很快变得难以运行。这种算法有一个示例，那就是<a href="https://www.baidu.com/s?ie=UTF-8&wd=%E6%97%85%E8%A1%8C%E6%8E%A8%E9%94%80%E5%91%98%E9%97%AE%E9%A2%98">旅行推销员问题</a>的暴力解法。这个问题是希望找到一条最短路径，要求该路径必须访问坐标系中的所有点，并最终回到起点。暴力解法涉及相互比较所有可能的路线（读作：排列组合）并选择最短的。请注意，除非要访问的点数很少，否则这通常不是解决此问题的合理方法。</p>
-<p><img alt="在这里插入图片描述" src="https://i-blog.csdnimg.cn/blog_migrate/98b79c221d99d4983221c316147cfe40.png"></p>
+<p><img alt="在这里插入图片描述" src="https://i-blog.csdnimg.cn/blog_migrate/98b79c221d99d4983221c316147cfe40.png#pic_center"></p>
 <h3 id="结语">结语</h3>
 <p>尽管我们在这里介绍了很多案例，但在该主题上还有很多东西要学习！我关注的是“最坏情况下的时间复杂度”，但考虑平均情况或最佳情况也很有用。我也没有提到空间的复杂性，如果内存有限，这也同样重要。好消息是，这种分析的方法和一般思考过程是相同的。希望下次您进行代码面试时或需要编写性能函数时，你有了可以放心地解决它的工具。</p>
 <blockquote>

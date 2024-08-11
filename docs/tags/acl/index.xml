@@ -7,12 +7,12 @@
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>© Copyright notice</copyright>
-    <lastBuildDate>Sat, 10 Aug 2024 02:51:18 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 11 Aug 2024 02:53:24 +0000</lastBuildDate>
     <atom:link href="https://wfsui.github.io/tags/acl/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ACL 2024 | 美团技术团队精选论文解读</title>
       <link>https://wfsui.github.io/posts/acl-2024--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</link>
-      <pubDate>Sat, 10 Aug 2024 02:51:18 +0000</pubDate>
+      <pubDate>Sun, 11 Aug 2024 02:53:24 +0000</pubDate>
       <guid>https://wfsui.github.io/posts/acl-2024--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%B2%BE%E9%80%89%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</guid>
       <description>本文精选了美团技术团队被ACL 2024收录的4篇论文进行解读，论文内容覆盖了训练成本优化、投机解码、代码生成优化、指令微调（IFT）等技术领域。这些论文是美团技术团队跟高校、科研机构合作的成果。希望能给从事相关研究工作的同学带来一些帮助或启发。&#xA;ACL是计算语言学和自然语言处理领域最重要的顶级国际会议，由国际计算语言学协会组织，每年举办一次。据谷歌学术计算语言学刊物指标显示，ACL影响力位列第一，是CCF-A类推荐会议。ACL成立于1962年，世界上影响力最大、最具活力的国际学术组织之一，它每年夏天都会召开大会，供学者发布论文，分享最新成果，它的会员来自全球60多个国家和地区，是NLP领域最高级别的国际学术组织，代表了国际计算语言学的最高水平。&#xA;以下内容是4篇论文的解读：&#xA;01 Speculative Decoding via Early-exiting for Faster LLM Inference with Thompson Sampling Control Mechanism 论文类型：Long Paper</description>
     </item>

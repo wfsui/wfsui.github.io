@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>从0到1：美团端侧CDN容灾解决方案 - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:url" content="https://wfsui.github.io/posts/%E4%BB%8E0%E5%88%B01%E7%BE%8E%E5%9B%A2%E7%AB%AF%E4%BE%A7cdn%E5%AE%B9%E7%81%BE%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">
+  <meta property="og:site_name" content="大峰哥">
+  <meta property="og:title" content="从0到1：美团端侧CDN容灾解决方案">
+  <meta property="og:description" content="1. 前言 作为业务研发，你是否遇到过因为 CDN 问题导致的业务图片加载失败，页面打开缓慢，页面布局错乱或者页面白屏？你是否又遇到过某些区域 CDN 域名异常导致业务停摆，客诉不断，此时的你一脸茫然，不知所措？作为 CDN 运维，你是否常常被业务方反馈的各种 CDN 问题搞得焦头烂额，一边顶着各种催促和压力寻求解决方案，一边抱怨着服务商的不靠谱？今天，我们主要介绍一下美团外卖技术团队端侧 CDN 的容灾方案，经过实践，我们发现该产品能有效减少运维及业务开发同学的焦虑，希望我们的这些经验也能够帮助到更多的技术团队。
+2. 背景 CDN 因能够有效解决因分布、带宽、服务器性能带来的网络访问延迟等问题，已经成为互联网不可或缺的一部分，也是前端业务严重依赖的服务之一。在实际业务生产中，我们通常会将大量的静态资源如 JS 脚本、CSS 资源、图片、视频、音频等托管至 CDN 服务，以享受其边缘节点缓存对静态资源的加速。但是在享用 CDN 服务带来更好体验的同时，也经常会被 CDN 故障所影响。比如因 CDN 边缘节点异常，CDN 域名封禁等导致页面白屏、排版错乱、图片加载失败。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-05-08T03:29:44+00:00">
+    <meta property="article:modified_time" content="2022-05-08T03:29:44+00:00">
+    <meta property="article:tag" content="美团技术团队">
+    <meta property="article:tag" content="前端">
+    <meta property="article:tag" content="到家">
+    <meta property="article:tag" content="美团外卖">
+    <meta property="article:tag" content="CDN">
+    <meta property="article:tag" content="CDN容灾">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="从0到1：美团端侧CDN容灾解决方案">
+  <meta name="twitter:description" content="1. 前言 作为业务研发，你是否遇到过因为 CDN 问题导致的业务图片加载失败，页面打开缓慢，页面布局错乱或者页面白屏？你是否又遇到过某些区域 CDN 域名异常导致业务停摆，客诉不断，此时的你一脸茫然，不知所措？作为 CDN 运维，你是否常常被业务方反馈的各种 CDN 问题搞得焦头烂额，一边顶着各种催促和压力寻求解决方案，一边抱怨着服务商的不靠谱？今天，我们主要介绍一下美团外卖技术团队端侧 CDN 的容灾方案，经过实践，我们发现该产品能有效减少运维及业务开发同学的焦虑，希望我们的这些经验也能够帮助到更多的技术团队。
+2. 背景 CDN 因能够有效解决因分布、带宽、服务器性能带来的网络访问延迟等问题，已经成为互联网不可或缺的一部分，也是前端业务严重依赖的服务之一。在实际业务生产中，我们通常会将大量的静态资源如 JS 脚本、CSS 资源、图片、视频、音频等托管至 CDN 服务，以享受其边缘节点缓存对静态资源的加速。但是在享用 CDN 服务带来更好体验的同时，也经常会被 CDN 故障所影响。比如因 CDN 边缘节点异常，CDN 域名封禁等导致页面白屏、排版错乱、图片加载失败。">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://wfsui.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://wfsui.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<base href="https://wfsui.github.io/">
+	<h1 class="site-title"><a href="https://wfsui.github.io/">大峰哥</a></h1>
+	<div class="site-description"><h2>记录日常生活哦</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/wfsui" title="Github"><i data-feather="github"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">文章</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">从0到1：美团端侧CDN容灾解决方案</h1>
+			<div class="meta">Posted at &mdash; May 8, 2022</div>
+		</div>
+
+		<div class="markdown">
+			<h2 id="1-前言">1. 前言</h2>
+<p>作为业务研发，你是否遇到过因为 CDN 问题导致的业务图片加载失败，页面打开缓慢，页面布局错乱或者页面白屏？你是否又遇到过某些区域 CDN 域名异常导致业务停摆，客诉不断，此时的你一脸茫然，不知所措？作为 CDN 运维，你是否常常被业务方反馈的各种 CDN 问题搞得焦头烂额，一边顶着各种催促和压力寻求解决方案，一边抱怨着服务商的不靠谱？今天，我们主要介绍一下美团外卖技术团队端侧 CDN 的容灾方案，经过实践，我们发现该产品能有效减少运维及业务开发同学的焦虑，希望我们的这些经验也能够帮助到更多的技术团队。</p>
+<h2 id="2-背景">2. 背景</h2>
+<p>CDN 因能够有效解决因分布、带宽、服务器性能带来的网络访问延迟等问题，已经成为互联网不可或缺的一部分，也是前端业务严重依赖的服务之一。在实际业务生产中，我们通常会将大量的静态资源如 JS 脚本、CSS 资源、图片、视频、音频等托管至 CDN 服务，以享受其边缘节点缓存对静态资源的加速。但是在享用 CDN 服务带来更好体验的同时，也经常会被 CDN 故障所影响。比如因 CDN 边缘节点异常，CDN 域名封禁等导致页面白屏、排版错乱、图片加载失败。</p>
+<p>每一次的 CDN 故障，业务方往往束手无策，只能寄希望于 CDN 团队。而 CDN 的监控与问题排查，对 SRE 也是巨大的难题和挑战。一方面，由于 CDN 节点的分布广泛，边缘节点的监控就异常困难。另一方面，各业务汇聚得到的 CDN 监控大盘，极大程度上隐匿了细节。小流量业务、定点区域的 CDN 异常往往会被淹没。SRE 团队也做了很多努力，设计了多种方案来降低 CDN 异常对业务的影响，也取得了一定的效果，但始终有几个问题无法很好解决：</p>
+<ul>
+<li><strong>时效性</strong>：当 CDN 出现问题时，SRE 会手动进行 CDN 切换，因为需要人为操作，响应时长就很难保证。另外，切换后故障恢复时间也无法准确保障。</li>
+<li><strong>有效性</strong>：切换至备份 CDN 后，备份 CDN 的可用性无法验证，另外因为 Local DNS 缓存，无法解决域名劫持和跨网访问等问题。</li>
+<li><strong>精准性</strong>：CDN 的切换都是大范围的变更，无法针对某一区域或者某一项目单独进行。</li>
+<li><strong>风险性</strong>：切换至备份 CDN 之后可能会导致回源，流量剧增拖垮源站，从而引发更大的风险。</li>
+</ul>
+<p>当前，美团外卖业务每天服务上亿人次，即使再小的问题在巨大的流量面前，也会被放大成大问题。外卖的动态化架构，70%的业务资源都依赖于 CDN，所以 CDN 的可用性严重影响着外卖业务。如何更有效的进行 CDN 容灾，降低 CDN 异常对业务的影响，是我们不断思考的问题。</p>
+<p>既然以上问题 SRE 侧无法完美地解决，端侧是不是可以进行一些尝试呢？比如将 CDN 容灾前置到终端侧。不死鸟（Phoenix） 就是在这样的设想下，通过前端能力建设，不断实践和完善的一套端侧 CDN 容灾方案。该方案不仅能够有效降低 CDN 异常对业务的影响，还能提高 CDN 资源加载成功率，现已服务整个美团多个业务和 App。</p>
+<h2 id="3-目标与场景">3. 目标与场景</h2>
+<h3 id="31-核心目标">3.1 核心目标</h3>
+<p>为降低 CDN 异常对业务的影响，提高业务可用性，同时降低 SRE 同学在 CDN 运维方面的压力，在方案设计之初，我们确定了以下目标：</p>
+<ul>
+<li><strong>端侧 CDN 域名自动切换</strong>：在 CDN 异常时，端侧第一时间感知并自动切换 CDN 域名进行加载重试，减少对人为操作的依赖。</li>
+<li><strong>CDN 域名隔离</strong>：CDN 域名与服务厂商在区域维度实现服务隔离且服务等效，保证 CDN 切换重试的有效性。</li>
+<li><strong>更精准有效的 CDN 监控</strong>：建设更细粒度的 CDN 监控，能够按照项目维度实时监控 CDN 可用性，解决 SRE CDN 监控粒度不足，告警滞后等问题。并根据容灾监控对 CDN 容灾策略实施动态调整，减少 SRE 切换 CDN 的频率。</li>
+<li><strong>域名持续热备</strong>：保证每个 CDN 域名的持续预热，避免流量切换时导致回源。</li>
+</ul>
+<h3 id="32-适用场景">3.2 适用场景</h3>
+<p>适用所有依赖 CDN ，希望降低 CDN 异常对业务影响的端侧场景，包括 Web、SSR Web、Native 等技术场景。</p>
+<h2 id="4-phoenix-方案">4. Phoenix 方案</h2>
+<p>一直以来，CDN 的稳定性是由 SRE 来保障，容灾措施也一直在 SRE 侧进行，但仅仅依靠链路层面上的保障，很难处理局部问题和实现快速止损。用户终端作为业务的最终投放载体，对资源加载有着天然的独立性和敏感性。如果将 CDN 容灾前置到终端侧，无论从时效性，精准性，都是 SRE 侧无法比拟的。在端侧进行容灾，就需要感知 CDN 的可用性，然后实现端侧自动切换的能力。我们调研整个前端领域，并未发现业内在端侧 CDN 容灾方面有所实践和输出，所以整个方案的实现是从无到有的一个过程。</p>
+<h3 id="41-总体设计">4.1 总体设计</h3>
+<p><img alt="图 1" src="https://p0.meituan.net/travelcube/9b55c6fa5e93c4e8844cf25d1a3f2da529029.png"></p>
+<p>Phoenix 端侧 CDN 容灾方案主要由五部分组成：</p>
+<ul>
+<li><strong>端侧容灾 SDK</strong>：负责端侧资源加载感知，CDN 切换重试，监控上报。</li>
+<li><strong>动态计算服务</strong>：根据端侧 SDK 上报数据，对多组等效域名按照城市、项目、时段等维度定时轮询计算域名可用性，动态调整流量至最优 CDN。同时也是对 CDN 可用性的日常巡检。</li>
+<li><strong>容灾监控平台</strong>：从项目维度和大盘维度提供 CDN 可用性监控和告警，为问题排查提供详细信息。</li>
+<li><strong>CDN 服务</strong>：提供完善的 CDN 链路服务，在架构上实现域名隔离，并为业务方提供等效域名服务，保证端侧容灾的有效性。等效域名，就是能够通过相同路径访问到同一资源的域名，比如：cdn1.meituan.net/src/js/test.js 和 cdn2.meituan.net/src/js/test.js 能够返回相同内容，则 cdn1.meituan.net 和 cdn2.meituan.net 互为等效域名。</li>
+<li><strong>容灾配置平台</strong>：对项目容灾域名进行配置管理，监控上报策略管理，并提供 CDN 流量人工干预等措施。</li>
+</ul>
+<h3 id="42-容灾流程设计">4.2 容灾流程设计</h3>
+<p>为保证各个端侧容灾效果和监控指标的一致性，我们设计了统一的容灾流程，整体流程如下：</p>
+<p><img alt="图 2" src="https://p0.meituan.net/travelcube/4cf4eb2d014e0539f4a310b8996426b190008.png"></p>
+<h3 id="43-实现原理">4.3 实现原理</h3>
+<h4 id="431-端侧容灾-sdk">4.3.1 端侧容灾 SDK</h4>
+<h5 id="web-端实现">Web 端实现</h5>
+<p>Web 端的 CDN 资源主要是 JS、CSS 和图片，所以我们的容灾目标也聚焦于这些。在 Web 侧的容灾，我们主要实现了对静态资源，异步资源和图片资源的容灾。</p>
+<p><strong>实现思路</strong></p>
+<p>要实现资源的容灾，最主要的问题是感知资源加载结果。通常我们是在资源标签上面添加错误回调来捕获，图片容灾可以这样实现，但这并不适合 JS，因为它有严格的执行顺序。为了解决这一问题，我们将传统的标签加载资源的方式，换成<strong>XHR</strong>来实现。通过<strong>Webpack</strong>在工程构建阶段把同步资源进行抽离，然后通过<strong>PhoenixLoader</strong>来加载资源。这样就能通过网络请求返回的状态码，来感知资源加载结果。</p>
+<p>在方案的实现上，我们将 SDK 设计成了 Webpack Plugin，主要基于以下四点考虑：</p>
+<ol>
+<li><strong>通用性</strong>：美团前端技术栈相对较多，要保证容灾 SDK 能够覆盖大部分的技术框架。</li>
+<li><strong>易用性</strong>：过高的接入成本会增加开发人员的工作量，不能做到对业务的有效覆盖，方案价值也就无从谈起。</li>
+<li><strong>稳定性</strong>：方案要保持稳定可靠，不受 CDN 可用性干扰。</li>
+<li><strong>侵入性</strong>：不能侵入到正常业务，要做到即插即用，保证业务的稳定性。</li>
+</ol>
+<p>通过调研发现，前端有 70%的工程构建都离不开 Webpack，而 Webpack Plugin 独立配置，即插即用的特性，是实现方案的最好选择。整体方案设计如下：</p>
+<p><img alt="图 3" src="https://p1.meituan.net/travelcube/b04f3d0f4bafa3898f04f947114d995761515.png"></p>
+<p>当然，很多团队在做性能优化时，会采取代码分割，按需引入的方式。这部分资源在同步资源生成的过程中无法感知，但这部分资源的加载结果，也关系到业务的可用性。在对异步资源的容灾方面，我们主要是通过对 Webpack 的异步资源处理方式进行重写，使用<strong>Phoenix Loader</strong>接管资源加载，从而实现异步资源的容灾。整体分析过程如下图所示：</p>
+<p><img alt="图 4" src="https://p0.meituan.net/travelcube/f9ac256fe9aa36e4e34974012c16c399387918.png"></p>
+<p>CSS 资源的处理与 JS 有所差别，但原理相似，只需要重写 <strong>mini-css-extract-plugin</strong> 的异步加载实现即可。</p>
+<p>Web 端方案资源加载示意：</p>
+<p><img alt="图 5" src="https://p1.meituan.net/travelcube/b2c5e59074f60c7c803ddcdbd2fa83df495663.png"></p>
+<p><strong>容灾效果</strong></p>
+<p><img alt="图6 容灾大盘" src="https://p0.meituan.net/travelcube/377ce73fa33b69dd0975b2509fe3ee36238466.png"></p>
+<p><img alt="图7 容灾案例" src="https://p1.meituan.net/travelcube/31bf1714a4bd3051caba85905e0ba6ad240323.jpg"></p>
+<h5 id="native-端容灾">Native 端容灾</h5>
+<p>客户端的 CDN 资源主要是图片，音视频以及各种动态化方案的 bundle 资源。Native 端的容灾建设也主要围绕上述资源展开。</p>
+<p><strong>实现思路</strong></p>
+<p>重新请求是 Native 端 CDN 容灾方案的基本原理，根据互备 CDN 域名，由 Native 容灾基建容灾域名重新进行请求资源，整个过程发生在原始请求失败后。Native 容灾基建不会在原始请求过程中进行任何操作，避免对原始请求产生影响。原始请求失败后，Native 容灾基建代理处理失败返回，业务方仍处于等待结果状态，重请新求结束后向业务方返回最终结果。整个过程中从业务方角度来看仍只发出一次请求，收到一次结果，从而达到业务方不感知的目的。为将重新请求效率提升至最佳，必须尽可能的保证重新请求次数趋向于最小。</p>
+<p>调研业务的关注点和技术层面使用的网络框架，结合 Phoenix 容灾方案的基本流程，在方案设计方面，我们主要考虑以下几点：</p>
+<ul>
+<li><strong>便捷性</strong>：接入的便捷性是 SDK 设计时首先考虑的内容，即业务方可以用最简单的方式接入，实现资源容灾，同时也可以简单无残留拆除 SDK。</li>
+<li><strong>兼容性</strong>：Android 侧的特殊性在于多样的网络框架，集团内包括 Retrofit 框架，okHttp 框架，okHttp3 框架及已经很少使用的 URLConnection 框架。提供的 SDK 应当与各种网络框架兼容，同时业务方在即使变更网络框架也能够以最小的成本实现容灾功能。而 iOS 侧则考虑复用一个 NSURLProtocol 去实现对请求的拦截，降低代码的冗余度，同时实现对初始化项进行统一适配。</li>
+<li><strong>扩展性</strong>：需要在基础功能之上提供可选的高级配置来满足特殊需求，包括监控方面也要提供特殊的监控数据上报能力。</li>
+</ul>
+<p>基于以上设计要点，我们将 Phoenix 划分为以下结构图，图中将整体的容灾 SDK 拆分为两部分 Phoenix-Adaptor 部分与 Phoenix-Base 部分。</p>
+<p><img alt="图 8" src="https://p1.meituan.net/travelcube/0c3d3396af224c21b376a3b8d899d7ca57887.png"></p>
+<p><strong>Phoenix-Base</strong></p>
+<p>Phoenix-Base 是整个 Phoenix 容灾的核心部分，其包括容灾数据缓存，域名更换组件，容灾请求执行器（区别于原始请求执行器），监控器四个对外不可见的内部功能模块，并包含外部接入模块，提供外部接入功能。</p>
+<ol>
+<li><strong>容灾数据缓存</strong>：定期获取及更新容灾数据，其产生的数据只会被域名更换组件使用。</li>
+<li><strong>域名更换组件</strong>：连接容灾数据缓存，容灾请求执行器，监控器的中心节点，负责匹配原始失败 Host，过滤错误码，并向容灾请求执行器提供容灾域名，向监控器提供整个容灾过程的详细数据副本。</li>
+<li><strong>容灾执行器</strong>：容灾请求的真正请求者，目前采用内部 OkHttp3Client，业务方也可以自主切换至自身的执行器。</li>
+<li><strong>监控器</strong>：分发容灾过程的详细数据，内置数据大盘的上报，若有外部自定义的监控器，也会向自定义监控器分发数据。</li>
+</ol>
+<p><strong>Phoenix-Adaptor</strong></p>
+<p>Phoenix-Adaptor 是 Phoenix 容灾的扩展适配部分，用于兼容各种网络框架。</p>
+<ul>
+<li><strong>绑定器</strong>：生成适合各个网络框架的拦截器并绑定至原始请求执行者。</li>
+<li><strong>解析器</strong>：将网络框架的 Request 转换为 Phoenix 内部执行器的 Request，并将 Phoenix 内部执行器的 Response 解析为外部网络框架 Response，以此达到适配目的。</li>
+</ul>
+<p><strong>容灾效果</strong></p>
+<p>① <strong>业务成功率</strong></p>
+<p>以外卖图片业务为例，Android 业务成功率对比（同版本 7512，2021.01.17 未开启 Phoenix 容灾，2021.01.19 晚开启 Phoenix 容灾）。</p>
+<p><img alt="图 9" src="https://p0.meituan.net/travelcube/3cd08e123c6232499bea8b89449547aa749063.png"></p>
+<p>iOS 业务成功率对比（同版本 7511，2021.01.17 未开启 Phoenix 容灾，2021.01.19 晚开启 Phoenix 容灾）。</p>
+<p><img alt="图 10" src="https://p0.meituan.net/travelcube/d679918d393495006b8f97aaac2e285e273169.png"></p>
+<p>② <strong>风险应对</strong></p>
+<p>以外卖与美团图片做为对比 ，在 CDN 服务出现异常时，接入 Phoenix 的外卖 App 和未接入的美团 App 在图片成功率方面的对比。</p>
+<p><img alt="图 11" src="https://p1.meituan.net/travelcube/76142c626b61d90b12244a4100f3e6af710290.png"></p>
+<h4 id="432-动态计算服务">4.3.2 动态计算服务</h4>
+<p>端侧的域名重试，会在某一域名加载资源失败后，根据容灾列表依次进行重试，直至成功或者失败。如下图所示：</p>
+<p><img alt="图 12" src="https://p0.meituan.net/travelcube/a7460a43636793fd1932c13907df844316541.png"></p>
+<p>如果域名 A 大范围异常，端侧依然会首先进行域名 A 的重试加载，这样就导致不必要的重试成本。如何让资源的首次加载更加稳定有效，如何为不同业务和地区动态提供最优的 CDN 域名列表，这就是动态计算服务的要解决的问题。</p>
+<p><strong>计算原理</strong></p>
+<p>动态计算服务通过域名池和项目的 Appkey 进行关联，按照不同省份、不同地级市、不同项目、不同资源等维度进行策略管理。通过获取 5 分钟内对应项目上报的资源加载结果进行<strong>定时轮询计算</strong>，对域名池中的域名按照地区（城市&amp;&amp;省份）的可用性监控。计算服务会根据域名可用性动态调整域名顺序并对结果进行输出。下图是一次完整的计算过程：</p>
+<p><img alt="图 13" src="https://p0.meituan.net/travelcube/2ebdca26cd99be3ff48117a1cb8fded748132.png"></p>
+<p>假设有 A、B、C 三个域名，成功率分别是 99%、98%、97.8%，流量占比分别是 90%、6%、4%。基于转移基准，进行流量转移，比如，A 和 B 成功率差值是 1，B 需要把自己 1⁄2 的流量转移给 A，同时 A 和 C 的成功率差值大于 1，C 也需要把自己 1⁄2 的流量转移给 A，同时 B 和 C 的差值是 0.2，所以 C 还需要把自己 1⁄4 的流量转移给 B。最终，经过计算，A 的流量占比是 95%，B 是 3.5%，C 是 1.5%。最后，经过排序和随机计算后将最终结果输出。</p>
+<p>因为 A 的占比最大，所以 A 优先被选择；通过随机，B 和 C 也会有一定的流量；基于转移基准，可以实现流量的平稳切换。</p>
+<p><strong>异常唤起</strong></p>
+<p>当某个 CDN 无法正常访问的时候，该 CDN 访问流量会由计算过程切换至等效的 CDN B。如果 SRE 发现切换过慢可以进行手动干预分配流量。当少量的 A 域名成功率上升后，会重复计算过程将 A 的流量加大。直至恢复初始态。</p>
+<p><img alt="图 14" src="https://p1.meituan.net/travelcube/8fb1416454a28cb0445a3d29c7176da974258.png"></p>
+<p><strong>服务效果</strong></p>
+<p>动态计算服务使得资源的首次加载成功率由原来的<strong>99.7%提升至99.9%</strong>。下图为接入动态计算后资源加载成功率与未接入加载成功率对比。</p>
+<p><img alt="图 15" src="https://p0.meituan.net/travelcube/43af7dbfa74270bde39dc1ebcca6dd7a102457.png"></p>
+<h3 id="433-容灾监控">4.3.3 容灾监控</h3>
+<p>在监控层面，SRE 团队往往只关注域名、大区域、运营商等复合维度的监控指标，监控流量巨大，对于小流量业务或者小范围区域的 CDN 波动，可能就无法被监控分析识别，进而也就无法感知 CDN 边缘节点异常。容灾监控建设，主要是为了解决 SRE 团队的 CDN 监控告警滞后和监控粒度问题。监控整体设计如下：</p>
+<p><img alt="图 16" src="https://p0.meituan.net/travelcube/e43752459648c73a82bfd7cf28c2a89e90715.png"></p>
+<p><strong>流程设计</strong></p>
+<p>端侧容灾数据的上报，分别按照<strong>项目、App、资源、域名</strong>等维度建立监控指标，将 CDN 可用性变成项目可用性的一部分。通过计算平台对数据进行分析聚合，形成 CDN 可用性大盘，按照域名、区域、项目、时间等维度进行输出，与天网监控互通，建立分钟级别的监控告警机制，大大提升了 CDN 异常感知的灵敏性。同时，SRE 侧的天网监控，也会对动态计算服务结果产生干预。监控整体流程如下：</p>
+<p><img alt="图 17" src="https://p0.meituan.net/travelcube/340d6420f11ae594ed65dc50e72f67bb62378.png"></p>
+<p><strong>监控效果</strong></p>
+<p>CDN 监控不仅从项目维度更加细粒度的监测 CDN 可用性，还为 CDN 异常排查提供了区域、运营商、网络状况、返回码等更丰富的信息。在监控告警方面，实现了分钟级异常告警，灵敏度也高于美团内部的监控系统。</p>
+<p><img alt="图 18" src="https://p1.meituan.net/travelcube/773929e5576f437a5ec99809ea8480be344132.png"></p>
+<h3 id="434-cdn-服务">4.3.4 CDN 服务</h3>
+<p>端侧域名切换的有效性，离不开 CDN 服务的支持。在 CDN 服务方面，在原有 SRE 侧容灾的基础上，对 CDN 服务整体做了升级，实现域名隔离，解决了单域名对应多 CDN 和多域名对应单 CDN 重试无效的弊端。</p>
+<p><img alt="图 19" src="https://p1.meituan.net/travelcube/64bdd201ff1782a691a5b1ddd62875e348371.png"></p>
+<h2 id="5-总结与展望">5. 总结与展望</h2>
+<p>经过一年的建设与发展，Phoenix CDN 容灾方案日趋成熟，现已成为美团在 CDN 容灾方面唯一的公共服务，在多次 CDN 异常中发挥了巨大的作用。在端侧，当前该方案日均容灾资源<strong>3000万+</strong>，挽回用户<strong>35万+</strong>，覆盖外卖，酒旅，餐饮，优选，买菜等业务部门，服务200+个工程，<strong>外卖 App</strong>、<strong>美团 App</strong>、<strong>大众点评 App</strong>均已接入。</p>
+<p>在 SRE 侧，实现了项目维度的分钟级精准告警，同时丰富了异常信息，大大提高了 SRE 问题排查效率。自从方案大规模落地以来，CDN 异常时鲜有手动切换操作，极大减轻了 SRE 同学的运维压力。</p>
+<p>由于前端技术的多样性和复杂性，我们的 SDK 无法覆盖所有的技术方案，所以在接下来的建设中，我们会积极推广我们的容灾原理，公开动态计算服务，希望更多的框架和服务在我们的容灾思想上，贴合自身业务实现端侧的 CDN 容灾。另外，针对方案本身，我们会不断优化资源加载性能，完善资源验签，智能切换等能力，也欢迎对 Phoenix CDN 容灾方案有兴趣的同学，跟我们一起探讨交流。同时更欢迎加入我们，文末附招聘信息，期待你的邮件。</p>
+<h2 id="6-作者简介">6. 作者简介</h2>
+<p>魏磊、陈彤、张群、粤俊等，均来自美团外卖平台-大前端团队，丁磊、心澎，来自美团餐饮 SaaS 团队。</p>
+<h2 id="7-招聘信息">7. 招聘信息</h2>
+<p>美团外卖平台-大前端团队是一个开放、创新、无边界的团队，鼓励每一位同学追求自己的技术梦想。团队长期招聘Android、iOS、FE 高级/资深工程师和技术专家。欢迎感兴趣的同学投递简历至：wangxiaofei03@meituan.com（邮件标题请注明：美团外卖大前端）。</p>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F">美团技术团队</a></li>
+								
+								<li><a href="/tags/%E5%89%8D%E7%AB%AF">前端</a></li>
+								
+								<li><a href="/tags/%E5%88%B0%E5%AE%B6">到家</a></li>
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2%E5%A4%96%E5%8D%96">美团外卖</a></li>
+								
+								<li><a href="/tags/cdn">CDN</a></li>
+								
+								<li><a href="/tags/cdn%E5%AE%B9%E7%81%BE">CDN容灾</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'wfsui';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="">Wfsui theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div><script>feather.replace()</script>
+</body>
+</html>

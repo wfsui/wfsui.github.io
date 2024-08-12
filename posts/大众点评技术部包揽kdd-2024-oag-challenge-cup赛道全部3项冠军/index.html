@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>大众点评技术部包揽KDD 2024 OAG-Challenge Cup赛道全部3项冠军 - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:url" content="https://wfsui.github.io/posts/%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84%E6%8A%80%E6%9C%AF%E9%83%A8%E5%8C%85%E6%8F%BDkdd-2024-oag-challenge-cup%E8%B5%9B%E9%81%93%E5%85%A8%E9%83%A83%E9%A1%B9%E5%86%A0%E5%86%9B/">
+  <meta property="og:site_name" content="大峰哥">
+  <meta property="og:title" content="大众点评技术部包揽KDD 2024 OAG-Challenge Cup赛道全部3项冠军">
+  <meta property="og:description" content="ACM SIGKDD （Knowledge Discovery and Data Mining，简称 KDD）是数据挖掘领域的国际顶级会议。KDD Cup比赛是由SIGKDD主办的数据挖掘研究领域的国际顶级赛事，从1997年开始，每年举办一次，是目前数据挖掘领域最有影响力的赛事。
+近日，来自大众点评技术部/搜索与内容智能团队组建的BlackPearl队伍，参加了KDD 2024 OAG-Challenge Cup赛道的WhoIsWho-IND、PST、AQA三道赛题，以较大优势包揽了该赛道全部赛题的冠军。
+今年，KDD 2024 OAG-Challenge Cup 的三道赛题，提出的是针对学术数据挖掘领域中的论文同名消歧、论文源头追溯、学术论文检索三个经典难题。团队同学创新性地采用大模型来解决这三个问题，他们基于大模型，提出自反馈增强、嫁接学习等技术，在效果上显著优于其他队伍，在排行榜上均取得较大领先。
+在WhoisWho（同名消歧任务）任务中，团队出了基于自反馈增强的迭代式大模型文本聚类方法，该方法构建的大模型文本聚类方案能够有效处理结构化信息并实现端到端直接输出聚类结果。最终以83%的gAUC指标明显超越传统机器学习方案，赢得了赛题冠军。
+在PST（论文源头追溯）任务中，团队利用嫁接学习的思想将BERT-Like模型的复杂文本语义匹配能力嫁接到LLM中，提高样本置信度。同时，团队构建了一套基于RAG的自动特征工程链路，缓解了复杂语义文本普通存在的文本多、信息杂、数据脏的问题。在最终评价指标MAP上利用7B单模型效果超出ChatGPT&#43;RAG方案10%。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-12T02:51:55+00:00">
+    <meta property="article:modified_time" content="2024-08-12T02:51:55+00:00">
+    <meta property="article:tag" content="美团技术团队">
+    <meta property="article:tag" content="大众点评">
+    <meta property="article:tag" content="KDD">
+    <meta property="article:tag" content="比赛获奖">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="大众点评技术部包揽KDD 2024 OAG-Challenge Cup赛道全部3项冠军">
+  <meta name="twitter:description" content="ACM SIGKDD （Knowledge Discovery and Data Mining，简称 KDD）是数据挖掘领域的国际顶级会议。KDD Cup比赛是由SIGKDD主办的数据挖掘研究领域的国际顶级赛事，从1997年开始，每年举办一次，是目前数据挖掘领域最有影响力的赛事。
+近日，来自大众点评技术部/搜索与内容智能团队组建的BlackPearl队伍，参加了KDD 2024 OAG-Challenge Cup赛道的WhoIsWho-IND、PST、AQA三道赛题，以较大优势包揽了该赛道全部赛题的冠军。
+今年，KDD 2024 OAG-Challenge Cup 的三道赛题，提出的是针对学术数据挖掘领域中的论文同名消歧、论文源头追溯、学术论文检索三个经典难题。团队同学创新性地采用大模型来解决这三个问题，他们基于大模型，提出自反馈增强、嫁接学习等技术，在效果上显著优于其他队伍，在排行榜上均取得较大领先。
+在WhoisWho（同名消歧任务）任务中，团队出了基于自反馈增强的迭代式大模型文本聚类方法，该方法构建的大模型文本聚类方案能够有效处理结构化信息并实现端到端直接输出聚类结果。最终以83%的gAUC指标明显超越传统机器学习方案，赢得了赛题冠军。
+在PST（论文源头追溯）任务中，团队利用嫁接学习的思想将BERT-Like模型的复杂文本语义匹配能力嫁接到LLM中，提高样本置信度。同时，团队构建了一套基于RAG的自动特征工程链路，缓解了复杂语义文本普通存在的文本多、信息杂、数据脏的问题。在最终评价指标MAP上利用7B单模型效果超出ChatGPT&#43;RAG方案10%。">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://wfsui.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://wfsui.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<base href="https://wfsui.github.io/">
+	<h1 class="site-title"><a href="https://wfsui.github.io/">大峰哥</a></h1>
+	<div class="site-description"><h2>记录日常生活哦</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/wfsui" title="Github"><i data-feather="github"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">文章</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">大众点评技术部包揽KDD 2024 OAG-Challenge Cup赛道全部3项冠军</h1>
+			<div class="meta">Posted at &mdash; Aug 12, 2024</div>
+		</div>
+
+		<div class="markdown">
+			<p>ACM SIGKDD （Knowledge Discovery and Data Mining，简称 KDD）是数据挖掘领域的国际顶级会议。KDD Cup比赛是由SIGKDD主办的数据挖掘研究领域的国际顶级赛事，从1997年开始，每年举办一次，是目前数据挖掘领域最有影响力的赛事。</p>
+<p>近日，来自大众点评技术部/搜索与内容智能团队组建的BlackPearl队伍，参加了KDD 2024 OAG-Challenge Cup赛道的<a href="https://www.biendata.xyz/competition/ind_kdd_2024/">WhoIsWho-IND</a>、<a href="https://www.biendata.xyz/competition/pst_kdd_2024/">PST</a>、<a href="https://www.biendata.xyz/competition/aqa_kdd_2024/">AQA</a>三道赛题，以较大优势包揽了该赛道全部赛题的冠军。</p>
+<p><img src="https://p0.meituan.net/travelcube/ebb631e6ad044806ff7e167c3878cc94603739.png"></p>
+<p>今年，KDD 2024 OAG-Challenge Cup 的三道赛题，提出的是针对学术数据挖掘领域中的论文同名消歧、论文源头追溯、学术论文检索三个经典难题。团队同学创新性地采用大模型来解决这三个问题，他们基于大模型，提出自反馈增强、嫁接学习等技术，在效果上显著优于其他队伍，在排行榜上均取得较大领先。</p>
+<p>在WhoisWho（同名消歧任务）任务中，团队出了基于自反馈增强的迭代式大模型文本聚类方法，该方法构建的大模型文本聚类方案能够有效处理结构化信息并实现端到端直接输出聚类结果。最终以83%的gAUC指标明显超越传统机器学习方案，赢得了赛题冠军。</p>
+<p><img alt="图1 WhoisWho  Solution by BlackPearl" src="https://p0.meituan.net/travelcube/f8dc212132d3c525e74c2f16e2c38090437996.png"></p>
+<p>在PST（论文源头追溯）任务中，团队利用嫁接学习的思想将BERT-Like模型的复杂文本语义匹配能力嫁接到LLM中，提高样本置信度。同时，团队构建了一套基于RAG的自动特征工程链路，缓解了复杂语义文本普通存在的文本多、信息杂、数据脏的问题。在最终评价指标MAP上利用7B单模型效果超出ChatGPT+RAG方案10%。</p>
+<p><img alt="图2 PST  Solution by BlackPearl" src="https://p1.meituan.net/travelcube/04b1401688fc544b752b52f672c9dbb2248021.png"></p>
+<p>在（AQA学术论文问答任务）任务中，带有复杂噪声的数据是该任务的主要难点。GPT4等开源大模型因为噪声问题，在场景文本搜索方面输出结果完全不可用。团队利用LLM For Vector及Boosting技术在文本搜索场景实践，提出集成召回、排序的Boosting LLM For Searching方案，在指标上全面超越基于传统文本嵌入方式的搜索方案，有效将LLM具备的语义理解能力迁移至场景文本搜索任务，解决了学术搜索场景的噪声问题。</p>
+<p><img alt="图3 AQA  Solution by BlackPearl" src="https://p0.meituan.net/travelcube/c8810ce65b3c30ec6fb686988252528e251099.png"></p>
+<p>BlackPearl团队开源了全部解决方案代码供研究者交流学习(<a href="https://github.com/BlackPearl-Lab/KddCup-2024-OAG-Challenge-1st-Solutions">https://github.com/BlackPearl-Lab/KddCup-2024-OAG-Challenge-1st-Solutions)，并提交了解决方案的论文，团队成员将在巴塞罗那举行的</a>，并提交了解决方案的论文，团队成员将在巴塞罗那举行的) KDD 2024 上展示报告其研究成果。后续，美团技术团队公众号将陆续发布这三道赛题的技术解读，敬请期待。</p>
+<p>未来，大众点评App将不断深入探索大模型技术，充分挖掘其内在潜力，通过先进AI技术产品化，使大众点评能够更精准地服务于用户，努力让AI帮大家更懂美食，更会生活。</p>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F">美团技术团队</a></li>
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F">美团技术团队</a></li>
+								
+								<li><a href="/tags/%E5%A4%A7%E4%BC%97%E7%82%B9%E8%AF%84">大众点评</a></li>
+								
+								<li><a href="/tags/kdd">KDD</a></li>
+								
+								<li><a href="/tags/%E6%AF%94%E8%B5%9B%E8%8E%B7%E5%A5%96">比赛获奖</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'wfsui';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="">Wfsui theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div><script>feather.replace()</script>
+</body>
+</html>

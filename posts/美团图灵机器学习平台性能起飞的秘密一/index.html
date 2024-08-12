@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>美团图灵机器学习平台性能起飞的秘密（一） - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:url" content="https://wfsui.github.io/posts/%E7%BE%8E%E5%9B%A2%E5%9B%BE%E7%81%B5%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%B9%B3%E5%8F%B0%E6%80%A7%E8%83%BD%E8%B5%B7%E9%A3%9E%E7%9A%84%E7%A7%98%E5%AF%86%E4%B8%80/">
+  <meta property="og:site_name" content="大峰哥">
+  <meta property="og:title" content="美团图灵机器学习平台性能起飞的秘密（一）">
+  <meta property="og:description" content="导语 图灵平台是美团履约平台技术部2018年开始自研的算法平台，提供模型全生命周期的一站式服务，旨在帮助算法同学脱离繁琐的工程化开发，把有限的精力聚焦于业务和算法的迭代优化中。
+随着美团图灵机器学习平台的发展，图灵技术团队在内存优化、计算优化、磁盘IO优化三个方面沉淀了一系列性能优化技术。我们将以连载的方式为大家揭秘这些技术。本文作为该系列的开篇之作，将重点为大家介绍内存优化。
+1. 业务背景 图灵平台主要包括机器学习平台、特征平台、图灵在线服务（Online Serving）、AB实验平台四大功能，具体可参考《一站式机器学习平台建设实践》以及《算法平台在线服务体系的演进与实践》这两篇博客。其中，图灵机器学习平台的离线训练引擎是基于Spark实现的。
+随着图灵的用户增长，越来越多算法模型在图灵平台上完成迭代，优化离线训练引擎的性能和吞吐对于节约离线计算资源显得愈发重要。经过半年持续的迭代，我们积累了一系列独特的优化方法，使图灵机器学习平台的离线资源消耗下降80%，生产任务平均耗时下降63%（如下图所示），图灵全平台的训练任务在性能层面都得到了较为明显的提升。
+资源消耗下降：
+当前平台性能：
+下图是某位图灵用户的实验。使用100万数据训练深度模型，总计约29亿的数据调用深度模型，计算评估指标并保存到Hive，整个实验只需要35分钟。其中Spark开启DynamicAllocation，maxExecutor=400 ，单个Executor为7Core16GB。
+2. 图灵训练引擎优化 那么，图灵训练引擎的性能优化是如何做到的呢？我们的优化分为内存优化、计算优化、磁盘IO优化三个层面。
+内存优化包括列裁切、自适应Cache、算子优化。我们借鉴Spark SQL原理设计了列裁切，可以自动剔除各组件中用户实际没有使用的字段，以降低内存占用。何时对Dataset Persist和Unpersist一直是Spark代码中的取舍问题，针对用户不熟悉Persist和Unpersist时机这个问题，我们将多年的开发经验沉淀在图灵中，结合列裁切技术实现自适应Cache。在计算优化方面，我们完成了图优化、Spark源码优化、XGB源码优化。在磁盘IO优化方面，我们创新性的实现了自动化小文件保存优化，能够使用一个Action实现多级分区表小文件的合并保存。
+此外，我们实现的TFRecord表示优化技术，成功将Spark生成的TFRecord体积减少50%。因图灵平台使用的优化技巧较多，我们将分成多篇文章为大家逐一介绍这些优化技术。
+而在众多优化中，收益最高、适用性最广的技术的就是算子优化，这项技术极大提升了图灵训练引擎的吞吐量。本篇文章首先将为大家介绍内存优化中的算子优化技术。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-05-12T02:44:15+00:00">
+    <meta property="article:modified_time" content="2023-05-12T02:44:15+00:00">
+    <meta property="article:tag" content="美团技术团队">
+    <meta property="article:tag" content="到家">
+    <meta property="article:tag" content="后台">
+    <meta property="article:tag" content="美团AI">
+    <meta property="article:tag" content="图灵平台">
+    <meta property="article:tag" content="Spark算子优化">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="美团图灵机器学习平台性能起飞的秘密（一）">
+  <meta name="twitter:description" content="导语 图灵平台是美团履约平台技术部2018年开始自研的算法平台，提供模型全生命周期的一站式服务，旨在帮助算法同学脱离繁琐的工程化开发，把有限的精力聚焦于业务和算法的迭代优化中。
+随着美团图灵机器学习平台的发展，图灵技术团队在内存优化、计算优化、磁盘IO优化三个方面沉淀了一系列性能优化技术。我们将以连载的方式为大家揭秘这些技术。本文作为该系列的开篇之作，将重点为大家介绍内存优化。
+1. 业务背景 图灵平台主要包括机器学习平台、特征平台、图灵在线服务（Online Serving）、AB实验平台四大功能，具体可参考《一站式机器学习平台建设实践》以及《算法平台在线服务体系的演进与实践》这两篇博客。其中，图灵机器学习平台的离线训练引擎是基于Spark实现的。
+随着图灵的用户增长，越来越多算法模型在图灵平台上完成迭代，优化离线训练引擎的性能和吞吐对于节约离线计算资源显得愈发重要。经过半年持续的迭代，我们积累了一系列独特的优化方法，使图灵机器学习平台的离线资源消耗下降80%，生产任务平均耗时下降63%（如下图所示），图灵全平台的训练任务在性能层面都得到了较为明显的提升。
+资源消耗下降：
+当前平台性能：
+下图是某位图灵用户的实验。使用100万数据训练深度模型，总计约29亿的数据调用深度模型，计算评估指标并保存到Hive，整个实验只需要35分钟。其中Spark开启DynamicAllocation，maxExecutor=400 ，单个Executor为7Core16GB。
+2. 图灵训练引擎优化 那么，图灵训练引擎的性能优化是如何做到的呢？我们的优化分为内存优化、计算优化、磁盘IO优化三个层面。
+内存优化包括列裁切、自适应Cache、算子优化。我们借鉴Spark SQL原理设计了列裁切，可以自动剔除各组件中用户实际没有使用的字段，以降低内存占用。何时对Dataset Persist和Unpersist一直是Spark代码中的取舍问题，针对用户不熟悉Persist和Unpersist时机这个问题，我们将多年的开发经验沉淀在图灵中，结合列裁切技术实现自适应Cache。在计算优化方面，我们完成了图优化、Spark源码优化、XGB源码优化。在磁盘IO优化方面，我们创新性的实现了自动化小文件保存优化，能够使用一个Action实现多级分区表小文件的合并保存。
+此外，我们实现的TFRecord表示优化技术，成功将Spark生成的TFRecord体积减少50%。因图灵平台使用的优化技巧较多，我们将分成多篇文章为大家逐一介绍这些优化技术。
+而在众多优化中，收益最高、适用性最广的技术的就是算子优化，这项技术极大提升了图灵训练引擎的吞吐量。本篇文章首先将为大家介绍内存优化中的算子优化技术。">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://wfsui.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://wfsui.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<base href="https://wfsui.github.io/">
+	<h1 class="site-title"><a href="https://wfsui.github.io/">大峰哥</a></h1>
+	<div class="site-description"><h2>记录日常生活哦</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/wfsui" title="Github"><i data-feather="github"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">文章</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">美团图灵机器学习平台性能起飞的秘密（一）</h1>
+			<div class="meta">Posted at &mdash; May 12, 2023</div>
+		</div>
+
+		<div class="markdown">
+			<h2 id="导语">导语</h2>
+<p>图灵平台是美团履约平台技术部2018年开始自研的算法平台，提供模型全生命周期的一站式服务，旨在帮助算法同学脱离繁琐的工程化开发，把有限的精力聚焦于业务和算法的迭代优化中。</p>
+<p>随着美团图灵机器学习平台的发展，图灵技术团队在内存优化、计算优化、磁盘IO优化三个方面沉淀了一系列性能优化技术。我们将以连载的方式为大家揭秘这些技术。本文作为该系列的开篇之作，将重点为大家介绍内存优化。</p>
+<h2 id="1-业务背景">1. 业务背景</h2>
+<p>图灵平台主要包括机器学习平台、特征平台、图灵在线服务（Online Serving）、AB实验平台四大功能，具体可参考《<a href="https://tech.meituan.com/2020/01/23/meituan-delivery-machine-learning.html">一站式机器学习平台建设实践</a>》以及《<a href="https://tech.meituan.com/2021/05/13/turing-os-online-serving.html">算法平台在线服务体系的演进与实践</a>》这两篇博客。其中，图灵机器学习平台的离线训练引擎是基于Spark实现的。</p>
+<p>随着图灵的用户增长，越来越多算法模型在图灵平台上完成迭代，优化离线训练引擎的性能和吞吐对于节约离线计算资源显得愈发重要。经过半年持续的迭代，我们积累了一系列独特的优化方法，使图灵机器学习平台的离线资源消耗下降80%，生产任务平均耗时下降63%（如下图所示），图灵全平台的训练任务在性能层面都得到了较为明显的提升。</p>
+<p>资源消耗下降：</p>
+<p><img alt="图1 资源消耗" src="https://p0.meituan.net/travelcube/43ac03c449f706d7a16cd94bdc99c2ab760483.jpg"></p>
+<p>当前平台性能：</p>
+<p>下图是某位图灵用户的实验。使用100万数据训练深度模型，总计约29亿的数据调用深度模型，计算评估指标并保存到Hive，整个实验只需要35分钟。其中Spark开启DynamicAllocation，maxExecutor=400 ，单个Executor为7Core16GB。</p>
+<p><img alt="图2 实验运行图" src="https://p0.meituan.net/travelcube/8a5739f0532a00979e9ff7b3981cdc4a703471.jpg"></p>
+<h2 id="2-图灵训练引擎优化">2. 图灵训练引擎优化</h2>
+<p>那么，图灵训练引擎的性能优化是如何做到的呢？我们的优化分为内存优化、计算优化、磁盘IO优化三个层面。</p>
+<p>内存优化包括列裁切、自适应Cache、算子优化。我们借鉴Spark SQL原理设计了列裁切，可以自动剔除各组件中用户实际没有使用的字段，以降低内存占用。何时对Dataset Persist和Unpersist一直是Spark代码中的取舍问题，针对用户不熟悉Persist和Unpersist时机这个问题，我们将多年的开发经验沉淀在图灵中，结合列裁切技术实现自适应Cache。在计算优化方面，我们完成了图优化、Spark源码优化、XGB源码优化。在磁盘IO优化方面，我们创新性的实现了自动化小文件保存优化，能够使用一个Action实现多级分区表小文件的合并保存。</p>
+<p>此外，我们实现的TFRecord表示优化技术，成功将Spark生成的TFRecord体积减少50%。因图灵平台使用的优化技巧较多，我们将分成多篇文章为大家逐一介绍这些优化技术。</p>
+<p><img alt="图3 图灵训练引擎优化" src="https://p1.meituan.net/travelcube/12941cec6dfc25c8df86421c65df981d598856.jpg"></p>
+<p>而在众多优化中，收益最高、适用性最广的技术的就是算子优化，这项技术极大提升了图灵训练引擎的吞吐量。本篇文章首先将为大家介绍内存优化中的算子优化技术。</p>
+<h2 id="3-spark算子解读">3. Spark算子解读</h2>
+<p>同样的业务需求，不同的算子实现会有不一样的特性。我们将多年的Spark开发技巧总结在下表中：</p>
+<p><img alt="表1 Spark算子开发技巧总结" src="https://p1.meituan.net/travelcube/0f8edde2e7ec1729e16ea62419220396597929.jpg"></p>
+<ol>
+<li><strong>多行输入多行输出</strong>：多行数据一起进入内存处理。输出多行数据。</li>
+<li><strong>多列输出</strong>：特定场景下，我们希望输出多个字段。
+<ol>
+<li>SQL场景下只能输出Struct，再从Struct中SELECT各字段。</li>
+<li>map/flatMap/mapPartitions可以轻松输出任意个字段。</li>
+</ol>
+</li>
+<li><strong>中间结果复用</strong>：
+<ol>
+<li>SQL场景下：SQL场景下只能先SELECT一次得到中间变量，再SELECT中间变量完成后续处理。</li>
+<li>map/flatMap/mapPartitions可将计算逻辑封装在函数内。</li>
+</ol>
+</li>
+<li><strong>重量级对象复用</strong>：
+<ol>
+<li>Executor级别，例如可以通过广播变量实现，或者通过静态类成员变量的“懒汉”模式实现。</li>
+<li>Partition级别，mapPartitions时，先创建对象，后迭代数据，这个对象可在Partition内复用。</li>
+</ol>
+</li>
+</ol>
+<p>通过对比我们发现，mapPartitions是各类算子中最为灵活——可以灵活实现输入M条输出N条数据，可以输出任意数量的字段，还可以实现重量级对象在Partition或Executor级别上的复用。mapPartitions因其强大的功能和灵活可定制性，在图灵训练引擎的开发中有着举足轻重的地位（例如按Batch调用深度模型、上下采样、Partition统计等组件，都是基于该算子实现）。但是mapPartitions也有一个不足之处。</p>
+<h2 id="4-mappartitions之殇">4. mapPartitions之殇</h2>
+<p>相信大部分读者都曾经写过这样的代码，创建一个重量级对象在Partition内完成复用，而不是像map算子那样每处理一行数据创建一个对象。</p>
+<p><strong>mapPartitions模板，重量级对象复用</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>dataset.mapPartitions((MapPartitionsFunction<span style="color:#719e07">&lt;</span>Row, Row<span style="color:#719e07">&gt;</span>) iterator <span style="color:#719e07">-&gt;</span> {
+</span></span><span style="display:flex;"><span>  HeavyObject obj <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> HeavyObject();
+</span></span><span style="display:flex;"><span>  List<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;</span> list <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> ArrayList<span style="color:#719e07">&lt;&gt;</span>();
+</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 遍历处理数据</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">while</span> (iterator.hasNext()) {
+</span></span><span style="display:flex;"><span>    Row row <span style="color:#719e07">=</span> iterator.next();
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 拼凑batch或逐条处理</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// ....</span>
+</span></span><span style="display:flex;"><span>    obj.process(row)
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// batch add或逐条add</span>
+</span></span><span style="display:flex;"><span>    list.add(...);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 返回list的迭代器</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">return</span> list.iterator();
+</span></span><span style="display:flex;"><span>}, RowEncoder.apply(schema));
+</span></span></code></pre></div><p>熟悉mapPartitions的同学都知道，这段代码完成了重量级对象的复用，相比map算子好像已经减少了大量GC，但这样仍旧非常容易溢出。那么：</p>
+<ol>
+<li>为什么mapPartitions算子容易溢出呢？</li>
+<li>当多个mapPartitions算子串联的时候又是如何GC的呢？</li>
+</ol>
+<h2 id="5-spark-pipeline中的mappartitions">5. Spark Pipeline中的mapPartitions</h2>
+<p>在进行下一部分讲解之前，我们先简要介绍一下Spark的懒执行机制。Spark的算子分为Action和Transformation两大类。RDD的依赖关系构成了数据处理的有向无环图DAG。只有当Action算子出现时，才会执行Action算子与前面一系列Transformation算子构成的DAG。Spark还会根据Shuffle将DAG划分成多个Stage进行计算，Shuffle过程需要跨节点交换数据，会产生大量的磁盘IO和网络IO。而每个Stage内的计算则构成了Pipeline，在内存中进行。</p>
+<p><img alt="图4 多列词典映射实验图" src="https://p0.meituan.net/travelcube/64b324f7509db0bcfd2b372723fa366c527972.jpg"></p>
+<p>我们以上图为例，该同学实验中的多列词典映射组件，对大量的特征做了词典映射计算。多列词典映射组件包含两个部分，计算词典和应用词典。
+::: block-1 &gt; <strong>计算词典</strong>：通过去重和collect生成了各个特征的词典，每个特征词典的计算都伴随着1次Shuffle和1次Action。 &gt; <strong>应用词典</strong>：将特征根据词典映射成唯一ID，不存在Shuffle。 :::</p>
+<p>与Spark StringIndexer的Pipeline优化相似，当进行多个特征的词典映射计算时，图灵机器学习平台会将计算词典的Action单独执行，而多个应用词典则一起执行。</p>
+<p>词典生成后，所有应用词典的计算逻辑（mapPartitions Transformation）不存在Shuffle，因此被划分到同一个Stage中，所有mapPartitions算子将串联成一条非常长的Pipeline。最终由后面的Action算子触发提交Job，执行该Pipeline。Stage的划分可参考下图：</p>
+<p><img alt="图5 应用多个词典Stage" src="https://p1.meituan.net/travelcube/1d169d500490d28eeda29194f9b682591453150.jpg"></p>
+<p>应用词典的实现中，每个mapPartitionsFunction中都新建了一个ArrayList充当Buffer来存储计算后的数据，最终返回ArrayList.iterator()。执行时，每次应用词典都会将整个Partition的数据拉入ArrayList当中。上述词典映射串联构成Pipeline的时候，内存中会有多少数据呢？</p>
+<p>带着这个疑问，让我们走进Spark的源代码，看看mapPartitionsFunction是如何构成Spark Pipeline的。</p>
+<p>Spark的一个Stage中会划分为多个Task，除了union和coalesce的场景，1个Partition对应1个Task。Task的执行通过抽象方法runTask()完成，以实现类ResultTask为例，最后runTask()方法调用了rdd.iterator()。</p>
+<p><strong>ResultTask.scala</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#719e07">override</span> <span style="color:#719e07">def</span> runTask<span style="color:#719e07">(</span>context<span style="color:#719e07">:</span> <span style="color:#dc322f">TaskContext</span><span style="color:#719e07">)</span><span style="color:#719e07">:</span> <span style="color:#dc322f">U</span> <span style="color:#719e07">=</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">......</span> <span style="color:#586e75">// 源码缩略不进行展示：初始化一些需要的对象
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#719e07">val</span> <span style="color:#719e07">(</span>rdd<span style="color:#719e07">,</span> func<span style="color:#719e07">)</span> <span style="color:#719e07">=</span> ser<span style="color:#719e07">.</span>deserialize<span style="color:#719e07">[(</span><span style="color:#dc322f">RDD</span><span style="color:#719e07">[</span><span style="color:#dc322f">T</span><span style="color:#719e07">]</span>, <span style="color:#719e07">(</span><span style="color:#dc322f">TaskContext</span>, <span style="color:#dc322f">Iterator</span><span style="color:#719e07">[</span><span style="color:#dc322f">T</span><span style="color:#719e07">])</span> <span style="color:#719e07">=&gt;</span> <span style="color:#dc322f">U</span><span style="color:#719e07">)](</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">ByteBuffer</span><span style="color:#719e07">.</span>wrap<span style="color:#719e07">(</span>taskBinary<span style="color:#719e07">.</span>value<span style="color:#719e07">),</span> <span style="color:#268bd2">Thread</span><span style="color:#719e07">.</span>currentThread<span style="color:#719e07">.</span>getContextClassLoader<span style="color:#719e07">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">_executorDeserializeTime</span> <span style="color:#719e07">=</span> <span style="color:#268bd2">System</span><span style="color:#719e07">.</span>currentTimeMillis<span style="color:#719e07">()</span> <span style="color:#719e07">-</span> deserializeStartTime
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">_executorDeserializeCpuTime</span> <span style="color:#719e07">=</span> <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>threadMXBean<span style="color:#719e07">.</span>isCurrentThreadCpuTimeSupported<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>    threadMXBean<span style="color:#719e07">.</span>getCurrentThreadCpuTime <span style="color:#719e07">-</span> deserializeStartCpuTime
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">}</span> <span style="color:#719e07">else</span> <span style="color:#2aa198">0L</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 这里的func()调用了rdd.iterator()
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  func<span style="color:#719e07">(</span>context<span style="color:#719e07">,</span> rdd<span style="color:#719e07">.</span>iterator<span style="color:#719e07">(</span>partition<span style="color:#719e07">,</span> context<span style="color:#719e07">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span></code></pre></div><p>而RDD的iterator方法的源码如下，其调用逻辑最终都会进入computeOrReadCheckpoint方法，若没有CheckPoint则进入compute方法执行计算。以MapPartitionsRDD类为例，获取父RDD的Iterator并传入自己的计算逻辑函数f中。</p>
+<p><strong>RDD.scala</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#719e07">final</span> <span style="color:#719e07">def</span> iterator<span style="color:#719e07">(</span>split<span style="color:#719e07">:</span> <span style="color:#dc322f">Partition</span><span style="color:#719e07">,</span> context<span style="color:#719e07">:</span> <span style="color:#dc322f">TaskContext</span><span style="color:#719e07">)</span><span style="color:#719e07">:</span> <span style="color:#dc322f">Iterator</span><span style="color:#719e07">[</span><span style="color:#dc322f">T</span><span style="color:#719e07">]</span> <span style="color:#719e07">=</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>storageLevel <span style="color:#719e07">!=</span> <span style="color:#268bd2">StorageLevel</span><span style="color:#719e07">.</span><span style="color:#268bd2">NONE</span><span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>    getOrCompute<span style="color:#719e07">(</span>split<span style="color:#719e07">,</span> context<span style="color:#719e07">)</span> <span style="color:#586e75">// 内部依然调用下面的computeOrReadCheckpoint(partition, context)
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#719e07">}</span> <span style="color:#719e07">else</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>    computeOrReadCheckpoint<span style="color:#719e07">(</span>split<span style="color:#719e07">,</span> context<span style="color:#719e07">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// StorageLevel不为NONE时调用的方法
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#719e07">private</span><span style="color:#719e07">[</span><span style="color:#dc322f">spark</span><span style="color:#719e07">]</span> <span style="color:#719e07">def</span> getOrCompute<span style="color:#719e07">(</span>partition<span style="color:#719e07">:</span> <span style="color:#dc322f">Partition</span><span style="color:#719e07">,</span> context<span style="color:#719e07">:</span> <span style="color:#dc322f">TaskContext</span><span style="color:#719e07">)</span><span style="color:#719e07">:</span> <span style="color:#dc322f">Iterator</span><span style="color:#719e07">[</span><span style="color:#dc322f">T</span><span style="color:#719e07">]</span> <span style="color:#719e07">=</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">......</span> <span style="color:#586e75">// 初始化相关变量
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#268bd2">SparkEnv</span><span style="color:#719e07">.</span>get<span style="color:#719e07">.</span>blockManager<span style="color:#719e07">.</span>getOrElseUpdate<span style="color:#719e07">(</span>blockId<span style="color:#719e07">,</span> storageLevel<span style="color:#719e07">,</span> elementClassTag<span style="color:#719e07">,</span> <span style="color:#719e07">()</span> <span style="color:#719e07">=&gt;</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>    readCachedBlock <span style="color:#719e07">=</span> <span style="color:#cb4b16">false</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 内部依然调用iterator()中的computeOrReadCheckpoint方法
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    computeOrReadCheckpoint<span style="color:#719e07">(</span>partition<span style="color:#719e07">,</span> context<span style="color:#719e07">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">})</span> <span style="color:#719e07">match</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">......</span> <span style="color:#586e75">// 源码缩略不进行展示：按case包装为对应iterator返回
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// 默认调用该方法
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#719e07">private</span><span style="color:#719e07">[</span><span style="color:#dc322f">spark</span><span style="color:#719e07">]</span> <span style="color:#719e07">def</span> computeOrReadCheckpoint<span style="color:#719e07">(</span>split<span style="color:#719e07">:</span> <span style="color:#dc322f">Partition</span><span style="color:#719e07">,</span> context<span style="color:#719e07">:</span> <span style="color:#dc322f">TaskContext</span><span style="color:#719e07">)</span><span style="color:#719e07">:</span> <span style="color:#dc322f">Iterator</span><span style="color:#719e07">[</span><span style="color:#dc322f">T</span><span style="color:#719e07">]</span> <span style="color:#719e07">=</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">if</span> <span style="color:#719e07">(</span>isCheckpointedAndMaterialized<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 有checkpoint或materialized则返回依赖关系中第一个父RDD的iterator
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    firstParent<span style="color:#719e07">[</span><span style="color:#dc322f">T</span><span style="color:#719e07">].</span>iterator<span style="color:#719e07">(</span>split<span style="color:#719e07">,</span> context<span style="color:#719e07">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">}</span> <span style="color:#719e07">else</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 调用当前RDD的compute方法计算，内部的计算逻辑包含了用户编写的代码
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    compute<span style="color:#719e07">(</span>split<span style="color:#719e07">,</span> context<span style="color:#719e07">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#719e07">}</span>
+</span></span></code></pre></div><p><strong>MapPartitionsRDD.scala</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#719e07">override</span> <span style="color:#719e07">def</span> compute<span style="color:#719e07">(</span>split<span style="color:#719e07">:</span> <span style="color:#dc322f">Partition</span><span style="color:#719e07">,</span> context<span style="color:#719e07">:</span> <span style="color:#dc322f">TaskContext</span><span style="color:#719e07">)</span><span style="color:#719e07">:</span> <span style="color:#dc322f">Iterator</span><span style="color:#719e07">[</span><span style="color:#dc322f">U</span><span style="color:#719e07">]</span> <span style="color:#719e07">=</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 用户编写的代码逻辑被封装为函数‘f’，在此接受参数后执行
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  f<span style="color:#719e07">(</span>context<span style="color:#719e07">,</span> split<span style="color:#719e07">.</span>index<span style="color:#719e07">,</span> firstParent<span style="color:#719e07">[</span><span style="color:#dc322f">T</span><span style="color:#719e07">].</span>iterator<span style="color:#719e07">(</span>split<span style="color:#719e07">,</span> context<span style="color:#719e07">))</span>
+</span></span></code></pre></div><p>为了更清晰的解释这个问题，以下述代码为例。</p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#719e07">val</span> rddA <span style="color:#719e07">=</span> initRDD<span style="color:#719e07">();</span> <span style="color:#586e75">// 获取一个RDD
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75">//funcA、funcB、funcC均为用户的代码逻辑
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span><span style="color:#719e07">val</span> rddB <span style="color:#719e07">=</span> rddA<span style="color:#719e07">.</span>mapPartitions<span style="color:#719e07">(</span>funcA<span style="color:#719e07">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#719e07">val</span> rddC <span style="color:#719e07">=</span> rddB<span style="color:#719e07">.</span>mapPartitions<span style="color:#719e07">(</span>funcB<span style="color:#719e07">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#719e07">val</span> rddD <span style="color:#719e07">=</span> rddC<span style="color:#719e07">.</span>mapPartitions<span style="color:#719e07">(</span>funcC<span style="color:#719e07">)</span>
+</span></span><span style="display:flex;"><span>rddD<span style="color:#719e07">.</span>count<span style="color:#719e07">()</span>
+</span></span></code></pre></div><p>在遇到count算子时会进行RDD回溯，最终的形成计算链路为fCount(funcC(funcB(funcA(rddA.iterator=&gt;iterator))))，由此构成了Pipeline，以多个mapPartitions + ArrayList.iterator()串联的代码展开则如下所示：</p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span>iteratorA <span style="color:#719e07">=&gt;</span> <span style="color:#586e75">// iteratorA：初始RDD对应Partition的输出迭代器
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#719e07">var</span> list <span style="color:#719e07">=</span> <span style="color:#268bd2">List</span><span style="color:#719e07">[</span><span style="color:#dc322f">Row</span><span style="color:#719e07">]()</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">while</span> <span style="color:#719e07">(</span>iteratorA<span style="color:#719e07">.</span>hasNext<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>    list <span style="color:#719e07">=</span> process<span style="color:#719e07">(</span>iteratorA<span style="color:#719e07">.</span>next<span style="color:#719e07">())</span> <span style="color:#719e07">+:</span> list <span style="color:#586e75">// funcA：每条拉至内存处理后加入resultList
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">val</span> iteratorB <span style="color:#719e07">=</span> list<span style="color:#719e07">.</span>iterator
+</span></span><span style="display:flex;"><span>iteratorB <span style="color:#719e07">=&gt;</span> <span style="color:#586e75">// iteratorB：rddA对应Partition的输出迭代器
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#719e07">var</span> list <span style="color:#719e07">=</span> <span style="color:#268bd2">List</span><span style="color:#719e07">[</span><span style="color:#dc322f">Row</span><span style="color:#719e07">]()</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">while</span> <span style="color:#719e07">(</span>iteratorB<span style="color:#719e07">.</span>hasNext<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>    list <span style="color:#719e07">=</span> process<span style="color:#719e07">(</span>iteratorB<span style="color:#719e07">.</span>next<span style="color:#719e07">())</span> <span style="color:#719e07">+:</span> list <span style="color:#586e75">// funcB：每条数据拉至内存处理后加入resultList
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">val</span> iteratorC <span style="color:#719e07">=</span> list<span style="color:#719e07">.</span>iterator
+</span></span><span style="display:flex;"><span>iteratorC <span style="color:#719e07">=&gt;</span>  <span style="color:#586e75">// iteratorC：rddB对应Partition的输出迭代器
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#719e07">var</span> list <span style="color:#719e07">=</span> <span style="color:#268bd2">List</span><span style="color:#719e07">[</span><span style="color:#dc322f">Row</span><span style="color:#719e07">]()</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">while</span> <span style="color:#719e07">(</span>iteratorC<span style="color:#719e07">.</span>hasNext<span style="color:#719e07">)</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>    list <span style="color:#719e07">=</span> process<span style="color:#719e07">(</span>iteratorC<span style="color:#719e07">.</span>next<span style="color:#719e07">())</span> <span style="color:#719e07">+:</span> list <span style="color:#586e75">// funcC：每条数据拉至内存处理后加入resultList
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#719e07">val</span> iteratorD <span style="color:#719e07">=</span> list<span style="color:#719e07">.</span>iterator
+</span></span><span style="display:flex;"><span>iteratorD <span style="color:#719e07">=&gt;</span> count<span style="color:#719e07">()</span>
+</span></span></code></pre></div><p>回看mapPartitions模板，作为Buffer的ArrayList是每个mapPartitionsFunction的局部变量，ArrayList.iterator()引用了这个Buffer，结合上面的源码我们知道，子RDD会引用父RDD的Iterator。结合该同学的实验分析，每个RDD中的计算都形成了一个Array Buffer，在RDD的function调用链路中Array Buffer2依赖Array Buffer1.iterator()，Array Buffer3依赖Array Buffer2.iterator()。</p>
+<p>以此类推，在计算RDD-3时，RDD-1的func1已经出栈，且RDD-3不依赖Array Buffer1.iterator()，因此局部变量Array Buffer1可以被GC。由此可见在Stage-应用多个词典的计算过程中，内存占用的峰值达到了两个Array Buffer，也就是两倍partitionSize。</p>
+<p><img alt="图6 应用多个词典内存占用" src="https://p0.meituan.net/travelcube/a65ed9ae47514ce53c5583616472fbe11351681.jpg"></p>
+<p>为了完全证实这个想法，又进行了实际的测试验证：初始化1个单Partition的RDD，并且该Partition的数据量为300万，占用内存大约为180M。接着将这些数据利用多个mapPartitions + ArrayList.iterator()串联，每输入1个对象，生成1个新对象放入Buffer中，最后用rdd.count()触发Action，整个执行流程中只包含一个Stage。运行的JVM堆内存设置为512M，以此来观察堆内存中的实例对象及其GC活动是否符合只有两个Buffer的预期。</p>
+<p>观察结果如下，每一行数据以一个GenericRowWithSchema实例存在并加入ArrayList中，其计算过程中最大的峰值正好为600万即两倍的分区数据量。GC以周期性的活动去销毁上上个mapPartitions中的无用Buffer，并且堆内存保持在了最大约两倍的数据占用量（约360M），因此验证了推断。以下是测试中的GenericRowWithSchema对象实例计数图、内存实时占用以及GC活动统计图。</p>
+<p><img alt="图7 对象统计" src="https://p0.meituan.net/travelcube/f6f2b680808fb7ebe5dd7d63cd8bf8d9546799.jpg"></p>
+<p><img alt="图8 内存统计" src="https://p0.meituan.net/travelcube/a6139c4aa6a22f6e8cee8972a5b49871574258.jpg"></p>
+<p>经过测试验证，mapPartitions + ArrayList.iterator()导致了两倍partitionSize的内存占用。</p>
+<p>使用mapPartitions + ArrayList.iterator()仅仅只是造成OOM或GC压力大吗？偏偏不巧，在Spark的内存管理中另有一番天地，会牵扯到更多的性能问题。</p>
+<h3 id="spark内存管理机制">Spark内存管理机制</h3>
+<p>Spark从2.0开始使用的是统一内存管理机制，主要分为四大区域，System Reserved、User Memory、Storage Memory和Execution Memory。System Reserved是为系统预留使用的内存，User Memory是用户定义的数据结构和Spark的元数据。存储内存Storage Memory与执行内存Execution Memory在运行期间会共享一块内存区域，默认有由spark.storage.storageFraction参数控制。Spark使用动态占用机制来管理这两块内存。</p>
+<p><img alt="图9 Spark内存逻辑模型" src="https://p0.meituan.net/travelcube/288f8c9852788faf3328400ee97d758f1070430.jpg"></p>
+<p><strong>Storage和Execution的动态占用机制</strong></p>
+<ol>
+<li>当Storage或Execution的内存不足、而对方的内存空余时，可以占用对方的内存空间。</li>
+<li>Storage占用Execution时，如果Execution需要更多内存，则会将Storage占用的内存淘汰（根据RDD的StorageLevel决定是溢写到磁盘还是直接删除），归还借用的内存空间。</li>
+<li>Execution占用Storage时，如果Storage需要更多内存，则直接发生淘汰（Execution的逻辑复杂，归还内存的难度非常高）。</li>
+<li>从Storage中淘汰掉的RDD Cache会在RDD重新使用时再次Cache。</li>
+</ol>
+<p>在涉及到mapPartitions + ArrayList.iterator()的执行过程中，由于大量的内存占用，导致Execution Memory不足，借用Storage Memory，并且借用后仍存在内存不足情况时，Storage Memory中的已缓存的Block会进行淘汰机制，根据其存储级别进行落盘或直接删除，这会导致缓存数据多次的IO操作与重复计算，极大的降低了数据处理的效率。</p>
+<p><img alt="图10 淘汰机制" src="https://p1.meituan.net/travelcube/a07f2c3703bfb97a0f9a05c3497755291460707.jpg"></p>
+<p>让我们小结一下mapPartitions + ArrayList.iterator()的实现方式：</p>
+<ol>
+<li>Spark通过mapPartitionsFunction嵌套实现Pipeline，例如fCount(funcC(funcB(funcA)))，func中的Buffer是方法中的局部变量。</li>
+<li>在mapPartitionsFunction中使用不限制长度的Buffer，会导致partitionSize两倍的数据拉入内存。</li>
+<li>可能触发Spark内存管理的淘汰机制，导致缓存数据多次的IO操作与重复计算。</li>
+</ol>
+<h2 id="6-最佳实践">6. 最佳实践</h2>
+<p>以多输入多输出为例，假设我们需要处理一批单个分区数据量达到千万级别的数据集，以单个分区中每5行数据为一批次，每批次随机输出2行数据，那么在mapPartitions基础上，可以这样写：</p>
+<p><strong>BatchIteratorDemo：mapPartitions处理多输入-&gt;多输出——以单分区每5行数据为一批次，每批次随机输出2行数据的Demo</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Dataset<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;</span> dataset <span style="color:#719e07">=</span> initDataset();<span style="color:#586e75">// 初始化数据集</span>
+</span></span><span style="display:flex;"><span><span style="color:#586e75">// mapPartitions中调用BatchIterator完成计算逻辑</span>
+</span></span><span style="display:flex;"><span>Dataset<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;</span> result <span style="color:#719e07">=</span> dataset.mapPartitions((MapPartitionsFunction<span style="color:#719e07">&lt;</span>Row, Row<span style="color:#719e07">&gt;</span>) inputIterator <span style="color:#719e07">-&gt;</span> <span style="color:#719e07">new</span> Iterator<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 一批处理的数据行数</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">private</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">final</span> <span style="color:#dc322f">int</span> INPUT_BATCH_PROCESS_SIZE <span style="color:#719e07">=</span> 5;
+</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 当前批次处理的数据集</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">private</span> <span style="color:#268bd2">final</span> List<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;</span> batchRows <span style="color:#719e07">=</span> <span style="color:#719e07">new</span> ArrayList<span style="color:#719e07">&lt;&gt;</span>(INPUT_BATCH_PROCESS_SIZE);
+</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 当前批次输出iterator</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">private</span> Iterator<span style="color:#719e07">&lt;</span>Row<span style="color:#719e07">&gt;</span> batchResult <span style="color:#719e07">=</span> Collections.emptyIterator();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">@Override</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">public</span> <span style="color:#dc322f">boolean</span> <span style="color:#268bd2">hasNext</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 本轮结果已全部消费，进入下一批次batch</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">if</span> (<span style="color:#719e07">!</span>batchResult.hasNext()) {
+</span></span><span style="display:flex;"><span>      batchRows.clear();
+</span></span><span style="display:flex;"><span>      <span style="color:#dc322f">int</span> count <span style="color:#719e07">=</span> 0;
+</span></span><span style="display:flex;"><span>      <span style="color:#586e75">// 按一个 batch 5条数据加入集合</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#719e07">while</span> (count<span style="color:#719e07">++</span> <span style="color:#719e07">&lt;</span> INPUT_BATCH_PROCESS_SIZE <span style="color:#719e07">&amp;&amp;</span> inputIterator.hasNext()) {
+</span></span><span style="display:flex;"><span>        batchRows.add(inputIterator.next());
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#586e75">// 上游数据全部消费</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#719e07">if</span> (batchRows.size() <span style="color:#719e07">==</span> 0) {
+</span></span><span style="display:flex;"><span>        <span style="color:#719e07">return</span> <span style="color:#cb4b16">false</span>;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#586e75">// 随机获取2条数据</span>
+</span></span><span style="display:flex;"><span>      batchResult <span style="color:#719e07">=</span> processBatch(batchRows);<span style="color:#586e75">// 随机抽取2条数据创建新对象返回</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">return</span> <span style="color:#cb4b16">true</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">public</span> Row <span style="color:#268bd2">next</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#719e07">return</span> batchResult.next();<span style="color:#586e75">// 消费当前批次的结果</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}, RowEncoder.apply(dataset.schema()));
+</span></span></code></pre></div><p>当该方式应用到fCount(funcC(funcB(funcA(rddA.iterator=&gt;iterator))))构成的Pipeline时，以多个mapPartitions + ArrayList.iterator()串联的代码展开则如下所示：</p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span>iteratorA <span style="color:#719e07">=&gt;</span> iteratorB <span style="color:#719e07">=</span>  <span style="color:#586e75">// iteratorA：初始RDD对应Partition的输出迭代器
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#719e07">new</span> <span style="color:#268bd2">Iterator</span><span style="color:#719e07">[</span><span style="color:#dc322f">Row</span><span style="color:#719e07">]</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">override</span> <span style="color:#719e07">def</span> hasNext<span style="color:#719e07">:</span> <span style="color:#dc322f">Boolean</span> <span style="color:#719e07">=</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>      processBatch<span style="color:#719e07">(</span>iteratorA<span style="color:#719e07">)</span> <span style="color:#586e75">// 只处理一个batch的数据
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">override</span> <span style="color:#719e07">def</span> next<span style="color:#719e07">()</span><span style="color:#719e07">:</span> <span style="color:#dc322f">Row</span> <span style="color:#719e07">=</span> nextInBatch<span style="color:#719e07">()</span> <span style="color:#586e75">// 获取当前batch的下个输出
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>iteratorB <span style="color:#719e07">=&gt;</span> iteratorC <span style="color:#719e07">=</span>  <span style="color:#586e75">// iteratorB：rddA对应Partition的结果迭代器
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#719e07">new</span> <span style="color:#268bd2">Iterator</span><span style="color:#719e07">[</span><span style="color:#dc322f">Row</span><span style="color:#719e07">]</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">override</span> <span style="color:#719e07">def</span> hasNext<span style="color:#719e07">:</span> <span style="color:#dc322f">Boolean</span> <span style="color:#719e07">=</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>      processBatch<span style="color:#719e07">(</span>iteratorB<span style="color:#719e07">)</span> <span style="color:#586e75">// 只处理一个batch的数据
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">override</span> <span style="color:#719e07">def</span> next<span style="color:#719e07">()</span><span style="color:#719e07">:</span> <span style="color:#dc322f">Row</span> <span style="color:#719e07">=</span> nextInBatch<span style="color:#719e07">()</span> <span style="color:#586e75">// 获取当前batch的下个输出
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>iteratorC <span style="color:#719e07">=&gt;</span> iteratorD <span style="color:#719e07">=</span>  <span style="color:#586e75">// iteratorC：rddB对应Partition的结果迭代器
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#719e07">new</span> <span style="color:#268bd2">Iterator</span><span style="color:#719e07">[</span><span style="color:#dc322f">Row</span><span style="color:#719e07">]</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">override</span> <span style="color:#719e07">def</span> hasNext<span style="color:#719e07">:</span> <span style="color:#dc322f">Boolean</span> <span style="color:#719e07">=</span> <span style="color:#719e07">{</span>
+</span></span><span style="display:flex;"><span>      processBatch<span style="color:#719e07">(</span>iteratorC<span style="color:#719e07">)</span> <span style="color:#586e75">// 只处理一个batch的数据
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>    <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">override</span> <span style="color:#719e07">def</span> next<span style="color:#719e07">()</span><span style="color:#719e07">:</span> <span style="color:#dc322f">Row</span> <span style="color:#719e07">=</span> nextInBatch<span style="color:#719e07">()</span> <span style="color:#586e75">// 获取当前batch的下个输出
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75"></span>  <span style="color:#719e07">}</span>
+</span></span><span style="display:flex;"><span>iteratorD <span style="color:#719e07">=&gt;</span> count<span style="color:#719e07">()</span>
+</span></span></code></pre></div><p>我们可以看到，多输入多输出Demo以inputBatch=5、outputBatch=2作为消费单位，内存占用只有Batch=7（inputBatch + outputBatch），每次处理完一个批次，直到当前批次产生的2条数据全部被下一个RDD Iterator消费完之后，才会继续尝试从上一个RDD Iterator读取下一个批次进入内存计算，不需要为了返回分区Iterator而直接消费整个分区数据。将随机抽取数据的逻辑串联处理，其Stage将如下图所示，每个Buffer仅为一个Batch，内存消耗几乎可以忽略不计。</p>
+<p><img alt="图11 Demo Stage" src="https://p0.meituan.net/travelcube/c72eb30c6244e65026a1356dc52e7d761392886.jpg"></p>
+<p>最终的数据处理效果对比如下图：</p>
+<p><img alt="图12 数据处理效果对比" src="https://p0.meituan.net/travelcube/cef2251fff0ff69d096da0fd7817aa171729775.jpg"></p>
+<h2 id="7-总结">7. 总结</h2>
+<p>本文作为《图灵机器学习平台性能起飞的秘密》系列的第一篇，主要讲述了内存优化中的算子优化技巧，深入分析了mapPartitions算子的原理，并提供了mapPartitions算子的最佳实践。图灵机器学习平台基于此方案进一步开发了BufferIterator框架，能够灵活应对输入M条数据输出N条数据的场景，极大提升了图灵的吞吐量。后续我们将继续为大家介绍更多的优化技巧，敬请期待。</p>
+<h2 id="8-作者简介">8. 作者简介</h2>
+<ul>
+<li>琦帆、立煌、兆军等，均来自美团到家事业群/履约平台技术部。</li>
+</ul>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F">美团技术团队</a></li>
+								
+								<li><a href="/tags/%E5%88%B0%E5%AE%B6">到家</a></li>
+								
+								<li><a href="/tags/%E5%90%8E%E5%8F%B0">后台</a></li>
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2ai">美团AI</a></li>
+								
+								<li><a href="/tags/%E5%9B%BE%E7%81%B5%E5%B9%B3%E5%8F%B0">图灵平台</a></li>
+								
+								<li><a href="/tags/spark%E7%AE%97%E5%AD%90%E4%BC%98%E5%8C%96">Spark算子优化</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'wfsui';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="">Wfsui theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div><script>feather.replace()</script>
+</body>
+</html>

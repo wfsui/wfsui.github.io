@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>线程Block on 大峰哥</title>
+    <link>https://wfsui.github.io/tags/%E7%BA%BF%E7%A8%8Bblock/</link>
+    <description>Recent content in 线程Block on 大峰哥</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Fri, 18 Nov 2022 03:29:43 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/%E7%BA%BF%E7%A8%8Bblock/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>日志导致线程Block的这些坑，你不得不防</title>
+      <link>https://wfsui.github.io/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/</link>
+      <pubDate>Fri, 18 Nov 2022 03:29:43 +0000</pubDate>
+      <guid>https://wfsui.github.io/posts/%E6%97%A5%E5%BF%97%E5%AF%BC%E8%87%B4%E7%BA%BF%E7%A8%8Bblock%E7%9A%84%E8%BF%99%E4%BA%9B%E5%9D%91%E4%BD%A0%E4%B8%8D%E5%BE%97%E4%B8%8D%E9%98%B2/</guid>
+      <description>1. 前言 日志对程序的重要性不言而喻。它很“大”，我们在项目中经常通过日志来记录信息和排查问题，相关代码随处可见。它也很“小”，作为辅助工具，日志使用简单、上手快，我们通常不会花费过多精力耗在日志上。但看似不起眼的日志也隐藏着各种各样的“坑”，如果使用不当，它不仅不能帮助我们，反而还可能降低服务性能，甚至拖垮我们的服务。&#xA;日志导致线程Block的问题，相信你或许已经遇到过，对此应该深有体会；或许你还没遇到过，但不代表没有问题，只是可能还没有触发而已。本文主要介绍美团统一API网关服务Shepherd（参见《百亿规模API网关服务Shepherd的设计与实现》一文）在实践中所踩过的关于日志导致线程Block的那些“坑”，然后再分享一些避“坑”经验。&#xA;2. 背景 API网关服务Shepherd基于Java语言开发，使用业界大名鼎鼎的Apache Log4j2作为主要日志框架，同时使用美团内部的XMD-Log SDK和Scribe-Log SDK对日志内容进行处理，日志处理整体流程如下图1所示。业务打印日志时，日志框架基于Logger配置来决定把日志交给XMDFile处理还是Scribe处理。其中，XMDFile是XMD-Log内部提供的日志Appender名称，负责输出日志到本地磁盘，Scribe是Scribe-Log内部提供的日志Appender名称，负责上报日志到远程日志中心。&#xA;随着业务的快速增长，日志导致的线程Block问题愈发频繁。比如调用后端RPC服务超时，导致调用方大量线程Block；再比如，业务内部输出异常日志导致服务大量线程Block等，这些问题严重影响着服务的稳定性。因此，我们结合项目在过去一段时间暴露出来的各种由于日志导致的线程Block问题，对日志框架存在的稳定性风险因素进行了彻底的排查和修复，并在线下、线上环境进行全方位验证。在此过程中，我们总结了一些日志使用相关的实践经验，希望分享给大家。&#xA;在进入正文前，首先介绍项目当时的运行环境和日志相关配置信息。&#xA;JDK版本 java version &amp;#34;1.8.0_45&amp;#34; Java(TM) SE Runtime Environment (build 1.</description>
+    </item>
+  </channel>
+</rss>

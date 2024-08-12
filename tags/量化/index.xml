@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>量化 on 大峰哥</title>
+    <link>https://wfsui.github.io/tags/%E9%87%8F%E5%8C%96/</link>
+    <description>Recent content in 量化 on 大峰哥</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <copyright>© Copyright notice</copyright>
+    <lastBuildDate>Thu, 02 Mar 2023 03:07:37 +0000</lastBuildDate>
+    <atom:link href="https://wfsui.github.io/tags/%E9%87%8F%E5%8C%96/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>通用目标检测开源框架YOLOv6在美团的量化部署实战</title>
+      <link>https://wfsui.github.io/posts/%E9%80%9A%E7%94%A8%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E9%87%8F%E5%8C%96%E9%83%A8%E7%BD%B2%E5%AE%9E%E6%88%98/</link>
+      <pubDate>Thu, 02 Mar 2023 03:07:37 +0000</pubDate>
+      <guid>https://wfsui.github.io/posts/%E9%80%9A%E7%94%A8%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6yolov6%E5%9C%A8%E7%BE%8E%E5%9B%A2%E7%9A%84%E9%87%8F%E5%8C%96%E9%83%A8%E7%BD%B2%E5%AE%9E%E6%88%98/</guid>
+      <description>1. 背景和难点## 1. 背景和难点 YOLOv6 是美团发布的一款开源的面向工业应用的 2D 目标检测模型 [1]，主要特点是速度快、精度高、部署友好，在美团众多视觉业务场景中都有着广泛的应用。通过量化（Quantization）提升推理速度是实际工业应用中的基本操作，但由于 YOLOv6 系列模型采用了大量的重参数化模块，如何针对 YOLOv6 进行高效和高精度的量化成为一个亟待解决的问题。本文旨在解决 YOLOv6 量化方面的难题，并以 YOLOv6s 模型为例，从训练后量化（Post-Training Quantization, PTQ）和量化感知训练（Quantization-Aware Training, QAT）两个方面进行分析，探索出了一条切实可行的量化方案。</description>
+    </item>
+  </channel>
+</rss>

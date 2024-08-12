@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>2023 | 美团技术团队热门技术文章汇总 - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:url" content="https://wfsui.github.io/posts/2023--%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F%E7%83%AD%E9%97%A8%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0%E6%B1%87%E6%80%BB/">
+  <meta property="og:site_name" content="大峰哥">
+  <meta property="og:title" content="2023 | 美团技术团队热门技术文章汇总">
+  <meta property="og:description" content="新年好！时光飞逝，我们告别了难忘的2023，迎来了充满希望的2024。再次感谢大家的一路相伴~~
+今天，我们整理了2023年公众号阅读量靠前的10篇技术文章，欢迎大家品阅。祝愿大家在新的一年里，幸福平安，行稳致远。
+01 Code：美团代码托管平台的演进与实践 作者：潘陶、费翔、丹丹、毛强
+美团代码托管平台经过长期的打磨，完成了分布式架构的改造落地，托管数以万计的仓库，日均Git相关请求达到千万级别。本文主要介绍了美团代码托管平台在迭代演进过程中面临的挑战及解决思路。阅读全文
+02 《美团开放平台SDK自动生成技术与实践》 作者：飞宏、照东、宇豪、王鸿
+美团开放平台为整个美团提供了20&#43;业务场景的开放API，为了使开发者能够快速且安全的接入美团开放平台，美团开放平台提供了多种语言的SDK来提高开发者的接入效率。本文介绍了美团开放平台如何自动生成SDK代码的相关技术实现方案。阅读全文
+03 代码变更风险可视化系统建设与实践 作者：桂来
+文章整理自美团技术沙龙第77期《美团亿级流量系统的质量风险防控和稳定性治理实践》。第一部分介绍了软件系统风险与变更；第二部分介绍了代码变更风险可视化系统的能力建设；第三部分介绍了整个系统在美团内部实践落地的情况；最后是对未来的规划和展望。阅读全文
+04 《一次「找回」TraceId的问题分析与过程思考》 作者：李祯
+用好中间件是每一个开发人员的基本功，一个专业的开发人员，追求的不仅是中间件的日常使用，还要探究这背后的设计初衷和底层逻辑，进而保证我们的系统运行更加稳定，让开发工作更加高效。
+结合这一主题，本文从一次线上告警问题出发，通过第一时间定位问题的根本原因，进而引出了分布式链路追踪系统的设计思想和实现途径，再回到问题本质深入@Async的源码分析底层的异步逻辑和实现特点，并给出MTrace跨线程传递失效的原因和解决方案，最后梳理目前主流的分布式跟踪系统的现状，并结合开发人员日常使用中间件的场景提出一些思考和总结。阅读全文">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-09T02:51:25+00:00">
+    <meta property="article:modified_time" content="2024-08-09T02:51:25+00:00">
+    <meta property="article:tag" content="美团技术团队">
+    <meta property="article:tag" content="年度总结">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="2023 | 美团技术团队热门技术文章汇总">
+  <meta name="twitter:description" content="新年好！时光飞逝，我们告别了难忘的2023，迎来了充满希望的2024。再次感谢大家的一路相伴~~
+今天，我们整理了2023年公众号阅读量靠前的10篇技术文章，欢迎大家品阅。祝愿大家在新的一年里，幸福平安，行稳致远。
+01 Code：美团代码托管平台的演进与实践 作者：潘陶、费翔、丹丹、毛强
+美团代码托管平台经过长期的打磨，完成了分布式架构的改造落地，托管数以万计的仓库，日均Git相关请求达到千万级别。本文主要介绍了美团代码托管平台在迭代演进过程中面临的挑战及解决思路。阅读全文
+02 《美团开放平台SDK自动生成技术与实践》 作者：飞宏、照东、宇豪、王鸿
+美团开放平台为整个美团提供了20&#43;业务场景的开放API，为了使开发者能够快速且安全的接入美团开放平台，美团开放平台提供了多种语言的SDK来提高开发者的接入效率。本文介绍了美团开放平台如何自动生成SDK代码的相关技术实现方案。阅读全文
+03 代码变更风险可视化系统建设与实践 作者：桂来
+文章整理自美团技术沙龙第77期《美团亿级流量系统的质量风险防控和稳定性治理实践》。第一部分介绍了软件系统风险与变更；第二部分介绍了代码变更风险可视化系统的能力建设；第三部分介绍了整个系统在美团内部实践落地的情况；最后是对未来的规划和展望。阅读全文
+04 《一次「找回」TraceId的问题分析与过程思考》 作者：李祯
+用好中间件是每一个开发人员的基本功，一个专业的开发人员，追求的不仅是中间件的日常使用，还要探究这背后的设计初衷和底层逻辑，进而保证我们的系统运行更加稳定，让开发工作更加高效。
+结合这一主题，本文从一次线上告警问题出发，通过第一时间定位问题的根本原因，进而引出了分布式链路追踪系统的设计思想和实现途径，再回到问题本质深入@Async的源码分析底层的异步逻辑和实现特点，并给出MTrace跨线程传递失效的原因和解决方案，最后梳理目前主流的分布式跟踪系统的现状，并结合开发人员日常使用中间件的场景提出一些思考和总结。阅读全文">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://wfsui.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://wfsui.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<base href="https://wfsui.github.io/">
+	<h1 class="site-title"><a href="https://wfsui.github.io/">大峰哥</a></h1>
+	<div class="site-description"><h2>记录日常生活哦</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/wfsui" title="Github"><i data-feather="github"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">文章</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">2023 | 美团技术团队热门技术文章汇总</h1>
+			<div class="meta">Posted at &mdash; Aug 9, 2024</div>
+		</div>
+
+		<div class="markdown">
+			<p><img src="https://p0.meituan.net/travelcube/a761f27c6bf0aca82dbee2bc11a61e03734192.png"></p>
+<p>新年好！时光飞逝，我们告别了难忘的2023，迎来了充满希望的2024。再次感谢大家的一路相伴~~</p>
+<p>今天，我们整理了2023年公众号阅读量靠前的10篇技术文章，欢迎大家品阅。祝愿大家在新的一年里，幸福平安，行稳致远。</p>
+<h2 id="01-code美团代码托管平台的演进与实践">01 Code：美团代码托管平台的演进与实践</h2>
+<p><strong>作�</strong>�：潘陶、费翔、丹丹、毛强</p>
+<p><img src="https://p1.meituan.net/travelcube/ed141ff8285ec377c641261a4a7aa98f331909.jpg"></p>
+<p>美团代码托管平台经过长期的打磨，完成了分布式架构的改造落地，托管数以万计的仓库，日均Git相关请求达到千万级别。本文主要介绍了美团代码托管平台在迭代演进过程中面临的挑战及解决思路。<a href="https://tech.meituan.com/2023/02/02/code-the-evolution-and-practice-of-meituan-code-repositories-platform.html">阅读全文</a></p>
+<h2 id="02-美团开放平台sdk自动生成技术与实践">02 《美团开放平台SDK自动生成技术与实践》</h2>
+<p><strong>作�</strong>�：飞宏、照东、宇豪、王鸿</p>
+<p><img src="https://p0.meituan.net/travelcube/7ab06b320f579a3b3287c106aaf8bfb9395131.jpg"></p>
+<p>美团开放平台为整个美团提供了20+业务场景的开放API，为了使开发者能够快速且安全的接入美团开放平台，美团开放平台提供了多种语言的SDK来提高开发者的接入效率。本文介绍了美团开放平台如何自动生成SDK代码的相关技术实现方案。<a href="https://tech.meituan.com/2023/01/05/openplatform-sdk-auto-generate.html">阅读全文</a></p>
+<h2 id="03-代码变更风险可视化系统建设与实践">03 代码变更风险可视化系统建设与实践</h2>
+<p><strong>作�</strong>�：桂来</p>
+<p><img src="https://p0.meituan.net/travelcube/29129df8e3af45a8f2f49993557c42f4280377.jpg"></p>
+<p>文章整理自美团技术沙龙第77期《美团亿级流量系统的质量风险防控和稳定性治理实践》。第一部分介绍了软件系统风险与变更；第二部分介绍了代码变更风险可视化系统的能力建设；第三部分介绍了整个系统在美团内部实践落地的情况；最后是对未来的规划和展望。<a href="https://tech.meituan.com/2023/09/22/construction-and-practice-of-code-change-risk-visualization-system.html">阅读全文</a></p>
+<h2 id="04-一次找回traceid的问题分析与过程思考">04 《一次「找回」TraceId的问题分析与过程思考》</h2>
+<p><strong>作�</strong>�：李祯</p>
+<p><img src="https://p0.meituan.net/travelcube/546471262f8c9532eb8e575cadf1944c400925.jpg"></p>
+<p>用好中间件是每一个开发人员的基本功，一个专业的开发人员，追求的不仅是中间件的日常使用，还要探究这背后的设计初衷和底层逻辑，进而保证我们的系统运行更加稳定，让开发工作更加高效。</p>
+<p>结合这一主题，本文从一次线上告警问题出发，通过第一时间定位问题的根本原因，进而引出了分布式链路追踪系统的设计思想和实现途径，再回到问题本质深入@Async的源码分析底层的异步逻辑和实现特点，并给出MTrace跨线程传递失效的原因和解决方案，最后梳理目前主流的分布式跟踪系统的现状，并结合开发人员日常使用中间件的场景提出一些思考和总结。<a href="https://tech.meituan.com/2023/04/20/traceid-google-dapper-mtrace.html">阅读全文</a></p>
+<h2 id="05-如何提供一个可信的ab测试解决方案">05 《如何提供一个可信的AB测试解决方案》</h2>
+<p><strong>作�</strong>�：王鹏、永斌、中锋</p>
+<p><img src="https://p0.meituan.net/travelcube/29d72e5c25bc8e2da648f1bbce80f47e341546.jpg"></p>
+<p>本文以履约场景下的具体实践为背景，介绍如何提供一个可信赖的AB测试解决方案。一方面从实验方法的角度论述实验过程中容易被忽视的统计陷阱，给出具体的解决方案，一方面从平台建设角度论述针对业务场景和对应约束制定实验方案提供给用户，而不只是功能和方法由用户自由选择，因为实验方法差之毫厘，结果可能是失之千里。<a href="https://tech.meituan.com/2023/08/24/ab-test-practice-in-meituan.html">阅读全文</a></p>
+<h2 id="06-kdd-2023--美团技术团队精选论文解读">06 《KDD 2023 | 美团技术团队精选论文解读》</h2>
+<p><strong>作�</strong>�：美团技术团队</p>
+<p><img src="https://p1.meituan.net/travelcube/edd9f901f10d4cd337413687f083b6d1241996.jpg"></p>
+<p>本文精选了美团技术团队被KDD 2023收录的7篇论文进行解读，论文覆盖了Feed流推荐、多模态数据、实例分割、用户意图预测等多个方向。这些论文也是美团技术团队与国内多所高校、科研机构合作的成果。<a href="https://tech.meituan.com/2023/08/11/meituan-kdd-2023.html">阅读全文</a></p>
+<h2 id="07-基于ui交互意图理解的异常检测方法">07 《基于UI交互意图理解的异常检测方法》</h2>
+<p><strong>作�</strong>�：诗雨、张雨、永祥</p>
+<p><img src="https://p0.meituan.net/travelcube/a633404fbcd2851976161fea64347f3586389.jpg"></p>
+<p>美团到店平台技术部/质量工程部与复旦大学周扬帆教授团队开展了科研合作，基于业务实际场景，自主研发了多模态UI交互意图识别模型以及配套的UI交互框架。</p>
+<p>本文从大前端质量保障领域的痛点出发，介绍了UI交互意图识别的方法设计与实现。基于UI交互意图编写的测试用例在实际业务中展现出了可以跨端、跨App的泛化能力。<a href="https://tech.meituan.com/2023/11/23/the-intent-of-ui-interaction-understanding.html">阅读全文</a></p>
+<h2 id="08-mjdk-如何实现压缩速率的-5-倍提升">08 《MJDK 如何实现压缩速率的 5 倍提升？》</h2>
+<p><strong>作�</strong>�：艳梅</p>
+<p><img src="https://p1.meituan.net/travelcube/77d087cd469d0c02d986056b654ac86d147529.jpg"></p>
+<p>MJDK是基于OpenJDK构建的美团JDK发行版。本文主要介绍MJDK是如何在保障java.util.zip.* API及压缩格式兼容性的前提下，实现压缩/解压缩速率提升5-10 倍的效果。<a href="https://tech.meituan.com/2023/08/31/meituan-mjdk-mzlib.html">阅读全文</a></p>
+<h2 id="09-超大规模数据库集群保稳高可用系统">09 《超大规模数据库集群保稳：高可用系统》</h2>
+<p><strong>作�</strong>�：张洪、李军、运洋</p>
+<p><img src="https://p0.meituan.net/travelcube/f48a632722659c169ea649432d82f2ef774114.jpg"></p>
+<p>本文整理自主题分享《美团数据库的高可用系统》（点击查看视频），系超大规模数据库集群保稳系列的第一篇文章。对数据库而言，非常核心的就是如何保证其高可用性。本文围绕4个方面的内容展开，包括高可用简介、高可用部署、重点模块的设计思考以及对未来思考。<a href="https://tech.meituan.com/2023/05/11/meituan-high-availability-system.html">阅读全文</a></p>
+<h2 id="10-交互式推荐在外卖场景的探索与应用">10 《交互式推荐在外卖场景的探索与应用》</h2>
+<p><strong>作�</strong>�：姬晨、亚成、王炜、成龙、姜飞、王聪、北海</p>
+<p><img src="https://p0.meituan.net/travelcube/42ee15539e72b70c4a8b4ee2c430e48d408157.jpg"></p>
+<p>外卖场景的用户停留时长低于传统电商，对用户实时需求的理解和反馈有更高的要求。针对业务问题，外卖推荐团队从2021年起开始持续投入，最终摸索出了一套适用于外卖场景的交互式推荐架构和策略，并取得了较好的收益。本文详细介绍外卖首页Feed在搭建交互式推荐时遇到的挑战和解决思路。<a href="https://tech.meituan.com/2023/02/17/interactive-recommendation-system-for-meituan-waimai.html">阅读全文</a></p>
+<h2 id="写在后面">写在后面</h2>
+<p>新年已至，一切都是新的开始。愿2024伙伴们幸福、平安、健康，事业有成。祝大家新年快乐！</p>
+<p>| 本文系美团技术团队出品，著作权归属美团。欢迎出于分享和交流等非商业目的转载或使用本文内容，敬请注明“内容转载自美团技术团队”。本文未经许可，不得进行商业性转载或者使用。任何商用行为，请发送邮件至tech@meituan.com申请授权。</p>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F">美团技术团队</a></li>
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F">美团技术团队</a></li>
+								
+								<li><a href="/tags/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93">年度总结</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'wfsui';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="">Wfsui theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div><script>feather.replace()</script>
+</body>
+</html>

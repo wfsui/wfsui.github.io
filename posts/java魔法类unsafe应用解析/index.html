@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Java魔法类：Unsafe应用解析 - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:url" content="https://wfsui.github.io/posts/java%E9%AD%94%E6%B3%95%E7%B1%BBunsafe%E5%BA%94%E7%94%A8%E8%A7%A3%E6%9E%90/">
+  <meta property="og:site_name" content="大峰哥">
+  <meta property="og:title" content="Java魔法类：Unsafe应用解析">
+  <meta property="og:description" content="前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
+注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
+基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
+public final class Unsafe { // 单例对象 private static final Unsafe theUnsafe; private Unsafe() { } @CallerSensitive public static Unsafe getUnsafe() { Class var0 = Reflection.">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-12T02:52:03+00:00">
+    <meta property="article:modified_time" content="2024-08-12T02:52:03+00:00">
+    <meta property="article:tag" content="收藏">
+    <meta property="article:tag" content="后台">
+    <meta property="article:tag" content="到店">
+    <meta property="article:tag" content="Java">
+    <meta property="article:tag" content="Sun.misc.Unsafe">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Java魔法类：Unsafe应用解析">
+  <meta name="twitter:description" content="前言 Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。
+注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。
+基本介绍 如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。
+public final class Unsafe { // 单例对象 private static final Unsafe theUnsafe; private Unsafe() { } @CallerSensitive public static Unsafe getUnsafe() { Class var0 = Reflection.">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://wfsui.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://wfsui.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<base href="https://wfsui.github.io/">
+	<h1 class="site-title"><a href="https://wfsui.github.io/">大峰哥</a></h1>
+	<div class="site-description"><h2>记录日常生活哦</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/wfsui" title="Github"><i data-feather="github"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">文章</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">Java魔法类：Unsafe应用解析</h1>
+			<div class="meta">Posted at &mdash; Aug 12, 2024</div>
+		</div>
+
+		<div class="markdown">
+			<h2 id="前言">前言</h2>
+<p>Unsafe是位于sun.misc包下的一个类，主要提供一些用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等，这些方法在提升Java运行效率、增强Java语言底层资源操作能力方面起到了很大的作用。但由于Unsafe类使Java语言拥有了类似C语言指针一样操作内存空间的能力，这无疑也增加了程序发生相关指针问题的风险。在程序中过度、不正确使用Unsafe类会使得程序出错的概率变大，使得Java这种安全的语言变得不再“安全”，因此对Unsafe的使用一定要慎重。</p>
+<p>注：本文对sun.misc.Unsafe公共API功能及相关应用场景进行介绍。</p>
+<h2 id="基本介绍">基本介绍</h2>
+<p>如下Unsafe源码所示，Unsafe类为一单例实现，提供静态方法getUnsafe获取Unsafe实例，当且仅当调用getUnsafe方法的类为引导类加载器所加载时才合法，否则抛出SecurityException异常。</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">final</span> <span style="color:#268bd2">class</span> <span style="color:#268bd2">Unsafe</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#586e75">// 单例对象</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">private</span> <span style="color:#268bd2">static</span> <span style="color:#268bd2">final</span> Unsafe theUnsafe;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">private</span> <span style="color:#268bd2">Unsafe</span>() {
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">@CallerSensitive</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#268bd2">public</span> <span style="color:#268bd2">static</span> Unsafe <span style="color:#268bd2">getUnsafe</span>() {
+</span></span><span style="display:flex;"><span>    Class var0 <span style="color:#719e07">=</span> Reflection.getCallerClass();
+</span></span><span style="display:flex;"><span>    <span style="color:#586e75">// 仅在引导类加载器`BootstrapClassLoader`加载时才合法</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">if</span>(<span style="color:#719e07">!</span>VM.isSystemDomainLoader(var0.getClassLoader())) {    
+</span></span><span style="display:flex;"><span>      <span style="color:#719e07">throw</span> <span style="color:#719e07">new</span> SecurityException(<span style="color:#2aa198">&#34;Unsafe&#34;</span>);
+</span></span><span style="display:flex;"><span>    } <span style="color:#719e07">else</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#719e07">return</span> theUnsafe;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>那如若想使用这个类，该如何获取其实例？有如下两个可行方案。</p>
+<p>其一，从<code>getUnsafe</code>方法的使用限制条件出发，通过Java命令行命令<code>-Xbootclasspath/a</code>把调用Unsafe相关方法的类A所在jar包路径追加到默认的bootstrap路径中，使得A被引导类加载器加载，从而通过<code>Unsafe.getUnsafe</code>方法安全的获取Unsafe实例。</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>java -Xbootclasspath/a: <span style="color:#2aa198">${</span><span style="color:#268bd2">path</span><span style="color:#2aa198">}</span>   // 其中path为调用Unsafe相关方法的类所在jar包路径 
+</span></span></code></pre></div><p>其二，通过反射获取单例对象theUnsafe。</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#268bd2">private</span> <span style="color:#268bd2">static</span> Unsafe <span style="color:#268bd2">reflectGetUnsafe</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#719e07">try</span> {
+</span></span><span style="display:flex;"><span>      Field field <span style="color:#719e07">=</span> Unsafe.class.getDeclaredField(<span style="color:#2aa198">&#34;theUnsafe&#34;</span>);
+</span></span><span style="display:flex;"><span>      field.setAccessible(<span style="color:#cb4b16">true</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#719e07">return</span> (Unsafe) field.get(<span style="color:#cb4b16">null</span>);
+</span></span><span style="display:flex;"><span>    } <span style="color:#719e07">catch</span> (Exception e) {
+</span></span><span style="display:flex;"><span>      log.error(e.getMessage(), e);
+</span></span><span style="display:flex;"><span>      <span style="color:#719e07">return</span> <span style="color:#cb4b16">null</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="功能介绍">功能介绍</h2>
+<p><img src="https://p1.meituan.net/travelcube/f182555953e29cec76497ebaec526fd1297846.png"></p>
+<p>如上图所示，Unsafe提供的API大致可分为内存操作、CAS、Class相关、对象操作、线程调度、系统信息获取、内存屏障、数组操作等几类，下面将对其相关方法和应用场景进行详细介绍。</p>
+<h3 id="内存操作">内存操作</h3>
+<p>这部分主要包含堆外内存的分配、拷贝、释放、给定地址值操作等方法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">//分配内存, 相当于C++的malloc函数</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">long</span> <span style="color:#268bd2">allocateMemory</span>(<span style="color:#dc322f">long</span> bytes);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//扩充内存</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">long</span> <span style="color:#268bd2">reallocateMemory</span>(<span style="color:#dc322f">long</span> address, <span style="color:#dc322f">long</span> bytes);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//释放内存</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">freeMemory</span>(<span style="color:#dc322f">long</span> address);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//在给定的内存块中设置值</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">setMemory</span>(Object o, <span style="color:#dc322f">long</span> offset, <span style="color:#dc322f">long</span> bytes, <span style="color:#dc322f">byte</span> value);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//内存拷贝</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">copyMemory</span>(Object srcBase, <span style="color:#dc322f">long</span> srcOffset, Object destBase, <span style="color:#dc322f">long</span> destOffset, <span style="color:#dc322f">long</span> bytes);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//获取给定地址值，忽略修饰限定符的访问限制。与此类似操作还有: getInt，getDouble，getLong，getChar等</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> Object <span style="color:#268bd2">getObject</span>(Object o, <span style="color:#dc322f">long</span> offset);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//为给定地址设置值，忽略修饰限定符的访问限制，与此类似操作还有: putInt,putDouble，putLong，putChar等</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">putObject</span>(Object o, <span style="color:#dc322f">long</span> offset, Object x);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//获取给定地址的byte类型的值（当且仅当该内存地址为allocateMemory分配时，此方法结果为确定的）</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">byte</span> <span style="color:#268bd2">getByte</span>(<span style="color:#dc322f">long</span> address);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//为给定地址设置byte类型的值（当且仅当该内存地址为allocateMemory分配时，此方法结果才是确定的）</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">putByte</span>(<span style="color:#dc322f">long</span> address, <span style="color:#dc322f">byte</span> x);
+</span></span></code></pre></div><p>通常，我们在Java中创建的对象都处于堆内内存（heap）中，堆内内存是由JVM所管控的Java进程内存，并且它们遵循JVM的内存管理机制，JVM会采用垃圾回收机制统一管理堆内存。与之相对的是堆外内存，存在于JVM管控之外的内存区域，Java中对堆外内存的操作，依赖于Unsafe提供的操作堆外内存的native方法。</p>
+<h4 id="使用堆外内存的原因">使用堆外内存的原因</h4>
+<ul>
+<li>对垃圾回收停顿的改善。由于堆外内存是直接受操作系统管理而不是JVM，所以当我们使用堆外内存时，即可保持较小的堆内内存规模。从而在GC时减少回收停顿对于应用的影响。</li>
+<li>提升程序I/O操作的性能。通常在I/O通信过程中，会存在堆内内存到堆外内存的数据拷贝操作，对于需要频繁进行内存间数据拷贝且生命周期较短的暂存数据，都建议存储到堆外内存。</li>
+</ul>
+<h4 id="典型应用">典型应用</h4>
+<p>DirectByteBuffer是Java用于实现堆外内存的一个重要类，通常用在通信过程中做缓冲池，如在Netty、MINA等NIO框架中应用广泛。DirectByteBuffer对于堆外内存的创建、使用、销毁等逻辑均由Unsafe提供的堆外内存API来实现。</p>
+<p>下图为DirectByteBuffer构造函数，创建DirectByteBuffer的时候，通过Unsafe.allocateMemory分配内存、Unsafe.setMemory进行内存初始化，而后构建Cleaner对象用于跟踪DirectByteBuffer对象的垃圾回收，以实现当DirectByteBuffer被垃圾回收时，分配的堆外内存一起被释放。</p>
+<p><img src="https://p0.meituan.net/travelcube/5eb082d2e4baf2d993ce75747fc35de6486751.png"></p>
+<p>那么如何通过构建垃圾回收追踪对象Cleaner实现堆外内存释放呢？</p>
+<p>Cleaner继承自Java四大引用类型之一的虚引用PhantomReference（众所周知，无法通过虚引用获取与之关联的对象实例，且当对象仅被虚引用引用时，在任何发生GC的时候，其均可被回收），通常PhantomReference与引用队列ReferenceQueue结合使用，可以实现虚引用关联对象被垃圾回收时能够进行系统通知、资源清理等功能。如下图所示，当某个被Cleaner引用的对象将被回收时，JVM垃圾收集器会将此对象的引用放入到对象引用中的pending链表中，等待Reference-Handler进行相关处理。其中，Reference-Handler为一个拥有最高优先级的守护线程，会循环不断的处理pending链表中的对象引用，执行Cleaner的clean方法进行相关清理工作。</p>
+<p><img src="https://p0.meituan.net/travelcube/9efac865a875c32cf570489332be5d0f131298.png"></p>
+<p>所以当DirectByteBuffer仅被Cleaner引用（即为虚引用）时，其可以在任意GC时段被回收。当DirectByteBuffer实例对象被回收时，在Reference-Handler线程操作中，会调用Cleaner的clean方法根据创建Cleaner时传入的Deallocator来进行堆外内存的释放。</p>
+<p><img src="https://p0.meituan.net/travelcube/66e616c6db18202578c561649facac8d387390.png"></p>
+<h3 id="cas相关">CAS相关</h3>
+<p>如下源代码释义所示，这部分主要为CAS相关操作的方法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75">	*  CAS
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75">  * @param o         包含要修改field的对象
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75">  * @param offset    对象中某field的偏移量
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75">  * @param expected  期望值
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75">  * @param update    更新值
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75">  * @return          true | false
+</span></span></span><span style="display:flex;"><span><span style="color:#586e75">  */</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">final</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">boolean</span> <span style="color:#268bd2">compareAndSwapObject</span>(Object o, <span style="color:#dc322f">long</span> offset,  Object expected, Object update);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">final</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">boolean</span> <span style="color:#268bd2">compareAndSwapInt</span>(Object o, <span style="color:#dc322f">long</span> offset, <span style="color:#dc322f">int</span> expected,<span style="color:#dc322f">int</span> update);
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">final</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">boolean</span> <span style="color:#268bd2">compareAndSwapLong</span>(Object o, <span style="color:#dc322f">long</span> offset, <span style="color:#dc322f">long</span> expected, <span style="color:#dc322f">long</span> update);
+</span></span></code></pre></div><p>什么是CAS? 即比较并替换，实现并发算法时常用到的一种技术。CAS操作包含三个操作数——内存位置、预期原值及新值。执行CAS操作的时候，将内存位置的值与预期原值比较，如果相匹配，那么处理器会自动将该位置值更新为新值，否则，处理器不做任何操作。我们都知道，CAS是一条CPU的原子指令（cmpxchg指令），不会造成所谓的数据不一致问题，Unsafe提供的CAS方法（如compareAndSwapXXX）底层实现即为CPU指令cmpxchg。</p>
+<h4 id="典型应用-1">典型应用</h4>
+<p>CAS在java.util.concurrent.atomic相关类、Java AQS、CurrentHashMap等实现上有非常广泛的应用。如下图所示，AtomicInteger的实现中，静态字段valueOffset即为字段value的内存偏移地址，valueOffset的值在AtomicInteger初始化时，在静态代码块中通过Unsafe的objectFieldOffset方法获取。在AtomicInteger中提供的线程安全方法中，通过字段valueOffset的值可以定位到AtomicInteger对象中value的内存地址，从而可以根据CAS实现对value字段的原子操作。</p>
+<p><img src="https://p1.meituan.net/travelcube/3bacb938ca6e63d6c79c2bb48d3f608f189412.png"></p>
+<p>下图为某个AtomicInteger对象自增操作前后的内存示意图，对象的基地址baseAddress=“0x110000”，通过baseAddress+valueOffset得到value的内存地址valueAddress=“0x11000c”；然后通过CAS进行原子性的更新操作，成功则返回，否则继续重试，直到更新成功为止。</p>
+<p><img src="https://p0.meituan.net/travelcube/6e8b1fe5d5993d17a4c5b69bb72ac51d89826.png"></p>
+<h3 id="线程调度">线程调度</h3>
+<p>这部分，包括线程挂起、恢复、锁机制等方法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//取消阻塞线程</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">unpark</span>(Object thread);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//阻塞线程</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">park</span>(<span style="color:#dc322f">boolean</span> isAbsolute, <span style="color:#dc322f">long</span> time);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//获得对象锁（可重入锁）</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">@Deprecated</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">monitorEnter</span>(Object o);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//释放对象锁</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">@Deprecated</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">monitorExit</span>(Object o);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//尝试获取对象锁</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">@Deprecated</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">boolean</span> <span style="color:#268bd2">tryMonitorEnter</span>(Object o);
+</span></span></code></pre></div><p>如上源码说明中，方法park、unpark即可实现线程的挂起与恢复，将一个线程进行挂起是通过park方法实现的，调用park方法后，线程将一直阻塞直到超时或者中断等条件出现；unpark可以终止一个挂起的线程，使其恢复正常。</p>
+<h4 id="典型应用-2">典型应用</h4>
+<p>Java锁和同步器框架的核心类AbstractQueuedSynchronizer，就是通过调用<code>LockSupport.park()</code>和<code>LockSupport.unpark()</code>实现线程的阻塞和唤醒的，而LockSupport的park、unpark方法实际是调用Unsafe的park、unpark方式来实现。</p>
+<h3 id="class相关">Class相关</h3>
+<p>此部分主要提供Class和它的静态字段的操作相关方法，包含静态字段内存定位、定义类、定义匿名类、检验&amp;确保初始化等。</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">//获取给定静态字段的内存地址偏移量，这个值对于给定的字段是唯一且固定不变的</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">long</span> <span style="color:#268bd2">staticFieldOffset</span>(Field f);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//获取一个静态类中给定字段的对象指针</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> Object <span style="color:#268bd2">staticFieldBase</span>(Field f);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//判断是否需要初始化一个类，通常在获取一个类的静态属性的时候（因为一个类如果没初始化，它的静态属性也不会初始化）使用。 当且仅当ensureClassInitialized方法不生效时返回false。</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">boolean</span> <span style="color:#268bd2">shouldBeInitialized</span>(Class<span style="color:#719e07">&lt;?&gt;</span> c);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//检测给定的类是否已经初始化。通常在获取一个类的静态属性的时候（因为一个类如果没初始化，它的静态属性也不会初始化）使用。</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">ensureClassInitialized</span>(Class<span style="color:#719e07">&lt;?&gt;</span> c);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//定义一个类，此方法会跳过JVM的所有安全检查，默认情况下，ClassLoader（类加载器）和ProtectionDomain（保护域）实例来源于调用者</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> Class<span style="color:#719e07">&lt;?&gt;</span> defineClass(String name, <span style="color:#dc322f">byte</span><span style="color:#719e07">[]</span> b, <span style="color:#dc322f">int</span> off, <span style="color:#dc322f">int</span> len, ClassLoader loader, ProtectionDomain protectionDomain);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//定义一个匿名类</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> Class<span style="color:#719e07">&lt;?&gt;</span> defineAnonymousClass(Class<span style="color:#719e07">&lt;?&gt;</span> hostClass, <span style="color:#dc322f">byte</span><span style="color:#719e07">[]</span> data, Object<span style="color:#719e07">[]</span> cpPatches);
+</span></span></code></pre></div><h4 id="典型应用-3">典型应用</h4>
+<p>从Java 8开始，JDK使用invokedynamic及VM Anonymous Class结合来实现Java语言层面上的Lambda表达式。</p>
+<ul>
+<li><strong>invokedynamic</strong>： invokedynamic是Java 7为了实现在JVM上运行动态语言而引入的一条新的虚拟机指令，它可以实现在运行期动态解析出调用点限定符所引用的方法，然后再执行该方法，invokedynamic指令的分派逻辑是由用户设定的引导方法决定。</li>
+<li><strong>VM Anonymous Class</strong>：可以看做是一种模板机制，针对于程序动态生成很多结构相同、仅若干常量不同的类时，可以先创建包含常量占位符的模板类，而后通过Unsafe.defineAnonymousClass方法定义具体类时填充模板的占位符生成具体的匿名类。生成的匿名类不显式挂在任何ClassLoader下面，只要当该类没有存在的实例对象、且没有强引用来引用该类的Class对象时，该类就会被GC回收。故而VM Anonymous Class相比于Java语言层面的匿名内部类无需通过ClassClassLoader进行类加载且更易回收。</li>
+</ul>
+<p>在Lambda表达式实现中，通过invokedynamic指令调用引导方法生成调用点，在此过程中，会通过ASM动态生成字节码，而后利用Unsafe的defineAnonymousClass方法定义实现相应的函数式接口的匿名类，然后再实例化此匿名类，并返回与此匿名类中函数式方法的方法句柄关联的调用点；而后可以通过此调用点实现调用相应Lambda表达式定义逻辑的功能。下面以如下图所示的Test类来举例说明。</p>
+<p><img src="https://p0.meituan.net/travelcube/7707d035eb5f04314b3684ff91dddb1663516.png"></p>
+<p>Test类编译后的class文件反编译后的结果如下图一所示（删除了对本文说明无意义的部分），我们可以从中看到main方法的指令实现、invokedynamic指令调用的引导方法BootstrapMethods、及静态方法<code>lambda$main$0</code>（实现了Lambda表达式中字符串打印逻辑）等。在引导方法执行过程中，会通过Unsafe.defineAnonymousClass生成如下图二所示的实现Consumer接口的匿名类。其中，accept方法通过调用Test类中的静态方法<code>lambda$main$0</code>来实现Lambda表达式中定义的逻辑。而后执行语句<code>consumer.accept（&quot;lambda&quot;）</code>其实就是调用下图二所示的匿名类的accept方法。</p>
+<p><img src="https://p1.meituan.net/travelcube/1038d53959701093db6c655e4a342e30456249.png"></p>
+<h3 id="对象操作">对象操作</h3>
+<p>此部分主要包含对象成员属性相关操作及非常规的对象实例化方式等相关方法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">//返回对象成员属性在内存地址相对于此对象的内存地址的偏移量</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">long</span> <span style="color:#268bd2">objectFieldOffset</span>(Field f);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//获得给定对象的指定地址偏移量的值，与此类似操作还有：getInt，getDouble，getLong，getChar等</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> Object <span style="color:#268bd2">getObject</span>(Object o, <span style="color:#dc322f">long</span> offset);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//给定对象的指定地址偏移量设值，与此类似操作还有：putInt，putDouble，putLong，putChar等</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">putObject</span>(Object o, <span style="color:#dc322f">long</span> offset, Object x);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//从对象的指定偏移量处获取变量的引用，使用volatile的加载语义</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> Object <span style="color:#268bd2">getObjectVolatile</span>(Object o, <span style="color:#dc322f">long</span> offset);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//存储变量的引用到对象的指定的偏移量处，使用volatile的存储语义</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">putObjectVolatile</span>(Object o, <span style="color:#dc322f">long</span> offset, Object x);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//有序、延迟版本的putObjectVolatile方法，不保证值的改变被其他线程立即看到。只有在field被volatile修饰符修饰时有效</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">putOrderedObject</span>(Object o, <span style="color:#dc322f">long</span> offset, Object x);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//绕过构造方法、初始化代码来创建对象</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> Object <span style="color:#268bd2">allocateInstance</span>(Class<span style="color:#719e07">&lt;?&gt;</span> cls) <span style="color:#268bd2">throws</span> InstantiationException;
+</span></span></code></pre></div><h4 id="典型应用-4">典型应用</h4>
+<ul>
+<li><strong>常规对象实例化方式</strong>：我们通常所用到的创建对象的方式，从本质上来讲，都是通过new机制来实现对象的创建。但是，new机制有个特点就是当类只提供有参的构造函数且无显示声明无参构造函数时，则必须使用有参构造函数进行对象构造，而使用有参构造函数时，必须传递相应个数的参数才能完成对象实例化。</li>
+<li><strong>非常规的实例化方式</strong>：而Unsafe中提供allocateInstance方法，仅通过Class对象就可以创建此类的实例对象，而且不需要调用其构造函数、初始化代码、JVM安全检查等。它抑制修饰符检测，也就是即使构造器是private修饰的也能通过此方法实例化，只需提类对象即可创建相应的对象。由于这种特性，allocateInstance在java.lang.invoke、Objenesis（提供绕过类构造器的对象生成方式）、Gson（反序列化时用到）中都有相应的应用。</li>
+</ul>
+<p>如下图所示，在Gson反序列化时，如果类有默认构造函数，则通过反射调用默认构造函数创建实例，否则通过UnsafeAllocator来实现对象实例的构造，UnsafeAllocator通过调用Unsafe的allocateInstance实现对象的实例化，保证在目标类无默认构造函数时，反序列化不够影响。</p>
+<p><img src="https://p1.meituan.net/travelcube/b9fe6ab772d03f30cd48009920d56948514676.png"></p>
+<h3 id="数组相关">数组相关</h3>
+<p>这部分主要介绍与数据操作相关的arrayBaseOffset与arrayIndexScale这两个方法，两者配合起来使用，即可定位数组中每个元素在内存中的位置。</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">//返回数组中第一个元素的偏移地址</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">int</span> <span style="color:#268bd2">arrayBaseOffset</span>(Class<span style="color:#719e07">&lt;?&gt;</span> arrayClass);
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//返回数组中一个元素占用的大小</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">int</span> <span style="color:#268bd2">arrayIndexScale</span>(Class<span style="color:#719e07">&lt;?&gt;</span> arrayClass);
+</span></span></code></pre></div><h4 id="典型应用-5">典型应用</h4>
+<p>这两个与数据操作相关的方法，在java.util.concurrent.atomic 包下的AtomicIntegerArray（可以实现对Integer数组中每个元素的原子性操作）中有典型的应用，如下图AtomicIntegerArray源码所示，通过Unsafe的arrayBaseOffset、arrayIndexScale分别获取数组首元素的偏移地址base及单个元素大小因子scale。后续相关原子性操作，均依赖于这两个值进行数组中元素的定位，如下图二所示的getAndAdd方法即通过checkedByteOffset方法获取某数组元素的偏移地址，而后通过CAS实现原子性操作。</p>
+<p><img src="https://p0.meituan.net/travelcube/160366b0fb2079ad897f6d6b1cb349cd426237.png"></p>
+<h3 id="内存屏障">内存屏障</h3>
+<p>在Java 8中引入，用于定义内存屏障（也称内存栅栏，内存栅障，屏障指令等，是一类同步屏障指令，是CPU或编译器在对内存随机访问的操作中的一个同步点，使得此点之前的所有读写操作都执行后才可以开始执行此点之后的操作），避免代码重排序。</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">//内存屏障，禁止load操作重排序。屏障前的load操作不能被重排序到屏障后，屏障后的load操作不能被重排序到屏障前</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">loadFence</span>();
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//内存屏障，禁止store操作重排序。屏障前的store操作不能被重排序到屏障后，屏障后的store操作不能被重排序到屏障前</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">storeFence</span>();
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//内存屏障，禁止load、store操作重排序</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">void</span> <span style="color:#268bd2">fullFence</span>();
+</span></span></code></pre></div><h4 id="典型应用-6">典型应用</h4>
+<p>在Java 8中引入了一种锁的新机制——StampedLock，它可以看成是读写锁的一个改进版本。StampedLock提供了一种乐观读锁的实现，这种乐观读锁类似于无锁的操作，完全不会阻塞写线程获取写锁，从而缓解读多写少时写线程“饥饿”现象。由于StampedLock提供的乐观读锁不阻塞写线程获取读锁，当线程共享变量从主内存load到线程工作内存时，会存在数据不一致问题，所以当使用StampedLock的乐观读锁时，需要遵从如下图用例中使用的模式来确保数据的一致性。</p>
+<p><img src="https://p1.meituan.net/travelcube/839ad79686d06583296f3abf1bec27e3320222.png"></p>
+<p>如上图用例所示计算坐标点Point对象，包含点移动方法move及计算此点到原点的距离的方法distanceFromOrigin。在方法distanceFromOrigin中，首先，通过tryOptimisticRead方法获取乐观读标记；然后从主内存中加载点的坐标值 (x,y)；而后通过StampedLock的validate方法校验锁状态，判断坐标点(x,y)从主内存加载到线程工作内存过程中，主内存的值是否已被其他线程通过move方法修改，如果validate返回值为true，证明(x, y)的值未被修改，可参与后续计算；否则，需加悲观读锁，再次从主内存加载(x,y)的最新值，然后再进行距离计算。其中，校验锁状态这步操作至关重要，需要判断锁状态是否发生改变，从而判断之前copy到线程工作内存中的值是否与主内存的值存在不一致。</p>
+<p>下图为StampedLock.validate方法的源码实现，通过锁标记与相关常量进行位运算、比较来校验锁状态，在校验逻辑之前，会通过Unsafe的loadFence方法加入一个load内存屏障，目的是避免上图用例中步骤②和StampedLock.validate中锁状态校验运算发生重排序导致锁状态校验不准确的问题。</p>
+<p><img src="https://p0.meituan.net/travelcube/256f54b037d07df53408b5eea9436b34135955.png"></p>
+<h3 id="系统相关">系统相关</h3>
+<p>这部分包含两个获取系统相关信息的方法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#586e75">//返回系统指针的大小。返回值为4（32位系统）或 8（64位系统）。</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">int</span> <span style="color:#268bd2">addressSize</span>();  
+</span></span><span style="display:flex;"><span><span style="color:#586e75">//内存页的大小，此值为2的幂次方。</span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">public</span> <span style="color:#268bd2">native</span> <span style="color:#dc322f">int</span> <span style="color:#268bd2">pageSize</span>();
+</span></span></code></pre></div><h4 id="典型应用-7">典型应用</h4>
+<p>如下图所示的代码片段，为java.nio下的工具类Bits中计算待申请内存所需内存页数量的静态方法，其依赖于Unsafe中pageSize方法获取系统内存页大小实现后续计算逻辑。</p>
+<p><img src="https://p0.meituan.net/travelcube/262470b0c3e79b8f4f7b0c0280b1cc5362454.png"></p>
+<h2 id="结语">结语</h2>
+<p>本文对Java中的sun.misc.Unsafe的用法及应用场景进行了基本介绍，我们可以看到Unsafe提供了很多便捷、有趣的API方法。即便如此，由于Unsafe中包含大量自主操作内存的方法，如若使用不当，会对程序带来许多不可控的灾难。因此对它的使用我们需要慎之又慎。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="http://hg.openjdk.java.net/jdk7/jdk7/jdk/file/9b8c96f96a0f/src/share/classes/sun/misc/Unsafe.java">OpenJDK Unsafe source</a></li>
+<li><a href="http://mishadoff.com/blog/java-magic-part-4-sun-dot-misc-dot-unsafe">Java Magic. Part 4: sun.misc.Unsafe</a></li>
+<li><a href="https://www.zhihu.com/question/51132462">JVM crashes at libjvm.so</a></li>
+<li><a href="https://www.cnblogs.com/throwable/p/9139947.html">Java中神奇的双刃剑–Unsafe</a></li>
+<li><a href="http://lovestblog.cn/blog/2015/05/12/direct-buffer/">JVM源码分析之堆外内存完全解读</a></li>
+<li><a href="https://www.jianshu.com/p/007052ee3773">堆外内存 之 DirectByteBuffer 详解</a></li>
+<li>《深入理解Java虚拟机（第2版）》</li>
+</ul>
+<h2 id="作者简介">作者简介</h2>
+<ul>
+<li>璐璐，美团点评Java开发工程师。2017年加入美团点评，负责美团点评境内度假的后端开发。</li>
+</ul>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/%E6%94%B6%E8%97%8F">收藏</a></li>
+								
+								<li><a href="/tags/%E5%90%8E%E5%8F%B0">后台</a></li>
+								
+								<li><a href="/tags/%E5%88%B0%E5%BA%97">到店</a></li>
+								
+								<li><a href="/tags/java">Java</a></li>
+								
+								<li><a href="/tags/sun.misc.unsafe">sun.misc.Unsafe</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'wfsui';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="">Wfsui theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div><script>feather.replace()</script>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>深入理解函数式编程（下） - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:url" content="https://wfsui.github.io/posts/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8B/">
+  <meta property="og:site_name" content="大峰哥">
+  <meta property="og:title" content="深入理解函数式编程（下）">
+  <meta property="og:description" content="1. 前文回顾 在上篇中，我们分析了函数式编程的起源和基本特性，并通过每一个特性的示例来演示这种特性的实际效果。首先，函数式编程起源于数理逻辑，起源于λ演算，这是一种演算法，它定义一些基础的数据结构，然后通过归约和代换来实现更复杂的数据结构，而函数本身也是它的一种数据。其次，我们探讨了很多函数式编程的特性，比如：
+First Class 纯函数 引用透明 表达式 高阶函数 柯里化 函数组合 point-free … 但我们也指出了一个实际问题：不能处理副作用的程序是毫无意义的。我们的计算机程序随时都在产生副作用。我们程序里面有大量的网络请求、多媒体输入输出、内部状态、全局状态等，甚至在提倡“碳中和”的今天，电脑的发热量也是一个不容小觑的副作用。那么我们应该如何处理这些问题呢？
+2. 本文简介 本文通过深入函数式编程的副作用处理及实际应用场景，提供一个学习和使用函数式编程的视角给读者。一方面，这种副作用管理方式是一种高级的抽象形式，不易理解；另一方面，我们在学习和使用函数式编程的过程中，几乎都会遇到类似的副作用问题需要解决，能否解决这个问题也决定了一门函数式编程语言最终是否能走上成功。
+本文主要分为三个部分：
+副作用处理方式 函数式编程的应用 函数式编程的优缺点比较 3.">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-03-21T02:45:49+00:00">
+    <meta property="article:modified_time" content="2023-03-21T02:45:49+00:00">
+    <meta property="article:tag" content="美团技术团队">
+    <meta property="article:tag" content="到家">
+    <meta property="article:tag" content="前端">
+    <meta property="article:tag" content="函数式编程">
+    <meta property="article:tag" content="JavaScript">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="深入理解函数式编程（下）">
+  <meta name="twitter:description" content="1. 前文回顾 在上篇中，我们分析了函数式编程的起源和基本特性，并通过每一个特性的示例来演示这种特性的实际效果。首先，函数式编程起源于数理逻辑，起源于λ演算，这是一种演算法，它定义一些基础的数据结构，然后通过归约和代换来实现更复杂的数据结构，而函数本身也是它的一种数据。其次，我们探讨了很多函数式编程的特性，比如：
+First Class 纯函数 引用透明 表达式 高阶函数 柯里化 函数组合 point-free … 但我们也指出了一个实际问题：不能处理副作用的程序是毫无意义的。我们的计算机程序随时都在产生副作用。我们程序里面有大量的网络请求、多媒体输入输出、内部状态、全局状态等，甚至在提倡“碳中和”的今天，电脑的发热量也是一个不容小觑的副作用。那么我们应该如何处理这些问题呢？
+2. 本文简介 本文通过深入函数式编程的副作用处理及实际应用场景，提供一个学习和使用函数式编程的视角给读者。一方面，这种副作用管理方式是一种高级的抽象形式，不易理解；另一方面，我们在学习和使用函数式编程的过程中，几乎都会遇到类似的副作用问题需要解决，能否解决这个问题也决定了一门函数式编程语言最终是否能走上成功。
+本文主要分为三个部分：
+副作用处理方式 函数式编程的应用 函数式编程的优缺点比较 3.">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://wfsui.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://wfsui.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<base href="https://wfsui.github.io/">
+	<h1 class="site-title"><a href="https://wfsui.github.io/">大峰哥</a></h1>
+	<div class="site-description"><h2>记录日常生活哦</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/wfsui" title="Github"><i data-feather="github"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">文章</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">深入理解函数式编程（下）</h1>
+			<div class="meta">Posted at &mdash; Mar 21, 2023</div>
+		</div>
+
+		<div class="markdown">
+			<h2 id="1-前文回顾">1. 前文回顾</h2>
+<p>在上篇中，我们分析了函数式编程的起源和基本特性，并通过每一个特性的示例来演示这种特性的实际效果。首先，函数式编程起源于数理逻辑，起源于<strong>λ演算</strong>，这是一种演算法，它定义一些基础的数据结构，然后通过归约和代换来实现更复杂的数据结构，而函数本身也是它的一种数据。其次，我们探讨了很多函数式编程的特性，比如：</p>
+<ul>
+<li>First Class</li>
+<li>纯函数</li>
+<li>引用透明</li>
+<li>表达式</li>
+<li>高阶函数</li>
+<li>柯里化</li>
+<li>函数组合</li>
+<li>point-free</li>
+<li>…</li>
+</ul>
+<p>但我们也指出了一个实际问题：不能处理副作用的程序是毫无意义的。我们的计算机程序随时都在产生副作用。我们程序里面有大量的网络请求、多媒体输入输出、内部状态、全局状态等，甚至在提倡“碳中和”的今天，电脑的发热量也是一个不容小觑的副作用。那么我们应该如何处理这些问题呢？</p>
+<h2 id="2-本文简介">2. 本文简介</h2>
+<p>本文通过深入函数式编程的副作用处理及实际应用场景，提供一个学习和使用函数式编程的视角给读者。一方面，这种副作用管理方式是一种高级的抽象形式，不易理解；另一方面，我们在学习和使用函数式编程的过程中，几乎都会遇到类似的副作用问题需要解决，能否解决这个问题也决定了一门函数式编程语言最终是否能走上成功。</p>
+<p>本文主要分为三个部分：</p>
+<ul>
+<li>副作用处理方式</li>
+<li>函数式编程的应用</li>
+<li>函数式编程的优缺点比较</li>
+</ul>
+<h2 id="3-副作用处理单子monad一种不可避免的抽象">3. 副作用处理：单子Monad，一种不可避免的抽象</h2>
+<p>上面说的，都是最基础的JavaScript概念+函数式编程概念。但我们还留了一个“坑”。</p>
+<p><strong>如何去处理IO操作？</strong></p>
+<p>我们的代码经常在和副作用打交道，如果要满足纯函数的要求，几乎连一个需求都完成不了。不用急，我们来看一下React Hooks。React Hooks的设计是很巧妙的，以useEffect为例：</p>
+<p><img alt="图 43" src="https://p0.meituan.net/travelcube/239feb42c21a3e310b9bf6cf9502aab788349.png"></p>
+<p>在函数组件中，useState用来产生状态，在使用useEffect的时候，我们需要挂载这个state到第二个参数，而第一个参数给到的运行函数在state变更的时候被调用，被调用时得到最新的state。</p>
+<p>这里面有一个状态转换：</p>
+<p><img alt="图 44" src="https://p1.meituan.net/travelcube/ba794e5729f24ed8c03b202d824f19d466196.png"></p>
+<p>React Hooks给我们的启发是，副作用都被放到一个状态节点里面去被动触发，行程一个单向的数据流动。而实际上，函数式编程语言确实也是这么做的，把副作用包裹到一个特殊的函数里面。</p>
+<p>如果一个函数既包含了我们的值，又封装了值的统一操作，使得我们可以在它限定的范围内进行任意运算，那么，我们称这种函数类型为Monad。Monad是一种高级别的思维抽象。</p>
+<h3 id="31-什么是monad">3.1 什么是Monad？</h3>
+<p>先思考一个问题，下面两个定义有什么区别？</p>
+<p><img alt="图 45" src="https://p1.meituan.net/travelcube/263b593fcaaafe9566e6b6c1bf585c7195381.png"></p>
+<p><strong>num1</strong>是数字类型，而<strong>num2</strong>是对象类型，这是一个直观的区别。</p>
+<p>不过，不仅仅如此。利用类型，我们可以做更多的事。因为作为数字的<strong>num1</strong>是支持加减乘除运算的，而<strong>num2</strong>却不行，必须要把它视为一个对象{val: 2}，并通过属性访问符<strong>num2.val</strong>才能进行计算<strong>num2.val + 2</strong>。但我们知道，函数式编程是不能改变状态的，现在为了计算<strong>num2.val</strong>被改变了，这不是我们期望的，并且我们使用属性操作符去读数据，更像是在操作对象，而不是操作函数，这与我们的初衷有所背离。</p>
+<p>现在我们把<strong>num2</strong>当作一个独立的数据，并假设存在一个方法<strong>fmap</strong>可以操作这个数据，可能是这样的。</p>
+<p><img alt="图 46" src="https://p0.meituan.net/travelcube/647d09282725da9794b58d2890dfc391121073.png"></p>
+<p>得到的还是对象，但操作通过一个纯函数<strong>addOne</strong>去实现了。</p>
+<p>上面这个例子里面的<strong>Num</strong>，实际上就是一个最简单的<strong>Monad</strong>，而<strong>fmap</strong>是属于<strong>Functor（函子）<strong>的概念。我们说函数就是从一个数据到另一个数据的映射，这里的fmap就是一个映射函数，在范畴论里面叫做</strong>态射</strong>（后面讲解）。</p>
+<p>由于有一个包裹的过程，很多人会把<strong>Monad</strong>看作是一个盒子类型。但<strong>Monad</strong>不仅是一个盒子的概念，它还需要满足一些特定的运算规律（后面涉及）。</p>
+<p>但是我们直接使用数字的加减乘除不行吗？为什么一定要<strong>Monad</strong>类型？</p>
+<p>首先，<strong>fmap</strong>的目的是把数据从一个类型映射到另一个类型，而JavaScript里面的<strong>map</strong>函数实际上就是这个功能。</p>
+<p><img alt="图 47" src="https://p0.meituan.net/travelcube/92b79c1b1e1bc5692cdbc5545b90b47a66528.png"></p>
+<p>我们可以认为<strong>Array</strong>就是一个<strong>Monad</strong>实现，<strong>map</strong>把<strong>Array&lt; T &gt;<strong>类型映射到</strong>Array&lt; K &gt;<strong>类型，操作仍然在数组范畴，数组的值被映射为新的值。 如果用</strong>TypeScript</strong>来表示，会不会更清晰一点？</p>
+<p><img alt="图 48" src="https://p1.meituan.net/travelcube/2d576dc89c0cc309869b378e068d0bf5197176.png"></p>
+<p>看起来<strong>Monad</strong>只是一个实现了<strong>fmap</strong>的对象（<strong>Functor</strong>类型，mappable接口）而已。但<strong>Monad</strong>类型不仅是一个<strong>Functor</strong>，它还有很多其他的工具函数，比如：</p>
+<ul>
+<li>bind函数</li>
+<li>flatMap函数</li>
+<li>liftM函数</li>
+</ul>
+<p>这些概念在学习Haskell时可以遇到，本文不作过多提及。这些额外的函数可以帮助我们操作被封装起来的值。</p>
+<h3 id="32-范畴群幺半群">3.2 范畴、群、幺半群</h3>
+<p>范畴论是一种研究抽象数学形式的科学，它把我们的数学世界抽象为两个概念：</p>
+<ul>
+<li>对象</li>
+<li>态射</li>
+</ul>
+<p>为什么说这是一种<strong>形式</strong>上的抽象呢？因为很多数学的概念都可以被这种形式所描述，比如集合，对集合范畴来说，一个集合就是一个范畴对象，从集合A到集合B的映射就是集合的态射，再细化一点，整数集合到整数集合的加减乘操作构成了整数集合的态射（除法会产生整数集合无法表示的数字，因此这里排除了除法）。又比如，三角形可以被代数表示，也可以用几何表示、向量表示，从代数表示到几何表示的运算就可以视为三角形范畴的一种态射。</p>
+<p>总之，<strong>对象描述了一个范畴中的元素，而态射描述了针对这些元素的操作</strong>。范畴论不仅可以应用到数学科学里面，在其他科学里面也有一些应用，实际上，范畴论就是我们描述客观世界的一种方式（抽象形式）。</p>
+<p><img alt="图 49" src="https://p0.meituan.net/travelcube/2e26eef140beb7da65e8c03fce77b8d6159125.png"></p>
+<p>相对应的，<strong>函子就是描述一个范畴对象和另一个范畴对象间关系的态射</strong>，具体到编程语言中，函子是一个帮助我们映射一个范畴元素（比如<strong>Monad</strong>）到另一个范畴元素的函数。</p>
+<p><strong>群论（Group）<strong>研究的是</strong>群</strong>这种代数结构，怎么去理解群呢？比如一个三角形有三个顶点<strong>A/B/C</strong>，那么我们可以表示一个三角形为<strong>ABC</strong>或者<strong>ACB</strong>，三角形还是这个三角形，但是从<strong>ABC</strong>到<strong>ACB</strong>一定是经过了某种变换。这就像范畴论，三角形的表示是范畴对象，而一个三角形的表示变换到另一个形式，就是范畴的态射。而我们说这些三角形表示方式的集合为一个<strong>群</strong>。<strong>群论主要是研究变换关系</strong>，群又可以分为很多种类，也有很多规律特性，这不在本文研究范围之内，读者可以自行学习相关内容。</p>
+<p><strong>科学解释一个Monad为自函子范畴上的幺半群</strong>。如果没有学习群论和范畴论的话，我们是很难理解这个解释的。</p>
+<p><img alt="图 50" src="https://p0.meituan.net/travelcube/6d9a62591dd98d9d796c8bd33cec6984164664.png"></p>
+<p>简单来说先固定一个正方形abcd，它和它的几何变换方式（旋转/逆时针旋转/对称/中心对称等）形成的其他正方形一起构成一个群。从这个角度来说，群研究的事物是同一类，只是性质稍有不一样（态射后）。</p>
+<p>另外一个理解群的概念就是<strong>自然数（构成一个群）和加法（群的二元运算，且满足结合律，半群）</strong>。</p>
+<p><img alt="图 51" src="https://p0.meituan.net/travelcube/e5a239f020906c1c92eec118ff15fe43141384.png"></p>
+<p>到此，我们可以理解<strong>Monad</strong>为：</p>
+<ol>
+<li>满足自函子运算（从A范畴态射到A范畴，fmap是在自己空间做映射）。</li>
+<li>满足含幺半群的结合律。</li>
+</ol>
+<p>很多函数式编程里面都会实现一个<strong>Identity</strong>函数，实际就是一个幺元素。比如<strong>JavaScript</strong>中对<strong>Just</strong>满足二元结合律可以这么操作：</p>
+<p><img alt="图 52" src="https://p0.meituan.net/travelcube/3d19238d3b09efe88c3e3b07e99147a7132172.png"></p>
+<h3 id="33-monad范畴定律折叠和链">3.3 Monad范畴：定律、折叠和链</h3>
+<p>我们要在一个更大的空间上讨论这个范畴对象（Monad）。就像Number封装了数字类型，Monad也封装了一些类型。</p>
+<p><img alt="图 53" src="https://p0.meituan.net/travelcube/a58e08637eda81d58f46e9c8ceda668d128344.png"></p>
+<p><strong>Monad</strong>需要满足一些定律：</p>
+<ul>
+<li><strong>结合律</strong>：比如a · b · c = a · (b · c)。</li>
+<li><strong>幺元</strong>：比如a · e = e · a = a。</li>
+</ul>
+<p>一旦定义了<strong>Monad</strong>为一类对象，<strong>fmap</strong>为针对这种对象的操作，那么定律我们可以很容易证明：</p>
+<p><img alt="图 54" src="https://p0.meituan.net/travelcube/578a698cbae1dc4c707499ce4e176852283619.png"></p>
+<p>我们可以通过<strong>Monad Just</strong>上挂载的操作来对数据进行计算，这些运算是限定在了<strong>Just</strong>上的，也就是说你只能得到**Just(..)**类型。要获取原始数据，可以基于这个定义一个fold方法。</p>
+<p><img alt="图 55" src="https://p0.meituan.net/travelcube/55cfd041f87e363f70c89fad8b63d628229415.png"></p>
+<p><strong>fold</strong>（折叠，对应能力我们称为foldable）的意义在于你可以将数据从一个特定范畴映射到你的常用范畴，比如面向对象语言的toString方法，就是把数据从对象域转换到字符串域。</p>
+<blockquote>
+<p>JavaScript中的Array.prototype.reduce其实就是一个fold函数，它把数据从Array范畴映射到其他范畴。</p>
+</blockquote>
+<p>一旦数据类型被我们锁定在了Monad空间（范畴），那我们就可以在这个范畴内连续调用fmap（或者其他这个空间的函数）来进行值操作，这样我们就可以<strong>链式处理</strong>我们的数据。</p>
+<p><img alt="图 56" src="https://p1.meituan.net/travelcube/5abaaf5786fbb5b10de57dd1da1f555d97448.png"></p>
+<h3 id="34-maybe和either">3.4 Maybe和Either</h3>
+<p>有了<strong>Just</strong>的概念，我们再来学习一些新的<strong>Monad</strong>概念。比如<strong>Nothing</strong>。</p>
+<p><img alt="图 57" src="https://p0.meituan.net/travelcube/7afe17c551e0d0e719e3d2dfbf9880d7140407.png"></p>
+<p><strong>Nothing</strong>表示在<strong>Monad</strong>范畴上没有的值。和<strong>Just</strong>一起正好描述了所有的数据情况，合称为<strong>Maybe</strong>，我们的<strong>Maybe Monad</strong>要么是<strong>Just</strong>，要么是<strong>Nothing</strong>。这有什么意义呢？</p>
+<p>其实这就是模拟了其他范畴内的“有”和“无”的概念，方便我们模拟其他编程范式的空值操作。比如：</p>
+<p><img alt="图 58" src="https://p1.meituan.net/travelcube/c77f49051765ed231179b4596ba4858998585.png"></p>
+<p>这种情况下我们需要去判断<strong>x</strong>和<strong>y</strong>是否为空。在<strong>Monad</strong>空间中，这种情况就很好表示：</p>
+<p><img alt="图 59" src="https://p1.meituan.net/travelcube/ef898f44f2f78f0c4418b962b87ca2f7185437.png"></p>
+<p>我们在<strong>Monad</strong>空间中消除了烦人的!== null判断，甚至消除了三元运算符。一切都只有函数。实际使用中一个<strong>Maybe</strong>要么是<strong>Just</strong>要么是<strong>Nothing</strong>。因此，这里用**Maybe(..)**构造可能让我们难以理解。</p>
+<p>如果非要理解的话，可以理解<strong>Maybe</strong>为<strong>Nothing</strong>和<strong>Just</strong>的抽象类，<strong>Just</strong>和<strong>Nothing</strong>构成这个抽象类的两个实现。实际在函数式编程语言实现中，<strong>Maybe</strong>确实只是一个类型（称为代数类型），具体的一个值有具体类型<strong>Just</strong>或<strong>Nothing</strong>，就像数字可以分为有理数和无理数一样。</p>
+<p>除了这种值存在与否的判断，我们的程序还有一些分支结构的方式，因此我们来看一下在<strong>Monad</strong>空间中，分支情况怎么去模拟？</p>
+<p><img alt="图 60" src="https://p0.meituan.net/travelcube/136599e0d6f721d9d6c530a2a9cdb9fb96732.png"></p>
+<p>假设我们有一个代数类型<strong>Either</strong>，<strong>Left</strong>和<strong>Right</strong>分别表示当数据为错误和数据为正确情况下的逻辑。</p>
+<p><img alt="图 61" src="https://p0.meituan.net/travelcube/76ae7272bf3980a06d3ff2458f5f5413265260.png"></p>
+<p>这样，我们就可以使用“函数”来替代分支了。这里的<strong>Either</strong>实现比较粗糙，因为<strong>Either</strong>类型应该只在<strong>Monad</strong>空间。这里加入了布尔常量的判断，目的是好理解一些。其他的编程语言特性，在函数式编程中也能找到对应的影子，比如循环结构，我们往往使用函数递归来实现。</p>
+<h3 id="35-io的处理方式">3.5 IO的处理方式</h3>
+<p>终于到<strong>IO</strong>了，如果不能处理好<strong>IO</strong>，我们的程序是不健全的。到目前为止，我们的<strong>Monad</strong>都是针对数据的。这句话对也不对，因为函数也是一种数据（函数是第一公民）。我们先让<strong>Monad Just</strong>能存储函数。</p>
+<p><img alt="图 62" src="https://p0.meituan.net/travelcube/f24fff28b932573b687dccf1bebae6c0260345.png"></p>
+<p>你可以想象为<strong>Just</strong>增加了一个抽象类实现，这个抽象类为：</p>
+<p><img alt="图 63" src="https://p0.meituan.net/travelcube/8995a5b58c528376eab226337993251492666.png"></p>
+<p>这个抽象类我们称为“应用函子”，它可以保存一个函数作为内部值，并且使用<strong>apply</strong>方法可以把这个函数作用到另一个<strong>Monad</strong>上。到这里，我们完全可以把Monad之间的各种操作（接口，比如<strong>fmap</strong>和<strong>apply</strong>）视为契约，也就是数学上的态射。</p>
+<p>现在，如果我们有一个单子叫<strong>IO</strong>，并且它有如下表现：</p>
+<p><img alt="图 64" src="https://p0.meituan.net/travelcube/694567b7cfd7d3522b9030bbfd6a9921189046.png"></p>
+<p>我们把这种类型的<strong>Monad</strong>称为<strong>IO</strong>，我们在<strong>IO</strong>中处理打印（副作用）。你可以把之前我们学习到的类型合并一下，得到一个示例：</p>
+<p><img alt="图 65" src="https://p0.meituan.net/travelcube/22e1ffb1f8b994e55995d16b13273d16156780.png"></p>
+<p>通常一个程序会有一个主入口函数main，这个main函数返回值类型是一个IO，我们的副作用现在全在IO这个范畴下运行，而其他操作，都可以保持纯净（类型运算）。</p>
+<p>IO类型让我们可以在Monad空间处理那些烦人的副作用，这个<strong>Monad</strong>类型和<strong>Promise</strong>（限定副作用到Promise域处理，可链式调用，可用then折叠和映射）很像。</p>
+<h2 id="4函数式编程的应用">4.函数式编程的应用</h2>
+<p>除了上面我们提到的一些示例，函数式编程可以应用到更广的业务代码开发中，用来替代我们的一些基础业务代码。这里举几个例子。</p>
+<h3 id="41-设计一个请求模块">4.1 设计一个请求模块</h3>
+<p><img alt="图 66" src="https://p1.meituan.net/travelcube/5d1c6846c19c0fc8de62d5dfb4e1c550424232.png"></p>
+<p>用这种方式构建的模块，组合和复用性很强，你也可以利用lodash的其他库对req做一个其他改造。我们调用业务代码的时候只管传递params，分支校验和错误检查就教给validate.js里面的高阶函数就好了。</p>
+<h3 id="42-设计一个输入框">4.2 设计一个输入框</h3>
+<p><img alt="图 67" src="https://p0.meituan.net/travelcube/077e99cfce95f1d213a320394abf8e57359872.png"></p>
+<p>这个例子也是来源于前端常见的场景。我们使用函数式编程的思想，把多个看似不相关的函数进行组合，得到了业务需要的subscribe函数，但同时，上面的任意一个函数都可以被用于其他功能组合。比如callback函数可以直接给dom回调，listenInput可以用于任意一个dom。</p>
+<p>这种通过高阶组件不停组合得到最终结果的方式，我们可以认为就是函数式的。（尽管它没有像上一个例子一样引入IO/Monad等概念）</p>
+<h3 id="43-超长文本省略ramdajs为例">4.3 超长文本省略：Ramdajs为例</h3>
+<p><img alt="图 68" src="https://p0.meituan.net/travelcube/780b6bdfa79727225813a600526a47db252373.png"></p>
+<p>这个也是常见的前端场景，当文本长度大于X时，显示省略号，这个实现使用Ramdajs。这个过程中你就像是在搭积木，很容易就把业务给“搭建”完成了。</p>
+<h2 id="5-函数式编程库语言">5. 函数式编程库、语言</h2>
+<p>函数式编程的库可以学习：</p>
+<ul>
+<li><strong>Ramda.js</strong>：函数式编程库</li>
+<li><strong>lodash.js</strong>：函数工具</li>
+<li><strong>immutable.js</strong>：数据不可变</li>
+<li><strong>rx.js</strong>：响应式编程</li>
+<li><strong>partial.lenses</strong>：函数工具</li>
+<li><strong>monio.js</strong>：函数式编程工具库/IO库</li>
+<li>…</li>
+</ul>
+<p>你可以结合起来使用。下面是Ramda.js示例：</p>
+<p><img alt="图片69" src="https://p0.meituan.net/travelcube/b8154978c87181d48959155711160599217847.png"></p>
+<p>而纯函数式语言，有很多：</p>
+<ul>
+<li><strong>Lisp</strong> 代表软件 emacs…</li>
+<li><strong>Haskell</strong> 代表软件 pandoc…</li>
+<li><strong>Ocaml</strong> …</li>
+<li>…</li>
+</ul>
+<h2 id="6-总结">6. 总结</h2>
+<p>函数式编程并不是什么“黑科技”，它已经存在的时间甚至比面向对象编程更久远。希望本文能帮助大家理解什么是函数式编程。</p>
+<p>现在我们来回顾先览，实际上，函数式编程也是程序实现方式的一种，它和面向对象是殊途同归的。在函数式语言中，我们要构建一个个小的基础函数，并通过一些通用的流程把他们粘合起来。举个例子，面向对象里面的继承，我在函数式编程中可以使用组合compose或者高阶函数hoc来实现。</p>
+<p>尽管在实现上是等价的，但和面向对象的编程范式对比，函数式编程有很多优点值得大家去尝试。</p>
+<h3 id="61-优点">6.1 优点</h3>
+<p>除了上面提到的风格和特性之外，函数式编程相对其他编程范式，有很多优点：</p>
+<ul>
+<li><strong>函数纯净</strong> 程序有更少的状态量，编码心智负担更小。随着状态量的增加，某些编程范式构建的软件库代码复杂度可能呈几何增长，而函数式编程的状态量都收敛了，对软件复杂度带来的影响更小。</li>
+<li><strong>引用透明性</strong> 可以让你在不影响其他功能的前提下，升级某一个特定功能（一个对象的引用需要改动的话，可能牵一发而动全身）。</li>
+<li><strong>高度可组合</strong> 函数之间复用方便（需要关注的状态量更少），函数的功能升级改造也更容易（高阶组件）。</li>
+<li><strong>副作用隔离</strong> 所有的状态量被收敛到一个盒子（函数）里面处理，关注点更加集中。</li>
+<li><strong>代码简洁/流程更清晰</strong> 通常函数式编程风格的程序，代码量比其他编程风格的少很多，这得益于函数的高度可组合性以及大量的完善的基础函数，简洁性也使得代码更容易维护。</li>
+<li><strong>语义化</strong> 一个个小的函数分别完成一种小的功能，当你需要组合上层能力的时候，基本可以按照函数语义来进行快速组合。</li>
+<li><strong>惰性计算</strong> 被组合的函数只会生成一个更高阶的函数，最后调用时数据才会在函数之间流动。</li>
+<li><strong>跨语言统一性</strong> 不同的语言，似乎都遵从类似的函数式编程范式，比如Java 8的lambda表达式，Rust的collection、匿名函数；而面向对象的实现，不同语言可能千差万别，函数式编程的统一性让你可以舒服地跨语言开发。</li>
+<li><strong>关键领域应用</strong> 因为函数式编程状态少、代码简洁等特点，使得它在交互复杂、安全性要求高的领域有重要的应用，像Lisp和Haskell就是因上一波人工智能热而火起来的，后来也在一些特殊的领域（银行、水利、航空航天等）得到了较大规模的应用。</li>
+<li>…</li>
+</ul>
+<h3 id="62-不足">6.2 不足</h3>
+<p>当然，函数式编程也存在一些不足之处：</p>
+<ul>
+<li><strong>陡峭的学习曲线</strong> 面向对象和命令式编程范式都是贴近我们的日常习惯的方式，而函数式编程要更抽象一些，要想更好地管理副作用，你可能需要学习很多新的概念（响应式、Monad等），这些概念入门很难，而且是一个长期积累的过程。</li>
+<li><strong>可能的调用栈溢出问题</strong> 惰性计算在一些电脑或特种程序架构上可能有函数调用栈错误（超长调用链、超长递归），另外许多函数式编程语言需要编译器支持尾递归优化（优化为循环迭代）以得到更好的性能。</li>
+<li><strong>额外的抽象负�</strong>� 当程序有大量可变状态、副作用时，用函数式编程可能造成额外的抽象负担，项目开发周期可能会延长，这时可能用其他抽象方式更好（比如OOP）。</li>
+<li><strong>数据不变性的问题</strong> 为了数据不变，运行时可能会构建生成大量的数据副本，造成时间和空间消耗更大，拖慢性能；同时数据不可变性可能会造成构建一些基础数据结构的时候语法不简洁，性能也更差（比如LinkedList、HashMap等数据结构）。</li>
+<li><strong>语义化的问题</strong> 往往为了开发一个功能，去造许多的基础函数，大量业务组件想要语义化的命名，也会带给开发人员很多负担；并且功能抽象能力因人而异，公共函数往往不够公用或者过度设计。</li>
+<li><strong>生态问题</strong> 函数式编程在工业生产领域因其抽象性和性能带来的问题，被许多开发者拒之门外，一些特定功能的解决方案也更小众（相比其他编程范式），生态也一直比较小，这成为一些新的开发人员学习和使用函数式编程的又一个巨大障碍。</li>
+<li>…</li>
+</ul>
+<p>日常业务开发中，往往我们需要取长补短，在适合的领域用适合的方法/范式。大家只要要记住，软件开发并没有“银弹”。</p>
+<h2 id="7-faq">7. FAQ</h2>
+<p><strong>Q：你觉得Promise是不是一种Monad IO模型？</strong></p>
+<p>A：我认为是的。纯函数是没有异步概念的，Promise用了一种很棒的方式把异步和IO转化为了.then函数。你仍然可以在.then函数中写纯粹的函数，也可以在.then函数中调用其他的Promise，这就和<code>IO Monad</code>的行为非常像。</p>
+<p><strong>Q：你愿意在生产中使用Haskell/Lisp/Clojure等纯函数式语言吗？</strong></p>
+<p>A：不论是否愿意使用，现在很多语言都开始引入函数式编程语法了。并不是说函数式编程一定是优秀的，但它至少没有那么恐怖。有一点可以肯定的是，学习函数式编程可以扩展我们的思维，增加我们看问题的角度。</p>
+<p><strong>Q：有没有一些可以预见的好处？</strong></p>
+<p>A：有的。比如强制你写代码的时候去关注状态量（多少、是否引用值、是否变更等），这或多或少可以帮助你写代码的时候减少状态量的使用，也慢慢地能复合一些状态量，写出更简洁的代码。</p>
+<p><strong>Q：函数式编程能给业务带来什么好处？</strong></p>
+<p>A：业务拆分的时候，函数式的思维是单向的，我们会通过实现，想到它对应需要的基础组件，并递归地思考下去，功能实现从最小粒度开始，上层逐步通过函数组合来实现。相比于面向对象，这种方式在组合上更方便简洁，更容易把复杂度降低，比如面向对象中可能对象之间的相互引用和调用是没有限制的，这种模式带来的是思考逻辑的时候思维会发散。</p>
+<p>这种对比在业务复杂的情况下更加明显，面向对象必须要优秀的设计模式来实现控制代码复杂度增长不那么快，而函数式编程大多数情况下都是单向数据流+基础工具库就减少了大量的复杂度，而且产生的代码更简洁。</p>
+<h2 id="8-作者简介">8. 作者简介</h2>
+<p>俊杰，美团到家研发平台/医药技术部前端工程师。</p>
+<h2 id="9-参考文献">9. 参考文献</h2>
+<ol>
+<li>维基百科：函数式编程/lambda演算/范畴论/集合论/群论。</li>
+<li>Github：getify/Functional-Light-JS</li>
+<li>《Learn You A Haskell For Great Good!》</li>
+<li>《Deep JavaScript》</li>
+<li>其他：各类在线博客</li>
+</ol>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F">美团技术团队</a></li>
+								
+								<li><a href="/tags/%E5%88%B0%E5%AE%B6">到家</a></li>
+								
+								<li><a href="/tags/%E5%89%8D%E7%AB%AF">前端</a></li>
+								
+								<li><a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B">函数式编程</a></li>
+								
+								<li><a href="/tags/javascript">JavaScript</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'wfsui';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="">Wfsui theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div><script>feather.replace()</script>
+</body>
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>基于多模态信息抽取的菜品知识图谱构建 - 大峰哥</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:url" content="https://wfsui.github.io/posts/%E5%9F%BA%E4%BA%8E%E5%A4%9A%E6%A8%A1%E6%80%81%E4%BF%A1%E6%81%AF%E6%8A%BD%E5%8F%96%E7%9A%84%E8%8F%9C%E5%93%81%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%9E%84%E5%BB%BA/">
+  <meta property="og:site_name" content="大峰哥">
+  <meta property="og:title" content="基于多模态信息抽取的菜品知识图谱构建">
+  <meta property="og:description" content="1. 背景 中国有句古话：“民以食为天”。对食物的分析和理解，特别是识别菜肴的食材，在健康管理、卡路里计算、烹饪艺术、食物搜索等领域具有重要意义。但是，算法技术尽管在目标检测[1]-[3]、通用场景理解[4][5]和跨模态检索[6]-[8]方面取得了很大进展，却没有在食物相关的场景中取得好的表现，尤其是对烹饪菜肴的相关场景。其核心原因是缺乏细粒度食材的基准，这已经成为该领域发展的瓶颈。
+以往的研究主要集中在食物层面的表征学习，如Food2K上的食物识别[9]-[12]，UNIMIB2016上的食物检测[13]-[15]。然而，这些方法忽视了菜肴中的食材组成，也不理解食材之间的上下文关系。相比之下，一系列的方法[16]-[18]运用Recipe1M的“食谱-图像”对，实现了跨模态的食谱检索[16]。
+然而，由于缺乏食材边界框的标注，这种类型的研究只能通过三元组建模出整个食物图像和食谱文本之间的关联[16],[19],[20]。这种限制导致图像区域与食物的一系列食材之间存在模糊的匹配关系，产生虚假相关性[21]。综上，目前迫切需要一个细粒度的食材级基准，促进复杂的食品场景理解算法的发展，并支持细粒度的任务，如食材检测和跨模态食材检索。
+在本研究中提出对于中餐进行理解这一新任务，旨在捕捉中餐图像中食材之间的语义关系，并建立了有关中国菜品理解的新基准。我们大致设定了中餐理解的两个任务：食材检测和食材检索。对于食材检测，目标是确定图像中特定食材的存在并提供精确的定位。对于食材检索，目标是探索不同食材组合与食品图像之间的细粒度对应关系。对中餐的理解扩展了食品相关任务的范围，在食品领域开辟了更广泛的应用。同时，食材的多样外观和它们错综复杂的语境关系，对中餐的理解提出了一个更大的难题。
+为了进行中餐理解这一新任务，我们需要构建一个包含食材粒度标注的数据集。然而，由于中餐种类繁多、风格独特，因此在食材标注上面临着巨大的挑战。构建含中餐食材的细粒度跨模态数据集主要有三个难点。
+首先，相同的食材有不同的名称。图1.1(a)说明了这种情况：“圣女果”和“小番茄”都是广泛使用的食材名称，它们是同一食材的不同名称，这样的情况使得我们需要花费更多的精力来清除数据集中的模糊标签以及其他噪声。 其次，同一植物类食材之间的图像存在细微差异，如“青菜”和“油菜”，“香菇”和“冬菇”，如图1.1(b)所示。这些情况对标注人员来说是相当具有挑战性的，他们需要从文本部分获得一些提示。此外，对于下游任务来说，基于视觉特征来区分它们也是相当具有挑战性的。 第三，由于烹饪方法的原因，中国菜肴的食材通常分散在图像中。如图1.1©所示，碎片化食材通常缺乏清晰的轮廓边界。此外，从图1.1(d)中可以看出，食品图像中的主要食材往往占据显著区域，这不可避免地削弱了辅助食材的语义信息。这使得在提取食材特征的同时，对辅助食材之间的上下文关系进行建模成为一个关键问题。 为了应对上述挑战并促进对中餐理解的研究，我们开发了一个名为CMIngre (Cross-Modal Ingredient-level Dataset) 的跨模态食材级数据集。该数据集旨在通过提供对食材及其关系的有价值的见解来增强对中国烹饪的理解。该数据集由来自三个不同来源的8,001张图像组成，即菜肴，食谱和用户生成内容（UGC）。该数据集包含429种不同的中国食材和95,290种食材边界框。
+为了对广泛的食材进行全面的语义分类，我们根据中华人民共和国健康行业标准对食品食材数据表达的规定[23]，将其划分为更高级的层次。这些层次关系也可以作为先验信息，以促进在后续研究中探索不同食材之间的上下文关系。此外，我们评估了传统的基于CNN的检测算法和基于Transformer的预训练模型在CMIngre上食材检测任务的性能。我们还提出了食材检索任务的基线方法，该方法捕获单个食材的语义信息以及各种食材组合之间的关系，并进一步采用pooling策略来研究跨模态图像-食材之间的匹配关系。在CMIngre数据集上进行的深入实验评估证实了我们提出的方法在提高食材检测和检索性能方面的有效性。
+本文的贡献可以概括为以下几点：
+本文提出了一种新的基于“图像-文本”对的中餐理解任务，该任务扩展了细粒度对象检测和检索的范围，对中餐烹饪领域的理解提供进一步的帮助。 为了支持对中餐理解的研究，我们建立了一个名为CMIngre的跨模态食材级别的数据集，该数据集由来自三个不同来源的8,001组图像食材组成，涵盖了429种不同的中国食材和95,290个边界框。 我们评估了不同的目标检测算法在CMIngre数据集上的性能，并提出了跨模态食材检索任务的基线方法。 我们在CMIngre上对两个食材级的食品理解任务进行了广泛的实验，以评估我们提出的方法的有效性。 2.">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-12T02:51:58+00:00">
+    <meta property="article:modified_time" content="2024-08-12T02:51:58+00:00">
+    <meta property="article:tag" content="美团技术团队">
+    <meta property="article:tag" content="到店研发平台">
+    <meta property="article:tag" content="算法">
+    <meta property="article:tag" content="知识图谱">
+    <meta property="article:tag" content="CMIngre">
+    <meta property="article:tag" content="Transformer">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="基于多模态信息抽取的菜品知识图谱构建">
+  <meta name="twitter:description" content="1. 背景 中国有句古话：“民以食为天”。对食物的分析和理解，特别是识别菜肴的食材，在健康管理、卡路里计算、烹饪艺术、食物搜索等领域具有重要意义。但是，算法技术尽管在目标检测[1]-[3]、通用场景理解[4][5]和跨模态检索[6]-[8]方面取得了很大进展，却没有在食物相关的场景中取得好的表现，尤其是对烹饪菜肴的相关场景。其核心原因是缺乏细粒度食材的基准，这已经成为该领域发展的瓶颈。
+以往的研究主要集中在食物层面的表征学习，如Food2K上的食物识别[9]-[12]，UNIMIB2016上的食物检测[13]-[15]。然而，这些方法忽视了菜肴中的食材组成，也不理解食材之间的上下文关系。相比之下，一系列的方法[16]-[18]运用Recipe1M的“食谱-图像”对，实现了跨模态的食谱检索[16]。
+然而，由于缺乏食材边界框的标注，这种类型的研究只能通过三元组建模出整个食物图像和食谱文本之间的关联[16],[19],[20]。这种限制导致图像区域与食物的一系列食材之间存在模糊的匹配关系，产生虚假相关性[21]。综上，目前迫切需要一个细粒度的食材级基准，促进复杂的食品场景理解算法的发展，并支持细粒度的任务，如食材检测和跨模态食材检索。
+在本研究中提出对于中餐进行理解这一新任务，旨在捕捉中餐图像中食材之间的语义关系，并建立了有关中国菜品理解的新基准。我们大致设定了中餐理解的两个任务：食材检测和食材检索。对于食材检测，目标是确定图像中特定食材的存在并提供精确的定位。对于食材检索，目标是探索不同食材组合与食品图像之间的细粒度对应关系。对中餐的理解扩展了食品相关任务的范围，在食品领域开辟了更广泛的应用。同时，食材的多样外观和它们错综复杂的语境关系，对中餐的理解提出了一个更大的难题。
+为了进行中餐理解这一新任务，我们需要构建一个包含食材粒度标注的数据集。然而，由于中餐种类繁多、风格独特，因此在食材标注上面临着巨大的挑战。构建含中餐食材的细粒度跨模态数据集主要有三个难点。
+首先，相同的食材有不同的名称。图1.1(a)说明了这种情况：“圣女果”和“小番茄”都是广泛使用的食材名称，它们是同一食材的不同名称，这样的情况使得我们需要花费更多的精力来清除数据集中的模糊标签以及其他噪声。 其次，同一植物类食材之间的图像存在细微差异，如“青菜”和“油菜”，“香菇”和“冬菇”，如图1.1(b)所示。这些情况对标注人员来说是相当具有挑战性的，他们需要从文本部分获得一些提示。此外，对于下游任务来说，基于视觉特征来区分它们也是相当具有挑战性的。 第三，由于烹饪方法的原因，中国菜肴的食材通常分散在图像中。如图1.1©所示，碎片化食材通常缺乏清晰的轮廓边界。此外，从图1.1(d)中可以看出，食品图像中的主要食材往往占据显著区域，这不可避免地削弱了辅助食材的语义信息。这使得在提取食材特征的同时，对辅助食材之间的上下文关系进行建模成为一个关键问题。 为了应对上述挑战并促进对中餐理解的研究，我们开发了一个名为CMIngre (Cross-Modal Ingredient-level Dataset) 的跨模态食材级数据集。该数据集旨在通过提供对食材及其关系的有价值的见解来增强对中国烹饪的理解。该数据集由来自三个不同来源的8,001张图像组成，即菜肴，食谱和用户生成内容（UGC）。该数据集包含429种不同的中国食材和95,290种食材边界框。
+为了对广泛的食材进行全面的语义分类，我们根据中华人民共和国健康行业标准对食品食材数据表达的规定[23]，将其划分为更高级的层次。这些层次关系也可以作为先验信息，以促进在后续研究中探索不同食材之间的上下文关系。此外，我们评估了传统的基于CNN的检测算法和基于Transformer的预训练模型在CMIngre上食材检测任务的性能。我们还提出了食材检索任务的基线方法，该方法捕获单个食材的语义信息以及各种食材组合之间的关系，并进一步采用pooling策略来研究跨模态图像-食材之间的匹配关系。在CMIngre数据集上进行的深入实验评估证实了我们提出的方法在提高食材检测和检索性能方面的有效性。
+本文的贡献可以概括为以下几点：
+本文提出了一种新的基于“图像-文本”对的中餐理解任务，该任务扩展了细粒度对象检测和检索的范围，对中餐烹饪领域的理解提供进一步的帮助。 为了支持对中餐理解的研究，我们建立了一个名为CMIngre的跨模态食材级别的数据集，该数据集由来自三个不同来源的8,001组图像食材组成，涵盖了429种不同的中国食材和95,290个边界框。 我们评估了不同的目标检测算法在CMIngre数据集上的性能，并提出了跨模态食材检索任务的基线方法。 我们在CMIngre上对两个食材级的食品理解任务进行了广泛的实验，以评估我们提出的方法的有效性。 2.">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://wfsui.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://wfsui.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://wfsui.github.io/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper post">
+		<div class="header">
+	<base href="https://wfsui.github.io/">
+	<h1 class="site-title"><a href="https://wfsui.github.io/">大峰哥</a></h1>
+	<div class="site-description"><h2>记录日常生活哦</h2><nav class="nav social">
+			<ul class="flat"><a href="https://github.com/wfsui" title="Github"><i data-feather="github"></i></a><a href="/index.xml" title="RSS"><i data-feather="rss"></i></a></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+			<li>
+				<a href="/">首页</a>
+			</li>
+			
+			<li>
+				<a href="/posts">文章</a>
+			</li>
+			
+			<li>
+				<a href="/about">关于</a>
+			</li>
+			
+			<li>
+				<a href="/tags">标签</a>
+			</li>
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post-header">
+			<h1 class="title">基于多模态信息抽取的菜品知识图谱构建</h1>
+			<div class="meta">Posted at &mdash; Aug 12, 2024</div>
+		</div>
+
+		<div class="markdown">
+			<h2 id="1-背景">1. 背景</h2>
+<p>中国有句古话：“民以食为天”。对食物的分析和理解，特别是识别菜肴的食材，在健康管理、卡路里计算、烹饪艺术、食物搜索等领域具有重要意义。但是，算法技术尽管在目标检测[1]-[3]、通用场景理解[4][5]和跨模态检索[6]-[8]方面取得了很大进展，却没有在食物相关的场景中取得好的表现，尤其是对烹饪菜肴的相关场景。其核心原因是缺乏细粒度食材的基准，这已经成为该领域发展的瓶颈。</p>
+<p>以往的研究主要集中在食物层面的表征学习，如Food2K上的食物识别[9]-[12]，UNIMIB2016上的食物检测[13]-[15]。然而，这些方法忽视了菜肴中的食材组成，也不理解食材之间的上下文关系。相比之下，一系列的方法[16]-[18]运用Recipe1M的“食谱-图像”对，实现了跨模态的食谱检索[16]。</p>
+<p>然而，由于缺乏食材边界框的标注，这种类型的研究只能通过三元组建模出整个食物图像和食谱文本之间的关联[16],[19],[20]。这种限制导致图像区域与食物的一系列食材之间存在模糊的匹配关系，产生虚假相关性[21]。综上，目前迫切需要一个细粒度的食材级基准，促进复杂的食品场景理解算法的发展，并支持细粒度的任务，如食材检测和跨模态食材检索。</p>
+<p>在本研究中提出对于中餐进行理解这一新任务，旨在捕捉中餐图像中食材之间的语义关系，并建立了有关中国菜品理解的新基准。我们大致设定了中餐理解的两个任务：食材检测和食材检索。对于食材检测，目标是确定图像中特定食材的存在并提供精确的定位。对于食材检索，目标是探索不同食材组合与食品图像之间的细粒度对应关系。对中餐的理解扩展了食品相关任务的范围，在食品领域开辟了更广泛的应用。同时，食材的多样外观和它们错综复杂的语境关系，对中餐的理解提出了一个更大的难题。</p>
+<p>为了进行中餐理解这一新任务，我们需要构建一个包含食材粒度标注的数据集。然而，由于中餐种类繁多、风格独特，因此在食材标注上面临着巨大的挑战。构建含中餐食材的细粒度跨模态数据集主要有三个难点。</p>
+<ul>
+<li>首先，相同的食材有不同的名称。图1.1(a)说明了这种情况：“圣女果”和“小番茄”都是广泛使用的食材名称，它们是同一食材的不同名称，这样的情况使得我们需要花费更多的精力来清除数据集中的模糊标签以及其他噪声。</li>
+<li>其次，同一植物类食材之间的图像存在细微差异，如“青菜”和“油菜”，“香菇”和“冬菇”，如图1.1(b)所示。这些情况对标注人员来说是相当具有挑战性的，他们需要从文本部分获得一些提示。此外，对于下游任务来说，基于视觉特征来区分它们也是相当具有挑战性的。</li>
+<li>第三，由于烹饪方法的原因，中国菜肴的食材通常分散在图像中。如图1.1©所示，碎片化食材通常缺乏清晰的轮廓边界。此外，从图1.1(d)中可以看出，食品图像中的主要食材往往占据显著区域，这不可避免地削弱了辅助食材的语义信息。这使得在提取食材特征的同时，对辅助食材之间的上下文关系进行建模成为一个关键问题。</li>
+</ul>
+<p>为了应对上述挑战并促进对中餐理解的研究，我们开发了一个名为CMIngre (Cross-Modal Ingredient-level Dataset) 的跨模态食材级数据集。该数据集旨在通过提供对食材及其关系的有价值的见解来增强对中国烹饪的理解。该数据集由来自三个不同来源的8,001张图像组成，即菜肴，食谱和用户生成内容（UGC）。该数据集包含429种不同的中国食材和95,290种食材边界框。</p>
+<p>为了对广泛的食材进行全面的语义分类，我们根据中华人民共和国健康行业标准对食品食材数据表达的规定[23]，将其划分为更高级的层次。这些层次关系也可以作为先验信息，以促进在后续研究中探索不同食材之间的上下文关系。此外，我们评估了传统的基于CNN的检测算法和基于Transformer的预训练模型在CMIngre上食材检测任务的性能。我们还提出了食材检索任务的基线方法，该方法捕获单个食材的语义信息以及各种食材组合之间的关系，并进一步采用pooling策略来研究跨模态图像-食材之间的匹配关系。在CMIngre数据集上进行的深入实验评估证实了我们提出的方法在提高食材检测和检索性能方面的有效性。</p>
+<p>本文的贡献可以概括为以下几点：</p>
+<ul>
+<li>本文提出了一种新的基于“图像-文本”对的中餐理解任务，该任务扩展了细粒度对象检测和检索的范围，对中餐烹饪领域的理解提供进一步的帮助。</li>
+<li>为了支持对中餐理解的研究，我们建立了一个名为CMIngre的跨模态食材级别的数据集，该数据集由来自三个不同来源的8,001组图像食材组成，涵盖了429种不同的中国食材和95,290个边界框。</li>
+<li>我们评估了不同的目标检测算法在CMIngre数据集上的性能，并提出了跨模态食材检索任务的基线方法。</li>
+<li>我们在CMIngre上对两个食材级的食品理解任务进行了广泛的实验，以评估我们提出的方法的有效性。</li>
+</ul>
+<p><img alt="图1.1 菜品中不同尺寸的食材" src="https://p0.meituan.net/travelcube/dd53a1be4fec67da55f36181dbfb54e42732851.png"></p>
+<h2 id="2-数据集">2. 数据集</h2>
+<p>在本节中，我们将讨论如何构造CMIngre数据集。我们将在第一部分中介绍我们如何收集和标注数据。在第二部分中，我们对数据进行了后处理，提升原始数据的质量。在第三部分中进行了CMIngre数据集的统计和分析。</p>
+<h3 id="21-数据收集和标注">2.1 数据收集和标注</h3>
+<p>数据收集：为了收集全面的食物图像，我们探索了三种类型的图像-文本对：</p>
+<ul>
+<li><strong>菜肴图片</strong>：如图2.1第二行所示，这一类别包括与其名称配对的菜肴图像。与其他类型相比，这种类型的文本提供了最简洁的描述。</li>
+<li><strong>菜谱图片</strong>：如图2.1第三行所示，这些数据由菜谱图像和详细的食谱文本组成。这些图像的质量更高，并且比其他两个类别的图像描述的信息更丰富。</li>
+<li><strong>用户UGC图片</strong>：如图2.1的最后一行所示，这种类型数据主要包含用户拍摄的图像及其附带的评论。由于用户生成的内容缺乏约束限制，图像和文本描述经常包含与食物无关的元素，例如餐厅氛围或餐具。为了将该数据集细化为专注于食物，我们使用菜肴名称识别算法[45]来识别带有菜肴名称的文本。具体来说，我们会选择评论中包含三个以上菜名的照片，减少与食物无关的内容。</li>
+</ul>
+<p>这三种类型的数据在线上平台很流行，并且提供了食品相关数据的多样化表示。我们总共收集了11,300个图像-文本对用于标注。</p>
+<p><img alt="图2.1 不同数据来源的图像-文本对，其中UGC表示用户生成的内容" src="https://p0.meituan.net/travelcube/aef25b66918705bd9b80d3eca4f5875e2420771.png"></p>
+<p><strong>数据标注</strong>：这里将详细介绍收集到的“图像-文本”对的标注过程。我们首先雇佣了8名母语为中文的工作人员，分别对文字描述和图片进行标注。然后，使用另外两名工作人员进行双重检查过程。</p>
+<ol>
+<li><strong>文字描述标注</strong>：标注人员的任务是识别文本描述中提到的所有食材。该标注的结果如图2.1第三列所示。</li>
+<li><strong>图片标注</strong>：如图2.1最后一列所示，图像标注遵循两个关键原则：1）要求标注人员标注文本中提到的和图像中可见的食材。2)文本中没有提及但在图像中可以识别的食材也需要标注。在这个过程中，标注人员遇到了几个挑战：1）一个图像包含相同食材的多个实例。在这种情况下，标注人员需要用多个边界框标注所有实例。但是，如果同一食材的多个实例紧密聚集在一起，则可以将它们分组在一个边界框中。2)多种食材被其他食材覆盖。在这种情况下，标注人员需要标注出所有可识别的部分。本质上，食材中任何可以被辨别和识别的部分都应该被标注。</li>
+</ol>
+<p>经过标注过程后，最终的数据集包含11,300个图像-文本对，用4,492个不同的食材标签和199,853个边界框进行了标注。</p>
+<h3 id="22-标注数据后处理">2.2 标注数据后处理</h3>
+<p>由于缺乏对标注人员关于每个图像的边界框的大小和数量的限制，最终的标注结果中存在边界框大小的显著变化和相当多的冗余边界框。为了解决这个问题，我们分别对图像和文本进行了进一步的后处理。</p>
+<ul>
+<li><strong>图像标注清洗</strong>：为了提高数据集中边界框的质量，我们基于两个关键策略实现了清理过程：1)边界框融合：我们通过将相同标签（重叠，相互包含或临近）合并到单个边界框中来解决冗余边界框的问题。具体来说，融合是基于边界框的面积，计算每个边界框内的像素数。如果融合前后的面积比大于一个特定的阈值，我们将这些边界框整合成一个新的边界框。这个阈值的设置是一个关键问题。我们注意到，过高的阈值将使融合策略无效，而过低的阈值将导致可能包含多种食材的过大的边界框。因此，我们根据经验将其设置为0.6作为平衡。2)较小边界框移除：我们通过两个过程来移除数据集中的小边界框。首先，为了去除只有小框的图像，我们去除所有框的总面积小于整个图像面积3%的图像-文本对。其次，如果图像中有超过三个相同类别的边界框，我们只保留面积至少为该类别中最大边界框面积0.8倍的边界框。在这些清理步骤之后，我们的精细化数据集包含8,001个图像-文本对，共有95,290个边界框。</li>
+<li><strong>文本标注清洗</strong>：为了改进数据集中的食材标注，我们实现了两个步骤：1)为了保留足够的数据用于训练和测试，我们删除出现在少于五张图像中的食材。由于原始数据集中存在显著的长尾问题，这一步使得食材标签总数减少到510。2)在这510种食材中，我们发现了不同名称指代同一种食材的情况，例如“松花蛋-皮蛋”。为了解决这个问题，我们利用中华人民共和国健康行业标准[23]中的食物成分数据表达规范，对目前510种食材进行比较和组合。具体而言，两个标注人员最初将510个食材中的每一个分类到分层本体的适当叶节点中。随后，另一个标注人员在同一父节点下审查并合并具有相同语义的食材。合并操作进一步将食材标签减少到429个。</li>
+</ul>
+<p>综上所述，清理后的数据集包括8,001张图像，95,290个边界框和429个食材标签。</p>
+<h3 id="23-数据统计和分析">2.3 数据统计和分析</h3>
+<p>在CMIngre中，有1,719对来自菜肴的图像-文本，2,330对来自食谱，3,952对来自UGC。如2.1所述，UGC的图像质量比菜肴和食谱的图像质量差，这给我们在接下来的食物理解任务中处理低质量数据带来了更多的工作量，因为UGC覆盖了近一半的数据集。</p>
+<p>数据集中每个食材上的图像数量如图2.2所示，少量食材在我们的数据集中出现了很多次。例如，“葱–scallion”在1,961张图片中出现次数最多，约占图片总数的24.51%。此外，有138种食材出现在不到10张图片中。例如，只有5张图片包含“西柚–grapefruit”，8张图片包含“桃–Peach”。图2.3显示了我们数据集中每个食材的边界框数量。如图2.3所示，每种食材对应的边界框数量分布与图2.2中包含该食材的图像数量分布大致相似，均为长尾。为了说明边界框尺寸的差异，图2.4给出了不同尺寸边界框的比例。我们观察到小尺寸的边界框（面积比在0.0025 ~ 0.01之间）的比例最大。同时，有超过50%的边界框的面积比小于0.01，说明数据集中有很多小物体。</p>
+<p>表2.1显示了与食品相关数据集的统计比较。我们可以看到，现有的食品相关数据集主要集中在食品识别任务上，其目的是识别图像内的食品类别。很少有数据集为食物边界框提供标注，这是由于它们的目标是定位整个菜肴，而不是各种类型的食材。相比之下，Recipe 1M为每个食物图像提供食材标注。然而，由于缺乏对这些细粒度食材的位置标注，它们只能隐式地建模整个食物图像与相应食材之间的关联，从而限制了模型的性能。因此，我们引入了CMIngre，旨在通过食材检测和检索任务增强对中餐的理解。</p>
+<p><img alt="表2.1 现有食品相关数据集之间的统计比较" src="https://p0.meituan.net/travelcube/6686e3666e5a045b1b04ac6b5b958a33119886.png"></p>
+<p>最后，我们将CMIngre数据集与广泛使用的目标检测数据集COCO进行了比较分析。在图2.5中，横轴表示每张图像中标签种类的数量（在CMIngre中标签为食材，在COCO中标签为物体）纵轴表示每种图像的比例。很明显，CMIngre图像通常包含更多的对象(在我们的例子中是食材)。具体来说，CMIngre中包含三个以上标签的图像的占比高于MS COCO数据集。这一趋势在边界框的数量上也很明显。如图2.6所示，与MS COCO相比，我们的数据集中超过5个边界框的图像比例更大。综上所述，CMIngre中的图像比其他现有数据集具有更丰富的语义和更密集的边界框，这对图像理解提出了更艰巨的挑战。</p>
+<p><img src="https://p0.meituan.net/travelcube/e96069a314798d41b37604cdc7ed3824281434.png"><img src="https://p0.meituan.net/travelcube/7e8e6ccc79fd44fed414298f41e00d50151768.png"></p>
+<h2 id="3-方法">3. 方法</h2>
+<p>在本研究中，我们引入了两项从食材层面理解中国菜食材的任务，即食材检测（任务1）和跨模态食材检索（任务2）。任务1的重点是识别食材并在图像中标注准确的位置信息，任务2旨在研究图像与食材组成之间的复杂关系。对于任务1，我们使用现有目标检测模型在CMIngre数据集上进行微调，构建有关中国菜品理解的新基准；对于任务2，我们在现有跨模态检索方法的基础上，提出了一些创新性的做法，填补了有关中国菜品食材粒度理解的空白。</p>
+<h3 id="31-食材检测">3.1 食材检测</h3>
+<p>与传统的目标检测数据集相比，CMIngre数据集具有极其详细的食材分类和密集的边界框注释，因此直接利用现存的目标检测算法进行拟合是一件非常具有挑战的事情。直接对现有的大规模目标检测模型[1]在原始边界框注释上进行微调的效果并不让人满意，因此我们采用融合和过滤策略来缓解边界框密集和尺寸较小带来的问题。</p>
+<p>具体而言，我们首先按照融合前后的边界框面积百分比 不低于阈值τ的规则，对同一类别的多个边界框进行融合，在实验中这个阈值被设置为0.6。接下来，我们对融合后的边界框进行排序，并将边界框的三个最大区域保留为真值。此外，我们将食材树层级结构的最低级标签都转换为第三级标签，例如“紫菜”和“海带”都融合为“藻类”，“冬笋”和“酸笋”都融合为“笋”，这样可以避免模型无法识别同一分支中高度相似的类别的问题。根据这种转换，类别总数从429减少到67个。在这种设置下，我们使用如下的两种不同的基线方法进行实验。</p>
+<h4 id="311-基于cnn的方法faster-r-cnn47和yolo-v548">3.1.1 基于CNN的方法：Faster R-CNN[47]和YOLO v5[48]</h4>
+<p>Faster R-CNN是一种经典的基于卷积神经网络（CNN）的两阶段目标检测框架。在第一阶段，Faster R-CNN利用CNN提取输入图像的特征映射，然后利用区域提名网络（RPN）生成候选目标区域。在第二阶段，基于候选目标区域，利用图像区域边界框回归以及区域食材识别两个约束进行网络参数的整体更新。相比之下，YOLO（You Only Look Once）是一种单阶段目标检测算法，以其速度和效率而闻名。与Faster R-CNN不同，YOLO在一次评估中处理整个图像，同时预测多个对象的分类概率和边界框。</p>
+<h4 id="312-dino1">3.1.2 DINO[1]</h4>
+<p>DINO（DETR with Improved deNoising anchOr boxes）是一个融合对比降噪训练（contrastive way for denoising training），混合查询选择锚点初始化（mixed query selection method for anchr initialization），前向两次预测（look forward twice scheme for box prediction）的端到端Transformer框架。相比于Faster R-CNN，DINO是一个参数量更大且更高效的目标检测模型。</p>
+<p><strong>评估方案</strong>：使用平均精度（AP）来评估基线模型的检测性能。对于Faster R-CNN，YOLO和DINO，分别评估了不同IoU阈值（0.5、0.75和0.5:0.95）下的标准平均精度结果。</p>
+<h3 id="32-跨模态食材检索">3.2 跨模态食材检索</h3>
+<p><img alt="图3.1 中餐理解框架" src="https://p0.meituan.net/travelcube/89a8ee55deb718feb238d0be52e4852c1386828.png"></p>
+<p><img src="https://p0.meituan.net/travelcube/53475fc70475afca34e5e945ffb37bf480410.png"></p>
+<p>如图所示，使用两个独立的特征提取器提取图像特征和食材特征。然后，应用对比约束以端到端的方式来缩小匹配的图像和食材之间的嵌入距离。考虑到食材检测能够学习不同图像区域中食材的语义嵌入，我们进一步研究了两阶段的检索模型的有效性，该模型首先使用食材检测算法提取区域特征，然后使用区域特征和食材来训练一个联合嵌入模型。</p>
+<h4 id="321-方法1-端到端训练">3.2.1 方法1-端到端训练</h4>
+<p>在端到端设置中，我们首先将食品图像和食材组合投影到公共的嵌入空间中，然后使用对比损失来约束跨模态特征对齐。对于图像编码器，受视觉-语言Transformer在各种下游任务中取得成功的启发，我们采用预训练的[49]-[51]CLIP ViT B/16作为图像特征提取器对图像特征进行编码，然后利用线性全连接层将原始图像特征投影到公共的嵌入空间中：</p>
+<p><img src="https://p0.meituan.net/travelcube/9f1da74698d2dd9238ab2706e95ec2d9372688.png"></p>
+<h4 id="322-方法2-二阶段训练">3.2.2 方法2-二阶段训练</h4>
+<p>与图像编码器直接提取的全局图像特征相比，从食材检测模型中提取的局部特征包含了特定的食材语义信息，为跨模态食材检索提供了更有利的初始化状态。为了利用这一优势，我们首先使用食材检测模型提取$Z$个区域特征。然后，我们提出了一个自适应式池化策略来自动融合多区域特征和多食材特征。</p>
+<p><img src="https://p0.meituan.net/travelcube/74792747bd89855ec9bba298d43ecca0442698.png"></p>
+<h2 id="4-实验">4. 实验</h2>
+<h3 id="41-算法实现细节">4.1 算法实现细节</h3>
+<p>CMIngre数据集在本次实验中被随机划分为6,001个训练样本，1,000个验证样本和1,000个测试样本。所有的实验都使用了PyTorch框架，在2张NVIDIA GTX 3090 GPU上进行实验。</p>
+<ul>
+<li><strong>食材检测</strong>：对于Faster R-CNN框架，与方法[47],[54]保持一致，利用ResNet-101作为特征提取器，设置batch size为2，学习率为0.001，并利用SGD优化器进行端到端检测优化。对于YOLO算法，遵循官方报告[48]使用yolov5x6进行检测实验。对于DINO框架，与官方设置[1]保持一致，然后选用Vision Transformer作为特征提取器fine-tune整个模型。</li>
+<li><strong>跨模态食材检索</strong>：选用Adam优化器训练整个模型并且设置batch size为128，最终映射层维度为1024。对于双层自注意力编码机制，选用包含有2层、4个头部的Transformer作为每层编码器，并且设置隐藏层维度为512。对于图像食材区域特征预提取，在Faster R-CNN框架中提取36个维度为2048的区域特征，在DINO框架中提取128个维度为256的区域特征。为了增加模型泛化能力，随机消去20%的图像区域，并且设置位置编码向量维度$d_2$为32。</li>
+</ul>
+<h3 id="42-实验结果">4.2 实验结果</h3>
+<h4 id="421-食材检测">4.2.1 食材检测</h4>
+<p>为了验证现有的检测框架在CMIngre食材数据集上的有效性，我们利用基于CNN以及基于Transformer的端到端框架。实验结果如表4.1所示，可以发现YOLO v5，Faster R-CNN和DINO在CMIngre数据集上性能一般。这一结果表明，目前的目标检测方法为明确的目标边界而设计，很难直接检测到自由形式的食材。这也表明，在食品相关领域开发更多细粒度食材理解算法仍有很大的性能提升空间。与Faster R-CNN相比，DINO在不同的IoU阈值下的检测性能更好，这说明大规模预训练模型在食物领域依然存在着较强的理解能力。</p>
+<p>此外，为了验证微调目标检测模型实验的有效性，我们找到了CMIngre数据集和MS COCO数据集中的七个公共类别：蛋糕、西兰花、苹果、胡萝卜、橙子、香蕉、甜甜圈。接下来，我们选取CMIngre数据集中包含这七类食材的数据，对预训练模型和使用CMIngre中数据微调后的模型进行了对比验证。表4.2展示了Faster R-CNN和DINO在CMIngre数据集中公共7类食材上的检测结果。与Faster R-CNN相比，预训练的DINO和微调后的DINO都表现出了更优的性能，突出了大规模预训练模型的泛化能力。此外，在CMIngre数据集上对DINO进行微调后，模型对常见类别的检测性能有了很大的提高。具体而言，微调后的DINO在7个公共类别上AP50:95、AP50和AP75方面分别比预训练的DINO提高了18.3%、25.2%和21%，这证明了在CMIngre数据集上进行模型调优的有效性。</p>
+<p><img alt="表4.1 CMIngre和MS COCO的检测结果(%)，“()”表示检测方法在MS COCO和CMIngre上的性能差异" src="https://p1.meituan.net/travelcube/4407f64a5e96256eb6e48f2e4b17e85185838.png"></p>
+<p><img alt="表4.2 Faster R-CNN和DINO在MS COCO和CMIngre的共有类别上的检测性能" src="https://p0.meituan.net/travelcube/0fec187d7661ec4c8385100caae817e357503.png"></p>
+<h4 id="422-跨模态食材检索">4.2.2 跨模态食材检索</h4>
+<p>在这一节中，我们重新实现了几个图像backbone（ResNet-50, ViT B/16和CLIP ViT B/16）和食材backbone（分层Transformer和分层LSTM）进行性能对比。此外，还进行了两阶段实验设置，验证了食材对象和跨模态食材检索相结合的有效性。实验结果如表4.3所示，其中APS表示自适应池化策略。最后，在表4.4中，我们重新实现了两种最先进的跨模式食谱检索方法（TFood[19]和VLPCook[56]），来比较我们提出的CMIngre和Recipe 1M[32]。</p>
+<p><img alt="表4.3 CMIngre中跨模态食材检索性能" src="https://p0.meituan.net/travelcube/19bbec3e32611fcc829815de76a90193148394.png"></p>
+<p>结果表明，ResNet+H-LSTM的性能并不令人满意。我们认为这是因为卷积神经网络的接受域有限，ResNet-50只能捕获整体图像的粗粒度语义，而忽略了细粒度的食材特征。这个结果突出了在跨模态食材检索中对于图像进行细粒度分析的重要性。通过利用Transformer中的自注意力机制对不同食材之间的语义关联进行建模，ResNet+H-Transformer增强了食材组合的表现力，从而提高了检索性能。</p>
+<p>具体来说，在图像到食材的设置中，medR从62.0降低到40.0。当使用视觉Transformer[58]作为图像backbone时，检索性能显著提升。这证明了视觉Transformer通过利用不同图像区域之间的关系来提取细粒度食材表示的能力。受视觉-语言基础模型在各种下游任务中获得成功的启发，我们采用CLIP[49]作为图像backbone进行实验，与其他端到端设置相比，CLIP具有最佳的检索性能。这些实验结果表明，当采用更深和更先进的backbone时，检索性能得到了一致的改善。</p>
+<p>除此之外，我们还探索了结合食材检测和跨模态食材检索的两阶段模型的检索性能。首先，我们使用Faster R-CNN和DINO提取固定长度的区域特征。然后，引入自适应池化策略（APS）来融合多区域特征。如表4.3所示，在所有的评估指标中，两阶段的方法明显优于端到端的方法，这表明当前的图像编码器很难直接从图像中提取细粒度食材的判别特征。</p>
+<p>在这种情况下，更有效的方法是下训练一个专门针对食材图像的检测模型，然后使用经过训练的检测模型提取的细粒度食材特征进行检索任务。此外，可以观察到，与Faster R-CNN相比，使用DINO的区域特征可以进一步提高检索性能。这表明食材检索模型的性能提升可以同步体现在跨模态食材检索中。</p>
+<p><img alt="表4.4 CMIngre和Recipe 1M的跨模态检索性能" src="https://p0.meituan.net/travelcube/a5eb867bcd290cd13fa8465c0d214f5b148369.png"></p>
+<p>为了进一步将所提出数据集与其他跨模态食品检索数据集的复杂性进行对比，我们在Recipe 1M中重新实现了两种最先进的方法[32]，并对比了这些方法在CMIngre数据集上的检索性能。根据表4.4所示，CMIngre数据集上的检索效率大约是Recipe 1M上的一半，这一显著差异凸显了中国食材面临的更大挑战。具体来说，Recipe 1M提供了一套全面的食谱细节（包括配料、标题和说明），它丰富了图像和食谱之间的上下文关系，从而促进了跨模态检索。相比之下，CMIngre数据集仅局限于食材信息，这对有效的跨模态检索提出了更大的挑战。值得注意的是，我们的两阶段方法明显优于这些对比方法，这进一步凸显了两阶段方法的优势，即训练食材检测方法提取细粒度食材特征可以显著增强图像的表示能力。</p>
+<h3 id="43-可视化">4.3 可视化</h3>
+<p>我们从三种类型的数据（菜名，菜谱，用户生成内容）中随机采样一个查询样本，执行跨模态检索任务，并可视化该查询样本的Top-5检索结果。如图4.1所示，查询图像所对应的正确食材组合成功的以最高相似度出现在第一个检索结果中，验证了我们图像搜索食材的有效性。此外，我们观察到查询样本和Top-5检索结果有着一定程度上的关联，例如在菜谱（recipe）查询图像的检索结果中，Top-5的食材组合都包含有鸡蛋和蔬菜（油菜、蔬菜、西兰花），并且第一个检索结果和第二个检索结果仅仅是“蔬菜”和“油菜”的细微区别，这说明我们的方法可以有效挖掘到图像和食材间的匹配关系。</p>
+<p>如图4.2所示，上述相同的现象也出现在三类查询食材的Top-5检索结果中。我们也在图4.3中可视化了一些最佳匹配失败的案例，发现当图像中所包含的食材不能被清晰认知时，模型会倾向于给出一个相似的具体食材。例如在菜品名称查询图像中，其中的一个绿色食材由于无法被清晰的辨识所以被标注为更高级的“蔬菜”标签。然而当模型执行跨模态检索时，会更倾向于将其认知为更细粒度“芥菜”和“秋葵”而不是“蔬菜”。另外一个观察是相比于最佳匹配案例，错误案例中Top-5检索结果的相似度往往倾向于更低且更平均，表示出了模型很难分辨菜品图像中模糊食材的具体分类。</p>
+<p><img alt="图4.1 使用图像检索食材组合，三种不同来源查询图的top-5检索结果" src="https://p0.meituan.net/travelcube/184b91f3216c3bed2a309b5853a7dd2d2366226.png"></p>
+<p><img alt="图4.2 使用食材组合检索图像，三种不同来源查询食材组合的top-5检索结果" src="https://p0.meituan.net/travelcube/0febdbdddaf8395ce79b0bb3a16093003343169.png"></p>
+<p><img alt="图4.3 三种不同来源查询图像最佳匹配失败示例" src="https://p0.meituan.net/travelcube/849cbef9cc773900f058023d5384f87f2610481.png"></p>
+<p>此外，按照[59]中描述的方法，我们可视化了单个食材的匹配下降分数（MDS）。具体来说，我们将单个食材的MDS定义为当从食材组合中删除特定食材时，图像与其相应食材组合之间的相似性变化。如图4.4所示，具有明显视觉特征的食材往往具有更高的MDS。例如，在第一张图像中，删除“米”导致了0.1216的相似度显著下降，这个下降明显高于土豆、胡萝卜、肉。另一个值得注意的是，具有模糊视觉外观的食材会对跨模态检索产生负面影响。例如，在第三张图中，由于煮熟的青菜缺乏鲜明的视觉特征，导致图像与缺乏青菜的食材组合匹配相似度增加。</p>
+<p><img alt="图4.4 单个食材在CMIngre上的MDS。MDS最高的食材用红色表示，MDS为负的食材用蓝色表示" src="https://p1.meituan.net/travelcube/1d5bd8c955d2e8e2965dd11a49ef10b31047450.png"></p>
+<h2 id="5-业务应用">5. 业务应用</h2>
+<p>菜品作为餐饮业务的最基本单元，在供给策略运营、用户需求洞察、业务经营分析等场景都必要依赖。2020年至2021年，到餐研发团队基于业务菜品数据，进行了标准统一和知识融合，整体菜品知识准确率达到94.51%、覆盖率达到87.01%。但在局部视角，部分菜品知识属性受限于获取信源单一、挖掘技术难度大等原因导致知识覆盖不足，例如烧烤/火锅品类准确率仅63.6%，食材属性覆盖率67.5%，口味属性覆盖率11.9%，影响支持业务精细化、智能化的运营需求。</p>
+<p>为了提升菜品知识的覆盖，我们提出一套构建多模态知识图谱的流程，分别从文本和图像两个模态获取菜品知识。</p>
+<p><img alt="图5.1 多模态知识图谱构建流程" src="https://p0.meituan.net/travelcube/3e93bf767e50422921304edc20581dd7392993.png"></p>
+<p>对于文本模态，使用命名实体识别提取文本中的食材、口味、口感、菜系、烹饪方法；对于图像模态，使用目标检测提取图像中的食材信息和对应区域对文本信息进行补充。在对单个图像-文本对构建多模态知识图谱对基础上，通过相同食材、口味等信息对不同的图像-文本对进行关联，进而构建完整的菜品多模态知识图谱，从而提升菜品知识覆盖率。</p>
+<h2 id="6-结论">6. 结论</h2>
+<p>在本研究中，我们将重点放在中餐食材理解上，它扩展了细粒度对象检测和检索的范围，在中餐领域提供了更广泛的应用。为了支持新任务的研究，我们设计了第一个跨模态食材级数据集CMIngre，该数据集由来自菜肴、食谱和UGC三种不同来源的8,001对图像食材组成，涵盖了429种不同的中国食材和超过95,290个边界框。我们在CMIngre数据集上评估了不同目标检测算法的有效性，表明开发更高级的细粒度食材检测算法仍然有足够的性能提升空间。此外，在CMIngre上进行的广泛的跨模态食材检索实验验证了我们提出的基线的有效性。此外，我们希望这个基准可以激发更多新颖的细粒度食材理解算法的发展，从而促进食品相关领域的进步。</p>
+<p>利用以上技术能力，在多模态数据集上建设菜品知识图谱。对比文本单模态 (知识准确率95%、覆盖率达到80%)，通过在评测数据上进行验证，该项目提升菜品知识图谱的属性知识的质量，知识准确率96.52%、覆盖率达到87.01%。将菜品知识图谱的能力应用于相同商品识别的业务场景，通过提供商品理解的关键信息，识别的错误率从20.38%降低至2.3%，提升美团精细化运营的效率。</p>
+<h2 id="作者团队简介">作者团队简介</h2>
+<p><strong>到店研发平台</strong></p>
+<p>美团核心本地商业/到店研发平台是到店业务的技术服务团队，聚焦公司“零售+科技”战略，为美团到店餐饮、休闲娱乐、丽人医美、教育母婴、Life Event、酒店、民宿、门票度假等业务提供从客户线索、商户入驻、供给上单、交易履约、整合营销、会员评价、经营收益等全方位技术研究和能力建设，保障到店场景下多业务的高效发展，持续优化用户体验，提升商户数字化经营水平。</p>
+<p><strong>高校团队</strong></p>
+<p>刘安安教授团队为天津大学图像所（教育部批准设立），长期从事跨媒体计算和人工智能领域研究，目前拥有全职教授4人、副教授8人、讲师2人，在读博士和硕士百余人；先后承担和参与国家重点研发计划、863计划、国家自然科学基金、安全部专项等科研项目；获得天津市科技进步特等奖、国家安全部科技进步奖一等奖等；在IEEE/ACM汇刊、CCF-A类期刊/会议发表论文百余篇，获批发明专利百余项。</p>
+<h2 id="8-招聘信息">8. 招聘信息</h2>
+<p>美团核心本地商业/到店研发平台是到店业务的技术服务团队，聚焦公司“零售+科技”战略，为美团到店餐饮、休闲娱乐、丽人医美、教育母婴、Life Event、酒店、民宿、门票度假等业务提供从客户线索、商户入驻、供给上单、交易履约、整合营销、会员评价、经营收益等全方位技术研究和能力建设，保障到店场景下多业务的高效发展，持续优化用户体验，提升商户数字化经营水平。</p>
+<p>到店研发平台下的数据智能部，长期招聘AIGC大模型、NLP等相关领域的算法工程师/专家，感兴趣的同学可以将简历发送至 <a href="mailto:hejianlin@meituan.com">hejianlin@meituan.com</a>。</p>
+<h2 id="9-致谢">9. 致谢</h2>
+<p>本课题是在到店研发平台和天津大学共同参与下完成。在课题推进过程中，感谢天津大学刘安安教授、王岚君研究员的悉心指导，以及天津大学张晨宇、张国楷、李秋静、杨博、胡明望等同学的积极参与，助力课题的顺利完成，并在美团餐饮美食场景带来实际的业务价值。本课题也获得了2023年度美团科研合作「卓越实践奖」。</p>
+<h2 id="10-参考文献">10. 参考文献</h2>
+<ul>
+<li>[1] H. Zhang, F. Li, S. Liu, L. Zhang, H. Su, J. Zhu, L. M. Ni, and H.-Y. Shum, “Dino: Detr with improved denoising anchor boxes for end-to- end object detection,” arXiv preprint arXiv:2203.03605, 2022, doi:10. 48550/arXiv.2203.03605.</li>
+<li>[2] Z. Liu, Y. Lin, Y. Cao, H. Hu, Y. Wei, Z. Zhang, S. Lin, and B. Guo, “Swin transformer: Hierarchical vision transformer using shifted windows,” in Proceedings of the IEEE/CVF international conference on computer vision, 2021, pp. 10 012–10 022, doi:10.1109/ICCV48922. 2021.00986.</li>
+<li>[3] X. Dai, Y. Chen, B. Xiao, D. Chen, M. Liu, L. Yuan, and L. Zhang, “Dynamic head: Unifying object detection heads with attentions,” in Proceedings of the IEEE/CVF conference on computer vision and pattern recognition, 2021, pp. 7373–7382, doi:10.1109/CVPR46437. 2021.00729.</li>
+<li>[4] A.-A. Liu, H. Tian, N. Xu, W. Nie, Y. Zhang, and M. Kankanhalli, “Toward region-aware attention learning for scene graph generation,” IEEE Transactions on Neural Networks and Learning Systems, vol. 33, no. 12, pp. 7655–7666, 2021, doi:10.1109/TNNLS.2021.3086066.</li>
+<li>[5] J. Yang, J. Lu, S. Lee, D. Batra, and D. Parikh, “Graph r-cnn for scene graph generation,” in Proceedings of the European confer- ence on computer vision (ECCV), 2018, pp. 670–685, doi:10.1007/ 978- 3- 030- 01246- 5 41.</li>
+<li>[6] C. Liu, Z. Mao, T. Zhang, H. Xie, B. Wang, and Y. Zhang, “Graph structured network for image-text matching,” in Proceedings of the IEEE/CVF conference on computer vision and pattern recognition, 2020, pp. 10 921–10 930, doi:10.1109/CVPR42600.2020.01093.</li>
+<li>[7] H.Diao,Y.Zhang,L.Ma,andH.Lu,“Similarityreasoningandfiltration for image-text matching,” in Proceedings of the AAAI conference on artificial intelligence, vol. 35, no. 2, 2021, pp. 1218–1226, doi:10.1609/ aaai.v35i2.16209.</li>
+<li>[8] Y. Wang, Y. Su, W. Li, J. Xiao, X. Li, and A.-A. Liu, “Dual-path rare content enhancement network for image and text matching,” IEEE Transactions on Circuits and Systems for Video Technology, 2023, doi:10.1109/TCSVT.2023.3254530.</li>
+<li>[9] L. Bossard, M. Guillaumin, and L. Van Gool, “Food-101–mining discriminative components with random forests,” in Computer Vision– ECCV 2014: 13th European Conference, Zurich, Switzerland, September 6-12, 2014, Proceedings, Part VI 13. Springer, 2014, pp. 446–461, doi:10.1007⁄978- 3- 319- 10599- 429.</li>
+<li>[10] J.ChenandC.-W.Ngo,“Deep-based ingredient recognition for cooking recipe retrieval,” in Proceedings of the 24th ACM international confer-ence on Multimedia, 2016, pp. 32–41, doi:10.1145⁄2964284.2964315.</li>
+<li>[11] W. Min, L. Liu, Z. Wang, Z. Luo, X. Wei, X. Wei, and S. Jiang, “Isia food-500: A dataset for large-scale food recognition via stacked global-local attention network,” in Proceedings of the 28th ACM International Conference on Multimedia, 2020, pp. 393–401, doi:10.1145⁄3394171. 3414031.</li>
+<li>[12] W. Min, Z. Wang, Y. Liu, M. Luo, L. Kang, X. Wei, X. Wei, and S. Jiang, “Large scale visual food recognition,” IEEE Transactions on Pattern Analysis and Machine Intelligence, 2023, doi:10.1109/TPAMI.2023.3237871.</li>
+<li>[13] E. Aguilar, B. Remeseiro, M. Bolan ̃os, and P. Radeva, “Grab, pay, and eat: Semantic food detection for smart restaurants,” IEEE Transactions on Multimedia, vol. 20, no. 12, pp. 3266–3275, 2018, doi:10.1109/TMM.2018.2831627.</li>
+<li>[14] R. Morales, J. Quispe, and E. Aguilar, “Exploring multi-food detection using deep learning-based algorithms,” in 2023 IEEE 13th International Conference on Pattern Recognition Systems (ICPRS), 2023, pp. 1–7, doi:10.1109/ICPRS58416.2023.10179037.</li>
+<li>[15] G. Ciocca, P. Napoletano, and R. Schettini, “Food recognition: a new dataset, experiments, and results,” IEEE journal of biomedical and health informatics, vol. 21, no. 3, pp. 588–598, 2016, doi:10.1109/JBHI. 2016.2636441.</li>
+<li>[16] A. Salvador, N. Hynes, Y. Aytar, J. Marin, F. Ofli, I. Weber, and A. Tor-ralba, “Learning cross-modal embeddings for cooking recipes and food images,” in Proceedings of the IEEE conference on computer vision and pattern recognition, 2017, pp. 3020–3028, doi:10.1109/CVPR.2017.327.</li>
+<li>[17] A. Salvador, E. Gundogdu, L. Bazzani, and M. Donoser, “Revamping cross-modal recipe retrieval with hierarchical transformers and self-supervised learning,” in Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2021, pp. 15 475-15 484, do: 10.1109/CVPR46437.2021.01522.</li>
+<li>[18] M. Carvalho, R. Cadène, D. Picard, L. Soulier, N. Thome, and M. Cord, “Cross-modal retrieval in the cooking context: Learning semantic text-image embeddings,” in The 41st International ACM SIGIR Conference on Research &amp; Development in Information Retrieval, 2018, pp. 35-44, doi: 10.1145⁄3209978.3210036.</li>
+<li>[19] M. Shukor, G. Couairon, A. Grechka, and M. Cord, *Transformer decoders with multimodal regularization for cross-modal food retrieval,” in Proceedings of the IEEE/CV Conference on Computer Vision and Pattern Recognition, 2022, pp. 4567-4578, doi: 10.1109/CVPRW56347.2022.00503.</li>
+<li>[20] H. Wang, D. Sahoo, C. Liu, K. Shu, P. Achananuparp, E.-p. Lim, and S. C. Hoi, “Cross-modal food retrieval: learning a joint embedding of food images and recipes with semantic consistency and attention mechanism,” IEEE Transactions on Multimedia, vol. 24, pp. 2515-2525, 2021, doi: 10.1 109/TMM.2021.3083109.</li>
+<li>[21] M. Li, P.-Y. Huang, X. Chang, J. Hu, Y. Yang, and A. Hauptmann, “Video pivoting unsupervised multi-modal machine translation,” IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 45, no. 3, pp. 3918-3932, 2023, doi: 10.1109/TPAMI.2022.3181116.</li>
+<li>[22] Chinese cuisine culture, Last accessed on June 23, 2023.</li>
+<li>[23] “Regulation of food composition data expression,” <a href="https://www.chinanutri.cn/fgbz/fgbzhybz/201707/P020170721479798369359.pdf,Last">https://www.chinanutri.cn/fgbz/fgbzhybz/201707/P020170721479798369359.pdf,Last</a> accessed on June 23, 2023.</li>
+<li>[24] T. Joutou and K. Yanai, *A food image recognition system with multiple kernel learning,” in 2009 16th IEEE International Conference on Image Processing (ICIP). IEEE, 2009, pp. 285-288, doi: 10.1109/ICIP.2009.5413400.</li>
+<li>[25] Y. Kawano and K. Yanai, “Food image recognition with deep con-volutional features,” in Proceedings of the 2014 ACM International Joint Conference on Pervasive and Ubiquitous Computing: Adjunct Publication, 2014, pp. 589-593, doi: 10.1145⁄2638728.2641339.</li>
+<li>[26] K. Yanai and Y. Kawano, “Food image recognition using deep con-volutional network with pre-training and fine-tuning,” in 2015 IEEE International Conference on Multimedia &amp; Expo Workshops (ICMEW). IEBE, 2015, p. 1-6, doi: 10.1109/ICMEW.2015.7169816.</li>
+<li>[27] M. T. Turan and E. Erzin, “Domain adaptation for food intake classification with teacher/student learning,” IEEE Transactions on Multimedia, vol. 23, pp. 4220 4231, 2020, doi: 10.1109/TMM.2020.3038315.</li>
+<li>[28] H. Liang, G. Wen, Y. Hu, M. Luo, P. Yang, and Y. Xu, “Mvanet: Multitask guided multi-view attention network for chinese food recognition,” IEEE Transactions on Multimedia, vol. 23, pp. 3551-3561, 2020, doi: 10.1109/TMM.2020.3028478.</li>
+<li>[29] J. He, L. Lin, H. A. Eicher-Miller, and F. Zhu, “Long-tailed food clas-sification,” Nutrients, vol. 15, no. 12, 2023, doi: 10.3390/nu15122751.</li>
+<li>[30] K. Aizawa, Y. Maruyama, H. Li, and C. Morikawa, “Food balance estimation by using personal dietary tendencies in a multimedia food log,” IEEE Transactions on multimedia, vol. 15, no. 8, pp. 2176-2185, 2013, doi: 10.1109/TMM.2013.2271474.</li>
+<li>[31] J.-J. Chen, C.-W. Ngo, F.-L. Feng, and T.-S. Chua, “Deep understanding of cooking procedure for cross-modal recipe retrieval,” in Proceedings of the 26th ACM international conference on Multimedia, 2018, pp.1020-1028, do: 10.1145⁄3240508.3240627.</li>
+<li>[32] Y.-C. Lien, H. Zamani, and W. B. Croft,“Recipe retrieval with visual query of ingredients,” in Proceedings of the 43rd International ACM SI-GIR Conference on Research and Development in Information Retrieval, 2020, pp. 1565-1568, do: 10.1145⁄3397271.3401244.</li>
+<li>[33] W. Min, B.-K. Bao, S. Mei, Y. Zhu, Y. Rui, and S. Jiang. “You are what you eat: Exploring rich recipe information for cross-region food analysis,” IEEE Transactions on Multimedia, vol. 20, no. 4, pp. 950-964, 2017, doi: 10.1109/TMM.2017.2759499.</li>
+<li>[34] G. Ciocca, P. Napoletano, and R. Schettini, *Learning cnn-based features for retrieval of food images,” in New Trends in Image Analysis and Processing-ICIAP 2017: ICIAP International Workshops, WBICV, SSPandBE, 3AS, RGBD, NIVAR, IWBAAS, and MADiMa 2017, Catania, Italy, September 11-15, 2017, Revised Selected Papers 19. Springer, 2017, pp. 426 434, doi: 10.1007⁄978-3-319-70742-6_41.</li>
+<li>[35] X. Chen, Y. Zhu, H. Zhou, L. Diao, and D. Wang, “Chinesefoodnet: A large-scale image dataset for chinese food recognition,” arXiv preprint arXiv: 1705.02743, 2017, doi: 10.48550/arXiv. 1705.02743.</li>
+<li>[36] S. Hou, Y. Feng, and Z. Wang, “Vegfru: A domain-specific dataset for fine-grained visual categorization,” in Proceedings of the IEEE International Conference on Computer Vision, 2017, pp. 541-549, doi:10.1109/ICCV.2017.66.</li>
+<li>[37] J. Qiu, F. P.-W. Lo, Y. Sun, S. Wang, and B. Lo, “Mining discriminative food regions for accurate food recognition,” arXiv preprint arXiv:2207.03692, 2022, doi: 10.48550/arXiv.2207.03692.</li>
+<li>[38] J. Wang, X. Ding, and B. Guo, “High precision food detection method based on deep object detection network,” in 2021 IEEE Sth Information Technology, Networking, Electronic and Automation Control Conference (ITNEC), vol. 5. IEEE, 2021, pp. 646-650, doi: 10.1109/ITNEC52019. 2021.9587189.</li>
+<li>[39] $. Akti, M. Qarage, and H. K. Ekenel, “A mobile food recognition system for dietary assessment,” in International Conference on Image Analysis and Processing. Springer, 2022, pp. 71-81, doi: 10.1007⁄978-3-031-13321-3_7.</li>
+<li>[40] Y. Matsuda, H. Hoashi, and K. Yanai, “Recognition of multiple-food images by detecting candidate regions,” in 2012 IEEE International Conference on Multimedia and Expo.IEEE, 2012, pp. 25-30, doi: 10.1109/ICME.2012.157.</li>
+<li>[41] Y. Kawano and K. Yanai, “Foodcam-256: a large-scale real-time mobile food recognifionsystem employing high-dimensional features and compression of classifier weights,” in Proceedings of the 22nd ACM international conference on Multimedia, 2014, pp. 761-762, doi:10.1145⁄2647868.2654869.</li>
+<li>[42] B. Muñoz, I. Chirino, and E. Aguilar, “Can deep learning models recognize chilean diet,” IEEE Latin America Transactions, vol. 20, no. 9, pp. 2131-2138, 2022, doi:10.1109 TLA.2022.9878168.</li>
+<li>[43] Y. Kawano and K. Yanai, “Automatic expansion of a food image dataset leveraging existing categories with domain adaptation,” in Computer Vision - ECCV 2014 Workshops, 2015, pp. 3-17, doi:10.1007/ 978-3-319-16199-0_1.</li>
+<li>[44] J. Chen, L. Pang, and C.-W. Ngo, “Cross-modal recipe retrieval: How to cook this dish?” in MultiMedia Modeling: 23rd International Conference, MMM 2017, Reykiavil, Iceland, January 4-6, 2017, Pro-ceedings, Part I 23.978-3-319-51811-4_48. Springer, 2017, pp. 588-600, doi: 10.1007/</li>
+<li>[45] X. Li, J. Feng, Y. Meng, Q. Han, F. Wu, and J. Li, “A unified MRC framework for named entity recognition,” in Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics, ACL 2020, Online, July 5-10, 2020, 2020, pp. 5849-5859, doi: 10.18653/V1/ 2020.ACL-MAIN.519.</li>
+<li>[46] Y. Kawano and K. Yanai, “Automatic expansion of a food image dataset leveraging existing categories with domain adaptation,” in Computer Vision-ECCV 2014 Workshops: Zurich, Switzerland, September 6-7 and 12, 2014, Proceedings, Part III 13. Springer, 2015, pp. 3-17, doi: 10.1007⁄978-3-319-16199-0_1.</li>
+<li>[47] 1 S. Ren, K. He, R. Girshick, and J. Sun, “Faster I-cnn: Towards real-time object detection with region proposal networks, “Advances in neural information processing systems, vol. 28, 2015, do: 10.1109/TPAMI. 2016.2577031.</li>
+<li>[48] G. Jocher, “Yolov5 by ultralytics,* 2020, doi: 10.5281/zenodo.3908559.[Online]. Available: <a href="https://github.com/ultralytics/yolov5">https://github.com/ultralytics/yolov5</a></li>
+<li>[49] A. Radford, J. W. Kim, C. Hallacy, A. Ramesh, G. Goh, S. Agarwal, G. Sastry, A. Askell, P. Mishkin, J. Clark et al., *Learning transferable visual models from natural language supervision,” in International conference on machine learning. PMLR, 2021, pp. 8748-8763, doi: 10.48550/arXiv.2103.00020.</li>
+<li>[50] L. H. Li, P. Zhang, H. Zhang, J. Yang, C. Li, Y. Zhong, L. Wang,L. Yuan, L. Zhang, J.-N. Hwang et al., “Grounded language-image pre-training,” in Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2022, pp. 10 965-10 975, doi: 10.48550/ arXiv.2112.03857.</li>
+<li>[51] H. Zhang, P. Zhang, x. Hu, Y-C. Chen, L. Li, x. Dai, L. Wang, L. Yuan, J.-N. Hwang, and J. Gao, “Glipv2: Unifying localization and vision-language understanding,” Advances in Neural Information Processing Systems, vol. 35, pp. 36 067-36080, 2022, doi: 10.48550/arXiv.2206.05836.</li>
+<li>[52] K.-H. Lee, X. Chen, G. Hua, H. Hu, and X. He, “Stacked cross attention for image-text matching,” in Proceedings of the European conference on computer vision (ECCV), 2018, pp. 201-216, doi: 10.1007/ 978-3-030-01225-0_13.</li>
+<li>[53] J. Chen, H. Hu, H. Wu, Y. Jiang, and C. Wang, “Learning the best pooling strategy for visual semantic embedding,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2021, doi: 10.1109/ CVPR46437.2021.01553.</li>
+<li>[54] J. Yang, J. Lu, D. Batra, and D. Parikh, “A faster pytorch implementation of faster r-cnn. “<a href="https://github.com/jwyang/faster-renn.pytorch">https://github.com/jwyang/faster-renn.pytorch</a>, 2017.</li>
+<li>[55] P. Anderson, X. He, C. Buehler, D. Teney, M. Johnson, S. Gould, and L. Zhang,*Bottom-up and top-down attention for image captioning and visual question answering,” in CVPR, 2018, doi: 10.1109/CVPR.2018.00636.</li>
+<li>[56] M. Shukor, N. Thome, and M. Cord, “Vision and structured-language pretraining for cross-modal food retrieval,” Available at SSRN 4511116, 2023, doi: 10.48550/arXiv.2212.04267</li>
+<li>[57] T.-Y. Lin, M. Maire, S. Belongie, J. Hays, P. Perona, D. Ramanan et al., “Microsoft coco: Common objects in context,” in European conference on computer vision. Springer, 2014, pp.1740-755, doi: 10.1007⁄978-3-319-10602-1_48.</li>
+<li>[58] A. Dosovitskiy, L. Beyer, A. Kolesnikov, D. Weissenborn, X. Zhai, T. Unterthiner, M. Dehghani, M. Minderer, G. Heigold, S. Gelly et al., “An image is worth 16x16 words: Transformers for image recognition at scale,” arXiv preprint arXiv:2010.11929, 2020, doi:10.48550/arXiv.2010.11929.</li>
+<li>[59] Z. Zheng, L. Zheng, M. Garrett, Y. Yang, M. Xu, and Y.-D. Shen, “Dual-path convolutional image-text embeddings with instance loss,” ACM Trans. Multimedia Comput. Commun. Appl., vol. 16, no. 2, 2020, doi: 10.1145⁄3383184.</li>
+</ul>
+
+		</div>
+
+		<div class="post-tags">
+			
+				
+					<nav class="nav tags">
+							<ul class="flat">
+								
+								<li><a href="/tags/%E7%BE%8E%E5%9B%A2%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F">美团技术团队</a></li>
+								
+								<li><a href="/tags/%E5%88%B0%E5%BA%97%E7%A0%94%E5%8F%91%E5%B9%B3%E5%8F%B0">到店研发平台</a></li>
+								
+								<li><a href="/tags/%E7%AE%97%E6%B3%95">算法</a></li>
+								
+								<li><a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1">知识图谱</a></li>
+								
+								<li><a href="/tags/cmingre">CMIngre</a></li>
+								
+								<li><a href="/tags/transformer">Transformer</a></li>
+								
+								<li><a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a></li>
+								
+							</ul>
+					</nav>
+				
+			
+		</div>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+	(function () {
+		
+		
+		if (window.location.hostname == "localhost")
+			return;
+
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		var disqus_shortname = 'wfsui';
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> © Copyright notice |  <a href="">Wfsui theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div><script>feather.replace()</script>
+</body>
+</html>
